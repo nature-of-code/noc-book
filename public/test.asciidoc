@@ -1,0 +1,25 @@
+Chapter 6.  Autonomous Agents
+=============================
+
+[quote]
+“This is an exercise in fictional science, or science fiction, if you like that better.” 
+	—Valentino Braitenberg 
+
+
+== 6.1  Forces from within
+
+=== 6.1.0  Rune Test
+
+Believe it or not, there is a purpose.  Well, at least there’s a purpose for the first five chapters of this book.   We could stop right here; after all, we’ve looked at several different ways of modeling motion and simulating physics.  Angry Birds, here we come!  
+
+Still, let’s think for a moment.  Why are we here?   The _nature_ of code, right?   What have we been designing so far?   Inanimate objects.  Lifeless shapes sitting on our screens that flop around when affected by forces in their environment.   What if we could breathe life into those shapes? What if those shapes could live by their own rules?  Can shapes have hopes and dreams and fears?   This is what we are here in this chapter to do—develop _autonomous agents_.
+
+The term *_autonomous agent_* generally refers to an entity that makes its own choices about how to act in its environment without any influence from a leader or global plan.  For us, “acting” will mean moving.   This addition is a significant conceptual leap.  Instead of a box sitting on a boundary waiting to be pushed by another falling box, we are now going to design a box that has the ability and “desire” to leap out of the way of that other falling box, if it so chooses.   While the concept of forces that come from within is a major shift in our design thinking, our code base will barely change, as these desires and actions are simply that—_forces_. 
+
+Here are three key components of autonomous agents that we’ll want to keep in mind as we build our examples.
+
+- *An autonomous agent has a _limited_ ability to perceive environment.*   It makes sense that a living, breathing being should have an awareness of its environment.  What does this mean for us, however?   As we look at examples in this chapter, we will point out programming techniques for allowing objects to store references to other objects and therefore “perceive” their environment.    It’s also crucial that we consider the word *_limited here_*.  Are we designing a all-knowing rectangle that flies around a Processing window aware of everything else in that window?  Or are we creating a shape that can only examine any other object within 15 pixels of itself?   - *_Of course, there is no right answer to this question; it all depends._*  We’ll explore some possibilities as we move forward.  For a simulation to feel more “natural,” however, limitations are a good thing.  An insect, for example, may only be aware of the sights and smells that immediately surround it?   For a real-world creature, we could study the exact science of  these limitations.   Luckily for us, we can just make stuff up and try it out.
+- *An autonomous agent processes the information from its environment and calculates an action.* This will be the easy part for us, as the action is a force.  The environment might tell the agent that there’s a big scary-looking shark swimming right at it, and the action will be a powerful force in the opposite direction.  
+- *An autonomous agent has no leader.*  This third principle is something we care a little less about.  After all, if you are designing a system where it makes sense to have a leader barking commands at various entities, then that’s what you’ll want to implement.  Nevertheless, many of these examples will have no leader for an important reason.   As we get to the end of this chapter and examine group behaviors, we will look at designing collections of autonomous agents that exhibit the properties of complex systems— intelligent and structured group dynamics that emerge not from a leader, but from the local interactions of the elements themselves.
+
+In the late 1980s, computer scientist Craig Reynolds developed algorithmic steering behaviors for animated characters. These behaviors allowed individual elements to navigate their digital environments in a “lifelike” manner with strategies for fleeing, wandering, arriving, pursuing, evading, etc. Used in the case of a single autonomous agent, these behaviors are fairly simple to understand and implement. In addition, by building a system of multiple characters that steer themselves according to simple locally based rules, surprising levels of complexity emerge.  The most famous example is Reynolds’s “boids” model for “flocking/swarming” behavior.
