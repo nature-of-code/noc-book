@@ -1,7 +1,11 @@
-AsciiPlugins::register(
-	:name => :title0,
-	:regexp  => /^== +(?<title>[\S].*?)( +==)?$/,
-	:handler => lambda { |doc, src, context|
-     # handle parsing here
+plugin = {
+  :name => :title1,
+	:regexp  => /^== +(?<title1>[\S].*?)( +==)?$/,
+	:handler => lambda { |lines, element|
+    title = AsciiElement.new(plugin[:name])
+    title.children << lines.current_line.gsub!(plugin[:regexp], '\k<title1>')
+    element.children << title
 	}
-)
+}
+
+AsciiPlugins::register(plugin)

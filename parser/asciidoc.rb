@@ -9,9 +9,23 @@ class AsciiDoc
   include AsciiPlugins
 
   def initialize(content)
-    @element = AsciiElement.new
+    @element = AsciiElement.new(:document)
     @lines = AsciiLines.new(content)
     parse_lines
+  end
+  
+  def render(template, format)
+    views = {}
+    Dir["./templates/#{template}/#{format}/*.html.erb"].each { |file| 
+      symbol = file.split("/").last.split(".").first.to_sym
+      views[symbol] = "Hello"
+      # require file 
+    }
+    views
+  end
+  
+  def test_output
+    @element.test_output
   end
   
   private
@@ -26,16 +40,10 @@ class AsciiDoc
   def detect_plugins()
     Plugins.each do |p|
       if p[:regexp] =~ @lines.current_line
-        puts "Matched something"
-        # if match, then call the handler with the Asciilines src and the element to push into
+        if p[:handler].call(@lines, @element)
+          break
+        end
       end
-    end
-  end
-  
-  def parse_titles
-    @config["titles"].each do |k,v|
-      #@html.gsub!(v, template(k))
-      @html.gsub!(v, '<h1>\k<title></h1>')
     end
   end
   
