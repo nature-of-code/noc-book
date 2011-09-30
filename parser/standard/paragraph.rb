@@ -5,11 +5,11 @@ plugin = {
     
     body = lines.current_line
     
+    # check for characters that should not be wrapped in <p>, like heading, etc
+    # how do we specify that?
+    
     while(lines.next_line) do
-      if lines.current_line =~ /^\s*$/
-        # lines.next_line  # remove whitespace
-        break
-      end
+      break if lines.current_line =~ /^\s*$/
       body += lines.current_line
     end
     
