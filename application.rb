@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require
-require './asciidoc'
+require './parser/asciidoc.rb'
 require 'yaml'
 
 class Application < Sinatra::Base
