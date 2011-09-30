@@ -18,14 +18,10 @@ class AsciiDoc
     views = {}
     Dir["./templates/#{template}/#{format}/*.html.erb"].each { |file| 
       symbol = file.split("/").last.split(".").first.to_sym
-      views[symbol] = "Hello"
-      # require file 
+      views[symbol] = ERB.new(open(file).read)
     }
-    views
-  end
-  
-  def test_output
-    @element.test_output
+    result = @element.render(views)
+    result
   end
   
   private
@@ -33,17 +29,24 @@ class AsciiDoc
   def parse_lines
     detect_plugins
     while @lines.next_line do
-      detect_plugins
+      unless @lines.current_line =~ /^\s*$/
+        detect_plugins
+      end
     end
   end
   
   def detect_plugins()
+    found = false
     Plugins.each do |p|
       if p[:regexp] =~ @lines.current_line
         if p[:handler].call(@lines, @element)
+          found = true
           break
         end
       end
+    end
+    unless found
+      @element.children << "NOT FOUND: " + @lines.current_line
     end
   end
   

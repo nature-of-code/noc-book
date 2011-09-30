@@ -7,16 +7,18 @@ class AsciiElement
     @children = []
   end
   
-  def test_output
-    out = ""
+  def render(views)
+    content = ""
     @children.each do |child|
       if(child.is_a? String)
-        out += child
+        content += child
       else
-        out += child.test_output
+        content += child.render(views)
       end
     end
-    out
+    content
+    raise Exception, "Template file doesn't exist: #{@type}" if views[@type].nil?
+    views[@type].result(binding)
   end
   
 end
