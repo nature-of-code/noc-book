@@ -27,8 +27,9 @@ class AsciiDoc
   private
   
   def parse_lines
+    order_plugins
     detect_plugins
-    while @lines.next_line do
+    while @lines.shift_line do
       unless @lines.current_line =~ /^\s*$/
         detect_plugins
       end
@@ -46,6 +47,7 @@ class AsciiDoc
       end
     end
     unless found
+      puts "#{@lines.current_index} out of #{@lines.lines.size}"
       @element.children << "NOT FOUND: " + @lines.current_line
     end
   end

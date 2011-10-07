@@ -5,7 +5,7 @@ plugin = {
     
     body = ""
     
-    while(lines.next_line) do
+    while(lines.shift_line) do
       break if lines.current_line =~ /^\s*$/
       body += lines.current_line
     end

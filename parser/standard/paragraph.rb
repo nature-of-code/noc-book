@@ -5,10 +5,7 @@ plugin = {
     
     body = lines.current_line
     
-    # check for characters that should not be wrapped in <p>, like heading, etc
-    # how do we specify that?
-    
-    while(lines.next_line) do
+    while(lines.shift_line) do
       break if lines.current_line =~ /^\s*$/
       body += lines.current_line
     end

@@ -3,13 +3,15 @@ plugin = {
 	:regexp  => /^\[source,[a-z]+\]$/,
 	:handler => lambda { |lines, element|
     
-    unless lines.next_line =~ /^-{3,}$/
+    lines.shift_line
+    
+    unless lines.current_line =~ /^-{3,}$/
       return false
     end
     
     body = ""
     
-    while(lines.next_line) do
+    while(lines.shift_line) do
       break if lines.current_line =~ /^-{3,}$/
       body += lines.current_line
     end
