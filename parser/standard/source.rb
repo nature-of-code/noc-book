@@ -15,9 +15,10 @@ plugin = {
     end
     
     source = AsciiElement.new(plugin[:name])
+    source.children << "Java"
     source.children << body
-    element.children << source
     
+    element.children << source
 	}
 }
 

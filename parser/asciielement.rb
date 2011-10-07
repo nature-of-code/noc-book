@@ -8,6 +8,12 @@ class AsciiElement
   end
   
   def render(views)
+    element = self
+    raise Exception, "Template file doesn't exist: #{@type}" if views[@type].nil?
+    views[@type].result(binding)
+  end
+  
+  def standard_render(views)
     content = ""
     @children.each do |child|
       if(child.is_a? String)
@@ -17,8 +23,6 @@ class AsciiElement
       end
     end
     content
-    raise Exception, "Template file doesn't exist: #{@type}" if views[@type].nil?
-    views[@type].result(binding)
   end
   
 end
