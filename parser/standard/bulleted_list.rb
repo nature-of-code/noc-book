@@ -11,7 +11,7 @@ plugin = {
     end
     
     body = body.split("- ")
-    body.keep_if { |child| not child.empty? }
+    body.keep_if { |child| not child.empty?}
     
     bulleted_list = AsciiElement.new(plugin[:name])
     bulleted_list.children = body
