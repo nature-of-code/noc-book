@@ -14,6 +14,7 @@ plugin = {
     while(lines.shift_line) do
       break if lines.current_line =~ /^-{3,}$/
       body += lines.current_line
+      body += "\n"
     end
     
     source = AsciiElement.new(plugin[:name])
