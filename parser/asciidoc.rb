@@ -1,7 +1,7 @@
 require './parser/asciielement.rb'
 require './parser/asciilines.rb'
 require './parser/asciiplugins.rb'
-# require plugins first
+Dir["./parser/custom/*.rb"].each {|file| require file }
 Dir["./parser/standard/*.rb"].each {|file| require file }
 
 class AsciiDoc
