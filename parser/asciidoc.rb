@@ -47,7 +47,6 @@ class AsciiDoc
       end
     end
     unless found
-      puts "#{@lines.current_index} out of #{@lines.lines.size}"
       @element.children << "NOT FOUND: " + @lines.current_line
     end
   end
