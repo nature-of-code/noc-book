@@ -12,7 +12,7 @@ plugin = {
     
     paragraph = AsciiElement.new(plugin[:name])
     paragraph.children << body
-    element.children << paragraph
+    element.children << AsciiBlock.new(paragraph).element
 	}
 }
 

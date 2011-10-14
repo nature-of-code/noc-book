@@ -1,5 +1,7 @@
 require './parser/asciielement.rb'
 require './parser/asciilines.rb'
+require './parser/asciiblock.rb'
+require './parser/asciichars.rb'
 require './parser/asciiplugins.rb'
 Dir["./parser/custom/*.rb"].each {|file| require file }
 Dir["./parser/standard/*.rb"].each {|file| require file }
