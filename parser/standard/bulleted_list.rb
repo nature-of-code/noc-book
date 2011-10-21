@@ -3,18 +3,20 @@ plugin = {
 	:regexp  =>  /^-\s{1}/,
 	:handler => lambda { |lines, element|
     
-    body = lines.current_line
+    lis = []
+    e = AsciiElement.new(:li)
+    e.children <<  lines.current_line.gsub(/^-\s{1}/, "")
+    lis << AsciiBlock.new(e).element 
     
     while(lines.shift_line) do
-      break if lines.current_line =~ /^\s*$/
-      body += lines.current_line
+      break if not lines.current_line =~ /^-\s{1}/
+      e = AsciiElement.new(:li)
+      e.children <<  lines.current_line.gsub(/^-\s{1}/, "")
+      lis << AsciiBlock.new(e).element 
     end
     
-    body = body.split("- ")
-    body.keep_if { |child| not child.empty?}
-    
     bulleted_list = AsciiElement.new(plugin[:name])
-    bulleted_list.children = body
+    bulleted_list.children = lis
     element.children << bulleted_list
 	}
 }

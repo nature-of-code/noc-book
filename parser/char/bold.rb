@@ -1,6 +1,6 @@
 plugin = {
-  :name => :italic,
-	:regexp  =>  /_/,
+  :name => :bold,
+	:regexp  =>  /\*/,
 	:handler => lambda { |chars, element|
     
     if not chars.next_char =~ /\S/
@@ -10,13 +10,13 @@ plugin = {
     body = ""
     
     while(chars.shift_char) do
-      break if chars.current_char =~ /_/
+      break if chars.current_char =~ /\*/
       body += chars.current_char
     end
 
-    italic = AsciiElement.new(plugin[:name])
-    italic.children << body
-    element.children << italic
+    bold = AsciiElement.new(plugin[:name])
+    bold.children << body
+    element.children << bold
 	}
 }
 

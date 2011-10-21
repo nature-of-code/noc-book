@@ -3,25 +3,20 @@ plugin = {
 	:regexp  =>  /^.\s{1}/,
 	:handler => lambda { |lines, element|
     
-    ordered_list = AsciiElement.new(plugin[:name])
-    
-    item = lines.current_line
+    lis = []
+    e = AsciiElement.new(:li)
+    e.children <<  lines.current_line.gsub(/^.\s{1}/, "")
+    lis << AsciiBlock.new(e).element 
     
     while(lines.shift_line) do
-      break if lines.current_line =~ /^\s*$/ && !(lines.next_line =~ plugin[:regexp])
-      item += lines.current_line
-      
-      # if next is new bullet
-      if lines.next_line =~ plugin[:regexp]
-        item.gsub!(plugin[:regexp], "")
-        ordered_list.children << item
-        item = ""
-      end
-      
+      break if not lines.current_line =~ /^.\s{1}/
+      e = AsciiElement.new(:li)
+      e.children <<  lines.current_line.gsub(/^.\s{1}/, "")
+      lis << AsciiBlock.new(e).element 
     end
     
-    item.gsub!(plugin[:regexp], "")
-    ordered_list.children << item
+    ordered_list = AsciiElement.new(plugin[:name])
+    ordered_list.children = lis
     element.children << ordered_list
 	}
 }
