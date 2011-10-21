@@ -16,7 +16,7 @@ plugin = {
 
     italic = AsciiElement.new(plugin[:name])
     italic.children << body
-    element.children << italic
+    element.children << AsciiBlock.new(italic).element 
 	}
 }
 

@@ -16,7 +16,7 @@ plugin = {
 
     bold = AsciiElement.new(plugin[:name])
     bold.children << body
-    element.children << bold
+    element.children << AsciiBlock.new(bold).element 
 	}
 }
 
