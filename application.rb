@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require
-require './parser/asciidoc.rb'
-require 'yaml'
 
 class Application < Sinatra::Base
    
@@ -11,7 +9,7 @@ class Application < Sinatra::Base
   end
   
   get '/parse' do
-    @document = AsciiDoc.new(open("public/test.asciidoc").read)
+    @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
     erb :parse
   end
 
