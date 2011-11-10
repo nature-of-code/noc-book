@@ -10,11 +10,14 @@ class Application < Sinatra::Base
   
   get '/create_html' do
     @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
-    @document.render(:html, "templates/html_template", "results/html_template")
+    @document.render(:html, "templates/html_template", "public/results/html_template")
+    redirect "results/html_template/index.html"
   end
   
   get '/create_pdf' do
-    `wkhtmltopdf http://localhost:9393/parse my.pdf`
+    @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
+    @document.render(:pdf, "templates/html_template", "public/results/pdf_template")
+    redirect "results/pdf_template/index.pdf"
   end
 
   not_found do
