@@ -8,12 +8,12 @@ class Application < Sinatra::Base
     erb :front
   end
   
-  get '/parse' do
+  get '/create_html' do
     @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
-    @document.render(:html, "templates/html_template", "results/html")
+    @document.render(:html, "templates/html_template", "results/html_template")
   end
   
-  get '/parse_pdf' do
+  get '/create_pdf' do
     `wkhtmltopdf http://localhost:9393/parse my.pdf`
   end
 
