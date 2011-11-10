@@ -10,7 +10,11 @@ class Application < Sinatra::Base
   
   get '/parse' do
     @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
-    erb :parse
+    @document.render(:html, "templates/html_template", "results/html")
+  end
+  
+  get '/parse_pdf' do
+    `wkhtmltopdf http://localhost:9393/parse my.pdf`
   end
 
   not_found do
