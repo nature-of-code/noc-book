@@ -9,13 +9,13 @@ class Application < Sinatra::Base
   end
   
   get '/create_html' do
-    @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
+    @document = AsciiDoc::AsciiDocument.new("templates/book.asciidoc")
     @document.render(:html, "templates/html_template", "public/results/html_template")
     redirect "results/html_template/index.html"
   end
   
   get '/create_pdf' do
-    @document = AsciiDoc::AsciiDocument.new(open("public/test.asciidoc").read)
+    @document = AsciiDoc::AsciiDocument.new("templates/test.asciidoc")
     @document.render(:pdf, "templates/html_template", "public/results/pdf_template")
     redirect "results/pdf_template/index.pdf"
   end
