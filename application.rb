@@ -9,7 +9,7 @@ class Application < Sinatra::Base
   end
   
   get '/create_html' do
-    @document = AsciiDoc::AsciiDocument.new("templates/book.asciidoc")
+    @document = AsciiDoc::AsciiDocument.new("templates/book.asciidoc")   
     @document.render(:html, "templates/html_template", "public/results/html_template")
     redirect "results/html_template/index.html"
   end
