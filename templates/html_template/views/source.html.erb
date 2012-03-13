@@ -1,2 +1,3 @@
 <%#= element.children[0] %>
-<pre><%= element.children[1] %></pre>
+<% template = File.read("#{File.dirname(__FILE__)}/templates/html_template/views/code_blocks.html.erb")%>
+<%= MagicRocco.new(element.children[1], element.children[0].downcase).render(template) %>
