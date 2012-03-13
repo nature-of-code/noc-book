@@ -1,5 +1,5 @@
 class MagicRocco < Rocco
-  def initialize(filename, language)
+  def initialize(filename, language, syntax_on=false)
     @file       = filename
 
     # When `block` is given, it must read the contents of the file using
@@ -9,10 +9,10 @@ class MagicRocco < Rocco
 
     @options =  {
       :template_file => nil,
-      :language => language
+      :language => language,
+      :syntax_on => syntax_on
     }
-    
-    @options[:language] = language
+
     @options[:comment_chars] = generate_comment_chars
 
     # Turn `:comment_chars` into a regex matching a series of spaces, the
