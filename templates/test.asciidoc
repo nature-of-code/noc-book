@@ -36,8 +36,8 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-                         
-// What else do we need to add?
+
+  // What else do we need to add?
 ----
 
 [breakout]
@@ -114,13 +114,12 @@ Putting this all together, we can write a function called seek() that receives a
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);  
     desired.normalize();
-    // Calculating the desired velocity to target at max speed 
-    desired.mult(maxspeed);		
-
-    //  Reynolds formula for steering force 
-    PVector steer = PVector.sub(desired,velocity);	
-    //  Using our physics model and applying the force to the object’s acceleration 
-    applyForce(steer);			
+    // Calculating the desired velocity to target at max speed
+    desired.mult(maxspeed);
+    // Reynolds formula for steering force
+    PVector steer = PVector.sub(desired,velocity);
+    // Using our physics model and applying the force to the object’s acceleration
+    applyForce(steer);
   }								
 ---
 
@@ -140,9 +139,8 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  // Maximum speed
   float maxspeed;
-  // Maximum force
+  // Now we have maximum force too		
   float maxforce;
 ---
 
@@ -156,9 +154,8 @@ void seek(PVector target) {
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired,velocity);
 
-    //  Limit the magnitude of the steering force 
+    // Limit the magnitude of the steering force 
     steer.limit(maxforce);
-
     applyForce(steer);
   }				
 ---
@@ -180,7 +177,7 @@ class Vehicle {
   PVector velocity;
   PVector acceleration;
   // Additional variable for size
-  float r; 
+  float r;
   float maxforce;
   float maxspeed;
 
@@ -190,25 +187,25 @@ class Vehicle {
     location = new PVector(x,y);
     r = 3.0;
     // Arbitrary values for maxspeed and force; try varying these! 
-    maxspeed = 4;	
+    maxspeed = 4;
     maxforce = 0.1;
   }
 
-  void update() {			
-    // Our standard “Euler integration” motion model
+  void update() {		
+    // Our standard “Euler integration” motion model 
     velocity.add(acceleration);
     velocity.limit(maxspeed);
     location.add(velocity);
     acceleration.mult(0);
   }
 
-  void applyForce(PVector force) {	  
-    // Newton’s second law; we could divide by mass if we wanted 
+  // Newton’s second law; we could divide by mass if we wanted 
+  void applyForce(PVector force) {
     acceleration.add(force);
   }
 
-  void seek(PVector target) {		  
-    // Our seek steering force algorithm
+  // Our seek steering force algorithm
+  void seek(PVector target) {
     PVector desired = PVector.sub(target,location);    
     desired.normalize();
     desired.mult(maxspeed);
@@ -217,18 +214,12 @@ class Vehicle {
     applyForce(steer);
   }
     
-<<<<<<< Updated upstream
   void display() {					 
 	// Vehicle is a triangle pointing in the direction of velocity; 
 	// since it is drawn pointing up, we rotate it an additional 90  degrees
     float theta = velocity.heading2D() + PI/2;
-=======
-  void display() {
-    // Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90  degrees 
-    float theta = velocity.heading2D() + PI/2; 
->>>>>>> Stashed changes
-    fill(175);						 
-    stroke(0);						
+    fill(175); 
+    stroke(0);
     pushMatrix();
     translate(location.x,location.y);
     rotate(theta);
@@ -260,7 +251,6 @@ _Exercise: Implement seeking a moving target, often referred to as “pursuit.�
 
 _Exercise: Create a sketch where a Vehicle’s maximum force and maximum speed do not remain constant, but rather vary according to environmental factors._
 
-
 === Some Example Markup
 
 Doing special boxes
@@ -284,3 +274,17 @@ I've also created a standard div box that takes a classname.
 It will try to load div.html.erb from the template/views folder. It will automatically add the class
 name to the div class.
 =====================================================================
+
+
+_The Eco-System Project:
+
+Step 6 Exercise:
+
+Use the concept of steering forces to drive the behavior of your creatures in your eco-system.  Some possibilities:
+
+Create “schools” or “flocks” of creatures.
+Use a seeking behavior for creatures to search for food (for chasing moving prey, consider “pursuit”).
+Use a flow field for the eco-system environment.  For example, how does your system behave if the creatures live in a flowing river.
+Build a creature with countless steering behaviors (as many as you can reasonably add).  Think about ways to vary the weights of these behaviors so that you can dial those behaviors up and down, mixing and matching on the fly.    How are creatures’ initial weights set?  What rules drive how the weights change over time?
+Complex systems can be nested.  Can you design a single creature out of a flock of boids?  And can you then make a flock of those creatures?
+Complex systems can have memory (and be adaptive).  Can the history of your eco-system affect the behavior in its current state? (This could be the driving force behind how the creatures adjust their steering force weights.)_
