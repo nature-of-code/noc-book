@@ -1,0 +1,21 @@
+<h2>Table of Contents</h2>
+
+<% 
+	def el_output(hash)
+		output = "<li><a href='##{hash[:el].attributes[:href]}'>#{hash[:el].children[0]}</a></li>"
+		if hash[:children].size > 0
+			output += "<ul>"
+			hash[:children].each do |child|
+				output += el_output(child)
+			end
+			output += "</ul>"
+		end
+		output
+	end
+%>
+
+<ul>
+	<% hierarchy.each do |el| %>
+		<%= el_output(el) %>
+	<% end %>
+</ul>
