@@ -1,2 +1,14 @@
-<%#= element.children[0] %>
-<pre><%= element.children[1] %></pre>
+<% template_array = [] %>
+<% template_array << '<div class="code-block">' %>
+<% template_array << '  <'+'% @sections.each do |section| %'+'><div class="code-comment-pair">' %>
+<% template_array << '    <'+'%= (section[0].length > 0) ? "<div class=\"code-comment-line\"></div>" : "" %'+'>' %>
+<% template_array << '    <span class="code-comment"><'+'%= section[0] %'+'></span>' %>
+<% template_array << '    <code><pre><'+'%= section[1] %'+'></pre></code>' %>
+<% template_array << '  </div>' %>
+<% template_array << '<'+'% end %'+'>' %>
+<% template_array << '</div>' %>
+<% template = template_array.join("\n") %>
+<%# Always leave syntax_on=true! the .code-comment-line elements rely on the spans generated %>
+<%# from the pygmentize process. The fix will be to wrap the syntax highlighting CSS in %>
+<%# @media(screen) %>
+<%= MagicRocco.new(element.children[1], element.children[0].downcase, true).render(template) %>
