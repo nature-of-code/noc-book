@@ -34,7 +34,8 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-                         [bubble]What else do we need to add?[end bubble]
+                         
+// What else do we need to add?
 ----
 
 [breakout]
@@ -89,7 +90,8 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float maxspeed;    	// Maximum speed
+  // Maximum speed
+  float maxspeed;
 ---
 
 Then, in our desired velocity calculation, we scale according to maximum speed.
@@ -110,10 +112,13 @@ Putting this all together, we can write a function called seek() that receives a
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);  
     desired.normalize();
-    desired.mult(maxspeed);		[bubble] Calculating the desired velocity to target at max speed [end bubble]
-    
-    PVector steer = PVector.sub(desired,velocity);	[bubble] Reynolds formula for steering force [end bubble]
-    applyForce(steer);			[bubble] Using our physics model and applying the force to the object’s acceleration [end bubble]
+    // Calculating the desired velocity to target at max speed 
+    desired.mult(maxspeed);		
+
+    //  Reynolds formula for steering force 
+    PVector steer = PVector.sub(desired,velocity);	
+    //  Using our physics model and applying the force to the object’s acceleration 
+    applyForce(steer);			
   }								
 ---
 
@@ -134,8 +139,10 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float maxspeed;		// Maximum speed
-  float maxforce;		// Maximum force
+  // Maximum speed
+  float maxspeed;
+  // Maximum force
+  float maxforce;
 ---
 
 followed by:
@@ -148,7 +155,8 @@ void seek(PVector target) {
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired,velocity);
 
-    steer.limit(maxforce);	[bubble] Limit the magnitude of the steering force [end bubble]
+    //  Limit the magnitude of the steering force 
+    steer.limit(maxforce);
 
     applyForce(steer);
   }				
@@ -170,7 +178,8 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float r;				[bubble] Additional variable for size [end bubble]
+  // Additional variable for size
+  float r; 
   float maxforce;
   float maxspeed;
 
@@ -179,22 +188,26 @@ class Vehicle {
     velocity = new PVector(0,0);
     location = new PVector(x,y);
     r = 3.0;
-    maxspeed = 4;	[bubble] Arbitrary values for maxspeed and force; try varying these! [end bubble]
+    // Arbitrary values for maxspeed and force; try varying these! 
+    maxspeed = 4;	
     maxforce = 0.1;
   }
 
-  void update() {			[bubble] Our standard “Euler integration” motion model [end bubble]		
+  void update() {			
+    // Our standard “Euler integration” motion model
     velocity.add(acceleration);
     velocity.limit(maxspeed);
     location.add(velocity);
     acceleration.mult(0);
   }
 
-  void applyForce(PVector force) {	  [bubble] Newton’s second law; we could divide by mass if we wanted [end bubble]
+  void applyForce(PVector force) {	  
+    // Newton’s second law; we could divide by mass if we wanted 
     acceleration.add(force);
   }
 
-  void seek(PVector target) {		  [bubble] Our seek steering force algorithm
+  void seek(PVector target) {		  
+    // Our seek steering force algorithm
     PVector desired = PVector.sub(target,location);    
     desired.normalize();
     desired.mult(maxspeed);
@@ -203,8 +216,16 @@ class Vehicle {
     applyForce(steer);
   }
     
+<<<<<<< Updated upstream
   void display() {					 
-    float theta = velocity.heading2D() + PI/2; [bubble] Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90  degrees [end bubble]
+		// Vehicle is a triangle pointing in the direction of velocity; 
+		// since it is drawn pointing up, we rotate it an additional 90  degrees
+    float theta = velocity.heading2D() + PI/2;
+=======
+  void display() {
+    // Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90  degrees 
+    float theta = velocity.heading2D() + PI/2; 
+>>>>>>> Stashed changes
     fill(175);						 
     stroke(0);						
     pushMatrix();
