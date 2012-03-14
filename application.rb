@@ -17,7 +17,7 @@ class Application < Sinatra::Base
   get '/create_pdf' do
     
     args = []
-    args << { :option => "--header-html", :value => "templates/html_template/views/header.html"}
+    args << { :option => "--header-html", :value => "templates/print/views/header.html"}
     args << { :option => "--header-spacing", :value => 10} # make space between header and content
     args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
     
