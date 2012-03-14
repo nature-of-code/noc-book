@@ -10,8 +10,8 @@ class Application < Sinatra::Base
   
   get '/create_html' do
     @document = AsciiDoc::AsciiDocument.new("templates/book.asciidoc")   
-    @document.render(:html, "templates/html_template", "public/results/html_template")
-    redirect "results/html_template/index.html"
+    @document.render(:html, "templates/html", "public/results/html")
+    redirect "results/html/index.html"
   end
   
   get '/create_pdf' do
@@ -22,8 +22,8 @@ class Application < Sinatra::Base
     args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
     
     @document = AsciiDoc::AsciiDocument.new("templates/test.asciidoc")
-    @document.render(:pdf, "templates/html_template", "public/results/pdf_template", args)
-    redirect "results/pdf_template/index.pdf"
+    @document.render(:pdf, "templates/print", "public/results/print", args)
+    redirect "results/print/index.pdf"
   end
 
   not_found do
