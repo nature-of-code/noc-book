@@ -107,6 +107,10 @@ class MagicRocco < Rocco
       map { |code| code.sub(/\n?<div class="highlight"><pre>/m, '') }.
       map { |code| code.sub(/\n?<\/pre><\/div>\n/m, '') }
 
+    # Wrap every line of code in spans with class "one-line"
+    code_html = code_html.
+      map { |code| code.gsub(/(?<code>.*)\n/,"<span class='one-line'>" + '\k<code>' + "</span>\n") }
+
     # Lastly, combine the docs and code lists back into a list of two-tuples.
     docs_html.zip(code_html)
   end
