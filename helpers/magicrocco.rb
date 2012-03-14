@@ -9,10 +9,11 @@ class MagicRocco < Rocco
 
     @options =  {
       :template_file => nil,
-      :language => language,
+      :language => language || "java",
+      :comment_chars => "//",
       :syntax_on => syntax_on
     }
-
+    @options[:language] = detect_language
     @options[:comment_chars] = generate_comment_chars
 
     # Turn `:comment_chars` into a regex matching a series of spaces, the
@@ -24,6 +25,15 @@ class MagicRocco < Rocco
     # `split()` and that result through `highlight()` to generate the final
     # section list.
     @sections = highlight(split(parse(@data)))
+  end
+  
+  def detect_language
+    @_language ||=
+      if pygmentize?
+        %x[pygmentize -N thing.#{@options[:language]}].strip.split('+').first
+      else
+        "text"
+      end
   end
   
   # Take the result of `split` and apply syntax highlighting to source code.
