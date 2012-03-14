@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require
+require './helpers/magicrocco'
 
 class Application < Sinatra::Base
    
