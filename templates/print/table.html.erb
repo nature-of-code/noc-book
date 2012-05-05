@@ -1,0 +1,13 @@
+<% if element.attributes[:title] %>
+	<h3><%= element.attributes[:title] %></h3>
+<% end %>
+<table>
+	<% element.children.each do |tr| %>
+		<tr>
+			<% tr.children.each do |td| %>
+				<td><%= td.render_children(views, filter_results) %></td>
+			<% end %>
+		</tr>
+	<% end %>
+	
+</table>

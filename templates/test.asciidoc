@@ -58,7 +58,7 @@ Ultimately, the most important layer for you to consider is #1 -- _Action Select
 
 We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A “Vehicle” moving with velocity desires to seek a target.   
 
-image:imgs/ch6_1.png[Seek]
+image::imgs/ch6_1.png[Seek]
 
 Its goal and subsequent action is to seek the target in the above figure.  If you think back to Chapter 2, you might begin by making the target an “attractor” and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the Vehicle towards its target; rather, we are asking the Vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal  with how quickly it is currently moving (its velocity), and apply a force accordingly.
 
@@ -67,16 +67,16 @@ STEERING FORCE = DESIRED VELOCITY - CURRENT VELOCITY
 Or as we might write in Processing:
 
 [source,java]
----
+----
 PVector steer = PVector.sub(desired,velocity);
----
+----
 
 In the above formula, velocity is no problem.  After all, we’ve got a variable for that.   However, we don’t have the desired velocity; this is something we have to calculate.  Let’s take a look at Figure X again.   If we’ve defined the vehicle’s goal as “seeking the target”, then its desired velocity is a vector that points from its current location to the target location.  Assuming a PVector target, we then have:
 
 [source,java]
----
+----
 PVector desired = PVector.sub(target,location);  
----
+----
 
 image:imgs/ch6_2.png[Seek 2]
 
@@ -87,30 +87,30 @@ _The vehicle desires to move towards the target at maximum speed._
 In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go.)   So first, we need to make sure we add a variable in our Vehicle class to store maximum speed.
 
 [source,java]
----
+----
 class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
   // Maximum speed
   float maxspeed;
----
+----
 
 Then, in our desired velocity calculation, we scale according to maximum speed.
 
 [source,java]
----
+----
 PVector desired = PVector.sub(target,location);
 desired.normalize();
 desired.mult(maxspeed);
----
+----
 
 image:imgs/ch6_3.png[Seek 3]
 
 Putting this all together, we can write a function called seek() that receives a PVector target and calculates a steering force towards that target.
 
 [source,java]
----
+----
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);  
     desired.normalize();
@@ -121,7 +121,7 @@ Putting this all together, we can write a function called seek() that receives a
     // Using our physics model and applying the force to the object’s acceleration
     applyForce(steer);
   }								
----
+----
 
 Note how in the above function we finish by passing the steering force into *_applyForce()_*.  This assumes that we are basing this example on the foundation we built in Chapter 2.  However, you could just as easily use the steering force with Box2D’s *_applyForce()_* function or toxiclibs’ *_addForce()_* function.
 
@@ -134,7 +134,7 @@ Again, notice how this is not at all the same force as gravitational attraction.
 In all of this excitement, however, we’ve missed one last step.  What sort of vehicle is this?  Is it a super sleek race car with amazing handling?  Or a giant Mack truck that needs a lot of advance notice to turn?   A graceful panda, or a lumbering elephant?  Our example code, as it stands, has no feature to account for this variability in steering ability.   Steering ability can be controlled with a variable that limits the magnitude of the steering force.  Let’s call it maxforce.  And so finally, we have:
 
 [source,java]
----
+----
 class Vehicle {
   PVector location;
   PVector velocity;
@@ -142,12 +142,12 @@ class Vehicle {
   float maxspeed;
   // Maximum force
   float maxforce;
----
+----
 
 followed by:
 
 [source,java]
----
+----
 void seek(PVector target) {
     PVector desired = PVector.sub(target,location);  
     desired.normalize();
@@ -158,7 +158,7 @@ void seek(PVector target) {
     steer.limit(maxforce);
     applyForce(steer);
   }				
----
+----
 
 Limiting the steering force brings up an important point.  We must always remember that it’s not actually our goal to get the Vehicle to the target as fast as possible.  If that were the case, we would just say “location equals target” and there the vehicle would be.  Our goal, as Reynolds puts it, is to move the vehicle in a lifelike and improvisational manner.  We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to achieve the result we want.  For example, a large maximum steering force would result in a very different path than a small one.  One is not inherently better or worse than the other; it depends on your desired effect.  (And of course, these values need not be fixed and could change based on other conditions.  Perhaps a vehicle has health: the better its health, the better it can steer.)
 
@@ -169,7 +169,7 @@ Here is the full Vehicle class, incorporating the rest of the elements from the 
 image:imgs/seekExample.png[seek example, canvas=processingjs/seekExample.pde]
 
 [source,java]
----
+----
 *Example 6-1: Seeking a Target*
 class Vehicle {
   
@@ -230,7 +230,7 @@ class Vehicle {
     endShape(CLOSE);
     popMatrix();
   }
----
+----
 
 Just putting an example table down here from Chapter 10.
 
@@ -288,3 +288,29 @@ Use a flow field for the eco-system environment.  For example, how does your sys
 Build a creature with countless steering behaviors (as many as you can reasonably add).  Think about ways to vary the weights of these behaviors so that you can dial those behaviors up and down, mixing and matching on the fly.    How are creatures’ initial weights set?  What rules drive how the weights change over time?
 Complex systems can be nested.  Can you design a single creature out of a flock of boids?  And can you then make a flock of those creatures?
 Complex systems can have memory (and be adaptive).  Can the history of your eco-system affect the behavior in its current state? (This could be the driving force behind how the creatures adjust their steering force weights.)_
+
+
+- Praesent eget purus quis magna eleifend eleifend.
+  1. Fusce euismod commodo velit.
+    a. Fusce euismod commodo velit.
+    b. Vivamus fringilla mi eu lacus.
+    c. Donec eget arcu bibendum nunc consequat lobortis.
+  2. Vivamus fringilla mi eu lacus.
+    i)  Fusce euismod commodo velit.
+    ii) Vivamus fringilla mi eu lacus.
+  3. Donec eget arcu bibendum nunc consequat lobortis.
+  4. Nam fermentum mattis ante.
+- Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  * Fusce euismod commodo velit.
+  ** Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+     adolescens. Sit munere ponderum dignissim et. Minim luptatum et
+     vel.
+  ** Vivamus fringilla mi eu lacus.
+  * Donec eget arcu bibendum nunc consequat lobortis.
+- Nulla porttitor vulputate libero.
+  . Fusce euismod commodo velit.
+  . Vivamus fringilla mi eu lacus.
+[upperroman]
+    .. Fusce euismod commodo velit.
+    .. Vivamus fringilla mi eu lacus.
+  . Donec eget arcu bibendum nunc consequat lobortis.

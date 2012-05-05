@@ -1,0 +1,443 @@
+[[asciidoc_101]]
+== AsciiDoc 101
+
+http://www.methods.co.nz/asciidoc/index.html[AsciiDoc] is a text document
+format for writing (among other things) books, ebooks, and documentation. The
+main advantages of AsciiDoc are that it is easy to use and plays well with
+O'Reilly's publishing tools, including Atlas. It's similar to wiki markup--if
+you can write a Wikipedia article, then you'll have no problem with AsciiDoc.
+This http://powerman.name/doc/asciidoc[Asciidoc cheat sheet] covers a lot of
+the nitty-gritty, but the following sections will give you an overview of the
+markup you'll use most frequently.
+
+You can create and edit AsciiDoc in any text editor, and then add it to Atlas
+by either pasting it into the wiki interface or using git. If you're on
+Windows, you can use http://notepad-plus-plus.org/[Notepad++] or any other
+text editor. If you're on a Mac, you can use TextEdit,
+http://macromates.com/[TextMate] (which you can pair with an
+https://github.com/zuckschwerdt/asciidoc.tmbundle[AsciiDoc bundle]),
+http://www.barebones.com/products/textwrangler/[TextWrangler], or any of a
+number of choices. Or maybe you prefer old school vi or Emacs. That's okay,
+too. The important thing is that you use the AsciiDoc markup.
+
+This chapter illustrates some of the most common elements used in writing
+technical documentation.
+
+.Use the Source, Luke
+[WARNING]
+====
+If you're viewing this document as a PDF, EPUB, or Mobi, you're seeing the
+_output_ from the AsciiDoc source, rather than the AsciiDoc markup itself.
+Since this chapter is intended as an introduction to the markup, you should
+view the source, available on GitHub.
+====
+
+++++
+<remark>Need to figure out where to put the source. On Github? Somewhere
+else? Okay to make it available to the public?</remark>
+++++
+
+[[SECTION_ID]]
+=== Top-Level Section
+This one designates AsciiDoc level 2 (DocBook +<sect1>+).
+
+==== Second-Level Section (Delimited Style) ====
+This one designates AsciiDoc level 3 (DocBook +<sect2>+). Also note that you
+can have the delimiter on both sides as in this one.
+
+===== Third-Level Section (Delimited Style)
+This one designates AsciiDoc level 4 (DocBook +<sect3>+).
+
+[[INLINES]]
+=== Inline Elements
+
+Here's some some _italic_, `monospaced` (aka ``constant-width'' or “CW”),
+*bold*, *+CW bold+*, ^super^, and ~sub~ text.
+
+Plus signs can also be used for literal (CW) text, for example: +ls -al+
+
+Standard O'Reilly font conventions are as follows:
+
+Italic:: _Ital_ indicates new terms, URLs, email addresses, filenames, and
+file extensions.
++Constant width+:: +CW+ is used for program listings, as well
+as within paragraphs to refer to program elements such as variable or function
+names, databases, data types, environment variables, statements, and keywords.
+*+Constant width bold+*:: *+CWB+* shows commands or other text that should be
+typed literally by the user.
+pass:[<replaceable>Constant width italic</replaceable>]::
+pass:[<replaceable>CWI</replaceable>] shows text that should be replaced with
+user-supplied values or by values determined by context.
+
+[WARNING]
+====
+Please do not use AsciiDoc's mechanisms for forcing linebreaks,
+page breaks, or "ruler" lines, as these don't mesh with Atlas's book building
+tools.
+====
+
+[[XREFS]]
+=== Cross-References
+
+To generate a cross-reference, use this syntax:
+
+----
+<<ID>>
+----
+
+where `ID` is the anchor or BlockID of the target, which you place in double
+square-brackets above that block.
+
+The Atlas build system will transform this into a standard cross-reference (or
++<xref>+) for you: the rendered text will adjust automatically if you later
+move the target or reword its title, and it will work as a hyperlink in online
+versions. Any time you refer to another component of your book, please be sure
+to use xref markup, not hardcoded text.
+
+<<XREF_TABLE>> shows the standard text generated from xrefs in PDF builds.
+
+[[XREF_TABLE]]
+.Standard Cross-Reference Formats
+[options="header"]
+|=======
+|Target|Generated Cross-Reference Text
+|chapter|Chapter 17
+|table|Table 4-1
+|figure|Figure 2-3
+|example|Example 3-5
+|sidebar|"Fooing the Bar" on page 23
+|section|"Inline Macros" on page 14
+|=======
+
+Here are some live examples (hover over the text in the PDF to locate the
+hyperlink):
+
+* See <<BLOCKS>> for details.
+* The results is shown in <<FIG1>>.
+* Flip ahead to <<advanced_asciidoc>> for a preview.
+
+generated from this source:
+
+----
+* See <<BLOCKS>> for details.
+* The results is shown in <<FIG1>>.
+* Flip ahead to <<advanced_asciidoc>> for a preview.
+----
+
+[WARNING]
+====
+Please do not use AsciiDoc's optional `xreflabel` and `caption` features on
+anchors and xrefs, as these interfere with standard generated xref formats.
+====
+
+[[BLOCKS]]
+=== Block Elements
+
+==== Sidebars
+
+Here's a +<sidebar>+:
+
+++++
+<?hard-pagebreak?>
+++++
+
+.What's Going On, Anyway?
+****
+A general understanding of what is going on under the hood of Atlas will help
+you make the most of it. One of the primary appeals of AsciiDoc is that it was
+created to export to http://www.docbook.org/[DocBook XML]. In other words, for
+each AsciiDoc markup syntax, there is an equivalent DocBook element. When you
+build your book (as described in <<building_and_debugging>>), Atlas converts the AsciiDoc to
+DocBook and then generates the book formats from that DocBook. This series of
+magical transformations is part of what makes writing in Atlas fun, but it
+also requires you to use the correct AsciiDoc markup for things to work right.
+
+If you get a build error, the most likely cause is an AsciiDoc markup error.
+Atlas provides error message logs to help you troubleshoot and fix syntax
+errors. Read more about building and debugging in <<building_and_debugging>>.
+**** 
+
+==== Admonitions (Notes and Warnings)
+
+Here are some admonitions:
+
+[NOTE]
+===============================
+O'Reilly books traditionally make no visual distinction between the DocBook
++<note>+, +<tip>+, and +<important>+ elements.
+===============================
+
+.Titled Tip
+[TIP]
+===============================
+We do support optional titles in admonitions (in most series).
+===============================
+
+.Titled Warning
+[WARNING]
+===============================
+O'Reilly Animal books traditionally make no visual distinction between the
+DocBook +<warning>+ and +<caution>+ elements.
+===============================
+
+[CAUTION]
+===============================
+This one is a +<caution>+.
+===============================
+
+[[figures_and_other_images]]
+==== Figures and Other Images
+
+Somewhere nearby is <<FIG1>> (a figure, titled and cross-referenced). Unlike
+other block elements, figures "float" by default. While AsciiDoc permits you
+to specify http://www.methods.co.nz/asciidoc/userguide.html#X9[various
+image-related attributes] for scaling/alignment/etc., generally these sorts of
+adjustments are not necessary. You can, however, prevent a float by adding `float="none"` like so:
+
+----
+[[FIG1]]
+.A Figure
+image::images/tiger.png[float]
+----
+
+[[FIG1]]
+.A Figure
+image::images/tiger.png[]
+
+Or you may prefer an image with no caption, like so:
+
+image::images/screenshot.png[]
+
+==== Lists
+
+===== Labeled (aka Variable or Term-Definition) Lists
+
+Term 1::
+  Definition/description
+Term 2::
+  Something else
+
+===== Bulleted (aka Itemized) Lists
+
+* lions
+* tigers
+** sabre-toothed
+** teapotted
+* bears
+
+===== Ordered (aka Numbered) Lists
+
+. Preparation
+. Assembly
+.. Measure
+.. Combine
+.. Bake
+. Applause
+
+==== Tables
+
+Atlas table styles vary slightly between series are supplied by the template
+stylesheets. If your material warrants something other than the default style
+as shown in <<STD_TABLE>>, please consult with your editor.
+
+[[STD_TABLE]]
+.A Table
+[options="header"]
+|=======
+|P|Q|P^Q
+|T|T|T
+|T|F|F
+|F|T|F
+|F|F|F
+|=======
+
+==== Code
+
+The AsciiDoc documentation refers to code blocks as "listing" blocks. Here's
+one:
+
+----
+Hello world!
+
+0        10        20        30        40
+1234567890123456789012345678901234567890
+----
+
+Contrast the code block above with <<EX1>>, which is a _formal_ code example
+(titled and cross-referenced).
+
+[[EX1]]
+.An Example
+====
+----
+Hello world!
+
+0        10        20        30        40
+1234567890123456789012345678901234567890
+----
+====
+
+[[inline-formatting]]
+===== Inline Formatting Within Code
+
+In AsciiDoc, there is no built-in mechanism for inline formatting within code.
+If you want to use inline formatting--in particular, for standard O'Reilly
+font conventions such as *+<userinput> (CW+bold)+* and _++<replaceable>
+(CW+italic)++_ or if you want to include line annotations--you can do so by
+using a passthrough block (see <<passthroughs>> for an explanation of passthroughs), like so:
+
+++++
+<screen>
+hostname $ <userinput>date</userinput>
+Sun Apr  1 12:34:56 GMT 1984
+</screen>
+++++
+
+or this:
+
+++++
+<programlisting>
+from __future__ import with_statement # This isn't required in Python 2.6
+                          <lineannotation>Above is a comment in the code, while this is an "annotation"</lineannotation>
+with open("<replaceable>hello.txt</replaceable>") as f:  
+    for line in f:        <lineannotation>(note regular italic here vs. constant-width in "hello.txt" on line above)</lineannotation>
+        print line</programlisting>
+++++
+
+===== Syntax Highlighting
+
+The Atlas book-building toolchain now supports syntax highlighting via
+http://pygments.org/[Pygments]. You need only add +[source]+ above each code
+block that you want to be syntax-highlighted, and specify the language of the
+code. For example, the following code:
+
+....
+[source,java]
+----
+int radius = 40;
+float x = 110;
+float speed = 0.5;
+int direction = 1;
+----
+....
+
+++++
+<?hard-pagebreak?>
+++++
+
+will render in the EPUB, PDF, and Mobi (Kindle Fire only) as follows:
+
+[source,java]
+----
+int radius = 40;
+float x = 110;
+float speed = 0.5;
+int direction = 1;
+----
+
+Pygments supports a wide variety of languages that can be used in +[source]+;
+see the full list at http://pygments.org/docs/lexers/. Ebook readers that do
+not have color screens will still display the highlighting, but in more subtle
+shades of gray.
+
+Please note the following caveats:
+
+* Highlighting will not be applied to any code that has inline markup (as
+described in <<inline-formatting>>), even if +[source]+ is added above the
+code block.
+
+* The color scheme cannot be changed at this time.
+
+* The PDF used for print will contain no highlighting.
+
+===== External Code Files
+
+To include an external code file that is text-only (no markup), use the
++include::+ macro inside of a delimited code block, as shown here:
+
+[source,java]
+----
+include::code/HelloWorld.java[]
+----
+
+To include an external file that contains inline markup (e.g., for callouts,
+line annotations, or inline font formatting), skip the code block delimiters
+around the +include::+ macro, and instead place passthrough delimiters within
+the included file, like so:
+
+include::code/inline_markup.txt[]
+
+===== Code Callouts
+
+http://www.sagehill.net/docbookxsl/AnnotateListing.html#Callouts[Code
+callouts] are used to mark specific lines of code with icons keyed to
+explanatory text outside the code block. These icon pairs function as
+bidirectional links in electronic PDF and downstream formats (i.e., you can
+click on the icon in the code to jump to the explanation, and vice versa).
+
+The built-in AsciiDoc mechanism (shown in <<asc_callouts>>) is somewhat more
+limited; for one thing, icons are hyperlinked from text to code, but not vice
+versa. However, you can always use a passthrough block (see <<passthroughs>>) for full functionality, as shown in <<bidir_callouts>>.
+
+If you have a need to refer to the same bit of explanatory text from more than
+one line of code, see <<callout-multiples>> (in <<advanced_asciidoc>>).
+
+[[asc_callouts]]
+.Built-in Callout Mechanism (Unidirectional Callouts)
+====
+-----------------------------------------------------
+ 10/17/97   9:04         <DIR>    bin
+ 10/16/97  14:11         <DIR>    DOS            <1>
+ 10/16/97  14:40         <DIR>    Program Files
+ 10/16/97  14:46         <DIR>    TEMP
+ 10/17/97   9:04         <DIR>    tmp
+ 10/16/97  14:37         <DIR>    WINNT
+ 10/16/97  14:25             119  AUTOEXEC.BAT   <2>
+  2/13/94   6:21          54,619  COMMAND.COM    
+ 10/16/97  14:25             115  CONFIG.SYS     
+ 11/16/97  17:17      61,865,984  pagefile.sys
+  2/13/94   6:21           9,349  WINA20.386     <3>
+-----------------------------------------------------
+====
+<1> This directory holds MS-DOS.
+<2> System startup code for DOS.
+<3> Some sort of Windows 3.1 hack.
+
+[[bidir_callouts]]
+.Bidirectional Callouts, via Passthrough Markup
+====
+++++
+<programlisting>class C: <co id="thing-co" linkends="thing"/>
+    def method(self):
+        pass</programlisting>
+
+<calloutlist>
+<callout id="thing" arearefs="thing-co">
+<para>The benefits of bidirectional callouts are more evident on longer listings...</para>
+</callout>
+</calloutlist>
+++++
+====
+
+[WARNING]
+===============================
+If using passthroughs for callouts, please use the paired markup as shown
+above (not +<areaspec>+).
+===============================
+
+==== Other Block Elements
+
+++++
+<remark>Use a passthrough block like this for notes to production
+staff</remark>
+++++
+
+// NB: AsciiDoc comments do _not_ get passed to DocBook output by default.
+
+Here's a +<quote>+ attributed to Benjamin Disraeli (by Wilfred Meynell,
+according to Frank Muir):
+
+[quote, Wilfred Meynell]
+____
+Many thanks; I shall lose no time in reading it.
+____
