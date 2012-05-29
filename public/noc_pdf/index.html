@@ -2,29 +2,34 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Document</title>
-	<style type="text/css" media="screen">
-		#container {
-			width: 800px;
-			margin: 0 auto;
-			font-family: Helvetica, Arial, sans-serif;
-			font-size: 15px;
-			line-height: 22px;
-		}
-		.line-through {
-			text-decoration: line-through;
-		}
-		
-		.underline {
-			text-decoration: underline;
-		}
-	</style>
+	<link rel="stylesheet" href="stylesheets/docco.css">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('.code-comment-pair').each(function(){
+			pair = $(this);
+			line = $(pair.find('.code-comment-line'));
+			firstCodeLine = $(pair.find('.one-line')[0]);
+			firstElement = $(firstCodeLine.find('span')[0]);
+			line.css('position','absolute');
+			//line.css('top',(firstCodeLine.position().top + firstCodeLine.height()) +'px');
+			if(0 != firstElement.length){
+				line.css('left', firstElement.position().left + 'px');
+				console.log($(pair).width() - firstElement.position().left, $(pair));
+				line.css('width', $(pair).width() - firstElement.position().left);
+			}
+		});
+	});
+	</script>
+	<script type="text/javascript" src="processingjs/processing.js"></script>
+	<link rel="stylesheet" href="stylesheets/print.css" type="text/css">
 </head>
 <body>
 	<div id="container">
 		<h1></h1><a name="_autonomous_agents"></a>
 <h2>Autonomous Agents</h2>
 <blockquote>
-	“This is an exercise in fictional science, or science fiction, if you like that better.”
+	This is an exercise in fictional science, or science fiction, if you like that better.
 	
 		<span>By: 
 Valentino Braitenberg
@@ -82,7 +87,7 @@ Valentino Braitenberg
 </p>
 </li>
 	
-</ol><p>Ultimately, the most important layer for you to consider is #1 — <em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not becauseyou should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter) you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to, as they say in American Idol, make these steering behaviors your own—it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
+</ol><p>Ultimately, the most important layer for you to consider is #1 - <em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not becauseyou should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter) you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to, as they say in American Idol, make these steering behaviors your own—it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
 <a name="_the_steering_force"></a>
 <h3>The Steering Force</h3><p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A “Vehicle” moving with velocity desires to seek a target.</p>
 <img src="imgs/ch6_1.png" alt="Seek" /><p>Its goal and subsequent action is to seek the target in the above figure.  If you think back to Chapter 2, you might begin by making the target an “attractor” and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the Vehicle towards its target; rather, we are asking the Vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal  with how quickly it is currently moving (its velocity), and apply a force accordingly.</p>
