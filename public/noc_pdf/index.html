@@ -1,0 +1,569 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Document</title>
+	<style type="text/css" media="screen">
+		#container {
+			width: 800px;
+			margin: 0 auto;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 15px;
+			line-height: 22px;
+		}
+		.line-through {
+			text-decoration: line-through;
+		}
+		
+		.underline {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<h1></h1><a name="_autonomous_agents"></a>
+<h2>Autonomous Agents</h2>
+<blockquote>
+	“This is an exercise in fictional science, or science fiction, if you like that better.”
+	
+		<span>By: 
+Valentino Braitenberg
+</span>
+	
+</blockquote><p>toc::[]</p>
+<p>This will be <span class="line-through">line-through</span></p>
+<p>This will be an <span class="underline">underlined thing</span></p>
+<p>In the function <span class="function">setup()</span></p>
+<a name="_forces_from_within"></a>
+<h3>Forces from within</h3><p><a href="#tablelink">
+	"Go to the Table"
+</a>
+</p>
+<p>Believe it or not, there is a purpose.  Well, at least there’s a purpose for the first five chapters of this book.   We could stop right here; after all, we’ve looked at several different ways of modeling motion and simulating physics.  Angry Birds, here we come!</p>
+<p>Still, let’s think for a moment.  Why are we here?   The <em>nature</em> of code, right?   What have we been designing so far?   Inanimate objects.  Lifeless shapes sitting on our screens that flop around when affected by forces in their environment.   What if we could breathe life into those shapes? What if those shapes could live by their own rules?  Can shapes have hopes and dreams and fears?   This is what we are here in this chapter to do—develop <em>autonomous agents</em>.</p>
+<p>The term <strong><em>autonomous agent</em></strong> generally refers to an entity that makes its own choices about how to act in its environment without any influence from a leader or global plan.  For us, “acting” will mean moving.   This addition is a significant conceptual leap.  Instead of a box sitting on a boundary waiting to be pushed by another falling box, we are now going to design a box that has the ability and “desire” to leap out of the way of that other falling box, if it so chooses.   While the concept of forces that come from within is a major shift in our design thinking, our code base will barely change, as these desires and actions are simply that—<em>forces</em>.</p>
+<p>Here are three key components of autonomous agents that we’ll want to keep in mind as we build our examples.</p>
+<ul>
+	
+		<li><p><strong>An autonomous agent has a <em>limited</em> ability to perceive environment.</strong>   It makes sense that a living, breathing being should have an awareness of its environment.  What does this mean for us, however?   As we look at examples in this chapter, we will point out programming techniques for allowing objects to store references to other objects and therefore “perceive” their environment.    It’s also crucial that we consider the word <strong><em>limited here</em></strong>.  Are we designing a all-knowing rectangle that flies around a Processing window aware of everything else in that window?  Or are we creating a shape that can only examine any other object within 15 pixels of itself?  <em>Of course, there is no right answer to this question; it all depends.</em>*  We’ll explore some possibilities as we move forward.  For a simulation to feel more “natural,” however, limitations are a good thing.  An insect, for example, may only be aware of the sights and smells that immediately surround it?   For a real-world creature, we could study the exact science of  these limitations.   Luckily for us, we can just make stuff up and try it out.
+</p>
+</li>
+	
+		<li><p><strong>An autonomous agent processes the information from its environment and calculates an action.</strong> This will be the easy part for us, as the action is a force.  The environment might tell the agent that there’s a big scary-looking shark swimming right at it, and the action will be a powerful force in the opposite direction.
+</p>
+</li>
+	
+		<li><p><strong>An autonomous agent has no leader.</strong>  This third principle is something we care a little less about.  After all, if you are designing a system where it makes sense to have a leader barking commands at various entities, then that’s what you’ll want to implement.  Nevertheless, many of these examples will have no leader for an important reason.   As we get to the end of this chapter and examine group behaviors, we will look at designing collections of autonomous agents that exhibit the properties of complex systems— intelligent and structured group dynamics that emerge not from a leader, but from the local interactions of the elements themselves.
+</p>
+</li>
+	
+</ul><p>In the late 1980s, computer scientist Craig Reynolds developed algorithmic steering behaviors for animated characters. These behaviors allowed individual elements to navigate their digital environments in a “lifelike” manner with strategies for fleeing, wandering, arriving, pursuing, evading, etc. Used in the case of a single autonomous agent, these behaviors are fairly simple to understand and implement. In addition, by building a system of multiple characters that steer themselves according to simple locally based rules, surprising levels of complexity emerge.  The most famous example is Reynolds’s “boids” model for “flocking/swarming” behavior.</p>
+<a name="_vehicles_and_steering"></a>
+<h3>Vehicles and Steering</h3><p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code.  There are many places we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents (for more, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick).  However, we want to start by examining agent behaviors that build on the work we’ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces.  And so it’s time to rename our Mover class that became our Particle class once again.  This time we are going to call it <strong><em>Vehicle</em></strong>.</p>
+<pre>class Vehicle {
+
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+
+  // What else do we need to add?</pre><h3>Why Vehicle?</h3><p>In 1986, Italian neuroscientist and cyberneticist Valentino Braitenberg described a series of hypothetical vehicles with simple internal structures in his book Vehicles: Experiments in Synthetic Psychology.  Braitenberg argues that his extraordinarily simple mechanical vehicles manifest behaviors such as fear, aggression, love, foresight, and optimism.  Reynolds took his inspiration from Braitenberg, and we’ll take ours from Reynolds.    Reynolds uses the word “Vehicle” to describe his autonomous agents, so we will follow suit.</p>
+<p>In his 1999 paper “Steering Behaviors for Autonomous Characters”, Reynolds describes the motion of idealized vehicles (idealized because we are not concerned with the actual engineering of such vehicles, but simply assume that they exist and will respond to our rules)as a series of three layers—Action Selection, Steering, and Locomotion.</p>
+<ol class="arabic">
+	
+		<li><p><strong>Action Selection</strong>.   A Vehicle has a goal (or goals) and can select an action (or a combination of actions) based on that goal.  This is essentially where we left off with autonomous agents.  The vehicle takes a look at its environment and calculates an action based on a desire: “I see a zombie marching towards me. Since I don’t want my brains to be eaten, I’m going to flee from the zombie.”   The goal is to keep one’s brains and the action is to flee.   Reynolds’s paper describes many goals and associated actions such as: seek a target, avoid an obstacle, and follow a path..   In a moment, we’ll start building these examples out with Processing code.
+</p>
+</li>
+	
+		<li><p><strong>Steering</strong>.  Once an action has been selected, the vehicle has to calculate its next move.  For us, the next move will be a force; more specifically, a steering force.  Luckily, Reynolds has developed a simple steering force formula that we’ll use throughout the examples in this chapter: <em>Steering Force = Desired Velocity minus Current Velocity</em>.  We’ll get into the details of this formula and why it works so effectively in the next section.
+</p>
+</li>
+	
+		<li><p><strong>Locomotion</strong>.  For the most part, we’re going to ignore this third layer.   In the case of fleeing zombies, the locomotion could be described as “left foot, right foot, left foot, right foot, as fast as you can.”   In our Processing world, however, a rectangle or circle or triangle’s actual movement across a window is irrelevant given that it’s all an illusion in the first place.  Nevertheless, this isn’t to say that you should ignore locomotion.   You will find great value in thinking about the locomotive design of your vehicle and how you choose to animate it.   The examples in this chapter will remain visually bare, and a good exercise would be to elaborate on the animation style —could you add spinning wheels or oscillating paddles or shuffling legs?
+</p>
+</li>
+	
+</ol><p>Ultimately, the most important layer for you to consider is #1 — <em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not becauseyou should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter) you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to, as they say in American Idol, make these steering behaviors your own—it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
+<a name="_the_steering_force"></a>
+<h3>The Steering Force</h3><p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A “Vehicle” moving with velocity desires to seek a target.</p>
+<img src="imgs/ch6_1.png" alt="Seek" /><p>Its goal and subsequent action is to seek the target in the above figure.  If you think back to Chapter 2, you might begin by making the target an “attractor” and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the Vehicle towards its target; rather, we are asking the Vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal  with how quickly it is currently moving (its velocity), and apply a force accordingly.</p>
+<p>STEERING FORCE = DESIRED VELOCITY - CURRENT VELOCITY</p>
+<p>Or as we might write in Processing:</p>
+<pre>PVector steer = PVector.sub(desired,velocity);</pre><p>In the above formula, velocity is no problem.  After all, we’ve got a variable for that.   However, we don’t have the desired velocity; this is something we have to calculate.  Let’s take a look at Figure X again.   If we’ve defined the vehicle’s goal as “seeking the target”, then its desired velocity is a vector that points from its current location to the target location.  Assuming a PVector target, we then have:</p>
+<pre>PVector desired = PVector.sub(target,location);</pre><p><img src="imgs/ch6_2.png" alt="Seek 2" /></p>
+<p>But this isn’t particularly realistic.  What if we have a very high-resolution window and the target is thousands of pixels away?  Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation.  What we really want to say is:</p>
+<p><em>The vehicle desires to move towards the target at maximum speed.</em></p>
+<p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go.)   So first, we need to make sure we add a variable in our Vehicle class to store maximum speed.</p>
+<pre>class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  // Maximum speed
+  float maxspeed;</pre><p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
+<pre>PVector desired = PVector.sub(target,location);
+desired.normalize();
+desired.mult(maxspeed);</pre><p><img src="imgs/ch6_3.png" alt="Seek 3" /></p>
+<p>Putting this all together, we can write a function called seek() that receives a PVector target and calculates a steering force towards that target.</p>
+<pre>  void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    // Calculating the desired velocity to target at max speed
+    desired.mult(maxspeed);
+    // Reynolds formula for steering force
+    PVector steer = PVector.sub(desired,velocity);
+    // Using our physics model and applying the force to the object’s acceleration
+    applyForce(steer);
+  }</pre><p>Note how in the above function we finish by passing the steering force into <strong><em>applyForce()</em></strong>.  This assumes that we are basing this example on the foundation we built in Chapter 2.  However, you could just as easily use the steering force with Box2D’s <strong><em>applyForce()</em></strong> function or toxiclibs’ <strong><em>addForce()</em></strong> function.</p>
+<p>So why does this all work so well?  Let’s see what the steering force looks like relative to the vehicle and target locations.</p>
+<p><img src="imgs/ch6_5.png" alt="Steering" /></p>
+<p>Again, notice how this is not at all the same force as gravitational attraction.  Remember one of our principles of autonomous agents: An autonomous agent has a limited ability to perceive its environment.  Here is that ability, subtly embedded into Reynolds’s steering formula.  If the vehicle weren’t moving at all (zero velocity) desired minus velocity would be equal to desired.  But this is not the case.  The vehicle is aware of its own velocity and its steering force compensates accordingly.   This creates a more active simulation, as the way in which the vehicle moves towards the targets depends on the way it is moving in the first place.</p>
+<p>In all of this excitement, however, we’ve missed one last step.  What sort of vehicle is this?  Is it a super sleek race car with amazing handling?  Or a giant Mack truck that needs a lot of advance notice to turn?   A graceful panda, or a lumbering elephant?  Our example code, as it stands, has no feature to account for this variability in steering ability.   Steering ability can be controlled with a variable that limits the magnitude of the steering force.  Let’s call it maxforce.  And so finally, we have:</p>
+<pre>class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float maxspeed;
+  // Maximum force
+  float maxforce;</pre><p>followed by:</p>
+<pre>void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    PVector steer = PVector.sub(desired,velocity);
+
+    // Limit the magnitude of the steering force
+    steer.limit(maxforce);
+    applyForce(steer);
+  }</pre><p>Limiting the steering force brings up an important point.  We must always remember that it’s not actually our goal to get the Vehicle to the target as fast as possible.  If that were the case, we would just say “location equals target” and there the vehicle would be.  Our goal, as Reynolds puts it, is to move the vehicle in a lifelike and improvisational manner.  We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to achieve the result we want.  For example, a large maximum steering force would result in a very different path than a small one.  One is not inherently better or worse than the other; it depends on your desired effect.  (And of course, these values need not be fixed and could change based on other conditions.  Perhaps a vehicle has health: the better its health, the better it can steer.)</p>
+<p><img src="imgs/ch6_5.png" alt="max force" /></p>
+<p>Here is the full Vehicle class, incorporating the rest of the elements from the Chapter 2 “Mover” object.</p>
+<p><img src="imgs/seekExample.png" alt="seek example" /></p>
+<pre>*Example 6-1: Seeking a Target*
+class Vehicle {
+
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  // Additional variable for size
+  float r;
+  float maxforce;
+  float maxspeed;
+
+  Vehicle(float x, float y) {
+    acceleration = new PVector(0,0);
+    velocity = new PVector(0,0);
+    location = new PVector(x,y);
+    r = 3.0;
+    // Arbitrary values for maxspeed and force; try varying these!
+    maxspeed = 4;
+    maxforce = 0.1;
+  }
+
+  void update() {
+    // Our standard “Euler integration” motion model
+    velocity.add(acceleration);
+    velocity.limit(maxspeed);
+    location.add(velocity);
+    acceleration.mult(0);
+  }
+
+  // Newton’s second law; we could divide by mass if we wanted
+  void applyForce(PVector force) {
+    acceleration.add(force);
+  }
+
+  // Our seek steering force algorithm
+  void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    PVector steer = PVector.sub(desired,velocity);
+    steer.limit(maxforce);
+    applyForce(steer);
+  }
+
+  void display() {
+        // Vehicle is a triangle pointing in the direction of velocity;
+        // since it is drawn pointing up, we rotate it an additional 90  degrees
+    float theta = velocity.heading2D() + PI/2;
+    fill(175);
+    stroke(0);
+    pushMatrix();
+    translate(location.x,location.y);
+    rotate(theta);
+    beginShape();
+    vertex(0, -r*2);
+    vertex(-r, r*2);
+    vertex(r, r*2);
+    endShape(CLOSE);
+    popMatrix();
+  }</pre><p>Just putting an example table down here from Chapter 10.</p>
+<p><a name="tablelink"></a>
+Here is a table with a header:</p>
+<table>
+	
+		<thead>
+			<tr>
+				
+					<th>Desired </th>
+				
+					<th> Guess </th>
+				
+					<th> Error</th>
+				
+			</tr>
+		</thead>
+	
+	
+	
+	
+	<tbody>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>Rune <strong>is</strong> Awesome</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-2</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+2</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>0</p>
+</td>
+			
+		</tr>
+	
+	</tbody>
+</table><p>Here is a table with a header and a footer:</p>
+<table>
+	
+		<thead>
+			<tr>
+				
+					<th>Desired </th>
+				
+					<th> Guess </th>
+				
+					<th> Error</th>
+				
+			</tr>
+		</thead>
+	
+	
+	
+		<tfoot>
+			<tr>
+				
+					<th><p>+1</p>
+</th>
+				
+					<th><p>+1</p>
+</th>
+				
+					<th><p>0</p>
+</th>
+				
+			</tr>
+		</tfoot>
+	
+	
+	<tbody>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>Rune <strong>is</strong> Awesome</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-2</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+2</p>
+</td>
+			
+		</tr>
+	
+	</tbody>
+</table><p>And here is a basic table:</p>
+<table>
+	
+	
+	
+	
+	<tbody>
+	
+		<tr>
+			
+				<td><p>Desired</p>
+</td>
+			
+				<td><p>Guess</p>
+</td>
+			
+				<td><p>Error</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>Rune <strong>is</strong> Awesome</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-2</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>-1</p>
+</td>
+			
+				<td><p>+2</p>
+</td>
+			
+		</tr>
+	
+		<tr>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>+1</p>
+</td>
+			
+				<td><p>0</p>
+</td>
+			
+		</tr>
+	
+	</tbody>
+</table><p><em>Exercise: Implement a “fleeing” steering behavior (desired vector is inverse of “seek”).</em></p>
+<p><em>Exercise: Implement seeking a moving target, often referred to as “pursuit.”  In this case, your desired vector won’t point towards the object’s current location, rather its “future” location as extrapolated based on its current velocity.   We’ll see this ability for a Vehicle to “predict the future” in later examples.</em></p>
+<p><em>Exercise: Create a sketch where a Vehicle’s maximum force and maximum speed do not remain constant, but rather vary according to environmental factors.</em></p>
+<a name="_some_example_markup"></a>
+<h3>Some Example Markup</h3><p>Doing special boxes</p>
+<h3>This is a special breakout box</h3><p>It will try to load breakout.html.erb from the template/views folder. The template will get passed:</p>
+element.attributes[:title] - the title ("This is a special rune box")
+element.children[0] - which will be all this text between the equal signs<p>This means that whatever name you put between [], that template will be rendered</p>
+<p>I’ve also created a standard div box that takes a classname.</p>
+<h3>This is a div box</h3><p>It will try to load div.html.erb from the template/views folder. It will automatically add the class
+name to the div class.</p>
+<p>_The Eco-System Project:</p>
+<p>Step 6 Exercise:</p>
+<p>Use the concept of steering forces to drive the behavior of your creatures in your eco-system.  Some possibilities:</p>
+<p>Create “schools” or “flocks” of creatures.
+Use a seeking behavior for creatures to search for food (for chasing moving prey, consider “pursuit”).
+Use a flow field for the eco-system environment.  For example, how does your system behave if the creatures live in a flowing river.
+Build a creature with countless steering behaviors (as many as you can reasonably add).  Think about ways to vary the weights of these behaviors so that you can dial those behaviors up and down, mixing and matching on the fly.    How are creatures’ initial weights set?  What rules drive how the weights change over time?
+Complex systems can be nested.  Can you design a single creature out of a flock of boids?  And can you then make a flock of those creatures?
+Complex systems can have memory (and be adaptive).  Can the history of your eco-system affect the behavior in its current state? (This could be the driving force behind how the creatures adjust their steering force weights.)_</p>
+<ul>
+	
+		<li><p>
+Praesent eget purus quis magna eleifend eleifend.
+</p>
+<ol class="arabic">
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+<ol class="loweralpha">
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+</li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+</li>
+	
+		<li><p>
+Donec eget arcu bibendum nunc consequat lobortis.
+</p>
+</li>
+	
+</ol></li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+<ol class="lowerroman">
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+</li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+</li>
+	
+</ol></li>
+	
+		<li><p>
+Donec eget arcu bibendum nunc consequat lobortis.
+</p>
+</li>
+	
+		<li><p>
+Nam fermentum mattis ante.
+</p>
+</li>
+	
+</ol></li>
+	
+		<li><p>
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+</p>
+<ul>
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+<ul>
+	
+		<li><p>
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+     adolescens. Sit munere ponderum dignissim et. Minim luptatum et
+     vel.
+</p>
+</li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+</li>
+	
+</ul></li>
+	
+		<li><p>
+Donec eget arcu bibendum nunc consequat lobortis.
+</p>
+</li>
+	
+</ul></li>
+	
+		<li><p>
+Nulla porttitor vulputate libero.
+</p>
+<ol class="arabic">
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+</li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+<ol class="upperroman">
+	
+		<li><p>
+Fusce euismod commodo velit.
+</p>
+</li>
+	
+		<li><p>
+Vivamus fringilla mi eu lacus.
+</p>
+</li>
+	
+</ol></li>
+	
+		<li><p>
+Donec eget arcu bibendum nunc consequat lobortis.
+</p>
+</li>
+	
+</ol></li>
+	
+</ul>
+	</div>
+</body>
+</html>

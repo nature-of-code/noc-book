@@ -18,14 +18,18 @@ class Application < Sinatra::Base
   
   get '/create_pdf' do
     
-    args = []
-    args << { :option => "--header-html", :value => "templates/oreilly_print/views/header.html"}
-    args << { :option => "--header-spacing", :value => 10} # make space between header and content
-    args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
+    # first render html
+    @document = AsciiDoc::AsciiDocument.new("public/test.asciidoc", { :debug_xml_to_file => "public/test.xml" })
+    @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
     
-    @document = AsciiDoc::AsciiDocument.new("templates/test.asciidoc")
-    @document.render(:pdf, "templates/oreilly_print", "public/results/oreilly_print", args)
-    redirect "results/oreilly_print/index.pdf"
+    # then render pdf from it
+    bin_args = []
+    bin_args << { :option => "--header-html", :value => "public/noc_pdf/views/header.html"}
+    bin_args << { :option => "--header-spacing", :value => 10} # make space between header and content
+    bin_args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
+    
+    @document.render(:pdf, :html_file => "public/noc_pdf/index.html", :output => "public/noc_pdf/index.pdf", :bin_args => bin_args)
+    redirect "noc_pdf/index.pdf"
   end
 
   not_found do
