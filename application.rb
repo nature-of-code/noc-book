@@ -10,25 +10,10 @@ class Application < Sinatra::Base
   end
   
   get '/create_html' do
-    
-    @document = AsciiDoc::AsciiDocument.new("templates/test.asciidoc")
-    
-    # Render via default templates
-    @html = @document.render(:html)
-    
-    # Render via custom templates
-    #@html = @document.render(:html, "templates/html")
-    
-    # Render to file via default templates
-    #@html = @document.render(:html, false, "public/results/html/index.html")
-    
-    # Render to file via custom templates
-    #@html = @document.render(:html, "templates/html", "public/results/html/index.html")
-    
-    #redirect "results/html/index.html"
-    
-    @html
-    
+    # TODO: Make is possible to specify array of templates. Later views will override older views.    
+    @document = AsciiDoc::AsciiDocument.new("public/test.asciidoc", { :debug_xml_to_file => "public/test.xml" })
+    @document.render(:html, :template => "public/noc_html/views", :output => "public/noc_html/index.html")
+    redirect "noc_html/index.html"
   end
   
   get '/create_pdf' do
