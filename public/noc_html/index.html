@@ -29,13 +29,17 @@
 		<h1></h1><a name="_autonomous_agents"></a>
 <h2>Autonomous Agents</h2>
 <blockquote>
-	“This is an exercise in fictional science, or science fiction, if you like that better.”
+	This is an exercise in fictional science, or science fiction, if you like that better.
 	
 		<span>By: 
 Valentino Braitenberg
 </span>
 	
-</blockquote><p>toc::[]</p>
+</blockquote>
+<canvas id="sketchdec21a" data-processing-sources="processingjs/seekExample.pde" class="runesclass">
+	<p>Your browser does not support the canvas tag.</p>
+</canvas>
+<p>toc::[]</p>
 <p>This will be <span class="line-through">line-through</span></p>
 <p>This will be an <span class="underline">underlined thing</span></p>
 <p>In the function <span class="function">setup()</span></p>
@@ -110,10 +114,12 @@ Valentino Braitenberg
 </p>
 </li>
 	
-</ol><p>Ultimately, the most important layer for you to consider is #1 — <em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not becauseyou should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter) you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to, as they say in American Idol, make these steering behaviors your own—it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
+</ol><p>Ultimately, the most important layer for you to consider is #1 - <em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not becauseyou should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter) you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to, as they say in American Idol, make these steering behaviors your own—it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
 <a name="_the_steering_force"></a>
 <h3>The Steering Force</h3><p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A “Vehicle” moving with velocity desires to seek a target.</p>
-<img src="imgs/ch6_1.png" alt="Seek" /><p>Its goal and subsequent action is to seek the target in the above figure.  If you think back to Chapter 2, you might begin by making the target an “attractor” and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the Vehicle towards its target; rather, we are asking the Vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal  with how quickly it is currently moving (its velocity), and apply a force accordingly.</p>
+
+<img src="imgs/ch6_1.png" alt="Seek"  />
+<p>Its goal and subsequent action is to seek the target in the above figure.  If you think back to Chapter 2, you might begin by making the target an “attractor” and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the Vehicle towards its target; rather, we are asking the Vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal  with how quickly it is currently moving (its velocity), and apply a force accordingly.</p>
 <p>STEERING FORCE = DESIRED VELOCITY - CURRENT VELOCITY</p>
 <p>Or as we might write in Processing:</p>
 
@@ -157,7 +163,9 @@ Valentino Braitenberg
     <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">desired</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">target</span><span class="o">,</span><span class="n">location</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><p><img src="imgs/ch6_2.png" alt="Seek 2" /></p>
+</div><p>
+<img src="imgs/ch6_2.png" alt="Seek 2"  />
+</p>
 <p>But this isn’t particularly realistic.  What if we have a very high-resolution window and the target is thousands of pixels away?  Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation.  What we really want to say is:</p>
 <p><em>The vehicle desires to move towards the target at maximum speed.</em></p>
 <p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go.)   So first, we need to make sure we add a variable in our Vehicle class to store maximum speed.</p>
@@ -212,7 +220,9 @@ Valentino Braitenberg
 <span class='one-line'><span class="n">desired</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="n">maxspeed</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><p><img src="imgs/ch6_3.png" alt="Seek 3" /></p>
+</div><p>
+<img src="imgs/ch6_3.png" alt="Seek 3"  />
+</p>
 <p>Putting this all together, we can write a function called seek() that receives a PVector target and calculates a steering force towards that target.</p>
 
 
@@ -254,7 +264,9 @@ Valentino Braitenberg
 
 </div><p>Note how in the above function we finish by passing the steering force into <strong><em>applyForce()</em></strong>.  This assumes that we are basing this example on the foundation we built in Chapter 2.  However, you could just as easily use the steering force with Box2D’s <strong><em>applyForce()</em></strong> function or toxiclibs’ <strong><em>addForce()</em></strong> function.</p>
 <p>So why does this all work so well?  Let’s see what the steering force looks like relative to the vehicle and target locations.</p>
-<p><img src="imgs/ch6_5.png" alt="Steering" /></p>
+<p>
+<img src="imgs/ch6_5.png" alt="Steering"  />
+</p>
 <p>Again, notice how this is not at all the same force as gravitational attraction.  Remember one of our principles of autonomous agents: An autonomous agent has a limited ability to perceive its environment.  Here is that ability, subtly embedded into Reynolds’s steering formula.  If the vehicle weren’t moving at all (zero velocity) desired minus velocity would be equal to desired.  But this is not the case.  The vehicle is aware of its own velocity and its steering force compensates accordingly.   This creates a more active simulation, as the way in which the vehicle moves towards the targets depends on the way it is moving in the first place.</p>
 <p>In all of this excitement, however, we’ve missed one last step.  What sort of vehicle is this?  Is it a super sleek race car with amazing handling?  Or a giant Mack truck that needs a lot of advance notice to turn?   A graceful panda, or a lumbering elephant?  Our example code, as it stands, has no feature to account for this variability in steering ability.   Steering ability can be controlled with a variable that limits the magnitude of the steering force.  Let’s call it maxforce.  And so finally, we have:</p>
 
@@ -319,9 +331,13 @@ Valentino Braitenberg
   </div>
 
 </div><p>Limiting the steering force brings up an important point.  We must always remember that it’s not actually our goal to get the Vehicle to the target as fast as possible.  If that were the case, we would just say “location equals target” and there the vehicle would be.  Our goal, as Reynolds puts it, is to move the vehicle in a lifelike and improvisational manner.  We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to achieve the result we want.  For example, a large maximum steering force would result in a very different path than a small one.  One is not inherently better or worse than the other; it depends on your desired effect.  (And of course, these values need not be fixed and could change based on other conditions.  Perhaps a vehicle has health: the better its health, the better it can steer.)</p>
-<p><img src="imgs/ch6_5.png" alt="max force" /></p>
+<p>
+<img src="imgs/ch6_5.png" alt="max force"  />
+</p>
 <p>Here is the full Vehicle class, incorporating the rest of the elements from the Chapter 2 “Mover” object.</p>
-<p><img src="imgs/seekExample.png" alt="seek example" /></p>
+<p>
+<img src="imgs/seekExample.png" alt="seek example"  />
+</p>
 
 
 
