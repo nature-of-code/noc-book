@@ -9,17 +9,17 @@ class Application < Sinatra::Base
     erb :front
   end
   
-  get '/create_html' do
+  get '/create_html/:filename' do
     # TODO: Make is possible to specify array of templates. Later views will override older views.    
-    @document = AsciiDoc::AsciiDocument.new("public/test.asciidoc", { :debug_xml_to_file => "public/test.xml" })
+    @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
     @document.render(:html, :template => "public/noc_html/views", :output => "public/noc_html/index.html")
     redirect "noc_html/index.html"
   end
   
-  get '/create_pdf' do
+  get '/create_pdf/:filename' do
     
     # first render html
-    @document = AsciiDoc::AsciiDocument.new("public/test.asciidoc", { :debug_xml_to_file => "public/test.xml" })
+    @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
     @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
     
     # then render pdf from it
