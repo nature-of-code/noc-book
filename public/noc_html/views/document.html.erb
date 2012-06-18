@@ -13,7 +13,13 @@
 			$(line).find('.c1').remove().end().html(line.html().trim())
 			styles = match[1].split(',');
 			for( l = 0; i < styles.length; i++) {
-				line.addClass(styles[i].trim());
+				if (styles[i].trim() === 'italic') {
+					line.html("<em>" + line.html() + "</em>");
+				} else if(styles[i].trim() === 'bold') {
+					line.html("<strong>" + line.html() + "</strong>");
+				} else {
+					line.addClass(styles[i].trim());
+				}
 			}
 		}
 	}
