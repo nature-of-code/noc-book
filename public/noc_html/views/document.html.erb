@@ -5,6 +5,19 @@
 	<link rel="stylesheet" href="stylesheets/docco.css">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript">
+
+	addStylesToCodeLines = function(comment) {
+		match = $(comment).html().match(/\[(.*)\]/);
+		if(match !== "undefined" && match !== null && match.length >= 1){
+			line = $(comment).parent('.one-line');
+			$(line).find('.c1').remove().end().html(line.html().trim())
+			styles = match[1].split(',');
+			for( l = 0; i < styles.length; i++) {
+				line.addClass(styles[i].trim());
+			}
+		}
+	}
+
 	$(document).ready(function(){
 		$('.code-comment-pair').each(function(){
 			pair = $(this);
@@ -15,10 +28,15 @@
 			//line.css('top',(firstCodeLine.position().top + firstCodeLine.height()) +'px');
 			if(0 != firstElement.length){
 				line.css('left', firstElement.position().left + 'px');
-				console.log($(pair).width() - firstElement.position().left, $(pair));
 				line.css('width', $(pair).width() - firstElement.position().left);
 			}
 		});
+
+		// Get all inline comments
+		comments = $('.c1')
+		for(i = 0, len=comments.length; i < len; i++) {
+			addStylesToCodeLines(comments[i]);
+		}
 	});
 	</script>
 	<script type="text/javascript" src="processingjs/processing.js"></script>
