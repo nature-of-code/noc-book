@@ -26,530 +26,879 @@
 </head>
 <body>
 	<div id="container">
-		<h1>Introduction</h1><blockquote>
-	“I am two with nature.”
-        —Woody Allen
+		<h1>Chapter 1.  Vectors</h1><blockquote>
+	“Roger, Roger. What’s our vector, Victor?”
+        —Captain Oveur, Airplane
 	
-</blockquote><p>Here we are: the beginning.  Well, almost the beginning. If it’s been a while since you’ve done any programming in Processing (or any math, for that matter), this introduction will get your mind back into computational thinking before we head into some of the more difficult and complex material.</p>
-<p>In Chapter 1, we’re going to talk about the concept of a vector and how it will serve as the building block for simulating motion throughout this book.   But before we take that step, let’s think about what it means for something to simply move around the screen.   Let’s begin with one of the best-known and simplest simulations of motion—the Random Walk.</p>
-<a name="_random_walks"></a>
-<h2>Random Walks</h2>
-<p>Imagine you are standing in the middle of a balance beam.  Every ten seconds, you flip a coin.  Heads, take a step forward.  Tails, take a step backwards.   This is a random walk—a path defined as a series of random steps.    Stepping off that balance beam and onto the floor, you could perform a random walk in two dimensions by flipping that same coin twice with the following results:</p>
-Flip 1 Flip 2 Result<p>Tails</p>
-<p>Tails</p>
-<p>Step backward.</p>
-<p>Heads</p>
-<p>Heads</p>
-<p>Step forward.</p>
-<p>Heads</p>
-<p>Tails</p>
-<p>Step right.</p>
-<p>Tails</p>
-<p>Heads</p>
-<p>Step left.</p>
-<p>Yes, this may seem like a particularly unsophisticated algorithm.  Nevertheless, random walks can be used to model phenomena that occur in the real world, from the movements of molecules in a gas to the behavior of a gambler spending a day at the casino.   For us, we begin this book studying a random walk with three goals in mind.</p>
-<a name="_the_random_walker_class"></a>
-<h2>The Random Walker Class</h2>
-<h2>Throughout the book, we’ll periodically need a basic understanding of randomness, probability, and Perlin noise.  The random walk will allow us to demonstrate a few key points that will come in handy later.</h2>
-Let’s review a bit of object-oriented programming (“OOP”) first by building a “Walker” object.   This will be only a cursory review.  If you have never worked with OOP before, you may want something more comprehensive; I’d suggest stopping here and reviewing the <a href="http://processing.org/learning/objects/">
-	basics on the Processing website
-</a>
- before continuing.<p>An <strong><em>object</em></strong> in Processing is an entity that has both data and functionality.  We are looking to design a Walker object that both keeps track of its data (where it exists on the screen) and has the capability to perform certain actions (such as draw itself or take a step).</p>
-<p>A <strong><em>class</em></strong> is the template for building actual instances of objects.  Think of a class as the cookie cutter; the objects are the cookies themselves.    Let’s begin by defining this template—what it means to be a Walker object.</p>
-<p>The Walker only needs two pieces of data—a number for its x-location and one for its y-location.</p>
-<pre>---
-class Walker {
-  // Objects have data.
-  int x;
-  int y;
----</pre><p>Every class must have a constructor, a special function that is called when the object is first created.  You can think of it as the object’s setup().   There, we’ll initialize the Walker’s starting location (in this case, the center of the window).</p>
-<pre>---
-  // Objects have a constructor where they are initialized.
-  Walker() {
-    x = width/2;
-    y = height/2;
-  }
----</pre><p>Finally, in addition to data, classes can be defined with functionality.  In this example, a Walker has two functions.   We first write a function to display itself (as a white dot).</p>
-<pre>---
-  // Objects have functions.
-  void display() {
-    stroke(255);
-    point(x,y);
-  }
----</pre><p>The second function directs the object to take a step.   Now, this is where things get a bit more interesting.   Remember that floor on which we were taking random steps?  Well, now we can use a Processing window in that same capacity.  There are four possible steps—a step to the right can be simulated by incrementing x ( x); to the left by decrementing x (x--); forward by going down a pixel (y); and backward by going up a pixel (y--).   How do we pick from these four choices?   Earlier we stated that we could flip two coins.  In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using random().</p>
-<pre>---
-  void step() {
-    // 0, 1, 2, or 3
-    int choice = int(random(4));
----</pre><p>The above line of code picks a random floating point number between 0 and 4 and converts it to an integer, resulting in 0, 1, 2, or 3.   Technically speaking, the highest number will never be 4.0, but rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an integer lops off the decimal place, the highest int we can get is 3.  Next, we take the appropriate step (left, right, up, or down) depending on which random number was picked.</p>
-<pre>---
-    // The random “choice” determines our step.
-    if (choice == 0) {
-      x++;
-    } else if (choice == 1) {
-      x--;
-    } else if (choice == 2) {
-      y++;
-    } else {
-      y--;
-    }
-  }
-}
----</pre><p>Now that we’ve written the class, it’s time to make an actual Walker object in the main part of our sketch—setup() and draw().   Assuming we are looking to model a single random walk, we declare one global variable of type Walker.</p>
-<pre>---
-// A Walker object
-Walker w;
----</pre><p>Then we create the object in setup() by calling the constructor with the new operator.</p>
-<p>====Example I.1: Traditional Random Walk</p>
-<pre>---
+</blockquote><p>This book is all about looking at the world around us and coming up with clever ways to simulate that world with code.  Divided into three parts, the book will start by looking at basic physics—how an apple falls from a tree, a pendulum swings in the air, the earth revolves around the sun, etc.  Absolutely everything contained within the first five chapters of this book requires the use of the most basic building block for programming motion—the <strong><em>vector</em></strong>.   And so this is where we begin our story.</p>
+<p>Now, the word <strong><em>vector</em></strong> can mean a lot of different things. Vector is the name of a new wave rock band formed in Sacramento, CA in the early 1980s.  It’s the name of a breakfast cereal manufactured by Kellogg’s Canada.   In the field of epidemiology, a vector is used to describe an organism that transmits infection from one host to another.  In the C++ programming language, a Vector (std::vector) is an implementation of a dynamically resizable array data structure.  While all these definitions are interesting, they’re not what we are looking for.   What we want is called a <strong>Euclidean vector</strong> (named for the Greek mathematician Euclid and also known as a geometric vector).  When you see the term “vector” in this book, you can assume it refers to a Euclidean vector defined as:</p>
+<p><strong><em>A vector is an entity that has both magnitude and direction.</em></strong></p>
+<p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
+<img src="imgs/chapter01_1-01.png" alt="imgs/chapter01_1-01.png" class="half-width" /><p><span class="notetoself">REDO THIS DIAGRAM NOW TO FIT NEW DEFINITION</span></p>
+<p>In the diagram above, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.</p>
+<a name="_1_1_vectors_you_complete_me"></a>
+<h2>1.1 Vectors, You Complete Me</h2>
+<p>Before we dive into more of the details about vectors, let’s look at a basic Processing example that demonstrates why we should care about vectors in the first place.  If you’ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you’ve done one of these things to help prepare you for this book), you probably, at one point or another, learned to how to write a simple bouncing ball sketch.</p>
+<img src="imgs/chapter01_2-01.png" alt="imgs/chapter01_2-01.png"  /><a name="_example_1_1_bouncing_ball_with_no_vectors"></a>
+<h3>Example 1.1: Bouncing ball with no vectors</h3><pre>// Variables for location and speed of ball.
+float x = 100;
+float y = 100;
+float xspeed = 1;
+float yspeed = 3.3;
+
+// Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
 void setup() {
-  size(640,360);
-  // Create the Walker.
-  *w = new Walker();*
-  background(0);
+  size(200,200);
+  smooth();
+  background(255);
 }
----</pre><p>Finally, during each cycle through draw(), we ask the Walker to take a step and draw a dot.</p>
-<pre>---
+
 void draw() {
-  // Call functions on the Walker.
-  *w.step();
-  w.display();*
-}
----</pre><p>Since we only draw the background once in setup() (rather than clearing it continually each time through draw()), we see the trail of the random walk in our Processing window.</p>
-<p>image:imgs/RandomWalkTraditional1.png [Random Walk Traditional, canvas=processingjs/RandomWalkTraditional1/RandomWalkTraditional1.pde,processingjs/RandomWalkTraditional1/Walker.pde]</p>
-<p>There are a couple improvements we could make to the random walker.  For one, this walker’s step choices are limited to four—up, down, left, and right.  But any given pixel in the window has eight possible neighbors, and a ninth possibility is to stay in the same place.</p>
-<p><img src="imgs/intro_1-01.png" alt="Figure I.1"  /></p>
-<p>To implement a walker that can step to any neighboring pixel (or stay put) we could then pick a number between zero and eight (nine possible choices).  However, a more efficient way to write the code would be to simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the y-axis.</p>
-<pre>---
-  void step() {
-    // Yields -1, 0, or 1
-    int stepx = int(random(3))-1;
-    int stepy = int(random(3))-1;
-    x += stepx;
-    y += stepy;
+  background(255);
+
+  // Move the ball according to its speed.
+  x = x + xspeed;
+  y = y + yspeed;
+
+  // Check for bouncing
+  if ((x > width) || (x < 0)) {
+    xspeed = xspeed * -1;
   }
----</pre><p>Taking this a step further, we could use floating point numbers (i.e. decimal numbers) for x and y instead and move according to an arbitrary random value between -1 and 1.</p>
-<pre>---
-  void step() {
-    float stepx = random(-1, 1);
-    float stepy = random(-1, 1);
-    x += stepx;
-    y += stepy;
+  if ((y > height) || (y < 0)) {
+    yspeed = yspeed * -1;
   }
----</pre><p>All of these variations on the “traditional” random walk have one thing in common: at any moment in time, the probability that the walker will take a step in a given direction is equal to the probability that the walker will take a step in any direction.   In other words, if there are four possible steps, there is a one in four (or 25%) chance the walker will take any given step.  With nine possible steps, it’s a one in nine (or 11.1%) chance.</p>
-<p>Conveniently, this is how the random() function works.  Processing’s random number generator (which operates behind the scenes) produces what is known as a “uniform” distribution of numbers.   We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
-<p>image:imgs/RandomDistributionSimple.png [Random Distribution, canvas=processingjs/RandomDistributionSimple/RandomDistributionSimple.pde]</p>
-<p>====Example I.2: Random number distribution</p>
-<pre>---
-// An array to keep track of how often random numbers are picked
-int[] randomCounts;</pre><p>void setup() {
-  size(640,240);
-  randomCounts = new int[20];
-}</p>
-<p>void draw() {
-  background(255);</p>
-// Pick a random number and increase the count.
-int index = int(random(randomCounts.length));
-randomCounts[index]++;  // Graphing the results
+
   stroke(0);
   fill(175);
-  int w = width/randomCounts.length;
-  for (int x = 0; x < randomCounts.length; x++) {
-    rect(x*w,height-randomCounts[x],w-1,randomCounts[x]);
+  // Display the ball at the location x,y.
+  ellipse(x,y,16,16);
+}</pre><p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.</p>
+*_LOCATION:_* *_x and y_*
+*_SPEED:_*    *_xspeed and yspeed_*<p>In a more advanced sketch, we could imagine having many more variables:</p>
+*_ACCELERATION:_*     *_xacceleration and yacceleration_*
+*_TARGET LOCATION:_*  *_xtarget and ytarget_*
+*_WIND:_*             *_xwind and ywind_*
+*_FRICTION:_*         *_xfriction and yfriction_*<p>It’s becoming more and more clear that for every concept in this world (wind, location, acceleration, etc.), we need two variables.  And this is only a two-dimensional world. In a 3D world, we’ll need <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>, <span class="var">xspeed</span>, <span class="var">yspeed</span>, <span class="var">zspeed</span>, and so on.</p>
+<p>Wouldn’t it be nice if we could simplify our code and use fewer variables?</p>
+<p>Instead of:</p>
+<pre>float x;
+float y;
+float xspeed;
+float yspeed;</pre><p>Wouldn’t it be nice to have. . .</p>
+<pre>Vector location;
+Vector speed;</pre><p>Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
+<p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use—[class]*PVector*—allows for three dimensions.)  However, for the time being, it’s easier to start with just two.</p>
+<a name="_1_2_vectors_what_are_they_to_us_processing_programmers"></a>
+<h2>1.2 Vectors: What are they to us Processing programmers?</h2>
+<p>One way to think of a vector is the difference between two points.   Consider how you might go about providing instructions to walk from one point to another.</p>
+<p>Here are some vectors and possible translations:</p>
+<img src="imgs/chapter01_3-01.png" alt="imgs/chapter01_3-01.png"  /><p>(  3, 5) —> Walk three steps east, turn and walk five steps north.
+(  2,-1) —> Walk two steps east, turn and walk one step south.
+(-15, 3) —> Walk fifteen steps west, turn and walk three steps north.</p>
+<p>You’ve probably done this before when programming motion.  For every frame of animation (i.e.  a single cycle through Processing’s <span class="function">draw()</span> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
+<img src="imgs/chapter01_4-01.png" alt="imgs/chapter01_4-01.png"  /><p>For every frame:</p>
+<p><strong><em>new location = velocity applied to current location</em></strong></p>
+<p>If velocity is a vector (the difference between two points), what is location?   Is it a vector too?  Technically, one might argue that location is not a vector, since it’s not describing how to move from one point to another—it’s simply describing a singular point in space.  And so conceptually, we think of a location as different.</p>
+<img src="imgs/chapter01_5-01.png" alt="imgs/chapter01_5-01.png"  /><img src="imgs/chapter01_6-01.png" alt="imgs/chapter01_6-01.png"  /><p><span class="note to self">CONSIDER COMBINING / INTEGRATING THIS DIAGRAM WITH PREVIOUS ONE BETTER</span></p>
+<p>Nevertheless, another way to describe a location is the path taken from the origin to reach that location. Hence, a location can be the vector representing the difference between location and origin.</p>
+<p>Let’s examine the underlying data for both location and velocity.  In the bouncing ball example we had the following:</p>
+<p>location —> <span class="var">x</span>,<span class="var">y
+velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
+<p>Notice how we are storing the _same data for both_—two floating point numbers, an x and a y. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
+<pre>class PVector {
+
+  float x;
+  float y;
+
+  PVector(float x_, float y_) {
+    x = x_;
+    y = y_;
   }
+
+}</pre><p>At its core, a <span class="class">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
+<p>And so this. . .</p>
+<pre>float x = 100;
+float y = 100;
+float xspeed = 1;
+float yspeed = 3.3;</pre><ol class="arabic">
+	
+		<li><p>
+. . becomes . . .
+</p>
+</li>
+	
+</ol><pre>PVector location = new PVector(100,100);
+PVector velocity = new PVector(1,3.3);</pre><p>Now that we have two vector objects (“location” and “velocity”), we’re ready to implement the algorithm for motion—location = location + velocity.   In Example 1.1, without vectors, we had:</p>
+<pre>// Add each speed to each location.
+x = x + xspeed;
+y = y + yspeed;</pre><p>In an ideal world, we would be able to rewrite the above as:</p>
+<pre>// Add the velocity vector to the location vector.
+[line-through]*location = location + velocity;*</pre><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
+<a name="_1_3_vector_addition"></a>
+<h2>1.3 Vector Addition</h2>
+<p>Before we continue looking at the <span class="class">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks</p>
+<p>Vectors are typically written either in boldface type or with an arrow on top.  For the purposes of this book, to distinguish a <strong><em>vector</em></strong> from a <strong>scalar</strong> (scalar refers to a single value, such as an integer or a floating point number), we’ll use the arrow notation:</p>
+<p>Vector: <span class="vector">u*￼
+Scalar: [var]*x</span></p>
+<p>Let’s say I have the following two vectors:</p>
+<img src="imgs/chapter01_7-01.png" alt="imgs/chapter01_7-01.png"  /><p>Each vector has two components, an x and a y.  To add two vectors together we simply add both x’s and both y’s.  In other words:</p>
+[vector]*w* = Vector: [vector]*u* + Vector: [vector]*v*<p>translates to:</p>
+[vector]*w*~x~ = [var]*u~x~* + [var]*v~x~*
+[vector]*w*~y~ = [var]*u~y~* + [var]*v~y~*<p>and therefore:</p>
+[vector]*w*~x~ =  5 + 3
+[vector]*w*~y~ =  2 + 4<p>and therefore:</p>
+[vector]*w* =  (8,6)<img src="imgs/chapter01_8-01.png" alt="imgs/chapter01_8-01.png"  /><p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="class">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="class">PVector</span> object.</p>
+<pre>class PVector {
+
+  float x;
+  float y;
+
+  PVector(float x_, float y_) {
+    x = x_;
+    y = y_;
+  }
+
+  *// New!  A function to add another PVector to this PVector.  Simply add the x components and the y components together.
+  void add(PVector v) {
+    x = x + v.x;
+    y = y + v.y;
+  }*
+}</pre><p>Now that we see how <span class="function">add()</span> is written inside of <span class="class">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
+<pre>// Add the current velocity to the location.
+[line-through]*location = location + velocity;*
+location.add(velocity);</pre><p>And here we are, ready to rewrite the bouncing ball example using <span class="class">PVector</span>.</p>
+<a name="_example_1_2_bouncing_ball_with_pvector"></a>
+<h3>Example 1.2: Bouncing ball with PVector!</h3><pre>// Instead of a bunch of floats, we now just have two PVector variables.
+*_PVector location;_*
+*_PVector velocity;_*
+
+void setup() {
+  size(200,200);
+  smooth();
+  *_location = new PVector(100,100);_*
+  *_velocity = new PVector(2.5,5);_*
 }
----<p>The above screenshot shows the result of the sketch running for a few minutes.   Notice how each bar of the graph differs in height.   Our sample size (i.e. the number of random numbers we’ve picked) is rather small and there are some random discrepancies, where certain numbers are picked more often.  Over time, with a good random number generator, this would even out.</p>
-<div class="example">
-	<h2>Pseudo-Random Numbers</h2>
-<p>The random numbers we get from the random() function are not truly random and are therefore known as “pseudo-random.”  They are the result of a mathematical function that simulates randomness.  This function would yield a pattern over time, but that time period is so long that for us, it’s just as good as pure randomness!</p>
+
+void draw() {
+  background(255);
+
+  *_location.add(velocity);
+
+  // We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
+  if ((location.x > width) || (location.x < 0)) {
+    velocity.x = velocity.x * -1;
+  }
+  if ((location.y > height) || (location.y < 0)) {
+    velocity.y = velocity.y * -1;
+  }_*
+
+  stroke(0);
+  fill(175);
+  *_ellipse(location.x,location.y,16,16);_*
+}</pre><p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="class">PVector</span> will become more apparent.</p>
+<p>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <span class="class">PVector</span> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <span class="class">PVector</span> individually.  When we go to draw an object in Processing, there’s no means for us to say:</p>
+<pre>[line-through]*ellipse(location,16,16);*</pre><p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
+<pre>ellipse(location.x,location.y,16,16);</pre><p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: location and velocity.</p>
+<pre>if ((location.x > width) || (location.x < 0)) {
+  velocity.x = velocity.x * -1;
+}</pre><div class="example">
+	<h3>Exercise 1.1</h3><p>Find something you’ve previously made in Processing using separate <span class="var">x</span> and <span class="var">y</span> variables and use PVectors instead.</p>
 
 </div><div class="example">
-	<h2>Exercise I.1</h2>
-<p>Create a random walker that has a tendency to move down and to the right.  (We’ll see the solution to this in the next section.)</p>
+	<h3>Exercise 1.2</h3><p>Take any of the walker examples from the introduction and convert it to use PVectors.</p>
 
-</div><a name="_probability_and_non_uniform_distributions"></a>
-<h2>Probability and Non-Uniform Distributions</h2>
-<p>Remember when you first started programming in Processing?  Perhaps you wanted to draw a lot of circles on the screen.  So you said to yourself: “Oh, I know.  I’ll draw all these circles at random locations, with random sizes, and random colors.”   In a computer graphics system, it’s often easiest to seed a system with randomness.   In this book, however, we’re looking to build systems modeled on what we see in nature.  Defaulting to randomness is not a particularly thoughtful solution to a design problem—in particular, the kind of problems that involve creating an organic or natural-looking simulation.</p>
-<p>With a few tricks, we can change the way we use random() to produce “non-uniform” distributions of random numbers.    This will come in handy throughout the book as we look at a number of different scenarios.    When we examine genetic algorithms, for example, we’ll need a methodology for performing “selection”—which members of our population should be selected to pass their DNA down to the next generation.   Remember the concept of survival of the fittest?    Let’s say we have a population of monkeys evolving.  Not every monkey will have a equal chance of reproducing.  To simulate Darwinian evolution, we can’t simply pick two random monkeys to be parents.  We need the more “fit” ones to be more likely to be chosen.  We need to define the “probability of the fittest.”   For example, a particularly fast and strong monkey might have a 90% chance of procreating, while a weaker one has only a 10% chance.</p>
-<p>Let’s review the basic principles of probability, first looking at “Single Event Probability,” i.e. the likelihood of something to occur.</p>
-<p>Given a system with a certain number of possible outcomes, the probability of any given event occurring is the number of outcomes that qualify as that event divided by the total number of possible outcomes. The simplest example is a coin toss. There are a total of two possible outcomes (heads or tails). There is only one way to flip heads. Therefore, the probability of heads is one divided by two, i.e. 1/2 or 50%.</p>
-<p>Consider a deck of fifty-two cards. The probability of drawing an ace from that deck is:</p>
-<p><em>*number of aces / number of cards = 4 / 52 = 0.077 = ~ 8%*</em></p>
-<p>The probability of drawing a diamond is:</p>
-<p><em>*number of diamonds / number of cards = 13 / 52 = 0.25 = 25%*</em></p>
-<p>We can also calculate the probability of multiple events occurring in sequence as the product of the individual probabilities of each event.</p>
-<p>The probability of a coin coming up heads three times in a row is:</p>
-<p><em>*(1 / 2) * (1 / 2) * (1 / 2) =  1 / 8 (or 0.125).*</em></p>
-<p>In other words, a coin will land heads three times in a row one out of eight times (with each “time” being three tosses).</p>
-<div class="example">
-	<h2>Exercise I.2</h2>
-<p>What is the probability of drawing two aces in a row from the deck of cards?</p>
+</div><div class="example">
+	<h3>Exercise 1.3</h3><p>Extend the bouncing ball with vectors example into 3D.  Can you get a sphere to bounce around a box?</p>
 
-</div><p>There are a few different techniques for using the random() function with probability in code. For example, if we fill an array with a selection of numbers (some repeated), we can randomly pick from that array and generate events based on what we select.</p>
-<pre>---
-int[] stuff = new int[5]
-// 1 is stored in the array twice to increase its likelihood of being picked.
-stuff[0] = 1;
-stuff[1] = 1;
-stuff[2] = 2;
-stuff[3] = 3;
-stuff[4] = 3;
-// Picking a random element from an array
-int index = int(random(stuff.length));
----</pre><p>If you run this code, there will be a 40% chance of printing the value 1, a 20% chance of printing 2, and a 40% chance of printing 3.</p>
-<p>Another strategy is to ask for a random number (for simplicity, we’ll consider random floating point values between 0 and 1) and allow an event to occur only if the random number we pick is within a certain range.  For example:</p>
-<pre>---
-// A probability of 10%
-float prob = 0.10;
-// A random floating point value between 0 and 1
-float r = random(1);
-// If our random number is less than 0.1
-if (r < prob) {
-   // DO SOMETHING!
-}
----</pre><p>This same technique can also be applied to multiple outcomes.</p>
-<p><em>*Outcome A — 60% | Outcome B — 10% | Outcome C — 30%*</em></p>
-<p>To implement this in code, we pick one random float and check where it falls.</p>
+</div><a name="_1_4_more_vector_math"></a>
+<h2>1.4 More Vector Math</h2>
+<p>Addition was really just the first step.   There are many mathematical operations that are commonly used with vectors.   Below is a comprehensive list of the operations available as functions in the <span class="class">PVector</span> class.  We’ll go through a few of the key ones now.  As our examples get more and more sophisticated in later chapters, we’ll continue to reveal the details of more functions.</p>
 <ul>
 	
-		<li><p><em>between 0.00 and 0.60 (60%) –> outcome A</em></p>
+		<li><p>
+[function]*add()*—add vectors
+</p>
 </li>
 	
-		<li><p><em>between 0.60 and 0.70 (10%) –> outcome B</em></p>
+		<li><p>
+[function]*sub()*—subtract vectors
+</p>
 </li>
 	
-		<li><p><em>between 0.70 and 1.00 (30%) –> outcome C</em></p>
+		<li><p>
+[function]*mult()*—scale the vector with multiplication
+</p>
 </li>
 	
-</ul><pre>---
-float num = random(1);</pre><p>if (num < 0.6) {
-  // Outcome A
-
-} else if (num < 0.7) {
-  // Outcome B
-
-} else {
-  // Outcome C
+		<li><p>
+[function]*div()*—scale the vector with division
+</p>
+</li>
+	
+		<li><p>
+[function]*mag()*—calculate the magnitude of a vector
+</p>
+</li>
+	
+		<li><p>
+[function]*normalize()*—normalize the vector to unit length of 1
+</p>
+</li>
+	
+		<li><p>
+[function]*limit()*—limit the magnitude of a vector
+</p>
+</li>
+	
+		<li><p>
+[function]*heading2D()*—the heading of a vector expressed as an angle
+</p>
+</li>
+	
+		<li><p>
+[function]*rotate()*—rotate a 2D vector by an angle
+</p>
+</li>
+	
+		<li><p>
+[function]*dist()*—the Euclidean distance between two vectors (considered as points)
+</p>
+</li>
+	
+		<li><p>
+[function]*angleBetween()*—find the angle between two vectors
+</p>
+</li>
+	
+		<li><p>
+[function]*dot()*—the dot product of two vectors
+</p>
+</li>
+	
+		<li><p>
+[function]*cross()*—the cross product of two vectors (only relevant in three dimensions)
+</p>
+</li>
+	
+		<li><p><span class="note to self">[CHECK WHAT NEW ONES I’M ADDING IN 2.0]</span></p>
+</li>
+	
+</ul><p>Having already covered addition, let’s start with subtraction.  This one’s not so bad; just take the plus sign and replace it with a minus!</p>
+<p><strong><em>Vector subtraction:</em></strong><span class="vector">w</span>=<span class="vector">u</span> - <span class="vector">v</span></p>
+<p>translates to:    <span class="vector">w</span><sub>x</sub> = u<sub>x</sub> - v<sub>x</sub>
+                  <span class="vector">w</span><sub>y</sub> = u<sub>y</sub> - v<sub>y</sub></p>
+<p>and the function inside <span class="class">PVector</span> therefore looks like:</p>
+<pre>void sub(PVector v) {
+    x = x - v.x;
+    y = y - v.y;
+  }</pre><img src="imgs/chapter01_9-01.png" alt="imgs/chapter01_9-01.png"  /><img src="imgs/chapter01_10-01.png" alt="imgs/chapter01_10-01.png"  /><p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
+<a name="_example_1_3_vector_subtraction"></a>
+<h3>Example 1-3: Vector subtraction</h3><pre>void setup() {
+  size(200,200);
+  smooth();
 }
----</p>
-<p>We could use the above methodology to create a random walker that tends to move to the right.  Here is an example of a Walker with the following probabilities:</p>
+
+void draw() {
+  background(255);
+
+  // Two PVectors, one for the mouse location and one for the center of the window.
+  PVector mouse  = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+
+  // PVector subtraction!
+  mouse.sub(center);
+
+  // Draw a line to represent the vector.
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
+
+}</pre><div class="example">
+	<h3>No Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
+<p><strong><em>The commutative rule:</em></strong><span class="vector">u</span> + <span class="vector">v*￼ = [vector]*v</span> + [vector]*u*￼</p>
+<p><strong><em>The associative rule:</em></strong> ￼[vector]<strong>u</strong> + (<span class="vector">v</span> + <span class="vector">w</span>)  = (￼[vector]<strong>u</strong> + <span class="vector">v</span>) + [vector]*w*￼</p>
+<p>Fancy terminology and symbols aside, this is really quite a simple concept.  We’re just saying that common sense properties of addition apply to vectors as well.</p>
+*_3 + 2 = 2 + 3_**_(3 + 2) + 1 = 3 + (2 + 1)_*
+</div><p>Moving on to multiplication, we have to think a little bit differently.  When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector.  In the case that we want to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: “Multiply the vector by 2” or “Multiply the vector by 1/3.”   Note we are multiplying a vector by a scalar, a single number, not another vector.</p>
+<p>To scale a vector, we multiply each component (x and y) by a scalar.</p>
+<p><strong><em>Vector multiplication:</em></strong><span class="vector">w</span> = <span class="vector">u</span> * n</p>
+<p>translates to:    w<sub>x</sub> = u<sub>x</sub> * n
+                  w<sub>y</sub> = u<sub>y</sub> * n</p>
+<p>Let’s look at an example with vector notation.</p>
+[vector]*u* = (-3,7)
+n = 3[vector]*w* = [vector]*u* * n
+w~x~ = -3 * 3
+w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class">PVector</span> class therefore is written as:</p>
+<pre>// With multiplication, the components of the vector are multiplied by a number.
+void mult(float n) {
+   x = x * n;
+   y = y * n;
+ }</pre><p>And implementing multiplication in code is as simple as:</p>
+<pre>// This PVector is now three times the size and is equal to (-9,21).
+PVector u = new PVector(-3,7);
+u.mult(3);</pre><img src="imgs/chapter01_11-01.png" alt="imgs/chapter01_11-01.png"  /><a name="_example_1_4_multiplying_a_vector"></a>
+<h3>Example 1-4: Multiplying a vector</h3><pre>void setup() {
+  size(200,200);
+  smooth();
+}
+
+void draw() {
+  background(255);
+
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
+
+  // Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
+  mouse.mult(0.5);
+
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
+
+}</pre><img src="imgs/chapter01_12-01.png" alt="imgs/chapter01_12-01.png"  /><p>Division works just like multiplication—we simply replace the multiplication sign (asterisk) with the division one (forward slash).</p>
+<pre>void div(float n) {
+  x = x / n;
+  y = y / n;
+}
+
+PVector u = new PVector(8,-4);
+u.div(2);</pre><img src="imgs/chapter01_13-01.png" alt="imgs/chapter01_13-01.png"  /><p>.</p>
+<p>As with addition, basic algebraic rules of multiplication and division apply to vectors.</p>
+<p>The associative rule:   (<span class="var">n</span> * <span class="var">m</span>) <strong>￼[vector]*v</strong> = <span class="var">n</span> * (<span class="var">m</span> <strong>￼[vector]*v</strong>)
+The distributive rule with 2 scalars, 1 vector:   (<span class="var">n</span> * <span class="var">m</span>) <strong>￼[vector]*v</strong> = <span class="var">n</span> * <span class="vector">v</span> + <span class="var">m</span> <strong>￼[vector]*v</strong>
+The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [vector]*v</span>) * <span class="var">n</span> = <span class="var">n</span> * <span class="vector">u</span> + <span class="var">n</span> * [vector]*v*￼</p>
+<a name="_1_5_vector_magnitude"></a>
+<h2>1.5 Vector Magnitude</h2>
+<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction.  Perhaps you’re wondering: “OK, so how do I know what the length of a vector is?  I know the components (<span class="var">x</span> and <span class="var">y</span>), but how long (in pixels) is the actual arrow?!”</p>
+<img src="imgs/chapter01_14-01.png" alt="imgs/chapter01_14-01.png"  /><p>.</p>
+<p>The length or “magnitude” of a vector <span class="vector">v</span> is often written as: ||￼[vector]<strong>v</strong> ||</p>
+<p>Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
+<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<span class="var">x</span> and <span class="var">y</span>), creates a right triangle.  The sides are the components and the hypotenuse is the arrow itself.   We’re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
+<img src="imgs/chapter01_15-01.png" alt="imgs/chapter01_15-01.png"  /><p>The Pythagorean theorem: <span class="var">a</span> squared plus <span class="var">b</span> squared equals <span class="var">c</span> squared.</p>
+<p>Armed with this formula, we can now compute the magnitude of <span class="vector">v</span> as follows:</p>
 <ul>
 	
 		<li><p>
-chance of moving up:          20%
+|| <span class="vector">v</span> || = <strong><em>sqrt (v<sub>x</sub> * v<sub>x</sub> + v<sub>y</sub> * v<sub>y</sub>)</em></strong>
 </p>
 </li>
 	
-		<li><p>
-chance of moving down:        20%
+</ul><p>or in <span class="class">PVector</span>:</p>
+<pre>float mag() {
+  return sqrt(x*x + y*y);
+}</pre><a name="_example_1_5_vector_magnitude"></a>
+<h3>Example 1-5: Vector magnitude</h3><img src="imgs/chapter01_15-01.png" alt="imgs/chapter01_15-01.png"  /><pre>void setup() {
+  size(200,200);
+  smooth();
+}
+
+void draw() {
+  background(255);
+
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
+
+  // The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
+  float m = mouse.mag();
+  fill(0);
+  rect(0,0,m,10);
+
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
+
+}</pre><a name="_1_6_normalizing_vectors"></a>
+<h2>1.6 Normalizing Vectors</h2>
+<p>Calculating the magnitude of a vector is only the beginning.  The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>.  Normalizing refers to the process of making something “standard” or, well, “normal.”  In the case of vectors, let’s assume for the moment that a standard vector has a length of one.  To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to one, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
+<img src="imgs/chapter01_17-01.png" alt="imgs/chapter01_17-01.png"  /><p>The ability to quickly access the unit vector is useful since it describes a vector’s direction without regard to length, and we’ll see this come in handy once we start to work with forces in Chapter 2.</p>
+<p>For any given vector <span class="vector">u</span>, its unit vector (written as û) is calculated as follows:</p>
+<ul>
+	
+		<li><p><strong><em>var]*û*</em></strong> = <span class="vector">u</span> / || [vector]*u*￼||
 </p>
 </li>
 	
-		<li><p>
-chance of moving left:        20%
-</p>
+</ul><p>In other words, to normalize a vector, simply divide each component by its magnitude.  This is pretty intuitive.  Say a vector is of length 5.  Well, 5 divided by 5 is 1.  So looking at our right triangle, we then need to scale the hypotenuse down by dividing by 5.   In that process the sides shrink, divided by 5 as well.</p>
+<img src="imgs/chapter01_18-01.png" alt="imgs/chapter01_18-01.png"  /><p>In the PVector class, we therefore write our normalization function as follows:</p>
+<pre>void normalize() {
+  float m = mag();
+  div(m);
+}</pre><p>Of course, there’s one small issue.  What if the magnitude of the vector is zero?  We can’t divide by zero!   Some quick error checking will fix that right up:</p>
+<pre>void normalize() {
+ float m = mag();
+ if (m != 0) {
+   div(m);
+ }
+}</pre><img src="imgs/chapter01_19-01.png" alt="imgs/chapter01_19-01.png"  /><a name="_example_1_6_normalizing_a_vector"></a>
+<h3>Example 1-6: Normalizing a vector</h3><pre>void draw() {
+  background(255);
+
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
+
+  // In this example, after the vector is normalized it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
+  mouse.normalize();
+  mouse.mult(50);
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
+
+}</pre><a name="_1_7_vector_motion_velocity"></a>
+<h2>1.7 Vector Motion: Velocity</h2>
+<p>Why should we care?  Yes, all this vector math stuff sounds like something we should know about, but why exactly?  How will it actually help us write code?   The truth of the matter is that we need to have some patience.  The awesomeness of using the <span class="class">PVector</span> class will take some time to fully come to light.  This is actually quite common when first learning a new data structure.   For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things.   But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things.  The same can be true for <span class="class">PVector</span>.  What might seem like more work now will pay off later, and pay off quite nicely.  And you don’t have to wait too long, as your reward will come in the next chapter.</p>
+<p>For now, however, we want to focus on simplicity.  What does it mean to program motion using vectors?   We’ve seen the beginning of this in Example 1.2 <strong><em>[REF]</em></strong>: the bouncing ball.   An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next).   Velocity is added to location:</p>
+<pre>location.add(velocity);</pre><p>And then we draw the object at that location:</p>
+<pre>ellipse(location.x,location.y,16,16);</pre><p>This is Motion 101.</p>
+<ol class="arabic">
+	
+		<li><p><strong><em>Add velocity to location</em></strong></p>
 </li>
 	
-		<li><p>
-chance of moving right:       40%
-</p>
+		<li><p><strong><em>Draw object at location</em></strong></p>
 </li>
 	
-</ul><p>image:imgs/RandomWalkTendsToRight.png [Random Walk Tends to Right, canvas=processingjs/RandomWalkTendsToRight/RandomWalkTendsToRight.pde,processingjs/RandomWalkTendsToRight/Walker.pde]</p>
-<p>====Example I.3: Walker that tends to move to the right</p>
-<pre>---
-  void step() {</pre>    float r = random(1);
-    // A 40% of moving to the right!
-    if (r < 0.4) {
-      x++;
-    } else if (r < 0.6) {
-      x--;
-    } else if (r < 0.8) {
-      y++;
-    } else {
-      y--;
+</ol><p>In the bouncing ball example, all of this code happened in Processing’s main tab, within <span class="function">setup()</span> and <span class="function">draw()</span>.   What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing.    In <strong><em>[REF]</em></strong> Section  section I.2 of the introduction, “The Random Walker Class,” we briefly reviewed the basics of object-oriented-programming (“OOP”).   Beyond that short introduction, this book assumes experience with objects and classes in Processing.   If you need a refresher, I encourage you to check out the online OOP Processing tutorial: <a href="http://processing.org/learning/tutorials/objects/">
+	Processing objects tutorial
+</a>
+.</p>
+<p>In this case, we’re going to create a generic <em>Mover</em> class, a class to describe a thing moving around the screen.  And so we must consider the following two questions:</p>
+<ol class="arabic">
+	
+		<li><p><strong><em>What data does a Mover have?</em></strong></p>
+</li>
+	
+		<li><p><strong><em>What functionality does a Mover have?</em></strong></p>
+</li>
+	
+</ol><p>Our “Motion 101” algorithm tells us the answers to these questions.  A Mover object has two pieces of data: location and velocity, two PVector objects.</p>
+<pre>class Mover {
+
+  PVector location;
+  PVector velocity;</pre><p>Its functionality is just about as simple.  The Mover needs to move and it needs to be seen.  We’ll implement these as functions named <span class="function">update()</span> and <span class="function">display()</span>.  <span class="function">update()</span> is where we’ll put all of our motion logic code and <span class="function">display()</span> is where we will draw the object.</p>
+<pre>  void update() {
+    // The Mover moves.
+    location.add(velocity);
+  }
+
+  void display() {
+    stroke(0);
+    fill(175);
+    // The Mover is displayed.
+    ellipse(location.x,location.y,16,16);
+  }
+
+}</pre><p>We’ve forgotten one crucial item, however: the object’s <strong><em>constructor</em></strong>.  The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object.  It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator: “Mover <span class="var">m</span> = new <span class="function">Mover( );</span> ”.</p>
+<p>In our case, let’s arbitrarily decide to initialize our mover object by giving it a random location and a random velocity.</p>
+<pre>  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(random(-2,2),random(-2,2));
+  }</pre><p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="class">PVector</span> class.  The <span class="class">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
+<p>Let’s finish off the Mover class by incorporating a function to determine what the object should do when it reaches the edge of the window.  For now let’s do something simple, and just have it wrap around the edges.</p>
+<pre>  void checkEdges() {
+
+    // When it reaches one edge, set location to the other.
+    if (location.x > width) {
+      location.x = 0;
+    } else if (location.x < 0) {
+      location.x = width;
+    }
+
+    if (location.y > height) {
+      location.y = 0;
+    } else if (location.y < 0) {
+      location.y = height;
+    }
+
+  }</pre><p>Now that the Mover class is finished, we can look at what we need to do in our main program.  We first declare a Mover object:</p>
+<pre>Mover mover;</pre><p>Then initialize the mover in <span class="function">setup()</span>:</p>
+<pre>mover = new Mover();</pre><p>and call the appropriate functions in <span class="function">draw()</span>:</p>
+<pre>mover.update();
+mover.checkEdges();
+mover.display();</pre><p>Here is the entire example for reference:</p>
+<img src="imgs/chapter01_20-01.png" alt="imgs/chapter01_20-01.png"  /><a name="_example_1_7_motion_101_velocity"></a>
+<h3>Example 1.7: Motion 101 (velocity)</h3><pre>Mover mover;      // Declare Mover object.
+
+void setup() {
+  size(200,200);
+  smooth();
+  background(255);
+  mover = new Mover();  // Create Mover object.
+}
+
+void draw() {
+  background(255);
+
+  mover.update();   // Call functions on Mover object.
+  mover.checkEdges();
+  mover.display();
+}
+
+class Mover {
+
+  PVector location;   // Our object has two PVectors: location and velocity.
+  PVector velocity;
+
+  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(random(-2,2),random(-2,2));
+  }
+
+  void update() {
+    location.add(velocity); // Motion 101: Location changes by velocity.
+  }
+
+  void display() {
+    stroke(0);
+    fill(175);
+    ellipse(location.x,location.y,16,16);
+  }
+
+  void checkEdges() {
+    if (location.x > width) {
+      location.x = 0;
+    } else if (location.x < 0) {
+      location.x = width;
+    }
+
+    if (location.y > height) {
+      location.y = 0;
+    } else if (location.y < 0) {
+      location.y = height;
     }
   }
----<div class="example">
-	<h2>Exercise I.3</h2>
-<p>Create a random walker with dynamic probabilities.  For example, can you give it a 50% chance of moving in the direction of the mouse?</p>
+}</pre><a name="_1_8_vector_motion_acceleration"></a>
+<h2>1.8 Vector Motion: Acceleration</h2>
+<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="class">PVector</span> is and (2) how we use <strong><em>PVectors</em></strong> inside of an object to keep track of its location and movement.  This is an excellent first step and deserves a mild round of applause.   Before standing ovations and screaming fans, however, we need to make one more, somewhat larger, step forward.   After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns.  For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="class">PVector</span> to our class—<strong><em>acceleration</em></strong>.</p>
+<p>The strict definition of acceleration we’re using here is: the rate of <em>change of velocity</em>.  Let’s think about that definition for a moment.  Is this a new concept?  Not really.  Velocity is defined as <em>the rate of change of location</em>.  In essence, we are developing a “trickle down” effect.  Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter when we see how forces affect acceleration, which affects velocity, which affects location.)  In code, this reads:</p>
+<pre>velocity.add(acceleration);
+location.add(velocity);</pre><p>As an exercise, from this point forward, let’s make a rule for ourselves.  Let’s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them).  In other words, our goal now for programming motion is as follows—come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic.   (In truth, you’ll find reasons to break this rule, but it’s important to illustrate the principles behind our motion algorithm.)  And so we need to come up with some ways to calculate acceleration:</p>
+<p>*ACCELERATION ALGORITHMS!</p>
+<p>1) A constant acceleration
+2) A totally random acceleration
+3) Acceleration towards the mouse*</p>
+<p>Algorithm #1, a constant acceleration, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code.   The first thing we need to do is add another <span class="class">PVector</span> to the Mover class:</p>
+<pre>class Mover {
 
-</div><a name="_a_normal_distribution_of_random_numbers"></a>
-<h2>A Normal Distribution of Random Numbers</h2>
-<p>Let’s go back to that population of simulated Processing monkeys.  Your program generates a thousand “Monkey” objects, each with a “height” value between 200 and 300 (as his is a world of monkeys that have heights between 200 and 300 pixels).</p>
-<pre>---
-float h = random(200,300);
----</pre><p>Does this accurately depict the heights of real-world beings?   Think of a crowded sidewalk in New York City.   Pick any person off the street and it may appear that their height is random.  Nevertheless, it’s not the kind of random that the random() produces.   People’s heights are not uniformly distributed; there are a great deal more people of average height than there are very tall or very short ones.   To simulate nature, we may want it to be more likely that our monkeys are of average height (250 pixels), yet allow them to still on occasion be very short or very tall.</p>
-<p>A distribution of values that cluster around an average (referred to as the “mean”) is known as a “normal” distribution.   It is also called the Gaussian distribution (named for mathematician Carl Friedrich Gauss) or, if you are French, the Laplacian distribution (named for Pierre-Simon Laplace).  Both mathematicians were working concurrently in the early nineteenth century on defining such a distribution.</p>
-<p>When you graph the distribution, you get something that looks like the following, informally known as the bell curve.</p>
-<p>image:imgs/BellCurve.png</p>
-<p>The curve is generated by a mathematical function that defines the probability of any given value occurring as a function of the mean (often written as μ, the Greek letter <em>mu</em>) and standard deviation (σ, the Greek letter <em>sigma</em>).</p>
-<p>The mean is pretty easy to understand.  In the case of our height values between 200 and 300, you probably have an intuitive sense of the mean (i.e. average) as 250.    However, what if I were to say that the standard deviation is 3 or 15?   What does this mean for the numbers?  The graphs above should give us a hint. The graph on the left shows us the distribution with a very low standard deviation, where the majority of the values cluster closely around the mean.  The graph on the right shows us a higher standard deviation, where the values are more evenly spread out from the average.
- The numbers work out as follows.  Given a population, 68% of the members of that population will have values in the range of one standard deviation from the mean, 98% within two standard deviations, and 99.7% within three standard deviations.   Given a standard deviation of five pixels, only 0.3% of the monkey heights will be less than 235 pixels (three standard deviations below the mean of 250) or greater than 265 pixels (three standard deviations above the mean of 250).</p>
+  PVector location;
+  PVector velocity;
+  // A new PVector for acceleration
+  PVector acceleration;</pre><p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
+<pre> void update() {
+    // Our motion algorithm is now two lines of code!
+    velocity.add(acceleration);
+    location.add(velocity);
+  }</pre><p>We’re almost done.  The only missing piece is initialization in the constructor.</p>
+<pre> Mover() {</pre><p>Let’s start the mover object in the middle of the window. . .</p>
+<pre> location = new PVector(width/2,height/2);</pre><ol class="arabic">
+	
+		<li><p>
+. . with an initial velocity of zero.
+</p>
+</li>
+	
+</ol><pre> velocity = new PVector(0,0);</pre><p>This means that when the sketch starts, the object is at rest.  We don’t have to worry about velocity anymore as we are controlling the object’s motion entirely with acceleration.  Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration.  So let’s pick a value.</p>
+<pre>    acceleration = new PVector(-0.001,0.01);
+  }</pre><p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="class">PVector</span> function <span class="function">limit()</span>.</p>
+<pre>// The limit() function constrains the magnitude of a vector.
+velocity.limit(10);</pre><p>This translates to the following:</p>
+<p><em>What is the magnitude of velocity?  If it’s less than 10, no worries; just leave it as is.  If it’s more than 10, however, reduce it to 10!</em></p>
 <div class="example">
-	<h2>Calculating Mean and Standard Deviation</h2>
-<p>Consider a class of ten students who receive the following scores (out of 100) on a test:</p>
-<p><em>85, 82, 88, 86, 85, 93, 98, 40, 73, 83</em></p>
-<p><strong><em>The mean is the average:  81.3</em></strong></p>
-<p>The standard deviation is calculated as the square root of the average of the squares of deviations around the mean. In other words, take the difference from the mean for each person and square it (variance). Calculate the average of all these values and take the square root as our standard deviation.</p>
-Score  Difference from Mean Variance<p></p>
-<p><strong>Average Variance:</strong></p>
-<p>254.23</p>
-<p>85</p>
-<p>85-81.3 = 3.7</p>
-<p>(3.7)<sup>2</sup> = 13.69</p>
-<p>40</p>
-<p>40-81.3 = -41.3</p>
-<p>(-41.3)<sup>2</sup> = 1705.69</p>
-<p>etc.</p>
-<p></p>
-<p></p>
-<p><strong><em>The standard deviation is the square root of the average variance = 15.13</em></strong></p>
+	<h2>Exercise 1-4</h2>
+<p>Write the <span class="function">limit()</span> function for the PVector class.</p>
+<p>void limit(float max) {
+    if (<em><em></em>_</em> > <em><em></em>_</em>) {
+      <em><em></em></em><em><em>();
+      </em>_</em>(max);
+    }
+  }</p>
 
-</div><p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don’t have to do any of these calculations ourselves.   Instead, we can make use of a class known as Random, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">
-	http://docs.oracle.com/javase/6/docs/api/java/util/Random.html
-</a>
- for more information).</p>
-<p>To use the Random class, we must first declare a variable of type Random and create the Random object in setup().</p>
-<pre>---
-// We use the variable name “generator” as what we
-// have here can be thought of as a random number generator.
-Random generator;</pre><p>void setup() {
-  size(640,360);
-  generator = new Random();
-}
----</p>
-<p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through draw(), it’s as easy as calling the function nextGaussian().</p>
-<pre>---
-void draw() {
-  // Asking for a Gaussian random number
-  float num = generator.nextGaussian();
-}
----</pre><p>Here’s the thing.  What are we supposed to do with this value?  What if we wanted to use it, for example, to assign the x-position of a shape we draw on screen?</p>
-<p>The nextGaussian() function returns a normal distribution of random numbers with the following parameters: <strong><em>a mean of zero</em></strong> and <strong><em>a standard deviation of one</em></strong>.    Let’s say we want a mean of 360 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels.   We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
-<p>====Example I.3: Gaussian distribution</p>
-<pre>---
-void draw() {
-  // Note nextGaussian() returns a double.
-  float num = (float) generator.nextGaussian();
-  float sd = 60;
-  float mean = 360;</pre>// Multiply by standard deviation and add the mean.
-float x = sd*num + mean;  noStroke();
-  fill(255,10);
-  ellipse(x,180,16,16);
-}
----<p>image:imgs/Gaussian1.png [Gaussian Distribution, canvas=processingjs/Gaussian1/Gaussian1.pde]</p>
-<p>distribution.  The brightest spot is near the center, where most of the values cluster, but every so often circles are drawn farther to the right or left of the center.</p>
+</div><p>Let’s take a look at the changes to the Mover class, complete with <span class="function">acceleration</span> and <span class="function">limit()</span>.</p>
+<img src="imgs/chapter01_21-01.png" alt="imgs/chapter01_21-01.png"  /><a name="_example_1_8_motion_101_velocity_and_constant_acceleration"></a>
+<h3>Example 1.8: Motion 101 (velocity and constant acceleration)</h3><pre>￼class Mover {
+
+  PVector location;
+  PVector velocity;
+  PVector acceleration; // Acceleration is the key!
+  float topspeed;     // The variable, topspeed, will limit
+           the magnitude of velocity.
+
+  Mover() {
+    location = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(-0.001,0.01);
+    topspeed = 10;
+  }
+
+  void update() {
+    velocity.add(acceleration); // Velocity changes by acceleration
+    velocity.limit(topspeed);      and is limited by topspeed.
+    location.add(velocity);
+  }
+
+  // display() is the same
+
+  // checkEdges() is the same
+
+}</pre><div class="example">
+	<h3>Exercise 1-4</h3><p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
+
+</div><p>Now to Algorithm #2,“a totally random acceleration.”  In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <span class="function">update()</span> is called.</p>
+<img src="imgs/chapter01_22-01.png" alt="imgs/chapter01_22-01.png"  /><a name="_example_1_9_motion_101_velocity_and_random_acceleration"></a>
+<h3>Example 1.9: Motion 101 (velocity and random acceleration)</h3><pre>  void update() {
+
+    acceleration = new PVector(random(-1,1),random(-1,1));
+    acceleration.normalize();
+
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+  }</pre><p>While normalizing acceleration is not entirely necessary, it does prove useful, as it standardizes the magnitude of the vector, allowing us to try different things. Such as:</p>
+<p>(a) scaling the acceleration to a constant value</p>
+<pre>acceleration = new PVector(random(-1,1),random(-1,1));
+acceleration.normalize();
+*acceleration.mult(0.5);*</pre><p>(b) scaling the acceleration to a random value</p>
+<pre>acceleration = new PVector(random(-1,1),random(-1,1));
+acceleration.normalize();
+*acceleration.mult(random(2));*</pre><p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
 <div class="example">
-	<h2>Exercise I.4</h2>
-<p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central location, but some dots do splatter out towards the edges.  Can you use a normal distribution of random numbers to generate the locations of the dots?  Can you also use a normal distribution of random numbers to generate a palette of color?</p>
+	<h3>Exercise 1-5</h3><p>Referring back to section I.6 of the Introduction <strong>[REF]</strong>, implement acceleration according to Perlin noise.</p>
 
-</div><div class="example">
-	<h2>Exercise I.5</h2>
-<p>A Gaussian random walk is defined as one in which the step size (how far you move in a given direction) is generated with a normal distribution.  Implement this variation of our random walk.</p>
+</div><a name="_1_9_static_vs_non_static_functions"></a>
+<h2>1.9 Static vs. Non-Static Functions</h2>
+<p>Before we get to acceleration Algorithm #3 (accelerate towards the mouse), we need to cover one more rather important aspect of working with vectors and the <span class="class">PVector</span> class: the difference between using <strong>static</strong> methods and <strong>non-static</strong> methods.</p>
+<p>Forgetting about vectors for a moment, take a look at the following code:</p>
+<pre>float x = 0;
+float y = 5;
 
-</div><a name="_a_custom_distribution_of_random_numbers"></a>
-<h2>A Custom Distribution of Random Numbers</h2>
-<p>There will come a time in your life when you do not want a uniform distribution of random values, or a Gaussian one.   Let’s imagine for a moment that you are a random walker in search of food.   Moving randomly around a space seems like a reasonable strategy for finding something to eat.   After all, you don’t know where the food is, so you might as well search randomly until you find it.  The problem, as you may have noticed, is that random walkers return to previously visited locations many times (this is known as “oversampling.”)   One strategy to avoid such a problem is to, every so often, take a very large step.   This allows the walker to forage randomly around a specific location while periodically jumping very far away to reduce the amount of oversampling.   This variation on the random walk (known as a Lévy flight) requires a custom set of probabilities.   Though not an exact implementation of a Lévy flight, we could state the probability distribution as follows: the longer the step, the less likely it is to be picked; the shorter the step, the more likely.</p>
-<p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an array with values (some duplicated so that they would be picked more frequently) or by testing the result of random().  Certainly, we could implement a Levy flight by saying there is a 1% chance of the walker taking a large step.</p>
-<pre>---
-float r = random(1);
-// A 1% chance of taking a large step
-if (r < 0.01) {
-  xstep = random(-100,100);
-  ystep - random(-100,100);
-} else {
-  xstep = random(-1,1);
-  ystep - random(-1,1);
+x = x + y;</pre><p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="class">PVector</span>.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+v.add(u);</pre><p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5).  Easy, right?</p>
+<p>OK, let’s take a look at another example of some simple floating point math:</p>
+<pre>float x = 0;
+float y = 5;
+
+float z = x + y;</pre><p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="class">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+// Don’t be fooled; this is incorrect!!!
+[line-through]*PVector w = v.add(u);*</pre><p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
+<pre>void add(PVector v) {
+    x = x + v.x;
+    y = y + v.y;
+ }</pre><ol class="arabic">
+	
+		<li><p>
+. . we see that this code does not accomplish our goal.  First, it does not return a new <span class="class">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="class">PVector</span> upon which it is called.  In order to add two PVector objects together and return the result as a new PVector, we must use the <span class="function">static add()</span> function.
+</p>
+</li>
+	
+</ol><p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong>static</strong> functions.   Here are two examples of function calls that assume two PVector objects, <span class="var">v</span> and <span class="var">u</span>:</p>
+<pre>// Static: called from the class name.
+PVector.add(v,u);
+// Not static: called from an object instance.
+v.add(u);</pre><p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="class">PVector*’s static functions allow us to perform generic mathematical operations on [class]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
+<pre>  // The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u) intact.
+  static PVector add(PVector v1, PVector v2) {
+    PVector v3 = new PVector(v1.x + v2.x, v1.y + v2.y);
+    return v3;
+  }</pre><p>There are several differences here:</p>
+<ul>
+	
+		<li><p>
+The function is labeled as <strong><em>static</em></strong>.
+</p>
+</li>
+	
+		<li><p>
+The function does not have a <strong><em>void</em></strong> return type, but rather returns a <span class="class">PVector</span>.
+</p>
+</li>
+	
+		<li><p>
+The function creates a new PVector (v3) and returns the sum of the components of <span class="var">v1</span> and <span class="var">v2</span> in that new PVector.
+</p>
+</li>
+	
+</ul><p>When you call a static function, instead of referencing an actual object instance, you simply reference the name of the class itself.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+[line-through]*PVector w = v.add(u);*
+*PVector w = PVector.add(v,u);*</pre><p>The PVector class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
+<div class="example">
+	<h2>Exercise 1-6</h2>
+<p>Translate the following pseudocode to code using static or non-static functions where appropriate.</p>
+<ul>
+	
+		<li><p>
+The PVector [var]*v equals (1,5)
+</p>
+</li>
+	
+		<li><p>
+The PVector <span class="var">u</span> equals <span class="var">v</span> multiplied by 2.
+</p>
+</li>
+	
+		<li><p>
+The PVector <span class="var">w</span> equals <span class="var">v</span> minus <span class="var">u</span>.
+</p>
+</li>
+	
+		<li><p>
+Divide the PVector w by 3.
+</p>
+</li>
+	
+</ul><p>PVector <span class="var">v</span> = new PVector(1,5);
+PVector <span class="var">u</span> = <em><em></em></em><em>.</em><em><em>(</em>,<em>);
+PVector <span class="var">w</span> = </em></em><em><em></em>.<em></em></em>(<em>,</em>);
+<em><em></em></em><em>_</em>;</p>
+
+</div><a name="_1_10_interactivity_with_acceleration"></a>
+<h2>1.10 Interactivity with acceleration</h2>
+<p>To finish out this chapter, let’s try something a bit more complex and a great deal more useful.  We’ll dynamically calculate an object’s acceleration according to a rule, acceleration Algorithm #3 —“the object accelerates towards the mouse.”</p>
+<img src="imgs/chapter01_23-01.png" alt="imgs/chapter01_23-01.png"  /><p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>.  Let’s start with direction.  We know the acceleration vector should point from the object’s location towards the mouse location.  Let’s say the object is located at the point (<span class="var">x</span>,<span class="var">y</span>) and the mouse at (<span class="var">mouseX</span>,<span class="var">mouseY</span>).</p>
+<img src="imgs/chapter01_24-01.png" alt="imgs/chapter01_24-01.png"  /><p>As illustrated in the above diagram, we see that we can get a vector (<span class="var">dx</span>,<span class="var">dy</span>) by subtracting the object’s location from the mouse’s location.</p>
+<p><strong>[var]*dx</strong> = <span class="var">mouseX</span> - <strong>x<strong>
+*[var]*dy</strong> = <span class="var">mouseY</span> - [var]*y</strong></p>
+<p>Let’s rewrite the above using <span class="class">PVector</span> syntax.   Assuming we are in the Mover class and thus have access to the object’s location <span class="class">PVector</span>, we then have:</p>
+<pre>PVector mouse = new PVector(mouseX,mouseY);
+// Look! We’re using the static reference to sub() because we want a new PVector pointing from one point to another.
+PVector dir = PVector.sub(mouse,location);</pre><p>We now have a <span class="class">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
+<p>In order to set the magnitude (whatever it may be) of our acceleration PVector, we must first <em><em></em>__</em> that direction vector.  That’s right, you said it.  <strong><em>Normalize</em></strong>.   If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value.   One multiplied by anything equals anything.</p>
+<pre>float anything = ?????
+dir.normalize();
+dir.mult(anything);</pre><p>To summarize, we take the following steps:</p>
+<ol class="arabic">
+	
+		<li><p>
+Calculate a vector that points from the object to the target location (mouse).
+</p>
+</li>
+	
+		<li><p>
+Normalize that vector (reducing its length to 1)
+</p>
+</li>
+	
+		<li><p>
+Scale that vector to an appropriate value (by multiplying it by some value)
+</p>
+</li>
+	
+		<li><p>
+Assign that vector to acceleration
+</p>
+</li>
+	
+</ol><p>And here are those steps in the <strong><em>update()</em></strong> function itself:</p>
+<img src="imgs/chapter01_25-01.png" alt="imgs/chapter01_25-01.png"  /><pre> void update() {
+
+    PVector mouse = new PVector(mouseX,mouseY);
+    // Step 1: Direction
+    PVector dir = PVector.sub(mouse,location);
+
+    // Step 2: Normalize
+    dir.normalize();
+
+    // Step 3: Scale
+    dir.mult(0.5);
+
+    // Step 4: Accelerate
+    acceleration = dir;
+
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+
+  }</pre><p>You may be wondering why the circle doesn’t stop when it reaches the target.  It’s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on, and so forth.   Stay tuned; in later chapters we’ll learn how to program an object to “arrive” at a location (slow down on approach).</p>
+<div class="example">
+	<h2>Exercise 1-7</h2>
+<p>This example is remarkably close to the concept of gravitational attraction (in which the object is attracted to the mouse location).  Gravitational attraction will be covered in more detail in the next chapter. However, one thing missing here is that the strength of gravity (magnitude of acceleration) is inversely proportional to distance.  This means that the closer the object is to the mouse, the faster it accelerates.   Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</p>
+
+</div><p>Let’s see what this example would look like with an array of Mover objects (rather than just one).</p>
+<img src="imgs/chapter01_26-01.png" alt="imgs/chapter01_26-01.png"  /><a name="_example_1_10_accelerating_towards_mouse"></a>
+<h3>Example 1.10: Accelerating towards mouse</h3><pre>// An array of objects
+Mover[] movers = new Mover[20];
+
+void setup() {
+  size(200,200);
+  smooth();
+  background(255);
+  for (int i = 0; i  movers.length; i++) {
+    // Initialize each object in the array.
+    movers[i] = new Mover();
+  }
 }
----</pre><p>However, this reduces the probabilities to a fixed number of options.  What if we wanted to make a more general rule—the higher a number, the more likely it is to be picked?  3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater.  In other words, if x is the random number, we could map the likelihood on the y-axis with y = x.</p>
-<p>image:imgs/intro_2-01.png
-￼
-If we can figure out how to generate a distribution of random numbers according to the above graph, then we will be able to apply the same methodology to any curve for which we have a formula.</p>
-<p>One solution is to pick two random numbers instead of one.  The first random number is just that, a random number.  The second one, however, is what we’ll call a “qualifying random value.”  It will tell us whether to use the first one or throw it away and pick another one.  Numbers that have an easier time “qualifying” will be picked more often, and numbers that rarely qualify will be picked infrequently.   Here are the steps (for now, let’s consider only random values between 0 and 1.)</p>
-<h2>If R2 is not less than P, go back to step 1 and start over.</h2>
-Here we are saying that the likelihood that a random value will qualify is equal to the random number itself.  Let’s say we pick 0.1 for R1.  This means that R1 will have a 10% chance of qualifying.  If we pick 0.83 for R1 then it will have a 83% chance of qualifying.  The higher the number, the greater the likelihood that we will actually use it.
- Here is a function (named for the Monte Carlo method, which was named for the Monte Carlo casino) that implements the above algorithm, returning a random value between zero and one.<pre>---
-float montecarlo() {
-  // We do this “forever” until we find a qualifying random value.
-  while (true) {
-    // Pick a random value.
-    float r1 = random(1);
-    // Assign a probability.
-    float probability = r1;
-    // Pick a second random value.
-    float r2 = random(1);
-    // Does it qualify?  If so, we’re done!
-    if (r2 < probability) {
-      return r1;
+
+void draw() {
+  background(255);
+
+  for (int i = 0; i  movers.length; i++) {
+    // Calling functions on all the objects in the array.
+    movers[i].update();
+    movers[i].checkEdges();
+    movers[i].display();
+  }
+}
+
+class Mover {
+  // Our algorithm for calculating acceleration:
+  // find vector pointing towards mouse
+  // normalize
+  // scale
+  // set to acceleration
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
+
+  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(0,0);
+    topspeed = 4;
+  }
+
+  void update() {
+
+    PVector mouse = new PVector(mouseX,mouseY);
+    PVector dir = PVector.sub(mouse,location);
+    dir.normalize();
+    dir.mult(0.5);
+    acceleration = dir;
+
+    // Motion 101! Velocity changes by acceleration.  Location changes by velocity.
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+  }
+
+  void display() {
+    stroke(0);
+    fill(175);
+    ellipse(location.x,location.y,16,16);
+  }
+
+  void checkEdges() {
+
+    if (location.x  width) {
+      location.x = 0;
+    } else if (location.x  0) {
+      location.x = width;
+    }
+
+    if (location.y  height) {
+      location.y = 0;
+    }  else if (location.y  0) {
+      location.y = height;
     }
   }
-}
----</pre><div class="example">
-	<h2>Exercise I.6</h2>
-<p>Use a custom probability distribution to vary the size of a step taken by the random walker.   The step size can be achieved by affecting the range of values picked.  Can you map the probability exponentially—i.e. making the likelihood a value is picked equal to the value squared?</p>
-<pre>---
-  // A uniform distribution of step sizes. Change this!
-  float stepsize = random(-10,10);</pre>float stepx = random(-stepsize,stepsize);
-float stepy = random(-stepsize,stepsize);  x += stepx;
-  y += stepy;
----<p>(Later we’ll see how to do this more efficiently using vectors.)</p>
+}</pre><div class="tip">
+	<h3>Ecosystem Project:</h3><p>As mentioned in the preface, one way to use this book is to build a single project over the course of reading it, incorporating elements from each chapter one step at a time.  We’ll follow the development of an example project throughout this book—an “ecosystem” simulation.  Imagine a population of computational creatures swimming around a digital pond, interacting with each other according to various rules.</p>
+<p>Step 1 Exercise:</p>
+<p>Develop a set of rules for simulating the real-world behavior of a creature, such as a nervous fly, swimming fish, hopping bunny, slithering snake, etc.  Can you control the object’s motion by only manipulating the acceleration?  Try to give the creature a personality through its behavior (rather than through its visual design.)</p>
 
-</div><a name="_perlin_noise_a_smoother_approach"></a>
-<h2>Perlin Noise (A Smoother Approach)</h2>
-<p>One of the qualities of a good random number generator is that the numbers produced have no relationship.   If they exhibit no discernible pattern, they are considered <em>random</em>.</p>
-<p>As we are beginning to see, a little bit of randomness can be a good thing when programming organic, lifelike behaviors.  However, randomness as the single guiding principle is not necessarily natural.   An algorithm known as “Perlin noise,” named for its inventor Ken Perlin, takes this concept into account.   Perlin developed the noise function while working on the original <em>Tron</em> movie in the early 1980s.  It was designed to create procedural textures for computer-generated effects; in 1997 Perlin won an Academy Award in Technical Achievement for this work. Perlin noise can be used to generate a variety of interesting effects such as clouds, landscapes, and patterned textures like marble.</p>
-<p>“Perlin noise” has a more organic quality because it produces a naturally ordered (i.e. “smooth”) sequence of pseudo-random numbers.    The graph on the left below shows Perlin noise over time (the x-axis represents time; note how the curve is smooth) while the graph on the right shows pure random numbers over time.  (The code for generating these graphs is available with the accompanying book downloads.)</p>
-<p>image:imgs/noise_random_graphs.png</p>
-<div class="example">
-	<h2>Noise Detail</h2>
-<p>If you visit the Processing.org noise reference, you’ll find that noise is calculated over several “octaves.” You can change the number of octaves and their relative importance by calling the <a href="http://processing.org/reference/noiseDetail_.html">
-	noiseDetail()
-</a>
- function.  This in turn changes how the noise function behaves.</p>
-<p>You can learn more about how noise works from <a href="http://www.noisemachine.com/talk1/">
-	Ken Perlin
-</a>
- himself.</p>
-
-</div><p>Processing has a built-in implementation of the Perlin noise algorithm with the function noise().  The noise() function takes one, two, or three arguments (referring to the “space” in which noise is computed: one, two, or three dimensions).  Let’s start by looking at one-dimensional noise.</p>
-<p>Consider for a moment drawing a circle in our Processing window at a random x-location.</p>
-<pre>---
-// A random x-location
-float x = random(0,width);
-ellipse(x,180,16,16);
----</pre><p>Now, instead of a random x-location, we want a Perlin noise x-location that is “smoother.”  You might think that all you need to do is replace random() with noise(), i.e.</p>
-<p>float x = noise(0,width);</p>
-<p>While conceptually this is exactly what we want to do—calculate an x-value that ranges between zero and the width according to Perlin noise—this is not the correct implementation.    While the arguments to the random() function specify a range of values between a minimum and a maximum, noise() does not work this way.  Instead, the output range is fixed—it always returns a value between zero and one.  We’ll see in a moment that we can get around this easily with Processing’s map() function, but first we must examine what exactly noise() expects us to pass in as an argument.</p>
-<p>We can think of one-dimensional Perlin noise as a linear sequence of values over time.   For example:</p>
-Time   Noise Value<p>4</p>
-<p>0.366</p>
-<p>0</p>
-<p>0.365</p>
-<p>1</p>
-<p>0.363</p>
-<p>2</p>
-<p>0.363</p>
-<p>3</p>
-<p>0.364</p>
-<p>Now, in order to access a particular noise value in Processing, we have to pass a specific moment in time to the noise() function.  For example:</p>
-<pre>---
-float n = noise(3);
----</pre><p>According to the above table, noise(3) will return 0.364 at time equals three. We could improve this by using a variable for “time” and asking for a noise value continuously in draw().</p>
-<pre>---
-float t = 3;</pre><p>void draw() {
-  // We need the noise value for a specific “moment in time.”
-  float n = noise(t);
-  println(n);
-}
----</p>
-<p>The above code results in the same value printed over and over.   This is because we are asking for the result of the noise() function at the same point in “time”—3—over and over.  If we increment the “time” variable t, however, we’ll get a different result.</p>
-<pre>---
-// Typically we would start at time = 0, though this is arbitrary.
-float t = 0;</pre><p>void draw() {
-  float n = noise(t);
-  println(n);
-  // Now, we move forward in time!
-  t += 0.01;
-}
----</p>
-<p>How quickly we increment “t” also affects the smoothness of the noise.   If we make large jumps in time, then we are skipping ahead and the values will be more random.</p>
-<p>image:imgs/intro_3-01.png</p>
-<p>Try running the code several times, incrementing t by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see different results.</p>
-<p>===Mapping Noise</p>
-<p>Now we’re ready to answer the question of what to do with the noise value.   Once we have the value with a range between zero and one, it’s up to us to map that range to what we want.   The easiest way to do this is with Processing’s map() function.   The map() function takes five arguments.  First up is the value we want to map, in this case n.  Then we have to give it the value’s current range (minimum and maximum) followed by our desired range.</p>
-<p>image:imgs/intro_4-01.png</p>
-<p>In this case, we know that noise has a range between zero and one, but we’d like to draw our circle with a range between zero and the window’s width.</p>
-<pre>---
-float t = 0;</pre><p>void draw() {
-  float n = noise(t);
-  // Using map() to customize the range of Perlin noise
-  float x = map(n,0,1,0,width);
-  ellipse(x,180,16,16);</p>
-  t += 0.01;
-}
----<p>We can apply the exact same logic to our random walker, and assign both its x- and y-values according to Perlin noise.</p>
-<p>image:imgs/NoiseWalk.png [Perlin Noise Walker, canvas=processingjs/NoiseWalk/NoiseWalk.pde,processingjs/NoiseWalk/Walker.pde]</p>
-<p>====Example I.3: Perlin Noise Walker</p>
-<pre>---
-class Walker {
-  float x,y;</pre>float tx,ty;Walker() {
-  tx = 0;
-  ty = 10000;
-}void step() {
-  // x- and y-location mapped from noise
-  x = map(noise(tx), 0, 1, 0, width);
-  y = map(noise(ty), 0, 1, 0, height);    // Move forward through “time.”
-    tx += 0.01;
-    ty += 0.01;
-  }
-}
----<p>Notice how the above example requires an additional pair of variables: tx and  ty.  This is because we need to keep track of two “time” variables, one for the x-location of the walker and one for the y-location.   But there is something a bit odd about these variables. Why does tx start at zero and  ty at 10,000?  While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values.  This is because the noise function is deterministic; it gives you the same result for a specific time t each and every time.  If we asked for the the noise value at the same time t for both x and y, then x and y would always be equal, meaning that the walker would only move along a diagonal.   Instead, we simply use two different parts of the noise space, starting at 0 for x and 10,000 for y so that x and y can appear to act independently of each other.</p>
-<p>image:imgs/intro_5-01.png</p>
-<p>In truth, there is no true concept of “time” at play here.  It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time.  The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-location whenever we want.   In examples, you will often see a variable named xoff to indicate the “x offset” along the noise graph rather than t for time (as noted in the diagram).</p>
-<div class="example">
-	<h2>Exercise I.7</h2>
-<p>In the above random walker, the result of the noise function is mapped directly to the walker’s location.  Create a random walker where you instead map the result of the noise() function to a walker’s step size.</p>
-
-</div><p>===Two-Dimensional Noise</p>
-<p>This idea of noise values living in a one-dimensional space is important because it leads us right into a discussion of two-dimensional space.  Let’s think about this for a moment.  With one-dimensional noise, we have a sequence of values in which any given value is similar to its neighbor.  Because the value is in one dimension, it only has two neighbors: a value that comes before it (to the left on the graph) and one that comes after it (to the right).</p>
-<p>image:imgs/intro_6-01.png</p>
-<p>Two-dimensional noise works exactly the same way conceptually.  The difference of course is that we aren’t looking at values along a linear path, but values that are sitting on a grid.  Think of a piece of graph paper with numbers written into each cell.  A given value will be similar to all of its neighbors: above, below, to the right, to the left, and along any diagonal.</p>
-<p>image:imgs/intro_8-01.png</p>
-<p>If you were to visualize this graph paper with each value mapped to the brightness of a color, we would get something that looks like clouds.  White sits next to light gray, which sits next to gray, which sits next to dark grey, which sits next to black, which sits next to dark gray, etc.</p>
-<p>image:imgs/noisecloud.png</p>
-<p>This is what noise was originally invented for.  Tweak the parameters a bit, play with color, and the resulting image might look more like marble or wood or any other organic texture.</p>
-<p>Let’s take a quick look at how you implement two-dimensional noise in Processing.  If you wanted to color every pixel of a window randomly, you would need a nested loop, one that accessed each pixel and picked a random brightness.</p>
-<pre>---
-loadPixels();
-for (int x = 0; x < width; x++) {
-  for (int y = 0; y < height; y++) {
-    // A random brightness!
-    float bright = random(255);
-    pixels[x+y*width] = color(bright);
-  }
-}
-updatePixels();
----</pre><p>To color each pixel according to the noise() function, we’ll do exactly the same thing, only instead of calling random() we’ll call noise().</p>
-<pre>---
-   _float bright = map(noise(x,y),0,1,0,255);_
----</pre><p>This is a nice start conceptually—it gives you a noise value for every (x,y) location in our two-dimensional space.  The problem is that this won’t have the cloudy quality we want.  Jumping from pixel 200 to pixel 201 is too large of a jump through noise.  Remember, when we worked with one-dimensional noise, we incremented our “time” variable by 0.01 each frame, not by 1!    A pretty good solution to this problem is to just use different variables for the noise arguments.  For example, we could increment a variable called xoff each time we move horizontally, and a yoff variable each time we move vertically through the nested loops.</p>
-<pre>---
-// Start xoff at 0.
-_float xoff = 0.0;_</pre><p>for (int x = 0; x < width; x++) {
-  // For every xoff, start yoff at 0.
-  <em>float yoff = 0.0;</em></p>
-  for (int y = 0; y < height; y++) {
-    // Use xoff and yoff for noise().
-    float bright = map(_noise(xoff,yoff)_,0,1,0,255);
-    // Use x and y for pixel location.
-    pixels[x+y*width] = color(bright);
-    // Increment xoff
-    _yoff += 0.01;_
-  }
-  // Increment xoff
-  _xoff += 0.01;_
-}
----
-.Exercise I.8<p>Play with color, noiseDetail(), and the rate at which xoff and yoff are incremented to achieve different visual effects.</p>
-<div class="example">
-	<h2>Exercise I.9</h2>
-<p>Add a third argument to noise that increments once per cycle through draw() to animate the two-dimensional noise.</p>
-
-</div><div class="example">
-	<h2>Exercise I.10</h2>
-<p>Use the noise values as the heights of a landscape.  See the screenshot below as a reference.</p>
-<p>image:imgs/NoiseLandscape.png [Tree Perlin Noise, canvas=processingjs/NoiseLandscape/NoiseLandscape.pde,processingjs/NoiseLandscape/Landscape.pde]</p>
-
-</div><p>We’ve examined several traditional uses of Perlin noise in this section.  With one-dimensional noise, we used smooth values to assign the location of an object to give the appearance of wandering.  With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels.  It’s important to remember, however, that Perlin noise values are just that—values.  They aren’t inherently tied to pixel locations or color.  Any example in this book that has a variable could be controlled via Perlin noise.  When we model a wind force, its strength could be controlled by Perlin noise.  Same goes for the angles between the branches in a fractal tree pattern, or the the speed and direction of objects moving along a grid in a flow field simulation.</p>
-<p>image:imgs/TreeStochasticNoise.png [Tree Perlin Noise, canvas=processingjs/TreeStochasticNoise/TreeStochasticNoise.pde] CAPTION: Tree with Perlin noise  image:imgs/Flow.png [Perlin noise flow field, canvas=processingjs/Flow/Flow.pde,processingjs/Flow/FlowField.pde,processingjs/Flow/Vehicle.pde] CAPTION: Perlin noise flow field</p>
-<a name="_onward"></a>
-<h2>Onward</h2>
-<p>We began this chapter by talking about how randomness can be a crutch.  In many ways, it’s the most obvious answer to the kinds of questions we ask continuously—how should this object move? What color should it be?  This obvious answer, however, can also be a lazy one.</p>
-<p>As we finish off the introduction, it’s also worth noting that we could just as easily fall into the trap of using Perlin noise as a crutch.   How should this object move? Perlin noise!  What color should it be?  Perlin noise!  How fast should it grow?  Perlin noise!</p>
-<p>The point of all of this is not to say that you should or should not use randomness.  Or that you should or should not use Perlin noise.   The point is that the rules of your system are defined by you and the larger your toolbox, the more choices you’ll have as you implement those rules.   The goal of this book is to fill your toolbox.  If all you know is random, then your design thinking is limited.  Sure, Perlin noise helps, but you’ll need more.  A lot more.</p>
-<p>I think we’re ready to begin.</p>
-
+</div>
 	</div>
 </body>
 </html>

@@ -35,14 +35,16 @@
 <p><strong><em>A vector is an entity that has both magnitude and direction.</em></strong></p>
 <p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
 
-<img src="imgs/chapter01_1-01.png" alt="imgs/chapter01_1-01.png"  />
-<p><span class="note to self">REDO THIS DIAGRAM NOW TO FIT NEW DEFINITION</span></p>
+<img src="imgs/chapter01_1-01.png" alt="imgs/chapter01_1-01.png" class="half-width" />
+<p><span class="notetoself">REDO THIS DIAGRAM NOW TO FIT NEW DEFINITION</span></p>
 <p>In the diagram above, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.</p>
 <a name="_1_1_vectors_you_complete_me"></a>
 <h2>1.1 Vectors, You Complete Me</h2>
 <p>Before we dive into more of the details about vectors, let’s look at a basic Processing example that demonstrates why we should care about vectors in the first place.  If you’ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you’ve done one of these things to help prepare you for this book), you probably, at one point or another, learned to how to write a simple bouncing ball sketch.</p>
 
-<img src="imgs/chapter01_2-01.png" alt="imgs/chapter01_2-01.png"  />
+<canvas id="sketchdec21a" data-processing-sources="processingjs/bouncingball_novectors.pde" >
+	<p>Your browser does not support the canvas tag.</p>
+</canvas>
 <a name="_example_1_1_bouncing_ball_with_no_vectors"></a>
 <h3>Example 1.1: Bouncing ball with no vectors</h3>
 
@@ -171,15 +173,13 @@
 (-15, 3) —> Walk fifteen steps west, turn and walk three steps north.</p>
 <p>You’ve probably done this before when programming motion.  For every frame of animation (i.e.  a single cycle through Processing’s <span class="function">draw()</span> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
 
-<img src="imgs/chapter01_4-01.png" alt="imgs/chapter01_4-01.png"  />
+<img src="imgs/chapter01_4-01.png" alt="imgs/chapter01_4-01.png" class="half-width" />
 <p>For every frame:</p>
 <p><strong><em>new location = velocity applied to current location</em></strong></p>
 <p>If velocity is a vector (the difference between two points), what is location?   Is it a vector too?  Technically, one might argue that location is not a vector, since it’s not describing how to move from one point to another—it’s simply describing a singular point in space.  And so conceptually, we think of a location as different.</p>
 
 <img src="imgs/chapter01_5-01.png" alt="imgs/chapter01_5-01.png"  />
-
-<img src="imgs/chapter01_6-01.png" alt="imgs/chapter01_6-01.png"  />
-<p><span class="note to self">CONSIDER COMBINING / INTEGRATING THIS DIAGRAM WITH PREVIOUS ONE BETTER</span></p>
+<p><span class="notetoself">CONSIDER COMBINING / INTEGRATING THIS DIAGRAM WITH PREVIOUS ONE BETTER</span></p>
 <p>Nevertheless, another way to describe a location is the path taken from the origin to reach that location. Hence, a location can be the vector representing the difference between location and origin.</p>
 <p>Let’s examine the underlying data for both location and velocity.  In the bouncing ball example we had the following:</p>
 <p>location —> <span class="var">x</span>,<span class="var">y
@@ -320,16 +320,16 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
 Scalar: [var]*x</span></p>
 <p>Let’s say I have the following two vectors:</p>
 
-<img src="imgs/chapter01_7-01.png" alt="imgs/chapter01_7-01.png"  />
+<img src="imgs/chapter01_6-01.png" alt="imgs/chapter01_6-01.png"  />
 <p>Each vector has two components, an x and a y.  To add two vectors together we simply add both x’s and both y’s.  In other words:</p>
-[vector]*w* = Vector: [vector]*u* + Vector: [vector]*v*<p>translates to:</p>
+[vector]*w* = Vector: [vector]*u* + Vector: [vector]*v*
+<img src="imgs/chapter01_7-01.png" alt="imgs/chapter01_7-01.png" class="half-width-right" />
+<p>translates to:</p>
 [vector]*w*~x~ = [var]*u~x~* + [var]*v~x~*
 [vector]*w*~y~ = [var]*u~y~* + [var]*v~y~*<p>and therefore:</p>
 [vector]*w*~x~ =  5 + 3
 [vector]*w*~y~ =  2 + 4<p>and therefore:</p>
-[vector]*w* =  (8,6)
-<img src="imgs/chapter01_8-01.png" alt="imgs/chapter01_8-01.png"  />
-<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="class">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="class">PVector</span> object.</p>
+[vector]*w* =  (8,6)<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="class">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="class">PVector</span> object.</p>
 
 
 
@@ -614,10 +614,12 @@ Scalar: [var]*x</span></p>
   </div>
 
 </div>
-<img src="imgs/chapter01_9-01.png" alt="imgs/chapter01_9-01.png"  />
-
-<img src="imgs/chapter01_10-01.png" alt="imgs/chapter01_10-01.png"  />
+<img src="imgs/chapter01_8-01.png" alt="imgs/chapter01_8-01.png"  />
 <p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
+
+<canvas id="sketchdec21a" data-processing-sources="processingjs/vector_subtraction/vector_subtraction.pde" >
+	<p>Your browser does not support the canvas tag.</p>
+</canvas>
 <a name="_example_1_3_vector_subtraction"></a>
 <h3>Example 1-3: Vector subtraction</h3>
 
@@ -665,7 +667,7 @@ Scalar: [var]*x</span></p>
   </div>
 
 </div><div class="example">
-	<h3>No Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
+	<h3>Need Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
 <p><strong><em>The commutative rule:</em></strong><span class="vector">u</span> + <span class="vector">v*￼ = [vector]*v</span> + [vector]*u*￼</p>
 <p><strong><em>The associative rule:</em></strong> ￼[vector]<strong>u</strong> + (<span class="vector">v</span> + <span class="vector">w</span>)  = (￼[vector]<strong>u</strong> + <span class="vector">v</span>) + [vector]*w*￼</p>
 <p>Fancy terminology and symbols aside, this is really quite a simple concept.  We’re just saying that common sense properties of addition apply to vectors as well.</p>
