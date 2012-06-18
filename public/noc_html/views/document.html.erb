@@ -8,17 +8,18 @@
 
 	addStylesToCodeLines = function(comment) {
 		match = $(comment).html().match(/\[(.*)\]/);
-		if(match !== "undefined" && match !== null && match.length >= 1){
+
+		if(match !== null && match.length >= 1){
 			line = $(comment).parent('.one-line');
 			$(line).find('.c1').remove()
 			styles = match[1].split(',');
-			for( l = 0; i < styles.length; i++) {
-				if (styles[i].trim() === 'italic') {
-					line.html("<em>" + line.html() + "</em>");
-				} else if(styles[i].trim() === 'bold') {
+			for( l = 0; l < styles.length; l++) {
+				if(styles[l].trim() === 'bold') {
 					line.html("<strong>" + line.html() + "</strong>");
+				} else if (styles[l].trim() === 'italic') {
+					line.html("<em>" + line.html() + "</em>");
 				} else {
-					line.addClass(styles[i].trim());
+					line.addClass(styles[l].trim());
 				}
 			}
 		}
@@ -39,8 +40,9 @@
 		});
 
 		// Get all inline comments
-		comments = $('.c1')
-		for(i = 0, len=comments.length; i < len; i++) {
+		comments = $('.c1');
+
+		for(i = 0; i < comments.length; i++) {
 			addStylesToCodeLines(comments[i]);
 		}
 	});
