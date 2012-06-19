@@ -22,9 +22,18 @@ class Application < Sinatra::Base
     @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
     @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
     
-    # then render pdf from it
     bin_args = []
-    bin_args << { :option => "--header-html", :value => "public/noc_pdf/views/header.html"}
+    # Margins 0.75 inches bottom, left and right, not sure about top yet b/c of header
+    bin_args << { :option => "--margin-bottom", :value => 10 }
+    bin_args << { :option => "--margin-left", :value => 19.05 }
+    bin_args << { :option => "--margin-right", :value => 19.05 }
+
+    # Page dimensions, 7.5x9.25 inches
+    bin_args << { :option => "--page-height", :value => 234.95 }
+    bin_args << { :option => "--page-width", :value => 190.5 }
+
+
+    bin_args << { :option => "--header-html", :value => "templates/print/views/header.html"}
     bin_args << { :option => "--header-spacing", :value => 10} # make space between header and content
     bin_args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
     
