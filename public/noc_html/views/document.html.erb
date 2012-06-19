@@ -11,7 +11,9 @@
 
 		if(match !== null && match.length >= 1){
 			line = $(comment).parent('.one-line');
-			$(line).find('.c1').remove()
+      // Remove the comment and trailing whitespace.
+      $(line).find('.c1').remove().end().html($(line).html().replace(/\s*$/,''));
+      // Split any styles by commas.
 			styles = match[1].split(',');
 			for( l = 0; l < styles.length; l++) {
 				if(styles[l].trim() === 'bold') {
@@ -26,25 +28,22 @@
 	}
 
 	$(document).ready(function(){
+    $('.c1').each(function(){
+      addStylesToCodeLines($(this));
+    });
+
 		$('.code-comment-pair').each(function(){
 			pair = $(this);
 			line = $(pair.find('.code-comment-line'));
 			firstCodeLine = $(pair.find('.one-line')[0]);
 			firstElement = $(firstCodeLine.find('span')[0]);
 			line.css('position','absolute');
-			//line.css('top',(firstCodeLine.position().top + firstCodeLine.height()) +'px');
+      // line.css('top',(firstCodeLine.position().top + firstCodeLine.height()) +'px');
 			if(0 != firstElement.length){
 				line.css('left', firstElement.position().left + 'px');
 				line.css('width', $(pair).width() - firstElement.position().left);
 			}
 		});
-
-		// Get all inline comments
-		comments = $('.c1');
-
-		for(i = 0; i < comments.length; i++) {
-			addStylesToCodeLines(comments[i]);
-		}
 	});
 	</script>
 	<script type="text/javascript" src="processingjs/processing.js"></script>
