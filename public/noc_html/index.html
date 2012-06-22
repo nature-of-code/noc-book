@@ -4,23 +4,7 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="stylesheets/docco.css">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('.code-comment-pair').each(function(){
-			pair = $(this);
-			line = $(pair.find('.code-comment-line'));
-			firstCodeLine = $(pair.find('.one-line')[0]);
-			firstElement = $(firstCodeLine.find('span')[0]);
-			line.css('position','absolute');
-			//line.css('top',(firstCodeLine.position().top + firstCodeLine.height()) +'px');
-			if(0 != firstElement.length){
-				line.css('left', firstElement.position().left + 'px');
-				console.log($(pair).width() - firstElement.position().left, $(pair));
-				line.css('width', $(pair).width() - firstElement.position().left);
-			}
-		});
-	});
-	</script>
+	<script type="text/javascript" src="javascripts/codeprocessing.js"></script>
 	<script type="text/javascript" src="processingjs/processing.js"></script>
 	<link rel="stylesheet" href="stylesheets/html.css" type="text/css">
 </head>
@@ -311,7 +295,7 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
   <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">Add the velocity vector to the location vector.</span>
-    <code><pre><span class='one-line'><span class="o">[</span><span class="n">line</span><span class="o">-</span><span class="n">through</span><span class="o">]*</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;*</span></span></pre></code>
+    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span>  <span class="c1">// [line-through, bold]</span></span></pre></code>
   </div>
 
 </div><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
@@ -352,6 +336,26 @@ Scalar: [var]*x</span></p>
   <div class="code-comment-pair">
     
     <span class="code-comment"></span>
+    <code><pre><span class='one-line'><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span> <span class="c1">// [bold]</span></span></pre></code>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="code-block">
+  <div class="code-comment-pair">
+    
+    <span class="code-comment"></span>
     <code><pre><span class='one-line'><span class="kd">class</span> <span class="nc">PVector</span> <span class="o">{</span></span>
 
 <span class='one-line'>  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span></span>
@@ -362,11 +366,10 @@ Scalar: [var]*x</span></p>
 <span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y_</span><span class="o">;</span></span>
 <span class='one-line'>  <span class="o">}</span></span>
 
-<span class='one-line'>  <span class="o">*</span><span class="c1">// New!  A function to add another PVector to this PVector.  Simply add the x components and the y components together.</span></span>
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">x</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">y</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}*</span></span>
+<span class='one-line'>  <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">y</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">x</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
@@ -388,7 +391,7 @@ Scalar: [var]*x</span></p>
   <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">Add the current velocity to the location.</span>
-    <code><pre><span class='one-line'><span class="o">[</span><span class="n">line</span><span class="o">-</span><span class="n">through</span><span class="o">]*</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;*</span></span>
+    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span> <span class="c1">// [line-through]</span></span>
 <span class='one-line'><span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
   </div>
 
@@ -411,34 +414,34 @@ Scalar: [var]*x</span></p>
   <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">Instead of a bunch of floats, we now just have two PVector variables.</span>
-    <code><pre><span class='one-line'><span class="o">*</span><span class="n">_PVector</span> <span class="n">location</span><span class="o">;</span><span class="n">_</span><span class="o">*</span></span>
-<span class='one-line'><span class="o">*</span><span class="n">_PVector</span> <span class="n">velocity</span><span class="o">;</span><span class="n">_</span><span class="o">*</span></span>
+    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">location</span><span class="o">;</span> <span class="c1">// [bold, italic]</span></span>
+<span class='one-line'><span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span> <span class="c1">// [bold, italic]</span></span>
 
 <span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
 <span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
 <span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="o">*</span><span class="n">_location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">100</span><span class="o">);</span><span class="n">_</span><span class="o">*</span></span>
-<span class='one-line'>  <span class="o">*</span><span class="n">_velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mf">2.5</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span><span class="n">_</span><span class="o">*</span></span>
+<span class='one-line'>  <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">100</span><span class="o">);</span> <span class="c1">// [bold, italic]</span></span>
+<span class='one-line'>  <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mf">2.5</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span> <span class="c1">// [bold, italic]</span></span>
 <span class='one-line'><span class="o">}</span></span>
 
 <span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
 <span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
 
-<span class='one-line'>  <span class="o">*</span><span class="n">_location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
+<span class='one-line'>  <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
   </div>
 <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.</span>
-    <code><pre><span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span><span class="n">_</span><span class="o">*</span></span>
+    <code><pre><span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
+<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
 
 <span class='one-line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
 <span class='one-line'>  <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">*</span><span class="n">_ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span><span class="n">_</span><span class="o">*</span></span>
+<span class='one-line'>  <span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span> <span class="c1">// [bold]</span></span>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
@@ -461,7 +464,7 @@ Scalar: [var]*x</span></p>
   <div class="code-comment-pair">
     
     <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="o">[</span><span class="n">line</span><span class="o">-</span><span class="n">through</span><span class="o">]*</span><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);*</span></span></pre></code>
+    <code><pre><span class='one-line'><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
   </div>
 
 </div><p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
@@ -1605,12 +1608,13 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">display() is the same</span>
-    <code><pre></pre></code>
+    <code><pre><span class='one-line'>  <span class="o">...</span></span></pre></code>
   </div>
 <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">checkEdges() is the same</span>
-    <code><pre><span class='one-line'><span class="o">}</span></span></pre></code>
+    <code><pre><span class='one-line'>  <span class="o">...</span></span>
+<span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
 </div><div class="example">
@@ -1670,7 +1674,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
     <span class="code-comment"></span>
     <code><pre><span class='one-line'><span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span></span>
 <span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">*</span><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);*</span></span></pre></code>
+<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
   </div>
 
 </div><p>(b) scaling the acceleration to a random value</p>
@@ -1693,7 +1697,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
     <span class="code-comment"></span>
     <code><pre><span class='one-line'><span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span></span>
 <span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">*</span><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">2</span><span class="o">));*</span></span></pre></code>
+<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span> <span class="c1">// [bold]</span></span></pre></code>
   </div>
 
 </div><p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
@@ -1799,7 +1803,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">Don’t be fooled; this is incorrect!!!</span>
-    <code><pre><span class='one-line'><span class="o">[</span><span class="n">line</span><span class="o">-</span><span class="n">through</span><span class="o">]*</span><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);*</span></span></pre></code>
+    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
   </div>
 
 </div><p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
@@ -1921,8 +1925,8 @@ The function creates a new PVector (v3) and returns the sum of the components of
     <span class="code-comment"></span>
     <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
 <span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span></span>
-<span class='one-line'><span class="o">[</span><span class="n">line</span><span class="o">-</span><span class="n">through</span><span class="o">]*</span><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);*</span></span>
-<span class='one-line'><span class="o">*</span><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">,</span><span class="n">u</span><span class="o">);*</span></span></pre></code>
+<span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [line-through]</span></span>
+<span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">,</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
   </div>
 
 </div><p>The PVector class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
