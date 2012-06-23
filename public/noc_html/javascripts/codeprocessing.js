@@ -1,3 +1,5 @@
+// Comments are documented according to http://tomdoc.org/
+
 // Public: Add classes or add strong and em attributes to lines of code 
 // by detecting inline comments matching the pattern // [<STYLE>]
 // Remove the comment from the DOM and apply styles to the parent
@@ -48,12 +50,41 @@ leftAlignCommentLine = function($codeCommentPair) {
 	}
 }
 
-$(document).ready(function(){
-	$('.c1').each(function(){
-		addStylesToCodeLines($(this));
-	});
+// Public: Toggle between formatted code markup and a textarea of the raw code.
+//
+// $toggle - a jQuery object corresponding to the clicked button.toggle 
+//
+// Returns nothing.
+toggleCodeDisplay = function($toggle) {
+  $sourceCode = $toggle.parent('.source-code');
+  if($toggle.html() === 'Show Raw'){
+    $sourceCode
+      .find('textarea').show().end()
+      .find('.code-block').hide().end()
+      .find('.toggle').html('Show Formatted');
+  } else {
+    $sourceCode
+      .find('textarea').hide().end()
+      .find('.code-block').show().end()
+      .find('.toggle').html('Show Raw');
+  }
+}
 
-	$('.code-comment-pair').each(function(){
-		leftAlignCommentLine($(this));
-	});
+// Public: Run preformatting on the textarea elements so that toggling does not
+// cause a huge shift in the layout. Does not guarantee that all code will be
+// visible without scrolling.
+//
+// $sourceCode - a jQuery object of a div wrapping a code section.
+//
+// Returns nothing.
+setRawCodeHeight = function($sourceCode) {
+  h = $sourceCode.find('.code-block').height();
+  $sourceCode.find('textarea').css('height', h);
+}
+
+$(document).ready(function(){
+	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
+	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
+  $('.source-code').each(function(){ setRawCodeHeight($(this)); });
+  $('.toggle').click(function(){ toggleCodeDisplay($(this)); });
 });
