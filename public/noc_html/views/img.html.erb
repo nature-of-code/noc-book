@@ -1,8 +1,10 @@
-<% if @attributes["canvas"] %>
-<canvas id="sketchdec21a" data-processing-sources="<%= @attributes["canvas"] %>" <%= att("classname", "class") %>>
-	<p>Your browser does not support the canvas tag.</p>
-</canvas>
-<% else %>
-<img src="<%= @src %>" alt="<%= @alt %>" <%= att("classname", "class") %> />
-<% end %>
-<% if @alt %><span class="caption"><%= @alt %></span><% end %>
+<div class="image-container <%= @attributes["classname"] if @attributes["classname"] %>" >
+	<% if @attributes["canvas"] %>
+	<canvas id="sketchdec21a" data-processing-sources="<%= @attributes["canvas"] %>" <%= att("classname", "class") %>>
+		<p>Your browser does not support the canvas tag.</p>
+	</canvas>
+	<% else %>
+	<img src="<%= @src %>" alt="<%= @alt %>" />
+	<% end %>
+	<% if @alt %><p class="caption"><%= @alt %></p><% end %>
+</div>
