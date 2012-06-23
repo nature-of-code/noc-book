@@ -134,7 +134,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.</p>
 <p><strong><em>LOCATION:</em></strong><strong><em>x and y</em></strong><br /><strong><em>SPEED:</em></strong><strong><em>xspeed and yspeed</em></strong><br /></p>
@@ -173,7 +173,7 @@ float yspeed;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Wouldn’t it be nice to have. . .</p>
 
@@ -202,7 +202,7 @@ Vector speed;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
 <p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use—[class]*PVector*—allows for three dimensions.)  However, for the time being, it’s easier to start with just two.</p>
@@ -285,7 +285,7 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>At its core, a <span class="class">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
 <p>And so this. . .</p>
@@ -319,7 +319,7 @@ float yspeed = 3.3;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <ol class="arabic">
 	
@@ -354,7 +354,7 @@ PVector velocity = new PVector(1,3.3);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Now that we have two vector objects (“location” and “velocity”), we’re ready to implement the algorithm for motion—location = location + velocity.   In Example 1.1, without vectors, we had:</p>
 
@@ -384,7 +384,7 @@ y = y + yspeed;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>In an ideal world, we would be able to rewrite the above as:</p>
 
@@ -412,7 +412,7 @@ location = location + velocity;  // [line-through, bold]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
 <a name="_1_3_vector_addition"></a>
@@ -465,7 +465,7 @@ Scalar: [var]*x</span></p>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 
 
@@ -519,7 +519,7 @@ Scalar: [var]*x</span></p>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Now that we see how <span class="function">add()</span> is written inside of <span class="class">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
 
@@ -549,7 +549,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>And here we are, ready to rewrite the bouncing ball example using <span class="class">PVector</span>.</p>
 <a name="_example_1_2_bouncing_ball_with_pvector"></a>
@@ -632,7 +632,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="class">PVector</span> will become more apparent.</p>
 <p>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <span class="class">PVector</span> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <span class="class">PVector</span> individually.  When we go to draw an object in Processing, there’s no means for us to say:</p>
@@ -660,7 +660,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
 
@@ -687,7 +687,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: location and velocity.</p>
 
@@ -718,7 +718,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="example">
 	<h3>Exercise 1.1</h3><p>Find something you’ve previously made in Processing using separate <span class="var">x</span> and <span class="var">y</span> variables and use PVectors instead.</p>
@@ -837,7 +837,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="image-container " >
 	
@@ -923,7 +923,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="example">
 	<h3>Need Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
@@ -972,7 +972,7 @@ void mult(float n) {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>And implementing multiplication in code is as simple as:</p>
 
@@ -1002,7 +1002,7 @@ u.mult(3);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="image-container " >
 	
@@ -1073,7 +1073,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="image-container " >
 	
@@ -1118,7 +1118,7 @@ u.div(2);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="image-container " >
 	
@@ -1188,7 +1188,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <a name="_example_1_5_vector_magnitude"></a>
 <h3>Example 1-5: Vector magnitude</h3><div class="image-container " >
@@ -1263,7 +1263,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <a name="_1_6_normalizing_vectors"></a>
 <h2>1.6 Normalizing Vectors</h2>
@@ -1320,7 +1320,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Of course, there’s one small issue.  What if the magnitude of the vector is zero?  We can’t divide by zero!   Some quick error checking will fix that right up:</p>
 
@@ -1357,7 +1357,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="image-container " >
 	
@@ -1418,7 +1418,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <a name="_1_7_vector_motion_velocity"></a>
 <h2>1.7 Vector Motion: Velocity</h2>
@@ -1448,7 +1448,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>And then we draw the object at that location:</p>
 
@@ -1475,7 +1475,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>This is Motion 101.</p>
 <ol class="arabic">
@@ -1530,7 +1530,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Its functionality is just about as simple.  The Mover needs to move and it needs to be seen.  We’ll implement these as functions named <span class="function">update()</span> and <span class="function">display()</span>.  <span class="function">update()</span> is where we’ll put all of our motion logic code and <span class="function">display()</span> is where we will draw the object.</p>
 
@@ -1587,7 +1587,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>We’ve forgotten one crucial item, however: the object’s <strong><em>constructor</em></strong>.  The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object.  It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator: “Mover <span class="var">m</span> = new <span class="function">Mover( );</span> ”.</p>
 <p>In our case, let’s arbitrarily decide to initialize our mover object by giving it a random location and a random velocity.</p>
@@ -1621,7 +1621,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="class">PVector</span> class.  The <span class="class">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
 <p>Let’s finish off the Mover class by incorporating a function to determine what the object should do when it reaches the edge of the window.  For now let’s do something simple, and just have it wrap around the edges.</p>
@@ -1681,7 +1681,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Now that the Mover class is finished, we can look at what we need to do in our main program.  We first declare a Mover object:</p>
 
@@ -1708,7 +1708,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Then initialize the mover in <span class="function">setup()</span>:</p>
 
@@ -1735,7 +1735,7 @@ void draw() {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>and call the appropriate functions in <span class="function">draw()</span>:</p>
 
@@ -1766,7 +1766,7 @@ mover.display();</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Here is the entire example for reference:</p>
 <div class="image-container " >
@@ -1900,7 +1900,7 @@ class Mover {
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <a name="_1_8_vector_motion_acceleration"></a>
 <h2>1.8 Vector Motion: Acceleration</h2>
@@ -1932,7 +1932,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>As an exercise, from this point forward, let’s make a rule for ourselves.  Let’s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them).  In other words, our goal now for programming motion is as follows—come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic.   (In truth, you’ll find reasons to break this rule, but it’s important to illustrate the principles behind our motion algorithm.)  And so we need to come up with some ways to calculate acceleration:</p>
 <p>*ACCELERATION ALGORITHMS!</p>
@@ -1977,7 +1977,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
 
@@ -2015,7 +2015,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>We’re almost done.  The only missing piece is initialization in the constructor.</p>
 
@@ -2042,7 +2042,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Let’s start the mover object in the middle of the window. . .</p>
 
@@ -2069,7 +2069,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <ol class="arabic">
 	
@@ -2102,7 +2102,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>This means that when the sketch starts, the object is at rest.  We don’t have to worry about velocity anymore as we are controlling the object’s motion entirely with acceleration.  Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration.  So let’s pick a value.</p>
 
@@ -2131,7 +2131,7 @@ location.add(velocity);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="class">PVector</span> function <span class="function">limit()</span>.</p>
 
@@ -2159,7 +2159,7 @@ velocity.limit(10);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>This translates to the following:</p>
 <p><em>What is the magnitude of velocity?  If it’s less than 10, no worries; just leave it as is.  If it’s more than 10, however, reduce it to 10!</em></p>
@@ -2260,7 +2260,7 @@ velocity.limit(10);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="example">
 	<h3>Exercise 1-4</h3><p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
@@ -2313,7 +2313,7 @@ velocity.limit(10);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>While normalizing acceleration is not entirely necessary, it does prove useful, as it standardizes the magnitude of the vector, allowing us to try different things. Such as:</p>
 <p>(a) scaling the acceleration to a constant value</p>
@@ -2345,7 +2345,7 @@ acceleration.mult(0.5); // [bold]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>(b) scaling the acceleration to a random value</p>
 
@@ -2376,7 +2376,7 @@ acceleration.mult(random(2)); // [bold]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
 <div class="example">
@@ -2416,7 +2416,7 @@ x = x + y;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="class">PVector</span>.</p>
 
@@ -2447,7 +2447,7 @@ v.add(u);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5).  Easy, right?</p>
 <p>OK, let’s take a look at another example of some simple floating point math:</p>
@@ -2481,7 +2481,7 @@ float z = x + y;</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="class">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
 
@@ -2517,7 +2517,7 @@ PVector w = v.add(u); // [line-through]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
 
@@ -2550,7 +2550,7 @@ PVector w = v.add(u); // [line-through]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <ol class="arabic">
 	
@@ -2592,7 +2592,7 @@ v.add(u);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="class">PVector*’s static functions allow us to perform generic mathematical operations on [class]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
 
@@ -2626,7 +2626,7 @@ v.add(u);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>There are several differences here:</p>
 <ul>
@@ -2677,7 +2677,7 @@ PVector w = PVector.add(v,u); // [bold]</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>The PVector class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
 <div class="example">
@@ -2761,7 +2761,7 @@ PVector dir = PVector.sub(mouse,location);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>We now have a <span class="class">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
 <p>In order to set the magnitude (whatever it may be) of our acceleration PVector, we must first <em><em></em>__</em> that direction vector.  That’s right, you said it.  <strong><em>Normalize</em></strong>.   If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value.   One multiplied by anything equals anything.</p>
@@ -2793,7 +2793,7 @@ dir.mult(anything);</textarea>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>To summarize, we take the following steps:</p>
 <ol class="arabic">
@@ -2896,7 +2896,7 @@ Assign that vector to acceleration
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <p>You may be wondering why the circle doesn’t stop when it reaches the target.  It’s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on, and so forth.   Stay tuned; in later chapters we’ll learn how to program an object to “arrive” at a location (slow down on approach).</p>
 <div class="example">
@@ -3095,7 +3095,7 @@ set to acceleration</span>
   </div>
 
 </div>
-  <button class="toggle">Show Raw</button>
+  <button class="toggle" data-to-raw='Show Raw' data-to-formatted='Show Formatted'>Show Raw</button>
 </div>
 <div class="tip">
 	<h3>Ecosystem Project:</h3><p>As mentioned in the preface, one way to use this book is to build a single project over the course of reading it, incorporating elements from each chapter one step at a time.  We’ll follow the development of an example project throughout this book—an “ecosystem” simulation.  Imagine a population of computational creatures swimming around a digital pond, interacting with each other according to various rules.</p>

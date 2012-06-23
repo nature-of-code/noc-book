@@ -51,22 +51,24 @@ leftAlignCommentLine = function($codeCommentPair) {
 }
 
 // Public: Toggle between formatted code markup and a textarea of the raw code.
+// Changes text of the button based on data attributes of button.toggle.
+// To change what the button says, see `views/source.html.erb`.
 //
 // $toggle - a jQuery object corresponding to the clicked button.toggle 
 //
 // Returns nothing.
 toggleCodeDisplay = function($toggle) {
   $sourceCode = $toggle.parent('.source-code');
-  if($toggle.html() === 'Show Raw'){
+  if($toggle.html() === $toggle.data()['toRaw']){
     $sourceCode
       .find('textarea').show().end()
       .find('.code-block').hide().end()
-      .find('.toggle').html('Show Formatted');
+      .find('.toggle').html($toggle.data()['toFormatted']);
   } else {
     $sourceCode
       .find('textarea').hide().end()
       .find('.code-block').show().end()
-      .find('.toggle').html('Show Raw');
+      .find('.toggle').html($toggle.data()['toRaw']);
   }
 }
 
