@@ -19,7 +19,11 @@ A vector is typically drawn as a arrow; the direction is indicated by where the 
 
 image::imgs/chapter01_1-01.png[classname="half-width"]
 
+<<<<<<< HEAD
 In the diagram to the left [notetoself]*[reference figure # instead?]*, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.
+=======
+In the diagram above, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.
+>>>>>>> rune
 
 == 1.1 Vectors, You Complete Me
 
@@ -68,11 +72,25 @@ void draw() {
 
 In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.
 
+<<<<<<< HEAD
+Table "[options=""header,footer""]
+|=======================
+|heading |heading | heading
+|field   |field   |field
+|field   |field   |field
+|=======================
+
+[notetoself]*will format stuff below as a table*
+
+*_LOCATION:_* *_x and y_* + 
+*_SPEED:_*    *_xspeed and yspeed_* + 
+=======
 [NOTE]
 ==============================
 Location: _x and y_ + 
 Speed:    _xspeed and yspeed_
 ==============================
+>>>>>>> rune
 
 In a more advanced sketch, we could imagine having many more variables:
 
@@ -108,7 +126,11 @@ Vector speed;
 
 Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.
 
+<<<<<<< HEAD
+As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use—[klass]*PVector*—allows for three dimensions.)  However, for the time being, it’s easier to start with just two.
+=======
 As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use — [klass]*PVector* — allows for three dimensions.)  However, for the time being, it’s easier to start with just two.
+>>>>>>> rune
 
 == 1.2 Vectors: What are they to us Processing programmers?
 
@@ -138,11 +160,16 @@ Nevertheless, another way to describe a location is the path taken from the orig
 
 Let’s examine the underlying data for both location and velocity.  In the bouncing ball example we had the following:
 
+<<<<<<< HEAD
+- location —> [var]*x*,[var]*y*
+- velocity —> [var]*xspeed*,[var]*yspeed*
+=======
 [NOTE]
 ==============================
 location —> [var]*x*,[var]*y
 velocity —> [var]*xspeed*,[var]*yspeed*
 ==============================
+>>>>>>> rune
 
 Notice how we are _storing the same data for both_ — two floating point numbers, an x and a y. If we were to write a vector class ourselves, we’d start with something rather basic:
 
@@ -173,7 +200,11 @@ float xspeed = 1;
 float yspeed = 3.3;
 ----
 
+<<<<<<< HEAD
+becomes . . .
+=======
 {empty}... becomes ...
+>>>>>>> rune
 
 [source,java]
 ----
@@ -198,7 +229,11 @@ In an ideal world, we would be able to rewrite the above as:
 location = location + velocity;
 ----
 
+<<<<<<< HEAD
+However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two [klass]*PVector* objects together any more than it knows how to add two *_PFont_* objects or *_PImage_* objects.   Fortunately for us, the [klass]*PVector* class includes functions for common mathematical operations.
+=======
 However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two [klass]*PVector* objects together any more than it knows how to add two [klass]*PFont* objects or [klass]*PImage* objects.   Fortunately for us, the [klass]*PVector* class includes functions for common mathematical operations.
+>>>>>>> rune
 
 == 1.3 Vector Addition
 
@@ -206,8 +241,13 @@ Before we continue looking at the [klass]*PVector* class and its [function]*add(
 
 Vectors are typically written either in boldface type or with an arrow on top.  For the purposes of this book, to distinguish a *_vector_* from a *scalar* (scalar refers to a single value, such as an integer or a floating point number), we’ll use the arrow notation:
 
+<<<<<<< HEAD
 - Vector: [vector]*u*￼
 - Scalar: [var]*x*
+=======
+Vector: [vector]*u* + 
+Scalar: [var]*x*
+>>>>>>> rune
 
 Let’s say I have the following two vectors:
 
@@ -237,6 +277,14 @@ and therefore:
 - [vector]*w* =  (8,6)
 
 Now that we understand how to add two vectors together, we can look at how addition is implemented in the [klass]*PVector* class itself.    Let’s write a function called [function]*add()* that takes as its argument another [klass]*PVector* object.
+<<<<<<< HEAD
+=======
+
+[source,java]
+----
+x = 5; // [bold]
+----
+>>>>>>> rune
 
 [source,java]
 ----
@@ -346,6 +394,22 @@ Extend the bouncing ball with vectors example into 3D.  Can you get a sphere to 
 
 Addition was really just the first step.   There are many mathematical operations that are commonly used with vectors.   Below is a comprehensive list of the operations available as functions in the [klass]*PVector* class.  We’ll go through a few of the key ones now.  As our examples get more and more sophisticated in later chapters, we’ll continue to reveal the details of more functions.
 
+<<<<<<< HEAD
+- [function]*add()*—add vectors
+- [function]*sub()*—subtract vectors
+- [function]*mult()*—scale the vector with multiplication
+- [function]*div()*—scale the vector with division
+- [function]*mag()*—calculate the magnitude of a vector
+- [function]*normalize()*—normalize the vector to unit length of 1
+- [function]*limit()*—limit the magnitude of a vector
+- [function]*heading2D()*—the heading of a vector expressed as an angle
+- [function]*rotate()*—rotate a 2D vector by an angle
+- [function]*dist()*—the Euclidean distance between two vectors (considered as points)
+- [function]*angleBetween()*—find the angle between two vectors
+- [function]*dot()*—the dot product of two vectors
+- [function]*cross()*—the cross product of two vectors (only relevant in three dimensions)
+- [notetoself]*[CHECK WHAT NEW ONES I’M ADDING IN 2.0]*
+=======
 - [function]*add()* — add vectors
 - [function]*sub()* — subtract vectors
 - [function]*mult()* — scale the vector with multiplication
@@ -360,6 +424,7 @@ Addition was really just the first step.   There are many mathematical operation
 - [function]*dot()* — the dot product of two vectors
 - [function]*cross()* — the cross product of two vectors (only relevant in three dimensions)
 - [notetoself]*CHECK WHAT NEW ONES I’M ADDING IN 2.0*
+>>>>>>> rune
 
 Having already covered addition, let’s start with subtraction.  This one’s not so bad; just take the plus sign and replace it with a minus!
 
@@ -372,8 +437,11 @@ translates to:
 * [var]*w*~x~ = [var]*u*~x~ - [var]*v*~x~
 * [var]*w*~y~ = [var]*u*~y~ - [var]*v*~y~
 
+<<<<<<< HEAD
 image::imgs/chapter01_8-01.png[Figure 1.x: Vector Subtraction]
 
+=======
+>>>>>>> rune
 and the function inside [klass]*PVector* therefore looks like:
 
 [source,java]
@@ -414,8 +482,13 @@ void draw() {
 }
 ----
 
+<<<<<<< HEAD
 [breakout]
 .Basic Number Properties with Vectors
+=======
+[NOTE]
+.Need Heading
+>>>>>>> rune
 =====================================================================
 Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.
 
@@ -520,8 +593,15 @@ PVector u = new PVector(8,-4);
 u.div(2);
 ----
 
+<<<<<<< HEAD
 [breakout]
 .More Number Properties with Vectors
+=======
+image::imgs/chapter01_13-01.png[]
+
+[NOTE]
+.
+>>>>>>> rune
 =====================================================================
 As with addition, basic algebraic rules of multiplication and division apply to vectors.
 
@@ -536,7 +616,17 @@ The distributive rule with 2 vectors, 1 scalar:   ([vector]*u*￼+ [vector]*v*) 
 
 Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction.  Perhaps you’re wondering: “OK, so how do I know what the length of a vector is?  I know the components ([var]*x* and [var]*y*), but how long (in pixels) is the actual arrow?!” 
 
+<<<<<<< HEAD
 image::imgs/chapter01_13-01.png[alt="The length or “magnitude” of a vector [vector]*v* is often written as: ||[vector]*v*||",classname="half-width-right"]
+=======
+image::imgs/chapter01_14-01.png[]
+
+[NOTE]
+.
+=====================================================================
+The length or “magnitude” of a vector [vector]*v* is often written as: ||￼[vector]*v* ||
+=====================================================================
+>>>>>>> rune
 
 Understanding how to calculate the length (also known as *_magnitude_*) of a vector is incredibly useful and important. 
 

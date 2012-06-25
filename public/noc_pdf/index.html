@@ -10,23 +10,32 @@
 	<link rel="stylesheet" href="stylesheets/print.css" type="text/css">
 </head>
 <body>
-	<div id="container">
-		<h1>Chapter 1.  Vectors</h1><blockquote>
-	“Roger, Roger. What’s our vector, Victor?”
-        —Captain Oveur, Airplane
+	<h1>Chapter 1.  Vectors</h1><blockquote>
+	Roger, Roger. What’s our vector, Victor?
+	
+		<span class="attribution">
+Captain Oveur (Airplane)
+</span>
 	
 </blockquote><p>This book is all about looking at the world around us and coming up with clever ways to simulate that world with code.  Divided into three parts, the book will start by looking at basic physics—how an apple falls from a tree, a pendulum swings in the air, the earth revolves around the sun, etc.  Absolutely everything contained within the first five chapters of this book requires the use of the most basic building block for programming motion—the <strong><em>vector</em></strong>.   And so this is where we begin our story.</p>
 <p>Now, the word <strong><em>vector</em></strong> can mean a lot of different things. Vector is the name of a new wave rock band formed in Sacramento, CA in the early 1980s.  It’s the name of a breakfast cereal manufactured by Kellogg’s Canada.   In the field of epidemiology, a vector is used to describe an organism that transmits infection from one host to another.  In the C++ programming language, a Vector (std::vector) is an implementation of a dynamically resizable array data structure.  While all these definitions are interesting, they’re not what we are looking for.   What we want is called a <strong>Euclidean vector</strong> (named for the Greek mathematician Euclid and also known as a geometric vector).  When you see the term “vector” in this book, you can assume it refers to a Euclidean vector defined as:</p>
-<p><strong><em>A vector is an entity that has both magnitude and direction.</em></strong></p>
-<p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
-<img src="imgs/chapter01_1-01.png" class="half-width" />
-<span class="caption">imgs/chapter01_1-01.png</span><p><span class="notetoself">REDO THIS DIAGRAM NOW TO FIT NEW DEFINITION</span></p>
+<div class="note">
+	<p>A vector is an entity that has both magnitude and direction</p>
+
+</div><p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
+<div class="image-container half-width" >
+	<img src="imgs/chapter01_1-01.png" alt="imgs/chapter01_1-01.png" />
+	
+</div>
 <p>In the diagram above, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.</p>
 <a name="_1_1_vectors_you_complete_me"></a>
 <h2>1.1 Vectors, You Complete Me</h2>
 <p>Before we dive into more of the details about vectors, let’s look at a basic Processing example that demonstrates why we should care about vectors in the first place.  If you’ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you’ve done one of these things to help prepare you for this book), you probably, at one point or another, learned to how to write a simple bouncing ball sketch.</p>
-<img src="imgs/chapter01_2-01.png"  />
-<span class="caption">imgs/chapter01_2-01.png</span><a name="_example_1_1_bouncing_ball_with_no_vectors"></a>
+<div class="image-container " >
+	<img src="imgs/chapter01_2-01.png" alt="imgs/chapter01_2-01.png" />
+	
+</div>
+<a name="_example_1_1_bouncing_ball_with_no_vectors"></a>
 <h3>Example 1.1: Bouncing ball with no vectors</h3>
 
 
@@ -88,10 +97,18 @@
   </div>
 
 </div><p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.</p>
-<p><strong><em>LOCATION:</em></strong><strong><em>x and y</em></strong><br /><strong><em>SPEED:</em></strong><strong><em>xspeed and yspeed</em></strong><br /></p>
-<p>In a more advanced sketch, we could imagine having many more variables:</p>
-<p><strong><em>ACCELERATION:</em></strong><strong><em>xacceleration and yacceleration</em></strong><br /><strong><em>TARGET LOCATION:</em></strong><strong><em>xtarget and ytarget</em></strong><br /><strong><em>WIND:</em></strong><strong><em>xwind and ywind</em></strong><br /><strong><em>FRICTION:</em></strong><strong><em>xfriction and yfriction</em></strong><br /></p>
-<p>It’s becoming more and more clear that for every concept in this world (wind, location, acceleration, etc.), we need two variables.  And this is only a two-dimensional world. In a 3D world, we’ll need <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>, <span class="var">xspeed</span>, <span class="var">yspeed</span>, <span class="var">zspeed</span>, and so on.</p>
+<div class="note">
+	<p>Location: <em>x and y</em><br />
+Speed:    <em>xspeed and yspeed</em></p>
+
+</div><p>In a more advanced sketch, we could imagine having many more variables:</p>
+<div class="note">
+	<p>Acceleration:     <em>xacceleration and yacceleration</em><br />
+Target location:  <em>xtarget and ytarget</em><br />
+Wind:             <em>xwind and ywind</em><br />
+Friction:         <em>xfriction and yfriction</em></p>
+
+</div><p>It’s becoming more and more clear that for every concept in this world (wind, location, acceleration, etc.), we need two variables.  And this is only a two-dimensional world. In a 3D world, we’ll need <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>, <span class="var">xspeed</span>, <span class="var">yspeed</span>, <span class="var">zspeed</span>, and so on.</p>
 <p>Wouldn’t it be nice if we could simplify our code and use fewer variables?</p>
 <p>Instead of:</p>
 
@@ -140,27 +157,38 @@
   </div>
 
 </div><p>Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
-<p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use—[class]*PVector*—allows for three dimensions.)  However, for the time being, it’s easier to start with just two.</p>
+<p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use — <span class="klass">PVector</span> — allows for three dimensions.)  However, for the time being, it’s easier to start with just two.</p>
 <a name="_1_2_vectors_what_are_they_to_us_processing_programmers"></a>
 <h2>1.2 Vectors: What are they to us Processing programmers?</h2>
 <p>One way to think of a vector is the difference between two points.   Consider how you might go about providing instructions to walk from one point to another.</p>
 <p>Here are some vectors and possible translations:</p>
-<img src="imgs/chapter01_3-01.png"  />
-<span class="caption">imgs/chapter01_3-01.png</span><p>(  3, 5) —> Walk three steps east, turn and walk five steps north.
+<div class="image-container " >
+	<img src="imgs/chapter01_3-01.png" alt="imgs/chapter01_3-01.png" />
+	
+</div>
+<p>(  3, 5) —> Walk three steps east, turn and walk five steps north.
 (  2,-1) —> Walk two steps east, turn and walk one step south.
 (-15, 3) —> Walk fifteen steps west, turn and walk three steps north.</p>
 <p>You’ve probably done this before when programming motion.  For every frame of animation (i.e.  a single cycle through Processing’s <span class="function">draw()</span> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
-<img src="imgs/chapter01_4-01.png" class="half-width" />
-<span class="caption">imgs/chapter01_4-01.png</span><p>For every frame:</p>
-<p><strong><em>new location = velocity applied to current location</em></strong></p>
+<div class="image-container half-width" >
+	<img src="imgs/chapter01_4-01.png" alt="imgs/chapter01_4-01.png" />
+	
+</div>
+<p>For every frame:</p>
+<p>new location = velocity applied to current location</p>
 <p>If velocity is a vector (the difference between two points), what is location?   Is it a vector too?  Technically, one might argue that location is not a vector, since it’s not describing how to move from one point to another—it’s simply describing a singular point in space.  And so conceptually, we think of a location as different.</p>
-<img src="imgs/chapter01_5-01.png"  />
-<span class="caption">imgs/chapter01_5-01.png</span><p><span class="notetoself">CONSIDER COMBINING / INTEGRATING THIS DIAGRAM WITH PREVIOUS ONE BETTER</span></p>
+<div class="image-container " >
+	<img src="imgs/chapter01_5-01.png" alt="imgs/chapter01_5-01.png" />
+	
+</div>
+<p><span class="notetoself">CONSIDER COMBINING / INTEGRATING THIS DIAGRAM WITH PREVIOUS ONE BETTER</span></p>
 <p>Nevertheless, another way to describe a location is the path taken from the origin to reach that location. Hence, a location can be the vector representing the difference between location and origin.</p>
 <p>Let’s examine the underlying data for both location and velocity.  In the bouncing ball example we had the following:</p>
-<p>location —> <span class="var">x</span>,<span class="var">y
+<div class="note">
+	<p>location —> <span class="var">x</span>,<span class="var">y
 velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
-<p>Notice how we are storing the _same data for both_—two floating point numbers, an x and a y. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
+
+</div><p>Notice how we are storing the _same data for both_—two floating point numbers, an x and a y. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
 
 
 
@@ -191,8 +219,8 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><p>At its core, a <span class="class">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
-<p>And so this. . .</p>
+</div><p>At its core, a <span class="klass">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
+<p>And so this …</p>
 
 
 
@@ -216,14 +244,8 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
 <span class='one-line'><span class="kt">float</span> <span class="n">yspeed</span> <span class="o">=</span> <span class="mf">3.3</span><span class="o">;</span></span></pre></code>
   </div>
 
-</div><ol class="arabic">
-	
-		<li><p>
-. . becomes . . .
-</p>
-</li>
-	
-</ol>
+</div><p>… becomes …</p>
+
 
 
 
@@ -284,26 +306,32 @@ velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
   <div class="code-comment-pair">
     <div class="code-comment-line"></div>
     <span class="code-comment">Add the velocity vector to the location vector.</span>
-    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span>  <span class="c1">// [line-through, bold]</span></span></pre></code>
+    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span></span></pre></code>
   </div>
 
-</div><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
+</div><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="klass">PVector</span> objects together any more than it knows how to add two <span class="klass">PFont</span> objects or <span class="klass">PImage</span> objects.   Fortunately for us, the <span class="klass">PVector</span> class includes functions for common mathematical operations.</p>
 <a name="_1_3_vector_addition"></a>
 <h2>1.3 Vector Addition</h2>
-<p>Before we continue looking at the <span class="class">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks</p>
+<p>Before we continue looking at the <span class="klass">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks</p>
 <p>Vectors are typically written either in boldface type or with an arrow on top.  For the purposes of this book, to distinguish a <strong><em>vector</em></strong> from a <strong>scalar</strong> (scalar refers to a single value, such as an integer or a floating point number), we’ll use the arrow notation:</p>
-<p>Vector: <span class="vector">u*￼
-Scalar: [var]*x</span></p>
+<p>Vector: <span class="vector">u</span><br />
+Scalar: <span class="var">x</span></p>
 <p>Let’s say I have the following two vectors:</p>
-<img src="imgs/chapter01_6-01.png"  />
-<span class="caption">imgs/chapter01_6-01.png</span><p>Each vector has two components, an x and a y.  To add two vectors together we simply add both x’s and both y’s.  In other words:</p>
-[vector]*w* = Vector: [vector]*u* + Vector: [vector]*v*<img src="imgs/chapter01_7-01.png" class="half-width-right" />
-<span class="caption">imgs/chapter01_7-01.png</span><p>translates to:</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_6-01.png" alt="imgs/chapter01_6-01.png" />
+	
+</div>
+<p>Each vector has two components, an x and a y.  To add two vectors together we simply add both x’s and both y’s.  In other words:</p>
+[vector]*w* = Vector: [vector]*u* + Vector: [vector]*v*<div class="image-container half-width-right" >
+	<img src="imgs/chapter01_7-01.png" alt="imgs/chapter01_7-01.png" />
+	
+</div>
+<p>translates to:</p>
 [vector]*w*~x~ = [var]*u~x~* + [var]*v~x~*
 [vector]*w*~y~ = [var]*u~y~* + [var]*v~y~*<p>and therefore:</p>
 [vector]*w*~x~ =  5 + 3
 [vector]*w*~y~ =  2 + 4<p>and therefore:</p>
-[vector]*w* =  (8,6)<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="class">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="class">PVector</span> object.</p>
+[vector]*w* =  (8,6)<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="klass">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="klass">PVector</span> object.</p>
 
 
 
@@ -358,7 +386,7 @@ Scalar: [var]*x</span></p>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><p>Now that we see how <span class="function">add()</span> is written inside of <span class="class">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
+</div><p>Now that we see how <span class="function">add()</span> is written inside of <span class="klass">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
 
 
 
@@ -380,7 +408,7 @@ Scalar: [var]*x</span></p>
 <span class='one-line'><span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><p>And here we are, ready to rewrite the bouncing ball example using <span class="class">PVector</span>.</p>
+</div><p>And here we are, ready to rewrite the bouncing ball example using <span class="klass">PVector</span>.</p>
 <a name="_example_1_2_bouncing_ball_with_pvector"></a>
 <h3>Example 1.2: Bouncing ball with PVector!</h3>
 
@@ -430,8 +458,8 @@ Scalar: [var]*x</span></p>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="class">PVector</span> will become more apparent.</p>
-<p>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <span class="class">PVector</span> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <span class="class">PVector</span> individually.  When we go to draw an object in Processing, there’s no means for us to say:</p>
+</div><p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="klass">PVector</span> will become more apparent.</p>
+<p>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <span class="klass">PVector</span> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <span class="klass">PVector</span> individually.  When we go to draw an object in Processing, there’s no means for us to say:</p>
 
 
 
@@ -452,7 +480,7 @@ Scalar: [var]*x</span></p>
     <code><pre><span class='one-line'><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
   </div>
 
-</div><p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
+</div><p>The <span class="function">ellipse()</span> function does not allow for a <span class="klass">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="klass">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
 
 
 
@@ -507,82 +535,69 @@ Scalar: [var]*x</span></p>
 
 </div><a name="_1_4_more_vector_math"></a>
 <h2>1.4 More Vector Math</h2>
-<p>Addition was really just the first step.   There are many mathematical operations that are commonly used with vectors.   Below is a comprehensive list of the operations available as functions in the <span class="class">PVector</span> class.  We’ll go through a few of the key ones now.  As our examples get more and more sophisticated in later chapters, we’ll continue to reveal the details of more functions.</p>
+<p>Addition was really just the first step.   There are many mathematical operations that are commonly used with vectors.   Below is a comprehensive list of the operations available as functions in the <span class="klass">PVector</span> class.  We’ll go through a few of the key ones now.  As our examples get more and more sophisticated in later chapters, we’ll continue to reveal the details of more functions.</p>
 <ul>
 	
-		<li><p>
-[function]*add()*—add vectors
+		<li><p><span class="function">add()</span> — add vectors
 </p>
 </li>
 	
-		<li><p>
-[function]*sub()*—subtract vectors
+		<li><p><span class="function">sub()</span> — subtract vectors
 </p>
 </li>
 	
-		<li><p>
-[function]*mult()*—scale the vector with multiplication
+		<li><p><span class="function">mult()</span> — scale the vector with multiplication
 </p>
 </li>
 	
-		<li><p>
-[function]*div()*—scale the vector with division
+		<li><p><span class="function">div()</span> — scale the vector with division
 </p>
 </li>
 	
-		<li><p>
-[function]*mag()*—calculate the magnitude of a vector
+		<li><p><span class="function">mag()</span> — calculate the magnitude of a vector
 </p>
 </li>
 	
-		<li><p>
-[function]*normalize()*—normalize the vector to unit length of 1
+		<li><p><span class="function">normalize()</span> — normalize the vector to unit length of 1
 </p>
 </li>
 	
-		<li><p>
-[function]*limit()*—limit the magnitude of a vector
+		<li><p><span class="function">limit()</span> — limit the magnitude of a vector
 </p>
 </li>
 	
-		<li><p>
-[function]*heading2D()*—the heading of a vector expressed as an angle
+		<li><p><span class="function">heading2D()</span> — the heading of a vector expressed as an angle
 </p>
 </li>
 	
-		<li><p>
-[function]*rotate()*—rotate a 2D vector by an angle
+		<li><p><span class="function">rotate()</span> — rotate a 2D vector by an angle
 </p>
 </li>
 	
-		<li><p>
-[function]*dist()*—the Euclidean distance between two vectors (considered as points)
+		<li><p><span class="function">dist()</span> — the Euclidean distance between two vectors (considered as points)
 </p>
 </li>
 	
-		<li><p>
-[function]*angleBetween()*—find the angle between two vectors
+		<li><p><span class="function">angleBetween()</span> — find the angle between two vectors
 </p>
 </li>
 	
-		<li><p>
-[function]*dot()*—the dot product of two vectors
+		<li><p><span class="function">dot()</span> — the dot product of two vectors
 </p>
 </li>
 	
-		<li><p>
-[function]*cross()*—the cross product of two vectors (only relevant in three dimensions)
+		<li><p><span class="function">cross()</span> — the cross product of two vectors (only relevant in three dimensions)
 </p>
 </li>
 	
-		<li><p><span class="note to self">[CHECK WHAT NEW ONES I’M ADDING IN 2.0]</span></p>
+		<li><p><span class="notetoself">CHECK WHAT NEW ONES I’M ADDING IN 2.0</span></p>
 </li>
 	
 </ul><p>Having already covered addition, let’s start with subtraction.  This one’s not so bad; just take the plus sign and replace it with a minus!</p>
 <p><strong><em>Vector subtraction:</em></strong><span class="vector">w</span>=<span class="vector">u</span> - <span class="vector">v</span></p>
 <p>translates to:    <span class="vector">w</span><sub>x</sub> = u<sub>x</sub> - v<sub>x</sub>
                   <span class="vector">w</span><sub>y</sub> = u<sub>y</sub> - v<sub>y</sub></p>
-<p>and the function inside <span class="class">PVector</span> therefore looks like:</p>
+<p>and the function inside <span class="klass">PVector</span> therefore looks like:</p>
 
 
 
@@ -606,10 +621,16 @@ Scalar: [var]*x</span></p>
 <span class='one-line'>  <span class="o">}</span></span></pre></code>
   </div>
 
-</div><img src="imgs/chapter01_8-01.png"  />
-<span class="caption">imgs/chapter01_8-01.png</span><p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
-<img src="imgs/chapter01_9-01.png"  />
-<span class="caption">imgs/chapter01_9-01.png</span><a name="_example_1_3_vector_subtraction"></a>
+</div><div class="image-container " >
+	<img src="imgs/chapter01_8-01.png" alt="imgs/chapter01_8-01.png" />
+	
+</div>
+<p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_9-01.png" alt="imgs/chapter01_9-01.png" />
+	
+</div>
+<a name="_example_1_3_vector_subtraction"></a>
 <h3>Example 1-3: Vector subtraction</h3>
 
 
@@ -655,7 +676,7 @@ Scalar: [var]*x</span></p>
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><div class="example">
+</div><div class="note">
 	<h3>Need Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
 <p><strong><em>The commutative rule:</em></strong><span class="vector">u</span> + <span class="vector">v*￼ = [vector]*v</span> + [vector]*u*￼</p>
 <p><strong><em>The associative rule:</em></strong> ￼[vector]<strong>u</strong> + (<span class="vector">v</span> + <span class="vector">w</span>)  = (￼[vector]<strong>u</strong> + <span class="vector">v</span>) + [vector]*w*￼</p>
@@ -670,7 +691,7 @@ Scalar: [var]*x</span></p>
 [vector]*u* = (-3,7)
 n = 3[vector]*w* = [vector]*u* * n
 w~x~ = -3 * 3
-w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class">PVector</span> class therefore is written as:</p>
+w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="klass">PVector</span> class therefore is written as:</p>
 
 
 
@@ -716,8 +737,11 @@ w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class
 <span class='one-line'><span class="n">u</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><img src="imgs/chapter01_11-01.png"  />
-<span class="caption">imgs/chapter01_11-01.png</span><a name="_example_1_4_multiplying_a_vector"></a>
+</div><div class="image-container " >
+	<img src="imgs/chapter01_11-01.png" alt="imgs/chapter01_11-01.png" />
+	
+</div>
+<a name="_example_1_4_multiplying_a_vector"></a>
 <h3>Example 1-4: Multiplying a vector</h3>
 
 
@@ -758,8 +782,11 @@ w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><img src="imgs/chapter01_12-01.png"  />
-<span class="caption">imgs/chapter01_12-01.png</span><p>Division works just like multiplication—we simply replace the multiplication sign (asterisk) with the division one (forward slash).</p>
+</div><div class="image-container " >
+	<img src="imgs/chapter01_12-01.png" alt="imgs/chapter01_12-01.png" />
+	
+</div>
+<p>Division works just like multiplication—we simply replace the multiplication sign (asterisk) with the division one (forward slash).</p>
 
 
 
@@ -786,22 +813,35 @@ w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class
 <span class='one-line'><span class="n">u</span><span class="o">.</span><span class="na">div</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><img src="imgs/chapter01_13-01.png"  />
-<span class="caption">imgs/chapter01_13-01.png</span><p>.</p>
-<p>As with addition, basic algebraic rules of multiplication and division apply to vectors.</p>
+</div><div class="image-container " >
+	<img src="imgs/chapter01_13-01.png" alt="imgs/chapter01_13-01.png" />
+	
+</div>
+<div class="note">
+	<p>.</p>
+
+</div><p>As with addition, basic algebraic rules of multiplication and division apply to vectors.</p>
 <p>The associative rule:   (<span class="var">n</span> * <span class="var">m</span>) <strong>￼[vector]*v</strong> = <span class="var">n</span> * (<span class="var">m</span> <strong>￼[vector]*v</strong>)
 The distributive rule with 2 scalars, 1 vector:   (<span class="var">n</span> * <span class="var">m</span>) <strong>￼[vector]*v</strong> = <span class="var">n</span> * <span class="vector">v</span> + <span class="var">m</span> <strong>￼[vector]*v</strong>
 The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [vector]*v</span>) * <span class="var">n</span> = <span class="var">n</span> * <span class="vector">u</span> + <span class="var">n</span> * [vector]*v*￼</p>
 <a name="_1_5_vector_magnitude"></a>
 <h2>1.5 Vector Magnitude</h2>
 <p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction.  Perhaps you’re wondering: “OK, so how do I know what the length of a vector is?  I know the components (<span class="var">x</span> and <span class="var">y</span>), but how long (in pixels) is the actual arrow?!”</p>
-<img src="imgs/chapter01_14-01.png"  />
-<span class="caption">imgs/chapter01_14-01.png</span><p>.</p>
-<p>The length or “magnitude” of a vector <span class="vector">v</span> is often written as: ||￼[vector]<strong>v</strong> ||</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_14-01.png" alt="imgs/chapter01_14-01.png" />
+	
+</div>
+<div class="note">
+	<p>.</p>
+
+</div><p>The length or “magnitude” of a vector <span class="vector">v</span> is often written as: ||￼[vector]<strong>v</strong> ||</p>
 <p>Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
 <p>Notice in the above diagram how the vector, drawn as an arrow and two components (<span class="var">x</span> and <span class="var">y</span>), creates a right triangle.  The sides are the components and the hypotenuse is the arrow itself.   We’re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
-<img src="imgs/chapter01_15-01.png"  />
-<span class="caption">imgs/chapter01_15-01.png</span><p>The Pythagorean theorem: <span class="var">a</span> squared plus <span class="var">b</span> squared equals <span class="var">c</span> squared.</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_15-01.png" alt="imgs/chapter01_15-01.png" />
+	
+</div>
+<p>The Pythagorean theorem: <span class="var">a</span> squared plus <span class="var">b</span> squared equals <span class="var">c</span> squared.</p>
 <p>Armed with this formula, we can now compute the magnitude of <span class="vector">v</span> as follows:</p>
 <ul>
 	
@@ -810,7 +850,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </p>
 </li>
 	
-</ul><p>or in <span class="class">PVector</span>:</p>
+</ul><p>or in <span class="klass">PVector</span>:</p>
 
 
 
@@ -834,8 +874,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
   </div>
 
 </div><a name="_example_1_5_vector_magnitude"></a>
-<h3>Example 1-5: Vector magnitude</h3><img src="imgs/chapter01_15-01.png"  />
-<span class="caption">imgs/chapter01_15-01.png</span>
+<h3>Example 1-5: Vector magnitude</h3><div class="image-container " >
+	<img src="imgs/chapter01_15-01.png" alt="imgs/chapter01_15-01.png" />
+	
+</div>
+
 
 
 
@@ -880,8 +923,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </div><a name="_1_6_normalizing_vectors"></a>
 <h2>1.6 Normalizing Vectors</h2>
 <p>Calculating the magnitude of a vector is only the beginning.  The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>.  Normalizing refers to the process of making something “standard” or, well, “normal.”  In the case of vectors, let’s assume for the moment that a standard vector has a length of one.  To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to one, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
-<img src="imgs/chapter01_17-01.png"  />
-<span class="caption">imgs/chapter01_17-01.png</span><p>The ability to quickly access the unit vector is useful since it describes a vector’s direction without regard to length, and we’ll see this come in handy once we start to work with forces in Chapter 2.</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_17-01.png" alt="imgs/chapter01_17-01.png" />
+	
+</div>
+<p>The ability to quickly access the unit vector is useful since it describes a vector’s direction without regard to length, and we’ll see this come in handy once we start to work with forces in Chapter 2.</p>
 <p>For any given vector <span class="vector">u</span>, its unit vector (written as û) is calculated as follows:</p>
 <ul>
 	
@@ -890,8 +936,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </li>
 	
 </ul><p>In other words, to normalize a vector, simply divide each component by its magnitude.  This is pretty intuitive.  Say a vector is of length 5.  Well, 5 divided by 5 is 1.  So looking at our right triangle, we then need to scale the hypotenuse down by dividing by 5.   In that process the sides shrink, divided by 5 as well.</p>
-<img src="imgs/chapter01_18-01.png"  />
-<span class="caption">imgs/chapter01_18-01.png</span><p>In the PVector class, we therefore write our normalization function as follows:</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_18-01.png" alt="imgs/chapter01_18-01.png" />
+	
+</div>
+<p>In the PVector class, we therefore write our normalization function as follows:</p>
 
 
 
@@ -941,8 +990,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <span class='one-line'><span class="o">}</span></span></pre></code>
   </div>
 
-</div><img src="imgs/chapter01_19-01.png"  />
-<span class="caption">imgs/chapter01_19-01.png</span><a name="_example_1_6_normalizing_a_vector"></a>
+</div><div class="image-container " >
+	<img src="imgs/chapter01_19-01.png" alt="imgs/chapter01_19-01.png" />
+	
+</div>
+<a name="_example_1_6_normalizing_a_vector"></a>
 <h3>Example 1-6: Normalizing a vector</h3>
 
 
@@ -980,7 +1032,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 
 </div><a name="_1_7_vector_motion_velocity"></a>
 <h2>1.7 Vector Motion: Velocity</h2>
-<p>Why should we care?  Yes, all this vector math stuff sounds like something we should know about, but why exactly?  How will it actually help us write code?   The truth of the matter is that we need to have some patience.  The awesomeness of using the <span class="class">PVector</span> class will take some time to fully come to light.  This is actually quite common when first learning a new data structure.   For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things.   But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things.  The same can be true for <span class="class">PVector</span>.  What might seem like more work now will pay off later, and pay off quite nicely.  And you don’t have to wait too long, as your reward will come in the next chapter.</p>
+<p>Why should we care?  Yes, all this vector math stuff sounds like something we should know about, but why exactly?  How will it actually help us write code?   The truth of the matter is that we need to have some patience.  The awesomeness of using the <span class="klass">PVector</span> class will take some time to fully come to light.  This is actually quite common when first learning a new data structure.   For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things.   But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things.  The same can be true for <span class="klass">PVector</span>.  What might seem like more work now will pay off later, and pay off quite nicely.  And you don’t have to wait too long, as your reward will come in the next chapter.</p>
 <p>For now, however, we want to focus on simplicity.  What does it mean to program motion using vectors?   We’ve seen the beginning of this in Example 1.2 <strong><em>[REF]</em></strong>: the bouncing ball.   An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next).   Velocity is added to location:</p>
 
 
@@ -1133,7 +1185,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <span class='one-line'>  <span class="o">}</span></span></pre></code>
   </div>
 
-</div><p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="class">PVector</span> class.  The <span class="class">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
+</div><p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="klass">PVector</span> class.  The <span class="klass">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
 <p>Let’s finish off the Mover class by incorporating a function to determine what the object should do when it reaches the edge of the window.  For now let’s do something simple, and just have it wrap around the edges.</p>
 
 
@@ -1238,8 +1290,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
   </div>
 
 </div><p>Here is the entire example for reference:</p>
-<img src="imgs/chapter01_20-01.png"  />
-<span class="caption">imgs/chapter01_20-01.png</span><a name="_example_1_7_motion_101_velocity"></a>
+<div class="image-container " >
+	<img src="imgs/chapter01_20-01.png" alt="imgs/chapter01_20-01.png" />
+	
+</div>
+<a name="_example_1_7_motion_101_velocity"></a>
 <h3>Example 1.7: Motion 101 (velocity)</h3>
 
 
@@ -1312,7 +1367,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 
 </div><a name="_1_8_vector_motion_acceleration"></a>
 <h2>1.8 Vector Motion: Acceleration</h2>
-<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="class">PVector</span> is and (2) how we use <strong><em>PVectors</em></strong> inside of an object to keep track of its location and movement.  This is an excellent first step and deserves a mild round of applause.   Before standing ovations and screaming fans, however, we need to make one more, somewhat larger, step forward.   After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns.  For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="class">PVector</span> to our class—<strong><em>acceleration</em></strong>.</p>
+<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">PVector</span> is and (2) how we use <strong><em>PVectors</em></strong> inside of an object to keep track of its location and movement.  This is an excellent first step and deserves a mild round of applause.   Before standing ovations and screaming fans, however, we need to make one more, somewhat larger, step forward.   After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns.  For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">PVector</span> to our class—<strong><em>acceleration</em></strong>.</p>
 <p>The strict definition of acceleration we’re using here is: the rate of <em>change of velocity</em>.  Let’s think about that definition for a moment.  Is this a new concept?  Not really.  Velocity is defined as <em>the rate of change of location</em>.  In essence, we are developing a “trickle down” effect.  Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter when we see how forces affect acceleration, which affects velocity, which affects location.)  In code, this reads:</p>
 
 
@@ -1340,7 +1395,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <p>1) A constant acceleration
 2) A totally random acceleration
 3) Acceleration towards the mouse*</p>
-<p>Algorithm #1, a constant acceleration, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code.   The first thing we need to do is add another <span class="class">PVector</span> to the Mover class:</p>
+<p>Algorithm #1, a constant acceleration, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code.   The first thing we need to do is add another <span class="klass">PVector</span> to the Mover class:</p>
 
 
 
@@ -1488,7 +1543,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <span class='one-line'>  <span class="o">}</span></span></pre></code>
   </div>
 
-</div><p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="class">PVector</span> function <span class="function">limit()</span>.</p>
+</div><p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="klass">PVector</span> function <span class="function">limit()</span>.</p>
 
 
 
@@ -1522,8 +1577,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
   }</p>
 
 </div><p>Let’s take a look at the changes to the Mover class, complete with <span class="function">acceleration</span> and <span class="function">limit()</span>.</p>
-<img src="imgs/chapter01_21-01.png"  />
-<span class="caption">imgs/chapter01_21-01.png</span><a name="_example_1_8_motion_101_velocity_and_constant_acceleration"></a>
+<div class="image-container " >
+	<img src="imgs/chapter01_21-01.png" alt="imgs/chapter01_21-01.png" />
+	
+</div>
+<a name="_example_1_8_motion_101_velocity_and_constant_acceleration"></a>
 <h3>Example 1.8: Motion 101 (velocity and constant acceleration)</h3>
 
 
@@ -1578,8 +1636,11 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 	<h3>Exercise 1-4</h3><p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
 
 </div><p>Now to Algorithm #2,“a totally random acceleration.”  In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <span class="function">update()</span> is called.</p>
-<img src="imgs/chapter01_22-01.png"  />
-<span class="caption">imgs/chapter01_22-01.png</span><a name="_example_1_9_motion_101_velocity_and_random_acceleration"></a>
+<div class="image-container " >
+	<img src="imgs/chapter01_22-01.png" alt="imgs/chapter01_22-01.png" />
+	
+</div>
+<a name="_example_1_9_motion_101_velocity_and_random_acceleration"></a>
 <h3>Example 1.9: Motion 101 (velocity and random acceleration)</h3>
 
 
@@ -1661,7 +1722,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 
 </div><a name="_1_9_static_vs_non_static_functions"></a>
 <h2>1.9 Static vs. Non-Static Functions</h2>
-<p>Before we get to acceleration Algorithm #3 (accelerate towards the mouse), we need to cover one more rather important aspect of working with vectors and the <span class="class">PVector</span> class: the difference between using <strong>static</strong> methods and <strong>non-static</strong> methods.</p>
+<p>Before we get to acceleration Algorithm #3 (accelerate towards the mouse), we need to cover one more rather important aspect of working with vectors and the <span class="klass">PVector</span> class: the difference between using <strong>static</strong> methods and <strong>non-static</strong> methods.</p>
 <p>Forgetting about vectors for a moment, take a look at the following code:</p>
 
 
@@ -1686,7 +1747,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <span class='one-line'><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span></span></pre></code>
   </div>
 
-</div><p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="class">PVector</span>.</p>
+</div><p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="klass">PVector</span>.</p>
 
 
 
@@ -1734,7 +1795,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <span class='one-line'><span class="kt">float</span> <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span></span></pre></code>
   </div>
 
-</div><p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="class">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
+</div><p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="klass">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
 
 
 
@@ -1761,7 +1822,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
     <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
   </div>
 
-</div><p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
+</div><p>The above might seem like a good guess, but it’s just not the way the <span class="klass">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
 
 
 
@@ -1788,7 +1849,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </div><ol class="arabic">
 	
 		<li><p>
-. . we see that this code does not accomplish our goal.  First, it does not return a new <span class="class">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="class">PVector</span> upon which it is called.  In order to add two PVector objects together and return the result as a new PVector, we must use the <span class="function">static add()</span> function.
+. . we see that this code does not accomplish our goal.  First, it does not return a new <span class="klass">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="klass">PVector</span> upon which it is called.  In order to add two PVector objects together and return the result as a new PVector, we must use the <span class="function">static add()</span> function.
 </p>
 </li>
 	
@@ -1818,7 +1879,7 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
     <code><pre><span class='one-line'><span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="class">PVector*’s static functions allow us to perform generic mathematical operations on [class]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
+</div><p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="klass">PVector*’s static functions allow us to perform generic mathematical operations on [klass]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
 
 
 
@@ -1851,7 +1912,7 @@ The function is labeled as <strong><em>static</em></strong>.
 </li>
 	
 		<li><p>
-The function does not have a <strong><em>void</em></strong> return type, but rather returns a <span class="class">PVector</span>.
+The function does not have a <strong><em>void</em></strong> return type, but rather returns a <span class="klass">PVector</span>.
 </p>
 </li>
 	
@@ -1918,13 +1979,19 @@ PVector <span class="var">w</span> = </em></em><em><em></em>.<em></em></em>(<em>
 </div><a name="_1_10_interactivity_with_acceleration"></a>
 <h2>1.10 Interactivity with acceleration</h2>
 <p>To finish out this chapter, let’s try something a bit more complex and a great deal more useful.  We’ll dynamically calculate an object’s acceleration according to a rule, acceleration Algorithm #3 —“the object accelerates towards the mouse.”</p>
-<img src="imgs/chapter01_23-01.png"  />
-<span class="caption">imgs/chapter01_23-01.png</span><p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>.  Let’s start with direction.  We know the acceleration vector should point from the object’s location towards the mouse location.  Let’s say the object is located at the point (<span class="var">x</span>,<span class="var">y</span>) and the mouse at (<span class="var">mouseX</span>,<span class="var">mouseY</span>).</p>
-<img src="imgs/chapter01_24-01.png"  />
-<span class="caption">imgs/chapter01_24-01.png</span><p>As illustrated in the above diagram, we see that we can get a vector (<span class="var">dx</span>,<span class="var">dy</span>) by subtracting the object’s location from the mouse’s location.</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_23-01.png" alt="imgs/chapter01_23-01.png" />
+	
+</div>
+<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>.  Let’s start with direction.  We know the acceleration vector should point from the object’s location towards the mouse location.  Let’s say the object is located at the point (<span class="var">x</span>,<span class="var">y</span>) and the mouse at (<span class="var">mouseX</span>,<span class="var">mouseY</span>).</p>
+<div class="image-container " >
+	<img src="imgs/chapter01_24-01.png" alt="imgs/chapter01_24-01.png" />
+	
+</div>
+<p>As illustrated in the above diagram, we see that we can get a vector (<span class="var">dx</span>,<span class="var">dy</span>) by subtracting the object’s location from the mouse’s location.</p>
 <p><strong>[var]*dx</strong> = <span class="var">mouseX</span> - <strong>x<strong>
 *[var]*dy</strong> = <span class="var">mouseY</span> - [var]*y</strong></p>
-<p>Let’s rewrite the above using <span class="class">PVector</span> syntax.   Assuming we are in the Mover class and thus have access to the object’s location <span class="class">PVector</span>, we then have:</p>
+<p>Let’s rewrite the above using <span class="klass">PVector</span> syntax.   Assuming we are in the Mover class and thus have access to the object’s location <span class="klass">PVector</span>, we then have:</p>
 
 
 
@@ -1950,7 +2017,7 @@ PVector <span class="var">w</span> = </em></em><em><em></em>.<em></em></em>(<em>
     <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">mouse</span><span class="o">,</span><span class="n">location</span><span class="o">);</span></span></pre></code>
   </div>
 
-</div><p>We now have a <span class="class">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
+</div><p>We now have a <span class="klass">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
 <p>In order to set the magnitude (whatever it may be) of our acceleration PVector, we must first <em><em></em>__</em> that direction vector.  That’s right, you said it.  <strong><em>Normalize</em></strong>.   If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value.   One multiplied by anything equals anything.</p>
 
 
@@ -1998,8 +2065,11 @@ Assign that vector to acceleration
 </li>
 	
 </ol><p>And here are those steps in the <strong><em>update()</em></strong> function itself:</p>
-<img src="imgs/chapter01_25-01.png"  />
-<span class="caption">imgs/chapter01_25-01.png</span>
+<div class="image-container " >
+	<img src="imgs/chapter01_25-01.png" alt="imgs/chapter01_25-01.png" />
+	
+</div>
+
 
 
 
@@ -2053,8 +2123,11 @@ Assign that vector to acceleration
 <p>This example is remarkably close to the concept of gravitational attraction (in which the object is attracted to the mouse location).  Gravitational attraction will be covered in more detail in the next chapter. However, one thing missing here is that the strength of gravity (magnitude of acceleration) is inversely proportional to distance.  This means that the closer the object is to the mouse, the faster it accelerates.   Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</p>
 
 </div><p>Let’s see what this example would look like with an array of Mover objects (rather than just one).</p>
-<img src="imgs/chapter01_26-01.png"  />
-<span class="caption">imgs/chapter01_26-01.png</span><a name="_example_1_10_accelerating_towards_mouse"></a>
+<div class="image-container " >
+	<img src="imgs/chapter01_26-01.png" alt="imgs/chapter01_26-01.png" />
+	
+</div>
+<a name="_example_1_10_accelerating_towards_mouse"></a>
 <h3>Example 1.10: Accelerating towards mouse</h3>
 
 
@@ -2166,6 +2239,5 @@ set to acceleration</span>
 <p>Develop a set of rules for simulating the real-world behavior of a creature, such as a nervous fly, swimming fish, hopping bunny, slithering snake, etc.  Can you control the object’s motion by only manipulating the acceleration?  Try to give the creature a personality through its behavior (rather than through its visual design.)</p>
 
 </div>
-	</div>
 </body>
 </html>
