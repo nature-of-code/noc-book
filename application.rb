@@ -31,9 +31,10 @@ class Application < Sinatra::Base
     # Page dimensions, 7.5x9.25 inches
     bin_args << { :option => "--page-height", :value => 234.95 }
     bin_args << { :option => "--page-width", :value => 190.5 }
+    bin_args << { :option => "--dpi", :value => 72 }
 
 
-    bin_args << { :option => "--header-html", :value => "templates/print/views/header.html"}
+    bin_args << { :option => "--header-html", :value => "public/noc_pdf/views/header.html"}
     bin_args << { :option => "--header-spacing", :value => 10} # make space between header and content
     bin_args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
     

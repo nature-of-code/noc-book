@@ -1,29 +1,64 @@
+/* Skeleton
+_____________________________________________________________________________ */
+
 body {
   font-size: 13px;
 	font-family: "Georgia", serif;
+	margin: 0;
+	padding: 0;
 }
 
-/* Header / paragraphs */
+#container {
+	padding-top: 2.5em;
+	width: 800px;
+	margin: 0 auto;
+	line-height: 1.317em;
+/*	background-image: url('../imgs/vertical_grid.jpg');*/
+}
+
+/* Fonts
+_____________________________________________________________________________ */
+
+@font-face {
+  font-family: 'Akkurat-Bold';
+  src: url(/fonts/AkkurBol.eot); 
+}
+
+@font-face {
+  font-family: 'Akkurat-Bold';
+  src: url(../fonts/AkkurBol.woff) format("woff"), url(../fonts/AkkurBol.svg#Akkurat-Bold) format("svg"); 
+}
+
+@font-face {
+  font-family: 'Akkurat-Regular';
+  src: url(../fonts/AkkurReg.eot); 
+}
+
+@font-face {
+  font-family: 'Akkurat-Regular';
+  src: url(../fonts/AkkurReg.woff) format("woff"), url(../fonts/AkkurReg.svg#Akkurat-Regular) format("svg"); 
+}
+
 h1, .entry-title {
-	font-size: 467.308%;
+	font-size: 270%;
 	line-height: 1em;
-	font-weight: 700;
 	font-style: normal;
-	margin-bottom:0.3em;
+	margin-bottom:1.7em;
 	margin-top: 0.4444444444444444em;
-	color: #541846;
 }
 
 h2 {
-  font-size: 311.538%;
+  font-size: 150%;
 }
 
 h3 {
-  font-size: 273.500%;
+  font-size: 110%;
 }
 
 h1, h2, h3 {
-  font-family: "skolar", Georgia, serif;
+	font-family: 'Akkurat-Bold', Helvetica, Arial, sans-serif;
+	color: #222;
+	font-weight: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,22 +67,67 @@ h1, h2, h3, h4, h5, h6 {
 
 h2, h3, h4, h5, h6 {
   line-height: 1.317em;
-  margin: 1.2em 0 0.5em;
-}
-
-#container {
-	width: 800px;
-	margin: 0 auto;
-	line-height: 1.317em;
+  margin: 1.6em 0 0.5em;
 }
 
 p {
-	font-size: 138.462%; /* 18 / 13 = 1.38462 */
+	font-size: 120%;
   line-height: 1.618em;
 	letter-spacing:0.03em;
 }
 
-/* Images stuff */
+.line-through {
+	text-decoration: line-through;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+/* Default Elements
+_____________________________________________________________________________ */
+
+blockquote {
+	font-size: 1.8em;
+	margin: 0em 4em 2em 4em;
+	font-style: italic;
+	line-height: 1.65em;
+	position: relative;
+}
+
+blockquote span.attribution {
+	display: block;
+	font-style: normal;
+	font-size: 0.6em;
+}
+
+blockquote .quote_start {
+	position: absolute;
+	top: 0.1em;
+	left: -0.5em;
+	font-size: 4em;
+	font-family: 'Akkurat-Bold', Helvetica;
+}
+
+canvas {
+	border: 1px solid #DCDCDC;
+	border-left: 0.4em solid #272727;
+}
+
+/* Image Classes
+_____________________________________________________________________________ */
+
+img {
+	width: 100%;
+	margin: 0px;
+}
+
+img.screenshot {
+	width: 100%;
+	margin: 0px;
+	border:1px solid gray;
+}
+
 .image-container {
   position: relative;
 }
@@ -75,44 +155,43 @@ p {
 
 .half-width {
   float: left;
-  margin-right: 10px;
+  margin-right: 2em;
 }
 
 .half-width-right {
   float: right;
-  margin-left: 10px;
+  margin-left: 2em;
 }
 
-img {
-	width: 100%;
-	margin: 0px;
+/* Boxes Styling
+_____________________________________________________________________________ */
+
+/* .example = exercises 
+	 .tip = projects
+	 .note = breakout boxes
+*/
+
+.note, .example, .tip {
+	border-left: 0.4em solid #272727;
+	padding: 0.7em 1.5em;
+	background-color: #F4F4F4;
+	margin: 1.15em 0;
 }
 
-img.screenshot {
-	width: 100%;
-	margin: 0px;
-	border:1px solid gray;
-	
+.note h2:first-child, .tip h2:first-child, .example h2:first-child,
+.note h3:first-child, .tip h3:first-child, .example h3:first-child,
+.note p:first-child, .tip p:first-child, .example p:first-child {
+	margin-top: 0;
 }
 
-
-/* Style exercises - we use example boxes for that */
-.example {
-	background-color: #BAD4F6;
-	padding: 16px;
-	margin: 5px;
-}
-
-/* Style example projects - we use tip boxes for that */
-.tip {
-	background-color: #F6E482;
-	padding: 20px;
+.note p:last-child, .tip p:last-child, .example p:last-child {
+	margin-bottom: 0;
 }
 
 /* Style functions */
-.function {
-	color: #285476;
-	font-weight: bold;
+.function, .klass, .var {
+	font-family: "Courier New", monospace;
+	color: #677625;
 }
 
 /* Style note to self */
@@ -121,21 +200,8 @@ img.screenshot {
 	font-weight: bold;
 }
 
-.breakout_box {
-	background-color: #D7D7D7;
-	padding: 10px 20px;
-}
-
-blockquote {
-	font-style: italic;
-}
-
-blockquote span {
-	font-style: normal;
-	display: block;
-	width: 100%;
-	text-align: right;
-}
+/* Code Formatting
+_____________________________________________________________________________ */
 
 pre {
 	width: 100%;
@@ -146,24 +212,9 @@ pre {
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.line-through {
-	text-decoration: line-through;
-}
-
-.underline {
-	text-decoration: underline;
-}
-
-canvas {
-	border: 2px solid gray;
-}
-
-/* CODE BLOCK FORMATTING
-___________________________________________________ */
-
 .source-code {
   background-color: #f8f8f8;
-  margin: 2em 1em;
+  margin: 2em 0em;
   padding: 1.5em;
   position: relative;
 }
@@ -186,6 +237,7 @@ a relatively positioned parent. */
   margin: 0;
   padding: 0;
   overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .code-comment-line {
@@ -207,6 +259,7 @@ a relatively positioned parent. */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+	margin-top: 0.5em;
 }
 
 /* The code goes in here. */
@@ -221,6 +274,9 @@ a relatively positioned parent. */
   width: 100%;
 }
 
-.source-code button {
-  margin-top: 1em;
+.source-code a.toggle {
+  display: inline-block;
+	margin-top: 1em;
+	font-size: 0.8em;
+	color: #656565;
 }

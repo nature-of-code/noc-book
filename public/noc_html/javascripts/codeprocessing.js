@@ -88,5 +88,5 @@ $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
   $('.source-code').each(function(){ setRawCodeHeight($(this)); });
-  $('.toggle').click(function(){ toggleCodeDisplay($(this)); });
+  $('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
