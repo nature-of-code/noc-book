@@ -10,8 +10,7 @@
 	<link rel="stylesheet" href="stylesheets/print.css" type="text/css">
 </head>
 <body>
-	<div id="container">
-		<h1>Chapter 1.  Vectors</h1><blockquote>
+	<h1>Chapter 1.  Vectors</h1><blockquote>
 	“Roger, Roger. What’s our vector, Victor?”
         —Captain Oveur, Airplane
 	
@@ -27,119 +26,51 @@
 <p>Before we dive into more of the details about vectors, let’s look at a basic Processing example that demonstrates why we should care about vectors in the first place.  If you’ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you’ve done one of these things to help prepare you for this book), you probably, at one point or another, learned to how to write a simple bouncing ball sketch.</p>
 <img src="imgs/chapter01_2-01.png"  />
 <span class="caption">imgs/chapter01_2-01.png</span><a name="_example_1_1_bouncing_ball_with_no_vectors"></a>
-<h3>Example 1.1: Bouncing ball with no vectors</h3>
+<h3>Example 1.1: Bouncing ball with no vectors</h3><pre>// Variables for location and speed of ball.
+float x = 100;
+float y = 100;
+float xspeed = 1;
+float yspeed = 3.3;
 
+// Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
+void setup() {
+  size(200,200);
+  smooth();
+  background(255);
+}
 
+void draw() {
+  background(255);
 
+  // Move the ball according to its speed.
+  x = x + xspeed;
+  y = y + yspeed;
 
+  // Check for bouncing
+  if ((x > width) || (x < 0)) {
+    xspeed = xspeed * -1;
+  }
+  if ((y > height) || (y < 0)) {
+    yspeed = yspeed * -1;
+  }
 
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Variables for location and speed of ball.</span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">xspeed</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">yspeed</span> <span class="o">=</span> <span class="mf">3.3</span><span class="o">;</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).</span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Move the ball according to its speed.</span>
-    <code><pre><span class='one-line'>  <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">xspeed</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">yspeed</span><span class="o">;</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Check for bouncing</span>
-    <code><pre><span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">xspeed</span> <span class="o">=</span> <span class="n">xspeed</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">yspeed</span> <span class="o">=</span> <span class="n">yspeed</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Display the ball at the location x,y.</span>
-    <code><pre><span class='one-line'>  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.</p>
+  stroke(0);
+  fill(175);
+  // Display the ball at the location x,y.
+  ellipse(x,y,16,16);
+}</pre><p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around.  This ball has some properties, which are represented in the code as variables.</p>
 <p><strong><em>LOCATION:</em></strong><strong><em>x and y</em></strong><br /><strong><em>SPEED:</em></strong><strong><em>xspeed and yspeed</em></strong><br /></p>
 <p>In a more advanced sketch, we could imagine having many more variables:</p>
 <p><strong><em>ACCELERATION:</em></strong><strong><em>xacceleration and yacceleration</em></strong><br /><strong><em>TARGET LOCATION:</em></strong><strong><em>xtarget and ytarget</em></strong><br /><strong><em>WIND:</em></strong><strong><em>xwind and ywind</em></strong><br /><strong><em>FRICTION:</em></strong><strong><em>xfriction and yfriction</em></strong><br /></p>
 <p>It’s becoming more and more clear that for every concept in this world (wind, location, acceleration, etc.), we need two variables.  And this is only a two-dimensional world. In a 3D world, we’ll need <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>, <span class="var">xspeed</span>, <span class="var">yspeed</span>, <span class="var">zspeed</span>, and so on.</p>
 <p>Wouldn’t it be nice if we could simplify our code and use fewer variables?</p>
 <p>Instead of:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">x</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">y</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">xspeed</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">yspeed</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>Wouldn’t it be nice to have. . .</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">Vector</span> <span class="n">location</span><span class="o">;</span></span>
-<span class='one-line'><span class="n">Vector</span> <span class="n">speed</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
+<pre>float x;
+float y;
+float xspeed;
+float yspeed;</pre><p>Wouldn’t it be nice to have. . .</p>
+<pre>Vector location;
+Vector speed;</pre><p>Taking this first step in using vectors won’t allow us to do anything new.  Just adding vectors won’t magically make your Processing sketches simulate physics; however, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
 <p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters.)  All of these examples can be fairly easily extended to three dimensions (and the class we will use—[class]*PVector*—allows for three dimensions.)  However, for the time being, it’s easier to start with just two.</p>
 <a name="_1_2_vectors_what_are_they_to_us_processing_programmers"></a>
 <h2>1.2 Vectors: What are they to us Processing programmers?</h2>
@@ -161,133 +92,35 @@
 <p>location —> <span class="var">x</span>,<span class="var">y
 velocity —> [var]*xspeed</span>,<span class="var">yspeed</span></p>
 <p>Notice how we are storing the _same data for both_—two floating point numbers, an x and a y. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
+<pre>class PVector {
 
+  float x;
+  float y;
 
+  PVector(float x_, float y_) {
+    x = x_;
+    y = y_;
+  }
 
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kd">class</span> <span class="nc">PVector</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x_</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y_</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>At its core, a <span class="class">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
+}</pre><p>At its core, a <span class="class">PVector</span> is just a convenient way to store two values (or three, as we’ll see in 3D examples.).</p>
 <p>And so this. . .</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">xspeed</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">yspeed</span> <span class="o">=</span> <span class="mf">3.3</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><ol class="arabic">
+<pre>float x = 100;
+float y = 100;
+float xspeed = 1;
+float yspeed = 3.3;</pre><ol class="arabic">
 	
 		<li><p>
 . . becomes . . .
 </p>
 </li>
 	
-</ol>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">100</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mf">3.3</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>Now that we have two vector objects (“location” and “velocity”), we’re ready to implement the algorithm for motion—location = location + velocity.   In Example 1.1, without vectors, we had:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Add each speed to each location.</span>
-    <code><pre><span class='one-line'><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">xspeed</span><span class="o">;</span></span>
-<span class='one-line'><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">yspeed</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>In an ideal world, we would be able to rewrite the above as:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Add the velocity vector to the location vector.</span>
-    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span>  <span class="c1">// [line-through, bold]</span></span></pre></code>
-  </div>
-
-</div><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
+</ol><pre>PVector location = new PVector(100,100);
+PVector velocity = new PVector(1,3.3);</pre><p>Now that we have two vector objects (“location” and “velocity”), we’re ready to implement the algorithm for motion—location = location + velocity.   In Example 1.1, without vectors, we had:</p>
+<pre>// Add each speed to each location.
+x = x + xspeed;
+y = y + yspeed;</pre><p>In an ideal world, we would be able to rewrite the above as:</p>
+<pre>// Add the velocity vector to the location vector.
+location = location + velocity;  // [line-through, bold]</pre><p>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <span class="class">PVector</span> objects together any more than it knows how to add two <strong><em>PFont</em></strong> objects or <strong><em>PImage</em></strong> objects.   Fortunately for us, the <span class="class">PVector</span> class includes functions for common mathematical operations.</p>
 <a name="_1_3_vector_addition"></a>
 <h2>1.3 Vector Addition</h2>
 <p>Before we continue looking at the <span class="class">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks</p>
@@ -304,199 +137,59 @@ Scalar: [var]*x</span></p>
 [vector]*w*~x~ =  5 + 3
 [vector]*w*~y~ =  2 + 4<p>and therefore:</p>
 [vector]*w* =  (8,6)<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="class">PVector</span> class itself.    Let’s write a function called <span class="function">add()</span> that takes as its argument another <span class="class">PVector</span> object.</p>
+<pre>x = 5; // [bold]</pre><pre>class PVector {
 
+  float x;
+  float y;
 
+  PVector(float x_, float y_) {
+    x = x_;
+    y = y_;
+  }
 
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span> <span class="c1">// [bold]</span></span></pre></code>
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kd">class</span> <span class="nc">PVector</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x_</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y_</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">y</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">x</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>Now that we see how <span class="function">add()</span> is written inside of <span class="class">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Add the current velocity to the location.</span>
-    <code><pre><span class='one-line'><span class="n">location</span> <span class="o">=</span> <span class="n">location</span> <span class="o">+</span> <span class="n">velocity</span><span class="o">;</span> <span class="c1">// [line-through]</span></span>
-<span class='one-line'><span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>And here we are, ready to rewrite the bouncing ball example using <span class="class">PVector</span>.</p>
+  void add(PVector v) { // [bold]
+    y = y + v.y; // [bold]
+    x = x + v.x; // [bold]
+  } // [bold]
+}</pre><p>Now that we see how <span class="function">add()</span> is written inside of <span class="class">PVector</span>, we can return to the <strong><em>location + velocity</em></strong> algorithm with our bouncing ball example and implement vector addition:</p>
+<pre>// Add the current velocity to the location.
+location = location + velocity; // [line-through]
+location.add(velocity);</pre><p>And here we are, ready to rewrite the bouncing ball example using <span class="class">PVector</span>.</p>
 <a name="_example_1_2_bouncing_ball_with_pvector"></a>
-<h3>Example 1.2: Bouncing ball with PVector!</h3>
+<h3>Example 1.2: Bouncing ball with PVector!</h3><pre>// Instead of a bunch of floats, we now just have two PVector variables.
+PVector location; // [bold, italic]
+PVector velocity; // [bold, italic]
 
+void setup() {
+  size(200,200);
+  smooth();
+  location = new PVector(100,100); // [bold, italic]
+  velocity = new PVector(2.5,5); // [bold, italic]
+}
 
+void draw() {
+  background(255);
 
+  location.add(velocity); // [bold]
 
+  // We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
+  if ((location.x > width) || (location.x < 0)) { // [bold]
+    velocity.x = velocity.x * -1; // [bold]
+  } // [bold]
+  if ((location.y > height) || (location.y < 0)) { // [bold]
+    velocity.y = velocity.y * -1; // [bold]
+  } // [bold]
 
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Instead of a bunch of floats, we now just have two PVector variables.</span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">location</span><span class="o">;</span> <span class="c1">// [bold, italic]</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span> <span class="c1">// [bold, italic]</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">100</span><span class="o">);</span> <span class="c1">// [bold, italic]</span></span>
-<span class='one-line'>  <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mf">2.5</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span> <span class="c1">// [bold, italic]</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.</span>
-    <code><pre><span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>  <span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">y</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'>  <span class="o">}</span> <span class="c1">// [bold]</span></span>
-
-<span class='one-line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span> <span class="c1">// [bold]</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="class">PVector</span> will become more apparent.</p>
+  stroke(0);
+  fill(175);
+  ellipse(location.x,location.y,16,16); // [bold]
+}</pre><p>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (Chapter 2), the benefits of <span class="class">PVector</span> will become more apparent.</p>
 <p>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <span class="class">PVector</span> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <span class="class">PVector</span> individually.  When we go to draw an object in Processing, there’s no means for us to say:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
-  </div>
-
-</div><p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: location and velocity.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="k">if</span> <span class="o">((</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="na">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><div class="example">
+<pre>ellipse(location,16,16); // [line-through]</pre><p>The <span class="function">ellipse()</span> function does not allow for a <span class="class">PVector</span> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <span class="class">PVector</span> object and pull out the x and y components using object-oriented dot syntax.</p>
+<pre>ellipse(location.x,location.y,16,16);</pre><p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: location and velocity.</p>
+<pre>if ((location.x > width) || (location.x < 0)) {
+  velocity.x = velocity.x * -1;
+}</pre><div class="example">
 	<h3>Exercise 1.1</h3><p>Find something you’ve previously made in Processing using separate <span class="var">x</span> and <span class="var">y</span> variables and use PVectors instead.</p>
 
 </div><div class="example">
@@ -583,79 +276,33 @@ Scalar: [var]*x</span></p>
 <p>translates to:    <span class="vector">w</span><sub>x</sub> = u<sub>x</sub> - v<sub>x</sub>
                   <span class="vector">w</span><sub>y</sub> = u<sub>y</sub> - v<sub>y</sub></p>
 <p>and the function inside <span class="class">PVector</span> therefore looks like:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">sub</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="na">x</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="na">y</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><img src="imgs/chapter01_8-01.png"  />
+<pre>void sub(PVector v) {
+    x = x - v.x;
+    y = y - v.y;
+  }</pre><img src="imgs/chapter01_8-01.png"  />
 <span class="caption">imgs/chapter01_8-01.png</span><p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
 <img src="imgs/chapter01_9-01.png"  />
 <span class="caption">imgs/chapter01_9-01.png</span><a name="_example_1_3_vector_subtraction"></a>
-<h3>Example 1-3: Vector subtraction</h3>
+<h3>Example 1-3: Vector subtraction</h3><pre>void setup() {
+  size(200,200);
+  smooth();
+}
 
+void draw() {
+  background(255);
 
+  // Two PVectors, one for the mouse location and one for the center of the window.
+  PVector mouse  = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
 
+  // PVector subtraction!
+  mouse.sub(center);
 
+  // Draw a line to represent the vector.
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
 
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Two PVectors, one for the mouse location and one for the center of the window.</span>
-    <code><pre><span class='one-line'>  <span class="n">PVector</span> <span class="n">mouse</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">PVector subtraction!</span>
-    <code><pre><span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">center</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Draw a line to represent the vector.</span>
-    <code><pre><span class='one-line'>  <span class="n">translate</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">y</span><span class="o">);</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><div class="example">
+}</pre><div class="example">
 	<h3>Need Heading</h3><p>Both addition and subtraction with vectors follow the same algebraic rules as with real numbers.</p>
 <p><strong><em>The commutative rule:</em></strong><span class="vector">u</span> + <span class="vector">v*￼ = [vector]*v</span> + [vector]*u*￼</p>
 <p><strong><em>The associative rule:</em></strong> ￼[vector]<strong>u</strong> + (<span class="vector">v</span> + <span class="vector">w</span>)  = (￼[vector]<strong>u</strong> + <span class="vector">v</span>) + [vector]*w*￼</p>
@@ -671,122 +318,42 @@ Scalar: [var]*x</span></p>
 n = 3[vector]*w* = [vector]*u* * n
 w~x~ = -3 * 3
 w~y~ =  7 * 3[vector]*w* = (-9, 21)<p>The function inside the <span class="class">PVector</span> class therefore is written as:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">With multiplication, the components of the vector are multiplied by a number.</span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">mult</span><span class="o">(</span><span class="kt">float</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>   <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">n</span><span class="o">;</span></span>
-<span class='one-line'>   <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">n</span><span class="o">;</span></span>
-<span class='one-line'> <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>And implementing multiplication in code is as simple as:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">This PVector is now three times the size and is equal to (-9,21).</span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span><span class="mi">7</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">u</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><img src="imgs/chapter01_11-01.png"  />
+<pre>// With multiplication, the components of the vector are multiplied by a number.
+void mult(float n) {
+   x = x * n;
+   y = y * n;
+ }</pre><p>And implementing multiplication in code is as simple as:</p>
+<pre>// This PVector is now three times the size and is equal to (-9,21).
+PVector u = new PVector(-3,7);
+u.mult(3);</pre><img src="imgs/chapter01_11-01.png"  />
 <span class="caption">imgs/chapter01_11-01.png</span><a name="_example_1_4_multiplying_a_vector"></a>
-<h3>Example 1-4: Multiplying a vector</h3>
+<h3>Example 1-4: Multiplying a vector</h3><pre>void setup() {
+  size(200,200);
+  smooth();
+}
 
+void draw() {
+  background(255);
 
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
 
+  // Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
+  mouse.mult(0.5);
 
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
 
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">center</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).</span>
-    <code><pre><span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">translate</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">y</span><span class="o">);</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><img src="imgs/chapter01_12-01.png"  />
+}</pre><img src="imgs/chapter01_12-01.png"  />
 <span class="caption">imgs/chapter01_12-01.png</span><p>Division works just like multiplication—we simply replace the multiplication sign (asterisk) with the division one (forward slash).</p>
+<pre>void div(float n) {
+  x = x / n;
+  y = y / n;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">div</span><span class="o">(</span><span class="kt">float</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="n">n</span><span class="o">;</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">8</span><span class="o">,-</span><span class="mi">4</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">u</span><span class="o">.</span><span class="na">div</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><img src="imgs/chapter01_13-01.png"  />
+PVector u = new PVector(8,-4);
+u.div(2);</pre><img src="imgs/chapter01_13-01.png"  />
 <span class="caption">imgs/chapter01_13-01.png</span><p>.</p>
 <p>As with addition, basic algebraic rules of multiplication and division apply to vectors.</p>
 <p>The associative rule:   (<span class="var">n</span> * <span class="var">m</span>) <strong>￼[vector]*v</strong> = <span class="var">n</span> * (<span class="var">m</span> <strong>￼[vector]*v</strong>)
@@ -811,73 +378,31 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </li>
 	
 </ul><p>or in <span class="class">PVector</span>:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="nf">mag</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="k">return</span> <span class="nf">sqrt</span><span class="o">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="o">);</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><a name="_example_1_5_vector_magnitude"></a>
+<pre>float mag() {
+  return sqrt(x*x + y*y);
+}</pre><a name="_example_1_5_vector_magnitude"></a>
 <h3>Example 1-5: Vector magnitude</h3><img src="imgs/chapter01_15-01.png"  />
-<span class="caption">imgs/chapter01_15-01.png</span>
+<span class="caption">imgs/chapter01_15-01.png</span><pre>void setup() {
+  size(200,200);
+  smooth();
+}
 
+void draw() {
+  background(255);
 
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
 
+  // The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
+  float m = mouse.mag();
+  fill(0);
+  rect(0,0,m,10);
 
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
 
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">center</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.</span>
-    <code><pre><span class='one-line'>  <span class="kt">float</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mouse</span><span class="o">.</span><span class="na">mag</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">rect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">m</span><span class="o">,</span><span class="mi">10</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">translate</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">y</span><span class="o">);</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><a name="_1_6_normalizing_vectors"></a>
+}</pre><a name="_1_6_normalizing_vectors"></a>
 <h2>1.6 Normalizing Vectors</h2>
 <p>Calculating the magnitude of a vector is only the beginning.  The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>.  Normalizing refers to the process of making something “standard” or, well, “normal.”  In the case of vectors, let’s assume for the moment that a standard vector has a length of one.  To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to one, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
 <img src="imgs/chapter01_17-01.png"  />
@@ -892,138 +417,36 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </ul><p>In other words, to normalize a vector, simply divide each component by its magnitude.  This is pretty intuitive.  Say a vector is of length 5.  Well, 5 divided by 5 is 1.  So looking at our right triangle, we then need to scale the hypotenuse down by dividing by 5.   In that process the sides shrink, divided by 5 as well.</p>
 <img src="imgs/chapter01_18-01.png"  />
 <span class="caption">imgs/chapter01_18-01.png</span><p>In the PVector class, we therefore write our normalization function as follows:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">normalize</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="kt">float</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mag</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">div</span><span class="o">(</span><span class="n">m</span><span class="o">);</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>Of course, there’s one small issue.  What if the magnitude of the vector is zero?  We can’t divide by zero!   Some quick error checking will fix that right up:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">normalize</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'> <span class="kt">float</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mag</span><span class="o">();</span></span>
-<span class='one-line'> <span class="k">if</span> <span class="o">(</span><span class="n">m</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>   <span class="n">div</span><span class="o">(</span><span class="n">m</span><span class="o">);</span></span>
-<span class='one-line'> <span class="o">}</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><img src="imgs/chapter01_19-01.png"  />
+<pre>void normalize() {
+  float m = mag();
+  div(m);
+}</pre><p>Of course, there’s one small issue.  What if the magnitude of the vector is zero?  We can’t divide by zero!   Some quick error checking will fix that right up:</p>
+<pre>void normalize() {
+ float m = mag();
+ if (m != 0) {
+   div(m);
+ }
+}</pre><img src="imgs/chapter01_19-01.png"  />
 <span class="caption">imgs/chapter01_19-01.png</span><a name="_example_1_6_normalizing_a_vector"></a>
-<h3>Example 1-6: Normalizing a vector</h3>
+<h3>Example 1-6: Normalizing a vector</h3><pre>void draw() {
+  background(255);
 
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
 
+  // In this example, after the vector is normalized it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
+  mouse.normalize();
+  mouse.mult(50);
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
 
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">center</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">In this example, after the vector is normalized it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.</span>
-    <code><pre><span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">mouse</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">translate</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">mouse</span><span class="o">.</span><span class="na">y</span><span class="o">);</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><a name="_1_7_vector_motion_velocity"></a>
+}</pre><a name="_1_7_vector_motion_velocity"></a>
 <h2>1.7 Vector Motion: Velocity</h2>
 <p>Why should we care?  Yes, all this vector math stuff sounds like something we should know about, but why exactly?  How will it actually help us write code?   The truth of the matter is that we need to have some patience.  The awesomeness of using the <span class="class">PVector</span> class will take some time to fully come to light.  This is actually quite common when first learning a new data structure.   For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things.   But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things.  The same can be true for <span class="class">PVector</span>.  What might seem like more work now will pay off later, and pay off quite nicely.  And you don’t have to wait too long, as your reward will come in the next chapter.</p>
 <p>For now, however, we want to focus on simplicity.  What does it mean to program motion using vectors?   We’ve seen the beginning of this in Example 1.2 <strong><em>[REF]</em></strong>: the bouncing ball.   An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next).   Velocity is added to location:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>And then we draw the object at that location:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>This is Motion 101.</p>
+<pre>location.add(velocity);</pre><p>And then we draw the object at that location:</p>
+<pre>ellipse(location.x,location.y,16,16);</pre><p>This is Motion 101.</p>
 <ol class="arabic">
 	
 		<li><p><strong><em>Add velocity to location</em></strong></p>
@@ -1046,470 +469,137 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </li>
 	
 </ol><p>Our “Motion 101” algorithm tells us the answers to these questions.  A Mover object has two pieces of data: location and velocity, two PVector objects.</p>
+<pre>class Mover {
 
+  PVector location;
+  PVector velocity;</pre><p>Its functionality is just about as simple.  The Mover needs to move and it needs to be seen.  We’ll implement these as functions named <span class="function">update()</span> and <span class="function">display()</span>.  <span class="function">update()</span> is where we’ll put all of our motion logic code and <span class="function">display()</span> is where we will draw the object.</p>
+<pre>  void update() {
+    // The Mover moves.
+    location.add(velocity);
+  }
 
+  void display() {
+    stroke(0);
+    fill(175);
+    // The Mover is displayed.
+    ellipse(location.x,location.y,16,16);
+  }
 
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kd">class</span> <span class="nc">Mover</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">location</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>Its functionality is just about as simple.  The Mover needs to move and it needs to be seen.  We’ll implement these as functions named <span class="function">update()</span> and <span class="function">display()</span>.  <span class="function">update()</span> is where we’ll put all of our motion logic code and <span class="function">display()</span> is where we will draw the object.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'>  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">The Mover moves.</span>
-    <code><pre><span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">The Mover is displayed.</span>
-    <code><pre><span class='one-line'>    <span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>We’ve forgotten one crucial item, however: the object’s <strong><em>constructor</em></strong>.  The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object.  It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator: “Mover <span class="var">m</span> = new <span class="function">Mover( );</span> ”.</p>
+}</pre><p>We’ve forgotten one crucial item, however: the object’s <strong><em>constructor</em></strong>.  The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object.  It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator: “Mover <span class="var">m</span> = new <span class="function">Mover( );</span> ”.</p>
 <p>In our case, let’s arbitrarily decide to initialize our mover object by giving it a random location and a random velocity.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'>  <span class="n">Mover</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="n">width</span><span class="o">),</span><span class="n">random</span><span class="o">(</span><span class="n">height</span><span class="o">));</span></span>
-<span class='one-line'>    <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">));</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="class">PVector</span> class.  The <span class="class">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
+<pre>  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(random(-2,2),random(-2,2));
+  }</pre><p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing.  After all, we spent the beginning of this chapter discussing the <span class="class">PVector</span> class.  The <span class="class">PVector</span> class is the template for making the object “location” and the object “velocity”.  So what are they doing inside of yet another object, the Mover object?   In fact, this is just about the most normal thing ever.  An object is simply something that holds data (and functionality).  That data can be numbers (integers, floats, etc.) or other objects!  We’ll see this over and over again in this book.   For example, in Chapter 4 <strong><em>[REF]</em></strong>, we’ll write a class to describe a system of particles.  That “ParticleSystem” object will have as its data a list of Particle objects. . .and each Particle object will have as its data several PVector objects!</p>
 <p>Let’s finish off the Mover class by incorporating a function to determine what the object should do when it reaches the edge of the window.  For now let’s do something simple, and just have it wrap around the edges.</p>
+<pre>  void checkEdges() {
 
+    // When it reaches one edge, set location to the other.
+    if (location.x > width) {
+      location.x = 0;
+    } else if (location.x < 0) {
+      location.x = width;
+    }
 
+    if (location.y > height) {
+      location.y = 0;
+    } else if (location.y < 0) {
+      location.y = height;
+    }
 
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'>  <span class="kt">void</span> <span class="nf">checkEdges</span><span class="o">()</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">When it reaches one edge, set location to the other.</span>
-    <code><pre><span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">width</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-
-<span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>Now that the Mover class is finished, we can look at what we need to do in our main program.  We first declare a Mover object:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">Mover</span> <span class="n">mover</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>Then initialize the mover in <span class="function">setup()</span>:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">mover</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mover</span><span class="o">();</span></span></pre></code>
-  </div>
-
-</div><p>and call the appropriate functions in <span class="function">draw()</span>:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">mover</span><span class="o">.</span><span class="na">update</span><span class="o">();</span></span>
-<span class='one-line'><span class="n">mover</span><span class="o">.</span><span class="na">checkEdges</span><span class="o">();</span></span>
-<span class='one-line'><span class="n">mover</span><span class="o">.</span><span class="na">display</span><span class="o">();</span></span></pre></code>
-  </div>
-
-</div><p>Here is the entire example for reference:</p>
+  }</pre><p>Now that the Mover class is finished, we can look at what we need to do in our main program.  We first declare a Mover object:</p>
+<pre>Mover mover;</pre><p>Then initialize the mover in <span class="function">setup()</span>:</p>
+<pre>mover = new Mover();</pre><p>and call the appropriate functions in <span class="function">draw()</span>:</p>
+<pre>mover.update();
+mover.checkEdges();
+mover.display();</pre><p>Here is the entire example for reference:</p>
 <img src="imgs/chapter01_20-01.png"  />
 <span class="caption">imgs/chapter01_20-01.png</span><a name="_example_1_7_motion_101_velocity"></a>
-<h3>Example 1.7: Motion 101 (velocity)</h3>
+<h3>Example 1.7: Motion 101 (velocity)</h3><pre>Mover mover;      // Declare Mover object.
 
+void setup() {
+  size(200,200);
+  smooth();
+  background(255);
+  mover = new Mover();  // Create Mover object.
+}
 
+void draw() {
+  background(255);
 
+  mover.update();   // Call functions on Mover object.
+  mover.checkEdges();
+  mover.display();
+}
 
+class Mover {
 
+  PVector location;   // Our object has two PVectors: location and velocity.
+  PVector velocity;
 
+  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(random(-2,2),random(-2,2));
+  }
 
+  void update() {
+    location.add(velocity); // Motion 101: Location changes by velocity.
+  }
 
+  void display() {
+    stroke(0);
+    fill(175);
+    ellipse(location.x,location.y,16,16);
+  }
 
+  void checkEdges() {
+    if (location.x > width) {
+      location.x = 0;
+    } else if (location.x < 0) {
+      location.x = width;
+    }
 
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">Mover</span> <span class="n">mover</span><span class="o">;</span>      <span class="c1">// Declare Mover object.</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">mover</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mover</span><span class="o">();</span>  <span class="c1">// Create Mover object.</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="n">mover</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>   <span class="c1">// Call functions on Mover object.</span></span>
-<span class='one-line'>  <span class="n">mover</span><span class="o">.</span><span class="na">checkEdges</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">mover</span><span class="o">.</span><span class="na">display</span><span class="o">();</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kd">class</span> <span class="nc">Mover</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">location</span><span class="o">;</span>   <span class="c1">// Our object has two PVectors: location and velocity.</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span></span>
-
-<span class='one-line'>  <span class="n">Mover</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="n">width</span><span class="o">),</span><span class="n">random</span><span class="o">(</span><span class="n">height</span><span class="o">));</span></span>
-<span class='one-line'>    <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">));</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span> <span class="c1">// Motion 101: Location changes by velocity.</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">checkEdges</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">width</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-
-<span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><a name="_1_8_vector_motion_acceleration"></a>
+    if (location.y > height) {
+      location.y = 0;
+    } else if (location.y < 0) {
+      location.y = height;
+    }
+  }
+}</pre><a name="_1_8_vector_motion_acceleration"></a>
 <h2>1.8 Vector Motion: Acceleration</h2>
 <p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="class">PVector</span> is and (2) how we use <strong><em>PVectors</em></strong> inside of an object to keep track of its location and movement.  This is an excellent first step and deserves a mild round of applause.   Before standing ovations and screaming fans, however, we need to make one more, somewhat larger, step forward.   After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns.  For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="class">PVector</span> to our class—<strong><em>acceleration</em></strong>.</p>
 <p>The strict definition of acceleration we’re using here is: the rate of <em>change of velocity</em>.  Let’s think about that definition for a moment.  Is this a new concept?  Not really.  Velocity is defined as <em>the rate of change of location</em>.  In essence, we are developing a “trickle down” effect.  Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter when we see how forces affect acceleration, which affects velocity, which affects location.)  In code, this reads:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>As an exercise, from this point forward, let’s make a rule for ourselves.  Let’s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them).  In other words, our goal now for programming motion is as follows—come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic.   (In truth, you’ll find reasons to break this rule, but it’s important to illustrate the principles behind our motion algorithm.)  And so we need to come up with some ways to calculate acceleration:</p>
+<pre>velocity.add(acceleration);
+location.add(velocity);</pre><p>As an exercise, from this point forward, let’s make a rule for ourselves.  Let’s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them).  In other words, our goal now for programming motion is as follows—come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic.   (In truth, you’ll find reasons to break this rule, but it’s important to illustrate the principles behind our motion algorithm.)  And so we need to come up with some ways to calculate acceleration:</p>
 <p>*ACCELERATION ALGORITHMS!</p>
 <p>1) A constant acceleration
 2) A totally random acceleration
 3) Acceleration towards the mouse*</p>
 <p>Algorithm #1, a constant acceleration, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code.   The first thing we need to do is add another <span class="class">PVector</span> to the Mover class:</p>
+<pre>class Mover {
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kd">class</span> <span class="nc">Mover</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">location</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">A new PVector for acceleration</span>
-    <code><pre><span class='one-line'>  <span class="n">PVector</span> <span class="n">acceleration</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Our motion algorithm is now two lines of code!</span>
-    <code><pre><span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>We’re almost done.  The only missing piece is initialization in the constructor.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'> <span class="n">Mover</span><span class="o">()</span> <span class="o">{</span></span></pre></code>
-  </div>
-
-</div><p>Let’s start the mover object in the middle of the window. . .</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'> <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><ol class="arabic">
+  PVector location;
+  PVector velocity;
+  // A new PVector for acceleration
+  PVector acceleration;</pre><p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
+<pre> void update() {
+    // Our motion algorithm is now two lines of code!
+    velocity.add(acceleration);
+    location.add(velocity);
+  }</pre><p>We’re almost done.  The only missing piece is initialization in the constructor.</p>
+<pre> Mover() {</pre><p>Let’s start the mover object in the middle of the window. . .</p>
+<pre> location = new PVector(width/2,height/2);</pre><ol class="arabic">
 	
 		<li><p>
 . . with an initial velocity of zero.
 </p>
 </li>
 	
-</ol>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'> <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>This means that when the sketch starts, the object is at rest.  We don’t have to worry about velocity anymore as we are controlling the object’s motion entirely with acceleration.  Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration.  So let’s pick a value.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'>    <span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(-</span><span class="mf">0.001</span><span class="o">,</span><span class="mf">0.01</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="class">PVector</span> function <span class="function">limit()</span>.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">The limit() function constrains the magnitude of a vector.</span>
-    <code><pre><span class='one-line'><span class="n">velocity</span><span class="o">.</span><span class="na">limit</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>This translates to the following:</p>
+</ol><pre> velocity = new PVector(0,0);</pre><p>This means that when the sketch starts, the object is at rest.  We don’t have to worry about velocity anymore as we are controlling the object’s motion entirely with acceleration.  Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration.  So let’s pick a value.</p>
+<pre>    acceleration = new PVector(-0.001,0.01);
+  }</pre><p>Maybe you’re thinking, “Gosh, those values seem awfully small!”   That’s right, they are quite tiny.  It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate.   And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small.   We can also help this cause by incorporating the <span class="class">PVector</span> function <span class="function">limit()</span>.</p>
+<pre>// The limit() function constrains the magnitude of a vector.
+velocity.limit(10);</pre><p>This translates to the following:</p>
 <p><em>What is the magnitude of velocity?  If it’s less than 10, no worries; just leave it as is.  If it’s more than 10, however, reduce it to 10!</em></p>
 <div class="example">
 	<h2>Exercise 1-4</h2>
@@ -1524,138 +614,53 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </div><p>Let’s take a look at the changes to the Mover class, complete with <span class="function">acceleration</span> and <span class="function">limit()</span>.</p>
 <img src="imgs/chapter01_21-01.png"  />
 <span class="caption">imgs/chapter01_21-01.png</span><a name="_example_1_8_motion_101_velocity_and_constant_acceleration"></a>
-<h3>Example 1.8: Motion 101 (velocity and constant acceleration)</h3>
+<h3>Example 1.8: Motion 101 (velocity and constant acceleration)</h3><pre>￼class Mover {
 
+  PVector location;
+  PVector velocity;
+  PVector acceleration; // Acceleration is the key!
+  float topspeed;     // The variable, topspeed, will limit
+           the magnitude of velocity.
 
+  Mover() {
+    location = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(-0.001,0.01);
+    topspeed = 10;
+  }
 
+  void update() {
+    velocity.add(acceleration); // Velocity changes by acceleration
+    velocity.limit(topspeed);      and is limited by topspeed.
+    location.add(velocity);
+  }
 
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="err">￼</span><span class="kd">class</span> <span class="nc">Mover</span> <span class="o">{</span></span>
-
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">location</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">acceleration</span><span class="o">;</span> <span class="c1">// Acceleration is the key!</span></span>
-<span class='one-line'>  <span class="kt">float</span> <span class="n">topspeed</span><span class="o">;</span>     <span class="c1">// The variable, topspeed, will limit</span></span>
-<span class='one-line'>           <span class="n">the</span> <span class="n">magnitude</span> <span class="n">of</span> <span class="n">velocity</span><span class="o">.</span></span>
-
-<span class='one-line'>  <span class="nf">Mover</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(-</span><span class="mf">0.001</span><span class="o">,</span><span class="mf">0.01</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">topspeed</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span> <span class="c1">// Velocity changes by acceleration</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">limit</span><span class="o">(</span><span class="n">topspeed</span><span class="o">);</span>      <span class="n">and</span> <span class="n">is</span> <span class="n">limited</span> <span class="n">by</span> <span class="n">topspeed</span><span class="o">.</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">display() is the same</span>
-    <code><pre><span class='one-line'>  <span class="o">...</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">checkEdges() is the same</span>
-    <code><pre><span class='one-line'>  <span class="o">...</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><div class="example">
+  // display() is the same
+  ...
+  // checkEdges() is the same
+  ...
+}</pre><div class="example">
 	<h3>Exercise 1-4</h3><p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
 
 </div><p>Now to Algorithm #2,“a totally random acceleration.”  In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <span class="function">update()</span> is called.</p>
 <img src="imgs/chapter01_22-01.png"  />
 <span class="caption">imgs/chapter01_22-01.png</span><a name="_example_1_9_motion_101_velocity_and_random_acceleration"></a>
-<h3>Example 1.9: Motion 101 (velocity and random acceleration)</h3>
+<h3>Example 1.9: Motion 101 (velocity and random acceleration)</h3><pre>  void update() {
 
+    acceleration = new PVector(random(-1,1),random(-1,1));
+    acceleration.normalize();
 
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'>  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span>
-
-<span class='one-line'>    <span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span></span>
-<span class='one-line'>    <span class="n">acceleration</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">limit</span><span class="o">(</span><span class="n">topspeed</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>While normalizing acceleration is not entirely necessary, it does prove useful, as it standardizes the magnitude of the vector, allowing us to try different things. Such as:</p>
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+  }</pre><p>While normalizing acceleration is not entirely necessary, it does prove useful, as it standardizes the magnitude of the vector, allowing us to try different things. Such as:</p>
 <p>(a) scaling the acceleration to a constant value</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span></span>
-<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
-  </div>
-
-</div><p>(b) scaling the acceleration to a random value</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">acceleration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span><span class="n">random</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span></span>
-<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'><span class="n">acceleration</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span> <span class="c1">// [bold]</span></span></pre></code>
-  </div>
-
-</div><p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
+<pre>acceleration = new PVector(random(-1,1),random(-1,1));
+acceleration.normalize();
+acceleration.mult(0.5); // [bold]</pre><p>(b) scaling the acceleration to a random value</p>
+<pre>acceleration = new PVector(random(-1,1),random(-1,1));
+acceleration.normalize();
+acceleration.mult(random(2)); // [bold]</pre><p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
 <div class="example">
 	<h3>Exercise 1-5</h3><p>Referring back to section I.6 of the Introduction <strong>[REF]</strong>, implement acceleration according to Perlin noise.</p>
 
@@ -1663,129 +668,26 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 <h2>1.9 Static vs. Non-Static Functions</h2>
 <p>Before we get to acceleration Algorithm #3 (accelerate towards the mouse), we need to cover one more rather important aspect of working with vectors and the <span class="class">PVector</span> class: the difference between using <strong>static</strong> methods and <strong>non-static</strong> methods.</p>
 <p>Forgetting about vectors for a moment, take a look at the following code:</p>
+<pre>float x = 0;
+float y = 5;
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span></span>
-
-<span class='one-line'><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="class">PVector</span>.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5).  Easy, right?</p>
+x = x + y;</pre><p>Pretty simple, right?  <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5.  We could write the corresponding code pretty easily based on what we’ve learned about <span class="class">PVector</span>.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+v.add(u);</pre><p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5).  Easy, right?</p>
 <p>OK, let’s take a look at another example of some simple floating point math:</p>
+<pre>float x = 0;
+float y = 5;
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'><span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span></span>
-
-<span class='one-line'><span class="kt">float</span> <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span></span></pre></code>
-  </div>
-
-</div><p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="class">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Don’t be fooled; this is incorrect!!!</span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [line-through]</span></span></pre></code>
-  </div>
-
-</div><p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">x</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="na">y</span><span class="o">;</span></span>
-<span class='one-line'> <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><ol class="arabic">
+float z = x + y;</pre><p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>.   The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)!  This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats.   However, it’s not so obvious with mathematical operations in <span class="class">PVector</span>).  Let’s try to write the code based on what we know so far.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+// Don’t be fooled; this is incorrect!!!
+PVector w = v.add(u); // [line-through]</pre><p>The above might seem like a good guess, but it’s just not the way the <span class="class">PVector</span> class works.   If we look at the definition of <span class="function">add()</span> . . .</p>
+<pre>void add(PVector v) {
+    x = x + v.x;
+    y = y + v.y;
+ }</pre><ol class="arabic">
 	
 		<li><p>
 . . we see that this code does not accomplish our goal.  First, it does not return a new <span class="class">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="class">PVector</span> upon which it is called.  In order to add two PVector objects together and return the result as a new PVector, we must use the <span class="function">static add()</span> function.
@@ -1793,56 +695,15 @@ The distributive rule with 2 vectors, 1 scalar:   (<span class="vector">u*￼+ [
 </li>
 	
 </ol><p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong>static</strong> functions.   Here are two examples of function calls that assume two PVector objects, <span class="var">v</span> and <span class="var">u</span>:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Static: called from the class name.</span>
-    <code><pre><span class='one-line'><span class="n">PVector</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">,</span><span class="n">u</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Not static: called from an object instance.</span>
-    <code><pre><span class='one-line'><span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="class">PVector*’s static functions allow us to perform generic mathematical operations on [class]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u) intact.</span>
-    <code><pre><span class='one-line'>  <span class="kd">static</span> <span class="n">PVector</span> <span class="nf">add</span><span class="o">(</span><span class="n">PVector</span> <span class="n">v1</span><span class="o">,</span> <span class="n">PVector</span> <span class="n">v2</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">PVector</span> <span class="n">v3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">v1</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">v1</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">y</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="k">return</span> <span class="n">v3</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>There are several differences here:</p>
+<pre>// Static: called from the class name.
+PVector.add(v,u);
+// Not static: called from an object instance.
+v.add(u);</pre><p>Since you can’t write static functions yourself in Processing, you might not have encountered them before.  <span class="class">PVector*’s static functions allow us to perform generic mathematical operations on [class]*PVector</span> objects without having to adjust the value of one of the input <strong><em>PVectors</em></strong>.  Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
+<pre>  // The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u) intact.
+  static PVector add(PVector v1, PVector v2) {
+    PVector v3 = new PVector(v1.x + v2.x, v1.y + v2.y);
+    return v3;
+  }</pre><p>There are several differences here:</p>
 <ul>
 	
 		<li><p>
@@ -1861,30 +722,10 @@ The function creates a new PVector (v3) and returns the sum of the components of
 </li>
 	
 </ul><p>When you call a static function, instead of referencing an actual object instance, you simply reference the name of the class itself.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">);</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [line-through]</span></span>
-<span class='one-line'><span class="n">PVector</span> <span class="n">w</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">,</span><span class="n">u</span><span class="o">);</span> <span class="c1">// [bold]</span></span></pre></code>
-  </div>
-
-</div><p>The PVector class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
+<pre>PVector v = new PVector(0,0);
+PVector u = new PVector(4,5);
+PVector w = v.add(u); // [line-through]
+PVector w = PVector.add(v,u); // [bold]</pre><p>The PVector class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
 <div class="example">
 	<h2>Exercise 1-6</h2>
 <p>Translate the following pseudocode to code using static or non-static functions where appropriate.</p>
@@ -1925,56 +766,13 @@ PVector <span class="var">w</span> = </em></em><em><em></em>.<em></em></em>(<em>
 <p><strong>[var]*dx</strong> = <span class="var">mouseX</span> - <strong>x<strong>
 *[var]*dy</strong> = <span class="var">mouseY</span> - [var]*y</strong></p>
 <p>Let’s rewrite the above using <span class="class">PVector</span> syntax.   Assuming we are in the Mover class and thus have access to the object’s location <span class="class">PVector</span>, we then have:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Look! We’re using the static reference to sub() because we want a new PVector pointing from one point to another.</span>
-    <code><pre><span class='one-line'><span class="n">PVector</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">mouse</span><span class="o">,</span><span class="n">location</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>We now have a <span class="class">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
+<pre>PVector mouse = new PVector(mouseX,mouseY);
+// Look! We’re using the static reference to sub() because we want a new PVector pointing from one point to another.
+PVector dir = PVector.sub(mouse,location);</pre><p>We now have a <span class="class">PVector</span> that points from the mover’s location all the way to the mouse.  If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location.  This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
 <p>In order to set the magnitude (whatever it may be) of our acceleration PVector, we must first <em><em></em>__</em> that direction vector.  That’s right, you said it.  <strong><em>Normalize</em></strong>.   If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value.   One multiplied by anything equals anything.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'><span class="kt">float</span> <span class="n">anything</span> <span class="o">=</span> <span class="o">?????</span></span>
-<span class='one-line'><span class="n">dir</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'><span class="n">dir</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="n">anything</span><span class="o">);</span></span></pre></code>
-  </div>
-
-</div><p>To summarize, we take the following steps:</p>
+<pre>float anything = ?????
+dir.normalize();
+dir.mult(anything);</pre><p>To summarize, we take the following steps:</p>
 <ol class="arabic">
 	
 		<li><p>
@@ -1999,55 +797,26 @@ Assign that vector to acceleration
 	
 </ol><p>And here are those steps in the <strong><em>update()</em></strong> function itself:</p>
 <img src="imgs/chapter01_25-01.png"  />
-<span class="caption">imgs/chapter01_25-01.png</span>
+<span class="caption">imgs/chapter01_25-01.png</span><pre> void update() {
 
+    PVector mouse = new PVector(mouseX,mouseY);
+    // Step 1: Direction
+    PVector dir = PVector.sub(mouse,location);
 
+    // Step 2: Normalize
+    dir.normalize();
 
+    // Step 3: Scale
+    dir.mult(0.5);
 
+    // Step 4: Accelerate
+    acceleration = dir;
 
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
 
-
-
-
-
-
-
-<div class="code-block">
-  <div class="code-comment-pair">
-    
-    <span class="code-comment"></span>
-    <code><pre><span class='one-line'> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span>
-
-<span class='one-line'>    <span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Step 1: Direction</span>
-    <code><pre><span class='one-line'>    <span class="n">PVector</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">mouse</span><span class="o">,</span><span class="n">location</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Step 2: Normalize</span>
-    <code><pre><span class='one-line'>    <span class="n">dir</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Step 3: Scale</span>
-    <code><pre><span class='one-line'>    <span class="n">dir</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Step 4: Accelerate</span>
-    <code><pre><span class='one-line'>    <span class="n">acceleration</span> <span class="o">=</span> <span class="n">dir</span><span class="o">;</span></span>
-
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">limit</span><span class="o">(</span><span class="n">topspeed</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="o">}</span></span></pre></code>
-  </div>
-
-</div><p>You may be wondering why the circle doesn’t stop when it reaches the target.  It’s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on, and so forth.   Stay tuned; in later chapters we’ll learn how to program an object to “arrive” at a location (slow down on approach).</p>
+  }</pre><p>You may be wondering why the circle doesn’t stop when it reaches the target.  It’s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on, and so forth.   Stay tuned; in later chapters we’ll learn how to program an object to “arrive” at a location (slow down on approach).</p>
 <div class="example">
 	<h2>Exercise 1-7</h2>
 <p>This example is remarkably close to the concept of gravitational attraction (in which the object is attracted to the mouse location).  Gravitational attraction will be covered in more detail in the next chapter. However, one thing missing here is that the strength of gravity (magnitude of acceleration) is inversely proportional to distance.  This means that the closer the object is to the mouse, the faster it accelerates.   Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</p>
@@ -2055,117 +824,86 @@ Assign that vector to acceleration
 </div><p>Let’s see what this example would look like with an array of Mover objects (rather than just one).</p>
 <img src="imgs/chapter01_26-01.png"  />
 <span class="caption">imgs/chapter01_26-01.png</span><a name="_example_1_10_accelerating_towards_mouse"></a>
-<h3>Example 1.10: Accelerating towards mouse</h3>
+<h3>Example 1.10: Accelerating towards mouse</h3><pre>// An array of objects
+Mover[] movers = new Mover[20];
 
+void setup() {
+  size(200,200);
+  smooth();
+  background(255);
+  for (int i = 0; i  movers.length; i++) {
+    // Initialize each object in the array.
+    movers[i] = new Mover();
+  }
+}
 
+void draw() {
+  background(255);
 
+  for (int i = 0; i  movers.length; i++) {
+    // Calling functions on all the objects in the array.
+    movers[i].update();
+    movers[i].checkEdges();
+    movers[i].display();
+  }
+}
 
+class Mover {
+  // Our algorithm for calculating acceleration:
+  // find vector pointing towards mouse
+  // normalize
+  // scale
+  // set to acceleration
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
 
+  Mover() {
+    location = new PVector(random(width),random(height));
+    velocity = new PVector(0,0);
+    topspeed = 4;
+  }
 
+  void update() {
 
+    PVector mouse = new PVector(mouseX,mouseY);
+    PVector dir = PVector.sub(mouse,location);
+    dir.normalize();
+    dir.mult(0.5);
+    acceleration = dir;
 
+    // Motion 101! Velocity changes by acceleration.  Location changes by velocity.
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+  }
 
+  void display() {
+    stroke(0);
+    fill(175);
+    ellipse(location.x,location.y,16,16);
+  }
 
+  void checkEdges() {
 
+    if (location.x  width) {
+      location.x = 0;
+    } else if (location.x  0) {
+      location.x = width;
+    }
 
-<div class="code-block">
-  <div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">An array of objects</span>
-    <code><pre><span class='one-line'><span class="n">Mover</span><span class="o">[]</span> <span class="n">movers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mover</span><span class="o">[</span><span class="mi">20</span><span class="o">];</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">size</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="n">smooth</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span>  <span class="n">movers</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Initialize each object in the array.</span>
-    <code><pre><span class='one-line'>    <span class="n">movers</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mover</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span></span>
-
-<span class='one-line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span>  <span class="n">movers</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Calling functions on all the objects in the array.</span>
-    <code><pre><span class='one-line'>    <span class="n">movers</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">update</span><span class="o">();</span></span>
-<span class='one-line'>    <span class="n">movers</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">checkEdges</span><span class="o">();</span></span>
-<span class='one-line'>    <span class="n">movers</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">display</span><span class="o">();</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'><span class="o">}</span></span>
-
-<span class='one-line'><span class="kd">class</span> <span class="nc">Mover</span> <span class="o">{</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Our algorithm for calculating acceleration:
-find vector pointing towards mouse
-normalize
-scale
-set to acceleration</span>
-    <code><pre><span class='one-line'>  <span class="n">PVector</span> <span class="n">location</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">velocity</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="n">PVector</span> <span class="n">acceleration</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="kt">float</span> <span class="n">topspeed</span><span class="o">;</span></span>
-
-<span class='one-line'>  <span class="n">Mover</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">location</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="n">width</span><span class="o">),</span><span class="n">random</span><span class="o">(</span><span class="n">height</span><span class="o">));</span></span>
-<span class='one-line'>    <span class="n">velocity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">topspeed</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span></span>
-
-<span class='one-line'>    <span class="n">PVector</span> <span class="n">mouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PVector</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span><span class="n">mouseY</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">PVector</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">PVector</span><span class="o">.</span><span class="na">sub</span><span class="o">(</span><span class="n">mouse</span><span class="o">,</span><span class="n">location</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">dir</span><span class="o">.</span><span class="na">normalize</span><span class="o">();</span></span>
-<span class='one-line'>    <span class="n">dir</span><span class="o">.</span><span class="na">mult</span><span class="o">(</span><span class="mf">0.5</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">acceleration</span> <span class="o">=</span> <span class="n">dir</span><span class="o">;</span></span></pre></code>
-  </div>
-<div class="code-comment-pair">
-    <div class="code-comment-line"></div>
-    <span class="code-comment">Motion 101! Velocity changes by acceleration.  Location changes by velocity.</span>
-    <code><pre><span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">acceleration</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">velocity</span><span class="o">.</span><span class="na">limit</span><span class="o">(</span><span class="n">topspeed</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">location</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">velocity</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span></span>
-<span class='one-line'>    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">fill</span><span class="o">(</span><span class="mi">175</span><span class="o">);</span></span>
-<span class='one-line'>    <span class="n">ellipse</span><span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span><span class="o">,</span><span class="n">location</span><span class="o">.</span><span class="na">y</span><span class="o">,</span><span class="mi">16</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-
-<span class='one-line'>  <span class="kt">void</span> <span class="nf">checkEdges</span><span class="o">()</span> <span class="o">{</span></span>
-
-<span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span>  <span class="n">width</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">x</span>  <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">width</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-
-<span class='one-line'>    <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span>  <span class="n">height</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span>  <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">location</span><span class="o">.</span><span class="na">y</span>  <span class="mi">0</span><span class="o">)</span> <span class="o">{</span></span>
-<span class='one-line'>      <span class="n">location</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span></span>
-<span class='one-line'>    <span class="o">}</span></span>
-<span class='one-line'>  <span class="o">}</span></span>
-<span class='one-line'><span class="o">}</span></span></pre></code>
-  </div>
-
-</div><div class="tip">
+    if (location.y  height) {
+      location.y = 0;
+    }  else if (location.y  0) {
+      location.y = height;
+    }
+  }
+}</pre><div class="tip">
 	<h3>Ecosystem Project:</h3><p>As mentioned in the preface, one way to use this book is to build a single project over the course of reading it, incorporating elements from each chapter one step at a time.  We’ll follow the development of an example project throughout this book—an “ecosystem” simulation.  Imagine a population of computational creatures swimming around a digital pond, interacting with each other according to various rules.</p>
 <p>Step 1 Exercise:</p>
 <p>Develop a set of rules for simulating the real-world behavior of a creature, such as a nervous fly, swimming fish, hopping bunny, slithering snake, etc.  Can you control the object’s motion by only manipulating the acceleration?  Try to give the creature a personality through its behavior (rather than through its visual design.)</p>
 
 </div>
-	</div>
 </body>
 </html>
