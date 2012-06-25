@@ -166,7 +166,7 @@ x = x + xspeed;
 y = y + yspeed;</programlisting>
 <simpara>In an ideal world, we would be able to rewrite the above as:</simpara>
 <programlisting language="java" linenumbering="unnumbered">// Add the velocity vector to the location vector.
-[line-through]*location = location + velocity;*</programlisting>
+location = location + velocity;  // [line-through, bold]</programlisting>
 <simpara>However, in Processing, the addition operator ‘+’ is reserved for primitive values (integers, floats, etc.) only.  Processing doesn’t know how to add two <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> objects together any more than it knows how to add two <emphasis role="strong"><emphasis>PFont</emphasis></emphasis> objects or <emphasis role="strong"><emphasis>PImage</emphasis></emphasis> objects.   Fortunately for us, the <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> class includes functions for common mathematical operations.</simpara>
 </section>
 <section id="_1_3_vector_addition">
@@ -203,6 +203,7 @@ Scalar: [var]*x</phrase></emphasis></simpara>
 <simpara>and therefore:</simpara>
 <literallayout class="monospaced">[vector]*w* =  (8,6)</literallayout>
 <simpara>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> class itself.    Let’s write a function called <emphasis role="strong"><phrase role="function">add()</phrase></emphasis> that takes as its argument another <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> object.</simpara>
+<programlisting language="java" linenumbering="unnumbered">x = 5; // [bold]</programlisting>
 <programlisting language="java" linenumbering="unnumbered">class PVector {
 
   float x;
@@ -213,50 +214,49 @@ Scalar: [var]*x</phrase></emphasis></simpara>
     y = y_;
   }
 
-  *// New!  A function to add another PVector to this PVector.  Simply add the x components and the y components together.
-  void add(PVector v) {
-    x = x + v.x;
-    y = y + v.y;
-  }*
+  void add(PVector v) { // [bold]
+    y = y + v.y; // [bold]
+    x = x + v.x; // [bold]
+  } // [bold]
 }</programlisting>
 <simpara>Now that we see how <emphasis role="strong"><phrase role="function">add()</phrase></emphasis> is written inside of <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis>, we can return to the <emphasis role="strong"><emphasis>location + velocity</emphasis></emphasis> algorithm with our bouncing ball example and implement vector addition:</simpara>
 <programlisting language="java" linenumbering="unnumbered">// Add the current velocity to the location.
-[line-through]*location = location + velocity;*
+location = location + velocity; // [line-through]
 location.add(velocity);</programlisting>
 <simpara>And here we are, ready to rewrite the bouncing ball example using <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis>.</simpara>
 <section id="_example_1_2_bouncing_ball_with_pvector">
 <title>Example 1.2: Bouncing ball with PVector!</title>
 <programlisting language="java" linenumbering="unnumbered">// Instead of a bunch of floats, we now just have two PVector variables.
-*_PVector location;_*
-*_PVector velocity;_*
+PVector location; // [bold, italic]
+PVector velocity; // [bold, italic]
 
 void setup() {
   size(200,200);
   smooth();
-  *_location = new PVector(100,100);_*
-  *_velocity = new PVector(2.5,5);_*
+  location = new PVector(100,100); // [bold, italic]
+  velocity = new PVector(2.5,5); // [bold, italic]
 }
 
 void draw() {
   background(255);
 
-  *_location.add(velocity);
+  location.add(velocity); // [bold]
 
   // We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
-  if ((location.x &gt; width) || (location.x &lt; 0)) {
-    velocity.x = velocity.x * -1;
-  }
-  if ((location.y &gt; height) || (location.y &lt; 0)) {
-    velocity.y = velocity.y * -1;
-  }_*
+  if ((location.x &gt; width) || (location.x &lt; 0)) { // [bold]
+    velocity.x = velocity.x * -1; // [bold]
+  } // [bold]
+  if ((location.y &gt; height) || (location.y &lt; 0)) { // [bold]
+    velocity.y = velocity.y * -1; // [bold]
+  } // [bold]
 
   stroke(0);
   fill(175);
-  *_ellipse(location.x,location.y,16,16);_*
+  ellipse(location.x,location.y,16,16); // [bold]
 }</programlisting>
 <simpara>Now, you might feel somewhat disappointed.  After all, this may initially appear to have made the code more complicated than the original version.  While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet.   Looking at a simple bouncing ball and only implementing vector addition is just the first step.  As we move forward into a more complex world of multiple objects and multiple <emphasis role="strong"><emphasis>forces</emphasis></emphasis> (Chapter 2), the benefits of <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> will become more apparent.</simpara>
 <simpara>We should, however, make note of an important aspect of the above transition to programming with vectors.  Even though we are using <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> objects to describe two values—the x and y of location and the x and y of velocity—we still often need to refer to the x and y components of each <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> individually.  When we go to draw an object in Processing, there’s no means for us to say:</simpara>
-<programlisting language="java" linenumbering="unnumbered">[line-through]*ellipse(location,16,16);*</programlisting>
+<programlisting language="java" linenumbering="unnumbered">ellipse(location,16,16); // [line-through]</programlisting>
 <simpara>The <emphasis role="strong"><phrase role="function">ellipse()</phrase></emphasis> function does not allow for a <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> as an argument.  An ellipse can only be drawn with two scalar values, an x coordinate and a y coordinate.  And so we must dig into the <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> object and pull out the x and y components using object-oriented dot syntax.</simpara>
 <programlisting language="java" linenumbering="unnumbered">ellipse(location.x,location.y,16,16);</programlisting>
 <simpara>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: location and velocity.</simpara>
@@ -868,9 +868,9 @@ velocity.limit(10);</programlisting>
   }
 
   // display() is the same
-
+  ...
   // checkEdges() is the same
-
+  ...
 }</programlisting>
 <example>
 <title>Exercise 1-4</title>
@@ -901,11 +901,11 @@ velocity.limit(10);</programlisting>
 <simpara>(a) scaling the acceleration to a constant value</simpara>
 <programlisting language="java" linenumbering="unnumbered">acceleration = new PVector(random(-1,1),random(-1,1));
 acceleration.normalize();
-*acceleration.mult(0.5);*</programlisting>
+acceleration.mult(0.5); // [bold]</programlisting>
 <simpara>(b) scaling the acceleration to a random value</simpara>
 <programlisting language="java" linenumbering="unnumbered">acceleration = new PVector(random(-1,1),random(-1,1));
 acceleration.normalize();
-*acceleration.mult(random(2));*</programlisting>
+acceleration.mult(random(2)); // [bold]</programlisting>
 <simpara>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <emphasis>speeding up</emphasis> or <emphasis>slowing down</emphasis> of a moving object, but rather <emphasis>any change</emphasis> in velocity in either magnitude or direction.   Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</simpara>
 <example>
 <title>Exercise 1-5</title>
@@ -935,7 +935,7 @@ float z = x + y;</programlisting>
 <programlisting language="java" linenumbering="unnumbered">PVector v = new PVector(0,0);
 PVector u = new PVector(4,5);
 // Don’t be fooled; this is incorrect!!!
-[line-through]*PVector w = v.add(u);*</programlisting>
+PVector w = v.add(u); // [line-through]</programlisting>
 <simpara>The above might seem like a good guess, but it’s just not the way the <emphasis role="strong"><phrase role="class">PVector</phrase></emphasis> class works.   If we look at the definition of <emphasis role="strong"><phrase role="function">add()</phrase></emphasis> . . .</simpara>
 <programlisting language="java" linenumbering="unnumbered">void add(PVector v) {
     x = x + v.x;
@@ -980,8 +980,8 @@ The function creates a new PVector (v3) and returns the sum of the components of
 <simpara>When you call a static function, instead of referencing an actual object instance, you simply reference the name of the class itself.</simpara>
 <programlisting language="java" linenumbering="unnumbered">PVector v = new PVector(0,0);
 PVector u = new PVector(4,5);
-[line-through]*PVector w = v.add(u);*
-*PVector w = PVector.add(v,u);*</programlisting>
+PVector w = v.add(u); // [line-through]
+PVector w = PVector.add(v,u); // [bold]</programlisting>
 <simpara>The PVector class has static versions of <emphasis role="strong"><phrase role="function">add()</phrase></emphasis>, <emphasis role="strong"><phrase role="function">sub()</phrase></emphasis>, <emphasis role="strong"><phrase role="function">mult()</phrase></emphasis>, and <emphasis role="strong"><phrase role="function">div()</phrase></emphasis>.</simpara>
 <example>
 <title>Exercise 1-6</title>
