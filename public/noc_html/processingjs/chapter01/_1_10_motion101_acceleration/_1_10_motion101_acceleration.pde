@@ -17,6 +17,7 @@ void setup() {
 }
 
 void draw() {
+  background(255);
   
   // Update the location
   mover.update();
