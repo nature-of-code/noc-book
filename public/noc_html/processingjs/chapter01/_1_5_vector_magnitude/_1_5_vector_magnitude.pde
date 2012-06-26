@@ -2,7 +2,7 @@
 // Daniel Shiffman
 // Draft book
 
-// Example 1-3: Vector magnitude
+// Example 1-5: Vector magnitude
 
 void setup() {
   size(800,200);

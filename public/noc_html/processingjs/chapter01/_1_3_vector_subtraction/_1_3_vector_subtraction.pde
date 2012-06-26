@@ -17,6 +17,8 @@ void draw() {
   mouse.sub(center);
   
   translate(width/2,height/2);
+  strokeWeight(2);
+  stroke(0);
   line(0,0,mouse.x,mouse.y);
   
 }

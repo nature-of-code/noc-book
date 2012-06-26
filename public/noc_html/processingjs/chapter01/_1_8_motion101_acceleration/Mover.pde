@@ -8,15 +8,11 @@ class Mover {
   Mover() {
     location = new PVector(width/2, height/2);
     velocity = new PVector(0, 0);
-    topspeed = 6;
+    acceleration = new PVector(-0.001, 0.01);
+    topspeed = 10;
   }
 
   void update() {
-
-    acceleration = new PVector(random(-1, 1), random(-1, 1));
-    acceleration.normalize();
-    acceleration.mult(random(2));
-
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
@@ -24,8 +20,9 @@ class Mover {
 
   void display() {
     stroke(0);
-    fill(175);
-    ellipse(location.x, location.y, 16, 16);
+    strokeWeight(2);
+    fill(127);
+    ellipse(location.x, location.y, 48, 48);
   }
 
   void checkEdges() {

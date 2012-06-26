@@ -2,7 +2,7 @@
 // Daniel Shiffman
 // Draft book
 
-// Example 1-3: Vector subtraction
+// Example 1-4: Vector multiplication
 
 void setup() {
   size(800,200);
