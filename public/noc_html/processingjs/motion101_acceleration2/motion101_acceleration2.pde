@@ -1,9 +1,8 @@
 Mover mover;
 
 void setup() {
-  size(640,360);
+  size(800,200);
   smooth();
-  background(255);
   mover = new Mover(); 
 }
 
