@@ -9,14 +9,12 @@ float xspeed = 2.5;
 float yspeed = 2;
 
 void setup() {
-  size(800,200);
+  size(800, 200);
   smooth();
-  background(255);
 }
 
 void draw() {
   background(255);
-  
 
   // Add the current speed to the location.
   x = x + xspeed;
@@ -32,8 +30,8 @@ void draw() {
 
   // Display circle at x location
   stroke(0);
-  fill(175);
-  ellipse(x,y,16,16);
+  strokeWeight(2);
+  fill(127);
+  ellipse(x, y, 48, 48);
 }
-
 
