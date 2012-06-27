@@ -5,7 +5,7 @@
 // Via Reynolds: http://www.red3d.com/cwr/steer/FlowFollow.html
 
 // Using this variable to decide whether to draw all the stuff
-boolean debug = true;
+boolean debug = false;
 
 // Flowfield object
 FlowField flowfield;
