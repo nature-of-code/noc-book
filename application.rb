@@ -21,24 +21,7 @@ class Application < Sinatra::Base
     # first render html
     @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
     @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
-    
-    bin_args = []
-    # Margins 0.75 inches bottom, left and right, not sure about top yet b/c of header
-    bin_args << { :option => "--margin-bottom", :value => 10 }
-    bin_args << { :option => "--margin-left", :value => 19.05 }
-    bin_args << { :option => "--margin-right", :value => 19.05 }
-
-    # Page dimensions, 7.5x9.25 inches
-    bin_args << { :option => "--page-height", :value => 234.95 }
-    bin_args << { :option => "--page-width", :value => 190.5 }
-    bin_args << { :option => "--dpi", :value => 72 }
-
-
-    bin_args << { :option => "--header-html", :value => "public/noc_pdf/views/header.html"}
-    bin_args << { :option => "--header-spacing", :value => 10} # make space between header and content
-    bin_args << { :option => "--margin-top", :value => 30} # the header spacing moves the header up, so push it down again
-    
-    @document.render(:pdf, :html_file => "public/noc_pdf/index.html", :output => "public/noc_pdf/index.pdf", :bin_args => bin_args)
+    @document.render(:pdf, :html_file => "public/noc_pdf/index.html", :output => "public/noc_pdf/index.pdf")
     redirect "noc_pdf/index.pdf"
   end
 
