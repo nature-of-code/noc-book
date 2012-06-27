@@ -110,8 +110,9 @@ blockquote .quote_start {
 }
 
 canvas {
-	border: 1px solid #DCDCDC;
-	border-left: 0.4em solid #272727;
+	border: 1px solid gray;
+	//margin-bottom: 1.15em;
+	//border-left: 0.4em solid #272727;
 }
 
 /* Image Classes
@@ -122,12 +123,6 @@ img {
 	margin: 0px;
 }
 
-img.screenshot {
-	width: 100%;
-	margin: 0px;
-	border:1px solid gray;
-}
-
 .image-container {
   position: relative;
 }
@@ -136,10 +131,18 @@ img.screenshot {
   max-width: 100%;
 }
 
+.screenshot img {
+	width: 100%;
+	margin: 0px;
+	border:1px solid gray;
+	// Need a magic solution for border side borders to be partial, not extend all the way to top
+}
+
 .image-container .caption {
   color: #222;
   font-family: 'Helvetica', Arial, sans-serif;
   font-size: 100%; /* 100% == 13px when not inside a p tag */
+  border: 0;
 }
 
 .half-width,
@@ -200,6 +203,14 @@ _____________________________________________________________________________ */
 	font-weight: bold;
 }
 
+/* Style example heading */
+span.example {
+ display: block;
+ font-size: 1em;
+ font-weight: bold;
+}
+
+
 /* Code Formatting
 _____________________________________________________________________________ */
 
@@ -214,9 +225,12 @@ pre {
 
 .source-code {
   border-left: 0.4em solid #272727;
-	padding: 0.7em 1.5em;
-	background-color: #F4F4F4;
+  margin-bottom: 1.5em;
+  padding: 0.7em 1.5em;
+  background-color: #F4F4F4;
   position: relative;
+  clear: both;
+
 }
 
 /* Div wrapper for code blocks */
@@ -237,7 +251,7 @@ a relatively positioned parent. */
   margin: 0;
   padding: 0;
   overflow-y: auto;
-	overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .code-comment-line {
@@ -251,7 +265,8 @@ a relatively positioned parent. */
 /* Div wrapper for code comments */
 .code-comment {
   clear: right;
-  color: #777;
+  color: #444;
+  font-style: bold;
   display: block;
   float: right;
   font-family: sans-serif;
@@ -275,8 +290,12 @@ a relatively positioned parent. */
 }
 
 .source-code a.toggle {
-  display: inline-block;
-	margin-top: 1em;
-	font-size: 0.8em;
-	color: #656565;
+  position: absolute;
+  right: 20px;
+  bottom: 4px;
+  margin-top: 0em;
+  font-size: 0.8em;
+  color: #656565;
+  z-index:1;
+
 }
