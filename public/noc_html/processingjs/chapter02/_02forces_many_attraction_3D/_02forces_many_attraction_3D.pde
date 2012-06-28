@@ -7,7 +7,7 @@ Attractor a;
 float angle = 0;
 
 void setup() {
-  size(640,360,OPENGL);
+  size(800,200,OPENGL);
   smooth();
   background(255);
   for (int i = 0; i < movers.length; i++) {
