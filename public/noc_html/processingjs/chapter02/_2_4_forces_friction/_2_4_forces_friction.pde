@@ -1,7 +1,7 @@
 Mover[] movers = new Mover[10];
 
 void setup() {
-  size(640, 360);
+  size(800, 200);
   smooth();
   for (int i = 0; i < movers.length; i++) {
     movers[i] = new Mover(random(0.1, 5), random(width), 0);

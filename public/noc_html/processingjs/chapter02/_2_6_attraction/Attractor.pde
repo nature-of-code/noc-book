@@ -31,6 +31,7 @@ class Attractor {
   // Method to display
   void display() {
     ellipseMode(CENTER);
+    strokeWeight(2);
     stroke(0);
     if (dragging) fill (50);
     else if (rollover) fill(100);

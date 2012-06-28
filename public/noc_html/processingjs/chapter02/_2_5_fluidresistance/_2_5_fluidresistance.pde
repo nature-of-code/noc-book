@@ -8,13 +8,13 @@
  */
 
 // Five moving bodies
-Mover[] movers = new Mover[5];
+Mover[] movers = new Mover[11];
 
 // Liquid
 Liquid liquid;
 
 void setup() {
-  size(360, 640);
+  size(800, 360);
   smooth();
   reset();
   // Create liquid object
