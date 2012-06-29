@@ -25,8 +25,9 @@ class Mover {
 
   void display() {
     stroke(0);
-    fill(175);
-    ellipse(location.x,location.y,16,16);
+    strokeWeight(2);
+    fill(127);
+    ellipse(location.x,location.y,48,48);
   }
 
   void checkEdges() {

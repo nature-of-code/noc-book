@@ -25,8 +25,9 @@ class Mover {
 
   void display() {
     stroke(0);
-    fill(175, 200);
-    ellipse(location.x, location.y, mass*16, mass*16);
+    strokeWeight(2);
+    fill(0, 100);
+    ellipse(location.x, location.y, mass*24, mass*24);
   }
 
   PVector attract(Mover m) {

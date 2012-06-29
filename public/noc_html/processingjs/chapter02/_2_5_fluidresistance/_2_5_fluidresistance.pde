@@ -8,13 +8,13 @@
  */
 
 // Five moving bodies
-Mover[] movers = new Mover[5];
+Mover[] movers = new Mover[11];
 
 // Liquid
 Liquid liquid;
 
 void setup() {
-  size(360, 640);
+  size(800, 360);
   smooth();
   reset();
   // Create liquid object
@@ -32,9 +32,9 @@ void draw() {
     // Is the Mover in the liquid?
     if (liquid.contains(movers[i])) {
       // Calculate drag force
-      PVector drag = liquid.drag(movers[i]);
+      PVector dragForce = liquid.drag(movers[i]);
       // Apply drag force to Mover
-      movers[i].applyForce(drag);
+      movers[i].applyForce(dragForce);
     }
 
     // Gravity is scaled by mass here!
