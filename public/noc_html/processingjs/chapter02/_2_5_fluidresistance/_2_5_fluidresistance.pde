@@ -32,9 +32,9 @@ void draw() {
     // Is the Mover in the liquid?
     if (liquid.contains(movers[i])) {
       // Calculate drag force
-      PVector drag = liquid.drag(movers[i]);
+      PVector dragForce = liquid.drag(movers[i]);
       // Apply drag force to Mover
-      movers[i].applyForce(drag);
+      movers[i].applyForce(dragForce);
     }
 
     // Gravity is scaled by mass here!

@@ -6,7 +6,7 @@ class Mover {
   float mass;
 
   Mover() {
-    location = new PVector(300,100);
+    location = new PVector(400,50);
     velocity = new PVector(1,0);
     acceleration = new PVector(0,0);
     mass = 1;

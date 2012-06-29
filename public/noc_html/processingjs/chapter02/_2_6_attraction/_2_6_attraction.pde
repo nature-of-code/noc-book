@@ -16,7 +16,7 @@ void draw() {
   m.update();
   
   a.drag();
-  a.rollover(mouseX,mouseY);
+  a.hover(mouseX,mouseY);
  
   a.display();
   m.display();
