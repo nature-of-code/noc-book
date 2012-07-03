@@ -39,7 +39,7 @@ void draw() {
 
   // Instructions
   fill(0);
-  //text("Hit space bar to toggle debugging lines.\nClick the mouse to generate a new path.", 10, height-30);
+  text("Hit space bar to toggle debugging lines.\nClick the mouse to generate a new path.", 10, height-30);
 }
 
 void newPath() {

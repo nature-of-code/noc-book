@@ -40,7 +40,6 @@ void draw() {
   // Instructions
   fill(0);
   text("Hit space bar to toggle debugging lines.", 10, height-30);
-  println("going");
 }
 
 public void keyPressed() {
