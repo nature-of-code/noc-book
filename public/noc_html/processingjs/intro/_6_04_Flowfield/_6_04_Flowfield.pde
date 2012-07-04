@@ -5,7 +5,7 @@
 // Via Reynolds: http://www.red3d.com/cwr/steer/FlowFollow.html
 
 // Using this variable to decide whether to draw all the stuff
-boolean debug = false;
+boolean debug = true;
 
 // Flowfield object
 FlowField flowfield;
@@ -13,10 +13,10 @@ FlowField flowfield;
 ArrayList<Vehicle> vehicles;
 
 void setup() {
-  size(800, 200);
+  size(380, 200);
   smooth();
   // Make a new flow field with "resolution" of 16
-  flowfield = new FlowField(16);
+  flowfield = new FlowField(20);
   vehicles = new ArrayList<Vehicle>();
   // Make a whole bunch of vehicles with random maxspeed and maxforce values
   for (int i = 0; i < 120; i++) {

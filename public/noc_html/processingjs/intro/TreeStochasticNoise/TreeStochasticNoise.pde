@@ -9,14 +9,14 @@ int seed = 5;
 
 
 void setup() {
-  size(800, 200);
+  size(383, 200);
   smooth();
 }
 
 void draw() {
   background(255);
   fill(0);
-  text("Click mouse to generate a new tree", 10, height-20);
+  //text("Click mouse to generate a new tree", 10, height-20);
 
   stroke(0);
   // Start the tree from the bottom of the screen
