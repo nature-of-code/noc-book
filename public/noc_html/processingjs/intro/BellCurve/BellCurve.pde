@@ -5,7 +5,7 @@
 float[] heights;
 
 void setup() {
-  size(400, 200);
+  size(383, 200);
   smooth();
 }
 

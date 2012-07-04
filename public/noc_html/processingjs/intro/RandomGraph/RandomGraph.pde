@@ -2,7 +2,7 @@
 // http://www.shiffman.net/
 
 void setup() {
-  size(400,200);
+  size(383,200);
   smooth();
 }
 
