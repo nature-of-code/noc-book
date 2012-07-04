@@ -1,10 +1,11 @@
-Mover[] movers = new Mover[20];
+Mover[] movers = new Mover[5];
 
 void setup() {
-  size(800, 200);
+  size(383, 200);
+  randomSeed(1);
   smooth();
   for (int i = 0; i < movers.length; i++) {
-    movers[i] = new Mover(random(1, 4), 0, 0);
+    movers[i] = new Mover(random(1, 4), random(width), 0);
   }
 }
 
@@ -16,6 +17,13 @@ void draw() {
     PVector wind = new PVector(0.01, 0);
     PVector gravity = new PVector(0, 0.1*movers[i].mass);
 
+    float c = 0.05;
+    PVector friction = movers[i].velocity.get();
+    friction.mult(-1); 
+    friction.normalize();
+    friction.mult(c);
+
+    //movers[i].applyForce(friction);
     movers[i].applyForce(wind);
     movers[i].applyForce(gravity);
 

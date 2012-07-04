@@ -8,14 +8,15 @@
  */
 
 // Five moving bodies
-Mover[] movers = new Mover[11];
+Mover[] movers = new Mover[5];
 
 // Liquid
 Liquid liquid;
 
 void setup() {
-  size(800, 200);
+  size(450, 450);
   smooth();
+  randomSeed(1);
   reset();
   // Create liquid object
   liquid = new Liquid(0, height/2, width, height/2, 0.1);
@@ -48,9 +49,10 @@ void draw() {
     movers[i].checkEdges();
   }
   
-  fill(0);
-  text("click mouse to reset",10,30);
+  fill(255);
+  //text("click mouse to reset",10,30);
   
+  if (frameCount % 20 == 0) saveFrame("ch2_05_####.png");
 }
 
 void mousePressed() {
@@ -60,7 +62,7 @@ void mousePressed() {
 // Restart all the Mover objects randomly
 void reset() {
   for (int i = 0; i < movers.length; i++) {
-    movers[i] = new Mover(random(0.5, 3), 40+i*70, 0);
+    movers[i] = new Mover(random(0.5*2.25,3*2.25), 20*2.25+i*40*2.25, 0);
   }
 }
 
