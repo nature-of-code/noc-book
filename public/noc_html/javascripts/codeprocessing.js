@@ -1,6 +1,6 @@
 // Comments are documented according to http://tomdoc.org/
 
-// Public: Add classes or add strong and em attributes to lines of code 
+// Public: Add classes or add strong and em attributes to lines of code
 // by detecting inline comments matching the pattern // [<STYLE>]
 // Remove the comment from the DOM and apply styles to the parent
 // .one-line element.
@@ -33,7 +33,7 @@ addStylesToCodeLines = function(comment) {
 // connecting a line of code to its comment. Aligns the left end of the line to
 // the left most position of the code.
 //
-// $codeCommentPair - a jQuery object containing a code block, a comment and a 
+// $codeCommentPair - a jQuery object containing a code block, a comment and a
 //                    code-comment-line.
 //
 // Returns nothing.
@@ -46,7 +46,7 @@ leftAlignCommentLine = function($codeCommentPair) {
 	line.css('position','absolute');
 	if(0 != firstElement.length){
 		line.css('left', firstElement.position().left + 'px');
-		line.css('width', $(pair).width() - firstElement.position().left);
+		line.css('width', ($(pair).width() - firstElement.position().left));
 	}
 }
 
@@ -54,7 +54,7 @@ leftAlignCommentLine = function($codeCommentPair) {
 // Changes text of the button based on data attributes of button.toggle.
 // To change what the button says, see `views/source.html.erb`.
 //
-// $toggle - a jQuery object corresponding to the clicked button.toggle 
+// $toggle - a jQuery object corresponding to the clicked button.toggle
 //
 // Returns nothing.
 toggleCodeDisplay = function($toggle) {
