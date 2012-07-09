@@ -17,13 +17,14 @@ addStylesToCodeLines = function(comment) {
 		$(line).find('.c1').remove().end().html($(line).html().replace(/\s*$/,''));
 		// Split any styles by commas.
 		styles = match[1].split(',');
-		for( l = 0; l < styles.length; l++) {
-			if(styles[l].trim() === 'bold') {
+    // Add any comment values with strong, em, or class names.
+		for(l = 0; l < styles.length; l++) {
+			if(styles[l] === 'bold') {
 				line.html("<strong>" + line.html() + "</strong>");
-			} else if (styles[l].trim() === 'italic') {
+			} else if (styles[l] === 'italic') {
 				line.html("<em>" + line.html() + "</em>");
 			} else {
-				line.addClass(styles[l].trim());
+				line.addClass(styles[l]);
 			}
 		}
 	}
