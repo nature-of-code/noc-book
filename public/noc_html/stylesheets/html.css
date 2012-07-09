@@ -39,23 +39,29 @@ _____________________________________________________________________________ */
   src: url(../fonts/AkkurReg.woff) format("woff"), url(../fonts/AkkurReg.svg#Akkurat-Regular) format("svg"); 
 }
 
-h1, .entry-title {
-	font-size: 270%;
+h1 {
+	font-size: 320%;
 	line-height: 1em;
 	font-style: normal;
-	margin-bottom:1.7em;
-	margin-top: 0.4444444444444444em;
+	margin-bottom:1.3em;
+	margin-top: 0.4em;
 }
 
 h2 {
-  font-size: 150%;
+	font-size: 270%;
+	line-height: 1em;
+	font-style: normal;
 }
 
 h3 {
-  font-size: 110%;
+	font-size: 150%;
 }
 
-h1, h2, h3 {
+h4,h5 {
+	font-size: 125%;
+}
+
+h1, h2, h3, h4, h5 {
 	font-family: 'Akkurat-Bold', Helvetica, Arial, sans-serif;
 	color: #222;
 	font-weight: normal;
@@ -65,7 +71,7 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 
-h2, h3, h4, h5, h6 {
+h3, h4, h5, h6 {
   line-height: 1.317em;
   margin: 1.6em 0 0.5em;
 }
@@ -113,6 +119,12 @@ canvas {
 	border: 1px solid gray;
 	//margin-bottom: 1.15em;
 	//border-left: 0.4em solid #272727;
+}
+
+.two-col canvas {
+  width: 100%;
+  margin-right: 1em;
+  float: left;
 }
 
 /* Image Classes
@@ -166,6 +178,43 @@ img {
   margin-left: 2em;
 }
 
+.two-col {
+  width: 48%;
+  margin-right: 1em;
+  float: left;
+}
+
+.two-col img {
+  border:1px solid gray;
+}
+
+.two-col-borderless {
+  width: 48%;
+  margin-right: 1em;
+  float: left;
+}
+.two-col-borderless img {
+  border:0px solid gray;
+}
+
+.three-col {
+  width: 31%;
+  margin-right: 1em;
+  float: left;
+  margin-bottom: 1.2em;
+}
+
+.three-col img {
+  border:1px solid gray;
+}
+
+.mini200 img {
+  width: 25%;
+  border:1px solid gray;
+}
+
+
+
 /* Boxes Styling
 _____________________________________________________________________________ */
 
@@ -183,6 +232,7 @@ _____________________________________________________________________________ */
 
 .note h2:first-child, .tip h2:first-child, .example h2:first-child,
 .note h3:first-child, .tip h3:first-child, .example h3:first-child,
+.note h4:first-child, .tip h4:first-child, .example h4:first-child,
 .note p:first-child, .tip p:first-child, .example p:first-child {
 	margin-top: 0;
 }
@@ -192,9 +242,10 @@ _____________________________________________________________________________ */
 }
 
 /* Style functions */
-.function, .klass, .var {
+.function, .klass, .var, .mono{
 	font-family: "Courier New", monospace;
-	color: #677625;
+	font-weight: bold;
+	color: #00000;
 }
 
 /* Style note to self */
@@ -205,9 +256,11 @@ _____________________________________________________________________________ */
 
 /* Style example heading */
 span.example {
+ clear: both;
  display: block;
- font-size: 1em;
- font-weight: bold;
+ font-family: 'Akkurat-Bold', Helvetica, Arial, sans-serif;
+ font-size:1em;
+ //font-weight: bold;
 }
 
 
@@ -230,13 +283,24 @@ pre {
   background-color: #F4F4F4;
   position: relative;
   clear: both;
+}
 
+.note .source-code,
+.example .source-code,
+.tip .source-code {
+  border-left: none;
 }
 
 /* Div wrapper for code blocks */
 .code-block {
+  font-size: 90%;
+  line-height: 1.4em;
   overflow: auto;
   position: relative;
+}
+
+pre {
+  /*line-height: 1.4em;*/
 }
 
 .code-block * {
@@ -274,7 +338,7 @@ a relatively positioned parent. */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-	margin-top: 0.5em;
+  margin-top: 0.0em;
 }
 
 /* The code goes in here. */
@@ -299,3 +363,40 @@ a relatively positioned parent. */
   z-index:1;
 
 }
+
+/* CSS for some lists */
+.list h4, .table h4 {
+  clear: none;
+}
+
+/* Working on some CSS for tables here */
+table {
+	font-size:11px;
+	font-family: 'Helvetica', Arial, sans-serif;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table th {
+	border-width: 1px;
+	text-align: left;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+.table.mono td {
+	font-size:10px;
+	font-family: 'Courier', sans-serif;
+}
+
+

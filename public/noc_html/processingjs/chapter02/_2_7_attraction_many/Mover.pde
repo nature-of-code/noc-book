@@ -7,7 +7,7 @@ class Mover {
 
   Mover(float m, float x, float y) {
     mass = m;
-    location = new PVector(300, 25);
+    location = new PVector(random(width), random(height));
     velocity = new PVector(1, 0);
     acceleration = new PVector(0, 0);
   }
@@ -26,7 +26,7 @@ class Mover {
   void display() {
     stroke(0);
     strokeWeight(2);
-    fill(127);
+    fill(0,100);
     ellipse(location.x, location.y, mass*25, mass*25);
   }
 }

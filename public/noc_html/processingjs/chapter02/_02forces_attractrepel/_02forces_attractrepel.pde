@@ -5,7 +5,7 @@ Attractor a;
 float g = 1;
 
 void setup() {
-  size(640,360);
+  size(800,200);
   smooth();
   a = new Attractor();
   for (int i = 0; i < movers.length; i++) {
