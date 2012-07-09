@@ -14,7 +14,7 @@ Mover[] movers = new Mover[11];
 Liquid liquid;
 
 void setup() {
-  size(800, 360);
+  size(800, 200);
   smooth();
   reset();
   // Create liquid object
@@ -22,7 +22,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(255);
   
   // Draw water
   liquid.display();
@@ -48,7 +48,7 @@ void draw() {
     movers[i].checkEdges();
   }
   
-  fill(255);
+  fill(0);
   text("click mouse to reset",10,30);
   
 }
@@ -60,7 +60,7 @@ void mousePressed() {
 // Restart all the Mover objects randomly
 void reset() {
   for (int i = 0; i < movers.length; i++) {
-    movers[i] = new Mover(random(1, 5), 40+i*70, 0);
+    movers[i] = new Mover(random(0.5, 3), 40+i*70, 0);
   }
 }
 

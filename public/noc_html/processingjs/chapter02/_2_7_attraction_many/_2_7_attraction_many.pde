@@ -9,7 +9,7 @@ void setup() {
     movers[i] = new Mover(random(0.1, 2), random(width), random(height));
   }
   a = new Attractor();
-}
+  }
 
 void draw() {
   background(255);
