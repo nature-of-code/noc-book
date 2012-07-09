@@ -35,7 +35,7 @@ addStylesToCodeLines = function(comment) {
 // the left most position of the code.
 //
 // $codeCommentPair - a jQuery object containing a code block, a comment and a
-//										code-comment-line.
+//                    code-comment-line.
 //
 // Returns nothing.
 leftAlignCommentLine = function($codeCommentPair) {
@@ -44,7 +44,6 @@ leftAlignCommentLine = function($codeCommentPair) {
 	firstCodeLine = $(pair.find('.one-line')[0]);
 	firstElement = $(firstCodeLine.find('span')[0]);
 
-	line.css('position','absolute');
 	if(0 != firstElement.length){
 		line.css('left', firstElement.position().left + 'px');
 		line.css('width', ($(pair).width() - firstElement.position().left));
