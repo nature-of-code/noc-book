@@ -17,7 +17,7 @@ addStylesToCodeLines = function(comment) {
 		$(line).find('.c1').remove().end().html($(line).html().replace(/\s*$/,''));
 		// Split any styles by commas.
 		styles = match[1].split(',');
-    // Add any comment values with strong, em, or class names.
+		// Add any comment values with strong, em, or class names.
 		for(l = 0; l < styles.length; l++) {
 			if(styles[l] === 'bold') {
 				line.html("<strong>" + line.html() + "</strong>");
@@ -35,7 +35,7 @@ addStylesToCodeLines = function(comment) {
 // the left most position of the code.
 //
 // $codeCommentPair - a jQuery object containing a code block, a comment and a
-//                    code-comment-line.
+//										code-comment-line.
 //
 // Returns nothing.
 leftAlignCommentLine = function($codeCommentPair) {
@@ -59,18 +59,18 @@ leftAlignCommentLine = function($codeCommentPair) {
 //
 // Returns nothing.
 toggleCodeDisplay = function($toggle) {
-  $sourceCode = $toggle.parent('.source-code');
-  if($toggle.html() === $toggle.data()['toRaw']){
-    $sourceCode
-      .find('textarea').show().end()
-      .find('.code-block').hide().end()
-      .find('.toggle').html($toggle.data()['toFormatted']);
-  } else {
-    $sourceCode
-      .find('textarea').hide().end()
-      .find('.code-block').show().end()
-      .find('.toggle').html($toggle.data()['toRaw']);
-  }
+	$sourceCode = $toggle.parent('.source-code');
+	if($toggle.html() === $toggle.data()['toRaw']){
+		$sourceCode
+			.find('textarea').show().end()
+			.find('.code-block').hide().end()
+			.find('.toggle').html($toggle.data()['toFormatted']);
+	} else {
+		$sourceCode
+			.find('textarea').hide().end()
+			.find('.code-block').show().end()
+			.find('.toggle').html($toggle.data()['toRaw']);
+	}
 }
 
 // Public: Run preformatting on the textarea elements so that toggling does not
@@ -81,13 +81,13 @@ toggleCodeDisplay = function($toggle) {
 //
 // Returns nothing.
 setRawCodeHeight = function($sourceCode) {
-  h = $sourceCode.find('.code-block').height();
-  $sourceCode.find('textarea').css('height', h);
+	h = $sourceCode.find('.code-block').height();
+	$sourceCode.find('textarea').css('height', h);
 }
 
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
-  $('.source-code').each(function(){ setRawCodeHeight($(this)); });
-  $('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
+	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
+	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
