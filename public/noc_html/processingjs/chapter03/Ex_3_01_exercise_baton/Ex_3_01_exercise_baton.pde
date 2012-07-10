@@ -1,15 +1,15 @@
 float angle = 0;			
 
 void setup() {
-  size(800, 200);
+  size(750, 150);
   smooth();
 }
 
 void draw() {
-  background(50);
+  background(255);
 
-  fill(175);
-  stroke(255);
+  fill(127);
+  stroke(0);
   rectMode(CENTER);
   translate(width/2, height/2);
   rotate(angle);
@@ -17,9 +17,8 @@ void draw() {
   stroke(0);
   strokeWeight(2);
   fill(127);
-  ellipse(50, 0, 48, 48);
-  ellipse(-50, 0, 48, 48);
-
+  ellipse(50, 0, 16, 16);
+  ellipse(-50, 0, 16, 16);
   angle += 0.05;
 }
 
