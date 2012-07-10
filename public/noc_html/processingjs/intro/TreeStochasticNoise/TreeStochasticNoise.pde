@@ -9,7 +9,7 @@ int seed = 5;
 
 
 void setup() {
-  size(383, 200);
+  size(380, 200);
   smooth();
 }
 
