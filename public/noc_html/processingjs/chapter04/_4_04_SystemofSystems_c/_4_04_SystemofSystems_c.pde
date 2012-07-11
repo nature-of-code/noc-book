@@ -8,10 +8,14 @@
 
 ArrayList<ParticleSystem> systems;
 
-
 void setup() {
   size(800,200);
   systems = new ArrayList<ParticleSystem>();
+  systems.add(new ParticleSystem(1,new PVector(100,25)));
+  for (int i = 0; i < 6; i++) {
+  systems.add(new ParticleSystem(1,new PVector(random(width),random(height))));
+  }
+
   smooth();
 }
 

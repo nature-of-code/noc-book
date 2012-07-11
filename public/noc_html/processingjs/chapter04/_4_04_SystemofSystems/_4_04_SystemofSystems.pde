@@ -8,20 +8,14 @@
 
 ArrayList<ParticleSystem> systems;
 
-
 void setup() {
   size(800,200);
-  background(255);
   systems = new ArrayList<ParticleSystem>();
   smooth();
 }
 
 void draw() {
-  
-  noStroke();
-  fill(255,5);
-  rect(0,0,width,height);
-  
+  background(255);
   for (ParticleSystem ps: systems) {
     ps.run();
     ps.addParticle(); 

@@ -10,7 +10,7 @@ class ParticleSystem {
   PVector origin;        // An origin point for where particles are birthed
 
   ParticleSystem(int num, PVector v) {
-    particles = new ArrayList<Particle>();              // Initialize the arraylist
+    particles = new ArrayList<Particle>();   // Initialize the arraylist
     origin = v.get();                        // Store the origin point
     for (int i = 0; i < num; i++) {
       particles.add(new Particle(origin));    // Add "num" amount of particles to the arraylist
@@ -18,6 +18,7 @@ class ParticleSystem {
   }
 
   void run() {
+    // Using the Iterator b/c we are deleting from list while iterating
     Iterator<Particle> it = particles.iterator();
     while (it.hasNext()) {
       Particle p = it.next();

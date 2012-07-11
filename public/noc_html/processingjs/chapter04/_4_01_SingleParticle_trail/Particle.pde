@@ -11,7 +11,7 @@ class Particle {
 
   Particle(PVector l) {
     acceleration = new PVector(0, 0.05);
-    velocity = new PVector(random(-1, 1), random(-1, 0));
+    velocity = new PVector(random(-1, 1), -1);
     location = l.get();
     lifespan = 255.0;
   }
@@ -32,8 +32,8 @@ class Particle {
   void display() {
     stroke(0, lifespan);
     strokeWeight(2);
-    fill(127, lifespan);
-    ellipse(location.x, location.y, 48, 48);
+    fill(127);
+    ellipse(location.x, location.y, 12, 12);
   }
 
   // Is the particle still useful?

@@ -33,7 +33,7 @@ class Particle {
     stroke(0, lifespan);
     strokeWeight(2);
     fill(127, lifespan);
-    ellipse(location.x, location.y, 48, 48);
+    ellipse(location.x, location.y, 12, 12);
   }
 
   // Is the particle still useful?

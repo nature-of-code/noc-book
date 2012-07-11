@@ -6,18 +6,26 @@
 // A ParticleSystem object manages a variable size (ArrayList) 
 // list of particles.
 
-ParticleSystem ps;
+ArrayList<ParticleSystem> systems;
 
 void setup() {
-  size(640,360);
-  ps = new ParticleSystem(1,new PVector(width/2,50));
+  size(800,200);
+  systems = new ArrayList<ParticleSystem>();
+  systems.add(new ParticleSystem(1,new PVector(100,25)));
+
   smooth();
 }
 
 void draw() {
   background(255);
-  ps.run();
-  ps.addParticle();
+  for (ParticleSystem ps: systems) {
+    ps.run();
+    ps.addParticle(); 
+  }
+}
+
+void mousePressed() {
+  systems.add(new ParticleSystem(1,new PVector(mouseX,mouseY)));
 }
 
 
