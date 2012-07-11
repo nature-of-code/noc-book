@@ -8,13 +8,13 @@ class Bob {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float mass = 10;
+  float mass = 24;
   
   // Arbitrary damping to simulate friction / drag 
   float damping = 0.98;
 
   // For mouse interaction
-  PVector drag;
+  PVector dragOffset;
   boolean dragging = false;
 
   // Constructor
@@ -22,7 +22,7 @@ class Bob {
     location = new PVector(x,y);
     velocity = new PVector();
     acceleration = new PVector();
-    drag = new PVector();
+    dragOffset = new PVector();
   } 
 
   // Standard Euler integration
@@ -43,12 +43,13 @@ class Bob {
 
   // Draw the bob
   void display() { 
-    stroke(255);
-    fill(100);
+    stroke(0);
+    strokeWeight(2);
+    fill(175);
     if (dragging) {
-      fill(255);
+      fill(50);
     }
-    ellipse(location.x,location.y,48,48);
+    ellipse(location.x,location.y,mass*2,mass*2);
   } 
 
   // The methods below are for mouse interaction
@@ -58,8 +59,8 @@ class Bob {
     float d = dist(mx,my,location.x,location.y);
     if (d < mass) {
       dragging = true;
-      drag.x = location.x-mx;
-      drag.y = location.y-my;
+      dragOffset.x = location.x-mx;
+      dragOffset.y = location.y-my;
     }
   }
 
@@ -69,8 +70,8 @@ class Bob {
 
   void drag(int mx, int my) {
     if (dragging) {
-      location.x = mx + drag.x;
-      location.y = my + drag.y;
+      location.x = mx + dragOffset.x;
+      location.y = my + dragOffset.y;
     }
   }
 }

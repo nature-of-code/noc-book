@@ -23,9 +23,9 @@ void setup() {
 }
 
 void draw()  {
-  background(50); 
+  background(255); 
   // Apply a gravity force to the bob
-  PVector gravity = new PVector(0,1);
+  PVector gravity = new PVector(0,2);
   bob.applyForce(gravity);
   
   // Connect the bob to the spring (this calculates the force)
@@ -43,8 +43,8 @@ void draw()  {
   bob.display(); 
   spring.display(); 
   
-  fill(255);
-  //text("click on bob to drag",10,height-5);
+  fill(0);
+  text("click on bob to drag",10,height-5);
 }
 
 
