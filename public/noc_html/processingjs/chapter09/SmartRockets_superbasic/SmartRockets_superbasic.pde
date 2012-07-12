@@ -20,7 +20,7 @@ int lifeCounter;          // Timer for cycle of generation
 PVector target;        // Target location
 
 void setup() {
-  size(640, 480);
+  size(800, 200);
   smooth();
 
   // The number of cycles we will allow a generation to live
