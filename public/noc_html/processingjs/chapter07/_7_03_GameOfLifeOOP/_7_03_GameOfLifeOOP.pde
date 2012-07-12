@@ -2,15 +2,13 @@
 // <http://www.shiffman.net>
 
 // A basic implementation of John Conway's Game of Life CA
-// how could this be improved to use object oriented programming?
-// think of it as similar to our particle system, with a "cell" class
-// to describe each individual cell and a "cellular automata" class
-// to describe a collection of cells
+
+// Each cell is now an object!
 
 GOL gol;
 
 void setup() {
-  size(400, 400);
+  size(800, 200);
   smooth();
   gol = new GOL();
 }

@@ -1,22 +1,19 @@
 // Daniel Shiffman, Nature of Code
 // <http://www.shiffman.net>
 
-// A basic implementation of John Conway's Game of Life CA
-
-// Each cell is now an object!
+// Outline for game of life 
+// This is just a grid of hexagons right now
 
 GOL gol;
 
 void setup() {
-  size(400, 400);
+  size(800, 200);
   smooth();
   gol = new GOL();
 }
 
 void draw() {
   background(255);
-
-  gol.generate();
   gol.display();
 }
 
