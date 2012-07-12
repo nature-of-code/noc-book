@@ -74,7 +74,7 @@ void displayInfo() {
   text("total population: " + popmax, 20, 170);
   text("mutation rate: " + int(mutationRate * 100) + "%", 20, 185);
 
-  text(population.allPhrases(), 10, 10);
+  text(popul.allPhrases(), 10, 10);
 }
 
 

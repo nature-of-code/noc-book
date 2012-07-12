@@ -13,7 +13,7 @@
 World world;
 
 void setup() {
-  size(600,400);
+  size(800, 200);
   // World starts with 20 creatures
   // and 20 pieces of food
   world = new World(20);

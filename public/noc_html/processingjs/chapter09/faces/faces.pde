@@ -6,7 +6,7 @@ Population population;
 Button button;
 
 void setup() {
-  size(780,200);
+  size(800,200);
   colorMode(RGB,1.0);
   smooth();
   int popmax = 10;
