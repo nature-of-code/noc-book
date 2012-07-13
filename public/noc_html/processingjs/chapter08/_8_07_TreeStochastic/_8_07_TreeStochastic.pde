@@ -6,29 +6,32 @@
 // Angles and number of branches are random
 
 void setup() {
-  size(600, 400);
+  size(800, 200);
   smooth();
   newTree();
 }
 
 void draw() {
-
+  noLoop();
 }
 
 void mousePressed() {
   newTree();
+  redraw();
 }
 
 void newTree() {
   background(255);
   fill(0);
-  text("Click mouse to generate a new tree", 10, height-20);
+  text("Click mouse to generate a new tree", 10, height-10);
 
   stroke(0);
+  pushMatrix();
   // Start the tree from the bottom of the screen
   translate(width/2, height);
   // Start the recursive branching!
-  branch(120);
+  branch(80);
+  popMatrix();
 }
 
 

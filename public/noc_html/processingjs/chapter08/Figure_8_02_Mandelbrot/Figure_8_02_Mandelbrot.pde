@@ -15,12 +15,12 @@
 // Created 2 May 2005
 
 // Establish a range of values on the complex plane
-double xmin = -2.5; double ymin = -2; double wh = 4;
+double xmin = -2.5; double ymin = -1; double w = 4; double h = 2;
 // A different range will allow us to "zoom" in or out on the fractal
 // double xmin = -1.5; double ymin = -.1; double wh = 0.15;
 
 void setup() {
-  size(400,400);
+  size(863,863/2);
 }
 
 void draw() {
@@ -31,9 +31,9 @@ void draw() {
   int maxiterations = 200;
 
   // x goes from xmin to xmax
-  double xmax = xmin + wh;
+  double xmax = xmin + w;
   // y goes from ymin to ymax
-  double ymax = ymin + wh;
+  double ymax = ymin + h;
   
   // Calculate amount we increment x,y for each pixel
   double dx = (xmax - xmin) / (width);
@@ -72,6 +72,8 @@ void draw() {
     y += dy;
   }
   updatePixels();
+  
+  save("chapter08_02.png");
   noLoop();
 }
 

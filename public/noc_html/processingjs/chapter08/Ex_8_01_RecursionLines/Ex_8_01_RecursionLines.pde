@@ -3,13 +3,13 @@
 // Nature of Code, Chapter 8
 
 void setup() {
-  size(640, 360);  
+  size(800, 200);  
   smooth();
 }
 
 void draw() {
   background(255);
-  drawLines(100,180,540,180);
+  drawLines(100,100,700,100);
   noLoop();
 }
 

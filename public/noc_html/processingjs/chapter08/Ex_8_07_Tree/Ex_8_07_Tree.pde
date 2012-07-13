@@ -8,7 +8,7 @@
 float theta;   
 
 void setup() {
-  size(250, 200);
+  size(800, 200);
   smooth();
 }
 
@@ -25,10 +25,8 @@ void draw() {
 
 void branch(float len) {
   // Each branch will be 2/3rds the size of the previous one
-
-  //float sw = map(len,2,120,1,10);
-  //strokeWeight(sw);
-  strokeWeight(2);
+  float sw = map(len,2,120,1,10);
+  strokeWeight(sw);
       
   line(0, 0, 0, -len);
   // Move to the end of that line

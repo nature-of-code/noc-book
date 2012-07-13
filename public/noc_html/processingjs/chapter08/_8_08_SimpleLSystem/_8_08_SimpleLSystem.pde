@@ -11,7 +11,7 @@ String current = "A";
 int count = 0;
 
 void setup() {
-  size(200, 200);
+  size(800, 200);
   println("Generation " + count + ": " + current);
 }
 
@@ -42,6 +42,6 @@ void mousePressed() {
   count++;
   // Print to message console
   println("Generation " + count + ": " + current);
-  println(count + " " + current.length());
+  //println(count + " " + current.length());
 }
 

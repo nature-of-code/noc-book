@@ -8,7 +8,7 @@
 float theta;   
 
 void setup() {
-  size(383, 200);
+  size(1800, 500);
   smooth();
 }
 
@@ -20,10 +20,12 @@ void draw() {
   // Start the tree from the bottom of the screen
   translate(width/2, height);
   stroke(0);
-  branch(70);
+  branch(200,0);
+  save("chapter08_exc06.png");
+  noLoop();
 }
 
-void branch(float len) {
+void branch(float len, int level) {
   // Each branch will be 2/3rds the size of the previous one
 
   //float sw = map(len,2,120,1,10);
@@ -35,18 +37,19 @@ void branch(float len) {
   translate(0, -len);
 
   len *= 0.66;
+  level++;
   // All recursive functions must have an exit condition!!!!
   // Here, ours is when the length of the branch is 2 pixels or less
-  if (len > 10) {
+  if (level < 5) {
     pushMatrix();    // Save the current state of transformation (i.e. where are we now)
     rotate(theta);   // Rotate by theta
-    branch(len);       // Ok, now call myself to draw two new branches!!
+    branch(len,level);       // Ok, now call myself to draw two new branches!!
     popMatrix();     // Whenever we get back here, we "pop" in order to restore the previous matrix state
 
     // Repeat the same thing, only branch off to the "left" this time!
     pushMatrix();
     rotate(-theta);
-    branch(len);
+    branch(len,level);
     popMatrix();
   }
 }
