@@ -26,55 +26,62 @@
 //   # Rinse and repeat
 
 
-PFont f, fb;
-String phrase;
+PFont f;
+String target;
 int popmax;
 float mutationRate;
-Population popul;
+Population population;
 
 void setup() {
-  size(400, 200);
-  fb = createFont("Courier", 32, true);
-  f = createFont("Arial", 12, true);
-  phrase = "To be or not to be.";
+  size(800, 200);
+  f = createFont("Courier", 32, true);
+  target = "To be or not to be.";
   popmax = 150;
   mutationRate = 0.01;
 
-  // Create a population with a target phrase, mutation rate, and population max
-  popul = new Population(phrase, mutationRate, popmax);
+  // Create a populationation with a target phrase, mutation rate, and populationation max
+  population = new Population(target, mutationRate, popmax);
 }
 
 void draw() {
   // Generate mating pool
-  popul.naturalSelection();
-  // Create next generation
-  popul.generate();
+  population.naturalSelection();
+  //Create next generation
+  population.generate();
   // Calculate fitness
-  popul.calcFitness();
+  population.calcFitness();
   displayInfo();
 
   // If we found the target phrase, stop
-  if (popul.finished()) {
+  if (population.finished()) {
+    println(millis()/1000.0);
     noLoop();
   }
 }
 
 void displayInfo() {
   background(255);
-  // Display current status of population
-  String answer = popul.getBest();
-  textFont(fb);
+  // Display current status of populationation
+  String answer = population.getBest();
+  textFont(f);
   textAlign(LEFT);
   fill(0);
-  text(answer, 20, 100);
+  
+  
+  textSize(16);
+  text("Best phrase:",20,30);
+  textSize(32);
+  text(answer, 20, 75);
 
-  textFont(f);
-  text("total generations: " + popul.getGenerations(), 20, 140);
-  text("average fitness: " + nf(popul.getAverageFitness(), 0, 2), 20, 155);
-  text("total population: " + popmax, 20, 170);
+  textSize(12);
+  text("total generations: " + population.getGenerations(), 20, 140);
+  text("average fitness: " + nf(population.getAverageFitness(), 0, 2), 20, 155);
+  text("total populationation: " + popmax, 20, 170);
   text("mutation rate: " + int(mutationRate * 100) + "%", 20, 185);
-
-  text(popul.allPhrases(), 10, 10);
+ 
+  textSize(10);
+  text("All phrases:\n" + population.allPhrases(), 650, 10);
 }
+
 
 
