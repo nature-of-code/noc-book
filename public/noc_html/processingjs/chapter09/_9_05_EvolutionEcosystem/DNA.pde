@@ -24,7 +24,12 @@ class DNA {
   
   DNA copy() {
     float[] newgenes = new float[genes.length];
-    arraycopy(genes,newgenes);
+    //arraycopy(genes,newgenes);
+    // JS mode not supporting arraycopy
+    for (int i = 0; i < newgenes.length; i++) {
+      newgenes[i] = genes[i];
+    }
+    
     return new DNA(newgenes);
   }
   

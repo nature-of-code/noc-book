@@ -2,13 +2,13 @@
 // http://www.genarts.com/karl/papers/siggraph91.html
 // Daniel Shiffman <http://www.shiffman.net>
 
-import java.awt.Rectangle;
+//import java.awt.Rectangle;
 
 class Button {
   Rectangle r;  // Button's rectangle
   String txt;   // Button's text
-  boolean clicked;  // Did i click on it?
-  boolean rollover; // Did i rollover it?
+  boolean clickedOn;  // Did i click on it?
+  boolean rolloverOn; // Did i rollover it?
 
   Button(int x, int y, int w, int h, String s) {
     r = new Rectangle(x,y,w,h);
@@ -19,12 +19,12 @@ class Button {
     // Draw rectangle and text based on whether rollover or clicked
     rectMode(CORNER);
     stroke(0); noFill();
-    if (rollover) fill(0.5);
-    if (clicked) fill(0);
+    if (rolloverOn) fill(0.5);
+    if (clickedOn) fill(0);
     rect(r.x,r.y,r.width,r.height);
     float b = 0.0;
-    if (clicked) b = 1;
-    else if (rollover) b = 0.2;
+    if (clickedOn) b = 1;
+    else if (rolloverOn) b = 0.2;
     else b = 0;
     fill(b);
     textAlign(LEFT);
@@ -36,18 +36,18 @@ class Button {
   // Methods to check rollover, clicked, or released (must be called from appropriate
   // Places in draw, mousePressed, mouseReleased
   boolean rollover(int mx, int my) {
-    if (r.contains(mx,my)) rollover = true;
-    else rollover = false;
-    return rollover;
+    if (r.contains(mx,my)) rolloverOn = true;
+    else rolloverOn = false;
+    return rolloverOn;
   }
 
   boolean clicked(int mx, int my) {
-    if (r.contains(mx,my)) clicked = true;
-    return clicked;
+    if (r.contains(mx,my)) clickedOn = true;
+    return clickedOn;
   }
 
   void released() {
-    clicked = false;
+    clickedOn = false;
   }
 
 }

@@ -21,6 +21,7 @@ class Obstacle {
   void display() {
     stroke(0);
     fill(175);
+    strokeWeight(2);
     rectMode(CORNER);
     rect(location.x,location.y,w,h);
   }

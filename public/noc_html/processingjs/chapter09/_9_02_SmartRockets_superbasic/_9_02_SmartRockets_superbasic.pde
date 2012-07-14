@@ -15,79 +15,59 @@ int lifetime;  // How long should each generation live
 
 Population population;  // Population
 
-int lifecycle;          // Timer for cycle of generation
-int recordtime;         // Fastest time to target
+int lifeCounter;          // Timer for cycle of generation
 
-Obstacle target;        // Target location
-
-//int diam = 24;          // Size of target
-
-ArrayList<Obstacle> obstacles;  //an array list to keep track of all the obstacles!
+PVector target;        // Target location
 
 void setup() {
   size(800, 200);
   smooth();
 
   // The number of cycles we will allow a generation to live
-  lifetime = 500;
+  lifetime = 200;
 
   // Initialize variables
-  lifecycle = 0;
-  recordtime = lifetime;
+  lifeCounter = 0;
   
-  target = new Obstacle(width/2-12, 24, 24, 24);
+  target = new PVector(width/2, 24);
 
   // Create a population with a mutation rate, and population max
   float mutationRate = 0.01;
   population = new Population(mutationRate, 50);
 
-  // Create the obstacle course  
-  obstacles = new ArrayList<Obstacle>();
-  obstacles.add(new Obstacle(200, height/2, width-400, 10));
 }
 
 void draw() {
   background(255);
 
   // Draw the start and target locations
-  target.display();
+  fill(0);
+  ellipse(target.x,target.y,24,24);
 
 
   // If the generation hasn't ended yet
-  if (lifecycle < lifetime) {
-    population.live(obstacles);
-    if ((population.targetReached()) && (lifecycle < recordtime)) {
-      recordtime = lifecycle;
-    }
-    lifecycle++;
+  if (lifeCounter < lifetime) {
+    population.live();
+    lifeCounter++;
     // Otherwise a new generation
   } 
   else {
-    lifecycle = 0;
+    lifeCounter = 0;
     population.fitness();
     population.selection();
     population.reproduction();
   }
 
-  // Draw the obstacles
-  for (Obstacle obs : obstacles) {
-    obs.display();
-  }
-
   // Display some info
   fill(0);
   text("Generation #: " + population.getGenerations(), 10, 18);
-  text("Cycles left: " + (lifetime-lifecycle), 10, 36);
-  text("Record cycles: " + recordtime, 10, 54);
-  
-  
+  text("Cycles left: " + (lifetime-lifeCounter), 10, 36);
 }
 
 // Move the target if the mouse is pressed
 // System will adapt to new target
 void mousePressed() {
-  target.location.x = mouseX;
-  target.location.y = mouseY;
-  recordtime = lifetime;
+  target.x = mouseX;
+  target.y = mouseY;
 }
 

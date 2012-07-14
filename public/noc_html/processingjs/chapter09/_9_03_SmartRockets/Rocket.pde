@@ -23,7 +23,7 @@ class Rocket {
   // To count which force we're on in the genes
   int geneCounter = 0;
 
-  boolean stopped = false;     // Am I stuck on an obstacle?
+  boolean hitObstacle = false;    // Am I stuck on an obstacle?
   boolean hitTarget = false;   // Did I reach the target
   int finishTime;              // What was my finish time?
 
@@ -52,22 +52,22 @@ class Rocket {
     // Make the function exponential
     fitness = pow(fitness, 4);
 
-    if (stopped) fitness *= 0.1; // lose 90% of fitness hitting an obstacle
+    if (hitObstacle) fitness *= 0.1; // lose 90% of fitness hitting an obstacle
     if (hitTarget) fitness *= 2; // twice the fitness for finishing!
   }
 
   // Run in relation to all the obstacles
   // If I'm stuck, don't bother updating or checking for intersection
-  void run(ArrayList<Obstacle> o) {
-    if (!stopped && !hitTarget) {
+  void run(ArrayList<Obstacle> os) {
+    if (!hitObstacle && !hitTarget) {
       applyForce(dna.genes[geneCounter]);
       geneCounter = (geneCounter + 1) % dna.genes.length;
       update();
       // If I hit an edge or an obstacle
-      obstacles(o);
+      obstacles(os);
     }
     // Draw me!
-    if (!stopped) {
+    if (!hitObstacle) {
       display();
     }
   }
@@ -86,10 +86,10 @@ class Rocket {
   }
 
   // Did I hit an obstacle?
-  void obstacles(ArrayList<Obstacle> o) {
-    for (Obstacle obs : o) {
+  void obstacles(ArrayList<Obstacle> os) {
+    for (Obstacle obs : os) {
       if (obs.contains(location)) {
-        stopped = true;
+        hitObstacle = true;
       }
     }
   }
@@ -106,9 +106,11 @@ class Rocket {
   }
 
   void display() {
+    //background(255,0,0);
     float theta = velocity.heading2D() + PI/2;
     fill(200, 100);
     stroke(0);
+    strokeWeight(1);
     pushMatrix();
     translate(location.x, location.y);
     rotate(theta);
@@ -139,7 +141,7 @@ class Rocket {
   }
 
   boolean stopped() {
-    return stopped;
+    return hitObstacle;
   }
 }
 

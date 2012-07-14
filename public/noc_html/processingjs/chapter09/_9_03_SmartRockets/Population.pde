@@ -23,12 +23,12 @@ class Population {
     }
   }
 
-  void live (ArrayList<Obstacle> o) {
+  void live (ArrayList<Obstacle> os) {
     // For every creature
     for (int i = 0; i < population.length; i++) {
       // If it finishes, mark it down as done!
       population[i].checkTarget();
-      population[i].run(o);
+      population[i].run(os);
     }
   }
 

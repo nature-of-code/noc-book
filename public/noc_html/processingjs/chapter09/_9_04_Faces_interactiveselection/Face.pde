@@ -12,7 +12,7 @@ class Face {
   float fitness;    // How good is this face?
   float x, y;       // Position on screen
   int wh = 70;      // Size of square enclosing face
-  boolean rollover; // Are we rolling over this face?
+  boolean rolloverOn; // Are we rolling over this face?
 
   Rectangle r;
 
@@ -67,7 +67,7 @@ class Face {
 
     // Draw the bounding box
     stroke(0.25);
-    if (rollover) fill(0, 0.25);
+    if (rolloverOn) fill(0, 0.25);
     else noFill();
     rectMode(CENTER);
     rect(0, 0, wh, wh);
@@ -75,7 +75,7 @@ class Face {
 
     // Display fitness value
     textAlign(CENTER);
-    if (rollover) fill(0);
+    if (rolloverOn) fill(0);
     else fill(0.25);
     text(int(fitness), x, y+55);
   }
@@ -91,10 +91,10 @@ class Face {
   // Increment fitness if mouse is rolling over face
   void rollover(int mx, int my) {
     if (r.contains(mx, my)) {
-      rollover = true;
+      rolloverOn = true;
       fitness += 0.25;
     } else {
-      rollover = false;
+      rolloverOn = false;
     }
   }
 }
