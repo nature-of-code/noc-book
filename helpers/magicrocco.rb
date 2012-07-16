@@ -26,7 +26,23 @@ class MagicRocco < Rocco
     # section list.
     @sections = highlight(split(parse(@data)))
   end
-  
+
+  # Take the list of paired *sections* two-tuples and split into two
+  # separate lists: one holding the comments with leaders removed and
+  # one with the code blocks.
+  def split(sections)
+    docs_blocks, code_blocks = [], []
+    sections.each do |docs,code|
+      docs_blocks << docs.join("\n")
+      code_blocks << code.map do |line|
+        line = line.length == 0 ? " " : line
+        tabs = line.match(/^(\t+)/)
+        tabs ? line.sub(/^\t+/, '  ' * tabs.captures[0].length) : line
+      end.join("\n")
+    end
+    [docs_blocks, code_blocks]
+  end
+
   def detect_language
     @_language ||=
       if pygmentize?
@@ -35,7 +51,7 @@ class MagicRocco < Rocco
         "text"
       end
   end
-  
+
   # Take the result of `split` and apply syntax highlighting to source code.
   def highlight(blocks)
     docs_blocks, code_blocks = blocks
@@ -93,7 +109,7 @@ class MagicRocco < Rocco
     # If syntax_on is true then after pygmentize the divider_input
     # has been altered to the form of divider_output, otherwise its
     # still the same.
-    code_divider = 
+    code_divider =
       if @options[:syntax_on]
         divider_output
       else
@@ -114,7 +130,7 @@ class MagicRocco < Rocco
     # Lastly, combine the docs and code lists back into a list of two-tuples.
     docs_html.zip(code_html)
   end
-  
+
   def render(template)
     ERB.new(template).result(binding)
   end
