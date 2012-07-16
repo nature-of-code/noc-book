@@ -30,6 +30,18 @@ addStylesToCodeLines = function(comment) {
 	}
 }
 
+inlineComments = function(comment) {
+	match = $(comment).html().match(/^(\[inline\])(.*)/);
+	if(match !== null && match.length >= 1){
+		code = $(comment).closest('.code-comment-pair')
+			.find('.code-comment-line').remove().end()
+			.find('code pre')[0];
+		$(code).prepend("<span class='one-line'><span class='c1'>// "
+			+ match[2]+"</span></span>\n");
+		$(comment).empty();
+	}
+}
+
 // Public: Adjust the size and left position of the div that draws the line
 // connecting a line of code to its comment. Aligns the left end of the line to
 // the left most position of the code.
@@ -86,6 +98,7 @@ setRawCodeHeight = function($sourceCode) {
 
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
+	$('.code-comment').each(function(){ inlineComments($(this)); });
 	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
 	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
 	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
