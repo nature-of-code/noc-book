@@ -87,6 +87,7 @@ class Vehicle {
     float theta = velocity.heading2D() + PI/2;
     fill(175);
     stroke(0);
+    strokeWeight(1);
     pushMatrix();
     translate(location.x,location.y);
     rotate(theta);

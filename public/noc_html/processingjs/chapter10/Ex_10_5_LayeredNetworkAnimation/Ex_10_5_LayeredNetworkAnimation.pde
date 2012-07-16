@@ -5,7 +5,7 @@
 Network network;
 
 void setup() {
-  size(640, 360); 
+  size(750,200); 
   smooth();
 
   // Create the Network object
@@ -17,8 +17,8 @@ void setup() {
   Neuron output = new Neuron(250, 0);
   for (int i = 0; i < layers; i++) {
     for (int j = 0; j < inputs; j++) {
-      float x = map(i, 0, layers, -200, 200);
-      float y = map(j, 0, inputs-1, -100, 100);
+      float x = map(i, 0, layers, -300, 300);
+      float y = map(j, 0, inputs-1, -75, 75);
       Neuron n = new Neuron(x, y);
       if (i > 0) {
         for (int k = 0; k < inputs; k++) {
