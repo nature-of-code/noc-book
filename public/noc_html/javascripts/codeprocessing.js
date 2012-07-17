@@ -31,7 +31,10 @@ addStylesToCodeLines = function(comment) {
 }
 
 inlineComments = function(code) {
-	$(code).html($(code).html().replace('<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',''));
+	$(code).html($(code).html().replace(
+		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
+		''
+	));
 }
 
 // Public: Adjust the size and left position of the div that draws the line
