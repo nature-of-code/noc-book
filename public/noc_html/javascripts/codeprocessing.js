@@ -9,7 +9,6 @@
 //
 // Return nothing.
 addStylesToCodeLines = function(comment) {
-	$('body').append('hi');
 	match = $(comment).html().match(/\[(.*)\]/);
 
 	if(match !== null && match.length >= 1){
@@ -31,17 +30,8 @@ addStylesToCodeLines = function(comment) {
 	}
 }
 
-inlineComments = function(comment) {
-	match = $(comment).html().match(/^(\[inline\])(.*)/);
-	if(match !== null && match.length >= 1){
-		Log.error('hi');
-		code = $(comment).closest('.code-comment-pair')
-			.find('.code-comment-line').remove().end()
-			.find('pre');
-		$(code).prepend("<span class='one-line'><span class='c1'>// "
-			+ match[2]+"</span></span>\n");
-		$(comment).empty();
-	}
+inlineComments = function(code) {
+	$(code).html($(code).html().replace('<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',''));
 }
 
 // Public: Adjust the size and left position of the div that draws the line
@@ -94,15 +84,14 @@ toggleCodeDisplay = function($toggle) {
 //
 // Returns nothing.
 setRawCodeHeight = function($sourceCode) {
-	$('body').append('hi');
 	h = $sourceCode.find('.code-block').height();
 	$sourceCode.find('textarea').css('height', h);
 }
 
 $(document).ready(function(){
-	// $('.c1').each(function(){ addStylesToCodeLines($(this)); });
-	$('.code-comment').each(function(){ inlineComments($(this)); });
+	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
+	$('code').each(function(){ inlineComments($(this)); });
 	// $('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
-	// $('.source-code').each(function(){ setRawCodeHeight($(this)); });
-	// $('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
+	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
+	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
