@@ -9,7 +9,7 @@ PVector desired;
 ArrayList<PVector> targets;
 
 void setup() {
-  size(640, 360);
+  size(800, 200);
   smooth();
   
   // The Vehicle's desired location
@@ -38,13 +38,15 @@ void draw() {
   // Draw a rectangle to show the Vehicle's goal
   rectMode(CENTER);
   stroke(0);
-  fill(0, 50);
+  strokeWeight(2);
+  fill(0, 100);
   rect(desired.x, desired.y, 36, 36);
 
   // Draw the targets
   for (PVector target : targets) {
-    fill(0, 50);
+    fill(0, 100);
     stroke(0);
+    strokeWeight(2);
     ellipse(target.x, target.y, 30, 30);
   }
   
