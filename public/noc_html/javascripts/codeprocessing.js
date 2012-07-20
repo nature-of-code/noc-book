@@ -30,6 +30,11 @@ addStylesToCodeLines = function(comment) {
 	}
 }
 
+// Public: Find instances of [inline]// and remove [inline]
+//
+// code - a <code> element
+//
+// Returns nothing
 inlineComments = function(code) {
 	$(code).html($(code).html().replace(
 		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
@@ -51,9 +56,10 @@ leftAlignCommentLine = function($codeCommentPair) {
 	firstCodeLine = $(pair.find('.one-line')[0]);
 	firstElement = $(firstCodeLine.find('span')[0]);
 
-	if(0 != firstElement.length){
-		line.css('left', firstElement.position().left + 'px');
-		line.css('width', ($(pair).width() - firstElement.position().left));
+	var html = firstCodeLine.html();
+	var match = html.match(/^\s+/);
+	if (match !== null) {
+		line.css('left', (match[0].length / 2) + 'em');
 	}
 }
 
@@ -94,7 +100,7 @@ setRawCodeHeight = function($sourceCode) {
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('code').each(function(){ inlineComments($(this)); });
-	// $('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
+	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
 	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
 	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
