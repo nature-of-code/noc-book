@@ -51,15 +51,31 @@ inlineComments = function(code) {
 //
 // Returns nothing.
 leftAlignCommentLine = function($codeCommentPair) {
-	pair = $codeCommentPair;
-	line = $(pair.find('.code-comment-line'));
-	firstCodeLine = $(pair.find('.one-line')[0]);
-	firstElement = $(firstCodeLine.find('span')[0]);
+	var pair = $codeCommentPair;
+	var line = $(pair.find('.code-comment-line'));
+	var firstCodeLine = $(pair.find('.one-line')[0]);
+	var firstElement = $(firstCodeLine.find('span')[0]);
+	var fontSize;
 
-	var html = firstCodeLine.html();
-	var match = html.match(/^\s+/);
-	if (match !== null) {
-		line.css('left', (match[0].length / 2) + 'em');
+	try {
+		fontSize = firstCodeLine.css('font-size');
+		if(0 != firstElement.length){
+			try {
+				line.css('left', firstElement.position().left + 'px');
+			} catch (e) {
+				Log.error(e);
+			}
+		}
+	} catch (e) {
+		var html = firstCodeLine.html();
+		var match = html.match(/^(\<.*?\>)*(\s+)/);
+		if (match !== null && match !== 'undefined') {
+			var last = match.length - 1;
+			if (match[last].length >= 1) {
+				line.css('left', (match[last].length / 2) + 'em');
+			}
+		}
+
 	}
 }
 
