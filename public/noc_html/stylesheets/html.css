@@ -280,7 +280,7 @@ pre {
   border-left: 0.4em solid #272727;
   margin-bottom: 2em;
   padding: 0.7em 1.5em;
-  background-color: #F4F4F4;
+  background-color: #f9f9f9;
   position: relative;
   clear: both;
 }
@@ -310,8 +310,31 @@ pre {
   position: relative;
 }
 
-pre {
+.code-comment-pair code pre {
+  width: 60%;
   /*line-height: 1.4em;*/
+}
+
+.one-line:first-child,
+.code-comment {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.no-comment .one-line:first-child,
+.no-comment .code-comment {
+  background-color: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.one-line {
+  padding-left: 4px;
+  width: 100%;
 }
 
 /* Wrapper for every pairing of code and comment.
@@ -321,7 +344,7 @@ a relatively positioned parent. */
   display: block;
   position: relative;
   clear: both;
-  margin: 0;
+  margin: 0 0 2px 0;
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -339,18 +362,18 @@ a relatively positioned parent. */
 
 /* Div wrapper for code comments */
 .code-comment {
-  display: block;
-  position: relative;
   clear: right;
   color: #444;
-  font-style: bold;
+  display: block;
   float: right;
   font-family: sans-serif;
-  width: 300px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  font-style: bold;
   margin-top: 0.0em;
+  position: relative;
+  width: 40%;
+
+  /* hack to remove 1px white space in Safari on Lion */
+  left: -1px;
 }
 
 /* The code goes in here. */
