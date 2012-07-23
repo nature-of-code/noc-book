@@ -30,8 +30,16 @@ addStylesToCodeLines = function(comment) {
 	}
 }
 
+// Public: Find instances of [inline]// and remove [inline]
+//
+// code - a <code> element
+//
+// Returns nothing
 inlineComments = function(code) {
-	$(code).html($(code).html().replace('<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',''));
+	$(code).html($(code).html().replace(
+		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
+		''
+	));
 }
 
 // Public: Adjust the size and left position of the div that draws the line
@@ -43,14 +51,25 @@ inlineComments = function(code) {
 //
 // Returns nothing.
 leftAlignCommentLine = function($codeCommentPair) {
-	pair = $codeCommentPair;
-	line = $(pair.find('.code-comment-line'));
-	firstCodeLine = $(pair.find('.one-line')[0]);
-	firstElement = $(firstCodeLine.find('span')[0]);
+	var pair = $codeCommentPair;
+	var line = $(pair.find('.code-comment-line'));
+	var firstCodeLine = $(pair.find('.one-line')[0]);
+	var firstElement = $(firstCodeLine.find('span')[0]);
 
-	if(0 != firstElement.length){
-		line.css('left', firstElement.position().left + 'px');
-		line.css('width', ($(pair).width() - firstElement.position().left));
+	// Set left position based on .position() if available.
+	try {
+		if(0 != firstElement.length){
+			line.css('left', firstElement.position().left + 'px');
+		}
+	} catch (e) {
+		var html = firstCodeLine.html();
+		var match = html.match(/^(\<.*?\>)*(\s+)/);
+		if (match !== null && match !== 'undefined') {
+			var last = match.length - 1;
+			if (match[last].length >= 1) {
+				line.css('left', (match[last].length / 2) + 'em');
+			}
+		}
 	}
 }
 
@@ -91,7 +110,7 @@ setRawCodeHeight = function($sourceCode) {
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('code').each(function(){ inlineComments($(this)); });
-	// $('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
+	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
 	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
 	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
