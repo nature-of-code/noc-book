@@ -42,37 +42,6 @@ inlineComments = function(code) {
 	));
 }
 
-// Public: Adjust the size and left position of the div that draws the line
-// connecting a line of code to its comment. Aligns the left end of the line to
-// the left most position of the code.
-//
-// $codeCommentPair - a jQuery object containing a code block, a comment and a
-//                    code-comment-line.
-//
-// Returns nothing.
-leftAlignCommentLine = function($codeCommentPair) {
-	var pair = $codeCommentPair;
-	var line = $(pair.find('.code-comment-line'));
-	var firstCodeLine = $(pair.find('.one-line')[0]);
-	var firstElement = $(firstCodeLine.find('span')[0]);
-
-	// Set left position based on .position() if available.
-	try {
-		if(0 != firstElement.length){
-			line.css('left', firstElement.position().left + 'px');
-		}
-	} catch (e) {
-		var html = firstCodeLine.html();
-		var match = html.match(/^(\<.*?\>)*(\s+)/);
-		if (match !== null && match !== 'undefined') {
-			var last = match.length - 1;
-			if (match[last].length >= 1) {
-				line.css('left', (match[last].length / 2) + 'em');
-			}
-		}
-	}
-}
-
 // Public: Toggle between formatted code markup and a textarea of the raw code.
 // Changes text of the button based on data attributes of button.toggle.
 // To change what the button says, see `views/source.html.erb`.
@@ -110,7 +79,6 @@ setRawCodeHeight = function($sourceCode) {
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('code').each(function(){ inlineComments($(this)); });
-	$('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
 	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
 	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
