@@ -30,28 +30,16 @@ addStylesToCodeLines = function(comment) {
 	}
 }
 
+// Public: Find instances of [inline]// and remove [inline]
+//
+// code - a <code> element
+//
+// Returns nothing
 inlineComments = function(code) {
-	$(code).html($(code).html().replace('<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',''));
-}
-
-// Public: Adjust the size and left position of the div that draws the line
-// connecting a line of code to its comment. Aligns the left end of the line to
-// the left most position of the code.
-//
-// $codeCommentPair - a jQuery object containing a code block, a comment and a
-//                    code-comment-line.
-//
-// Returns nothing.
-leftAlignCommentLine = function($codeCommentPair) {
-	pair = $codeCommentPair;
-	line = $(pair.find('.code-comment-line'));
-	firstCodeLine = $(pair.find('.one-line')[0]);
-	firstElement = $(firstCodeLine.find('span')[0]);
-
-	if(0 != firstElement.length){
-		line.css('left', firstElement.position().left + 'px');
-		line.css('width', ($(pair).width() - firstElement.position().left));
-	}
+	$(code).html($(code).html().replace(
+		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
+		''
+	));
 }
 
 // Public: Toggle between formatted code markup and a textarea of the raw code.
@@ -91,7 +79,6 @@ setRawCodeHeight = function($sourceCode) {
 $(document).ready(function(){
 	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
 	$('code').each(function(){ inlineComments($(this)); });
-	// $('.code-comment-pair').each(function(){ leftAlignCommentLine($(this)); });
 	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
 	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
 });
