@@ -17,12 +17,16 @@ class Application < Sinatra::Base
   end
   
   get '/create_pdf/:filename' do
-    
+    startTime = Time.now;
+    printf("Starting %g.\n",startTime);
     # first render html
     @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
     @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
+    printf("Rendered HTML: %g. seconds\n",Time.now-startTime);
     @document.render(:pdf, :html_file => "public/noc_pdf/index.html", :output => "public/noc_pdf/index.pdf")
+    printf("Rendered PDF: %g. seconds\n",Time.now-startTime);
     redirect "noc_pdf/index.pdf"
+
   end
 
   not_found do
