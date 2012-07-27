@@ -8,11 +8,11 @@
 // comment - a jQuery object with corresponding to $('.c1')
 //
 // Return nothing.
-addStylesToCodeLines = function(comment) {
+var addStylesToCodeLines = function(comment) {
 	match = $(comment).html().match(/\[(.*)\]/);
 
 	if(match !== null && match.length >= 1){
-		line = $(comment).parent('.one-line');
+		line = $(comment).parent('span.one-line');
 		// Remove the comment and trailing whitespace.
 		$(line).find('.c1').remove().end().html($(line).html().replace(/\s*$/,''));
 		// Split any styles by commas.
@@ -35,7 +35,7 @@ addStylesToCodeLines = function(comment) {
 // code - a <code> element
 //
 // Returns nothing
-inlineComments = function(code) {
+var inlineComments = function(code) {
 	$(code).html($(code).html().replace(
 		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
 		''
@@ -49,18 +49,18 @@ inlineComments = function(code) {
 // $toggle - a jQuery object corresponding to the clicked button.toggle
 //
 // Returns nothing.
-toggleCodeDisplay = function($toggle) {
-	$sourceCode = $toggle.parent('.source-code');
+var toggleCodeDisplay = function($toggle) {
+	$sourceCode = $toggle.parent('div.source-code');
 	if($toggle.html() === $toggle.data()['toRaw']){
 		$sourceCode
 			.find('textarea').show().end()
-			.find('.code-block').hide().end()
-			.find('.toggle').html($toggle.data()['toFormatted']);
+			.find('div.code-block').hide().end()
+			.find('a.toggle').html($toggle.data()['toFormatted']);
 	} else {
 		$sourceCode
 			.find('textarea').hide().end()
-			.find('.code-block').show().end()
-			.find('.toggle').html($toggle.data()['toRaw']);
+			.find('div.code-block').show().end()
+			.find('a.toggle').html($toggle.data()['toRaw']);
 	}
 }
 
@@ -71,14 +71,7 @@ toggleCodeDisplay = function($toggle) {
 // $sourceCode - a jQuery object of a div wrapping a code section.
 //
 // Returns nothing.
-setRawCodeHeight = function($sourceCode) {
-	h = $sourceCode.find('.code-block').height();
+var setRawCodeHeight = function($sourceCode) {
+	h = $sourceCode.find('div.code-block').height();
 	$sourceCode.find('textarea').css('height', h);
 }
-
-$(document).ready(function(){
-	$('.c1').each(function(){ addStylesToCodeLines($(this)); });
-	$('code').each(function(){ inlineComments($(this)); });
-	$('.source-code').each(function(){ setRawCodeHeight($(this)); });
-	$('.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
-});
