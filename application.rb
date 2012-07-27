@@ -18,10 +18,20 @@ class Application < Sinatra::Base
   
   get '/create_pdf/:filename' do
     
+    startTime = Time.now
+    puts "///////// Starting Render: #{startTime}"
+        
     # first render html
     @document = AsciiDoc::AsciiDocument.new("public/#{params[:filename]}", { :debug_xml_to_file => "public/#{params[:filename]}.xml" })
+    puts "Parsed Asciidoc after: #{Time.now-startTime} seconds"
+    
     @document.render(:html, :template => "public/noc_pdf/views", :output => "public/noc_pdf/index.html")
+    puts "Rendered HTML after: #{Time.now-startTime} seconds"
+    
     @document.render(:pdf, :html_file => "public/noc_pdf/index.html", :output => "public/noc_pdf/index.pdf")
+    puts "Rendered PDF after: #{Time.now-startTime} seconds"
+    
+    puts "DONE! Rendered in: #{Time.now-startTime} seconds"
     redirect "noc_pdf/index.pdf"
   end
 
