@@ -30,18 +30,6 @@ var addStylesToCodeLines = function(comment) {
 	}
 }
 
-// Public: Find instances of [inline]// and remove [inline]
-//
-// code - a <code> element
-//
-// Returns nothing
-var inlineComments = function(code) {
-	$(code).html($(code).html().replace(
-		'<span class="o">[</span><span class="n">inline</span><span class="o">]</span>',
-		''
-	));
-}
-
 // Public: Toggle between formatted code markup and a textarea of the raw code.
 // Changes text of the button based on data attributes of button.toggle.
 // To change what the button says, see `views/source.html.erb`.
