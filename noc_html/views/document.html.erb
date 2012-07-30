@@ -1,0 +1,25 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="stylesheets/docco.css">
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/codeprocessing.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function(){
+			$('span.c1').each(function(){ addStylesToCodeLines($(this)); });
+			// $('code').each(function(){ inlineComments($(this)); });
+			$('div.source-code').each(function(){ setRawCodeHeight($(this)); });
+			$('a.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
+		});
+	</script>
+	<script type="text/javascript" src="processingjs/processing.js"></script>
+	<link rel="stylesheet" href="stylesheets/html.css" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<%= render_children(views, filter_results) %>
+	</div>
+</body>
+</html>
