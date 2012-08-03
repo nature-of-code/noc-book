@@ -3,7 +3,7 @@ _____________________________________________________________________________ */
 
 body {
   font-size: 13px;
-	font-family: "Proxima-Nova-Regular";
+	font-family: "Georgia", serif;
 	margin: 0;
 	padding: 0;
 }
@@ -16,60 +16,39 @@ body {
 /*	background-image: url('../imgs/vertical_grid.jpg');*/
 }
 
-/* Fonts
-_____________________________________________________________________________ */
 
-@font-face {
-	font-family: 'Proxima-Nova-Regular';
-	src: url('../fonts/ProximaNova-Regular.eot');
-	src: local('☺'), url('../fonts/ProximaNova-Regular.ttf') format('truetype'), url('../fonts/ProximaNova-Regular.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Proxima-Nova-Semibold';
-	src: url('../fonts/ProximaNova-Semibold.eot');
-	src: local('☺'), url('../fonts/ProximaNova-Semibold.ttf') format('truetype'), url('../fonts/ProximaNova-Semibold.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Vijaya';
-	src: url('../fonts/Vijaya.eot');
-	src: local('☺'), url('../fonts/Vijaya.woff') format('woff'), url('../fonts/Vijaya.ttf') format('truetype'), url('../fonts/Vijaya.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
 
 h1 {
 	font-size: 320%;
-	font-family: "Proxima-Nova-Regular";
-/*	margin-bottom:1.3em;
-	margin-top: 0.4em;*/
+	line-height: 1em;
+	font-style: normal;
+	margin-bottom:1.3em;
+	margin-top: 0.4em;
 }
 
 h2 {
 	font-size: 270%;
+	line-height: 1em;
+	font-style: normal;
+	margin-top: 3.5em;
 	margin-bottom: 0.3em;
-	font-family: "Proxima-Nova-Regular";
-	/*line-height: 1em;*/
+	color: #202020;
 }
 
 h3 {
-	font-family: "Proxima-Nova-Semibold";
 	font-size: 150%;
+	color: #404040;
+	margin-top: 2em;
 }
 
-h4 {
-	font-family: "Proxima-Nova-Semibold";
+h4,h5 {
 	font-size: 125%;
 }
 
-h5 {
-	font-family: "Proxima-Nova-Semibold";
-	font-size: 125%;
+h1, h2, h3, h4, h5 {
+	font-family: 'ProximaNovaA-Bold';
+	color: #222;
+	font-weight: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -87,10 +66,53 @@ p {
 	letter-spacing:0.03em;
 }
 
-blockquote {
-	font-family: "Vijaya";
-	margin: 0 0 3em 0;
+/* Tables
+_____________________________________________________________________________ */
+
+table {
+	font-size: 8pt;
+	font-family: "ProximaNova-Regular";
+	color: #606060;
+	border-collapse: collapse;
+	width: 100%;
+	text-align: center;
+	margin: 3em 0;
+	table-layout: fixed;
+	border: 1px solid #D1D1D1;
 }
+
+table td, table th {
+	padding: 0.5em;
+}
+
+/* weird fix. setting font size 1pt up in header to make it look the same size */
+table th {
+	color: #404040;
+	font-size: 9pt;
+	border: 1px solid #D1D1D1;
+	background-color: rgb(92%,92%,92%);
+	font-family: "ProximaNova-Bold";
+	font-style: normal;
+}
+
+table td {
+	border: 1px solid #D1D1D1;
+}
+
+table td p {
+	margin: 0;
+}
+
+table.code pre {
+  font-size: 0.9em;
+}
+
+table.code td {
+	text-align: left;
+}
+
+/* Styles
+_____________________________________________________________________________ */
 
 .line-through {
 	text-decoration: line-through;
@@ -100,20 +122,143 @@ blockquote {
 	text-decoration: underline;
 }
 
-/* This is to make headings in next section work */
-section {
-	overflow-y: auto;
-	position: relative;
-	clear: both;
-}
-
 /* Default Elements
 _____________________________________________________________________________ */
+
+blockquote {
+	font-size: 1.8em;
+	margin: 0em 4em 2em 4em;
+	font-style: italic;
+	line-height: 1.65em;
+	position: relative;
+}
+
+blockquote span.attribution {
+	display: block;
+	font-style: normal;
+	font-size: 0.6em;
+}
+
+blockquote .quote_start {
+	position: absolute;
+	top: 0.1em;
+	left: -0.5em;
+	font-size: 4em;
+	font-family: 'Akkurat-Bold', Helvetica;
+}
 
 canvas {
 	border: 1px solid gray;
 	//margin-bottom: 1.15em;
 	//border-left: 0.4em solid #272727;
+}
+
+/* Span Classes Styling
+_____________________________________________________________________________ */
+
+span.highlight {
+	background-color: #E9E9E9;
+	font-size: 10pt;
+	display: block;
+	margin: 2em 1em;
+	padding: 0.8em;
+	text-align: center;
+}
+
+/* .example = exercises
+	 .tip = projects
+	 .note = breakout boxes
+*/
+
+.note h2, .tip, .example h2,
+.note h3, .tip h3, .example h3,
+.note h4, .tip h4, .example h4 {
+	font-size: 12pt;
+	color: #191919;
+	margin-bottom: 0.3em;
+	font-style: normal;
+	font-family: 'ProximaNova-Bold';
+}
+
+/* == BREAKOUT BOXES */
+.note {
+	font-size: 10pt;
+	color: #191919;
+	padding: 1.4em 1.5em;
+	margin: 1.15em 0;
+	background-color: #E9E9E9;
+}
+
+/* == EXERCISES */
+div.example {
+	background-color: rgb(112, 115, 115);
+  color: #ffffff;
+  padding: 3em 1.5em 1em;
+	position: relative;
+  margin: 1.15em 0;
+	overflow-y:auto;
+}
+
+div.example h3[id],
+div.example h4[id],
+div.example h5[id],
+div.example h6[id] {
+  text-align: right;
+  margin: 1em 0.9em;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+div.example * {
+  color: #ffffff;
+}
+
+/* == PROJECTS */
+.tip {
+	padding: 0.7em 1.5em;
+	margin: 1.15em 0;
+	background-color: #E9E9E9;
+}
+
+.note h2:first-child, .tip h2:first-child, .example h2:first-child,
+.note h3:first-child, .tip h3:first-child, .example h3:first-child,
+.note h4:first-child, .tip h4:first-child, .example h4:first-child,
+.note p:first-child, .tip p:first-child, .example p:first-child {
+	margin-top: 0;
+}
+
+.note p:last-child, .tip p:last-child, .example p:last-child {
+	margin-bottom: 0;
+}
+
+/* Style functions */
+.function, .klass, .var, .mono, .formula{
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 1em;
+	color: #00000;
+}
+.mono, .formula{
+    font-weight: bold;
+}
+
+.formula{
+    margin-left: 2em;
+}
+/* Style note to self */
+.notetoself {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+/* Style example heading */
+span.example {
+  font-family: "ProximaNova-Bold";
+  background-color: #CACCCB;
+  clear: both;
+  display: block;
+  font-size:1em;
+  padding: 0.7em 1em;
 }
 
 /* Image Classes
@@ -126,7 +271,6 @@ img {
 
 .image-container {
   position: relative;
-	margin: 1.7em 0;
 }
 
 .image-container img {
@@ -141,13 +285,11 @@ img {
 	// Need a magic solution for border side borders to be partial, not extend all the way to top
 }
 
-.caption {
+.image-container .caption {
   color: #222;
-  font-family: 'Vijaya';
+  font-family: 'Helvetica', Arial, sans-serif;
   font-size: 100%; /* 100% == 13px when not inside a p tag */
   border: 0;
-  margin: 0;
-  line-height: 1em;
 }
 
 .half-width,
@@ -208,79 +350,6 @@ img {
   width: 33%;
 }
 
-.mini200 img {
-  width: 25%;
-  border:1px solid gray;
-}
-
-/* Boxes Styling
-_____________________________________________________________________________ */
-
-/* .example = exercises
-	 .tip = projects
-	 .note = breakout boxes
-*/
-
-.note, span.example, .tip {
-	border-left: 0.4em solid #272727;
-	padding: 0.7em 1.5em;
-	background-color: #F4F4F4;
-	margin: 1.15em 0;
-}
-
-.note h2:first-child, .tip h2:first-child, .example h2:first-child,
-.note h3:first-child, .tip h3:first-child, .example h3:first-child,
-.note h4:first-child, .tip h4:first-child, .example h4:first-child,
-.note p:first-child, .tip p:first-child, .example p:first-child {
-	margin-top: 0;
-}
-
-.note p:last-child, .tip p:last-child, .example p:last-child {
-	margin-bottom: 0;
-}
-
-/* Exercise box */
-div.example {
-  background-color: rgb(112, 115, 115);
-  color: #ffffff;
-  margin: 1.15em 0;
-  padding: 3em 1.5em 0.7em;
-  position: relative;
-}
-
-div.example h3[id],
-div.example h4[id],
-div.example h5[id],
-div.example h6[id] {
-  float: right;
-  margin: 1em 0.9em;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-/* Style functions */
-.function, .klass, .var, .mono, .formula{
-	font-family: "Courier New", monospace;
-	font-weight: bold;
-	color: #00000;
-}
-
-/* Style note to self */
-.notetoself {
-	color: #FF0000;
-	font-weight: bold;
-}
-
-/* Style example heading */
-span.example {
- clear: both;
- display: block;
- font-family: 'Akkurat-Bold', Helvetica, Arial, sans-serif;
- font-size:1em;
- //font-weight: bold;
-}
-
 
 /* Code Formatting
 _____________________________________________________________________________ */
@@ -298,7 +367,7 @@ pre {
   border-left: 0.4em solid #272727;
   margin-bottom: 2em;
   padding: 0.7em 1.5em;
-  background-color: #f9f9f9;
+  background-color: #F4F4F4;
   position: relative;
   clear: both;
 }
@@ -320,6 +389,64 @@ pre {
   border-left: none;
 }
 
+/* Div wrapper for code blocks */
+.code-block {
+  font-size: 90%;
+  line-height: 1.4em;
+  overflow: auto;
+  position: relative;
+}
+
+pre {
+  /*line-height: 1.4em;*/
+}
+
+.code-block * {
+  position: relative;
+}
+
+/* Wrapper for every pairing of code and comment.
+Used to catch the .code-comment-line inside of
+a relatively positioned parent. */
+.code-comment-pair {
+  clear: both;
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.code-comment-line {
+  border-top: 1px dashed #C7C7C7;
+  display: block;
+  height: 2px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+}
+
+/* Div wrapper for code comments */
+.code-comment {
+  clear: right;
+  color: #444;
+  font-style: bold;
+  display: block;
+  float: right;
+  font-family: sans-serif;
+  width: 300px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: 0.0em;
+}
+
+/* The code goes in here. */
+.code-block code {
+  clear: left;
+  display: block;
+}
+
 .source-code textarea {
   background-color: #f0f0f0;
   display: none;
@@ -330,66 +457,4 @@ pre {
 .list h4, .table h4 {
   clear: none;
 }
-
-/* Working on some CSS for tables here */
-table {
-	font-size:11px;
-	border-collapse: collapse;
-	width: 100%;
-	text-align: center;
-	margin: 3em 0;
-	table-layout: fixed;
-	border: 1px solid #D1D1D1;
-}
-
-table th {
-	border: 1px solid #D1D1D1;
-	font-weight: bold;
-}
-
-table td {
-	border: 1px solid #D1D1D1;
-}
-
-table td p {
-	margin: 0;
-}
-
-.table.mono td {
-	font-size: 10px;
-	font-family: 'Courier', sans-serif;
-}
-
-/* Definition Lists
-_____________________________________________________________________________ */
-
-dl {
-	width:100%;
-	overflow:hidden;
-	margin: 0;
-	padding: 0;
-}
-
-dt, dd {
-	float: left;
-	font-size: 1.2em;
-	line-height: 1em;
-	margin: 0 0 0.5em 0;
-}
-
-dt {
- 	width:30%;
-}
-
-dd {
- 	width:70%;
-}
-
-dd p {
-	font-size: 1.2em;
-	line-height: 1em;
-	margin: 0;
-	padding: 0;
-}
-
 
