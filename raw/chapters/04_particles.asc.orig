@@ -222,9 +222,7 @@ Now that we have a class to describe a single Particle, we’re ready for the ne
 [[chapter04_section3]]
 === 4.3 The ArrayList
 
-In truth, we could use a simple array to manage our Particle objects.  Some particle systems might have a fixed number of particles, and arrays are magnificently efficient in those instances.  Processing also offers [function]*expand()*, [function]*contract()*, [function]*subset()*, [function]*splice()*, and other methods for resizing arrays.   However, for these examples, we’re going to take a more sophisticated approach and use the Java class ArrayList (found in the java.util package: http://download.oracle.com/javase/6/docs/api/java/util/ArrayList.html[ArrayList Documentation]).
-
-Using an ArrayList follows the same idea as using a standard array, but with different syntax. The following two code examples (which assume the existence of a generic Particle class) produce the same result: first with an array, and second with an ArrayList.    
+In truth, we could use a simple array to manage our Particle objects.  Some particle systems might have a fixed number of particles, and arrays are magnificently efficient in those instances.  Processing also offers [function]*expand()*, [function]*contract()*, [function]*subset()*, [function]*splice()*, and other methods for resizing arrays.   However, for these examples, we’re going to take a more sophisticated approach and use the Java class ArrayList (found in the java.util package: http://download.oracle.com/javase/6/docs/api/java/util/ArrayList.html[ArrayList Documentation]).  Using an ArrayList follows the same idea as using a standard array, but with different syntax. The following two code examples (which assume the existence of a generic Particle class) produce the same result: first with an array, and second with an ArrayList.    
 
 The standard array way:
 [source,java]
@@ -803,12 +801,20 @@ class Cat {
 }
 ----
 
+<<<<<<< HEAD
 As we rewrite the same code for fish, horses, koala bears, and lemurs, this process will become rather tedious.  Instead, let's develop a generic Animal class that can describe any type of animal.  All animals eat and sleep, after all.  We could then say:
+=======
+As we move onto fish, horses, koala bears, and lemurs and rewrite the same code over and over again, this process will become rather tedious.  What if, instead, we could develop a generic Animal class to describe any type of animal?  After all, all animals eat and sleep.  We could then say the following:
+>>>>>>> evan
 
 - A dog is an animal and has all the properties of animals and can do all the things animals do. Also, a dog can bark.
 - A cat is an animal and has all the properties of animals and can do all the things animals do. Also, a cat can meow.
 
+<<<<<<< HEAD
 Inheritance makes this all possible.  With inheritance, classes can inherit properties (variables) and functionality (methods) from other classes.  A Dog class is a child (_subclass_) of an Animal class.  Children will automatically inherit all variables and functions from the parent (_superclass_), but can also include functions and variables not found in the parent.    Like a phylogenetic "tree of life," inheritance follows a tree structure.    Dogs inherit from Canines which inherit from Mammals which inherit from Animals, etc. 
+=======
+Inheritance allows us to program just this.  With inheritance, classes can inherit properties (variables) and functionality (methods) from other classes.  A Dog class is a child (aka *_subclass_*) of an Animal class.  Children automatically inherit all variables and functions from their parent (aka *_superclass_*).  Children can also include additional variables and functions not found in the parent.    Inheritance follows a tree structure (much like a phylogenetic “tree of life”).    Dogs can inherit from Canines, which inherit from Mammals, which inherit from Animals, etc. 
+>>>>>>> evan
 
 [[chapter04_figure2]]
 image::imgs/chapter04/ch04_02.png[alt="Figure 4.2"]
@@ -861,10 +867,17 @@ class Cat extends Animal {
 
 This brings up two new terms:
 
+<<<<<<< HEAD
+- *_extends_* – Used to indicate a parent for the class being defined.  Note that classes can only extend one class.   However, classes can extend classes that extend other classes, i.e.  Dog extends Animal, Retriever extends Dog.  Everything is inherited along the way.
+- *_super()_* – Calls the Constructor in the parent class.   In other words, whatever you do in the parent constructor, do the same in the child constructor.   Other code besides [function]*super()* can be written into the constructor.   [function]*super()* can also receive arguments if a parent constructor has been defined with matching arguments.
+
+A subclass can be expanded to include properties and functions beyond what is found in the superclass.  For instance, a Dog object already has an age variable, which is set randomly in the constructor, but let’s assume that it also has a haircolor variable:
+=======
 - *_extends_* – This keyword is used to indicate a parent for the class being defined.  Note that classes can only extend *one* class.   However, classes can extend classes that extend other classes, i.e.  Dog extends Animal, Terrier extends Dog.  Everything is inherited all the way down the line.
 - *_super()_* – This calls the constructor in the parent class.   In other words, whatever you do in the parent constructor, do so in the child constructor as well.   Other code can be written into the constructor in addition to [function]*super()*.   [function]*super()* can also receive arguments if there is a parent constructor defined with matching arguments.
 
 A subclass can be expanded to include additional functions and properties beyond what is contained in the superclass.  For example, let’s assume that a Dog object has a haircolor variable in addition to age, which is set randomly in the constructor.  The class would now look like this:
+>>>>>>> evan
 
 [source,java]
 ----
@@ -925,7 +938,11 @@ class Dog extends Animal {
      // while adding its own code.
      super.eat(); // [bold]
      // Add some additional code 
+<<<<<<< HEAD
      // for a Dog's specific eating characteristics.
+=======
+     // for how a dog specifically eats.
+>>>>>>> evan
      println("Woof!!!");
    }
 
