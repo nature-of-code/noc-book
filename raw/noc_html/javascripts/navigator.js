@@ -28,7 +28,7 @@
 
     // Load in the TOC
     $.ajax('toc.html').done(function(data) {
-      $toc.html(data);
+      $toc.append(data);
       setupTOC();
     });
 
