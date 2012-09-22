@@ -3,9 +3,9 @@
   addExpandLinks = function() {
     // Add expand links
     var chapters;
-    chapters = $('#toc-holder>ul>li');
+    chapters = $('#toc-list>ul>li');
     chapters.each(function() {
-      $(this).append(' <a href="#" class="expand">↓</a>')
+      $(this).append(' <a href="#" class="expand">➤</a>')
     });
   }
 
@@ -24,7 +24,7 @@
   $(function() {
     var $toc;
 
-    $toc = $('#toc-holder');
+    $toc = $('#toc-list');
 
     // Load in the TOC
     $.ajax('toc.html').done(function(data) {
