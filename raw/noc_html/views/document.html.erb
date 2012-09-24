@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="javascripts/codeprocessing.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
+      $('canvas').lazyload();
 			$('span.c1').each(function(){ addStylesToCodeLines($(this)); });
 			// $('code').each(function(){ inlineComments($(this)); });
 			$('div.source-code').each(function(){ setRawCodeHeight($(this)); });
@@ -36,6 +37,19 @@
 
 </head>
 <body>
+  <div id="navigator">
+    <div id="toc-holder">
+      <h1>THE <strong>NATURE</strong> OF CODE</h1>
+      <h2>by Daniel Shiffman</h2>
+
+      <p><a id="table-of-contents">Table of Contents</a></p>
+
+      <div id="toc-list"></div>
+
+      <p><a id="purchase-link" href="/">Buy as a PDF</a></p>
+    </div>
+  </div>
+
   <div id="top">
     <div id="header">
       <h1><a href="/">The <strong>Nature</strong> of Code</a></h1>
@@ -45,19 +59,6 @@
   </div>
 
   <div id="middle">
-    <div id="navigator">
-    	<div id="toc-holder">
-        <h1>THE <strong>NATURE</strong> OF CODE</h1>
-        <h2>by Daniel Shiffman</h2>
-
-        <p><a id="table-of-contents">Table of Contents</a></p>
-
-        <div id="toc-list"></div>
-
-        <p><a id="purchase-link" href="/">Buy as a PDF</a></p>
-      </div>
-    </div>
-
   	<div id="container">
   		<%= render_children(views, filter_results) %>
   	</div>

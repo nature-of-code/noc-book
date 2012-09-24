@@ -70,12 +70,18 @@ body {
 /* NAVIGATOR
 ______________________________________________________________________________*/
 #navigator {
-  background-color: none;
+  background-color: #ffffff;
+  height: 100%;
   margin: 10px 0;
+  overflow-y: scroll;
+  padding: 30px 8px 0;
   position: fixed;
-  top: 0;
+  top: 10px;
   width: 200px;
   z-index: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #navigator,
@@ -90,13 +96,22 @@ ______________________________________________________________________________*/
   font-size: 16px;
   margin: 0;
   padding: 8px 0;
-  width: 200px;
+  position: fixed;
   text-align: center;
+  top: 10px;
+  width: 190px;
+  z-index: 2;
+  -webkit-box-shadow: 0 5px 10px #fff;
+  -moz-box-shadow: 0 5px 10px #fff;
+  box-shadow: 0 5px 10px #fff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #navigator h2 {
   font-size: 16px;
-  margin: 10px 4px;
+  margin: 10px 4px 10px;
 }
 
 #navigator strong {
@@ -116,47 +131,49 @@ ______________________________________________________________________________*/
 
 #toc-holder a {
   color: #000;
+  display: block;
   text-decoration: none;
+  width: 100%;
 }
 
 #toc-holder a:hover {
   color: rgb(235,0,90);
 }
 
-#toc-holder ul {
+#toc-list ul {
+  list-style: none;
+}
+
+#toc-list>ul {
   clear: both;
   display: block;
-  list-style: none;
   margin: 0;
   padding: 0 0 0 5px;
   position: relative;
 }
 
-#toc-holder ul>ul {
-  background-color: #efefef;
-  display: none;
-  /*margin:10px 8px;*/
-  margin: 0 200px 0 0;
-  padding: 4px;
-  position: absolute;
-  left: 200px;
-  width: 300px;
-  top: 0;
-  z-index: 2;
+/* Chapter Titles*/
+#toc-list>ul>li {
+  font-family: "ProximaNova-Bold";
+  margin: 18px 0 8px;
+  text-transform: uppercase;
 }
 
-#toc-holder ul>ul li {
-  margin: 0 0 1px;
+/* Chapter Section lists*/
+#toc-list ul>ul {
+  margin: 0;
   padding: 0;
+  position: relative;
 }
 
-#toc-holder ul>ul a {
+#toc-list ul>ul a {
   color: #777;
 }
 
-#toc-holder .expand {
-  color: #ccc;
-  font-size: 90%;
+/* Chapter Section */
+#toc-list ul>ul li {
+  margin: 0 0 1px;
+  padding: 0;
 }
 
 #purchase-link {
@@ -166,7 +183,7 @@ ______________________________________________________________________________*/
   color: #ababab;
   font-size: 13px;
   overflow-y: auto;
-  width: 1000px;
+  width: 800px;
 }
 
 #footer a {
