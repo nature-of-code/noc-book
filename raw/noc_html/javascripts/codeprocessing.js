@@ -1,7 +1,7 @@
 // Comments are documented according to http://tomdoc.org/
 
 // Public: Add classes or add strong and em attributes to lines of code
-// by detecting inline comments matching the pattern // [<STYLE>]
+// by detecting inline comments matching the pattern //[<STYLE>]
 // Remove the comment from the DOM and apply styles to the parent
 // .one-line element.
 //
