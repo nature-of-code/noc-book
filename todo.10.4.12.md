@@ -1,3 +1,3 @@
 # High Priority
 
-* Index, get basic index functionality up and running:  Issue #137
+* Index, get basic index functionality up and running:  Issue #61
