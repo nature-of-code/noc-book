@@ -1,1 +1,3 @@
-todo.10.4.12.md
+# High Priority
+
+* Index, get basic index functionality up and running:  Issue #137
