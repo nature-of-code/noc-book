@@ -15,6 +15,59 @@ body code pre span[class] {
 	color: #000000;
 }   /* Set all span elements to black in code elements.*/
 
+
+/* The code goes in here. */
+.code-block code {
+  clear: left;
+  display: block;
+  position: relative;
+}
+
+
+/* Stretch class for comments that point to multiple lines of code */
+.stretch {
+  background-color: #eee;
+  padding: 4px;
+}
+
+.stretch .code-comment,
+.stretch .one-line:first-child,
+.stretch span.one-line {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.stretch span.one-line {
+  padding-right: 4px;
+  padding-left: 0;
+}
+
+.stretch .code-comment {
+  padding-left: 1.0em;
+}
+
+div.example code pre span[class],
+div.example .code-comment,
+div.example .toggle {
+  color: #ffffff;
+}
+
+div.example .source-code {
+  background: transparent;
+}
+
+div.example .one-line:first-child,
+div.example .code-comment,
+div.example .stretch {
+  background-color: rgb(136,138,138);
+}
+
+div.example .no-comment .one-line:first-child {
+  background: transparent;
+}
+
+
 /* Div wrapper for code blocks */
 .code-block {
   font-size: 80%;
@@ -22,9 +75,30 @@ body code pre span[class] {
   margin: 2em 1em;
 }
 
+.code-comment-pair code pre {
+  width: 100%;
+}
+
+.one-line:first-child,
+.code-comment {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .one-line:first-child {
-  width: 60%;
   margin-bottom: 3px;
+  width: 60%;
+}
+
+.no-comment .one-line:first-child {
+  background-color: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .code-comment {
@@ -34,6 +108,22 @@ body code pre span[class] {
 
 .offset-up .code-comment {
   margin-bottom: 0;
+}
+
+.offset-down .one-line:first-child {
+  width: 100%;
+}
+
+.offset-down code {
+  position: relative;
+}
+
+.offset-down .code-comment {
+  float: right;
+  position: absolute;
+  margin-top: 2.1em;
+  right: 0;
+  top: 0;
 }
 
 /* Wrapper for every pairing of code and comment.
@@ -47,6 +137,23 @@ a relatively positioned parent. */
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+/* Div wrapper for code comments */
+.code-comment {
+  clear: right;
+  color: #444;
+  display: block;
+  float: right;
+  font-family: sans-serif;
+  font-style: bold;
+  margin-top: 0.0em;
+  position: relative;
+  width: 40%;
+  padding-left: 1.0em;
+
+  /* hack to remove 1px white space in Safari on Lion */
+  /*left: -1px;*/
 }
 
 .source-code {
