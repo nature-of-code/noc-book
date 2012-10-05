@@ -15,6 +15,7 @@
 	</script>
 	<script type="text/javascript" src="processingjs/processing.js"></script>
   <script type="text/javascript" src="processingjs/lazyloading.js"></script>
+  <script type="text/javascript" src="javascripts/sketchControls.js"></script>
 	<link rel="stylesheet" href="stylesheets/fonts.css" type="text/css">
 	<link rel="stylesheet" href="stylesheets/html.css" type="text/css">
 	<link rel="stylesheet" href="stylesheets/code-html.css">
@@ -31,6 +32,19 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+</script>
+
+<script>
+
+    window.onload= function() {
+      offsetUps = document.getElementsByClassName('offset-up');
+      for(var i=0; i < offsetUps.length; i++) {
+        var element = offsetUps[i];
+        var comment = element.getElementsByClassName('code-comment')[0];
+        var height = comment.offsetHeight;
+        comment.style.top = '-' + (height) +  'px';
+      }
+    };
 </script>
 
 </head>

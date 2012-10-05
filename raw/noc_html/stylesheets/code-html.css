@@ -173,6 +173,7 @@ a relatively positioned parent. */
   padding-left: 1.0em;
 }
 
+
 .offset-up code {
   clear: both;
 }
@@ -182,9 +183,27 @@ a relatively positioned parent. */
   width: 100%;
 }
 
-.offset-down .code-comment {
+.offset-down span.one-line {
+  width: 200%;
+}
+
+.offset-down code {
+  float: left;
+}
+
+.offset-up .code-comment {
   position: absolute;
-  top:2.1em;
+  /*float: right;*/
+  right: 0;
+  top: -10px;
+  z-index: 1;
+}
+
+.offset-down .code-comment {
+  float: right;
+  clear: none;
+  position: relative;
+  margin-top: 2.1em;
   right: 0;
 }
 
@@ -206,4 +225,10 @@ div.example .stretch {
 
 div.example .no-comment .one-line:first-child {
   background: transparent;
+}
+
+
+.offset-up {
+  overflow-y: visible;
+  overflow-x: visible;
 }
