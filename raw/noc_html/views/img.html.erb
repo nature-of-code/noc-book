@@ -1,9 +1,12 @@
 <div class="image-container <%= @attributes["classname"] if @attributes["classname"] %>" >
 	<% if @attributes["canvas"] %>
-	<canvas data-processing-sources="<%= @attributes["canvas"] %> processingjs/reset.pde" <%= att("classname", "class") %>>
+	<canvas data-processing-sources="<%= @attributes["canvas"] %>" <%= att("classname", "class") %>>
 		<p>Your browser does not support the canvas tag.</p>
 	</canvas>
-  <div class="reset">RESET</div>
+  <div class="sketch-controls">
+    <button class="reset">RESET</button>
+    <button class="pause">PAUSE</button>
+  </div>
 	<% else %>
 	<img src="<%= @src %>" alt="Nature of Code Image" />
 	<% end %>
