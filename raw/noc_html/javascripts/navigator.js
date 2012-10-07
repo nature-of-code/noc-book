@@ -5,7 +5,7 @@
     var chapters;
     chapters = $('#toc-list>ul>li');
     chapters.each(function() {
-      $(this).append(' <a href="#" class="expand">➤</a>')
+      // $(this).append(' <a href="#" class="expand">➤</a>')
     });
   }
 
@@ -25,6 +25,8 @@
     var $toc;
 
     $toc = $('#toc-list');
+
+    $('#toc-holder').fixed({'top':'10'});
 
     // Load in the TOC
     $.ajax('toc.html').done(function(data) {

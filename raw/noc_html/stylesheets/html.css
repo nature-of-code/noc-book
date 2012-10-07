@@ -13,6 +13,8 @@ body {
   background-color: rgb(235,0,90);
   color: #ffffff;
   padding: 3em 0 3em;
+  position: relative;
+  z-index: 3;
 }
 
 #bottom {
@@ -57,28 +59,21 @@ body {
   margin: 0;
 }
 
-
-#top {
-  display: none;
-}
 #middle {
   margin: 0 auto;
   position: relative;
   width: 1020px;
+  z-index: 1;
 }
 
 /* NAVIGATOR
 ______________________________________________________________________________*/
 #navigator {
-  background-color: #ffffff;
-  height: 100%;
-  margin: 10px 0;
-  overflow-y: scroll;
-  padding: 30px 8px 0;
-  position: fixed;
-  top: 10px;
-  width: 200px;
-  z-index: 1;
+  margin: 140px 0 10px;
+  padding: 0px 8px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -91,16 +86,24 @@ ______________________________________________________________________________*/
 }
 
 #navigator h1 {
-  background-color: rgb(235,0,90);
   color: #fff;
   font-size: 16px;
   margin: 0;
   padding: 8px 0;
-  position: fixed;
+  position: relative;
   text-align: center;
-  top: 10px;
   width: 190px;
-  z-index: 2;
+}
+
+#navigator h2 {
+  font-size: 16px;
+  margin: 10px 4px 10px;
+}
+
+#nav-bar {
+  background-color: rgb(235,0,90);
+  position: relative;
+  width: 100%;
   -webkit-box-shadow: 0 5px 10px #fff;
   -moz-box-shadow: 0 5px 10px #fff;
   box-shadow: 0 5px 10px #fff;
@@ -109,9 +112,8 @@ ______________________________________________________________________________*/
   box-sizing: border-box;
 }
 
-#navigator h2 {
-  font-size: 16px;
-  margin: 10px 4px 10px;
+#nav-bar h1, #nav-bar h2 {
+  display: inline-block;
 }
 
 #navigator strong {
@@ -125,8 +127,12 @@ ______________________________________________________________________________*/
 #toc-holder {
   clear: both;
   display: block;
+  /*min-height: 100%;*/
   margin: 0 auto;
   position: relative;
+  float: left;
+  width: 100%;
+  z-index: 2;
 }
 
 #toc-holder a {
@@ -138,6 +144,12 @@ ______________________________________________________________________________*/
 
 #toc-holder a:hover {
   color: rgb(235,0,90);
+}
+
+#toc-list {
+  /*height: 100%;*/
+  /*overflow-y: scroll;*/
+  /*position: absolute;*/
 }
 
 #toc-list ul {
@@ -164,6 +176,7 @@ ______________________________________________________________________________*/
   margin: 0;
   padding: 0;
   position: relative;
+  display: none;
 }
 
 #toc-list ul>ul a {
