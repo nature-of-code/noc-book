@@ -5,7 +5,7 @@
     var chapters;
     chapters = $('#toc-list>ul>li');
     chapters.each(function() {
-      // $(this).append(' <a href="#" class="expand">➤</a>')
+      $(this).append(' <span class="expand">l</span>')
     });
   }
 
