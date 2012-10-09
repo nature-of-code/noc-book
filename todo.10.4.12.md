@@ -13,11 +13,11 @@
 
 
 # Low Priority
-* Customize Table of Contents Heading: [MB Issue #145](https://github.com/runemadsen/Magic-Book-Project/issues/145)
 * Page-break avoid for h4?: [NOC Issue #54](https://github.com/shiffman/The-Nature-of-Code/issues/58)
 * Formatting inside of a link: [NOC Issue #35](https://github.com/shiffman/The-Nature-of-Code/issues/35)
 
 
 
 # Closed Issues
+* Customize Table of Contents Heading: [MB Issue #145](https://github.com/runemadsen/Magic-Book-Project/issues/145)
 * Title page style problem: [MB Issue #141](https://github.com/runemadsen/Magic-Book-Project/issues/141)
