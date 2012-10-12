@@ -26,7 +26,7 @@
 
     $toc = $('#toc-list');
 
-    $('#toc-list').fixed({'top':'10'});
+    $('#toc-list').fixed({'top':'8'});
     $('#nav-bar-wrap').fixed({'top':'8'});
 
     // Load in the TOC
