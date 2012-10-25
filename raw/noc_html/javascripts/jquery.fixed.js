@@ -24,23 +24,39 @@
 			var offset = (parseInt(offset.top) - parseInt(settings.top) );
 
 			// Init
-			$this.css('position','absolute');
+			if ($(window).width() <= 1020) {
+				setRel();
+			} else {
+				setAb()
+			}
 
 			// Check if element is already passed offset; usually on page refresh
 			if ( $(document).scrollTop() > offset ) {
 				setFixed();
 			};
 
+			$(window).resize(function(){
+				windowChange();
+			});
+
 			$(window).scroll(function() {
+				windowChange();
+			});
+
+			function windowChange() {
+				if ($(window).width() <= 1020) {
+					setRel();
+					return false;
+				}
+
 				//documentElement.scrollTo works for IE/Firefox (Gecko); self.pageYOffset for Chrome/Safari(Webkit))
 				if (document.documentElement.scrollTop > offset || self.pageYOffset > offset) {
 				   setFixed();
 
 				} else if (document.documentElement.scrollTop < offset || self.pageYOffset < offset) {
 				   setAb();
-
 				};
-			});
+			}
 
 			function setFixed() {
 				$this.css('position','fixed').css('top', settings.top+'px');
@@ -49,6 +65,10 @@
 			function setAb() {
 				$this.css('position','absolute').css('top', '0px');
 			};
+
+			function setRel() {
+				$this.css('position','relative').css('top','auto');
+			}
 
 		});
 

@@ -73,7 +73,6 @@ a {
   position: relative;
   width: 100%;
   z-index: 1;
-  min-width: 1020px;
 }
 
 /* NAVIGATOR BLOCK LEVEL
@@ -96,8 +95,6 @@ _____________________________________________________________________________*/
   display: block;
   position: relative;
   margin: 0 auto;
-  min-width: 1020px;
-  max-width: 1240px;
 }
 
 #mask{
@@ -125,8 +122,6 @@ _____________________________________________________________________________*/
 #nav-bar-wrap {
   margin: 0;
   position: absolute;
-  max-width: 1240px;
-  min-width: 1020px;
   width: 100%;
   z-index: 3;
 }
@@ -136,8 +131,6 @@ _____________________________________________________________________________*/
   display: block;
   margin: 160px auto 0;
   position: relative;
-  min-width: 1020px;
-  max-width: 1240px;
 }
 
 #toc-list {
@@ -199,7 +192,6 @@ _____________________________________________________________________________*/
   list-style: none;
   width: 220px;
   float: left;
-  margin: 0 800px 0 auto;
   min-width: 220px;
 }
 
@@ -254,8 +246,10 @@ _____________________________________________________________________________*/
 
 a#purchase-link {
   color: #fff;
+  display: inline-block;
   float: right;
   padding: 10px;
+  position: relative;
 }
 
 /* END NAVIGATOR
@@ -309,16 +303,6 @@ _____________________________________________________________________________*/
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 /*	background-image: url('../imgs/vertical_grid.jpg');*/
-}
-
-@media screen and (max-width:1240px) {
-  #container {
-    margin-left: 220px;
-    margin-right: 0;
-  }
-}
-
-@media screen and (max-width:1020px) {
 }
 
 h1 {
@@ -792,3 +776,117 @@ a relatively positioned parent. */
   clear: none;
 }
 
+
+@media screen and (max-width:1240px) {
+  #container {
+    margin-left: 220px;
+    margin-right: 0;
+  }
+}
+
+@media all and (min-width: 1020px) {
+  #nav-bar-wrap {
+    max-width: 1240px;
+    min-width: 1020px;
+  }
+
+  #navigator-inner {
+    min-width: 1020px;
+    max-width: 1240px;
+  }
+
+  #toc-holder {
+    min-width: 1020px;
+    max-width: 1240px;
+  }
+
+  #middle {
+    min-width: 1020px;
+  }
+}
+
+/* iPad non-retina */
+@media all and (max-width: 1020px) {
+  #top {
+    display: none;
+  }
+
+  #navigator {
+    position: relative;
+    margin: 0 ;
+  }
+
+  #nav-bar-wrap {
+    position: relative;
+  }
+
+  #middle {
+    min-width: auto;
+  }
+
+  #toc-holder {
+    margin: 0;
+    padding: 0;
+  }
+
+  #toc-list {
+    padding: 0;
+    position: relative;
+  }
+
+  #toc-list > ul {
+    font-size: 16px;
+    margin: 1em 0 1.6em;
+    text-align: center;
+    width: 100%;
+  }
+
+  #toc-list > ul li {
+    display: inline-block;
+    margin: 0.5em 0.8em;
+  }
+
+  #container {
+    margin: 0;
+    max-width: 100%;
+    padding: 0 1em;
+  }
+
+  #header, #footer {
+    width: 100%;
+  }
+}
+
+@media all and (max-width: 640px) {
+  #nav-bar {
+    overflow-y: auto;
+  }
+
+  #nav-bar h1, #nav-bar h2 {
+    display: block;
+    float: none;
+    position: relative;
+    text-align: center;
+    width: auto;
+  }
+
+  a#purchase-link {
+    display: block;
+    float: none;
+    position: relative;
+    text-align: center;
+    width: auto;
+  }
+
+  #nav-bar h1 {
+    font-size: 22px;
+  }
+
+  #footer .one-third {
+    width: 100%;
+  }
+
+  blockquote {
+    margin: 0 1.5em 2em;
+  }
+}
