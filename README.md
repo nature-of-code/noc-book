@@ -6,7 +6,7 @@ You may notice that all of the book's content is here -- illustrations, source c
 
 All of the book's source code is licensed under the [GNU Lesser General Public License](http://creativecommons.org/licenses/LGPL/2.1/) as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 
-By using github to host all the raw material for the book, it's my hope that I will be able to more easily manage corrections and revisions.  Please use the github issues for bug reports, typos, suggestions, etc.  You are also welcome to fork the repo, make corrections on your own and submit a pull request.
+By using GitHub to host all the raw material for the book, it's my hope that I will be able to more easily manage corrections and revisions.  Please use the GitHub issues for bug reports, typos, suggestions, etc.  You are also welcome to fork the repo, make corrections on your own and submit a pull request.
 
 Finally, please note that if you attempt to generate the book using ASCIIDOC, it won't come out properly.  While I am using ASCIIDCOC as the raw material, the book's design (for PDF and HTML) is being generated via something called the "Magic Book Project."  Check out the repo here: https://github.com/runemadsen/Magic-Book-Project.  We're hoping to launch the Magic Book Project soon as a web application.  Currently to use it, you'll have to clone the repo and configure and run manually. There are instructions in the Magic Book's repo.
 
