@@ -88,6 +88,17 @@ strong em {
 
 
 
+/* Page Numbering
+_____________________________________________________________________________ */
+
+div#frontmatter {
+  page: frontmatter;
+}
+
+div#contents {
+  counter-reset: page 1;
+}
+
 /* Define Left Headers and Footers
 _____________________________________________________________________________ */
 
@@ -105,9 +116,10 @@ _____________________________________________________________________________ */
     content: counter(page);
     padding-top: 2em;
     vertical-align: top;
-		color: #000000;//#404040;
+	color: #000000;//#404040;
   }
 }
+
 
 /* Define Right Headers and Footers
 _____________________________________________________________________________ */
@@ -128,6 +140,27 @@ _____________________________________________________________________________ */
     vertical-align: top;
     padding-top: 2em;
     color: #000000;//#404040;
+  }
+}
+
+/* Dealing with front matter 
+_____________________________________________________________________________ */
+
+@page frontmatter :left {
+   @bottom-left {
+    content: counter(page,lower-roman);
+  }
+}
+
+@page frontmatter :right {
+   @bottom-right {
+    content: counter(page,lower-roman);
+  }
+}
+
+@page  :first {
+  @bottom-right {
+    content: counter(page,lower-roman);
   }
 }
 
