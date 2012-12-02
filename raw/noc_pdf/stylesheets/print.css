@@ -432,15 +432,16 @@ _____________________________________________________________________________ */
 
 /* Don't show dedication in TOC */
 
-.toc ul li:nth-of-type(1) {
+.toc ul li:nth-child(1) {
 	display: none;
 }
 
-.toc li li:nth-child(1) {
+.toc ul li li:nth-child(1) {
 	display: block;
 }
 
-.toc ul li:nth-child(-n+3) a[href]::after {
+.toc ul li:nth-child(-n+3) a[href]::after,
+.toc ul li:nth-child(-n+3) li a[href]::after {
 	content: target-counter(attr(href), page,lower-roman);
 }
 
