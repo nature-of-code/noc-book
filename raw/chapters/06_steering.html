@@ -1,0 +1,1617 @@
+<div style="page-break-after:always;"> </div>
+<section data-type="chapter" id="_chapter_6_autonomous_agents">
+  <h1>Chapter 6.  Autonomous Agents</h1>
+  <blockquote data-type="epigraph"><p>“This is an exercise in fictional science, or science fiction, if you like that better.”</p>
+    <p data-type="attribution">&#8212; — Valentino Braitenberg</p>
+  </blockquote>
+  <p><a data-type="indexterm" data-primary=""autonomous agents""/>
+  <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""autonomous agents""/></p>
+  <p>Believe it or not, there is a purpose.  Well, at least there&#8217;s a purpose to the first five chapters of this book.  We could stop right here; after all, we’ve looked at several different ways of modeling motion and simulating physics.  Angry Birds, here we come!</p>
+  <p>Still, let’s think for a moment.  Why are we here?   The <em>nature</em> of code, right?   What have we been designing so far?   Inanimate objects.  Lifeless shapes sitting on our screens that flop around when affected by forces in their environment.   What if we could breathe life into those shapes? What if those shapes could live by their own rules?  Can shapes have hopes and dreams and fears?   This is what we are here in this chapter to do—develop <em>autonomous agents</em>.</p>
+  <section data-type="sect1" id="chapter06_section1">
+    <h1>6.1  Forces from Within</h1>
+    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""autonomous agents and""/></p>
+    <p>The term <strong><em>autonomous agent</em></strong> generally refers to an entity that makes its own choices about how to act in its environment without any influence from a leader or global plan.  For us, “acting” will mean moving.   This addition is a significant conceptual leap.  Instead of a box sitting on a boundary waiting to be pushed by another falling box, we are now going to design a box that has the ability and “desire” to leap out of the way of that other falling box, if it so chooses.   While the concept of forces that come from within is a major shift in our design thinking, our code base will barely change, as these desires and actions are simply that—<em>forces</em>.</p>
+    <p>Here are three key components of autonomous agents that we’ll want to keep in mind as we build our examples.</p>
+    <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""key components of""/></p>
+    <ul>
+      <li>
+      <p><strong>An autonomous agent has a <em>limited</em> ability to perceive environment.</strong>   It makes sense that a living, breathing being should have an awareness of its environment.  What does this mean for us, however?   As we look at examples in this chapter, we will point out programming techniques for allowing objects to store references to other objects and therefore “perceive” their environment.    It’s also crucial that we consider the word <em>limited</em> here.  Are we designing an all-knowing rectangle that flies around a Processing window, aware of everything else in that window?  Or are we creating a shape that can only examine any other object within fifteen pixels of itself?   Of course, there is no right answer to this question; it all depends.  We’ll explore some possibilities as we move forward.  For a simulation to feel more “natural,” however, limitations are a good thing.  An insect, for example, may only be aware of the sights and smells that immediately surround it.   For a real-world creature, we could study the exact science of these limitations.   Luckily for us, we can just make stuff up and try it out.</p></li>
+      <li>
+      <p><strong>An autonomous agent processes the information from its environment and calculates an action.</strong>    This will be the easy part for us, as the action is a force.  The environment might tell the agent that there’s a big scary-looking shark swimming right at it, and the action will be a powerful force in the opposite direction.</p></li>
+      <li>
+      <p><strong>An autonomous agent has no leader.</strong>  This third principle is something we care a little less about.  After all, if you are designing a system where it makes sense to have a leader barking commands at various entities, then that’s what you’ll want to implement.  Nevertheless, many of these examples will have no leader for an important reason.   As we get to the end of this chapter and examine group behaviors, we will look at designing collections of autonomous agents that exhibit the properties of complex systems— intelligent and structured group dynamics that emerge not from a leader, but from the local interactions of the elements themselves.</p></li>
+    </ul>
+    <p><a data-type="indexterm" data-primary=""boids model""/>
+    <a data-type="indexterm" data-primary=""Reynolds" data-secondary="Craig""/></p>
+    <p>In the late 1980s, computer scientist <a href="http://www.red3d.com/cwr/">Craig Reynolds</a> developed algorithmic steering behaviors for animated characters. These behaviors allowed individual elements to navigate their digital environments in a “lifelike” manner with strategies for fleeing, wandering, arriving, pursuing, evading, etc. Used in the case of a single autonomous agent, these behaviors are fairly simple to understand and implement. In addition, by building a system of multiple characters that steer themselves according to simple, locally based rules, surprising levels of complexity emerge.  The most famous example is Reynolds’s “boids” model for “flocking/swarming” behavior.</p>
+  </section>
+  <section data-type="sect1" id="chapter06_section2">
+    <h1>6.2  Vehicles and Steering</h1>
+    <p><a data-type="indexterm" data-primary=""<em>Turtles" data-secondary="Termites" data-tertiary="and Traffic Jams</em> (Resnick)""/>
+    <a data-type="indexterm" data-primary=""Resnick" data-secondary="Mitchel""/></p>
+    <p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code.  There are many places where  we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents. (For more on this topic, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick.)  However, we want to begin by examining agent behaviors that build on the work we’ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces.  And so it’s time to rename our <strong klass>Mover</strong> class that became our <strong klass>Particle</strong> class once again.  This time we are going to call it <strong klass>Vehicle</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+[inline]// What else do we need to add?</pre>
+    <p><a data-type="indexterm" data-primary=""Steering Behaviors for Autonomous Characters (Reynolds)""/></p>
+    <p>In his 1999 paper “Steering Behaviors for Autonomous Characters,” Reynolds uses the word “vehicle” to describe his autonomous agents, so we will follow suit.</p>
+    <p><a data-type="indexterm" data-primary=""<em>Vehicles: Experiments in Synthetic Psychology</em> (Braitenberg)""/>
+    <a data-type="indexterm" data-primary=""Braitenberg" data-secondary="Valentino""/></p>
+    <div data-type="note">
+      <h1>Why Vehicle?</h1><p>In 1986, Italian neuroscientist and cyberneticist Valentino Braitenberg described a series of hypothetical vehicles with simple internal structures in his book <em>Vehicles: Experiments in Synthetic Psychology</em>.  Braitenberg argues that his extraordinarily simple mechanical vehicles manifest behaviors such as fear, aggression, love, foresight, and optimism.  Reynolds took his inspiration from Braitenberg, and we’ll take ours from Reynolds.</p>
+    </div>
+    <p>Reynolds describes the motion of <em>idealized</em> vehicles (idealized because we are not concerned with the actual engineering of such vehicles, but simply assume that they exist and will respond to our rules) as a series of three layers—<strong>Action Selection</strong>, <strong>Steering</strong>, and <strong>Locomotion</strong>.</p>
+    <p><a data-type="indexterm" data-primary=""action selection""/>
+    <a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""action selection""/>
+    <a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""steering""/>
+    <a data-type="indexterm" data-primary=""steering force""/></p>
+    <ol>
+      <li>
+      <p><strong><em>Action Selection.</em></strong>   A vehicle has a goal (or goals) and can select an action (or a combination of actions) based on that goal.  This is essentially where we left off with autonomous agents.  The vehicle takes a look at its environment and calculates an action based on a desire: “I see a zombie marching towards me. Since I don’t want my brains to be eaten, I’m going to flee from the zombie.”   The goal is to keep one’s brains and the action is to flee.   Reynolds’s paper describes many goals and associated actions such as: seek a target, avoid an obstacle, and follow a path.  In a moment, we’ll start building these examples out with Processing code.</p></li>
+      <li>
+      <p><strong><em>Steering.</em></strong>  Once an action has been selected, the vehicle has to calculate its next move.  For us, the next move will be a force; more specifically, a steering force.  Luckily, Reynolds has developed a simple steering force formula that we’ll use throughout the examples in this chapter: <strong><em>steering force = desired velocity - current velocity</em></strong>.  We’ll get into the details of this formula and why it works so effectively in the next section.</p></li>
+      <li>
+      <p><strong><em>Locomotion.</em></strong>  For the most part, we’re going to ignore this third layer.   In the case of fleeing zombies, the locomotion could be described as “left foot, right foot, left foot, right foot, as fast as you can.”   In our Processing world, however, a rectangle or circle or triangle’s actual movement across a window is irrelevant given that it’s all an illusion in the first place.  Nevertheless, this isn’t to say that you should ignore locomotion entirely.   You will find great value in thinking about the locomotive design of your vehicle and how you choose to animate it.   The examples in this chapter will remain visually bare, and a good exercise would be to elaborate on the animation style —could you add spinning wheels or oscillating paddles or shuffling legs?</p></li>
+    </ol>
+    <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""locomotion""/>
+    <a data-type="indexterm" data-primary=""locomotion""/></p>
+    <p>Ultimately, the most important layer for you to consider is #1—<em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not because you should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel!), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter), you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to make these steering behaviors <em>your own</em><code>—</code>it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
+  </section>
+  <section data-type="sect1" id="chapter06_section3">
+    <h1>6.3  The Steering Force</h1>
+    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""steering""/></p>
+    <p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A vehicle moving with velocity desires to seek a target.</p>
+    <figure id="chapter06_figure1">
+      <img src="imgs/chapter06/ch06_01.png" alt="Figure 6.1"/>
+      <figcaption/>
+    </figure>
+    <p>Its goal and subsequent action is to seek the target in Figure 6.1.  If you think back to Chapter 2, you might begin by making the target an attractor and apply a gravitational force that pulls the vehicle to the target.  This would be a perfectly reasonable solution, but conceptually it’s not what we’re looking for here.   We don’t want to simply calculate a force that pushes the vehicle towards its target; rather, we are asking the vehicle to make an intelligent decision to steer towards the target based on its perception of its state and environment (i.e. how fast and in what direction is it currently moving).   The vehicle should look at how it desires to move (a vector pointing to the target), compare that goal with how quickly it is currently moving (its velocity), and apply a force accordingly.</p>
+    <p><strong><em>steering force = desired velocity - current velocity</em></strong></p>
+    <p>Or as we might write in Processing:</p>
+<pre data-type="programlisting" data-code-language="java">PVector steer = PVector.sub(desired,velocity);</pre>
+<p><a data-type="indexterm" data-primary=""desired velocity""/>
+<a data-type="indexterm" data-primary=""steering force"" data-secondary=""desired velocity""/></p>
+<p>In the above formula, velocity is no problem.  After all, we’ve got a variable for that.   However, we don’t have the <em>desired velocity</em>; this is something we have to calculate.  Let’s take a look at Figure 6.2.   If we’ve defined the vehicle’s goal as “seeking the target,” then its desired velocity is a vector that points from its current location to the target location.</p>
+    <figure id="chapter06_figure2">
+<img src="imgs/chapter06/ch06_02.png" alt="Figure 6.2"/>
+<figcaption/>
+    </figure>
+<p>Assuming a <strong klass>PVector</strong> target, we then have:</p>
+<pre data-type="programlisting" data-code-language="java">PVector desired = PVector.sub(target,location);</pre>
+<p>But this isn’t particularly realistic.  What if we have a very high-resolution window and the target is thousands of pixels away?  Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation.  What we really want to say is:</p>
+<p><em>The vehicle desires to move towards the target at maximum speed.</em></p>
+<p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go).   So first, we need to make sure we add a variable to our <strong klass>Vehicle</strong> class that stores maximum speed.</p>
+<pre data-type="programlisting" data-code-language="java">class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  // Maximum speed
+float maxspeed;</pre>
+    <p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
+<pre data-type="programlisting" data-code-language="java">PVector desired = PVector.sub(target,location);
+desired.normalize();
+desired.mult(maxspeed);</pre>
+    <figure id="chapter06_figure3">
+      <img src="imgs/chapter06/ch06_03.png" alt="Figure 6.3"/>
+      <figcaption/>
+    </figure>
+    <p>Putting this all together, we can write a function called <strong function>seek()</strong> that receives a <strong klass>PVector</strong> target and calculates a steering force towards that target.</p>
+<pre data-type="programlisting" data-code-language="java">  void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    // Calculating the desired velocity
+    // to target at max speed
+    desired.mult(maxspeed);
+    // Reynolds’s formula for steering force
+    PVector steer = PVector.sub(desired,velocity);
+    // Using our physics model and applying the force
+    // to the object’s acceleration
+    applyForce(steer);
+}</pre>
+    <p>Note how in the above function we finish by passing the steering force into <strong function>applyForce()</strong>.  This assumes that we are basing this example on the foundation we built in <a href="#chapter02_section2">Chapter 2</a>.  However, you could just as easily use the steering force with Box2D’s <strong function>applyForce()</strong> function or toxiclibs’ <strong function>addForce()</strong> function.</p>
+    <p>So why does this all work so well?  Let’s see what the steering force looks like relative to the vehicle and target locations.</p>
+    <figure id="chapter06_figure4">
+      <img src="imgs/chapter06/ch06_04.png" alt="Figure 6.4"/>
+      <figcaption/>
+    </figure>
+    <p>Again, notice how this is not at all the same force as gravitational attraction.  Remember one of our principles of autonomous agents: An autonomous agent has a <em>limited</em> ability to perceive its environment.  Here is that ability, subtly embedded into Reynolds’s steering formula.  If the vehicle weren’t moving at all (zero velocity), desired minus velocity would be equal to desired.  But this is not the case.  The vehicle is aware of its own velocity and its steering force compensates accordingly.   This creates a more active simulation, as the way in which the vehicle moves towards the targets depends on the way it is moving in the first place.</p>
+    <p><a data-type="indexterm" data-primary=""steering force"" data-secondary=""magnitude of""/></p>
+    <p>In all of this excitement, however, we’ve missed one last step.  What sort of vehicle is this?  Is it a super sleek race car with amazing handling?  Or a giant Mack truck that needs a lot of advance notice to turn?   A graceful panda, or a lumbering elephant?  Our example code, as it stands, has no feature to account for this variability in steering ability.   Steering ability can be controlled by limiting the magnitude of the steering force.  Let’s call that limit the “maximum force” (or <strong class="var">maxforce</strong> for short).  And so finally, we have:</p>
+<pre data-type="programlisting" data-code-language="java">class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  // Maximum speed
+  float maxspeed;
+  // Now we also have maximum force.
+float maxforce;</pre>
+    <p>followed by:</p>
+<pre data-type="programlisting" data-code-language="java">  void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    PVector steer = PVector.sub(desired,velocity);
+    // Limit the magnitude of the steering force.
+    steer.limit(maxforce);
+    applyForce(steer);
+}</pre>
+    <p>Limiting the steering force brings up an important point.  We must always remember that it’s not actually our goal to get the vehicle to the target as fast as possible.  If that were the case, we would just say “location equals target” and there the vehicle would be.  Our goal, as Reynolds puts it, is to move the vehicle in a “lifelike and improvisational manner.”  We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to simulate a given behavior.  For example, a large maximum steering force would result in a very different path than a small one.  One is not inherently better or worse than the other; it depends on your desired effect.  (And of course, these values need not be fixed and could change based on other conditions.  Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
+    <figure id="chapter06_figure5">
+      <img src="imgs/chapter06/ch06_05.png" alt="Figure 6.5"/>
+      <figcaption/>
+    </figure>
+    <p>Here is the full <strong klass>Vehicle</strong> class, incorporating the rest of the elements from the Chapter 2 <strong klass>Mover</strong> object.</p>
+    <figure>
+      <img src="imgs/chapter06/ch06_ex1.png" alt="ch06 ex1"/>
+      <figcaption/>
+    </figure>
+    <p><strong example>Example 6.1: Seeking a target</strong></p>
+<pre data-type="programlisting" data-code-language="java">class Vehicle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  // Additional variable for size
+  float r;
+  float maxforce;
+  float maxspeed;
+  Vehicle(float x, float y) {
+    acceleration = new PVector(0,0);
+    velocity = new PVector(0,0);
+    location = new PVector(x,y);
+    r = 3.0;
+    //[full] Arbitrary values for maxspeed and
+    // force; try varying these!
+    maxspeed = 4;
+    maxforce = 0.1;
+    //[end]
+  }
+  // Our standard “Euler integration” motion model
+  void update() {
+    velocity.add(acceleration);
+    velocity.limit(maxspeed);
+    location.add(velocity);
+    acceleration.mult(0);
+  }
+  // Newton’s second law; we could divide by mass if we wanted.
+  void applyForce(PVector force) {
+    acceleration.add(force);
+  }
+  // Our seek steering force algorithm
+  void seek(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    PVector steer = PVector.sub(desired,velocity);
+    steer.limit(maxforce);
+    applyForce(steer);
+  }
+  void display() {
+    // Vehicle is a triangle pointing in
+    // the direction of velocity; since it is drawn
+    // pointing up, we rotate it an additional 90 degrees.
+    float theta = velocity.heading() + PI/2;
+    fill(175);
+    stroke(0);
+    pushMatrix();
+    translate(location.x,location.y);
+    rotate(theta);
+    beginShape();
+    vertex(0, -r*2);
+    vertex(-r, r*2);
+    vertex(r, r*2);
+    endShape(CLOSE);
+    popMatrix();
+}</pre>
+    <div id="chapter06_exercise1" data-type="example">
+      <h5>Exercise 6.1</h5>
+      <p>Implement a “fleeing” steering behavior (desired vector is inverse of “seek”).</p>
+    </div>
+    <div id="chapter06_exercise2" data-type="example">
+      <h5>Exercise 6.2</h5>
+      <p>Implement seeking a moving target, often referred to as “pursuit.”  In this case, your desired vector won’t point towards the object’s current location, but rather its “future” location as extrapolated from its current velocity.   We’ll see this ability for a vehicle to “predict the future” in later examples.</p>
+    </div>
+    <div id="chapter06_exercise3" data-type="example">
+      <h5>Exercise 6.3</h5>
+      <p>Create a sketch where a vehicle’s maximum force and maximum speed do not remain constant, but rather vary according to environmental factors.</p>
+    </div>
+  </section>
+  <section data-type="sect1" id="chapter06_section4">
+    <h1>6.4  Arriving Behavior</h1>
+    <p><a data-type="indexterm" data-primary=""arriving behavior""/>
+    <a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""arriving behavior""/></p>
+    <p>After working for a bit with the seeking behavior, you probably are asking yourself,  “What if I want my vehicle to slow down as it approaches the target?”   Before we can even begin to answer this question, we should look at the reasons behind why the seek behavior causes the vehicle to fly past the target so that it has to turn around and go back.  Let’s consider the brain of a seeking vehicle.  What is it thinking?</p>
+    <p>Frame 1: I want to go as fast as possible towards the target!<br/>
+    Frame 2: I want to go as fast as possible towards the target!<br/>
+    Frame 3: I want to go as fast as possible towards the target!<br/>
+    Frame 4: I want to go as fast as possible towards the target!<br/>
+    Frame 5: I want to go as fast as possible towards the target!<br/>
+    etc.</p>
+    <p>The vehicle is so gosh darn excited about getting to the target that it doesn’t bother to make any intelligent decisions about its speed relative to the target’s proximity.  Whether it’s far away or very close, it always wants to go as fast as possible.</p>
+    <figure id="chapter06_figure6">
+      <img src="imgs/chapter06/ch06_06.png" alt="Figure 6.6"/>
+      <figcaption/>
+    </figure>
+    <p>In some cases, this is the desired behavior (if a missile is flying at a target, it should always travel at maximum speed.)  However, in many other cases (a car pulling into a parking spot, a bee landing on a flower), the vehicle’s thought process needs to consider its speed relative to the distance from its target.  For example:</p>
+    <p>Frame 1: I’m very far away. I want to go as fast as possible towards the target!<br/>
+    Frame 2: I’m very far away. I want to go as fast as possible towards the target!<br/>
+    Frame 3: I’m somewhat far away. I want to go as fast as possible towards the target!<br/>
+    Frame 4: I’m getting close. I want to go more slowly towards the target!<br/>
+    Frame 5: I’m almost there. I want to go very slowly towards the target!<br/>
+    Frame 6: I’m there. I want to stop!</p>
+    <figure id="chapter06_figure7">
+      <img src="imgs/chapter06/ch06_07.png" alt="Figure 6.7"/>
+      <figcaption/>
+    </figure>
+    <p>How can we implement this “arriving” behavior in code?  Let’s return to our <strong function>seek()</strong> function and find the line of code where we set the magnitude of the desired velocity.</p>
+<pre data-type="programlisting" data-code-language="java">   PVector desired = PVector.sub(target,location);
+   desired.normalize();
+desired.mult(maxspeed);</pre>
+    <p>In Example 6.1, the magnitude of the desired vector is always “maximum” speed.</p>
+    <figure id="chapter06_figure8">
+      <img src="imgs/chapter06/ch06_08.png" alt="Figure 6.8"/>
+      <figcaption/>
+    </figure>
+    <p>What if we instead said the desired velocity is equal to half the distance?</p>
+    <figure id="chapter06_figure9">
+      <img src="imgs/chapter06/ch06_09.png" alt="Figure 6.9"/>
+      <figcaption/>
+    </figure>
+<pre data-type="programlisting" data-code-language="java">   PVector desired = PVector.sub(target,location);
+desired.div(2);</pre>
+    <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it’s not particularly reasonable.  After all, 10 pixels away is rather close and a desired speed of 5 is rather large.   Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
+<pre data-type="programlisting" data-code-language="java">  PVector desired = PVector.sub(target,location);
+desired.mult(0.05);</pre>
+    <p>Reynolds describes a more sophisticated approach.  Let’s imagine a circle around the target with a given radius.  If the vehicle is within that circle, it slows down—at the edge of the circle, its desired speed is maximum speed, and at the target itself, its desired speed is 0.</p>
+    <figure id="chapter06_figure10">
+      <img src="imgs/chapter06/ch06_10.png" alt="Figure 6.10"/>
+      <figcaption/>
+    </figure>
+    <p>In other words, if the distance from the target is less than r, the desired speed is between 0 and maximum speed mapped according to that distance.</p>
+    <figure>
+      <img src="imgs/chapter06/ch06_ex2.png" alt="ch06 ex2"/>
+      <figcaption/>
+    </figure>
+    <p><strong example>Example 6.2: Arrive steering behavior</strong></p>
+<pre data-type="programlisting" data-code-language="java">  void arrive(PVector target) {
+    PVector desired = PVector.sub(target,location);
+    // The distance is the magnitude of
+    // the vector pointing from
+    // location to target.
+    float d = desired.mag();
+    desired.normalize();
+    // If we are closer than 100 pixels...
+    if (d &lt; 100) {
+      //[full] ...set the magnitude
+      // according to how close we are.
+      float m = map(d,0,100,0,maxspeed);
+      desired.mult(m);
+      //[end]
+    } else {
+      // Otherwise, proceed at maximum speed.
+      desired.mult(maxspeed);
+    }
+    // The usual steering = desired - velocity
+    PVector steer = PVector.sub(desired,velocity);
+    steer.limit(maxforce);
+    applyForce(steer);
+}</pre>
+    <p>The arrive behavior is a great demonstration of the magic of “desired minus velocity.”   Let’s examine this model again relative to how we calculated forces in earlier chapters.   In the “gravitational attraction” examples, the force always pointed directly from the object to the target (the exact direction of the desired velocity), whether the force was strong or weak.</p>
+    <p><a data-type="indexterm" data-primary=""arriving behavior"" data-secondary=""steering force and""/>
+    <a data-type="indexterm" data-primary=""steering force"" data-secondary=""arriving behavior and""/></p>
+    <p>The steering function, however, says: “I have the ability to perceive the environment.”  The force isn’t based on just the desired velocity, but on the desired velocity relative to the current velocity.  Only things that are alive can know their current velocity.  A box falling off a table doesn’t know it’s falling.  A cheetah chasing its prey, however, knows it is chasing.</p>
+    <p>The steering force, therefore, is essentially a manifestation of the current velocity’s <strong><em>error</em></strong>:  "I’m supposed to be going this fast in this direction, but I’m actually going this fast in another direction.   My error is the difference between where I want to go and where I am currently going."  Taking that error and applying it as a steering force results in more dynamic, lifelike simulations.   With gravitational attraction, you would never have a force pointing away from the target, no matter how close. But with arriving via steering, if you are moving too fast towards the target, the error would actually tell you to slow down!</p>
+    <figure id="chapter06_figure11">
+      <img src="imgs/chapter06/ch06_11.png" alt="Figure 6.11"/>
+      <figcaption/>
+    </figure></section>
+    <section data-type="sect1" id="chapter06_section5">
+      <h1>6.5 Your Own Desires: Desired Velocity</h1>
+      <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""desired velocity""/>
+      <a data-type="indexterm" data-primary=""desired velocity""/>
+      <a data-type="indexterm" data-primary=""velocity"" data-secondary=""desired" data-tertiary="for autonomous agents""/></p>
+      <p>The first two examples we’ve covered—seek and arrive—boil down to calculating a single vector for each behavior: the <em>desired</em> velocity.  And in fact, every single one of Reynolds’s steering behaviors follows this same pattern.  In this chapter, we’re going to walk through several more of Reynolds’s behaviors—flow field, path-following, flocking.  First, however, I want to emphasize again that these are <em>examples</em>—demonstrations of common steering behaviors that are useful in procedural animation.   They are not the be-all and end-all of what <em>you</em> can do.  As long as you can come up with a vector that describes a vehicle’s <em>desired</em> velocity, then you have created your own steering behavior.</p>
+      <p>Let’s see how Reynolds defines the desired velocity for his wandering behavior.</p>
+      <p><a data-type="indexterm" data-primary=""wandering behavior (Reynolds)""/></p>
+      <blockquote >
+        “Wandering is a type of random steering which has some long term order: the steering direction on one frame is related to the steering direction on the next frame. This produces more interesting motion than, for example, simply generating a random steering direction each frame.”
+        <span class="attribution">
+        <a href="http://www.red3d.com/cwr/steer/Wander.html">—Craig Reynolds</a>
+        </span>
+      </blockquote>
+      <figure id="chapter06_figure12">
+        <img src="imgs/chapter06/ch06_12.png" alt="Figure 6.12"/>
+        <figcaption/>
+      </figure>
+      <p><a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""wandering""/></p>
+      <p>For Reynolds, the goal of wandering is not simply random motion, but rather a sense of moving in one direction for a little while, wandering off to the next for a little bit, and so on and so forth.  So how does Reynolds calculate a desired vector to achieve such an effect?</p>
+      <p>Figure 6.12 illustrates how the vehicle predicts its future location as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <strong class="var">r</strong> at that location, and picks a random point along the circumference of the circle.  That random point moves randomly around the circle in each frame of animation.   And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
+      <p>Sounds a bit absurd, right?  Or, at the very least, rather arbitrary.   In fact, this is a very clever and thoughtful solution—it uses randomness to drive a vehicle’s steering, but constrains that randomness along the path of a circle to keep the vehicle’s movement from appearing jittery, and, well, random.</p>
+      <p>But the seemingly random and arbitrary nature of this solution should drive home the point I’m trying to make—these are made-up behaviors inspired by real-life motion.  You can just as easily concoct some elaborate scenario to compute a desired velocity yourself.  And you should.</p>
+      <div id="chapter06_exercise4" data-type="example">
+        <h5>Exercise 6.4</h5>
+        <p>Write the code for Reynolds&#8217;s wandering behavior.  Use polar coordinates to calculate the vehicle’s target along a circular path.</p>
+        <figure>
+          <img src="imgs/chapter06/ch06_exc4.png" alt="ch06 exc4"/>
+          <figcaption/>
+        </figure></div>
+        <p>Let’s say we want to create a steering behavior called “stay within walls.”  We’ll define the desired velocity as:</p>
+        <p><strong><em>If a vehicle comes within a distance</em></strong> d <strong><em>of a wall, it desires to move at maximum speed in the opposite direction of the wall.</em></strong></p>
+        <figure id="chapter06_figure13">
+          <img src="imgs/chapter06/ch06_13.png" alt="Figure 6.13"/>
+          <figcaption/>
+        </figure>
+        <p>If we define the walls of the space as the edges of a Processing window and the distance <strong class="var">d</strong> as 25, the code is rather simple.</p>
+        <figure>
+          <img src="imgs/chapter06/ch06_ex3.png" alt="ch06 ex3"/>
+          <figcaption/>
+        </figure>
+        <p><strong example>Example 6.3: “Stay within walls” steering behavior</strong></p>
+<pre data-type="programlisting" data-code-language="java">if (location. x &gt; 25) {
+  //[offset-down] Make a desired vector that retains the y direction of
+  // the vehicle but points the x direction directly away from
+  // the window’s left edge.
+  PVector desired = new PVector(maxspeed,velocity.y);
+  PVector steer = PVector.sub(desired, velocity);
+  steer.limit(maxforce);
+  applyForce(steer);
+}</pre>
+        <div id="chapter06_exercise5" data-type="example">
+          <h5>Exercise 6.5</h5>
+          <p>Come up with your own arbitrary scheme for calculating a desired velocity.</p>
+        </div>
+      </section>
+      <section data-type="sect1" id="chapter06_section6">
+        <h1>6.6  Flow Fields</h1>
+        <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""flow field following""/>
+        <a data-type="indexterm" data-primary=""flow field following""/>
+        <a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""flow field following""/></p>
+        <p>Now back to the task at hand.  Let’s examine a couple more of Reynolds’s steering behaviors.  First, <strong><em>flow field following</em></strong>.  What is a flow field?   Think of your Processing window as a grid.  In each cell of the grid lives an arrow pointing in some direction—you know, a vector.   As a vehicle moves around the screen, it asks, “Hey, what arrow is beneath me?  That’s my desired velocity!”</p>
+        <figure id="chapter06_figure14">
+          <img src="imgs/chapter06/ch06_14.png" alt="Figure 6.14"/>
+          <figcaption/>
+        </figure>
+        <p>Reynolds’s flow field following example has the vehicle predicting its future location and following the vector at that spot, but for simplicity’s sake, we’ll have the vehicle simply look to the vector at its current location.</p>
+        <p><a data-type="indexterm" data-primary=""arrays (2D)""/></p>
+        <p>Before we can write the additional code for our <strong klass>Vehicle</strong> class, we’ll need to build a class that describes the flow field itself, the grid of vectors.   A two-dimensional array is a convenient data structure in which to store a grid of information. If you are not familiar with 2D arrays, I suggest reviewing this online Processing tutorial: <a href="http://processing.org/learning/2darray/">2D array</a>.   The 2D array is convenient because we reference each element with two indices, which we can think of as columns and rows.</p>
+<pre data-type="programlisting" data-code-language="java">class FlowField {
+  // Declaring a 2D array of PVectors
+  PVector[][] field;
+  // How many columns and how many rows in the grid?
+  int cols, rows;
+  // Resolution of grid relative to window
+  // width and height in pixels
+int resolution;</pre>
+        <p><a data-type="indexterm" data-primary=""flow field following"" data-secondary=""resolution and""/>
+        <a data-type="indexterm" data-primary=""resolution" data-secondary="flow field following and""/></p>
+        <p>Notice how we are defining a third variable called <strong class="var">resolution</strong> above.   What is this variable?  Let’s say we have a Processing window that is 200 pixels wide by 200 pixels high.  We could make a flow field that has a <strong klass>PVector</strong> object for every single pixel, or 40,000 <strong klass>PVector</strong><code>s</code> (200 * 200).  This isn’t terribly unreasonable, but in our case, it’s overkill.  We don’t need a <strong klass>PVector</strong> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400).   We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
+<pre data-type="programlisting" data-code-language="java">  FlowField() {
+    resolution = 10;
+    // Total columns equals width divided by resolution.
+    cols = width/resolution;
+    // Total rows equals height divided by resolution.
+    rows = height/resolution;
+    field = new PVector[cols][rows];
+}</pre>
+        <p><a data-type="indexterm" data-primary=""vectors"" data-secondary=""flow fields" data-tertiary="computing for""/></p>
+        <p>Now that we’ve set up the flow field’s data structures, it’s time to compute the vectors in the flow field itself.  How do we do that? However we feel like it!  Perhaps we want to have every vector in the flow field pointing to the right.</p>
+        <figure id="chapter06_figure15">
+          <img src="imgs/chapter06/ch06_15.png" alt="Figure 6.15"/>
+          <figcaption/>
+        </figure>
+<pre data-type="programlisting" data-code-language="java">//[full] Using a nested loop to hit every column
+// and every row of the flow field
+for (int i = 0; i &lt; cols; i++) {
+  for (int j = 0; j &lt; rows; j++) {
+  //[end]
+    // Arbitrary decision to make each vector point to the right
+    field[i][j] = new PVector(1,0);
+  }
+}</pre>
+        <p>Or perhaps we want the vectors to point in random directions.</p>
+        <figure id="chapter06_figure16">
+          <img src="imgs/chapter06/ch06_16.png" alt="Figure 6.16"/>
+          <figcaption/>
+        </figure>
+<pre data-type="programlisting" data-code-language="java">for (int i = 0; i &lt; cols; i++) {
+  for (int j = 0; j &lt; rows; j++) {
+    // A random PVector
+    field[i][j] = PVector.2D();
+  }
+}</pre>
+        <p>What if we use 2D Perlin noise (mapped to an angle)?</p>
+        <p><a data-type="indexterm" data-primary=""Perlin noise"" data-secondary=""flow field following and""/></p>
+        <figure id="chapter06_figure17">
+          <img src="imgs/chapter06/ch06_17.png" alt="Figure 6.17"/>
+          <figcaption/>
+        </figure>
+<pre data-type="programlisting" data-code-language="java">float xoff = 0;
+for (int i = 0; i &lt; cols; i++) {
+  float yoff = 0;
+  for (int j = 0; j &lt; rows; j++) {
+    //[offset-up] Noise
+    float theta = map(noise(xoff,yoff),0,1,0,TWO_PI);
+    field[i][j] = new PVector(cos(theta),sin(theta));
+    yoff += 0.1;
+  }
+  xoff += 0.1;
+}</pre>
+        <p>Now we’re getting somewhere.   Flow fields can be used for simulating various effects, such as an irregular gust of wind or the meandering path of a river.  Calculating the direction of your vectors using Perlin noise is one way to achieve such an effect.  Of course, there’s no “correct” way to calculate the vectors of a flow field; it’s really up to you to decide what you’re looking to simulate.</p>
+        <div id="chapter06_exercise6" data-type="example">
+          <h5>Exercise 6.6</h5>
+          <p>Write the code to calculate a <strong klass>PVector</strong> at every location in the flow field that points towards the center of a window.</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_exc6.png" alt="ch06 exc6"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java">PVector v = new PVector(____________,____________);
+v.______________();
+field[i][j] = v;</pre>
+        </div>
+        <p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field.    Let’s say we have a vehicle that lives at a <strong klass>PVector</strong>: its location.  We first need to divide by the resolution of the grid.  For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
+<pre data-type="programlisting" data-code-language="java">int column = int(location.x/resolution);
+int row = int(location.y/resolution);</pre>
+        <p><a data-type="indexterm" data-primary=""constrain() function (Processing)""/></p>
+        <p>Because a vehicle could theoretically wander off the Processing window, it’s also useful for us to employ the <strong function>constrain()</strong> function to make sure we don’t look outside of the flow field array.  Here is a function we’ll call <strong function>lookup()</strong> that goes in the <strong klass>FlowField</strong> class—it receives a <strong klass>PVector</strong> (presumably the location of our vehicle) and returns the corresponding flow field <strong klass>PVector</strong> for that location.</p>
+<pre data-type="programlisting" data-code-language="java">  PVector lookup(PVector lookup) {
+    //[full]
+    // Using constrain()
+    int column = int(constrain(lookup.x/resolution,0,cols-1));
+    int row = int(constrain(lookup.y/resolution,0,rows-1));
+    //[end]
+    // Note the use of get() to ensure
+    // we return a copy of the PVector.
+    return field[column][row].get();
+}</pre>
+        <p>Before we move on to the <strong klass>Vehicle</strong> class, let’s take a look at the <strong klass>FlowField</strong> class all together.</p>
+<pre data-type="programlisting" data-code-language="java">class FlowField {
+  // A flow field is a two-dimensional array of PVectors.
+  PVector[][] field;
+  int cols, rows;
+  int resolution;
+  FlowField(int r) {
+    resolution = r;
+    //[full] Determine the number of columns and rows.
+    cols = width/resolution;
+    rows = height/resolution;
+    //[end]
+    field = new PVector[cols][rows];
+    init();
+  }
+  void init() {
+    float xoff = 0;
+    for (int i = 0; i &lt; cols; i++) {
+      float yoff = 0;
+      for (int j = 0; j &lt; rows; j++) {
+        //[offset-up] In this example, we use Perlin noise to seed the vectors.
+        float theta = map(noise(xoff,yoff),0,1,0,TWO_PI);
+        //[offset-down] Polar to Cartesian coordinate transformation to get x and y components of the vector
+        field[i][j] = new PVector(cos(theta),sin(theta));
+        yoff += 0.1;
+      }
+      xoff += 0.1;
+    }
+  }
+  //[full] A function to return a PVector based on a location
+  PVector lookup(PVector lookup) {
+    int column = int(constrain(lookup.x/resolution,0,cols-1));
+    int row = int(constrain(lookup.y/resolution,0,rows-1));
+    return field[column][row].get();
+  }
+  //[end]
+}</pre>
+        <p>So let’s assume we have a <strong klass>FlowField</strong> object called “flow”.  Using the <strong function>lookup()</strong> function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds’s rules (steering = desired - velocity) to calculate a steering force.</p>
+        <figure>
+          <img src="imgs/chapter06/ch06_ex4.png" alt="ch06 ex4"/>
+          <figcaption/>
+        </figure>
+        <p><strong example>Example 6.4: Flow field following</strong></p>
+<pre data-type="programlisting" data-code-language="java">class Vehicle {
+  void follow(FlowField flow) {
+    // What is the vector at that spot in the flow field?
+    PVector desired = flow.lookup(location);
+    desired.mult(maxspeed);
+    // Steering is desired minus velocity
+    PVector steer = PVector.sub(desired, velocity);
+    steer.limit(maxforce);
+    applyForce(steer);
+}</pre>
+        <div id="chapter06_exercise7" data-type="example">
+          <h5>Exercise 6.7</h5>
+          <p>Adapt the flow field example so that the <strong klass>PVector</strong><code>s</code> change over time. (Hint: try using the third dimension of Perlin noise!)</p>
+        </div>
+        <div id="chapter06_exercise8" data-type="example">
+          <h5>Exercise 6.8</h5>
+          <p>Can you seed a flow field from a <strong klass>PImage</strong>?  For example, try having the <strong klass>PVector</strong><code>s</code> point from dark to light colors (or vice versa).</p>
+        </div>
+      </section>
+      <section data-type="sect1" id="chapter06_section7">
+        <h1>6.7  The Dot Product</h1>
+        <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""dot product""/>
+        <a data-type="indexterm" data-primary=""dot product (PVector)""/>
+        <a data-type="indexterm" data-primary=""vectors"" data-secondary=""dot product""/></p>
+        <p>In a moment, we’re going to work through the algorithm (along with accompanying mathematics) and code for another of Craig Reynolds’s steering behaviors: <a href="http://www.red3d.com/cwr/steer/PathFollow.html">Path Following</a>.  Before we can do this, however, we have to spend some time learning about another piece of vector math that we skipped in Chapter 1—the dot product.  We haven’t needed it yet, but it’s likely going to prove quite useful for you (beyond just this path-following example), so we’ll go over it in detail now.</p>
+        <p>Remember all the basic vector math we covered in Chapter 1?  Add, subtract, multiply, and divide?</p>
+        <figure id="chapter06_figure18">
+          <img src="imgs/chapter06/ch06_18.png" alt="Figure 6.18"/>
+          <figcaption/>
+        </figure>
+        <p>Notice how in the above diagram, vector multiplication involves multiplying a vector by a scalar value.  This makes sense; when we want a vector to be twice as large (but facing the same direction), we multiply it by 2.  When we want it to be half the size, we multiply it by 0.5.</p>
+        <p><a data-type="indexterm" data-primary=""dot product (PVector)"" data-secondary=""defined""/></p>
+        <p>However, there are two other <em>multiplication-like</em> operations with vectors that are useful in certain scenarios—the dot product and the cross product. For now we’re going to focus on the dot product, which is defined as follows.  Assume vectors {vectora} and {vectorb}:</p>
+        <p>{vectora} {equals} {axay}<br/>
+        {vectorb} {equals} {bxby}</p>
+        <p>THE DOT PRODUCT: {vectora} {dot} {vectorb} {equals} {dotform}</p>
+        <p>For example, if we have the following two vectors:</p>
+        <p>{vectora} {equals} {threefive}<br/>
+        {vectorb} {equals} {tenone}</p>
+        <p>{vectora} {dot} {vectorb} {equals} {dotresult}</p>
+        <p>Notice that the result of the dot product is a scalar value (a single number) and not a vector.</p>
+        <p>In Processing, this would translate to:</p>
+<pre data-type="programlisting" data-code-language="java">PVector a = new PVector(-3,5);
+PVector b = new PVector(10,1);
+// The PVector class includes a
+// function to calculate the dot product.
+float n = a.dot(b);</pre>
+        <p>And if we were to look in the guts of the <strong klass>PVector</strong> source, we’d find a pretty simple implementation of this function:</p>
+<pre data-type="programlisting" data-code-language="java">public float dot(PVector v) {
+  return x*v.x + y*v.y + z*v.z;
+}</pre>
+        <p>This is simple enough, but why do we need the dot product, and when is it going to be useful for us in code?</p>
+        <p>One of the more common uses of the dot product is to find the angle between two vectors.   Another way in which the dot product can be expressed is:</p>
+        <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+        <p><a data-type="indexterm" data-primary=""dot product (PVector)"" data-secondary=""theta""/>
+        <a data-type="indexterm" data-primary=""theta (θ)"" data-secondary=""dot product and""/></p>
+        <p>In other words, A dot B is equal to the magnitude of A times magnitude of B times cosine of theta (with theta defined as <em>the angle between the two vectors A and B</em>).</p>
+        <p>The two formulas for dot product can be derived from one another with <a href="http://mathworld.wolfram.com/DotProduct.html">trigonometry</a>, but for our purposes we can be happy with operating on the assumption that:</p>
+        <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}<br/>
+        {vectora} {dot} {vectorb} {equals} {dotform}</p>
+        <p>both hold true and therefore:</p>
+        <p>{dotform} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+        <figure id="chapter06_figure19">
+          <img src="imgs/chapter06/ch06_19.png" alt="Figure 6.19"/>
+          <figcaption/>
+        </figure>
+        <p>Now, let’s start with the following problem. We have the vectors A and B:</p>
+        <p>{vectora} {equals} {tentwo}<br/>
+        {vectorb} {equals} {fourthree}</p>
+        <p>We now have a situation in which we know everything except for theta.   We know the components of the vector and can calculate the magnitude of each vector.  We can therefore solve for cosine of theta:</p>
+        <p>{costheta} {equals} {open} {vectora} {dot} {vectorb} {close} {div} {open} {maga} {mult} {magb} {close}</p>
+        <p>To solve for theta, we can take the inverse cosine (often expressed as <em>cosine<sup>-1</sup></em> or <em>arccosine</em>).</p>
+        <p>{theta} {equals} {arccos} {open} {open} {vectora} {dot} {vectorb} {close} {div} {open} {maga} {mult} {magb} {close} {close}</p>
+        <p>Let’s now do the math with actual numbers:</p>
+        <p>{maga} {equals} {tenpointtwo}<br/>
+        {magb} {equals} {five}</p>
+        <p>Therefore:</p>
+        <p>{theta} {equals} {arccos} {open} {open} {ten} {mult} {four} &#43; {two} {mult} {negthree} {close} {div} {open} {tenpointtwo} {mult} {five} {close} {close}<br/>
+        {theta} {equals} {arccos} {open} {threefour} {div} {fiveone} {close}<br/>
+        {theta} {equals} {foureightdeg}</p>
+        <p>The Processing version of this would be:</p>
+<pre data-type="programlisting" data-code-language="java">PVector a = new PVector(10,2);
+PVector b = new PVector(4,-3);
+float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
+        <p>And, again, if we were to dig into the guts of the Processing source code, we would see a function that implements this exact algorithm.</p>
+<pre data-type="programlisting" data-code-language="java">  static public float angleBetween(PVector v1, PVector v2) {
+    float dot = v1.dot(v2);
+    float theta = (float) Math.acos(dot / (v1.mag() * v2.mag()));
+    return theta;
+}</pre>
+        <div id="chapter06_exercise9" data-type="example">
+          <h5>Exercise 6.9</h5>
+          <figure>
+            <img src="imgs/chapter06/ch06_exc9.png" alt="ch06 exc9"/>
+            <figcaption/>
+          </figure>
+          <p>Create a sketch that displays the angle between two <strong klass>PVector</strong> objects.</p>
+          <figure>
+            <img src="imgs/blank.png" alt="blank"/>
+            <figcaption/>
+          </figure></div>
+          <p>A couple things to note here:</p>
+          <ol>
+            <li>
+            <p>If two vectors ({vectora} and {vectorb}) are orthogonal (i.e. perpendicular), the dot product ({vectora} {dot} {vectorb}) is equal to 0.</p></li>
+            <li>
+            <p>If two vectors are unit vectors, then the dot product is simply equal to cosine of the angle between them, i.e. {vectora} {dot} {vectorb} {equals} {costheta} if {vectora} and {vectorb} are of length 1.</p></li>
+          </ol>
+        </section>
+        <section data-type="sect1" id="chapter06_section8">
+          <h1>6.8  Path Following</h1>
+          <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""path following""/>
+          <a data-type="indexterm" data-primary=""path following""/>
+          <a data-type="indexterm" data-primary=""path following"" data-secondary=""pathfinding vs.""/>
+          <a data-type="indexterm" data-primary=""pathfinding""/>
+          <a data-type="indexterm" data-primary=""Reynolds" data-secondary="Craig"" data-tertiary=""path following algorithm""/></p>
+          <p>Now that we’ve got a basic understanding of the dot product under our belt, we can return to a discussion of Craig Reynolds’s path-following algorithm.     Let’s quickly clarify something.  We are talking about path <em>following</em>, not path <em>finding</em>.  Pathfinding refers to a research topic (commonly studied in artificial intelligence) that involves solving for the shortest distance between two points, often in a maze.   With <strong><em>path following</em></strong>, the path already exists and we’re asking a vehicle to follow that path.</p>
+          <p>Before we work out the individual pieces, let’s take a look at the overall algorithm for path following, as defined by Reynolds.</p>
+          <figure id="chapter06_figure20">
+            <img src="imgs/chapter06/ch06_20.png" alt="Figure 6.20"/>
+            <figcaption/>
+          </figure>
+          <p><a data-type="indexterm" data-primary=""path""/></p>
+          <p>We&#8217;ll first define what we mean by a path.  There are many ways we could implement a path, but for us, a simple way will be to define a path as a series of connected points:</p>
+          <figure id="chapter06_figure21">
+            <img src="imgs/chapter06/ch06_21.png" alt="Figure 6.21: Path"/>
+            <figcaption/>
+          </figure>
+          <p>An even simpler path would be a line between two points.</p>
+          <figure id="chapter06_figure22">
+            <img src="imgs/chapter06/ch06_22.png" alt="Figure 6.22: Simple path"/>
+            <figcaption/>
+          </figure>
+          <p>We’re also going to consider a path to have a radius.  If we think of the path as a road, the radius determines the road’s width.  With a smaller radius, our vehicles will have to follow the path more closely; a wider radius will allow them to stray a bit more.</p>
+          <p>Putting this into a class, we have:</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_ex5_a.png" alt="ch06 ex5 a"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java">class Path {
+  //[full] A path is only two points, start and end.
+  PVector start;
+  PVector end;
+  //[end]
+  // A path has a radius, i.e. how wide it is.
+  float radius;
+  Path() {
+    // Picking some arbitrary values to initialize the path
+    radius = 20;
+    start = new PVector(0,height/3);
+    end = new PVector(width,2*height/3);
+  }
+  void display() {  // Display the path.
+    strokeWeight(radius*2);
+    stroke(0,100);
+    line(start.x,start.y,end.x,end.y);
+    strokeWeight(1);
+    stroke(0);
+    line(start.x,start.y,end.x,end.y);
+  }
+}</pre>
+          <p>Now, let’s assume we have a vehicle (as depicted below) outside of the path’s radius, moving with a velocity.</p>
+          <figure id="chapter06_figure23">
+            <img src="imgs/chapter06/ch06_23.png" alt="Figure 6.23"/>
+            <figcaption/>
+          </figure>
+          <p>The first thing we want to do is predict, assuming a constant velocity, where that vehicle will be in the future.</p>
+<pre data-type="programlisting" data-code-language="java">// Start by making a copy of the velocity.
+PVector predict = vel.get();
+//[full] Normalize it and look 25 pixels
+// ahead by scaling the vector up.
+predict.normalize();
+predict.mult(25);
+//[end]
+// Add vector to location to find the
+// predicted location.
+PVector predictLoc = PVector.add(loc, predict);</pre>
+          <p><a data-type="indexterm" data-primary=""path following"" data-secondary=""current distance from path" data-tertiary="finding""/></p>
+          <p>Once we have that location, it’s now our job to find out the vehicle&#8217;s current distance from the path of that predicted location.  If it’s very far away, well, then, we’ve strayed from the path and need to steer back towards it.  If it’s close, then we’re doing OK and are following the path nicely.</p>
+          <p>So, how do we find the distance between a point and a line?  This concept is key.  The distance between a point and a line is defined as the length of the normal between that point and line.  The normal is a vector that extends from that point and is perpendicular to the line.</p>
+          <figure id="chapter06_figure24">
+            <img src="imgs/chapter06/ch06_24.png" alt="Figure 6.24"/>
+            <figcaption/>
+          </figure>
+          <p>Let’s figure out what we do know.    We know we have a vector (call it {vectora}) that extends from the path’s starting point to the vehicle’s predicted location.</p>
+<pre data-type="programlisting" data-code-language="java">PVector a = PVector.sub(predictLoc,path.start);</pre>
+<p>We also know that we can define a vector (call it {vectorb}) that points from the start of the path to the end.</p>
+<pre data-type="programlisting" data-code-language="java">PVector b = PVector.sub(path.end,path.start);</pre>
+<p>Now, with basic trigonometry, we know that the distance from the path’s start to the normal point is: <strong formula>|A| * cos(theta)</strong>.</p>
+          <figure id="chapter06_figure25">
+<img src="imgs/chapter06/ch06_25.png" alt="Figure 6.25"/>
+<figcaption/>
+          </figure>
+<p>If we knew theta, we could easily define that normal point as follows:</p>
+<pre data-type="programlisting" data-code-language="java">// The distance from START to NORMAL
+float d = a.mag()*cos(theta);
+b.normalize();
+// Scale PVector b to that distance.
+b.mult(d);
+// The normal point can be found by adding
+// the scaled version of b to the path’s
+// starting point.
+PVector normalPoint = PVector.add(path.start,b);</pre>
+          <p>And if the dot product has taught us anything, it’s that given two vectors, we can get theta, the angle between.</p>
+<pre data-type="programlisting" data-code-language="java">// What is theta?  The angle between A and B
+float theta = PVector.angleBetween(a,b);
+b.normalize();
+b.mult(a.mag()*cos(theta));
+PVector normalPoint = PVector.add(path.start,b);</pre>
+          <p>While the above code will work, there’s one more simplification we can make.   If you’ll notice, the desired magnitude for vector {vectorb} is:</p>
+          <p><strong formula>a.mag()*cos(theta)</strong></p>
+          <p>which is the code translation of:</p>
+          <p>{maga} {mult} {costheta}</p>
+          <p>And if you recall:</p>
+          <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+          <p>Now, what if vector {vectorb} is a unit vector, i.e. length 1?  Then:</p>
+          <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {one} {mult} {costheta}</p>
+          <p>or</p>
+          <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {costheta}</p>
+          <p>And what are we doing in our code?  Normalizing b!</p>
+<pre data-type="programlisting" data-code-language="java">b.normalize();</pre>
+<p>Because of this fact, we can simplify our code as:</p>
+<pre data-type="programlisting" data-code-language="java">float theta = PVector.angleBetween(a,b); //[line-through]
+b.normalize();
+// We can use the dot product to scale b’s length.
+b.mult(a.dot(b));
+PVector normalPoint = PVector.add(path.start,b);</pre>
+          <p><a data-type="indexterm" data-primary=""scalar projection""/></p>
+          <p>This process is commonly known as “scalar projection.”  <strong><em>|A| cos(θ) is the scalar projection of A onto B.</em></strong></p>
+          <figure id="chapter06_figure26">
+            <img src="imgs/chapter06/ch06_26.png" alt="Figure 6.26"/>
+            <figcaption/>
+          </figure>
+          <p><a data-type="indexterm" data-primary=""normal points""/>
+          <a data-type="indexterm" data-primary=""path following"" data-secondary=""normal points""/></p>
+          <p>Once we have the normal point along the path, we have to decide whether the vehicle should steer towards the path and how.  Reynolds’s algorithm states that the vehicle should only steer towards the path if it strays beyond the path (i.e., if the distance between the normal point and the predicted future location is greater than the path radius).</p>
+          <figure id="chapter06_figure27">
+            <img src="imgs/chapter06/ch06_27.png" alt="Figure 6.27"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java">float distance = PVector.dist(predictLoc, normalPoint);
+// If the vehicle is outside the path,
+// seek the target.
+if (distance &gt; path.radius) {
+  // We don’t have to work out the desired velocity and
+  // steering force; all that is taken care of by seek(),
+  // which we already wrote in Example 6.1.
+  seek(target);
+}</pre>
+          <p>But what is the target?</p>
+          <p><a data-type="indexterm" data-primary=""path following"" data-secondary=""target" data-tertiary="determining""/></p>
+          <p>Reynolds’s algorithm involves picking a point ahead of the normal on the path (see step #3 above).  But for simplicity, we could just say that the target is the normal itself. This will work fairly well:</p>
+<pre data-type="programlisting" data-code-language="java">float distance = PVector.dist(predictLoc, normalPoint);
+if (distance &gt; path.radius) {
+  // Seek the normal point on the path.
+  seek(normalPoint);
+}</pre>
+          <p>Since we know the vector that defines the path (we’re calling it “B”), we can implement Reynolds’s “point ahead on the path” without too much trouble.</p>
+          <figure id="chapter06_figure28">
+            <img src="imgs/chapter06/ch06_28.png" alt="Figure 6.28"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java">float distance = PVector.dist(predictLoc, normalPoint);
+if (distance &gt; path.radius) {
+  //[full] Normalize and scale b (pick 25 pixels arbitrarily).
+  b.normalize();
+  b.mult(25);
+  //[end]
+  // By adding b to normalPoint, we now move
+  // 25 pixels ahead on the path.
+  PVector target = PVector.add(normalPoint,b);
+  seek(target);
+}</pre>
+          <p>Putting it all together, we have the following steering function in our <strong klass>Vehicle</strong> class.</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_ex5.png" alt="ch06 ex5"/>
+            <figcaption/>
+          </figure>
+          <p><strong example>Example 6.5: Simple path following</strong></p>
+<pre data-type="programlisting" data-code-language="java">  void follow(Path p) {
+    //[full] Step 1: Predict the vehicle’s future location.
+    PVector predict = vel.get();
+    predict.normalize();
+    predict.mult(25);
+    PVector predictLoc = PVector.add(loc, predict);
+    //[end]
+    //[full] Step 2: Find the normal point along the path.
+    PVector a = p.start;
+    PVector b = p.end;
+    PVector normalPoint = getNormalPoint(predictLoc, a, b);
+    //[end]
+    //[full] Step 3: Move a little further along the path and set a target.
+    PVector dir = PVector.sub(b, a);
+    dir.normalize();
+    dir.mult(10);
+    PVector target = PVector.add(normalPoint, dir);
+    //[end]
+    //[full] Step 4: If we are off the path,
+    // seek that target in order to stay on the path.
+    float distance =
+      PVector.dist(normalPoint, predictLoc);
+    if (distance &gt; p.radius) {
+      seek(target);
+    }//[end]
+}</pre>
+          <p>Now, you may notice above that instead of using all that dot product/scalar projection code to find the normal point, we instead call a function: <strong function>getNormalPoint()</strong>.   In cases like this, it’s useful to break out the code that performs a specific task (finding a normal point) into a function that it can be used generically in any case where it is required.  The function takes three <strong klass>PVector</strong><code>s</code>: the first defines a point in Cartesian space and the second and third arguments define a line segment.</p>
+          <figure id="chapter06_figure29">
+            <img src="imgs/chapter06/ch06_29.png" alt="Figure 6.29"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java">  PVector getNormalPoint(PVector p, PVector a, PVector b) {
+    // PVector that points from a to p
+    PVector ap = PVector.sub(p, a);
+    // PVector that points from a to b
+    PVector ab = PVector.sub(b, a);
+    //[full] Using the dot product for scalar projection
+    ab.normalize();
+    ab.mult(ap.dot(ab));
+    //[end]
+    // Finding the normal point along the line segment
+    PVector normalPoint = PVector.add(a, ab);
+    return normalPoint;
+}</pre>
+          <p>What do we have so far?  We have a <strong klass>Path</strong> class that defines a path as a line between two points.  We have a <strong klass>Vehicle</strong> class that defines a vehicle that can follow the path (using a steering behavior to seek a target along the path).  What is missing?</p>
+          <p>Take a deep breath.  We’re almost there.</p>
+        </section>
+        <section data-type="sect1" id="chapter06_section9">
+          <h1>6.9 Path Following with Multiple Segments</h1>
+          <p><a data-type="indexterm" data-primary=""path following"" data-secondary=""multiple segments""/></p>
+          <figure id="chapter06_figure30">
+            <img src="imgs/chapter06/ch06_30.png" alt="Figure 6.30"/>
+            <figcaption/>
+          </figure>
+          <p>We’ve built a great example so far, yes, but it’s pretty darn limiting.  After all, what if we want our path to be something that looks more like:</p>
+          <figure id="chapter06_figure31">
+            <img src="imgs/chapter06/ch06_31.png" alt="Figure 6.31"/>
+            <figcaption/>
+          </figure>
+          <p>While it’s true that we could make this example work for a curved path, we’re much less likely to end up needing a cool compress on our forehead if we stick with line segments.  In the end, we  can always employ the same technique we discovered with Box2D—we can draw whatever fancy curved path we want and approximate it behind the scenes with simple geometric forms.</p>
+          <p>So, what’s the problem?  If we made path following work with one line segment, how do we make it work with a series of connected line segments?   Let’s take a look again at our vehicle driving along the screen.    Say we arrive at Step 3.</p>
+          <p><strong><em>Step 3: Find a target point on the path.</em></strong></p>
+          <p><a data-type="indexterm" data-primary=""normal points"" data-secondary=""series of" data-tertiary="for path following""/></p>
+          <p>To find the target, we need to find the normal to the line segment.  But now that we have a series of line segments, we have a series of normal points (see above)!  Which one do we choose?  The solution we’ll employ is to pick the normal point that is (a) closest and (b) on the path itself.</p>
+          <figure id="chapter06_figure32">
+            <img src="imgs/chapter06/ch06_32.png" alt="Figure 6.32"/>
+            <figcaption/>
+          </figure>
+          <p>If we have a point and an infinitely long line, we’ll always have a normal.  But, as in the path-following example, if we have a point and a line segment, we won’t necessarily find a normal that is on the line segment itself.  So if this happens for any of the segments, we can disqualify those normals.  Once we are left with normals that are on the path itself (only two in the above diagram), we simply pick the one that is closest to our vehicle’s location.</p>
+          <p>In order to write the code for this, we’ll have to expand our <strong klass>Path</strong> class to have an <strong klass>ArrayList</strong> of points (rather than just two, a start and an end).</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_ex6_a.png" alt="ch06 ex6 a"/>
+            <figcaption/>
+          </figure>
+<pre data-type="programlisting" data-code-language="java"> class Path {
+  // A Path is now an ArrayList of points (PVector objects).
+  ArrayList&lt;PVector&gt; points;
+  float radius;
+  Path() {
+    radius = 20;
+    points = new ArrayList&lt;PVector&gt;();
+  }
+  //[full] This function allows us to add points to the path.
+  void addPoint(float x, float y) {   .
+    PVector point = new PVector(x,y);
+    points.add(point);
+  }
+  //[end]
+  //[full] Display the path as a series of points.
+  void display() {
+    stroke(0);
+    noFill();
+    beginShape();
+    for (PVector v : points) {
+      vertex(v.x,v.y);
+    }
+    endShape();
+  }
+  //[end]
+}</pre>
+          <p>Now that we have the <strong klass>Path</strong> class defined, it’s the vehicle’s turn to deal with multiple line segments.  All we did before was find the normal for one line segment.  We can now find the normals for all the line segments in a loop.</p>
+<pre data-type="programlisting" data-code-language="java">for (int i = 0; i &lt; p.points.size()-1; i++) {
+  PVector a = p.points.get(i);
+  PVector b = p.points.get(i+1);
+  //[offset-down] Finding the normals for each line segment
+  PVector normalPoint = getNormalPoint(predictLoc, a, b);
+</pre>
+          <p>Then we should make sure the normal point is actually between points <strong class="var">a</strong> and <strong class="var">b</strong>.  Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <strong class="var">normalPoint</strong> is outside the <em>x</em> components of <strong class="var">a</strong> and <strong class="var">b</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">   if (normalPoint.x &lt; a.x || normalPoint.x &gt; b.x) {
+      // Use the end point of the segment
+      // as our normal point if we can’t find one.
+      normalPoint = b.get();
+}</pre>
+          <p>As a little trick, we’ll say that if it’s not within the line segment, let’s just pretend the end point of that line segment is the normal.  This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>
+          <p>Finally, we’ll need to make sure we find the normal point that is closest to our vehicle.  To accomplish this, we start with a very high “world record” distance and iterate through each normal point to see if it beats the record (i.e. is less than).  Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <strong class="var">target</strong>.  At the end of the loop, we’ll have the closest normal point in that variable.</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_ex6.png" alt="ch06 ex6"/>
+            <figcaption/>
+          </figure>
+          <p><strong example>Example 6.6: Path following</strong></p>
+<pre data-type="programlisting" data-code-language="java">PVector target = null;
+// Start with a very high record
+// that can easily be beaten.
+float worldRecord = 1000000;
+for (int i = 0; i &lt; p.points.size()-1; i++) {
+  PVector a = p.points.get(i);
+  PVector b = p.points.get(i+1);
+  PVector normalPoint = getNormalPoint(predictLoc, a, b);
+  if (normalPoint.x &lt; a.x || normalPoint.x &gt; b.x) {
+    normalPoint = b.get();
+  }
+  float distance = PVector.dist(predictLoc, normalPoint);
+  //[full] If we beat the record, then
+  // this should be our target!
+  if (distance &lt; worldRecord) {
+    worldRecord = distance;
+    target = normalPoint.get();
+  }
+  //[end]
+}</pre>
+          <div id="chapter06_exercise10" data-type="example">
+            <h5>Exercise 6.10</h5>
+            <p>Update the path-following example so that the path can go in any direction.  (Hint: you’ll need to use the <strong function>min()</strong> and <strong function>max()</strong> function when determining if the normal point is inside the line segment.)</p>
+<pre data-type="programlisting" data-code-language="java">if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
+  normalPoint = b.get();
+}</pre>
+          </div>
+          <div id="chapter06_exercise11" data-type="example">
+            <h5>Exercise 6.11</h5>
+            <p>Create a path that changes over time.  Can the points that define the path itself have their own steering behaviors?</p>
+          </div>
+        </section>
+        <section data-type="sect1" id="chapter06_section10">
+          <h1>6.10  Complex Systems</h1>
+          <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""complex systems and""/>
+          <a data-type="indexterm" data-primary=""complex systems""/></p>
+          <p>Remember our purpose?  To breathe life into the things that move around our Processing windows?  By learning to write the code for an autonomous agent and building a series of examples of individual behaviors, hopefully our souls feel a little more full.  But this is no place to stop and rest on our laurels.  We’re just getting started.   After all, there is a deeper purpose at work here.  Yes, a vehicle is a simulated being that makes decisions about how to seek and flow and follow.  But what is a life led alone, without the love and support of others?  Our purpose here is not only to build individual behaviors for our vehicles, but to put our vehicles into systems of many vehicles and allow those vehicles to interact with each other.</p>
+          <p><a data-type="indexterm" data-primary=""ants" data-secondary="modeling for""/>
+          <a data-type="indexterm" data-primary=""complex systems"" data-secondary=""superorganisms""/>
+          <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""ants" data-tertiary="modeling""/>
+          <a data-type="indexterm" data-primary=""superorganisms""/></p>
+          <p>Let’s think about a tiny, crawling ant—one single ant.  An ant is an autonomous agent; it can perceive its environment (using antennae to gather information about the direction and strength of chemical signals) and make decisions about how to move based on those signals.  But can a single ant acting alone build a nest, gather food, defend its queen?   An ant is a simple unit and can only perceive its immediate environment.  A colony of ants, however, is a sophisticated complex system, a “superorganism” in which the components work together to accomplish difficult and complicated goals.</p>
+          <p>We want to take what we’ve learned during the process of building autonomous agents in Processing into simulations that involve many agents operating in parallel—agents that have an ability to perceive not only their physical environment but also the actions of their fellow agents, and then act accordingly.  We want to create complex systems in Processing.</p>
+          <p>What is a complex system?  A complex system is typically defined as a system that is “more than the sum of its parts.”  While the individual elements of the system may be incredibly simple and easily understood, the behavior of the system as a whole can be highly complex, intelligent, and difficult to predict.  Here are three key principles of complex systems.</p>
+          <p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""key principles of""/>
+          <a data-type="indexterm" data-primary=""short range relationships"" data-secondary=""complex systems""/></p>
+          <ul>
+            <li>
+            <p><strong><em>Simple units with short-range relationships.</em></strong>  This is what we’ve been building all along: vehicles that have a limited perception of their environment.</p></li>
+            <li>
+            <p><strong><em>Simple units operate in parallel.</em></strong>   This is what we need to simulate in code.  For every cycle through Processing’s <strong function>draw()</strong> loop, each unit will decide how to move (to create the appearance of them all working in parallel).</p></li>
+            <li>
+            <p><strong><em>System as a whole exhibits emergent phenomena.</em></strong>   Out of the interactions between these simple units emerges complex behavior, patterns, and intelligence.  Here we’re talking about the result we are hoping for in our sketches.  Yes, we know this happens in nature (ant colonies, termites, migration patterns, earthquakes, snowflakes, etc.), but can we achieve the same result in our Processing sketches?</p></li>
+          </ul>
+          <p>Following are three additional features of complex systems that will help frame the discussion, as well as provide guidelines for features we will want to include in our software simulations.  It&#8217;s important to acknowledge that this is a fuzzy set of characteristics and not all complex systems have all of them.</p>
+          <p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""non-linearity component""/></p>
+          <ul>
+            <li>
+            <p><strong><em>Non-linearity.</em></strong>  This aspect of complex systems is often casually referred to as “the butterfly effect,” coined by mathematician and meteorologist Edward Norton Lorenz, a pioneer in the study of chaos theory.  In 1961, Lorenz was running a computer weather simulation for the second time and, perhaps to save a little time, typed in a starting value of 0.506 instead of 0.506127.   The end result was completely different from the first result of the simulation.   In other words, the theory is that a single butterfly flapping its wings on the other side of the world could cause a massive weather shift and ruin our weekend at the beach.  We call it “non-linear” because there isn’t a linear relationship between a change in initial conditions and a change in outcome.   A small change in initial conditions can have a massive effect on the outcome.  Non-linear systems are a superset of chaotic systems.  In the next chapter, we’ll see how even in a system of many zeros and ones, if we change just one bit, the result will be completely different.</p></li>
+          </ul>
+          <p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""competition/cooperation component""/></p>
+          <ul>
+            <li>
+            <p><strong><em>Competition and cooperation.</em></strong>  One of the things that often makes a complex system tick is the presence of both competition and cooperation between the elements.   In our upcoming flocking system, we will have three rules—alignment, cohesion, and separation.  Alignment and cohesion will ask the elements to “cooperate”—i.e. work together to stay together and move together.  Separation, however, will ask the elements to “compete” for space.  As we get to the flocking system, try taking out the cooperation or the competition and you’ll see how you are left without complexity. Competition and cooperation are found in living complex systems, but not in non-living complex systems like the weather.</p></li>
+          </ul>
+          <p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""feedback component""/></p>
+          <ul>
+            <li>
+            <p><strong><em>Feedback.</em></strong> Complex systems often include a feedback loop where the the output of the system is fed back into the system to influence its behavior in a positive or negative direction. Let&#8217;s say you drive to work each day because the price of gas is low.  In fact, everyone drives to work.  The price of gas goes up as demand begins to exceed supply.  You, and everyone else, decide to take the train to work because driving is too expensive.  And the price of gas declines as the demand declines.  The price of gas is both the input of the system (determining whether you choose to drive or ride the train) and the output (the demand that results from your choice).  I should note that economic models (like supply/demand, the stock market) are one example of a human complex system.  Others include fads and trends, elections, crowds, and traffic flow.</p></li>
+          </ul>
+          <p>Complexity will serve as a theme for the remaining content in this book. In this chapter, we’ll begin by adding one more feature to our <strong klass>Vehicle</strong> class: an ability to look at neighboring vehicles.</p>
+        </section>
+        <section data-type="sect1" id="chapter06_section11">
+          <h1>6.11  Group Behaviors (or: Let’s not run into each other)</h1>
+          <p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""group behavior""/>
+          <a data-type="indexterm" data-primary=""group behavior""/>
+          <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""group behavior""/></p>
+          <p>A group is certainly not a new concept. We’ve done this before—in Chapter 4, where we developed a framework for managing collections of particles in a <strong klass>ParticleSystem</strong> class.   There, we stored a list of particles in an <strong klass>ArrayList</strong>.  We’ll do the same thing here: store a bunch of <strong klass>Vehicle</strong> objects in an <strong klass>ArrayList</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">// Declare an ArrayList of Vehicle objects.
+ArrayList&lt;Vehicle&gt; vehicles;
+void setup() {
+  // Initialize and fill the ArrayList
+  // with a bunch of Vehicles.
+  vehicles = new ArrayList&lt;Vehicle&gt;;
+  for (int i = 0; i &lt; 100; i++) {
+    vehicles.add(new Vehicle(random(width),random(height)));
+  }
+}</pre>
+          <p>Now when it comes time to deal with all the vehicles in <strong function>draw()</strong>, we simply loop through all of them and call the necessary functions.</p>
+<pre data-type="programlisting" data-code-language="java">void draw(){
+  for (Vehicle v : vehicles) {
+    v.update();
+    v.display();
+  }
+}</pre>
+          <p>OK, so maybe we want to add a behavior, a force to be applied to all the vehicles.  This could be seeking the mouse.</p>
+<pre data-type="programlisting" data-code-language="java">    v.seek(mouseX,mouseY);</pre>
+<p><a data-type="indexterm" data-primary=""collisions"" data-secondary=""avoiding in group behavior""/>
+<a data-type="indexterm" data-primary=""group behavior"" data-secondary=""collisions" data-tertiary="avoiding""/></p>
+<p>But that’s an individual behavior.  We’ve already spent thirty-odd pages worrying about individual behaviors.  We’re here because we want to apply a group behavior.  Let’s begin with separation, a behavior that commands, “Avoid colliding with your neighbors!”</p>
+<pre data-type="programlisting" data-code-language="java">    v.separate();</pre>
+<p>Is that right?  It sounds good, but it’s not.  What’s missing?  In the case of seek, we said, “Seek <strong class="var">mouseX</strong> and <strong class="var">mouseY</strong>.”  In the case of separate, we’re saying “separate from <em>everyone else</em>.”  Who is everyone else?  It’s the list of all the other vehicles.</p>
+<pre data-type="programlisting" data-code-language="java">    v.separate(vehicles);</pre>
+<p>This is the big leap beyond what we did before with particle systems.  Instead of having each element (particle or vehicle) operate on its own, we’re now saying, “Hey you, the vehicle! When it comes time for you to operate, you need to operate with an awareness of everyone else. So I’m going to go ahead and pass you the <strong klass>ArrayList</strong> of everyone else.”</p>
+<p>This is how we’ve mapped out <strong function>setup()</strong> and <strong function>draw()</strong> to deal with a group behavior.</p>
+<pre data-type="programlisting" data-code-language="java">ArrayList&lt;Vehicle&gt; vehicles;
+void setup() {
+  size(320,240);
+  vehicles = new ArrayList&lt;Vehicle&gt;();
+  for (int i = 0; i &lt; 100; i++) {
+    vehicles.add(new Vehicle(random(width),random(height)));
+  }
+}
+void draw() {
+  background(255);
+  for (Vehicle v : vehicles) {
+    // This is really the only new thing we’re doing in this section.  We’re asking
+    // a Vehicle object to examine all the other vehicles in the process of calculating a
+    // separation force.
+    v.separate(vehicles); //[bold]
+    v.update();
+    v.display();
+  }
+}</pre>
+          <figure id="chapter06_figure33">
+            <img src="imgs/chapter06/ch06_33.png" alt="Figure 6.33"/>
+            <figcaption/>
+          </figure>
+          <p><a data-type="indexterm" data-primary=""repulsion"" data-secondary=""group behavior and""/>
+          <a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""group behavior and""/></p>
+          <p>Of course, this is just the beginning.  The real work happens inside the <strong function>separate()</strong> function itself.  Let’s figure out how we want to define separation. Reynolds states: “Steer to avoid crowding.” In other words, if a given vehicle is too close to you, steer away from that vehicle.  Sound familiar?  Remember the seek behavior where a vehicle steers towards a target?  Reverse that force and we have the flee behavior.</p>
+          <figure id="chapter06_figure34">
+            <img src="imgs/chapter06/ch06_34.png" alt="Figure 6.34"/>
+            <figcaption/>
+          </figure>
+          <p>But what if more than one vehicle is too close?  In this case, we’ll define separation as the average of all the vectors pointing away from any close vehicles.</p>
+          <p>Let’s begin to write the code.  As we just worked out, we’re writing a function called <strong function>separate()</strong> that receives an <strong klass>ArrayList</strong> of Vehicle objects as an argument.</p>
+<pre data-type="programlisting" data-code-language="java">void separate (ArrayList&lt;Vehicle&gt; vehicles) {
+}</pre>
+          <p>Inside this function, we’re going to loop through all of the vehicles and see if any are too close.</p>
+<pre data-type="programlisting" data-code-language="java">  // This variable specifies how close is too close.
+  float desiredseparation = 20;
+  for (Vehicle other : vehicles) {
+    //[offset-down] What is the distance between me and another Vehicle?
+    float d = PVector.dist(location, other.location);
+    if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
+      // Any code here will be executed if the Vehicle is within 20 pixels.
+    }
+}</pre>
+          <p>Notice how in the above code, we are not only checking if the distance is less than a desired separation (i.e. too close!), but also if the distance is greater than zero.  This is a little trick that makes sure we don’t ask a vehicle to separate from itself.   Remember, all the vehicles are in the <strong klass>ArrayList</strong>, so if you aren’t careful you’ll be comparing each vehicle to itself!</p>
+          <p>Once we know that two vehicles are too close, we need to make a vector that points away from the offending vehicle.</p>
+<pre data-type="programlisting" data-code-language="java">    if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
+      //[offset-down] A PVector pointing away from the other’s location
+      PVector diff = PVector.sub(location, other.location);
+      diff.normalize();
+}</pre>
+          <p>This is not enough.  We have that vector now, but we need to make sure we calculate the average of all vectors pointing away from close vehicles.   How do we compute average?  We add up all the vectors and divide by the total.</p>
+<pre data-type="programlisting" data-code-language="java">  // Start with an empty PVector.
+  PVector sum = new PVector();  //[bold]
+  int count = 0;  //[bold]
+  // We have to keep track of how many Vehicles are too close.
+  for (Vehicle other : vehicles) {
+    float d = PVector.dist(location, other.location);
+    if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
+      PVector diff = PVector.sub(location, other.location); //[bold]
+      diff.normalize();
+      // Add all the vectors together and increment the count.
+      sum.add(diff); //[bold]
+      count++;
+    }
+  }
+  // We have to make sure we found at least one close
+  // vehicle.  We don’t want to bother doing anything
+  // if nothing is too close (not to mention we can’t
+  // divide by zero!)
+  if (count &gt; 0) { //[bold]
+    sum.div(count); //[bold]
+} //[bold]</pre>
+          <p>Once we have the average vector (stored in the <strong klass>PVector</strong> object “sum”), that <strong klass>PVector</strong> can be scaled to maximum speed and become our desired velocity—we <em>desire</em> to move in that direction at maximum speed!   And once we have the desired velocity, it’s the same old Reynolds story: steering equals desired minus velocity.</p>
+<pre data-type="programlisting" data-code-language="java">  if (count &gt; 0) {
+    sum.div(count);
+    // Scale average to maxspeed
+    // (this becomes desired).
+    sum.setMag(maxspeed);
+    // Reynolds’s steering formula
+    PVector steer = PVector.sub(sum,vel);
+    steer.limit(maxforce);
+    // Apply the force to the Vehicle’s
+    // acceleration.
+    applyForce(steer);
+}</pre>
+          <p>Let’s see the function in its entirety.  There are two additional improvements, noted in the code comments.</p>
+          <figure>
+            <img src="imgs/chapter06/ch06_ex7.png" alt="ch06 ex7"/>
+            <figcaption/>
+          </figure>
+          <p><strong example>Example 6.7: Group behavior: Separation</strong></p>
+<pre data-type="programlisting" data-code-language="java">  void separate (ArrayList&lt;Vehicle&gt; vehicles) {
+    // Note how the desired separation is based
+    // on the Vehicle’s size.
+    float desiredseparation = r*2; //[bold]
+    PVector sum = new PVector();
+    int count = 0;
+    for (Vehicle other : vehicles) {
+      float d = PVector.dist(location, other.location);
+      if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
+        PVector diff = PVector.sub(location, other.location);
+        diff.normalize();
+        // What is the magnitude of the PVector
+        // pointing away from the other vehicle?
+        // The closer it is, the more we should flee.
+        // The farther, the less. So we divide
+        // by the distance to weight it appropriately.
+        diff.div(d);  //[bold]
+        sum.add(diff);
+        count++;
+      }
+    }
+    if (count &gt; 0) {
+      sum.div(count);
+      sum.normalize();
+      sum.mult(maxspeed);
+      PVector steer = PVector.sub(sum, vel);
+      steer.limit(maxforce);
+      applyForce(steer);
+    }
+}</pre>
+          <div id="chapter06_exercise12" data-type="example">
+            <h5>Exercise 6.12</h5>
+            <p>Rewrite <strong function>separate()</strong> to work in the opposite fashion (“cohesion”).  If a vehicle is beyond a certain distance, steer towards that vehicle.  This will keep the group together.  (Note that in a moment, we’re going to look at what happens when we have both cohesion and separation in the same simulation.)</p>
+          </div>
+          <div style="page-break-after:always;"> </div>
+          <div id="chapter06_exercise13" data-type="example">
+            <h5>Exercise 6.13</h5>
+            <p>Add the separation force to path following to create a simulation of Reynolds’s “Crowd Path Following.”</p>
+            <figure>
+              <img src="imgs/chapter06/ch06_exc13.png" alt="ch06 exc13"/>
+              <figcaption/>
+            </figure></div>
+          </section>
+          <section data-type="sect1" id="chapter06_section12">
+            <h1>6.12  Combinations</h1>
+            <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""combinations""/>
+            <a data-type="indexterm" data-primary=""combinations""/>
+            <a data-type="indexterm" data-primary=""group behavior"" data-secondary=""combinations""/></p>
+            <p>The previous two exercises hint at what is perhaps the most important aspect of this chapter.  After all, what is a Processing sketch with one steering force compared to one with many?  How could we even begin to simulate emergence in our sketches with only one rule?   The most exciting and intriguing behaviors will come from mixing and matching multiple steering forces, and we’ll need a mechanism for doing so.</p>
+            <p>You may be thinking, “Duh, this is nothing new.  We do this all the time.”  You would be right.  In fact, we did this as early as Chapter 2.</p>
+<pre data-type="programlisting" data-code-language="java">  PVector wind = new PVector(0.001,0);
+  PVector gravity = new PVector(0,0.1);
+  mover.applyForce(wind);
+mover.applyForce(gravity);</pre>
+            <p>Here we have a mover that responds to two forces.  This all works nicely because of the way we designed the <strong klass>Mover</strong> class to accumulate the force vectors into its acceleration vector.  In this chapter, however, our forces stem from internal desires of the movers (now called vehicles). And those desires can be weighted. Let’s consider a sketch where all vehicles have two desires:</p>
+            <ul>
+              <li>
+              <p><strong><em>Seek the mouse location.</em></strong></p></li>
+              <li>
+              <p><strong><em>Separate from any vehicles that are too close.</em></strong></p></li>
+            </ul>
+            <p>We might begin by adding a function to the <strong klass>Vehicle</strong> class that manages all of the behaviors.  Let’s call it <strong function>applyBehaviors()</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
+  separate(vehicles);
+  seek(new PVector(mouseX,mouseY));
+}</pre>
+            <p>Here we see how a single function takes care of calling the other functions that apply the forces—<strong function>separate()</strong> and <strong function>seek()</strong>.    We could start mucking around with those functions and see if we can adjust the strength of the forces they are calculating.  But it would be easier for us to ask those functions to return the forces so that we can adjust their strength before applying them to the vehicle’s acceleration.</p>
+<pre data-type="programlisting" data-code-language="java">  void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
+    PVector separate = separate(vehicles);
+    PVector seek = seek(new PVector(mouseX,mouseY));
+    //[full] We have to apply the force here since seek() and separate() no longer do so.
+    applyForce(separate);
+    applyForce(seek);
+    //[end]
+}</pre>
+            <p>Let’s look at how the seek function changed.</p>
+<pre data-type="programlisting" data-code-language="java">  PVector seek(PVector target) {
+    PVector desired = PVector.sub(target,loc);
+    desired.normalize();
+    desired.mult(maxspeed);
+    PVector steer = PVector.sub(desired,vel);
+    steer.limit(maxforce);
+    //[full] Instead of applying the force we return the PVector.
+    applyForce(steer); //[line-through]
+    return steer;
+    //[end]
+}</pre>
+            <p>This is a subtle change, but incredibly important for us: it allows us to alter the strength of these forces in one place.</p>
+            <figure>
+              <img src="imgs/chapter06/ch06_ex8.png" alt="ch06 ex8"/>
+              <figcaption/>
+            </figure>
+            <p><strong example>Example 6.8: Combining steering behaviors: Seek and separate</strong></p>
+<pre data-type="programlisting" data-code-language="java">void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
+  PVector separate = separate(vehicles);
+  PVector seek = seek(new PVector(mouseX,mouseY));
+  //[full] These values can be whatever you want them to be!
+  // They can be variables that are customized for
+  // each vehicle, or they can change over time.
+  separate.mult(1.5); //[bold]
+  seek.mult(0.5); //[bold]
+  //[end]
+  applyForce(separate);
+  applyForce(seek);
+}</pre>
+            <div id="chapter06_exercise14" data-type="example">
+              <h5>Exercise 6.14</h5>
+              <p>Redo Example 6.8 so that the behavior weights are not constants.  What happens if they change over time (according to a sine wave or Perlin noise)?  Or if some vehicles are more concerned with seeking and others more concerned with separating?  Can you introduce other steering behaviors as well?</p>
+            </div>
+          </section>
+          <section data-type="sect1" id="chapter06_section13">
+            <h1>6.13  Flocking</h1>
+            <p><a data-type="indexterm" data-primary=""Flocks" data-secondary="Herds" data-tertiary="and Schools: A Distributed Behavioral Model (Reynolds)""/>
+            <a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""flocking""/>
+            <a data-type="indexterm" data-primary=""flocking""/>
+            <a data-type="indexterm" data-primary=""group behavior"" data-secondary=""flocking""/>
+            <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""flocking""/></p>
+            <p>Flocking is an group animal behavior that is characteristic of many living creatures, such as birds, fish, and insects.   In 1986, Craig Reynolds created a computer simulation of flocking behavior and documented the algorithm in his paper, “Flocks, Herds, and Schools: A Distributed Behavioral Model.”    Recreating this simulation in Processing will bring together all the concepts in this chapter.</p>
+            <ol>
+              <li>
+              <p><em>We will use the steering force formula (steer = desired - velocity) to implement the rules of flocking.</em></p></li>
+              <li>
+              <p><em>These steering forces will be group behaviors and require each vehicle to look at all the other vehicles.</em></p></li>
+              <li>
+              <p><em>We will combine and weight multiple forces.</em></p></li>
+              <li>
+              <p><em>The result will be a complex system—intelligent group behavior will emerge from the simple rules of flocking without the presence of a centralized system or leader.</em></p></li>
+            </ol>
+            <p>The good news is, we’ve already done items 1 through 3 in this chapter, so this section will be about just putting it all together and seeing the result.</p>
+            <p>Before we begin, I should mention that we’re going to change the name of our <strong klass>Vehicle</strong> class (yet again).  Reynolds uses the term “boid” (a made-up word that refers to a bird-like object) to describe the elements of a flocking system and we will do the same.</p>
+            <p>Let’s take an overview of the three rules of flocking.</p>
+            <p><a data-type="indexterm" data-primary=""alignment (flocking)""/>
+            <a data-type="indexterm" data-primary=""cohesion (flocking)""/>
+            <a data-type="indexterm" data-primary=""flocking"" data-secondary=""rules of""/>
+            <a data-type="indexterm" data-primary=""separation (flocking)""/></p>
+            <ol>
+              <li>
+              <p><strong><em>Separation</em></strong> (also known as “avoidance”): Steer to avoid colliding with your neighbors.</p></li>
+              <li>
+              <p><strong><em>Alignment</em></strong> (also known as “copy”): Steer in the same direction as your neighbors.</p></li>
+              <li>
+              <p><strong><em>Cohesion</em></strong> (also known as “center”): Steer towards the center of your neighbors (stay with the group).</p></li>
+            </ol>
+            <figure id="chapter06_figure35">
+              <img src="imgs/chapter06/ch06_35.png" alt="Figure 6.35"/>
+              <figcaption/>
+            </figure>
+            <p>Just as we did with our separate and seek example, we’ll want our <strong klass>Boid</strong> objects to have a single function that manages all the above behaviors.  We’ll call this function <strong function>flock()</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">  void flock(ArrayList&lt;Boid&gt; boids) {
+    //[full] The three flocking rules
+    PVector sep = separate(boids);
+    PVector ali = align(boids);
+    PVector coh = cohesion(boids);
+    //[end]
+    //[full] Arbitrary weights for these forces
+    // (Try different ones!)
+    sep.mult(1.5);
+    ali.mult(1.0);
+    coh.mult(1.0);
+    //[end]
+    //[full] Applying all the forces
+    applyForce(sep);
+    applyForce(ali);
+    applyForce(coh);
+    //[end]
+}</pre>
+            <p>Now, it’s just a matter of implementing the three rules.   We did separation before; it’s identical to our previous example.  Let’s take a look at alignment, or steering in the same direction as your neighbors.  As with all of our steering behaviors, we’ve got to boil down this concept into a desire: the boid’s desired velocity is the average velocity of its neighbors.</p>
+            <p>So our algorithm is to calculate the average velocity of all the other boids and set that to desired.</p>
+            <p><a data-type="indexterm" data-primary=""separation (flocking)"" data-secondary=""implementing""/></p>
+<pre data-type="programlisting" data-code-language="java">  PVector align (ArrayList&lt;Boid&gt; boids) {
+    //[full] Add up all the velocities
+    // and divide by the total
+    // to calculate the average velocity.
+    PVector sum = new PVector(0,0);
+    for (Boid other : boids) {
+      sum.add(other.velocity);
+    }
+    sum.div(boids.size());
+    //[end]
+    // We desire to go in that
+    // direction at maximum speed.
+    sum.setMag(maxspeed);
+    // Reynolds’s steering
+    // force formula
+    PVector steer = PVector.sub(sum,velocity);
+    steer.limit(maxforce);
+    return steer;
+}</pre>
+            <p><a data-type="indexterm" data-primary=""short range relationships"" data-secondary=""flocking behavior and""/></p>
+            <p>The above is pretty good, but it’s missing one rather crucial detail.  One of the key principles behind complex systems like flocking is that the elements (in this case, boids) have short-range relationships.   Thinking about ants again, it’s pretty easy to imagine an ant being able to sense its immediate environment, but less so an ant having an awareness of what another ant is doing hundreds of feet away.  The fact that the ants can perform such complex collective behavior from only these neighboring relationships is what makes them so exciting in the first place.</p>
+            <p>In our alignment function, we’re taking the average velocity of all the boids, whereas we should really only be looking at the boids within a certain distance.  That distance threshold is up to you, of course.  You could design boids that can see only twenty pixels away or boids that can see a hundred pixels away.</p>
+            <figure id="chapter06_figure36">
+              <img src="imgs/chapter06/ch06_36.png" alt="Figure 6.36"/>
+              <figcaption/>
+            </figure>
+            <p>Much like we did with separation (only calculating a force for others within a certain distance), we’ll want to do the same with alignment (and cohesion).</p>
+            <p><a data-type="indexterm" data-primary=""alignment (flocking)"" data-secondary=""implementing""/></p>
+<pre data-type="programlisting" data-code-language="java">  PVector align (ArrayList&lt;Boid&gt; boids) {
+    // This is an arbitrary value and could
+    // vary from boid to boid.
+    float neighbordist = 50;
+    PVector sum = new PVector(0,0);
+    int count = 0;
+    for (Boid other : boids) {
+      float d = PVector.dist(location,other.location);
+      if ((d &gt; 0) &amp;&amp; (d &lt; neighbordist)) {
+        sum.add(other.velocity);
+        // For an average, we need to keep track of
+        // how many boids are within the distance.
+        count++;
+      }
+    }
+    if (count &gt; 0) {
+      sum.div(count);
+      sum.normalize();
+      sum.mult(maxspeed);
+      PVector steer = PVector.sub(sum,velocity);
+      steer.limit(maxforce);
+      return steer;
+    //[full] If we don’t find any close boids,
+    // the steering force is zero.
+    } else {
+      return new PVector(0,0);
+    }
+    //[end]
+}</pre>
+            <div id="chapter06_exercise15" data-type="example">
+              <h5>Exercise 6.15</h5>
+              <figure>
+                <img src="imgs/chapter06/ch06_exc15.png" alt="ch06 exc15"/>
+                <figcaption/>
+              </figure>
+              <p>Can you write the above code so that boids can only see other boids that are actually within their “peripheral” vision (as if they had eyes)?</p>
+              <figure>
+                <img src="imgs/blank.png" alt="blank"/>
+                <figcaption/>
+              </figure></div>
+              <p><a data-type="indexterm" data-primary=""cohesion (flocking)"" data-secondary=""implementing""/></p>
+              <p>Finally, we are ready for cohesion.  Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average location of the boid’s neighbors (and use that as a target to seek).</p>
+<pre data-type="programlisting" data-code-language="java">  PVector cohesion (ArrayList&lt;Boid&gt; boids) {
+    float neighbordist = 50;
+    PVector sum = new PVector(0,0);
+    int count = 0;
+    for (Boid other : boids) {
+      float d = PVector.dist(location,other.location);
+      if ((d &gt; 0) &amp;&amp; (d &lt; neighbordist)) {
+        // Adding up all the others’ locations
+        sum.add(other.location);
+        count++;
+      }
+    }
+    if (count &gt; 0) {
+      sum.div(count);
+      // Here we make use of the seek() function we
+      // wrote in Example 6.8.  The target
+      // we seek is the average location of
+      // our neighbors.
+      return seek(sum); //[bold]
+    } else {
+      return new PVector(0,0);
+    }
+}</pre>
+              <p>It’s also worth taking the time to write a class called <strong klass>Flock</strong>, which will be virtually identical to the <strong klass>ParticleSystem</strong> class we wrote in Chapter 4 with only one tiny change:  When we call <strong function>run()</strong> on each <strong klass>Boid</strong> object (as we did to each <strong klass>Particle</strong> object), we’ll pass in a reference to the entire <strong klass>ArrayList</strong> of boids.</p>
+<pre data-type="programlisting" data-code-language="java">class Flock {
+  ArrayList&lt;Boid&gt; boids;
+  Flock() {
+    boids = new ArrayList&lt;Boid&gt;();
+  }
+  void run() {
+    for (Boid b : boids) {
+      // Each Boid object must know about
+      // all the other Boids.
+      b.run(boids); //[bold]
+    }
+  }
+  void addBoid(Boid b) {
+    boids.add(b);
+  }
+}</pre>
+              <p>And our main program will look like:</p>
+              <figure>
+                <img src="imgs/chapter06/ch06_ex9.png" alt="ch06 ex9"/>
+                <figcaption/>
+              </figure>
+              <p><strong example>Example 6.9: Flocking</strong></p>
+<pre data-type="programlisting" data-code-language="java">// A Flock object manages the
+// entire group.
+Flock flock;
+void setup() {
+  size(300,200);
+  flock = new Flock();
+  for (int i = 0; i &lt; 100; i++) {
+    Boid b = new Boid(width/2,height/2);
+    // The Flock starts out with 100 Boids.
+    flock.addBoid(b);
+  }
+}
+void draw() {
+  background(255);
+  flock.run();
+}</pre>
+              <div id="chapter06_exercise16" data-type="example">
+                <h5>Exercise 6.16</h5>
+                <p>Combine flocking with some other steering behaviors.</p>
+              </div>
+              <div id="chapter06_exercise17" data-type="example">
+                <h5>Exercise 6.17</h5>
+                <figure>
+                  <img src="imgs/chapter06/ch06_exc17.png" alt="ch06 exc17"/>
+                  <figcaption/>
+                </figure>
+                <p><a data-type="indexterm" data-primary=""<em>Computational Beauty of Nature</em> (Flake)""/>
+                <a data-type="indexterm" data-primary=""Flake" data-secondary="Gary""/></p>
+                <p>In his book The <em>Computational Beauty of Nature</em> (MIT Press, 2000), Gary Flake describes a fourth rule for flocking: “View: move laterally away from any boid that blocks the view.” Have your boids follow this rule.</p>
+                <figure>
+                  <img src="imgs/blank.png" alt="blank"/>
+                  <figcaption/>
+                </figure></div>
+                <div id="chapter06_exercise18" data-type="example">
+                  <h5>Exercise 6.18</h5>
+                  <p>Create a flocking simulation where all of the parameters (<em>separation weight</em>, <em>cohesion weight</em>, <em>alignment weight</em>, <em>maximum force</em>, <em>maximum speed</em>) change over time.  They could be controlled by Perlin noise or by user interaction. (For example, you could use a library such as <a href="http://www.sojamo.de/libraries/controlP5/">controlp5</a> to tie the values to slider positions.)</p>
+                </div>
+                <div id="chapter06_exercise19" data-type="example">
+                  <h5>Exercise 6.19</h5>
+                  <p>Visualize the flock in an entirely different way.</p>
+                </div>
+              </section>
+              <section data-type="sect1" id="chapter06_section14">
+                <h1>6.14  Algorithmic Efficiency (or: Why does my $@(*%! run so slowly?)</h1>
+                <p><a data-type="indexterm" data-primary=""efficiency""/>
+                <a data-type="indexterm" data-primary=""performance""/></p>
+                <p>I would like to hide the dark truth behind we’ve just done, because I would like you to be happy and live a fulfilling and meaningful life.  But I also would like to be able to sleep at night without worrying about you so much.  So it is with a heavy heart that I must bring up this topic.  Group behaviors are wonderful.  But they can be slow, and the more elements in the group, the slower they can be.  Usually, when we talk about Processing sketches running slowly, it’s because drawing to the screen can be slow—the more you draw, the slower your sketch runs.  This is actually a case, however, where the slowness derives from the algorithm itself.  Let’s discuss.</p>
+                <p><a data-type="indexterm" data-primary=""Big O Notation""/>
+                <a data-type="indexterm" data-primary=""efficiency"" data-secondary=""Big O Notation""/>
+                <a data-type="indexterm" data-primary=""flocking"" data-secondary=""performance and""/>
+                <a data-type="indexterm" data-primary=""performance"" data-secondary=""Big O Notation""/></p>
+                <p>Computer scientists classify algorithms with something called “Big O notation,” which describes the efficiency of an algorithm: how many computational cycles does it require to complete?  Let’s consider a simple analog search problem.  You have a basket containing one hundred chocolate treats, only one of which is pure dark chocolate. That’s the one you want to eat.  To find it, you pick the chocolates out of the basket one by one.  Sure, you might be lucky and find it on the first try, but in the worst-case scenario you have to check all one hundred before you find the dark chocolate.   To find one thing in one hundred, you have to check one hundred things (or to find one thing in N things, you have to check N times.)  Your Big O Notation is N.  This, incidentally, is the Big O Notation that describes our simple particle system.  If we have N particles, we have to run and display those particles N times.</p>
+                <p>Now, let’s think about a group behavior (such as flocking).   For every <strong klass>Boid</strong> object, we have to check every other <strong klass>Boid</strong> object (for its velocity and location).  Let’s say we have one hundred boids.  For boid #1, we need to check one hundred boids; for boid #2, we need to check one hundred boids, and so on and so forth.   For one hundred boids, we need to perform one hundred times one hundred checks, or ten thousand.   No problem: computers are fast and can do things ten thousand times pretty easily.  Let’s try one thousand.</p>
+                <p>1,000 x 1,000 = 1,000,000 cycles.</p>
+                <p>OK, this is rather slow, but still somewhat manageable.   Let’s try 10,000 elements:</p>
+                <p>10,000 x 10,000 elements = 100,000,000 cycles.</p>
+                <p>Now, we’re really getting slow. Really, really, really slow.</p>
+                <p><a data-type="indexterm" data-primary=""Big O Notation N-Squared""/>
+                <a data-type="indexterm" data-primary=""efficiency"" data-secondary=""Big O Notation N-Squared""/>
+                <a data-type="indexterm" data-primary=""performance"" data-secondary=""Big O Notation N-Squared""/></p>
+                <p>Notice something odd?  As the number of elements increases by a factor of 10, the number of required cycles increases by a factor of 100.  Or as the number of elements increases by a factor of N, the cycles increase by a factor of N times N.  This is known as Big O Notation N-Squared.</p>
+                <p>I know what you are thinking.  You are thinking: “No problem; with flocking, we only need to consider the boids that are close to other boids.  So even if we have 1,000 boids, we can just look at, say, the 5 closest boids and then we only have 5,000 cycles.”   You pause for a moment, and then start thinking: “So for each boid I just need to check all the boids and find the five closest ones and I’m good!”  See the catch-22?  Even if we only want to look at the close ones, the only way to know what the close ones are would be to check all of them.</p>
+                <p>Or is there another way?</p>
+                <p>Let’s take a number that we might actually want to use, but would still run too slowly: 2,000 (4,000,000 cycles required).</p>
+                <p><a data-type="indexterm" data-primary=""bin-lattice spatial subdivision""/>
+                <a data-type="indexterm" data-primary=""efficiency"" data-secondary=""bin-lattice spatial subdivision""/>
+                <a data-type="indexterm" data-primary=""flocking"" data-secondary=""bin-lattice spatial subdivision""/>
+                <a data-type="indexterm" data-primary=""performance"" data-secondary=""bin-lattice spatial subdivision""/></p>
+                <p>What if we could divide the screen into a grid?  We would take all 2,000 boids and assign each boid to a cell within that grid.   We would then be able to look at each boid and compare it to its neighbors within that cell at any given moment. Imagine a 10 x 10 grid. In a system of 2,000 elements, on average, approximately 20 elements would be found in each cell (20 x 10 x 10 = 2,000).  Each cell would then require 20 x 20 = 400 cycles. With 100 cells, we’d have 100 x 400 = 40,000 cycles, a massive savings over 4,000,000.</p>
+                <figure id="chapter06_figure37">
+                  <img src="imgs/chapter06/ch06_37.png" alt="Figure 6.37"/>
+                  <figcaption/>
+                </figure>
+                <p><a data-type="indexterm" data-primary=""Interaction with Groups of Autonomous Characters (Reynolds)""/></p>
+                <p>This technique is known as “bin-lattice spatial subdivision” and is outlined in more detail in (surprise, surprise) Reynolds’s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">“Interaction with Groups of Autonomous Characters”</a>.   How do we implement such an algorithm in Processing?  One way is to keep multiple <strong klass>ArrayList</strong><code>s</code>.  One <strong klass>ArrayList</strong> would keep track of all the boids, just like in our flocking example.</p>
+<pre data-type="programlisting" data-code-language="java">ArrayList&lt;Boid&gt; boids;</pre>
+<p>In addition to that <strong klass>ArrayList</strong>, we store an additional reference to each <strong klass>Boid</strong> object in a two-dimensional <strong klass>ArrayList</strong>.  For each cell in the grid, there is an <strong klass>ArrayList</strong> that tracks the objects in that cell.</p>
+<pre data-type="programlisting" data-code-language="java">ArrayList&lt;Boid&gt;[][] grid;</pre>
+<p>In the main <strong function>draw()</strong> loop, each <strong klass>Boid</strong> object then registers itself in the appropriate cell according to its location.</p>
+<pre data-type="programlisting" data-code-language="java">int column = int(boid.x) / resolution;
+int row    = int(boid.y) /resolution;
+grid[column][row].add(boid);</pre>
+                <p>Then when it comes time to have the boids check for neighbors, they can look at only those in their particular cell (in truth, we also need to check neighboring cells to deal with border cases).</p>
+                <p><strong example>Example 6.10: Bin-lattice spatial subdivision</strong></p>
+<pre data-type="programlisting" data-code-language="java">int column = int(boid.x) / resolution;
+int row    = int(boid.y) /resolution;
+boid.flock(boids);
+// Instead of looking at all
+// the boids, just this cell
+boid.flock(grid[column][row]);</pre>
+                <p>We’re only covering the basics here; for the full code, check the book’s website.</p>
+                <p>Now, there are certainly flaws with this system.  What if all the boids congregate in the corner and live in the same cell? Then don’t we have to check all 2,000 against all 2,000?</p>
+                <p>The good news is that this need for optimization is a common one and there are a wide variety of similar techniques out there.   For us, it’s likely that a basic approach will be good enough (in most cases, you won’t need one at all.)  For another, more sophisticated approach, check out <a href="http://toxiclibs.org/2010/02/new-package-simutils/">toxiclibs' Octree examples</a>.</p>
+              </section>
+              <section data-type="sect1" id="chapter06_section15">
+                <h1>6.15  A Few Last Notes: Optimization Tricks</h1>
+                <p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""efficiency""/>
+                <a data-type="indexterm" data-primary=""efficiency""/>
+                <a data-type="indexterm" data-primary=""performance""/></p>
+                <p>This is something of a momentous occasion.  The end of Chapter 6 marks the end of our story of motion (in the context of this book, that is).  We started with the concept of a vector, moved on to forces, designed systems of many elements, examined physics libraries, built entities with hopes and dreams and fears, and simulated emergence.  The story doesn’t end here, but it does take a bit of a turn.  The next two chapters won’t focus on moving bodies, but rather on systems of rules.   Before we get there, I have a few quick items I’d like to mention that are important when working with the examples in Chapters 1 through 6.  They also relate to optimizing your code, which fits in with the previous section.</p>
+                <section data-type="sect2" id="_1_magnitude_squared_or_sometimes_distance_squared">
+                  <h2>1) Magnitude squared (or sometimes distance squared)</h2>
+                  <p>What is magnitude squared and when should you use it?  Let’s revisit how the magnitude of a vector is calculated.</p>
+<pre data-type="programlisting" data-code-language="java">float mag() {
+  return sqrt(x*x + y*y);
+}</pre>
+                  <p>Magnitude requires the square root operation.  And it should.  After all, if you want the magnitude of a vector, then you’ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1).  However, if you could somehow skip using the square root, your code would run faster.   Let’s consider a situation where you just want to know the relative magnitude of a vector.  For example, is the magnitude greater than ten?  (Assume a <strong klass>PVector</strong> <strong class="var">v</strong>.)</p>
+<pre data-type="programlisting" data-code-language="java">if (v.mag() &gt; 10) {
+  [inline]// Do Something!
+}</pre>
+                  <p>Well, this is equivalent to saying:</p>
+<pre data-type="programlisting" data-code-language="java">if (v.magSq() &gt; 100) {
+  [inline]// Do Something!
+}</pre>
+                  <p>And how is magnitude squared calculated?</p>
+<pre data-type="programlisting" data-code-language="java">float magSq() {
+  return x*x + y*y;
+}</pre>
+                  <p><a data-type="indexterm" data-primary=""efficiency"" data-secondary=""magSq() function (PVector class).""/>
+                  <a data-type="indexterm" data-primary=""mag() function (PVector class)"" data-secondary=""magSq() function vs.""/>
+                  <a data-type="indexterm" data-primary=""magSq() function (PVector class).""/>
+                  <a data-type="indexterm" data-primary=""optimization"" data-secondary=""magSq() function (PVector class).""/>
+                  <a data-type="indexterm" data-primary=""performance"" data-secondary=""magSq() function (PVector class).""/></p>
+                  <p>Same as magnitude, but without the square root.  In the case of a single <strong klass>PVector</strong> object, this will never make a significant difference on a Processing sketch.  However, if you are computing the magnitude of thousands of <strong klass>PVector</strong> objects each time through <strong function>draw()</strong>, using <strong function>magSq()</strong> instead of <strong function>mag()</strong> could help your code run a wee bit faster.  (Note: <strong function>magSq()</strong> is only available in Processing 2.0a1 or later.)</p>
+                </section>
+                <section data-type="sect2" id="_2_sine_and_cosine_lookup_tables">
+                  <h2>2) Sine and cosine lookup tables</h2>
+                  <p><a data-type="indexterm" data-primary=""cosine lookup tables""/>
+                  <a data-type="indexterm" data-primary=""efficiency"" data-secondary=""sine/cosine lookup tables""/>
+                  <a data-type="indexterm" data-primary=""optimization"" data-secondary=""sine/cosine lookup tables""/>
+                  <a data-type="indexterm" data-primary=""performance"" data-secondary=""sine/cosine lookup tables""/>
+                  <a data-type="indexterm" data-primary=""sine lookup tables""/></p>
+                  <p>There’s a pattern here.  What kinds of functions are slow to compute? Square root. Sine. Cosine.  Tangent.  Again, if you just need a sine or cosine value here or there in your code, you are never going to run into a problem.  But what if you had something like this?</p>
+<pre data-type="programlisting" data-code-language="java">void draw() {
+  for (int i = 0; i &lt; 10000; i++) {
+     println(sin(PI));
+  }
+}</pre>
+                  <p>Sure, this is a totally ridiculous code snippet that you would never write.  But it illustrates a certain point.  If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary?  This is the principle behind sine and cosine lookup tables.   Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <strong class="var">TWO_PI</strong> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
+<pre data-type="programlisting" data-code-language="java">float sinvalues[] = new float[360];
+float cosvalues[] = new float[360];
+for (int i = 0; i &lt; 360; i++) {
+  sinvalues[i] = sin(radians(i));
+  cosvalues[i] = cos(radians(i));
+}</pre>
+                  <p>Now, what if you need the value of sine of pi?</p>
+<pre data-type="programlisting" data-code-language="java">int angle = int(degrees(PI));
+float answer = sinvalues[angle];</pre>
+                  <p>A more sophisticated example of this technique is available on the <a href="http://wiki.processing.org/w/Sin/Cos_look-up_table">Processing wiki</a>.</p>
+                </section>
+                <section data-type="sect2" id="_3_making_gajillions_of_unnecessary_pvector_objects">
+                  <h2>3) Making gajillions of unnecessary PVector objects</h2>
+                  <p><a data-type="indexterm" data-primary=""efficiency"" data-secondary=""temporary objects and""/>
+                  <a data-type="indexterm" data-primary=""optimization"" data-secondary=""temporary objects and""/>
+                  <a data-type="indexterm" data-primary=""performance"" data-secondary=""temporary objects and""/></p>
+                  <p>I have to admit, I am perhaps the biggest culprit of this last note.  In fact, in the interest of writing clear and understandable examples, I often choose to make extra <strong klass>PVector</strong> objects when I absolutely do not need to.  For the most part, this is not a problem at all.   But sometimes, it can be.  Let’s take a look at an example.</p>
+<pre data-type="programlisting" data-code-language="java">void draw() {
+  for (Vehicle v : vehicles) {
+   PVector mouse = new PVector(mouseX,mouseY);
+   v.seek(mouse);
+  }
+}</pre>
+                  <p>Let’s say our <strong klass>ArrayList</strong> of vehicles has one thousand vehicles in it.  We just made one thousand new <strong klass>PVector</strong> objects every single time through <strong function>draw()</strong>.  Now, on any ol’ laptop or desktop computer you’ve purchased in recent times, your sketch will likely not register a complaint, run slowly, or have any problems.  After all, you’ve got tons of RAM, and Java will be able to handle making a thousand or so temporary objects and dispose of them without much of a problem.</p>
+                  <p>If your numbers grow larger (and they easily could) or perhaps more likely, if you are working with Processing on Android, you will almost certainly run into a problem.  In cases like this you want to look for ways to reduce the number of <strong klass>PVector</strong> objects you make.  An obvious fix for the above code is:</p>
+<pre data-type="programlisting" data-code-language="java">void draw() {
+  PVector mouse = new PVector(mouseX,mouseY);
+  for (Vehicle v : vehicles) {
+   v.seek(mouse);
+  }
+}</pre>
+                  <p>Now you’ve made just one <strong klass>PVector</strong> instead of one thousand.  Even better, you could turn the <strong klass>PVector</strong> into a global variable and just assign the <strong class="var">x</strong> and <strong class="var">y</strong> value:</p>
+<pre data-type="programlisting" data-code-language="java">PVector mouse = new PVector();
+void draw() {
+  mouse.x = mouseX;
+  mouse.y = mouseY;
+  for (Vehicle v : vehicles) {
+   v.seek(mouse);
+  }
+}</pre>
+                  <p>Now you never make a new <strong klass>PVector</strong>; you use just one over the length of your sketch!</p>
+                  <p>Throughout the book&#8217;s examples, you can find lots of opportunities to reduce the number of temporary objects.  Let’s look at one more.  Here is a snippet from our <strong function>seek()</strong> function.</p>
+<pre data-type="programlisting" data-code-language="java">    PVector desired = PVector.sub(target,location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    // Create a new PVector to store the steering force.
+    PVector steer = PVector.sub(desired,velocity); //[bold]
+    steer.limit(maxforce);
+return steer;</pre>
+                  <p>See how we’ve made two <strong klass>PVector</strong> objects?  First, we figure out the desired vector, then we calculate the steering force.  Notice how we could rewrite this to create only one <strong klass>PVector</strong>.</p>
+<pre data-type="programlisting" data-code-language="java">    PVector desired = PVector.sub(target, location);
+    desired.normalize();
+    desired.mult(maxspeed);
+    // Calculate the steering force in the desired PVector.
+    desired.sub(velocity); //[bold]
+    desired.limit(maxforce);
+return desired;</pre>
+                  <p>We don’t actually need a second <strong klass>PVector</strong> called <strong class="var">steer</strong>.  We could just use the desired <strong klass>PVector</strong> object and turn it into the steering force by subtracting velocity.  I didn’t do this in my example because it is more confusing to read.  But in some cases, it may be greatly more efficient.</p>
+                  <div id="chapter06_exercise20" data-type="example">
+                    <h5>Exercise 6.20</h5>
+                    <p>Eliminate as many temporary <strong klass>PVector</strong> objects from the flocking example as possible.  Also use <strong function>magSq()</strong> where possible.</p>
+                  </div>
+                  <div id="chapter06_exercise21" data-type="example">
+                    <h5>Exercise 6.21</h5>
+                    <p>Use steering behaviors with Box2D or toxiclibs.</p>
+                  </div>
+                  <div style="page-break-after:always;"> </div>
+                  <div data-type="tip">
+                    <h1>The Ecosystem Project</h1><p>Step 6 Exercise:</p>
+                    <p>Use the concept of steering forces to drive the behavior of the creatures in your ecosystem.  Some possibilities:</p>
+                    <ul>
+                      <li>
+                      <p>Create “schools” or “flocks” of creatures.</p></li>
+                      <li>
+                      <p>Use a seeking behavior for creatures to search for food (for chasing moving prey, consider “pursuit”).</p></li>
+                      <li>
+                      <p>Use a flow field for the ecosystem environment.  For example, how does your system behave if the creatures live in a flowing river?</p></li>
+                      <li>
+                      <p>Build a creature with countless steering behaviors (as many as you can reasonably add).  Think about ways to vary the weights of these behaviors so that you can dial those behaviors up and down, mixing and matching on the fly.    How are creatures’ initial weights set?  What rules drive how the weights change over time?</p></li>
+                      <li>
+                      <p>Complex systems can be nested.  Can you design a single creature out of a flock of boids?  And can you then make a flock of those creatures?</p></li>
+                      <li>
+                      <p>Complex systems can have memory (and be adaptive).  Can the history of your ecosystem affect the behavior in its current state? (This could be the driving force behind how the creatures adjust their steering force weights.)</p></li>
+                    </ul>
+                  </div></section>
+                </section>
+              </section>
