@@ -1,257 +1,339 @@
-<div style="page-break-after:always;"> </div>
+<div style="page-break-after:always;">&nbsp;</div>
+
 <section data-type="chapter" id="_chapter_2_forces">
-  <h1>Chapter 2.  Forces</h1>
-  <blockquote data-type="epigraph"><p>“Don&#8217;t underestimate the Force.”</p>
-    <p data-type="attribution">&#8212; — Darth Vader</p>
-  </blockquote>
-  <p><a data-type="indexterm" data-primary=""forces""/></p>
-  <p>In the final example of Chapter 1, we saw how we could calculate a dynamic acceleration based on a vector pointing from a circle on the screen to the mouse location.   The resulting motion resembled a magnetic attraction between circle and mouse, as if some <em>force</em> were pulling the circle in towards the mouse.  In this chapter we will formalize our understanding of the concept of a force and its relationship to acceleration.    Our goal, by the end of this chapter, is to understand how to make multiple objects move around the screen and respond to a variety of environmental forces.</p>
-  <section data-type="sect1" id="chapter02_section1">
-    <h1>2.1 Forces and Newton’s Laws of Motion</h1>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""Newton's laws of motion""/>
-    <a data-type="indexterm" data-primary=""Newton" data-secondary="Isaac""/></p>
-    <p>Before we begin examining the practical realities of simulating forces in code, let’s take a conceptual look at what it means to be a force in the real world.   Just like the word “vector,” “force” is often used to mean a variety of things.  It can indicate a powerful intensity, as in “She pushed the boulder with great force” or “He spoke forcefully.”   The definition of <strong><em>force</em></strong> that we care about is much more formal and comes from Isaac Newton’s laws of motion:</p>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""defined""/></p>
-    <p><strong highlight>A force is a vector that causes an object with mass to accelerate.</strong></p>
-    <p>The good news here is that we recognize the first part of the definition: <em>a force is a vector</em>. Thank goodness we just spent a whole chapter learning what a vector is and how to program with <strong klass>PVector</strong><code>s</code>!</p>
-    <p>Let’s look at Newton’s three laws of motion in relation to the concept of a force.</p>
-    <section data-type="sect2" id="_newton_s_first_law">
-      <h2>Newton’s First Law</h2>
-      <p><a data-type="indexterm" data-primary=""Newton's first law""/></p>
-      <p>Newton’s first law is commonly stated as:</p>
-      <p><strong highlight>An object at rest stays at rest and an object in motion stays in motion.</strong></p>
-      <p>However, this is missing an important element related to forces. We could expand it by stating:</p>
-      <p><strong highlight>An object at rest stays at rest and an object in motion stays in motion at a constant speed and direction unless acted upon by an unbalanced force.</strong></p>
-      <p><a data-type="indexterm" data-primary=""Aristotle""/></p>
-      <p>By the time Newton came along, the prevailing theory of motion—formulated by Aristotle—was nearly two thousand years old. It stated that if an object is moving, some sort of force is required to keep it moving.   Unless that moving thing is being pushed or pulled, it will simply slow down or stop.  Right?</p>
-      <p><a data-type="indexterm" data-primary=""equilibrium""/>
-      <a data-type="indexterm" data-primary=""forces"" data-secondary=""equilibrium""/>
-      <a data-type="indexterm" data-primary=""forces"" data-secondary=""terminal velocity""/>
-      <a data-type="indexterm" data-primary=""terminal velocity""/></p>
-      <p>This, of course, is not true.   In the absence of any forces, no force is required to keep an object moving.  An object (such as a ball) tossed in the earth’s atmosphere slows down because of air resistance (a force).    An object’s velocity will only remain constant in the absence of any forces or if the forces that act on it cancel each other out, i.e. the net force adds up to zero.  This is often referred to as <strong><em>equilibrium</em></strong>.  The falling ball will reach a terminal velocity (that stays constant) once the force of air resistance equals the force of gravity.</p>
-      <figure id="chapter02_figure1">
-        <img src="imgs/chapter02/ch02_01.png" alt="Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net force of zero)."/>
-        <figcaption/>
-      </figure>
-      <p>In our Processing world, we could restate Newton’s first law as follows:</p>
-      <p><a data-type="indexterm" data-primary=""Newton's first law"" data-secondary=""PVector class and""/>
-      <a data-type="indexterm" data-primary=""PVector class (Processing)"" data-secondary=""Newton's first law and""/></p>
-      <p><strong highlight>An object’s PVector velocity will remain constant if it is in a state of equilibrium.</strong></p>
-      <p>Skipping Newton’s second law (arguably the most important law for our purposes) for a moment, let’s move on to the third law.</p>
-      <p><a data-type="indexterm" data-primary=""Newton's third law""/></p>
-    </section>
-    <section data-type="sect2" id="_newton_s_third_law">
-      <h2>Newton’s Third Law</h2>
-      <p>This law is often stated as:</p>
-      <p><strong highlight>For every action there is an equal and opposite reaction.</strong></p>
-      <p>This law frequently causes some confusion in the way that it is stated.   For one, it sounds like one force causes another.   Yes, if you push someone, that someone may <em>actively</em> decide to push you back.  But this is not the action and reaction we are talking about with Newton’s third law.</p>
-      <p>Let’s say you push against a wall.  The wall doesn’t actively decide to push back on you.   There is no “origin” force.   Your push simply includes both forces, referred to as an “action/reaction pair.”</p>
-      <p>A better way of stating the law might be:</p>
-      <p><strong highlight>Forces always occur in pairs.  The two forces are of equal strength, but in opposite directions.</strong></p>
-      <p>Now, this still causes confusion because it sounds like these forces would always cancel each other out.   This is not the case.  Remember, the forces act on different objects.  And just because the two forces are equal, it doesn’t mean that the movements are equal (or that the objects will stop moving).</p>
-      <p>Try pushing on a stationary truck.  Although the truck is far more powerful than you, unlike a moving one, a stationary truck will never overpower you and send you flying backwards.  The force you exert on it is equal and opposite to the force exerted on your hands.   The outcome depends on a variety of other factors.  If the truck is a small truck on an icy downhill, you’ll probably be able to get it to move.  On the other hand, if it’s a very large truck on a dirt road and you push hard enough (maybe even take a running start), you could injure your hand.</p>
-      <p>And if you are wearing roller skates when you push on that truck?</p>
-      <figure id="chapter02_figure2">
-        <img src="imgs/chapter02/ch02_02.png" alt="Figure 2.2"/>
-        <figcaption/>
-      </figure>
-      <p>You’ll accelerate away from the truck, sliding along the road while the truck stays put.   Why do you slide but not the truck?  For one, the truck has a much larger mass (which we’ll get into with Newton’s second law).  There are other forces at work too, namely the friction of the truck’s tires and your roller skates against the road.</p>
-    </section>
-    <section data-type="sect2" id="_newton_s_third_law_as_seen_through_the_eyes_of_processing">
-      <h2>Newton’s Third Law (as seen through the eyes of Processing)</h2>
-      <p><a data-type="indexterm" data-primary=""Newton's third law"" data-secondary=""PVector class and""/>
-      <a data-type="indexterm" data-primary=""PVector class (Processing)"" data-secondary=""Newton's third law and""/></p>
-      <p><strong highlight>If we calculate a PVector f that is a force of object A on object B, we must also apply the force—PVector.mult(f,-1);—that B exerts on object A.</strong></p>
-      <p>We’ll see that in the world of Processing programming, we don’t always have to stay true to the above.  Sometimes, such as in the case of see <a href="#chapter02_example6">gravitational attraction between bodies</a>, we’ll want to model equal and opposite forces.  Other times, such as when we’re simply saying, “Hey, there’s some wind in the environment,” we’re not going to bother to model the force that a body exerts back on the air.  In fact, we’re not modeling the air at all!  Remember, we are simply taking inspiration from the physics of the natural world, not simulating everything with perfect precision.</p>
-    </section>
-  </section>
-  <section data-type="sect1" id="chapter02_section2">
-    <h1>2.2 Forces and Processing—Newton’s Second Law as a Function</h1>
-    <p><a data-type="indexterm" data-primary=""acceleration"" data-secondary=""Newton's second law""/>
-    <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""Newton's second law" data-tertiary="modeling""/>
-    <a data-type="indexterm" data-primary=""Newton's second law""/></p>
-    <p>And here we are at the most important law for the Processing programmer.</p>
-    <section data-type="sect2" id="_newton_s_second_law">
-      <h2>Newton’s Second Law</h2>
-      <p>This law is stated as:</p>
-      <p><strong highlight>Force equals mass times acceleration.</strong></p>
-      <p>Or:</p>
-      <p>{newton2ablock}</p>
-      <p>Why is this the most important law for us?  Well, let’s write it a different way.</p>
-      <p>{newton2bblock}</p>
-      <p>Acceleration is directly proportional to force and inversely proportional to mass.  This means that if you get pushed, the harder you are pushed, the faster you’ll move (accelerate).  The bigger you are, the slower you’ll move.</p>
-      <p><a data-type="indexterm" data-primary=""density""/>
-      <a data-type="indexterm" data-primary=""mass"" data-secondary=""weight vs.""/>
-      <a data-type="indexterm" data-primary=""weight"" data-secondary=""mass vs.""/></p>
-      <div data-type="note">
-        <h1>Weight vs. Mass</h1><ul>
-          <li>
-          <p>The <strong><em>mass</em></strong> of an object is a measure of the amount of matter in the object (measured in kilograms).</p></li>
-          <li>
-          <p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton’s second law, we can calculate it as mass times the acceleration of gravity (<strong class="var">w</strong> = <strong class="var">m</strong> * <strong class="var">g</strong>). Weight is measured in newtons.</p></li>
-          <li>
-          <p><strong><em>Density</em></strong> is defined as the amount of mass per unit of volume (grams per cubic centimeter, for example).</p></li>
-        </ul>
-        <p>Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the moon. However, it would weigh only one-sixth as much.</p>
-      </div>
-      <p>Now, in the world of Processing, what is mass anyway?  Aren’t we dealing with pixels?  To start in a simpler place, let’s say that in our pretend pixel world, all of our objects have a mass equal to 1.  <strong class="var">F</strong>/ 1 = <strong class="var">F</strong>.  And so:</p>
-      <p>{aequalsf}</p>
-      <p>The acceleration of an object is equal to force.  This is great news.  After all, we saw in Chapter 1 that acceleration was the key to controlling the movement of our objects on screen.  Location is adjusted by velocity, and velocity by acceleration.  Acceleration was where it all began.  Now we learn that <em>force</em> is truly where it all begins.</p>
-      <p>Let’s take our <strong klass>Mover</strong> class, with location, velocity, and acceleration.</p>
-<pre data-type="programlisting" data-code-language="java">class Mover {
+<h1>Chapter 2. Forces</h1>
+
+<blockquote data-type="epigraph">
+<p>&ldquo;Don&rsquo;t underestimate the Force.&rdquo;</p>
+
+<p data-type="attribution">&mdash; &mdash; Darth Vader</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>In the final example of Chapter 1, we saw how we could calculate a dynamic acceleration based on a vector pointing from a circle on the screen to the mouse location. The resulting motion resembled a magnetic attraction between circle and mouse, as if some <em>force</em> were pulling the circle in towards the mouse. In this chapter we will formalize our understanding of the concept of a force and its relationship to acceleration. Our goal, by the end of this chapter, is to understand how to make multiple objects move around the screen and respond to a variety of environmental forces.</p>
+
+<section data-type="sect1" id="chapter02_section1">
+<h1>2.1 Forces and Newton&rsquo;s Laws of Motion</h1>
+
+<p>&nbsp;</p>
+
+<p>Newton&rsquo;s first law is commonly stated as:</p>
+
+<p><strong highlight="">An object at rest stays at rest and an object in motion stays in motion.</strong></p>
+
+<p>However, this is missing an important element related to forces. We could expand it by stating:</p>
+
+<p><strong highlight="">An object at rest stays at rest and an object in motion stays in motion at a constant speed and direction unless acted upon by an unbalanced force.</strong></p>
+
+<p>&nbsp;</p>
+
+<p>By the time Newton came along, the prevailing theory of motion&mdash;formulated by Aristotle&mdash;was nearly two thousand years old. It stated that if an object is moving, some sort of force is required to keep it moving. Unless that moving thing is being pushed or pulled, it will simply slow down or stop. Right?</p>
+
+<p>&nbsp;</p>
+
+<p>This, of course, is not true. In the absence of any forces, no force is required to keep an object moving. An object (such as a ball) tossed in the earth&rsquo;s atmosphere slows down because of air resistance (a force). An object&rsquo;s velocity will only remain constant in the absence of any forces or if the forces that act on it cancel each other out, i.e. the net force adds up to zero. This is often referred to as <strong><em>equilibrium</em></strong>. The falling ball will reach a terminal velocity (that stays constant) once the force of air resistance equals the force of gravity.</p>
+
+<figure id="chapter02_figure1"><img alt="Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net force of zero)." src="imgs/chapter02/ch02_01.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>In our Processing world, we could restate Newton&rsquo;s first law as follows:</p>
+
+<p>&nbsp;</p>
+
+<p><strong highlight="">An object&rsquo;s PVector velocity will remain constant if it is in a state of equilibrium.</strong></p>
+
+<p>Skipping Newton&rsquo;s second law (arguably the most important law for our purposes) for a moment, let&rsquo;s move on to the third law.</p>
+
+<p>&nbsp;</p>
+
+<p>And here we are at the most important law for the Processing programmer.</p>
+
+<section data-type="sect2" id="_newton_s_second_law">
+<h2>Newton&rsquo;s Second Law</h2>
+
+<p>This law is stated as:</p>
+
+<p><strong highlight="">Force equals mass times acceleration.</strong></p>
+
+<p>Or:</p>
+
+<p>{newton2ablock}</p>
+
+<p>Why is this the most important law for us? Well, let&rsquo;s write it a different way.</p>
+
+<p>{newton2bblock}</p>
+
+<p>Acceleration is directly proportional to force and inversely proportional to mass. This means that if you get pushed, the harder you are pushed, the faster you&rsquo;ll move (accelerate). The bigger you are, the slower you&rsquo;ll move.</p>
+
+<p>&nbsp;</p>
+
+<div data-type="note">
+<h1>Weight vs. Mass</h1>
+
+<ul>
+	<li>
+	<p>The <strong><em>mass</em></strong> of an object is a measure of the amount of matter in the object (measured in kilograms).</p>
+	</li>
+	<li>
+	<p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton&rsquo;s second law, we can calculate it as mass times the acceleration of gravity (<strong class="var">w</strong> = <strong class="var">m</strong> * <strong class="var">g</strong>). Weight is measured in newtons.</p>
+	</li>
+	<li>
+	<p><strong><em>Density</em></strong> is defined as the amount of mass per unit of volume (grams per cubic centimeter, for example).</p>
+	</li>
+</ul>
+
+<p>Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the moon. However, it would weigh only one-sixth as much.</p>
+</div>
+
+<p>Now, in the world of Processing, what is mass anyway? Aren&rsquo;t we dealing with pixels? To start in a simpler place, let&rsquo;s say that in our pretend pixel world, all of our objects have a mass equal to 1. <strong class="var">F</strong>/ 1 = <strong class="var">F</strong>. And so:</p>
+
+<p>{aequalsf}</p>
+
+<p>The acceleration of an object is equal to force. This is great news. After all, we saw in Chapter 1 that acceleration was the key to controlling the movement of our objects on screen. Location is adjusted by velocity, and velocity by acceleration. Acceleration was where it all began. Now we learn that <em>force</em> is truly where it all begins.</p>
+
+<p>Let&rsquo;s take our <strong klass="">Mover</strong> class, with location, velocity, and acceleration.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Mover {
   PVector location;
   PVector velocity;
   PVector acceleration;
 }</pre>
-      <p>Now our goal is to be able to add forces to this object, perhaps saying:</p>
-<pre data-type="programlisting" data-code-language="java">mover.applyForce(wind);</pre>
+
+<p>Now our goal is to be able to add forces to this object, perhaps saying:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+mover.applyForce(wind);</pre>
+
 <p>or:</p>
-<pre data-type="programlisting" data-code-language="java">mover.applyForce(gravity);</pre>
-<p>where wind and gravity are <strong klass>PVector</strong><code>s</code>.  According to Newton’s second law, we could implement this function as follows.</p>
-<pre data-type="programlisting" data-code-language="java">void applyForce(PVector force) {
-  // Newton’s second law at its simplest.
+
+<pre data-code-language="java" data-type="programlisting">
+mover.applyForce(gravity);</pre>
+
+<p>where wind and gravity are <strong klass="">PVector</strong><code>s</code>. According to Newton&rsquo;s second law, we could implement this function as follows.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void applyForce(PVector force) {
+  // Newton&rsquo;s second law at its simplest.
   acceleration = force;
 }</pre>
-    </section>
-  </section>
-  <section data-type="sect1" id="chapter02_section3">
-    <h1>2.3 Force Accumulation</h1>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""accumulation of""/></p>
-    <p>This looks pretty good.  After all, <em>acceleration = force</em> is a literal translation of Newton’s second law (without mass).  Nevertheless, there’s a pretty big problem here.  Let’s return to what we are trying to accomplish: creating a moving object on the screen that responds to wind and gravity.</p>
-<pre data-type="programlisting" data-code-language="java">mover.applyForce(wind);
+</section>
+</section>
+
+<section data-type="sect1" id="chapter02_section3">
+<h1>2.3 Force Accumulation</h1>
+
+<p>&nbsp;</p>
+
+<p>This looks pretty good. After all, <em>acceleration = force</em> is a literal translation of Newton&rsquo;s second law (without mass). Nevertheless, there&rsquo;s a pretty big problem here. Let&rsquo;s return to what we are trying to accomplish: creating a moving object on the screen that responds to wind and gravity.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+mover.applyForce(wind);
 mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
-    <p>Ok, let’s <em>be</em> the computer for a moment.  First, we call <strong function>applyForce()</strong> with wind.  And so the <strong klass>Mover</strong> object’s acceleration is now assigned the <strong klass>PVector</strong> <strong class="var">wind</strong>.   Second, we call <strong function>applyForce()</strong> with gravity.  Now the <strong klass>Mover</strong> object’s acceleration is set to the gravity <strong klass>PVector</strong>.    Third, we call <strong function>update()</strong>.  What happens in <strong function>update()</strong>?  Acceleration is added to velocity.</p>
-<pre data-type="programlisting" data-code-language="java">velocity.add(acceleration);</pre>
-<p>We’re not going to see any error in Processing, but zoinks!  We’ve got a major problem.  What is the value of acceleration when it is added to velocity?  It is equal to the gravity force.  Wind has been left out!  If we call <strong function>applyForce()</strong> more than once, it overrides each previous call.   How are we going to handle more than one force?</p>
-<p><a data-type="indexterm" data-primary=""force accumulation""/></p>
-<p>The truth of the matter here is that we started with a simplified statement of Newton&#8217;s second law.   Here&#8217;s a more accurate way to put it:</p>
-<p><strong highlight>Net Force equals mass times acceleration.</strong></p>
-<p>Or, acceleration is equal to the <em>sum of all forces</em> divided by mass.  This makes perfect sense.  After all, as we saw in Newton&#8217;s first law, if all the forces add up to zero, an object experiences an equilibrium state (i.e. no acceleration).    Our implementation of this is through a process known as <strong><em>force accumulation</em></strong>.  It’s actually very simple; all we need to do is add all of the forces together.  At any given moment, there might be 1, 2, 6, 12, or 303 forces.  As long as our object knows how to accumulate them, it doesn’t matter how many forces act on it.</p>
-<pre data-type="programlisting" data-code-language="java"> void applyForce(PVector force) {
-  // Newton’s second law, but with force accumulation.
+
+<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <strong function="">applyForce()</strong> with wind. And so the <strong klass="">Mover</strong> object&rsquo;s acceleration is now assigned the <strong klass="">PVector</strong> <strong class="var">wind</strong>. Second, we call <strong function="">applyForce()</strong> with gravity. Now the <strong klass="">Mover</strong> object&rsquo;s acceleration is set to the gravity <strong klass="">PVector</strong>. Third, we call <strong function="">update()</strong>. What happens in <strong function="">update()</strong>? Acceleration is added to velocity.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+velocity.add(acceleration);</pre>
+
+<p>We&rsquo;re not going to see any error in Processing, but zoinks! We&rsquo;ve got a major problem. What is the value of acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If we call <strong function="">applyForce()</strong> more than once, it overrides each previous call. How are we going to handle more than one force?</p>
+
+<p>&nbsp;</p>
+
+<p>The truth of the matter here is that we started with a simplified statement of Newton&rsquo;s second law. Here&rsquo;s a more accurate way to put it:</p>
+
+<p><strong highlight="">Net Force equals mass times acceleration.</strong></p>
+
+<p>Or, acceleration is equal to the <em>sum of all forces</em> divided by mass. This makes perfect sense. After all, as we saw in Newton&rsquo;s first law, if all the forces add up to zero, an object experiences an equilibrium state (i.e. no acceleration). Our implementation of this is through a process known as <strong><em>force accumulation</em></strong>. It&rsquo;s actually very simple; all we need to do is add all of the forces together. At any given moment, there might be 1, 2, 6, 12, or 303 forces. As long as our object knows how to accumulate them, it doesn&rsquo;t matter how many forces act on it.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ void applyForce(PVector force) {
+  // Newton&rsquo;s second law, but with force accumulation.
   // We now add each force to acceleration, one at a time.
     acceleration.add(force);
 }</pre>
-    <p>Now, we’re not finished just yet.  Force accumulation has one more piece.  Since we’re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <strong function>update()</strong> is called.   Let’s think about wind for a moment.   Sometimes the wind is very strong, sometimes it’s weak, and sometimes there’s no wind at all.   At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
-<pre data-type="programlisting" data-code-language="java">if (mousePressed) {
+
+<p>Now, we&rsquo;re not finished just yet. Force accumulation has one more piece. Since we&rsquo;re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <strong function="">update()</strong> is called. Let&rsquo;s think about wind for a moment. Sometimes the wind is very strong, sometimes it&rsquo;s weak, and sometimes there&rsquo;s no wind at all. At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+if (mousePressed) {
   PVector wind = new PVector(0.5,0);
   mover.applyForce(wind);
 }</pre>
-    <p><a data-type="indexterm" data-primary=""acceleration"" data-secondary=""force accumulation and""/></p>
-    <p>When the user releases the mouse, the wind will stop, and according to Newton’s first law, the object will continue to move at a constant velocity.   However, if we had forgotten to reset acceleration to zero, the gust of wind would still be in effect.  Even worse, it would add onto itself from the previous frame, since we are accumulating forces!    Acceleration, in our simulation, has no memory; it is simply calculated based on the environmental forces present at a moment in time.   This is different than, say, location, which must remember where the object was in the previous frame in order to move properly to the next.</p>
-    <p>The easiest way to implement clearing the acceleration for each frame is to multiply the <strong klass>PVector</strong> by 0 at the end of <strong function>update()</strong>.</p>
-<pre data-type="programlisting" data-code-language="java"> void update() {
+
+<p>&nbsp;</p>
+
+<p>When the user releases the mouse, the wind will stop, and according to Newton&rsquo;s first law, the object will continue to move at a constant velocity. However, if we had forgotten to reset acceleration to zero, the gust of wind would still be in effect. Even worse, it would add onto itself from the previous frame, since we are accumulating forces! Acceleration, in our simulation, has no memory; it is simply calculated based on the environmental forces present at a moment in time. This is different than, say, location, which must remember where the object was in the previous frame in order to move properly to the next.</p>
+
+<p>The easiest way to implement clearing the acceleration for each frame is to multiply the <strong klass="">PVector</strong> by 0 at the end of <strong function="">update()</strong>.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ void update() {
     velocity.add(acceleration);
     location.add(velocity);
     acceleration.mult(0);
 }</pre>
-    <div id="chapter02_exercise1" data-type="example">
-      <h5>Exercise 2.1</h5>
-      <p>Using forces, simulate a helium-filled balloon floating upward and bouncing off the top of a window.  Can you add a wind force that changes over time, perhaps according to Perlin noise?</p>
-    </div>
-  </section>
-  <section data-type="sect1" id="chapter02_section4">
-    <h1>2.4 Dealing with Mass</h1>
-    <p><a data-type="indexterm" data-primary=""mass"" data-secondary=""modeling""/>
-    <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""mass" data-tertiary="modeling""/></p>
-    <p>OK. We’ve got one tiny little addition to make before we are done with integrating forces into our <strong klass>Mover</strong> class and are ready to look at examples.  After all, Newton’s second law is really {newton2a}, not {fequalsa}.   Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
-    <p>First we just need to add mass.</p>
-<pre data-type="programlisting" data-code-language="java">class Mover {
+
+<div data-type="example" id="chapter02_exercise1">
+<h5>Exercise 2.1</h5>
+
+<p>Using forces, simulate a helium-filled balloon floating upward and bouncing off the top of a window. Can you add a wind force that changes over time, perhaps according to Perlin noise?</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section4">
+<h1>2.4 Dealing with Mass</h1>
+
+<p>&nbsp;</p>
+
+<p>OK. We&rsquo;ve got one tiny little addition to make before we are done with integrating forces into our <strong klass="">Mover</strong> class and are ready to look at examples. After all, Newton&rsquo;s second law is really {newton2a}, not {fequalsa}. Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
+
+<p>First we just need to add mass.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Mover {
   PVector location;
   PVector velocity;
   PVector acceleration;
   // Adding mass as a float
 float mass;</pre>
-    <p><a data-type="indexterm" data-primary=""mass"" data-secondary=""units of measurement" data-tertiary="defining""/></p>
-    <div data-type="note">
-      <h1>Units of Measurement</h1><p>Now that we are introducing mass, it’s important to make a quick note about units of measurement.  In the real world, things are measured in specific units.  We say that two objects are 3 meters apart, the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6 kilograms.   As we’ll see later in this book, sometimes we will want to take real-world units into consideration.  However, in this chapter, we’re going to ignore them for the most part.  Our units of measurement are in pixels (“These two circles are 100 pixels apart”) and frames of animation (“This circle is moving at a rate of 2 pixels per frame”).   In the case of mass, there isn’t any unit of measurement for us to use.  We’re just going to make something up.  In this example, we’re arbitrarily picking the number 10.   There is no unit of measurement, though you might enjoy inventing a unit of your own, like “1 moog” or “1 yurkle.”  It should also be noted that, for demonstration purposes, we’ll tie mass to pixels (drawing, say, a circle with a radius of 10).  This will allow us to visualize the mass of an object.   In the real world, however, size does not definitely indicate mass. A small metal ball could have a much higher mass than a large balloon due to its higher density.</p>
-    </div>
-    <p>Mass is a scalar (float), not a vector, as it’s just one number describing the amount of matter in an object.  We could be fancy about things and compute the area of a shape as its mass, but it’s simpler to begin by saying, “Hey, the mass of this object is&#8230;um, I dunno&#8230;how about 10?”</p>
-<pre data-type="programlisting" data-code-language="java"> Mover() {
+
+<p>&nbsp;</p>
+
+<div data-type="note">
+<h1>Units of Measurement</h1>
+
+<p>Now that we are introducing mass, it&rsquo;s important to make a quick note about units of measurement. In the real world, things are measured in specific units. We say that two objects are 3 meters apart, the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6 kilograms. As we&rsquo;ll see later in this book, sometimes we will want to take real-world units into consideration. However, in this chapter, we&rsquo;re going to ignore them for the most part. Our units of measurement are in pixels (&ldquo;These two circles are 100 pixels apart&rdquo;) and frames of animation (&ldquo;This circle is moving at a rate of 2 pixels per frame&rdquo;). In the case of mass, there isn&rsquo;t any unit of measurement for us to use. We&rsquo;re just going to make something up. In this example, we&rsquo;re arbitrarily picking the number 10. There is no unit of measurement, though you might enjoy inventing a unit of your own, like &ldquo;1 moog&rdquo; or &ldquo;1 yurkle.&rdquo; It should also be noted that, for demonstration purposes, we&rsquo;ll tie mass to pixels (drawing, say, a circle with a radius of 10). This will allow us to visualize the mass of an object. In the real world, however, size does not definitely indicate mass. A small metal ball could have a much higher mass than a large balloon due to its higher density.</p>
+</div>
+
+<p>Mass is a scalar (float), not a vector, as it&rsquo;s just one number describing the amount of matter in an object. We could be fancy about things and compute the area of a shape as its mass, but it&rsquo;s simpler to begin by saying, &ldquo;Hey, the mass of this object is&hellip;um, I dunno&hellip;how about 10?&rdquo;</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ Mover() {
     location = new PVector(random(width),random(height));
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
     mass = 10.0;
 }</pre>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""applying to objects""/></p>
-    <p>This isn’t so great since things only become interesting once we have objects with varying mass, but it’ll get us started.  Where does mass come in?  We use it while applying Newton’s second law to our object.</p>
-<pre data-type="programlisting" data-code-language="java"> void applyForce(PVector force) {
-   //[full] Newton’s second law (with force accumulation and mass)
+
+<p>&nbsp;</p>
+
+<p>This isn&rsquo;t so great since things only become interesting once we have objects with varying mass, but it&rsquo;ll get us started. Where does mass come in? We use it while applying Newton&rsquo;s second law to our object.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ void applyForce(PVector force) {
+   //[full] Newton&rsquo;s second law (with force accumulation and mass)
    force.div(mass);
    acceleration.add(force);
    //[end]
 }</pre>
-    <p>Yet again, even though our code looks quite reasonable, we have a fairly major problem here.  Consider the following scenario with two <strong klass>Mover</strong> objects, both being blown away by a wind force.</p>
-<pre data-type="programlisting" data-code-language="java">Mover m1 = new Mover();
+
+<p>Yet again, even though our code looks quite reasonable, we have a fairly major problem here. Consider the following scenario with two <strong klass="">Mover</strong> objects, both being blown away by a wind force.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover m1 = new Mover();
 Mover m2 = new Mover();
 PVector wind = new PVector(1,0);
 m1.applyForce(wind);
 m2.applyForce(wind);</pre>
-    <p>Again, let’s <em>be</em> the computer.  Object <strong class="var">m1</strong> receives the wind force—(1,0)—divides it by mass (10), and adds it to acceleration.</p>
-    <p><strong formula>m1 equals wind force: &#160;&#160;&#160; (1,0)</strong><br/>
-    <strong formula>Divided by mass of 10: &#160;&#160; (0.1,0)</strong></p>
-    <p><a data-type="indexterm" data-primary=""object-oriented programming"" data-secondary=""references to vs. copies of objects""/></p>
-    <p>OK. Moving on to object <strong class="var">m2</strong>.  It also receives the wind force—(1,0).  Wait.  Hold on a second.  What is the value of the wind force?   Taking a closer look, the wind force is actually now—(0.1,0)!!   Do you remember this little tidbit about working with objects?  When you pass an object (in this case a <strong klass>PVector</strong>) into a function, you are passing a reference to that object.  It’s not a copy!  So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed!  But we don’t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state—(1,0).  And so we must protect ourselves and make a copy of the <strong klass>PVector</strong> f before dividing it by mass.    Fortunately, the <strong klass>PVector</strong> class has a convenient method for making a copy—<strong function>get()</strong>.  <strong function>get()</strong> returns a new <strong klass>PVector</strong> object with the same data.  And so we can revise <strong function>applyForce()</strong> as follows:</p>
-<pre data-type="programlisting" data-code-language="java">void applyForce(PVector force) {
+
+<p>Again, let&rsquo;s <em>be</em> the computer. Object <strong class="var">m1</strong> receives the wind force&mdash;(1,0)&mdash;divides it by mass (10), and adds it to acceleration.</p>
+
+<p><strong formula="">m1 equals wind force: &nbsp;&nbsp;&nbsp; (1,0)</strong><br />
+<strong formula="">Divided by mass of 10: &nbsp;&nbsp; (0.1,0)</strong></p>
+
+<p>&nbsp;</p>
+
+<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <strong klass="">PVector</strong>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <strong klass="">PVector</strong> f before dividing it by mass. Fortunately, the <strong klass="">PVector</strong> class has a convenient method for making a copy&mdash;<strong function="">get()</strong>. <strong function="">get()</strong> returns a new <strong klass="">PVector</strong> object with the same data. And so we can revise <strong function="">applyForce()</strong> as follows:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void applyForce(PVector force) {
   // Making a copy of the PVector before using it!
   PVector f = force.get();
   f.div(mass);
   acceleration.add(f);
 }</pre>
-    <p>There’s another way we could write the above function, using the static method <strong function>div()</strong>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
-    <div id="chapter02_exercise2" data-type="example">
-      <h5>Exercise 2.2</h5>
-      <p>Rewrite the <strong function>applyForce()</strong> method using the static method <strong function>div()</strong> instead of <strong function>get()</strong>.</p>
-<pre data-type="programlisting" data-code-language="java">void applyForce(PVector force) {
+
+<p>There&rsquo;s another way we could write the above function, using the static method <strong function="">div()</strong>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
+
+<div data-type="example" id="chapter02_exercise2">
+<h5>Exercise 2.2</h5>
+
+<p>Rewrite the <strong function="">applyForce()</strong> method using the static method <strong function="">div()</strong> instead of <strong function="">get()</strong>.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void applyForce(PVector force) {
   PVector f = _______.___(_____,____);
   acceleration.add(f);
 }</pre>
-    </div>
-  </section>
-  <section data-type="sect1" id="chapter02_section5">
-    <h1>2.5 Creating Forces</h1>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""creating""/></p>
-    <p>Let’s take a moment to remind ourselves where we are.  We know what a force is (a vector), and we know how to apply a force to an object (divide it by mass and add it to the object’s acceleration vector).   What are we missing?  Well, we have yet to figure out how we get a force in the first place.  Where do forces come from?</p>
-    <p>In this chapter, we’ll look at two methods for creating forces in our Processing world.</p>
-    <p><a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""forces" data-tertiary="modeling""/></p>
-    <ol>
-      <li>
-      <p><strong>Make up a force!</strong>  After all, you are the programmer, the creator of your world. There’s no reason why you can’t just make up a force and apply it.</p></li>
-      <li>
-      <p><strong>Model a force!</strong>  Yes, forces exist in the real world.  And physics textbooks often contain formulas for these forces.  We can take these formulas, translate them into source code, and model real-world forces in Processing.</p></li>
-    </ol>
-    <p>The easiest way to make up a force is to just pick a number.  Let’s start with the idea of simulating wind.  How about a wind force that points to the right and is fairly weak?  Assuming a <strong klass>Mover</strong> object m, our code would look like:</p>
-<pre data-type="programlisting" data-code-language="java">  PVector wind = new PVector(0.01,0);
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section5">
+<h1>2.5 Creating Forces</h1>
+
+<p>&nbsp;</p>
+
+<p>Let&rsquo;s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how to apply a force to an object (divide it by mass and add it to the object&rsquo;s acceleration vector). What are we missing? Well, we have yet to figure out how we get a force in the first place. Where do forces come from?</p>
+
+<p>In this chapter, we&rsquo;ll look at two methods for creating forces in our Processing world.</p>
+
+<p>&nbsp;</p>
+
+<ol>
+	<li>
+	<p><strong>Make up a force!</strong> After all, you are the programmer, the creator of your world. There&rsquo;s no reason why you can&rsquo;t just make up a force and apply it.</p>
+	</li>
+	<li>
+	<p><strong>Model a force!</strong> Yes, forces exist in the real world. And physics textbooks often contain formulas for these forces. We can take these formulas, translate them into source code, and model real-world forces in Processing.</p>
+	</li>
+</ol>
+
+<p>The easiest way to make up a force is to just pick a number. Let&rsquo;s start with the idea of simulating wind. How about a wind force that points to the right and is fairly weak? Assuming a <strong klass="">Mover</strong> object m, our code would look like:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  PVector wind = new PVector(0.01,0);
 m.applyForce(wind);</pre>
-    <p>The result isn’t terribly interesting, but it is a good place to start.  We create a <strong klass>PVector</strong> object, initialize it, and pass it into an object (which in turn will apply it to its own acceleration).  If we wanted to have two forces, perhaps wind and gravity (a bit stronger, pointing down), we might write the following:</p>
-    <figure>
-      <img src="imgs/chapter02/ch02_ex01.png" alt="ch02 ex01"/>
-      <figcaption/>
-    </figure>
-    <p><strong example>Example 2.1: Forces</strong></p>
-<pre data-type="programlisting" data-code-language="java">  PVector wind = new PVector(0.01,0);
+
+<p>The result isn&rsquo;t terribly interesting, but it is a good place to start. We create a <strong klass="">PVector</strong> object, initialize it, and pass it into an object (which in turn will apply it to its own acceleration). If we wanted to have two forces, perhaps wind and gravity (a bit stronger, pointing down), we might write the following:</p>
+
+<figure><img alt="ch02 ex01" src="imgs/chapter02/ch02_ex01.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.1: Forces</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+  PVector wind = new PVector(0.01,0);
   PVector gravity = new PVector(0,0.1);
   m.applyForce(wind);
 m.applyForce(gravity);</pre>
-    <p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <strong class="var">m</strong>.  We’re beginning to get somewhere.  We’ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
-    <p>Let’s look at how we could make this example a bit more exciting with many objects of varying mass.   To do this, we’ll need a quick review of object-oriented programming.  Again, we’re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction).  However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it’s worth taking a moment to walk through the steps of going from one object to many.</p>
-    <p>This is where we are with the <strong klass>Mover</strong> class as a whole.  Notice how it is identical to the <strong klass>Mover</strong> class created in Chapter 1, with two additions—<strong class="var">mass</strong> and a new <strong function>applyForce()</strong> function.</p>
-<pre data-type="programlisting" data-code-language="java">class Mover {
+
+<p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <strong class="var">m</strong>. We&rsquo;re beginning to get somewhere. We&rsquo;ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
+
+<p>Let&rsquo;s look at how we could make this example a bit more exciting with many objects of varying mass. To do this, we&rsquo;ll need a quick review of object-oriented programming. Again, we&rsquo;re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction). However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it&rsquo;s worth taking a moment to walk through the steps of going from one object to many.</p>
+
+<p>This is where we are with the <strong klass="">Mover</strong> class as a whole. Notice how it is identical to the <strong klass="">Mover</strong> class created in Chapter 1, with two additions&mdash;<strong class="var">mass</strong> and a new <strong function="">applyForce()</strong> function.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Mover {
   PVector location;
   PVector velocity;
   PVector acceleration;
   // The object now has mass!
   float mass;
   Mover() {
-    // And for now, we’ll just set the mass equal to 1 for simplicity.
+    // And for now, we&rsquo;ll just set the mass equal to 1 for simplicity.
     mass = 1;
     location = new PVector(30,30);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
   }
-  // Newton’s second law.
+  // Newton&rsquo;s second law.
   void applyForce(PVector force) {
     //[full] Receive a force, divide by mass, and add to acceleration.
     PVector f = PVector.div(force,mass);
@@ -289,16 +371,25 @@ m.applyForce(gravity);</pre>
     }
   }
 }</pre>
-    <p>Now that our class is set, we can choose to create, say, one hundred <strong klass>Mover</strong> objects with an array.</p>
-<pre data-type="programlisting" data-code-language="java">Mover[] movers = new Mover[100];</pre>
-<p>And then we can initialize all of those <strong klass>Mover</strong> objects in <strong function>setup()</strong> with a loop.</p>
-<pre data-type="programlisting" data-code-language="java">void setup() {
+
+<p>Now that our class is set, we can choose to create, say, one hundred <strong klass="">Mover</strong> objects with an array.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover[] movers = new Mover[100];</pre>
+
+<p>And then we can initialize all of those <strong klass="">Mover</strong> objects in <strong function="">setup()</strong> with a loop.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void setup() {
   for (int i = 0; i &lt; movers.length; i++) {
     movers[i] = new Mover();
   }
 }</pre>
-    <p>But now we have a small issue.  If we refer back to the <strong klass>Mover</strong> object’s constructor&#8230;</p>
-<pre data-type="programlisting" data-code-language="java">  Mover() {
+
+<p>But now we have a small issue. If we refer back to the <strong klass="">Mover</strong> object&rsquo;s constructor&hellip;</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  Mover() {
     //[full] Every object has a mass of 1 and a location of (30,30).
     mass = 1;
     location = new PVector(30,30);
@@ -306,9 +397,13 @@ m.applyForce(gravity);</pre>
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
 }</pre>
-    <p><a data-type="indexterm" data-primary=""constructor"" data-secondary=""arguments" data-tertiary="adding to""/></p>
-    <p>&#8230;we discover that every <strong klass>Mover</strong> object is made exactly the same way.  What we want are <strong klass>Mover</strong> objects of varying mass that start at varying locations.  Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
-<pre data-type="programlisting" data-code-language="java">  Mover(float m, float x , float y) {
+
+<p>&nbsp;</p>
+
+<p>&hellip;we discover that every <strong klass="">Mover</strong> object is made exactly the same way. What we want are <strong klass="">Mover</strong> objects of varying mass that start at varying locations. Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  Mover(float m, float x , float y) {
     //[full] Now setting these variables with arguments
     mass = m;
     location = new PVector(x,y);
@@ -316,26 +411,37 @@ m.applyForce(gravity);</pre>
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
 }</pre>
-    <p>Notice how the mass and location are no longer set to hardcoded numbers, but rather initialized via arguments passed through the constructor.   This means we can create a variety of <strong klass>Mover</strong> objects: big ones, small ones, ones that start on the left side of the screen, ones that start on the right, etc.</p>
-<pre data-type="programlisting" data-code-language="java">// A big Mover on the left side of the window
+
+<p>Notice how the mass and location are no longer set to hardcoded numbers, but rather initialized via arguments passed through the constructor. This means we can create a variety of <strong klass="">Mover</strong> objects: big ones, small ones, ones that start on the left side of the screen, ones that start on the right, etc.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+// A big Mover on the left side of the window
 Mover m1 = new Mover(10,0,height/2);
 // A small Mover on the right side of the window
 Mover m1 = new Mover(0.1,width,height/2);</pre>
-    <p>With an array, however, we want to initialize all of the objects with a loop.</p>
-<pre data-type="programlisting" data-code-language="java">void setup() {
+
+<p>With an array, however, we want to initialize all of the objects with a loop.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void setup() {
   for (int i = 0; i &lt; movers.length; i++) {
     // Initializing many Mover objects, all with random mass (and all starting at 0,0)
     movers[i] = new Mover(random(0.1,5),0,0);
   }
 }</pre>
-    <p>For each mover created, the mass is set to a random value between 0.1 and 5, the starting x-location is set to 0, and the starting y-location is set to 0.  Certainly, there are all sorts of ways we might choose to initialize the objects; this is just a demonstration of one possibility.</p>
-    <p>Once the array of objects is declared, created, and initialized, the rest of the code is simple.  We run through every object, hand them each the forces in the environment, and enjoy the show.</p>
-    <figure>
-      <img src="imgs/chapter02/ch02_ex02.png" alt="ch02 ex02"/>
-      <figcaption/>
-    </figure>
-    <p><strong example>Example 2.2: Forces acting on many objects</strong></p>
-<pre data-type="programlisting" data-code-language="java">void draw() {
+
+<p>For each mover created, the mass is set to a random value between 0.1 and 5, the starting x-location is set to 0, and the starting y-location is set to 0. Certainly, there are all sorts of ways we might choose to initialize the objects; this is just a demonstration of one possibility.</p>
+
+<p>Once the array of objects is declared, created, and initialized, the rest of the code is simple. We run through every object, hand them each the forces in the environment, and enjoy the show.</p>
+
+<figure><img alt="ch02 ex02" src="imgs/chapter02/ch02_ex02.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.2: Forces acting on many objects</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void draw() {
   background(255);
   PVector wind = new PVector(0.01,0);
   // Make up two forces.
@@ -350,24 +456,31 @@ Mover m1 = new Mover(0.1,width,height/2);</pre>
     movers[i].checkEdges();
   }
 }</pre>
-    <p>Note how in the above image, the smaller circles reach the right of the window faster than the larger ones.  This is because of our formula: <em>acceleration = force divided by mass</em>.   The larger the mass, the smaller the acceleration.</p>
-    <div id="chapter02_exercise3" data-type="example">
-      <h5>Exercise 2.3</h5>
-      <p>Instead of objects bouncing off the edge of the wall, create an example in which an invisible force pushes back on the objects to keep them in the window.  Can you weight the force according to how far the object is from an edge—i.e., the closer it is, the stronger the force?</p>
-    </div>
-  </section>
-  <section data-type="sect1" id="chapter02_section6">
-    <h1>2.6 Gravity on Earth and Modeling a Force</h1>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""gravity" data-tertiary="modeling""/>
-    <a data-type="indexterm" data-primary=""Galileo""/>
-    <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""gravity""/></p>
-    <p>You may have noticed something woefully inaccurate about this last example.  The smaller the circle, the faster it falls.   There is a logic to this; after all, we just stated (according to Newton’s second law) that the smaller the mass, the higher the acceleration.  But this is not what happens in the real world.  If you were to climb to the top of the Leaning Tower of Pisa and drop two balls of different masses, which one will hit the ground first?  According to legend, Galileo performed this exact test in 1589, discovering that they fell with the same acceleration, hitting the ground at the same time.  Why is this?   As we will see later in this chapter, the force of gravity is calculated relative to an object’s mass.  The bigger the object, the stronger the force.  So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass.   We can implement this in our sketch rather easily by multiplying our made-up gravity force by mass.</p>
-    <figure>
-      <img src="imgs/chapter02/ch02_ex03.png" alt="ch02 ex03"/>
-      <figcaption/>
-    </figure>
-    <p><strong example>Example 2.3: Gravity scaled by mass</strong></p>
-<pre data-type="programlisting" data-code-language="java">for (int i = 0; i &lt; movers.length; i++) {
+
+<p>Note how in the above image, the smaller circles reach the right of the window faster than the larger ones. This is because of our formula: <em>acceleration = force divided by mass</em>. The larger the mass, the smaller the acceleration.</p>
+
+<div data-type="example" id="chapter02_exercise3">
+<h5>Exercise 2.3</h5>
+
+<p>Instead of objects bouncing off the edge of the wall, create an example in which an invisible force pushes back on the objects to keep them in the window. Can you weight the force according to how far the object is from an edge&mdash;i.e., the closer it is, the stronger the force?</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section6">
+<h1>2.6 Gravity on Earth and Modeling a Force</h1>
+
+<p>&nbsp;</p>
+
+<p>You may have noticed something woefully inaccurate about this last example. The smaller the circle, the faster it falls. There is a logic to this; after all, we just stated (according to Newton&rsquo;s second law) that the smaller the mass, the higher the acceleration. But this is not what happens in the real world. If you were to climb to the top of the Leaning Tower of Pisa and drop two balls of different masses, which one will hit the ground first? According to legend, Galileo performed this exact test in 1589, discovering that they fell with the same acceleration, hitting the ground at the same time. Why is this? As we will see later in this chapter, the force of gravity is calculated relative to an object&rsquo;s mass. The bigger the object, the stronger the force. So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass. We can implement this in our sketch rather easily by multiplying our made-up gravity force by mass.</p>
+
+<figure><img alt="ch02 ex03" src="imgs/chapter02/ch02_ex03.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.3: Gravity scaled by mass</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+for (int i = 0; i &lt; movers.length; i++) {
     PVector wind = new PVector(0.001,0);
     float m = movers[i].mass;
     // Scaling gravity by mass to be more accurate
@@ -378,82 +491,121 @@ Mover m1 = new Mover(0.1,width,height/2);</pre>
     movers[i].display();
     movers[i].checkEdges();
 }</pre>
-    <p>While the objects now fall at the same rate, because the strength of the wind force is independent of mass, the smaller objects still accelerate to the right more quickly.</p>
-    <p>Making up forces will actually get us quite far.  The world of Processing is a pretend world of pixels and you are its master.  So whatever you deem appropriate to be a force, well by golly, that’s the force it should be.  Nevertheless, there may come a time where you find yourself wondering: “But how does it really all work?”</p>
-    <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""models of" data-tertiary="building""/>
-    <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""physics (real world)" data-tertiary="modeling""/>
-    <a data-type="indexterm" data-primary=""physics"" data-secondary=""modeling""/></p>
-    <p>Open up any high school physics textbook and you will find some diagrams and formulas describing many different forces—gravity, electromagnetism, friction, tension, elasticity, and more.  In this chapter we’re going to look at two forces—friction and gravity.  The point we’re making here is not that friction and gravity are fundamental forces that you always need to have in your Processing sketches.  Rather, we want to evaluate these two forces as case studies for the following process:</p>
-    <ul>
-      <li>
-      <p>Understanding the concept behind a force</p></li>
-      <li>
-        <p>Deconstructing the force’s formula into two parts:</p>
-        <ul>
-          <li>
-          <p>How do we compute the force’s direction?</p></li>
-          <li>
-          <p>How do we compute the force’s magnitude?</p></li>
-        </ul>
-      </li>
-      <li>
-      <p>Translating that formula into Processing code that calculates a <strong klass>PVector</strong> to be sent through our <strong klass>Mover</strong><code>'s</code> <strong function>applyForce()</strong> function</p></li>
-    </ul>
-    <p>If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling “atomic nuclei weak nuclear force” at 3 a.m., you will have the skills to take what you find and adapt it for Processing.</p>
-    <p><a data-type="indexterm" data-primary=""formulae" data-secondary="evaluating in code""/></p>
-    <div data-type="note">
-      <h1>Dealing with formulae</h1><p>OK, in a moment we’re going to write out the formula for friction.  This isn’t the first time we’ve seen a formula in this book; we just finished up our discussion of Newton’s second law, {newton2a} (or force = mass * acceleration).    We didn’t spend a lot of time worrying about this formula because it’s a nice and simple one.  Nevertheless, it’s a scary world out there.  Just take a look at the equation for a “normal” distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
-      <p>{normal}</p>
-      <p><a data-type="indexterm" data-primary=""friction"" data-secondary=""formula for""/></p>
-      <p>What we’re seeing here is that formulas like to use a lot of symbols (quite often letters from the Greek alphabet).   Let’s take a look at the formula for friction.</p>
-      <p>{friction1}</p>
-      <p>If it’s been a while since you’ve looked at a formula from a math or physics textbook, there are three key points that are important to cover before we move on.</p>
-      <ul>
-        <li>
-        <p><strong><em>Evaluate the right side, assign to the left side.</em></strong>  This is just like in code!  What we’re doing here is evaluating the right side of the equation and assigning it to the left.  In the case above, we want to calculate the force of friction—the left side tells us what we want to calculate and the right side tells us how to do it.</p></li>
-        <li>
-        <p><strong><em>Are we talking about a vector or a scalar?</em></strong>  It’s important for us to realize that in some cases, we’ll be looking at a vector; in others, a scalar.   For example, in this case the force of friction is a vector.  We can see that by the arrow above the word “friction.” It has a magnitude and direction.  The right side of the equation also has a vector, as indicated by the symbol {unitv}, which in this case stands for the velocity unit vector.</p></li>
-        <li>
-        <p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong>  The formula above actually has four elements:  -1, <em>μ</em>, <em>N</em>, and {unitv}.  We want to multiply them together and read the formula as: {friction2}</p></li>
-      </ul>
-    </div></section>
-    <section data-type="sect1" id="chapter02_section7">
-      <h1>2.7 Friction</h1>
-      <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""friction" data-tertiary="modeling""/>
-      <a data-type="indexterm" data-primary=""friction"" data-secondary=""modeling with formulae""/>
-      <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""friction""/></p>
-      <p>Let’s begin with friction and follow our steps.</p>
-      <p><a data-type="indexterm" data-primary=""dissipative force""/></p>
-      <p>Friction is a <strong><em>dissipative force</em></strong>.  A dissipative force is one in which the total energy of a system decreases when an object is in motion.   Let’s say you are driving a car. When you press your foot down on the brake pedal, the car’s brakes use friction to slow down the motion of the tires.  Kinetic energy (motion) is converted into thermal energy (heat).   Whenever two surfaces come into contact, they experience friction.   A complete model of friction would include separate cases for static friction (a body at rest against a surface) and kinetic friction (a body in motion against a surface), but for our purposes, we are only going to look at the kinetic case.</p>
-      <p>Here&#8217;s the formula for friction:</p>
-      <figure id="chapter02_figure3">
-        <img src="imgs/chapter02/ch02_03.png" alt="Figure 2.3"/>
-        <figcaption/>
-      </figure>
-      <p><a data-type="indexterm" data-primary=""friction"" data-secondary=""determining direction/magnitude of""/></p>
-      <p>It’s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude.  Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em>   In fact, that’s the part of the formula that says -1 * {unitv}, or -1 times the velocity unit vector.  In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
-<pre data-type="programlisting" data-code-language="java">PVector friction = velocity.get();
+
+<p>While the objects now fall at the same rate, because the strength of the wind force is independent of mass, the smaller objects still accelerate to the right more quickly.</p>
+
+<p>Making up forces will actually get us quite far. The world of Processing is a pretend world of pixels and you are its master. So whatever you deem appropriate to be a force, well by golly, that&rsquo;s the force it should be. Nevertheless, there may come a time where you find yourself wondering: &ldquo;But how does it really all work?&rdquo;</p>
+
+<p>&nbsp;</p>
+
+<p>Open up any high school physics textbook and you will find some diagrams and formulas describing many different forces&mdash;gravity, electromagnetism, friction, tension, elasticity, and more. In this chapter we&rsquo;re going to look at two forces&mdash;friction and gravity. The point we&rsquo;re making here is not that friction and gravity are fundamental forces that you always need to have in your Processing sketches. Rather, we want to evaluate these two forces as case studies for the following process:</p>
+
+<ul>
+	<li>
+	<p>Understanding the concept behind a force</p>
+	</li>
+	<li>
+	<p>Deconstructing the force&rsquo;s formula into two parts:</p>
+
+	<ul>
+		<li>
+		<p>How do we compute the force&rsquo;s direction?</p>
+		</li>
+		<li>
+		<p>How do we compute the force&rsquo;s magnitude?</p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p>Translating that formula into Processing code that calculates a <strong klass="">PVector</strong> to be sent through our <strong klass="">Mover</strong><code>'s</code> <strong function="">applyForce()</strong> function</p>
+	</li>
+</ul>
+
+<p>If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling &ldquo;atomic nuclei weak nuclear force&rdquo; at 3 a.m., you will have the skills to take what you find and adapt it for Processing.</p>
+
+<p>&nbsp;</p>
+
+<div data-type="note">
+<h1>Dealing with formulae</h1>
+
+<p>OK, in a moment we&rsquo;re going to write out the formula for friction. This isn&rsquo;t the first time we&rsquo;ve seen a formula in this book; we just finished up our discussion of Newton&rsquo;s second law, {newton2a} (or force = mass * acceleration). We didn&rsquo;t spend a lot of time worrying about this formula because it&rsquo;s a nice and simple one. Nevertheless, it&rsquo;s a scary world out there. Just take a look at the equation for a &ldquo;normal&rdquo; distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
+
+<p>{normal}</p>
+
+<p>&nbsp;</p>
+
+<p>What we&rsquo;re seeing here is that formulas like to use a lot of symbols (quite often letters from the Greek alphabet). Let&rsquo;s take a look at the formula for friction.</p>
+
+<p>{friction1}</p>
+
+<p>If it&rsquo;s been a while since you&rsquo;ve looked at a formula from a math or physics textbook, there are three key points that are important to cover before we move on.</p>
+
+<ul>
+	<li>
+	<p><strong><em>Evaluate the right side, assign to the left side.</em></strong> This is just like in code! What we&rsquo;re doing here is evaluating the right side of the equation and assigning it to the left. In the case above, we want to calculate the force of friction&mdash;the left side tells us what we want to calculate and the right side tells us how to do it.</p>
+	</li>
+	<li>
+	<p><strong><em>Are we talking about a vector or a scalar?</em></strong> It&rsquo;s important for us to realize that in some cases, we&rsquo;ll be looking at a vector; in others, a scalar. For example, in this case the force of friction is a vector. We can see that by the arrow above the word &ldquo;friction.&rdquo; It has a magnitude and direction. The right side of the equation also has a vector, as indicated by the symbol {unitv}, which in this case stands for the velocity unit vector.</p>
+	</li>
+	<li>
+	<p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong> The formula above actually has four elements: -1, <em>&mu;</em>, <em>N</em>, and {unitv}. We want to multiply them together and read the formula as: {friction2}</p>
+	</li>
+</ul>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section7">
+<h1>2.7 Friction</h1>
+
+<p>&nbsp;</p>
+
+<p>Let&rsquo;s begin with friction and follow our steps.</p>
+
+<p>&nbsp;</p>
+
+<p>Friction is a <strong><em>dissipative force</em></strong>. A dissipative force is one in which the total energy of a system decreases when an object is in motion. Let&rsquo;s say you are driving a car. When you press your foot down on the brake pedal, the car&rsquo;s brakes use friction to slow down the motion of the tires. Kinetic energy (motion) is converted into thermal energy (heat). Whenever two surfaces come into contact, they experience friction. A complete model of friction would include separate cases for static friction (a body at rest against a surface) and kinetic friction (a body in motion against a surface), but for our purposes, we are only going to look at the kinetic case.</p>
+
+<p>Here&rsquo;s the formula for friction:</p>
+
+<figure id="chapter02_figure3"><img alt="Figure 2.3" src="imgs/chapter02/ch02_03.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>&nbsp;</p>
+
+<p>It&rsquo;s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that&rsquo;s the part of the formula that says -1 * {unitv}, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+PVector friction = velocity.get();
 friction.normalize();
-// Let’s figure out the direction of the friction force
+// Let&rsquo;s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
 friction.mult(-1);</pre>
-      <p>Notice two additional steps here.  First, it’s important to make a copy of the velocity vector, as we don’t want to reverse the object’s direction by accident.  Second, we normalize the vector.  This is because the magnitude of friction is not associated with how fast it is moving, and we want to start with a friction vector of magnitude 1 so that it can easily be scaled.</p>
-      <p><a data-type="indexterm" data-primary=""mu (μ)""/>
-      <a data-type="indexterm" data-primary=""coefficient of friction""/>
-      <a data-type="indexterm" data-primary=""coefficient of friction"" data-secondary=""mu (μ)""/>
-      <a data-type="indexterm" data-primary=""friction"" data-secondary=""mu (μ)""/>
-      <a data-type="indexterm" data-primary=""friction"" data-secondary=""coefficient of friction""/></p>
-      <p>According to the formula, the magnitude is <strong class="var">μ</strong> * <strong class="var">N</strong>.   <strong class="var">μ</strong>, the Greek letter <em>mu</em> (pronounced “mew”), is used here to describe the <strong><em>coefficient of friction</em></strong>.   The coefficient of friction establishes the strength of a friction force for a particular surface.  The higher it is, the stronger the friction; the lower, the weaker.   A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper.   Since we’re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
-<pre data-type="programlisting" data-code-language="java">float c = 0.01;</pre>
-<p><a data-type="indexterm" data-primary=""friction"" data-secondary=""normal force""/>
-<a data-type="indexterm" data-primary=""normal force""/></p>
-<p>Now for the second part: <strong class="var">N</strong>.  <strong class="var">N</strong> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object’s motion along a surface.  Think of a vehicle driving along a road.   The vehicle pushes down against the road with gravity, and Newton’s third law tells us that the road in turn pushes back against the vehicle.  That’s the normal force.  The greater the gravitational force, the greater the normal force.   As we’ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck.   With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn’t point in the same direction as gravity.  We’ll need to know something about angles and trigonometry.</p>
-<p>All of these specifics are important; however, in Processing, a “good enough” simulation can be achieved without them.  We can, for example, make friction work with the assumption that the normal force will always have a magnitude of 1.  When we get into trigonometry in the next chapter, we’ll remember to return to this question and make our friction example a bit more sophisticated.  Therefore:</p>
-<pre data-type="programlisting" data-code-language="java">float normal = 1;</pre>
-<p>Now that we have both the magnitude and direction for friction, we can put it all together&#8230;</p>
-<pre data-type="programlisting" data-code-language="java">float c = 0.01;
+
+<p>Notice two additional steps here. First, it&rsquo;s important to make a copy of the velocity vector, as we don&rsquo;t want to reverse the object&rsquo;s direction by accident. Second, we normalize the vector. This is because the magnitude of friction is not associated with how fast it is moving, and we want to start with a friction vector of magnitude 1 so that it can easily be scaled.</p>
+
+<p>&nbsp;</p>
+
+<p>According to the formula, the magnitude is <strong class="var">&mu;</strong> * <strong class="var">N</strong>. <strong class="var">&mu;</strong>, the Greek letter <em>mu</em> (pronounced &ldquo;mew&rdquo;), is used here to describe the <strong><em>coefficient of friction</em></strong>. The coefficient of friction establishes the strength of a friction force for a particular surface. The higher it is, the stronger the friction; the lower, the weaker. A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper. Since we&rsquo;re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+float c = 0.01;</pre>
+
+<p>&nbsp;</p>
+
+<p>Now for the second part: <strong class="var">N</strong>. <strong class="var">N</strong> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object&rsquo;s motion along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with gravity, and Newton&rsquo;s third law tells us that the road in turn pushes back against the vehicle. That&rsquo;s the normal force. The greater the gravitational force, the greater the normal force. As we&rsquo;ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck. With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn&rsquo;t point in the same direction as gravity. We&rsquo;ll need to know something about angles and trigonometry.</p>
+
+<p>All of these specifics are important; however, in Processing, a &ldquo;good enough&rdquo; simulation can be achieved without them. We can, for example, make friction work with the assumption that the normal force will always have a magnitude of 1. When we get into trigonometry in the next chapter, we&rsquo;ll remember to return to this question and make our friction example a bit more sophisticated. Therefore:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+float normal = 1;</pre>
+
+<p>Now that we have both the magnitude and direction for friction, we can put it all together&hellip;</p>
+
+<pre data-code-language="java" data-type="programlisting">
+float c = 0.01;
 float normal = 1;
-// Let’s figure out the magnitude of friction
+// Let&rsquo;s figure out the magnitude of friction
 // (really just an arbitrary constant).
 float frictionMag = c*normal;
 PVector friction = velocity.get();
@@ -462,17 +614,21 @@ friction.normalize();
 // Take the unit vector and multiply it by magnitude
 // and we have our force vector!
 friction.mult(frictionMag);</pre>
-      <p>&#8230;and add it to our “forces” example, where many objects experience wind, gravity, and now friction:</p>
-      <figure>
-        <img src="imgs/chapter02/ch02_ex04a.png" alt="No friction"/>
-        <figcaption/>
-      </figure>
-      <figure>
-        <img src="imgs/chapter02/ch02_ex04b.png" alt="With friction"/>
-        <figcaption/>
-      </figure>
-      <p><strong example>Example 2.4: Including friction</strong></p>
-<pre data-type="programlisting" data-code-language="java">void draw() {
+
+<p>&hellip;and add it to our &ldquo;forces&rdquo; example, where many objects experience wind, gravity, and now friction:</p>
+
+<figure><img alt="No friction" src="imgs/chapter02/ch02_ex04a.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<figure><img alt="With friction" src="imgs/chapter02/ch02_ex04b.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.4: Including friction</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void draw() {
   background(255);
   PVector wind = new PVector(0.001,0);
   // We could scale by mass to be more accurate.
@@ -492,53 +648,70 @@ friction.mult(frictionMag);</pre>
     movers[i].checkEdges();
   }
 }</pre>
-      <p>Running this example, you’ll notice that the circles don’t even make it to the right side of the window.  Since friction continuously pushes against the object in the opposite direction of its movement, the object continuously slows down.  This can be a useful technique or a problem depending on the goals of your visualization.</p>
-      <div id="chapter02_exercise4" data-type="example">
-        <h5>Exercise 2.4</h5>
-        <p>Create pockets of friction in a Processing sketch so that objects only experience friction when crossing over those pockets.    What if you vary the strength (friction coefficient) of each area?   What if you make some pockets feature the opposite of friction—i.e., when you enter a given pocket you actually speed up instead of slowing down?</p>
-      </div>
-    </section>
-    <section data-type="sect1" id="chapter02_section8">
-      <h1>2.8 Air and Fluid Resistance</h1>
-      <figure id="chapter02_figure4">
-        <img src="imgs/chapter02/ch02_04.png" alt="Figure 2.4"/>
-        <figcaption/>
-      </figure>
-      <p><a data-type="indexterm" data-primary=""drag force""/>
-      <a data-type="indexterm" data-primary=""fluid resistance" data-secondary="modeling""/>
-      <a data-type="indexterm" data-primary=""forces"" data-secondary=""fluid resistance""/>
-      <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""fluid resistance" data-tertiary="modeling""/>
-      <a data-type="indexterm" data-primary=""viscous force""/></p>
-      <p>Friction also occurs when a body passes through a liquid or gas.  This force has many different names, all really meaning the same thing: <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>.  While the result is ultimately the same as our previous friction examples (the object slows down), the way in which we calculate a drag force will be slightly different.  Let’s look at the formula:</p>
-      <p>{drag1}</p>
-      <p>Now let’s break this down and see what we really need for an effective simulation in Processing, making ourselves a much simpler formula in the process.</p>
-      <ul>
-        <li>
-        <p>{fd} refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <strong function>applyForce()</strong> function.</p></li>
-        <li>
-        <p>- 1/2 is a constant: -0.5.   This is fairly irrelevant in terms of our Processing world, as we will be making up values for other constants anyway.   However, the fact that it is negative is important, as it tells us that the force is in the opposite direction of velocity (just as with friction).</p></li>
-      </ul>
-      <p><a data-type="indexterm" data-primary=""rho (ρ)""/>
-      <a data-type="indexterm" data-primary=""friction"" data-secondary=""rho (ρ)""/></p>
-      <ul>
-        <li>
-        <p>{rho} is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don’t need to worry about.  We can simplify the problem and consider this to have a constant value of 1.</p></li>
-        <li>
-        <p>{v} refers to the speed of the object moving.  OK, we’ve got this one!  The object’s speed is the magnitude of the velocity vector:  <strong function>velocity.magnitude()</strong>.  And {v2} just means {v} squared or {v} * {v}.</p></li>
-        <li>
-        <p>{a} refers to the frontal area of the object that is pushing through the liquid (or gas).  An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo.   Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p></li>
-        <li>
-        <p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction ({rho}).  This is a constant we’ll determine based on whether we want the drag force to be strong or weak.</p></li>
-        <li>
-        <p>{unitv} Look familiar?  It should.  This refers to the velocity unit vector, i.e. <strong function>velocity.normalize()</strong>.  Just like with friction, drag is a force that points in the opposite direction of velocity.</p></li>
-      </ul>
-      <p>Now that we’ve analyzed each of these components and determined what we need for a simple simulation, we can reduce our formula to:</p>
-      <figure id="chapter02_figure5">
-        <img src="imgs/chapter02/ch02_05.png" alt="Figure 2.5: Our simplified drag force formula"/>
-        <figcaption/>
-      </figure>
-      <p>or:</p>
-<pre data-type="programlisting" data-code-language="java">float c = 0.1;
+
+<p>Running this example, you&rsquo;ll notice that the circles don&rsquo;t even make it to the right side of the window. Since friction continuously pushes against the object in the opposite direction of its movement, the object continuously slows down. This can be a useful technique or a problem depending on the goals of your visualization.</p>
+
+<div data-type="example" id="chapter02_exercise4">
+<h5>Exercise 2.4</h5>
+
+<p>Create pockets of friction in a Processing sketch so that objects only experience friction when crossing over those pockets. What if you vary the strength (friction coefficient) of each area? What if you make some pockets feature the opposite of friction&mdash;i.e., when you enter a given pocket you actually speed up instead of slowing down?</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section8">
+<h1>2.8 Air and Fluid Resistance</h1>
+
+<figure id="chapter02_figure4"><img alt="Figure 2.4" src="imgs/chapter02/ch02_04.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>&nbsp;</p>
+
+<p>Friction also occurs when a body passes through a liquid or gas. This force has many different names, all really meaning the same thing: <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>. While the result is ultimately the same as our previous friction examples (the object slows down), the way in which we calculate a drag force will be slightly different. Let&rsquo;s look at the formula:</p>
+
+<p>{drag1}</p>
+
+<p>Now let&rsquo;s break this down and see what we really need for an effective simulation in Processing, making ourselves a much simpler formula in the process.</p>
+
+<ul>
+	<li>
+	<p>{fd} refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <strong function="">applyForce()</strong> function.</p>
+	</li>
+	<li>
+	<p>- 1/2 is a constant: -0.5. This is fairly irrelevant in terms of our Processing world, as we will be making up values for other constants anyway. However, the fact that it is negative is important, as it tells us that the force is in the opposite direction of velocity (just as with friction).</p>
+	</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<ul>
+	<li>
+	<p>{rho} is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don&rsquo;t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
+	</li>
+	<li>
+	<p>{v} refers to the speed of the object moving. OK, we&rsquo;ve got this one! The object&rsquo;s speed is the magnitude of the velocity vector: <strong function="">velocity.magnitude()</strong>. And {v2} just means {v} squared or {v} * {v}.</p>
+	</li>
+	<li>
+	<p>{a} refers to the frontal area of the object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p>
+	</li>
+	<li>
+	<p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction ({rho}). This is a constant we&rsquo;ll determine based on whether we want the drag force to be strong or weak.</p>
+	</li>
+	<li>
+	<p>{unitv} Look familiar? It should. This refers to the velocity unit vector, i.e. <strong function="">velocity.normalize()</strong>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
+	</li>
+</ul>
+
+<p>Now that we&rsquo;ve analyzed each of these components and determined what we need for a simple simulation, we can reduce our formula to:</p>
+
+<figure id="chapter02_figure5"><img alt="Figure 2.5: Our simplified drag force formula" src="imgs/chapter02/ch02_05.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>or:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+float c = 0.1;
 float speed = v.mag();
 // Part 1 of our formula (magnitude): Cd * v2
 float dragMagnitude = c * speed * speed;
@@ -549,9 +722,13 @@ drag.mult(-1);
 drag.normalize();
 // Magnitude and direction together!
 drag.mult(dragMagnitude);</pre>
-      <p><a data-type="indexterm" data-primary=""friction"" data-secondary=""applying to an object""/></p>
-      <p>Let’s implement this force in our <strong klass>Mover</strong> class example with one addition.   When we wrote our friction example, the force of friction was always present.  Whenever an object was moving, friction would slow it down.  Here, let’s introduce an element to the environment—a “liquid” that the <strong klass>Mover</strong> objects pass through.  The <strong klass>Liquid</strong> object will be a rectangle and will know about its location, width, height, and “coefficient of drag”—i.e., is it easy for objects to move through it (like air) or difficult (like molasses)?  In addition, it should include a function to draw itself on the screen (and two more functions, which we’ll see in a moment).</p>
-<pre data-type="programlisting" data-code-language="java">class Liquid {
+
+<p>&nbsp;</p>
+
+<p>Let&rsquo;s implement this force in our <strong klass="">Mover</strong> class example with one addition. When we wrote our friction example, the force of friction was always present. Whenever an object was moving, friction would slow it down. Here, let&rsquo;s introduce an element to the environment&mdash;a &ldquo;liquid&rdquo; that the <strong klass="">Mover</strong> objects pass through. The <strong klass="">Liquid</strong> object will be a rectangle and will know about its location, width, height, and &ldquo;coefficient of drag&rdquo;&mdash;i.e., is it easy for objects to move through it (like air) or difficult (like molasses)? In addition, it should include a function to draw itself on the screen (and two more functions, which we&rsquo;ll see in a moment).</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Liquid {
   // The liquid object includes a variable defining
   // its coefficient of drag.
   float x,y,w,h;
@@ -569,22 +746,34 @@ drag.mult(dragMagnitude);</pre>
     rect(x,y,w,h);
   }
 }</pre>
-      <p>The main program will now include a <strong klass>Liquid</strong> object reference as well as a line of code that initializes that object.</p>
-<pre data-type="programlisting" data-code-language="java">Liquid liquid;
+
+<p>The main program will now include a <strong klass="">Liquid</strong> object reference as well as a line of code that initializes that object.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+Liquid liquid;
 void setup() {
   //[offset-up] Initialize a Liquid object.  Note the coefficient is low (0.1), otherwise the object would come to a halt fairly quickly (which may someday be the effect you want).
   liquid = new Liquid(0, height/2, width, height/2, 0.1);
 }</pre>
-      <p>Now comes an interesting question: how do we get the <strong klass>Mover</strong> object to talk to the <strong klass>Liquid</strong> object?  In other words, we want to execute the following:</p>
-      <p><em>When a mover passes through a liquid it experiences a drag force.</em></p>
-      <p>&#8230;or in object-oriented speak (assuming we are looping through an array of <strong klass>Mover</strong> objects with index i):</p>
-<pre data-type="programlisting" data-code-language="java">if (movers[i].isInside(liquid)) {
+
+<p>Now comes an interesting question: how do we get the <strong klass="">Mover</strong> object to talk to the <strong klass="">Liquid</strong> object? In other words, we want to execute the following:</p>
+
+<p><em>When a mover passes through a liquid it experiences a drag force.</em></p>
+
+<p>&hellip;or in object-oriented speak (assuming we are looping through an array of <strong klass="">Mover</strong> objects with index i):</p>
+
+<pre data-code-language="java" data-type="programlisting">
+if (movers[i].isInside(liquid)) {
   // If a Mover is inside a Liquid, apply the drag force.
   movers[i].drag(liquid);
 }</pre>
-      <p>The above code tells us that we need to add two functions to the <strong klass>Mover</strong> class: (1) a function that determines if a <strong klass>Mover</strong> object is inside the <strong klass>Liquid</strong> object, and (2) a function that computes and applies a drag force on the <strong klass>Mover</strong> object.</p>
-      <p>The first is easy; we can simply use a conditional statement to determine if the location vector rests inside the rectangle defined by the liquid.</p>
-<pre data-type="programlisting" data-code-language="java">boolean isInside(Liquid l) {
+
+<p>The above code tells us that we need to add two functions to the <strong klass="">Mover</strong> class: (1) a function that determines if a <strong klass="">Mover</strong> object is inside the <strong klass="">Liquid</strong> object, and (2) a function that computes and applies a drag force on the <strong klass="">Mover</strong> object.</p>
+
+<p>The first is easy; we can simply use a conditional statement to determine if the location vector rests inside the rectangle defined by the liquid.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+boolean isInside(Liquid l) {
   //[offset-down] This conditional statement determines if the PVector location is inside the rectangle defined by the Liquid class.
   if (location.x&gt;l.x &amp;&amp; location.x&lt;l.x+l.w &amp;&amp; location.y&gt;l.y &amp;&amp; location.y&lt;l.y+l.h)
   {
@@ -593,10 +782,13 @@ void setup() {
     return false;
   }
 }</pre>
-      <p>The <strong function>drag()</strong> function is a bit more complicated; however, we’ve written the code for it already.  This is simply an implementation of our formula.  The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass>Mover</strong> squared in the opposite direction of velocity!</em></p>
-<pre data-type="programlisting" data-code-language="java"> void drag(Liquid l) {
+
+<p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
+
+<pre data-code-language="java" data-type="programlisting">
+ void drag(Liquid l) {
     float speed = velocity.mag();
-    // The force’s magnitude: Cd * v~2~
+    // The force&rsquo;s magnitude: Cd * v~2~
     float dragMagnitude = l.c * speed * speed;
     PVector drag = velocity.get();
     drag.mult(-1);
@@ -607,13 +799,17 @@ void setup() {
     // Apply the force.
     applyForce(drag);
 }</pre>
-      <p>And with these two functions added to the <strong klass>Mover</strong> class, we’re ready to put it all together in the main tab:</p>
-      <figure>
-        <img src="imgs/chapter02/ch02_ex05.png" alt="ch02 ex05"/>
-        <figcaption/>
-      </figure>
-      <p><strong example>Example 2.5: Fluid Resistance</strong></p>
-<pre data-type="programlisting" data-code-language="java">Mover[] movers = new Mover[100];
+
+<p>And with these two functions added to the <strong klass="">Mover</strong> class, we&rsquo;re ready to put it all together in the main tab:</p>
+
+<figure><img alt="ch02 ex05" src="imgs/chapter02/ch02_ex05.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.5: Fluid Resistance</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover[] movers = new Mover[100];
 Liquid liquid;
 void setup() {
   size(360, 640);
@@ -638,79 +834,116 @@ void draw() {
     movers[i].checkEdges();
   }
 }</pre>
-      <p>Running the example, you should notice that we are simulating balls falling into water.  The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid).  You’ll also notice that the smaller objects slow down a great deal more than the larger objects.    Remember Newton’s second law?  <strong class="var">A</strong> = <strong class="var">F</strong> / <strong class="var">M</strong>. Acceleration equals force <em>divided</em> by mass.  A massive object will accelerate less.  A smaller object will accelerate more.    In this case, the acceleration we’re talking about is the “slowing down” due to drag.  The smaller objects will slow down at a greater rate than the larger ones.</p>
-      <div id="chapter02_exercise5" data-type="example">
-        <h5>Exercise 2.5</h5>
-        <p>Take a look at our formula for drag again:  <strong><em>drag force = coefficient * speed * speed</em></strong>.  The faster an object moves, the greater the drag force against it.  In fact, an object not moving in water experiences no drag at all.   Expand the example to drop the balls from different heights.  How does this affect the drag as they hit the water?</p>
-      </div>
-      <div id="chapter02_exercise6" data-type="example">
-        <h5>Exercise 2.6</h5>
-        <p>The formula for drag also included surface area.  Can you create a simulation of boxes falling into water with a drag force dependent on the length of the side hitting the water?</p>
-      </div>
-      <div id="chapter02_exercise7" data-type="example">
-        <h5>Exercise 2.7</h5>
-        <p>Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it.  This is known as “lift-induced drag” and will cause an airplane with an angled wing to rise in altitude.   Try creating a simulation of lift.</p>
-      </div>
-    </section>
-    <section data-type="sect1" id="chapter02_section9">
-      <h1>2.9 Gravitational Attraction</h1>
-      <p><a data-type="indexterm" data-primary=""gravity"" data-secondary=""modeling""/>
-      <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""gravity""/></p>
-      <figure id="chapter02_figure6">
-        <img src="imgs/chapter02/ch02_06.png" alt="Figure 2.6"/>
-        <figcaption/>
-      </figure>
-      <p>Probably the most famous force of all is gravity.   We humans on earth think of gravity as an apple hitting Isaac Newton on the head.    Gravity means that stuff falls down.  But this is only <em>our</em> experience of gravity.   In truth, just as the earth pulls the apple towards it due to a gravitational force, the apple pulls the earth as well.   The thing is, the earth is just so freaking big that it overwhelms all the other gravity interactions.  Every object with mass exerts a gravitational force on every other object.   And there is a formula for calculating the strengths of these forces, as depicted in Figure 2.6.</p>
-      <p>Let’s examine this formula a bit more closely.</p>
-      <p><a data-type="indexterm" data-primary=""forces"" data-secondary=""universal gravitational constant""/>
-      <a data-type="indexterm" data-primary=""gravity"" data-secondary=""universal gravitational constant""/>
-      <a data-type="indexterm" data-primary=""universal gravitational constant""/></p>
-      <ul>
-        <li>
-        <p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <strong function>applyForce()</strong> function.</p></li>
-        <li>
-        <p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared.   This is a pretty important number if your name is Isaac Newton or Albert Einstein.  It’s not an important number if you are a Processing programmer.  Again, it’s a constant that we can use to make the forces in our world weaker or stronger.  Just making it equal to one and ignoring it isn’t such a terrible choice either.</p></li>
-        <li>
-        <p><strong class="var">m<sub>1</sub></strong> and <strong class="var">m<sub>2</sub></strong> are the masses of objects 1 and 2.   As we saw with Newton’s second law ({newton2a}), mass is also something we could choose to ignore.  After all, shapes drawn on the screen don’t actually have a physical mass.  However, if we keep these values, we can create more interesting simulations in which “bigger” objects exert a stronger gravitational force than smaller ones.</p></li>
-        <li>
-        <p>{unitr} refers to the unit vector pointing from object 1 to object 2.  As we’ll see in a moment, we can compute this direction vector by subtracting the location of one object from the other.</p></li>
-        <li>
-        <p><strong class="var">r</strong><sup>2</sup> refers to the distance between the two objects squared.  Let’s take a moment to think about this a bit more.  With everything on the top of the formula—<strong class="var">G</strong>, <strong class="var">m<sub>1</sub></strong>, <strong class="var">m<sub>2</sub></strong>—the bigger its value, the stronger the force.  Big mass, big force.  Big <strong class="var">G</strong>, big force.  Now, when we divide by something, we have the opposite.  The strength of the force is inversely proportional to the distance squared.  The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p></li>
-      </ul>
-      <p>Hopefully by now the formula makes some sense to us.  We’ve looked at a diagram and dissected the individual components of the formula.  Now it’s time to figure out how we translate the math into Processing code.  Let’s make the following assumptions.</p>
-      <p>We have two objects, and:</p>
-      <p><a data-type="indexterm" data-primary=""gravity"" data-secondary=""implementing model of""/>
-      <a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""gravity""/></p>
-      <ol>
-        <li>
-        <p>Each object has a location: <strong class="var">PVector location1</strong> and <strong class="var">PVector location2</strong>.</p></li>
-        <li>
-        <p>Each object has a mass: <strong class="var">float mass1</strong> and <strong class="var">float mass2</strong>.</p></li>
-        <li>
-        <p>There is a variable <strong class="var">float G</strong> for the universal gravitational constant.</p></li>
-      </ol>
-      <p>Given these assumptions, we want to compute <strong class="var">PVector force</strong>, the force of gravity.  We’ll do it in two parts.  First, we’ll compute the direction of the force {unitr} in the formula above.  Second, we’ll calculate the strength of the force according to the masses and distance.</p>
-      <figure id="chapter02_figure7">
-        <img src="imgs/chapter02/ch02_07.png" alt="Figure 2.7"/>
-        <figcaption/>
-      </figure>
-      <p>Remember in <a href="#chapter01_section10">Chapter 1</a>, when we figured out how to have an object accelerate towards the mouse? (See Figure 2.7.)</p>
-      <p>A vector is the difference between two points. To make a vector that points from the circle to the mouse, we simply subtract one point from another:</p>
-<pre data-type="programlisting" data-code-language="java">PVector dir = PVector.sub(mouse,location);</pre>
+
+<p>Running the example, you should notice that we are simulating balls falling into water. The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid). You&rsquo;ll also notice that the smaller objects slow down a great deal more than the larger objects. Remember Newton&rsquo;s second law? <strong class="var">A</strong> = <strong class="var">F</strong> / <strong class="var">M</strong>. Acceleration equals force <em>divided</em> by mass. A massive object will accelerate less. A smaller object will accelerate more. In this case, the acceleration we&rsquo;re talking about is the &ldquo;slowing down&rdquo; due to drag. The smaller objects will slow down at a greater rate than the larger ones.</p>
+
+<div data-type="example" id="chapter02_exercise5">
+<h5>Exercise 2.5</h5>
+
+<p>Take a look at our formula for drag again: <strong><em>drag force = coefficient * speed * speed</em></strong>. The faster an object moves, the greater the drag force against it. In fact, an object not moving in water experiences no drag at all. Expand the example to drop the balls from different heights. How does this affect the drag as they hit the water?</p>
+</div>
+
+<div data-type="example" id="chapter02_exercise6">
+<h5>Exercise 2.6</h5>
+
+<p>The formula for drag also included surface area. Can you create a simulation of boxes falling into water with a drag force dependent on the length of the side hitting the water?</p>
+</div>
+
+<div data-type="example" id="chapter02_exercise7">
+<h5>Exercise 2.7</h5>
+
+<p>Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it. This is known as &ldquo;lift-induced drag&rdquo; and will cause an airplane with an angled wing to rise in altitude. Try creating a simulation of lift.</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section9">
+<h1>2.9 Gravitational Attraction</h1>
+
+<p>&nbsp;</p>
+
+<figure id="chapter02_figure6"><img alt="Figure 2.6" src="imgs/chapter02/ch02_06.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Probably the most famous force of all is gravity. We humans on earth think of gravity as an apple hitting Isaac Newton on the head. Gravity means that stuff falls down. But this is only <em>our</em> experience of gravity. In truth, just as the earth pulls the apple towards it due to a gravitational force, the apple pulls the earth as well. The thing is, the earth is just so freaking big that it overwhelms all the other gravity interactions. Every object with mass exerts a gravitational force on every other object. And there is a formula for calculating the strengths of these forces, as depicted in Figure 2.6.</p>
+
+<p>Let&rsquo;s examine this formula a bit more closely.</p>
+
+<p>&nbsp;</p>
+
+<ul>
+	<li>
+	<p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <strong function="">applyForce()</strong> function.</p>
+	</li>
+	<li>
+	<p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&rsquo;s not an important number if you are a Processing programmer. Again, it&rsquo;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&rsquo;t such a terrible choice either.</p>
+	</li>
+	<li>
+	<p><strong class="var">m<sub>1</sub></strong> and <strong class="var">m<sub>2</sub></strong> are the masses of objects 1 and 2. As we saw with Newton&rsquo;s second law ({newton2a}), mass is also something we could choose to ignore. After all, shapes drawn on the screen don&rsquo;t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which &ldquo;bigger&rdquo; objects exert a stronger gravitational force than smaller ones.</p>
+	</li>
+	<li>
+	<p>{unitr} refers to the unit vector pointing from object 1 to object 2. As we&rsquo;ll see in a moment, we can compute this direction vector by subtracting the location of one object from the other.</p>
+	</li>
+	<li>
+	<p><strong class="var">r</strong><sup>2</sup> refers to the distance between the two objects squared. Let&rsquo;s take a moment to think about this a bit more. With everything on the top of the formula&mdash;<strong class="var">G</strong>, <strong class="var">m<sub>1</sub></strong>, <strong class="var">m<sub>2</sub></strong>&mdash;the bigger its value, the stronger the force. Big mass, big force. Big <strong class="var">G</strong>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
+	</li>
+</ul>
+
+<p>Hopefully by now the formula makes some sense to us. We&rsquo;ve looked at a diagram and dissected the individual components of the formula. Now it&rsquo;s time to figure out how we translate the math into Processing code. Let&rsquo;s make the following assumptions.</p>
+
+<p>We have two objects, and:</p>
+
+<p>&nbsp;</p>
+
+<ol>
+	<li>
+	<p>Each object has a location: <strong class="var">PVector location1</strong> and <strong class="var">PVector location2</strong>.</p>
+	</li>
+	<li>
+	<p>Each object has a mass: <strong class="var">float mass1</strong> and <strong class="var">float mass2</strong>.</p>
+	</li>
+	<li>
+	<p>There is a variable <strong class="var">float G</strong> for the universal gravitational constant.</p>
+	</li>
+</ol>
+
+<p>Given these assumptions, we want to compute <strong class="var">PVector force</strong>, the force of gravity. We&rsquo;ll do it in two parts. First, we&rsquo;ll compute the direction of the force {unitr} in the formula above. Second, we&rsquo;ll calculate the strength of the force according to the masses and distance.</p>
+
+<figure id="chapter02_figure7"><img alt="Figure 2.7" src="imgs/chapter02/ch02_07.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Remember in <a href="#chapter01_section10">Chapter 1</a>, when we figured out how to have an object accelerate towards the mouse? (See Figure 2.7.)</p>
+
+<p>A vector is the difference between two points. To make a vector that points from the circle to the mouse, we simply subtract one point from another:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+PVector dir = PVector.sub(mouse,location);</pre>
+
 <p>In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:</p>
-<pre data-type="programlisting" data-code-language="java">PVector dir = PVector.sub(location1,location2);
+
+<pre data-code-language="java" data-type="programlisting">
+PVector dir = PVector.sub(location1,location2);
 dir.normalize();</pre>
-      <p>Don’t forget that since we want a unit vector, a vector that tells us about direction only, we’ll need to <em>normalize</em> the vector after subtracting the locations.</p>
-      <p>OK, we’ve got the direction of the force.  Now we just need to compute the magnitude and scale the vector accordingly.</p>
-<pre data-type="programlisting" data-code-language="java">float m = (G * mass1 * mass2) / (distance * distance);
+
+<p>Don&rsquo;t forget that since we want a unit vector, a vector that tells us about direction only, we&rsquo;ll need to <em>normalize</em> the vector after subtracting the locations.</p>
+
+<p>OK, we&rsquo;ve got the direction of the force. Now we just need to compute the magnitude and scale the vector accordingly.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+float m = (G * mass1 * mass2) / (distance * distance);
 dir.mult(m);</pre>
-      <figure id="chapter02_figure8">
-        <img src="imgs/chapter02/ch02_08.png" alt="Figure 2.8"/>
-        <figcaption/>
-      </figure>
-      <p>The only problem is that we don’t know the distance.  <strong class="var">G</strong>, <strong class="var">mass1</strong>, and <strong class="var">mass2</strong> were all givens, but we’ll need to actually compute distance before the above code will work.   Didn’t we just make a vector that points all the way from one location to another?   Wouldn’t the length of that vector be the distance between two objects?</p>
-      <p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then we’ll have the distance.</p>
-<pre data-type="programlisting" data-code-language="java">// The vector that points from one object to another
+
+<figure id="chapter02_figure8"><img alt="Figure 2.8" src="imgs/chapter02/ch02_08.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>The only problem is that we don&rsquo;t know the distance. <strong class="var">G</strong>, <strong class="var">mass1</strong>, and <strong class="var">mass2</strong> were all givens, but we&rsquo;ll need to actually compute distance before the above code will work. Didn&rsquo;t we just make a vector that points all the way from one location to another? Wouldn&rsquo;t the length of that vector be the distance between two objects?</p>
+
+<p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then we&rsquo;ll have the distance.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+// The vector that points from one object to another
 PVector force = PVector.sub(location1,location2);
 // The length (magnitude) of that vector is the distance between the two objects.
 float distance = force.mag();
@@ -720,22 +953,31 @@ float m = (G * mass1 * mass2) / (distance * distance);
 // to the appropriate magnitude.
 force.normalize();
 force.mult(m);</pre>
-      <p>Note that I also renamed the <strong klass>PVector</strong> “dir” as “force.”   After all, when we’re finished with the calculations, the <strong klass>PVector</strong> we started with ends up being the actual force vector we wanted all along.</p>
-      <p>Now that we’ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch.   In Example 2.1, you may recall how we created a simple <strong klass>Mover</strong> object—a class with <strong klass>PVector</strong><code>’s</code> location, velocity, and acceleration as well as an <strong function>applyForce()</strong>.  Let’s take this exact class and put it in a sketch with:</p>
-      <figure id="chapter02_figure9">
-        <img src="imgs/chapter02/ch02_09.png" alt="Figure 2.9"/>
-        <figcaption/>
-      </figure>
-      <ul>
-        <li>
-        <p>A single <strong klass>Mover</strong> object.</p></li>
-        <li>
-        <p>A single <strong klass>Attractor</strong> object (a new class that will have a fixed location).</p></li>
-      </ul>
-      <p>The <strong klass>Mover</strong> object will experience a gravitational pull towards the <strong klass>Attractor</strong> object, as illustrated in Figure 2.9.</p>
-      <p>We can start by making the new <strong klass>Attractor</strong> class very simple—giving it a location and a mass, along with a function to display itself (tying mass to size).</p>
-<pre data-type="programlisting" data-code-language="java">class Attractor {
-  // Our Attractor is a simple object that doesn’t move.
+
+<p>Note that I also renamed the <strong klass="">PVector</strong> &ldquo;dir&rdquo; as &ldquo;force.&rdquo; After all, when we&rsquo;re finished with the calculations, the <strong klass="">PVector</strong> we started with ends up being the actual force vector we wanted all along.</p>
+
+<p>Now that we&rsquo;ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch. In Example 2.1, you may recall how we created a simple <strong klass="">Mover</strong> object&mdash;a class with <strong klass="">PVector</strong><code>&rsquo;s</code> location, velocity, and acceleration as well as an <strong function="">applyForce()</strong>. Let&rsquo;s take this exact class and put it in a sketch with:</p>
+
+<figure id="chapter02_figure9"><img alt="Figure 2.9" src="imgs/chapter02/ch02_09.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<ul>
+	<li>
+	<p>A single <strong klass="">Mover</strong> object.</p>
+	</li>
+	<li>
+	<p>A single <strong klass="">Attractor</strong> object (a new class that will have a fixed location).</p>
+	</li>
+</ul>
+
+<p>The <strong klass="">Mover</strong> object will experience a gravitational pull towards the <strong klass="">Attractor</strong> object, as illustrated in Figure 2.9.</p>
+
+<p>We can start by making the new <strong klass="">Attractor</strong> class very simple&mdash;giving it a location and a mass, along with a function to display itself (tying mass to size).</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Attractor {
+  // Our Attractor is a simple object that doesn&rsquo;t move.
   // We just need a mass and a location.
   float mass;
   PVector location;
@@ -749,8 +991,11 @@ force.mult(m);</pre>
     ellipse(location.x,location.y,mass*2,mass*2);
   }
 }</pre>
-      <p>And in our main program, we can add an instance of the <strong klass>Attractor</strong> class.</p>
-<pre data-type="programlisting" data-code-language="java">Mover m;
+
+<p>And in our main program, we can add an instance of the <strong klass="">Attractor</strong> class.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover m;
 Attractor a;
 void setup() {
   size(640,360);
@@ -765,47 +1010,74 @@ void draw() {
   m.update();
   m.display();
 }</pre>
-      <p><a data-type="indexterm" data-primary=""object"" data-secondary=""interaction between""/></p>
-      <p>This is a good structure: a main program with a <strong klass>Mover</strong> and an <strong klass>Attractor</strong> object, and a class to handle the variables and behaviors of movers and attractors.   The last piece of the puzzle is how to get one object to attract the other.  How do we get these two objects to talk to each other?</p>
-      <p>There are a number of ways we could do this.  Here are just a few possibilities.</p>
-      <table class="codewide">
-        <tr>
-          <th>Task</th>
-          <th>Function</th>
-        </tr>
-        <tr>
-          <td>1. A function that receives both an Attractor and a Mover:</td>
-          <td><pre>attraction(a,m);</pre></td>
-        </tr>
-        <tr>
-          <td>2. A function in the Attractor class that receives a Mover:</td>
-          <td><pre>a.attract(m);</pre></td>
-        </tr>
-        <tr>
-          <td>3. A function in the Mover class that receives an Attractor:</td>
-          <td><pre>m.attractedTo(a);</pre></td>
-        </tr>
-        <tr>
-          <td>4. A function in the Attractor class that receives a Mover and returns a PVector, which is the attraction force.  That attraction force is then passed into the Mover's applyForce() function:</td>
-          <td>
-<pre>
+
+<p>&nbsp;</p>
+
+<p>This is a good structure: a main program with a <strong klass="">Mover</strong> and an <strong klass="">Attractor</strong> object, and a class to handle the variables and behaviors of movers and attractors. The last piece of the puzzle is how to get one object to attract the other. How do we get these two objects to talk to each other?</p>
+
+<p>There are a number of ways we could do this. Here are just a few possibilities.</p>
+
+<table class="codewide">
+	<tbody>
+		<tr>
+			<th>Task</th>
+			<th>Function</th>
+		</tr>
+		<tr>
+			<td>1. A function that receives both an Attractor and a Mover:</td>
+			<td>
+			<pre>
+attraction(a,m);</pre>
+			</td>
+		</tr>
+		<tr>
+			<td>2. A function in the Attractor class that receives a Mover:</td>
+			<td>
+			<pre>
+a.attract(m);</pre>
+			</td>
+		</tr>
+		<tr>
+			<td>3. A function in the Mover class that receives an Attractor:</td>
+			<td>
+			<pre>
+m.attractedTo(a);</pre>
+			</td>
+		</tr>
+		<tr>
+			<td>4. A function in the Attractor class that receives a Mover and returns a PVector, which is the attraction force. That attraction force is then passed into the Mover's applyForce() function:</td>
+			<td>
+			<pre>
 PVector f = a.attract(m);
 m.applyForce(f);
-          </pre></td>
-        </tr>
-      </table>
+          </pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
 <p>and so on. . .</p>
-<p>It’s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities.  I’d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass>Mover</strong> or <strong klass>Attractor</strong> class.   Whether you pick option 2 or option 3 is the difference between saying “The attractor attracts the mover” or “The mover is attracted to the attractor.”  Number 4 is really my favorite, at least in terms of where we are in this book.  After all, we spent a lot of time working out the <strong function>applyForce()</strong> function, and I think our examples will be clearer if we continue with the same methodology.</p>
+
+<p>It&rsquo;s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities. I&rsquo;d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass="">Mover</strong> or <strong klass="">Attractor</strong> class. Whether you pick option 2 or option 3 is the difference between saying &ldquo;The attractor attracts the mover&rdquo; or &ldquo;The mover is attracted to the attractor.&rdquo; Number 4 is really my favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out the <strong function="">applyForce()</strong> function, and I think our examples will be clearer if we continue with the same methodology.</p>
+
 <p>In other words, where we once had:</p>
-<pre data-type="programlisting" data-code-language="java">// Made-up force
+
+<pre data-code-language="java" data-type="programlisting">
+// Made-up force
 PVector f = new PVector(0.1,0);
 m.applyForce(f);</pre>
-      <p>We now have:</p>
-<pre data-type="programlisting" data-code-language="java">// Attraction force between two objects
+
+<p>We now have:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+// Attraction force between two objects
 PVector f = a.attract(m); //[bold]
 m.applyForce(f);</pre>
-      <p>And so our <strong function>draw()</strong> function can now be written as:</p>
-<pre data-type="programlisting" data-code-language="java">void draw() {
+
+<p>And so our <strong function="">draw()</strong> function can now be written as:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void draw() {
   background(255);
   //[full] Calculate attraction force and apply it.
   PVector f = a.attract(m); //[bold]
@@ -815,33 +1087,49 @@ m.applyForce(f);</pre>
   a.display();
   m.display();
 }</pre>
-      <p>We’re almost there.  Since we decided to put the <strong function>attract()</strong> function inside of the <strong klass>Attractor</strong> class, we’ll need to actually write that function.   The function needs to receive a <strong klass>Mover</strong> object and return a <strong klass>PVector</strong>, i.e.:</p>
-<pre data-type="programlisting" data-code-language="java">PVector attract(Mover m) {
+
+<p>We&rsquo;re almost there. Since we decided to put the <strong function="">attract()</strong> function inside of the <strong klass="">Attractor</strong> class, we&rsquo;ll need to actually write that function. The function needs to receive a <strong klass="">Mover</strong> object and return a <strong klass="">PVector</strong>, i.e.:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+PVector attract(Mover m) {
 }</pre>
-      <p>And what goes inside that function?  All of that nice math we worked out for gravitational attraction!</p>
-<pre data-type="programlisting" data-code-language="java">PVector attract(Mover m) {
-  // What’s the force’s direction?
+
+<p>And what goes inside that function? All of that nice math we worked out for gravitational attraction!</p>
+
+<pre data-code-language="java" data-type="programlisting">
+PVector attract(Mover m) {
+  // What&rsquo;s the force&rsquo;s direction?
   PVector force = PVector.sub(location,m.location);
   float distance = force.mag();
   force.normalize();
-  //[offset-down] What’s the force’s magnitude?
+  //[offset-down] What&rsquo;s the force&rsquo;s magnitude?
   float strength = (G * mass * m.mass) / (distance * distance);
   force.mult(strength);
   // Return the force so that it can be applied!
   return force;
 }</pre>
-      <p><a data-type="indexterm" data-primary=""gravity"" data-secondary=""placing limits on model of""/></p>
-      <p>And we’re done.  Sort of.  Almost.  There’s one small kink we need to work out.  Let’s look at the above code again.  See that symbol for divide, the slash?  Whenever we have one of these, we need to ask ourselves the question:  What would happen if  the distance happened to be a really, really small number or (even worse!) zero??!  Well, we know we can’t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000!   Yes, this is the real-world formula for the strength of gravity, but we don’t live in the real world.  We live in the <em>Processing</em> world.   And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen.   And so with this formula, it’s good for us to be practical and constrain the range of what <strong class="var">distance</strong> can actually be.   Maybe, no matter where the <strong klass>Mover</strong> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
-<pre data-type="programlisting" data-code-language="java">  distance = constrain(distance,5,25);</pre>
-<p>For the same reason that we need to constrain the minimum distance, it’s useful for us to do the same with the maximum.  After all, if the mover were to be, say, 500 pixels from the attractor (not unreasonable), we’d be dividing the force by 250,000.  That force might end up being so weak that it’s almost as if we’re not applying it at all.</p>
-<p>Now, it’s really up to you to decide what behaviors you want.  But in the case of, “I want reasonable-looking attraction that is never absurdly weak or strong,” then constraining the distance is a good technique.</p>
-<p>Our <strong klass>Mover</strong> class hasn’t changed at all, so let’s just look at the main program and the <strong klass>Attractor</strong> class as a whole, adding a variable <strong class="var">G</strong> for the universal gravitational constant.  (On the website, you’ll find that this example also has code that allows you to move the <strong klass>Attractor</strong> object with the mouse.)</p>
-      <figure>
-<img src="imgs/chapter02/ch02_ex06.png" alt="ch02 ex06"/>
-<figcaption/>
-      </figure>
-<p><strong example>Example 2.6: Attraction</strong></p>
-<pre data-type="programlisting" data-code-language="java">// A Mover and an Attractor
+
+<p>&nbsp;</p>
+
+<p>And we&rsquo;re done. Sort of. Almost. There&rsquo;s one small kink we need to work out. Let&rsquo;s look at the above code again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves the question: What would happen if the distance happened to be a really, really small number or (even worse!) zero??! Well, we know we can&rsquo;t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000! Yes, this is the real-world formula for the strength of gravity, but we don&rsquo;t live in the real world. We live in the <em>Processing</em> world. And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen. And so with this formula, it&rsquo;s good for us to be practical and constrain the range of what <strong class="var">distance</strong> can actually be. Maybe, no matter where the <strong klass="">Mover</strong> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  distance = constrain(distance,5,25);</pre>
+
+<p>For the same reason that we need to constrain the minimum distance, it&rsquo;s useful for us to do the same with the maximum. After all, if the mover were to be, say, 500 pixels from the attractor (not unreasonable), we&rsquo;d be dividing the force by 250,000. That force might end up being so weak that it&rsquo;s almost as if we&rsquo;re not applying it at all.</p>
+
+<p>Now, it&rsquo;s really up to you to decide what behaviors you want. But in the case of, &ldquo;I want reasonable-looking attraction that is never absurdly weak or strong,&rdquo; then constraining the distance is a good technique.</p>
+
+<p>Our <strong klass="">Mover</strong> class hasn&rsquo;t changed at all, so let&rsquo;s just look at the main program and the <strong klass="">Attractor</strong> class as a whole, adding a variable <strong class="var">G</strong> for the universal gravitational constant. (On the website, you&rsquo;ll find that this example also has code that allows you to move the <strong klass="">Attractor</strong> object with the mouse.)</p>
+
+<figure><img alt="ch02 ex06" src="imgs/chapter02/ch02_ex06.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.6: Attraction</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+// A Mover and an Attractor
 Mover m;
 Attractor a;
 void setup() {
@@ -871,7 +1159,7 @@ class Attractor {
     PVector force = PVector.sub(location,m.location);
     float distance = force.mag();
     // Remember, we need to constrain the distance
-    // so that our circle doesn’t spin out of control.
+    // so that our circle doesn&rsquo;t spin out of control.
     distance = constrain(distance,5.0,25.0);
     force.normalize();
     float strength = (G * mass * m.mass) / (distance * distance);
@@ -884,13 +1172,17 @@ class Attractor {
     ellipse(location.x,location.y,mass*2,mass*2);
   }
 }</pre>
-      <p>And we could, of course, expand this example using an array to include many <strong klass>Mover</strong> objects, just as we did with friction and drag:</p>
-      <figure>
-        <img src="imgs/chapter02/ch02_ex07.png" alt="ch02 ex07"/>
-        <figcaption/>
-      </figure>
-      <p><strong example>Example 2.7: Attraction with many Movers</strong></p>
-<pre data-type="programlisting" data-code-language="java">// Now we have 10 Movers!
+
+<p>And we could, of course, expand this example using an array to include many <strong klass="">Mover</strong> objects, just as we did with friction and drag:</p>
+
+<figure><img alt="ch02 ex07" src="imgs/chapter02/ch02_ex07.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.7: Attraction with many Movers</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+// Now we have 10 Movers!
 Mover[] movers = new Mover[10];
 Attractor a;
 void setup() {
@@ -912,20 +1204,29 @@ void draw() {
     movers[i].display();
   }
 }</pre>
-      <div id="chapter02_exercise8" data-type="example">
-        <h5>Exercise 2.8</h5>
-        <p>In the example above, we have a system (i.e. array) of <strong klass>Mover</strong> objects and one <strong klass>Attractor</strong> object.  Build an example that has systems of both movers and attractors.  What if you make the attractors invisible?  Can you create a pattern/design from the trails of objects moving around attractors?  See the <a href="http://processing.org/exhibition/works/metropop/">Metropop Denim project by Clayton Cubitt and Tom Carden</a> for an example.</p>
-      </div>
-      <div id="chapter02_exercise9" data-type="example">
-        <h5>Exercise 2.9</h5>
-        <p>It’s worth noting that gravitational attraction is a model we can follow to develop our own forces.  This chapter isn’t suggesting that you should exclusively create sketches that use gravitational attraction.  Rather, you should be thinking creatively about how to design your own rules to drive the behavior of objects.  For example, what happens if you design a force that is weaker the closer it gets and stronger the farther it gets?  Or what if you design your attractor to attract faraway objects, but repel close ones?</p>
-      </div>
-    </section>
-    <section data-type="sect1" id="chapter02_section10">
-      <h1>2.10 Everything Attracts (or Repels) Everything</h1>
-      <p>Hopefully, you found it helpful that we started with a simple scenario—<em>one object attracts another object</em><code>—</code>and moved on to <em>one object attracts many objects</em>.  However, it’s likely that you are going to find yourself in a slightly more complex situation: <em>many objects attract each other</em>.  In other words, every object in a given system attracts every other object in that system (except for itself).</p>
-      <p>We’ve really done almost all of the work for this already.  Let’s consider a Processing sketch with an array of <strong klass>Mover</strong> objects:</p>
-<pre data-type="programlisting" data-code-language="java">Mover[] movers = new Mover[10];
+
+<div data-type="example" id="chapter02_exercise8">
+<h5>Exercise 2.8</h5>
+
+<p>In the example above, we have a system (i.e. array) of <strong klass="">Mover</strong> objects and one <strong klass="">Attractor</strong> object. Build an example that has systems of both movers and attractors. What if you make the attractors invisible? Can you create a pattern/design from the trails of objects moving around attractors? See the <a href="http://processing.org/exhibition/works/metropop/">Metropop Denim project by Clayton Cubitt and Tom Carden</a> for an example.</p>
+</div>
+
+<div data-type="example" id="chapter02_exercise9">
+<h5>Exercise 2.9</h5>
+
+<p>It&rsquo;s worth noting that gravitational attraction is a model we can follow to develop our own forces. This chapter isn&rsquo;t suggesting that you should exclusively create sketches that use gravitational attraction. Rather, you should be thinking creatively about how to design your own rules to drive the behavior of objects. For example, what happens if you design a force that is weaker the closer it gets and stronger the farther it gets? Or what if you design your attractor to attract faraway objects, but repel close ones?</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter02_section10">
+<h1>2.10 Everything Attracts (or Repels) Everything</h1>
+
+<p>Hopefully, you found it helpful that we started with a simple scenario&mdash;<em>one object attracts another object</em><code>&mdash;</code>and moved on to <em>one object attracts many objects</em>. However, it&rsquo;s likely that you are going to find yourself in a slightly more complex situation: <em>many objects attract each other</em>. In other words, every object in a given system attracts every other object in that system (except for itself).</p>
+
+<p>We&rsquo;ve really done almost all of the work for this already. Let&rsquo;s consider a Processing sketch with an array of <strong klass="">Mover</strong> objects:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover[] movers = new Mover[10];
 void setup() {
   size(400,400);
   for (int i = 0; i &lt; movers.length; i++) {
@@ -939,9 +1240,13 @@ void draw() {
     movers[i].display();
   }
 }</pre>
-      <p>The <strong function>draw()</strong> function is where we need to work some magic.  Currently, we’re saying: “for every mover <strong class="var">i</strong>, update and display yourself.”  Now what we need to say is: “for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.”</p>
-      <p>To do this, we need to nest a second loop.</p>
-<pre data-type="programlisting" data-code-language="java"> for (int i = 0; i &lt; movers.length; i++) {
+
+<p>The <strong function="">draw()</strong> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <strong class="var">i</strong>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&rdquo;</p>
+
+<p>To do this, we need to nest a second loop.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ for (int i = 0; i &lt; movers.length; i++) {
   // For every Mover, check every Mover!
     for (int j = 0; j &lt; movers.length; j++) {
       PVector force = movers[j].attract(movers[i]);
@@ -950,8 +1255,11 @@ void draw() {
     movers[i].update();
     movers[i].display();
 }</pre>
-      <p>In the previous example, we had an <strong klass>Attractor</strong> object with a function named <strong function>attract()</strong>.  Now, since we have movers attracting movers, all we need to do is copy the <strong function>attract()</strong> function into the <strong klass>Mover</strong> class.</p>
-<pre data-type="programlisting" data-code-language="java">class Mover {
+
+<p>In the previous example, we had an <strong klass="">Attractor</strong> object with a function named <strong function="">attract()</strong>. Now, since we have movers attracting movers, all we need to do is copy the <strong function="">attract()</strong> function into the <strong klass="">Mover</strong> class.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class Mover {
   [inline]// All the other stuff we had before plus. . .
   // The Mover now knows how to attract another Mover.
   PVector attract(Mover m) {
@@ -964,13 +1272,17 @@ void draw() {
     return force;
   }
 }</pre>
-      <p>Of course, there’s one small problem. When we are looking at every mover <strong class="var">i</strong> and every mover <strong class="var">j</strong>, are we OK with the times that <strong class="var">i</strong> equals <strong class="var">j</strong>?  For example, should mover #3 attract mover #3?   The answer, of course, is no.   If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself.   And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
-      <figure>
-        <img src="imgs/chapter02/ch02_ex08.png" alt="ch02 ex08"/>
-        <figcaption/>
-      </figure>
-      <p><strong example>Example 2.8: Mutual attraction</strong></p>
-<pre data-type="programlisting" data-code-language="java">Mover[] movers = new Mover[20];
+
+<p>Of course, there&rsquo;s one small problem. When we are looking at every mover <strong class="var">i</strong> and every mover <strong class="var">j</strong>, are we OK with the times that <strong class="var">i</strong> equals <strong class="var">j</strong>? For example, should mover #3 attract mover #3? The answer, of course, is no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
+
+<figure><img alt="ch02 ex08" src="imgs/chapter02/ch02_ex08.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 2.8: Mutual attraction</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+Mover[] movers = new Mover[20];
 float g = 0.4;
 void setup() {
   size(400,400);
@@ -982,7 +1294,7 @@ void draw() {
   background(255);
   for (int i = 0; i &lt; movers.length; i++) {
     for (int j = 0; j &lt; movers.length; j++) {
-      // Don’t attract yourself!
+      // Don&rsquo;t attract yourself!
       if (i != j) {
         PVector force = movers[j].attract(movers[i]);
         movers[i].applyForce(force);
@@ -992,12 +1304,19 @@ void draw() {
     movers[i].display();
   }
 }</pre>
-      <div id="chapter02_exercise10" data-type="example">
-        <h5>Exercise 2.10</h5>
-        <p>Change the attraction force in Example 2.8 to a repulsion force.  Can you create an example in which all of the <strong klass>Mover</strong> objects are attracted to the mouse, but repel each other?  Think about how you need to balance the relative strength of the forces and how to most effectively use distance in your force calculations.</p>
-      </div>
-      <div data-type="tip">
-        <h1>The Ecosystem Project</h1><p>Step 2 Exercise:</p>
-        <p>Incorporate the concept of forces into your ecosystem.   Try introducing other elements into the environment (food, a predator) for the creature to interact with.   Does the creature experience attraction or repulsion to things in its world?  Can you think more abstractly and design forces based on the creature’s desires or goals?</p>
-      </div></section>
-    </section>
+
+<div data-type="example" id="chapter02_exercise10">
+<h5>Exercise 2.10</h5>
+
+<p>Change the attraction force in Example 2.8 to a repulsion force. Can you create an example in which all of the <strong klass="">Mover</strong> objects are attracted to the mouse, but repel each other? Think about how you need to balance the relative strength of the forces and how to most effectively use distance in your force calculations.</p>
+</div>
+
+<div data-type="tip">
+<h1>The Ecosystem Project</h1>
+
+<p>Step 2 Exercise:</p>
+
+<p>Incorporate the concept of forces into your ecosystem. Try introducing other elements into the environment (food, a predator) for the creature to interact with. Does the creature experience attraction or repulsion to things in its world? Can you think more abstractly and design forces based on the creature&rsquo;s desires or goals?</p>
+</div>
+</section>
+</section>
