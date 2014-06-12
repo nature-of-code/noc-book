@@ -1,0 +1,25 @@
+<section data-type="chapter" id="_chapter_6_steering">
+  <h1>Chapter 6.  Steering</h1>
+  <section data-type="sect1" id="_6_1_forces_from_within">
+    <h1>6.1  Forces from Within</h1>
+    <p>The term <strong><em>autonomous agent</em></strong> generally refers to an entity that makes its own choices about how to act in its environment without any influence from a leader or global plan.  For us, “acting” will mean moving.   This addition is a significant conceptual leap.  Instead of a box sitting on a boundary waiting to be pushed by another falling box, we are now going to design a box that has the ability and “desire” to leap out of the way of that other falling box, if it so chooses.   While the concept of forces that come from within is a major shift in our design thinking, our code base will barely change, as these desires and actions are simply that—<em>forces</em>.</p>
+    <p>This is a subtle change, but incredibly important for us: it allows us to alter the strength of these forces in one place.</p>
+    <figure>
+      <img src="images/chapter06/ch06_ex8.png" alt="ch06 ex8"/>
+      <figcaption/>
+    </figure>
+    <p><strong example>Example 6.8: Combining steering behaviors: Seek and separate</strong></p>
+<pre data-type="programlisting" data-code-language="java">void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
+  PVector separate = separate(vehicles);
+  PVector seek = seek(new PVector(mouseX,mouseY));
+  //[full] These values can be whatever you want them to be!
+  // They can be variables that are customized for
+  // each vehicle, or they can change over time.
+  separate.mult(1.5); //[bold]
+  seek.mult(0.5); //[bold]
+  //[end]
+  applyForce(separate);
+  applyForce(seek);
+}</pre>
+  </section>
+</section>

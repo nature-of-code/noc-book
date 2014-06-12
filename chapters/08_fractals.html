@@ -1,0 +1,1212 @@
+<div style="page-break-after:always;">&nbsp;</div>
+
+<section data-type="chapter" id="_chapter_8_fractals">
+<h1>Chapter 8. Fractals</h1>
+
+<blockquote class="long-quote">&ldquo;Pathological monsters! cried the terrified mathematician<br />
+Every one of them a splinter in my eye<br />
+I hate the Peano Space and the Koch Curve<br />
+I fear the Cantor Ternary Set<br />
+The Sierpinski Gasket makes me wanna cry<br />
+And a million miles away a butterfly flapped its wings<br />
+On a cold November day a man named Benoit Mandelbrot was born&rdquo;<br />
+<span class="attribution">&mdash; Jonathan Coulton, lyrics from &ldquo;Mandelbrot Set&rdquo; </span></blockquote>
+
+<p> </p>
+
+<p> </p>
+
+<p>Once upon a time, I took a course in high school called &ldquo;Geometry.&rdquo; Perhaps you did too. You learned about shapes in one dimension, two dimensions, and maybe even three. What is the circumference of a circle? The area of a rectangle? The distance between a point and a line? Come to think of it, we&rsquo;ve been studying geometry all along in this book, using vectors to describe the motion of bodies in Cartesian space. This sort of geometry is generally referred to as Euclidean geometry, after the Greek mathematician Euclid.</p>
+
+<figure id="chapter08_figure1"><img alt="Figure 8.1" src="images/chapter08/ch08_01.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>For us nature coders, we have to ask the question: Can we describe our world with Euclidean geometry? The LCD screen I&rsquo;m staring at right now sure looks like a rectangle. And the plum I ate this morning is circular. But what if I were to look further, and consider the trees that line the street, the leaves that hang off those trees, the lightning from last night&rsquo;s thunderstorm, the cauliflower I ate for dinner, the blood vessels in my body, and the mountains and coastlines that cover land beyond New York City? Most of the stuff you find in nature cannot be described by the idealized geometrical forms of Euclidean geometry. So if we want to start building computational designs with patterns beyond the simple shapes <strong function="">ellipse()</strong>, <strong function="">rect()</strong>, and <strong function="">line()</strong>, it&rsquo;s time for us to learn about the concepts behind and techniques for simulating the geometry of nature: fractals.</p>
+
+<section data-type="sect1" id="chapter08_section1">
+<h1>8.1 What Is a Fractal?</h1>
+
+<p>  <a data-primary="" data-type="indexterm" em="">Fractal Geometry of Nature&quot; data-secondary=&quot;The (Mandelbrot)&quot;&quot;/&gt;</a></p>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<p><a data-primary="" data-type="indexterm" em="">The term <strong><em>fractal</em></strong> (from the Latin <em>fractus</em>, meaning &ldquo;broken&rdquo;) was coined by the mathematician Benoit Mandelbrot in 1975. In his seminal work &ldquo;The Fractal Geometry of Nature,&rdquo; he defines a fractal as &ldquo;a rough or fragmented geometric shape that can be split into parts, each of which is (at least approximately) a reduced-size copy of the whole.&rdquo;</a></p>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<figure id="chapter08_figure2"><a data-primary="" data-type="indexterm" em=""><img alt="Figure 8.2: One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself.   Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function.  Do they tend to infinity?  Do they stay bounded?  While a fascinating mathematical discussion, this “escape-time” algorithm is a less practical method for generating fractals than the recursive techniques we’ll examine in this chapter.  However, an example for generating the Mandelbrot set is included in the code examples." src="images/chapter08/ch08_02.png" /> </a>
+
+<figcaption>&nbsp;</figcaption>
+<a data-primary="" data-type="indexterm" em=""> </a></figure>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<p><a data-primary="" data-type="indexterm" em="">Let&rsquo;s illustrate this definition with two simple examples. First, let&rsquo;s think about a tree branching structure (for which we&rsquo;ll write the code later):</a></p>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<figure id="chapter08_figure3"><a data-primary="" data-type="indexterm" em=""><img alt="Figure 8.3" src="images/chapter08/ch08_03.png" /> </a>
+
+<figcaption>&nbsp;</figcaption>
+<a data-primary="" data-type="indexterm" em=""> </a></figure>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<p><a data-primary="" data-type="indexterm" em="">Notice how the tree in Figure 8.3 has a single root with two branches connected at its end. Each one of those branches has two branches at its end and those branches have two branches and so on and so forth. What if we were to pluck one branch from the tree and examine it on its own?</a></p>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<figure id="chapter08_figure4"><a data-primary="" data-type="indexterm" em=""><img alt="Figure 8.4" src="images/chapter08/ch08_04.png" /> </a>
+
+<figcaption>&nbsp;</figcaption>
+<a data-primary="" data-type="indexterm" em=""> </a></figure>
+<a data-primary="" data-type="indexterm" em=""> </a>
+
+<p> </p>
+
+<p>Looking closely at a given section of the tree, we find that the shape of this branch resembles the tree itself. This is known as <strong><em>self-similarity</em></strong>; as Mandelbrot stated, each part is a &ldquo;reduced-size copy of the whole.&rdquo;</p>
+
+<p>The above tree is perfectly symmetrical and the parts are, in fact, exact replicas of the whole. However, fractals do not have to be perfectly self-similar. Let&rsquo;s take a look at a graph of the stock market (adapted from actual Apple stock data).</p>
+
+<figure id="chapter08_figure5"><img alt="Figure 8.5: Graph A" src="images/chapter08/ch08_05.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>And one more.</p>
+
+<figure id="chapter08_figure6"><img alt="Figure 8.6: Graph B" src="images/chapter08/ch08_06.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p> </p>
+
+<p>In these graphs, the x-axis is time and the y-axis is the stock&rsquo;s value. It&rsquo;s not an accident that I omitted the labels, however. Graphs of stock market data are examples of fractals because they look the same at any scale. Are these graphs of the stock over one year? One day? One hour? There&rsquo;s no way for you to know without a label. (Incidentally, graph A shows six months&rsquo; worth of data and graph B zooms into a tiny part of graph A, showing six hours.)</p>
+
+<figure id="chapter08_figure7"><img alt="Figure 8.7" src="images/chapter08/ch08_07.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>This is an example of a <strong><em>stochastic</em></strong> fractal, meaning that it is built out of probabilities and randomness. Unlike the deterministic tree-branching structure, it is statistically self-similar. As we go through the examples in this chapter, we will look at both deterministic and stochastic techniques for generating fractal patterns.</p>
+
+<p> </p>
+
+<p>While self-similarity is a key trait of fractals, it&rsquo;s important to realize that self-similarity alone does not make a fractal. After all, a line is self-similar. A line looks the same at any scale, and can be thought of as comprising lots of little lines. But it&rsquo;s not a fractal. Fractals are characterized by having a fine structure at small scales (keep zooming into the stock market graph and you&rsquo;ll continue to find fluctuations) and cannot be described with Euclidean geometry. If you can say &ldquo;It&rsquo;s a line!&rdquo; then it&rsquo;s not a fractal.</p>
+
+<p> </p>
+
+<p>Another fundamental component of fractal geometry is recursion. Fractals all have a recursive definition. We&rsquo;ll start with recursion before developing techniques and code examples for building fractal patterns in Processing.</p>
+</section>
+
+<section data-type="sect1" id="chapter08_section2">
+<h1>8.2 Recursion</h1>
+
+<p> </p>
+
+<p>Let&rsquo;s begin our discussion of recursion by examining the first appearance of fractals in modern mathematics. In 1883, German mathematician George Cantor developed simple rules to generate an infinite set:</p>
+
+<figure id="chapter08_figure8"><img alt="Figure 8.8: The Cantor set" src="images/chapter08/ch08_08.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>There is a feedback loop at work here. Take a single line and break it into two. Then return to those two lines and apply the same rule, breaking each line into two, and now we&rsquo;re left with four. Then return to those four lines and apply the rule. Now you&rsquo;ve got eight. This process is known as <strong><em>recursion</em></strong>: the repeated application of a rule to successive results. Cantor was interested in what happens when you apply these rules an infinite number of times. We, however, are working in a finite pixel space and can mostly ignore the questions and paradoxes that arise from infinite recursion. We will instead construct our code in such a way that we do not apply the rules forever (which would cause our program to freeze).</p>
+
+<p></p>
+
+<p>Before we implement the Cantor set, let&rsquo;s take a look at what it means to have recursion in code. Here&rsquo;s something we&rsquo;re used to doing all the time&mdash;calling a function inside another function.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void someFunction() {
+  // Calling the function background()
+  // in the definition of someFunction()
+  background(0);
+}</pre>
+
+<p>What would happen if we called the function we are defining within the function itself? Can <strong function="">someFunction()</strong> call <strong function="">someFunction()</strong>?</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void someFunction() {
+  someFunction();
+}</pre>
+
+<p> </p>
+
+<p>In fact, this is not only allowed, but it&rsquo;s quite common (and essential to how we will implement the Cantor set). Functions that call themselves are <em>recursive</em> and good for solving certain problems. For example, certain mathematical calculations are implemented recursively; the most common example is <em>factorial</em>.</p>
+
+<p>The factorial of any number n, usually written as n!, is defined as:</p>
+
+<p><strong formula="">n! = n * n &ndash; 1 * . . . . * 3 * 2 * 1</strong><br />
+<strong formula="">0! = 1</strong></p>
+
+<p>Here we&rsquo;ll write a function in Processing that uses a <strong function="">for</strong> loop to calculate factorial:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+int factorial(int n) {
+  int f = 1;
+  //[full] Using a regular loop to compute factorial
+  for (int i = 0; i &lt; n; i++) {
+    f = f * (i+1);
+  }
+  //[end]
+  return f;
+}</pre>
+
+<p>Upon close examination, you&rsquo;ll notice something interesting about how factorial works. Let&rsquo;s look at 4! and 3!</p>
+
+<p><strong formula="">4! = 4 * 3 * 2 * 1</strong><br />
+<strong formula="">3! = 3 * 2 * 1</strong></p>
+
+<p><strong><em>therefore. . .</em></strong></p>
+
+<p><strong formula="">4! = 4 * 3!</strong></p>
+
+<p>In more general terms, for any positive integer n:</p>
+
+<p><strong formula="">n! = n * (n-1)!</strong><br />
+<strong formula="">1! = 1</strong></p>
+
+<p>Written out:</p>
+
+<p>The <em>factorial</em> of <strong class="var">n</strong> is defined as <strong class="var">n</strong> times the <em>factorial</em> of <strong class="var">n-1</strong>.</p>
+
+<p>The definition of <strong><em>factorial</em></strong> includes <strong><em>factorial</em></strong>?! It&rsquo;s kind of like defining &ldquo;tired&quot; as &ldquo;the feeling you get when you are tired.&rdquo; This concept of self-reference in functions is an example of recursion. And we can use it to write a factorial function that calls itself.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+int factorial(int n) {
+  if (n == 1) {
+    return 1;
+  } else {
+    return n * factorial(n-1);
+  }
+}</pre>
+
+<p>It may look crazy, but it works. Here are the steps that happen when <strong function="">factorial(4)</strong> is called.</p>
+
+<figure id="chapter08_figure9"><img alt="Figure 8.9" src="images/chapter08/ch08_09.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>We can apply the same principle to graphics with interesting results, as we will see in many examples throughout this chapter. Take a look at this recursive function.</p>
+
+<figure><img alt="ch08 ex01" src="images/chapter08/ch08_ex01.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.1: Recursive Circles I</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void drawCircle(int x, int y, float radius) {
+  ellipse(x, y, radius, radius);
+  if(radius &gt; 2) {
+    radius *= 0.75f;
+    // The drawCircle() function is
+    // calling itself recursively.
+    drawCircle(x, y, radius);
+  }
+}</pre>
+
+<p><strong function="">drawCircle()</strong> draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.</p>
+
+<p> </p>
+
+<p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a crucial point. As with iteration, <em>all recursive functions must have an exit condition!</em> You likely are already aware that all <strong function="">for</strong> and <strong function="">while</strong> loops must include a boolean expression that eventually evaluates to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite loop. The same can be said about recursion. If a recursive function calls itself forever and ever, you&rsquo;ll be most likely be treated to a nice frozen screen.</p>
+
+<p>This circles example is rather trivial; it could easily be achieved through simple iteration. However, for scenarios in which a function calls itself more than once, recursion becomes wonderfully elegant.</p>
+
+<p>Let&rsquo;s make <strong function="">drawCircle()</strong> a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
+
+<figure><img alt="ch08 ex02" src="images/chapter08/ch08_ex02.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.2: Recursion twice</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void setup() {
+  size(640,360);
+}
+void draw() {
+  background(255);
+  drawCircle(width/2,height/2,200);
+}
+void drawCircle(float x, float y, float radius) {
+  stroke(0);
+  noFill();
+  ellipse(x, y, radius, radius);
+  if(radius &gt; 2) {
+    //[full] drawCircle() calls itself twice, creating
+    // a branching effect.  For every circle,
+    // a smaller circle is drawn to the left and the right.
+    drawCircle(x + radius/2, y, radius/2);
+    drawCircle(x - radius/2, y, radius/2);
+    //[end]
+  }
+}</pre>
+
+<p>With just a little more code, we could also add a circle above and below each circle.</p>
+
+<figure><img alt="ch08 ex03" src="images/chapter08/ch08_ex03.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.3: Recursion four times</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void drawCircle(float x, float y, float radius) {
+  ellipse(x, y, radius, radius);
+  if(radius &gt; 8) {
+    drawCircle(x + radius/2, y, radius/2);
+    drawCircle(x - radius/2, y, radius/2);
+    drawCircle(x, y + radius/2, radius/2);
+    drawCircle(x, y - radius/2, radius/2);
+  }
+}</pre>
+
+<p>Try reproducing this sketch with iteration instead of recursion&mdash;I dare you!</p>
+</section>
+
+<section data-type="sect1" id="chapter08_section3">
+<h1>8.3 The Cantor Set with a Recursive Function</h1>
+
+<p></p>
+
+<p>Now we&rsquo;re ready to visualize the Cantor set in Processing using a recursive function. Where do we begin? Well, we know that the Cantor set begins with a line. So let&rsquo;s start there and write a function that draws a line.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void cantor(float x, float y, float len) {
+  line(x,y,x+len,y);
+}</pre>
+
+<p>The above <strong function="">cantor()</strong> function draws a line that starts at pixel coordinate <em>(x,y)</em> with a length of <strong class="var">len</strong>. (The line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function, saying:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+cantor(10, 20, width-20);</pre>
+
+<p>we&rsquo;d get the following:</p>
+
+<figure id="chapter08_figure10"><img alt="Figure 8.10" src="images/chapter08/ch08_10.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<figure id="chapter08_figure11"><img alt="Figure 8.11" src="images/chapter08/ch08_11.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Now, the Cantor rule tells us to erase the middle third of that line, which leaves us with two lines, one from the beginning of the line to the one-third mark, and one from the two-thirds mark to the end of the line.</p>
+
+<p>We can now add two more lines of code to draw the second pair of lines, moving the y-location down a bunch of pixels so that we can see the result below the original line.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void cantor(float x, float y, float len) {
+  line(x,y,x+len,y);
+  y += 20;
+  // From start to 1/3rd
+  line(x,y,x+len/3,y); //[bold]
+  // From 2/3rd to end
+  line(x+len*2/3,y,x+len,y); //[bold]
+}</pre>
+
+<figure id="chapter08_figure12"><img alt="Figure 8.12" src="images/chapter08/ch08_12.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>While this is a fine start, such a manual approach of calling <strong function="">line()</strong> for each line is not what we want. It will get unwieldy very quickly, as we&rsquo;d need four, then eight, then sixteen calls to <strong function="">line()</strong>. Yes, a <strong function="">for</strong> loop is our usual way around such a problem, but give that a try and you&rsquo;ll see that working out the math for each iteration quickly proves inordinately complicated. Here is where recursion comes and rescues us.</p>
+
+<p>Take a look at where we draw that first line from the start to the one-third mark.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+   line(x,y,x+len/3,y);</pre>
+
+<p>Instead of calling the <strong function="">line()</strong> function directly, we can simply call the <strong function="">cantor()</strong> function itself. After all, what does the <strong function="">cantor()</strong> function do? It draws a line at an <em>(x,y)</em> location with a given length! And so:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+   line(x,y,x+len/3,y);         becomes -------&gt;  cantor(x,y,len/3);</pre>
+
+<p>And for the second line:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+   line(x+len*2/3,y,x+len,y);   becomes -------&gt;  cantor(x+len*2/3,y,len/3);</pre>
+
+<p>Leaving us with:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void cantor(float x, float y, float len) {
+  line(x,y,x+len,y);
+  y += 20;
+  cantor(x,y,len/3);
+  cantor(x+len*2/3,y,len/3);
+}</pre>
+
+<p>And since the <strong function="">cantor()</strong> function is called recursively, the same rule will be applied to the next lines and to the next and to the next as <strong function="">cantor()</strong> calls itself again and again! Now, don&rsquo;t go and run this code yet. We&rsquo;re missing that crucial element: an exit condition. We&rsquo;ll want to make sure we stop at some point&mdash;for example, if the length of the line ever is less than 1 pixel.</p>
+
+<figure><img alt="ch08 ex04" src="images/chapter08/ch08_ex04.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.4: Cantor set</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void cantor(float x, float y, float len) {
+  // Stop at 1 pixel!
+  if (len &gt;= 1) {
+    line(x,y,x+len,y);
+    y += 20;
+    cantor(x,y,len/3);
+    cantor(x+len*2/3,y,len/3);
+  }
+}</pre>
+
+<div data-type="example">
+<h5>Exercise 8.1</h5>
+
+<p>Using <strong function="">drawCircle()</strong> and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</p>
+
+<figure><img alt="ch08 exc01" src="images/chapter08/ch08_exc01.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter08_section4">
+<h1>8.4 The Koch Curve and the ArrayList Technique</h1>
+
+<p>   </p>
+
+<p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects that could be moved independently? The recursive function is simple and elegant, but it does not allow you to do much besides simply generating the pattern itself. However, there is another way we can apply recursion in combination with an <strong klass="">ArrayList</strong> that will allow us to not only generate a fractal pattern, but keep track of all its individual parts as objects.</p>
+
+<p>To demonstrate this technique, let&rsquo;s look at another famous fractal pattern, discovered in 1904 by Swedish mathematician Helge von Koch. Here are the rules. (Note that it starts the same way as the Cantor set, with a single line.)</p>
+
+<figure id="chapter08_figure13"><img alt="Figure 8.13" src="images/chapter08/ch08_13.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>The result looks like:</p>
+
+<figure id="chapter08_figure14"><img alt="Figure 8.14" src="images/chapter08/ch08_14.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p></p>
+
+<div data-type="note">
+<h1>The &ldquo;Monster&rdquo; Curve</h1>
+
+<p>The Koch curve and other fractal patterns are often called &ldquo;mathematical monsters.&rdquo; This is due to an odd paradox that emerges when you apply the recursive definition an infinite number of times. If the length of the original starting line is one, the first iteration of the Koch curve will yield a line of length four-thirds (each segment is one-third the length of the starting line). Do it again and you get a length of sixteen-ninths. As you iterate towards infinity, the length of the Koch curve approaches infinity. Yet it fits in the tiny finite space provided right here on this paper (or screen)!</p>
+
+<p>Since we are working in the Processing land of finite pixels, this theoretical paradox won&rsquo;t be a factor for us. We&rsquo;ll have to limit the number of times we recursively apply the Koch rules so that our program won&rsquo;t run out of memory or crash.</p>
+</div>
+
+<p>We could proceed in the same manner as we did with the Cantor set, and write a recursive function that iteratively applies the Koch rules over and over. Nevertheless, we are going to tackle this problem in a different manner by treating each segment of the Koch curve as an individual object. This will open up some design possibilities. For example, if each segment is an object, we could allow each segment to move independently from its original location and participate in a physics simulation. In addition, we could use a random color, line thickness, etc. to display each segment differently.</p>
+
+<p>In order to accomplish our goal of treating each segment as an individual object, we must first decide what this object should be in the first place. What data should it store? What functions should it have?</p>
+
+<p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each <strong klass="">KochLine</strong> object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are <strong klass="">PVector</strong> objects, and the line is drawn with Processing&rsquo;s <strong function="">line()</strong> function.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+class KochLine {
+  //[full] A line between two points: start and end
+  PVector start;
+  PVector end;
+  //[end]
+  KochLine(PVector a, PVector b) {
+    start = a.get();
+    end = b.get();
+  }
+  void display() {
+    stroke(0);
+    // Draw the line from PVector start to end.
+    line(start.x, start.y, end.x, end.y);
+  }
+}</pre>
+
+<p>Now that we have our <strong klass="">KochLine</strong> class, we can get started on the main program. We&rsquo;ll need a data structure to keep track of what will eventually become many <strong klass="">KochLine</strong> objects, and an <strong klass="">ArrayList</strong> (see Chapter 4 for a review of <strong klass="">ArrayList</strong><code>s</code>) will do just fine.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+ArrayList&lt;KochLine&gt; lines;</pre>
+
+<p>In <strong function="">setup()</strong>, we&rsquo;ll want to create the <strong klass="">ArrayList</strong> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void setup() {
+  size(600, 300);
+  // Create the ArrayList.
+  lines = new ArrayList&lt;KochLine&gt;();
+  // Left side of window
+  PVector start = new PVector(0, 200);
+  // Right side of window
+  PVector end   = new PVector(width, 200);
+  // The first KochLine object
+  lines.add(new KochLine(start, end));
+}</pre>
+
+<p>Then in <strong function="">draw()</strong>, all <strong klass="">KochLine</strong> objects (just one right now) can be displayed in a loop.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void draw() {
+  background(255);
+  for (KochLine l : lines) {
+    l.display();
+  }
+}</pre>
+
+<p>This is our foundation. Let&rsquo;s review what we have so far:</p>
+
+<ul>
+	<li>
+	<p><strong><em>KochLine class:</em></strong> A class to keep track of a line from point A to B.</p>
+	</li>
+	<li>
+	<p><strong><em>ArrayList:</em></strong> A list of all <strong klass="">KochLine</strong> objects.</p>
+	</li>
+</ul>
+
+<p>With the above elements, how and where do we apply Koch rules and principles of recursion?</p>
+
+<p></p>
+
+<p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation. We are going to apply a similar technique here. We have an <strong klass="">ArrayList</strong> that keeps track of the current set of <strong klass="">KochLine</strong> objects (at the start of the program, there is only one). We will need a second <strong klass="">ArrayList</strong> (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new <strong klass="">KochLine</strong> objects that are generated from applying the Koch rules. For every <strong klass="">KochLine</strong> object in the current <strong klass="">ArrayList</strong>, four new <strong klass="">KochLine</strong> objects are added to the next <strong klass="">ArrayList</strong>. When we&rsquo;re done, the next <strong klass="">ArrayList</strong> becomes the current one.</p>
+
+<figure id="chapter08_figure15"><img alt="Figure 8.15" src="images/chapter08/ch08_15.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Here&rsquo;s how the code will look:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void generate() {
+  // Create the next ArrayList...
+  ArrayList next = new ArrayList&lt;KochLine&gt;();
+  // ...for every current line.
+  for (KochLine l : lines) {
+    //[full] Add four new lines. (We need to figure out how
+    // to compute the locations of these lines!)
+    next.add(new KochLine(???,???));
+    next.add(new KochLine(???,???));
+    next.add(new KochLine(???,???));
+    next.add(new KochLine(???,???));
+    //[end]
+  }
+  // The new ArrayList is now the
+  // one we care about!
+  lines = next;
+}</pre>
+
+<p>By calling <strong function="">generate()</strong> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong klass="">KochLine</strong> objects. Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong klass="">KochLine</strong> object uses <strong klass="">PVector</strong>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <strong klass="">KochLine</strong> object.</p>
+
+<figure id="chapter08_figure16"><img alt="Figure 8.16" src="images/chapter08/ch08_16.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new <strong klass="">KochLine</strong> objects and make the new line segments (ab, cb, cd, and de).</p>
+
+<pre data-code-language="java" data-type="programlisting">
+    next.add(new KochLine(a,b));
+    next.add(new KochLine(b,c));
+    next.add(new KochLine(c,d));
+next.add(new KochLine(d,e));</pre>
+
+<p>Where do we get these points? Since we have a <strong klass="">KochLine</strong> object, why not ask the <strong klass="">KochLine</strong> object to compute all these points for us?</p>
+
+<pre data-code-language="java" data-type="programlisting">
+void generate() {
+  ArrayList next = new ArrayList&lt;KochLine&gt;();
+  for (KochLine l : lines) {
+    //[full] The KochLine object has five functions,
+    // each of which return a PVector according
+    // to the Koch rules.
+    PVector a = l.kochA();
+    PVector b = l.kochB();
+    PVector c = l.kochC();
+    PVector d = l.kochD();
+    PVector e = l.kochE();
+    //[end]
+    next.add(new KochLine(a, b));
+    next.add(new KochLine(b, c));
+    next.add(new KochLine(c, d));
+    next.add(new KochLine(d, e));
+  }
+  lines = next;
+}</pre>
+
+<p>Now we just need to write five new functions in the <strong klass="">KochLine</strong> class, each one returning a <strong klass="">PVector</strong> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let&rsquo;s knock off <strong function="">kochA()</strong> and <strong function="">kochE()</strong> first, which are simply the start and end points of the original line.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  PVector kochA() {
+    // Note the use of get(), which returns a copy of the PVector. As was noted in
+    // Chapter 6, section 14, we want to avoid making copies whenever
+    // possible, but here we will need a new PVector in case we want the segments to move
+    // independently of each other.
+    return start.get();
+  }
+  PVector kochE() {
+    return end.get();
+  }
+</pre>
+
+<p>Now let&rsquo;s move on to points B and D. B is one-third of the way along the line segment and D is two-thirds. Here we can make a <strong klass="">PVector</strong> that points from start to end and shrink it to one-third the length for B and two-thirds the length for D to find these points.</p>
+
+<figure id="chapter08_figure17"><img alt="Figure 8.17" src="images/chapter08/ch08_17.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<pre data-code-language="java" data-type="programlisting">
+  PVector kochB() {
+    // PVector from start to end
+    PVector v = PVector.sub(end, start);
+    // One-third the length
+    v.div(3);
+    // Add that PVector to the beginning of the line
+    // to find the new point.
+    v.add(start);
+    return v;
+  }
+  PVector kochD() {
+    PVector v = PVector.sub(end, start);
+    // Same thing here, only we need to move two-thirds
+    // along the line instead of one-third.
+    v.mult(2/3.0);
+    v.add(start);
+    return v;
+}</pre>
+
+<p>The last point, C, is the most difficult one to find. However, if you recall that the angles of an equilateral triangle are all sixty degrees, this makes it a little bit easier. If we know how to find point B with a <strong klass="">PVector</strong> one-third the length of the line, what if we were to rotate that same <strong klass="">PVector</strong> sixty degrees and move along that vector from point B? We&rsquo;d be at point C!</p>
+
+<figure id="chapter08_figure18"><img alt="Figure 8.18" src="images/chapter08/ch08_18.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<pre data-code-language="java" data-type="programlisting">
+  PVector kochC() {
+    // Start at the beginning.
+    PVector a = start.get();
+    PVector v = PVector.sub(end, start);
+    // Move 1/3rd of the way to point B.
+    v.div(3);
+    a.add(v);
+    // Rotate &ldquo;above&rdquo; the line 60 degrees.
+    v.rotate(-radians(60));
+    // Move along that vector to point C.
+    a.add(v);
+    return a;
+}</pre>
+
+<p>Putting it all together, if we call <strong function="">generate()</strong> five times in <strong function="">setup()</strong>, we&rsquo;ll see the following result.</p>
+
+<figure><img alt="ch08 ex05" src="images/chapter08/ch08_ex05.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.5: Koch curve</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+ArrayList&lt;KochLine&gt; lines;
+void setup() {
+  size(600, 300);
+  background(255);
+  lines = new ArrayList&lt;KochLine&gt;();
+  PVector start = new PVector(0, 200);
+  PVector end   = new PVector(width, 200);
+  lines.add(new KochLine(start, end));
+  // Arbitrarily apply the Koch rules five times.
+  for (int i = 0; i &lt; 5; i++) {
+    generate();
+  }
+}</pre>
+
+<div data-type="example">
+<h5>Exercise 8.2</h5>
+
+<figure><img alt="ch08 exc02" src="images/chapter08/ch08_exc02.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Draw the Koch snowflake (or some other variation of the Koch curve).</p>
+
+<figure><img alt="blank" src="images/blank.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.3</h5>
+
+<p>Try animating the Koch curve. For example, can you draw it from left to right? Can you vary the visual design of the line segments? Can you move the line segments using techniques from earlier chapters? What if each line segment were made into a spring (toxiclibs) or joint (Box2D)?</p>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.4</h5>
+
+<p>Rewrite the Cantor set example using objects and an <strong klass="">ArrayList</strong>.</p>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.5</h5>
+
+<p>Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion.</p>
+
+<figure><img alt="ch08 exc05" src="images/chapter08/ch08_exc05.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter08_section5">
+<h1>8.5 Trees</h1>
+
+<p>    </p>
+
+<p>The fractals we have examined in this chapter so far are deterministic, meaning they have no randomness and will always produce the identical outcome each time they are run. They are excellent demonstrations of classic fractals and the programming techniques behind drawing them, but are too precise to feel <em>natural</em>. In this next part of the chapter, I want to examine some techniques behind generating a stochastic (or non-deterministic) fractal. The example we&rsquo;ll use is a branching tree. Let&rsquo;s first walk through the steps to create a deterministic version. Here are our production rules:</p>
+
+<figure id="chapter08_figure19"><img alt="Figure 8.19" src="images/chapter08/ch08_19.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Again, we have a nice fractal with a recursive definition: A branch is a line with two branches connected to it.</p>
+
+<figure><img alt="ch08 ex06" src="images/chapter08/ch08_ex06.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>    </p>
+
+<p>The part that is a bit more difficult than our previous fractals lies in the use of the word <em>rotate</em> in the fractal&rsquo;s rules. Each new branch must rotate relative to the previous branch, which is rotated relative to all its previous branches. Luckily for us, Processing has a mechanism to keep track of rotations for us&mdash;the <strong><em>transformation matrix</em></strong>. If you aren&rsquo;t familiar with the functions <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong>, I suggest you read the online Processing tutorial <a href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover the concepts you&rsquo;ll need for this particular example.</p>
+
+<p>Let&rsquo;s begin by drawing a single branch, the trunk of the tree. Since we are going to involve the <strong function="">rotate()</strong> function, we&rsquo;ll need to make sure we are continuously translating along the branches while we draw the tree. And since the root starts at the bottom of the window (see above), the first step requires translating to that spot:</p>
+
+<pre data-code-language="java" data-type="programlisting">
+translate(width/2,height);</pre>
+
+<figure id="chapter08_figure20"><img alt="Figure 8.20" src="images/chapter08/ch08_20.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>&hellip;followed by drawing a line upwards (Figure 8.20):</p>
+
+<pre data-code-language="java" data-type="programlisting">
+line(0,0,0,-100);</pre>
+
+<p>Once we&rsquo;ve finished the root, we just need to translate to the end and rotate in order to draw the next branch. (Eventually, we&rsquo;re going to need to package up what we&rsquo;re doing right now into a recursive function, but let&rsquo;s sort out the steps first.)</p>
+
+<figure id="chapter08_figure21"><img alt="Figure 8.21" src="images/chapter08/ch08_21.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Remember, when we rotate in Processing, we are always rotating around the point of origin, so here the point of origin must always be translated to the end of our current branch.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+translate(0,-100);
+rotate(PI/6);
+line(0,0,0,-100);</pre>
+
+<p>Now that we have a branch going to the right, we need one going to the left. We can use <strong function="">pushMatrix()</strong> to save the transformation state before we rotate, letting us call <strong function="">popMatrix()</strong> to restore that state and draw the branch to the left. Let&rsquo;s look at all the code together.</p>
+
+<figure id="chapter08_figure22"><img alt="Figure 8.22" src="images/chapter08/ch08_22.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<figure id="chapter08_figure23"><img alt="Figure 8.23" src="images/chapter08/ch08_23.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<pre data-code-language="java" data-type="programlisting">
+translate(width/2,height);
+// The root
+line(0,0,0,-100);
+translate(0,-100);
+pushMatrix();
+rotate(PI/6);
+// Branch to the right
+line(0,0,0,-100);
+popMatrix();
+rotate(-PI/6);
+// Branch to the left
+line(0,0,0,-100);</pre>
+
+<p>If you think of each call to the function <strong function="">line()</strong> as a &ldquo;branch,&rdquo; you can see from the code above that we have implemented our definition of branching as a line that has two lines connected to its end. We could keep adding more and more calls to <strong function="">line()</strong> for more and more branches, but just as with the Cantor set and Koch curve, our code would become incredibly complicated and unwieldy. Instead, we can use the above logic as our foundation for writing a recursive function, replacing the direct calls to <strong function="">line()</strong> with our own function called <strong function="">branch()</strong>. Let&rsquo;s take a look.</p>
+
+<p><strong example="">Example 8.6: Recursive tree</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void branch() {
+  // Draw the branch itself.
+  line(0, 0, 0, -100);
+  // Translate to the end.
+  translate(0, -100);
+  pushMatrix();
+  // Rotate to the right and branch again.
+  rotate(PI/6);
+  branch();
+  popMatrix();
+  pushMatrix();
+  // Rotate to the left and branch again.
+  rotate(-PI/6);
+  branch();
+  popMatrix();
+}</pre>
+
+<p>Notice how in the above code we use <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong> around each subsequent call to <strong function="">branch()</strong>. This is one of those elegant code solutions that feels almost like magic. Each call to <strong function="">branch()</strong> takes a moment to remember the location of that particular branch. If you turn yourself into Processing for a moment and try to follow the recursive function with pencil and paper, you&rsquo;ll notice that it draws all of the branches to the right first. When it gets to the end, <strong function="">popMatrix()</strong> will pop us back along all of the branches we&rsquo;ve drawn and start sending branches out to the left.</p>
+
+<div data-type="example">
+<h5>Exercise 8.6</h5>
+
+<figure><img alt="ch08 exc06" src="images/chapter08/ch08_exc06.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>Emulate the Processing code in <a href="#chapter08_example6">Example 8.6</a> and number the branches in the above diagram in the order that Processing would actually draw each one.</p>
+</div>
+
+<p>You may have noticed that the recursive function we just wrote would not actually draw the above tree. After all, it has no exit condition and would get stuck in infinite recursive calls to itself. You&rsquo;ll also probably notice that the branches of the tree get shorter at each level. Let&rsquo;s look at how we can shrink the length of the lines as the tree is drawn, and stop branching once the lines have become too short.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+// Each branch now receives
+// its length as an argument.
+void branch(float len) {
+  line(0, 0, 0, -len);
+  translate(0, -len);
+  // Each branch&rsquo;s length
+  // shrinks by two-thirds.
+  len *= 0.66;
+  if (len &gt; 2) {
+    pushMatrix();
+    rotate(theta);
+    // Subsequent calls to branch()
+    // include the length argument.
+    branch(len);
+    popMatrix();
+    pushMatrix();
+    rotate(-theta);
+    branch(len);
+    popMatrix();
+  }
+}</pre>
+
+<p>We&rsquo;ve also included a variable for theta that allows us, when writing the rest of the code in <strong function="">setup()</strong> and <strong function="">draw()</strong>, to vary the branching angle according to, say, the <strong class="var">mouseX</strong> location.</p>
+
+<figure><img alt="ch08 ex06a" src="images/chapter08/ch08_ex06a.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<figure><img alt="ch08 ex06b" src="images/chapter08/ch08_ex06b.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<figure><img alt="ch08 ex06c" src="images/chapter08/ch08_ex06c.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.7: Recursive tree</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+float theta;
+void setup() {
+  size(300, 200);
+}
+void draw() {
+  background(255);
+  // Pick an angle according to
+  // the mouse location.
+  theta = map(mouseX,0,width,0,PI/2);
+  // The first branch starts at the
+  // bottom of the window.
+  translate(width/2, height);
+  stroke(0);
+  branch(60);
+}</pre>
+
+<div data-type="example">
+<h5>Exercise 8.7</h5>
+
+<p>Vary the <strong function="">strokeWeight()</strong> for each branch. Make the root thick and each subsequent branch thinner.</p>
+
+<figure><img alt="ch08 exc07" src="images/chapter08/ch08_exc07.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.8</h5>
+
+<p>The tree structure can also be generated using the <strong klass="">ArrayList</strong> technique demonstrated with the Koch curve. Recreate the tree using a <strong class="var">Branch</strong> object and an <strong klass="">ArrayList</strong> to keep track of the branches. Hint: you&rsquo;ll want to keep track of the branch directions and lengths using vector math instead of Processing transformations.</p>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.9</h5>
+
+<p>Once you have the tree built with an <strong klass="">ArrayList</strong> of <strong class="var">Branch</strong> objects, animate the tree&rsquo;s growth. Can you draw leaves at the end of the branches?</p>
+</div>
+
+<p>The recursive tree fractal is a nice example of a scenario in which adding a little bit of randomness can make the tree look more natural. Take a look outside and you&rsquo;ll notice that branch lengths and angles vary from branch to branch, not to mention the fact that branches don&rsquo;t all have exactly the same number of smaller branches. First, let&rsquo;s see what happens when we simply vary the angle and length. This is a pretty easy one, given that we can just ask Processing for a random number each time we draw the tree.</p>
+
+<figure><img alt="ch08 ex07a" src="images/chapter08/ch08_ex07a.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<pre data-code-language="java" data-type="programlisting">
+void branch(float len) {
+  // Start by picking a random
+  // angle for each branch.
+  float theta = random(0,PI/3);
+  line(0, 0, 0, -len);
+  translate(0, -len);
+  len *= 0.66;
+  if (len &gt; 2) {
+    pushMatrix();
+    rotate(theta);
+    branch(len);
+    popMatrix();
+    pushMatrix();
+    rotate(-theta);
+    branch(len);
+    popMatrix();
+  }
+}</pre>
+
+<p>In the above function, we always call <strong function="">branch()</strong> twice. But why not pick a random number of branches and call <strong function="">branch()</strong> that number of times?</p>
+
+<figure><img alt="ch08 ex07b" src="images/chapter08/ch08_ex07b.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.8: Stochastic tree</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+void branch(float len) {
+  line(0, 0, 0, -len);
+  translate(0, -len);
+  if (len &gt; 2) {
+    // Call branch() a random
+    // number of times.
+    int n = int(random(1,4));
+    for (int i = 0; i &lt; n; i++) {
+      // Each branch gets its own random angle.
+      float theta = random(-PI/2, PI/2);
+      pushMatrix();
+      rotate(theta);
+      branch(h);
+      popMatrix();
+    }
+}</pre>
+
+<div data-type="example">
+<h5>Exercise 8.10</h5>
+
+<p>Set the angles of the branches of the tree according to Perlin noise values. Adjust the noise values over time to animate the tree. See if you can get it to appear as if it is blowing in the wind.</p>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.11</h5>
+
+<p>Use toxiclibs to simulate tree physics. Each branch of the tree should be two particles connected with a spring. How can you get the tree to stand up and not fall down?</p>
+</div>
+</section>
+
+<section data-type="sect1" id="chapter08_section6">
+<h1>8.6 L-systems</h1>
+
+<p>    </p>
+
+<p>In 1968, Hungarian botanist Aristid Lindenmayer developed a grammar-based system to model the growth patterns of plants. L-systems (short for Lindenmayer systems) can be used to generate all of the recursive fractal patterns we&rsquo;ve seen so far in this chapter. We don&rsquo;t need L-systems to do the kind of work we&rsquo;re doing here; however, they are incredibly useful because they provide a mechanism for keeping track of fractal structures that require complex and multi-faceted production rules.</p>
+
+<p>In order to create an example that implements L-systems in Processing, we are going to have to be comfortable with working with (a) recursion, (b) transformation matrices, and (c) strings. So far we&rsquo;ve worked with recursion and transformations, but strings are new here. We will assume the basics, but if that is not comfortable for you, I would suggest taking a look at the Processing tutorial <a href="http://www.processing.org/learning/text/">Strings and Drawing Text</a>.</p>
+
+<p>An L-system involves three main components:</p>
+
+<p>   </p>
+
+<ul>
+	<li>
+	<p><strong><em>Alphabet.</em></strong> An L-system&rsquo;s alphabet is comprised of the valid characters that can be included. For example, we could say the alphabet is &ldquo;ABC,&rdquo; meaning that any valid &ldquo;sentence&rdquo; (a string of characters) in an L-system can only include these three characters.</p>
+	</li>
+</ul>
+
+<p></p>
+
+<ul>
+	<li>
+	<p><strong><em>Axiom.</em></strong> The axiom is a sentence (made up with characters from the alphabet) that describes the initial state of the system. For example, with the alphabet &ldquo;ABC,&rdquo; some example axioms are &ldquo;AAA&rdquo; or &ldquo;B&rdquo; or &ldquo;ACBAB.&rdquo;</p>
+	</li>
+</ul>
+
+<p></p>
+
+<ul>
+	<li>
+	<p><strong><em>Rules.</em></strong> The rules of an L-system are applied to the axiom and then applied recursively, generating new sentences over and over again. An L-system rule includes two sentences, a &ldquo;predecessor&rdquo; and a &ldquo;successor.&rdquo; For example, with the Rule &ldquo;A &mdash;&gt; AB&rdquo;, whenever an &ldquo;A&rdquo; is found in a string, it is replaced with &ldquo;AB.&rdquo;</p>
+	</li>
+</ul>
+
+<p>Let&rsquo;s begin with a very simple L-system. (This is, in fact, Lindenmayer&rsquo;s original L-system for modeling the growth of algae.)</p>
+
+<figure id="chapter08_figure24"><img alt="Figure 8.24: And so on and so forth..." src="images/chapter08/ch08_24.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong formula="">Alphabet: A B</strong><br />
+<strong formula="">Axiom: A</strong><br />
+<strong formula="">Rules: (A &rarr; AB) (B &rarr; A)</strong></p>
+
+<p>As with our recursive fractal shapes, we can consider each successive application of the L-system rules to be a generation. Generation 0 is, by definition, the axiom.</p>
+
+<p>Let&rsquo;s look at how we might create these generations with code. We&rsquo;ll start by using a <strong klass="">String</strong> object to store the axiom.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+String current = &quot;A&quot;;</pre>
+
+<p>And once again, just as we did with the Game of Life and the Koch curve <strong klass="">ArrayList</strong> examples, we will need an entirely separate string to keep track of the &ldquo;next&rdquo; generation.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+String next = &quot;&quot;;</pre>
+
+<p>Now it&rsquo;s time to apply the rules to the current generation and place the results in the next.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+for (int i = 0; i &lt; current.length(); i++) {
+  char c = current.charAt(i);
+  // Production rule A --&gt; AB
+  if (c == 'A') {
+    next += &quot;AB&quot;;
+  // Production rule B --&gt; A
+  } else if (c == 'B') {
+    next += &quot;A&quot;;
+  }
+}</pre>
+
+<p>And when we&rsquo;re done, current can become next.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+current = next;</pre>
+
+<p>To be sure this is working, let&rsquo;s package it into a function and and call it every time the mouse is pressed.</p>
+
+<figure><img alt="ch08 ex08" src="images/chapter08/ch08_ex08.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.9: Simple L-system sentence generation</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+// Start with an axiom.
+String current = &quot;A&quot;;
+// Let&rsquo;s keep track of how many generations.
+int count = 0;
+void setup() {
+  println(&quot;Generation &quot; + count + &quot;: &quot; + current);
+}
+void draw() {
+}
+void mousePressed() {
+  String next = &quot;&quot;;
+  // Traverse the current String and make the new one.
+  for (int i = 0; i &lt; current.length(); i++) {
+    char c = current.charAt(i);
+    if (c == 'A') {
+      next += &quot;AB&quot;;
+    }  else if (c == 'B') {
+      next += &quot;A&quot;;
+    }
+  }
+  current = next;
+  count++;
+  println(&quot;Generation &quot; + count + &quot;: &quot; + current);
+}</pre>
+
+<p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <strong klass="">String</strong> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <strong klass="">String</strong> object is &ldquo;immutable,&rdquo; which means once the object is created it can never be changed. Whenever you add on to the end of a <strong klass="">String</strong> object, Java has to make a brand new <strong klass="">String</strong> object (even if you are using the same variable name).</p>
+
+<pre data-code-language="java" data-type="programlisting">
+String s = &quot;blah&quot;;
+s += &quot;add some more stuff&quot;;</pre>
+
+<p> </p>
+
+<p>In most cases, this is fine, but why duplicate a 46,000-character string if you don&rsquo;t have to? For better efficiency in our L-system examples, we&rsquo;ll use the <strong klass="">StringBuffer</strong> class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+  // A StringBuffer for the &ldquo;next&rdquo; sentence
+  StringBuffer next = new StringBuffer();
+  for (int i = 0; i &lt; current.length(); i++) {
+    char c = current.charAt(i);
+    if (c == 'A') {
+      // append() instead of +=
+      next.append(&quot;AB&quot;);
+    } else if (c == 'B') {
+      next.append(&quot;A&quot;);
+    }
+  }
+  // StringBuffer can easily be converted
+  // back to a String.
+current = next.toString();</pre>
+
+<p>You may find yourself wondering right about now: what exactly is the point of all this? After all, isn&rsquo;t this a chapter about <em>drawing</em> fractal patterns? Yes, the recursive nature of the L-system sentence structure seems relevant to the discussion, but how exactly does this model plant growth in a visual way?</p>
+
+<p>What we&rsquo;ve left unsaid until now is that embedded into these L-system sentences are instructions for drawing. Let&rsquo;s see how this works with another example.</p>
+
+<p><strong formula="">Alphabet: A B</strong><br />
+<strong formula="">Axiom: A</strong><br />
+<strong formula="">Rules: (A &rarr; ABA) (B &rarr; BBB)</strong></p>
+
+<p>To read a sentence, we&rsquo;ll translate it in the following way:</p>
+
+<p><strong formula="">A: Draw a line forward.</strong><br />
+<strong formula="">B: Move forward without drawing.</strong></p>
+
+<p>Let&rsquo;s look at the sentence of each generation and its visual output.</p>
+
+<p><strong formula="">Generation 0: A</strong><br />
+<strong formula="">Generation 1: ABA</strong><br />
+<strong formula="">Generation 2: ABABBBABA</strong><br />
+<strong formula="">Generation 3: ABABBBABABBBBBBBBBABABBBABA</strong></p>
+
+<p></p>
+
+<p>Look familiar? This is the Cantor set generated with an L-system.</p>
+
+<figure id="chapter08_figure25"><img alt="Figure 8.25" src="images/chapter08/ch08_25.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p>The following alphabet is often used with L-systems: &ldquo;FG+-[]&rdquo;, meaning:</p>
+
+<p><strong formula="">F: Draw a line and move forward</strong><br />
+<strong formula="">G: Move forward (without drawing a line)</strong><br />
+<strong formula="">+: Turn right</strong><br />
+<strong formula="">-: Turn left</strong><br />
+<strong formula="">[: Save current location</strong><br />
+<strong formula="">]: Restore previous location</strong></p>
+
+<p></p>
+
+<p>This type of drawing framework is often referred to as &ldquo;Turtle graphics&rdquo; (from the old days of LOGO programming). Imagine a turtle sitting on your computer screen to which you could issue a small set of commands: turn left, turn right, draw a line, etc. Processing isn&rsquo;t set up to operate this way by default, but by using <strong function="">translate()</strong>, <strong function="">rotate()</strong>, and <strong function="">line()</strong>, we can emulate a Turtle graphics engine fairly easily.</p>
+
+<p></p>
+
+<p>Here&rsquo;s how we would translate the above L-system alphabet into Processing code.</p>
+
+<p><strong formula="">F: line(0,0,0,len); translate(0,len);</strong><br />
+<strong formula="">G: translate(0,len);</strong><br />
+<strong formula="">+: rotate(angle);</strong><br />
+<strong formula="">-: rotate(-angle);</strong><br />
+<strong formula="">[: pushMatrix();</strong><br />
+<strong formula="">]: popMatrix();</strong></p>
+
+<p>Assuming we have a sentence generated from the L-system, we can walk through the sentence character by character and call the appropriate function as outlined above.</p>
+
+<pre data-code-language="java" data-type="programlisting">
+for (int i = 0; i &lt; sentence.length(); i++) {
+  // Looking at each character one at a time
+  char c = sentence.charAt(i);
+  //[full] Performing the correct task for each character.
+  // This could also be written with a &ldquo;case&rdquo; statement,
+  // which might be nicer to look at, but leaving it as an
+  // if/else if structure helps readers not familiar with case statements.
+  if (c == 'F') {
+    line(0,0,len,0);
+    translate(len,0);
+  } else if (c == 'G') {
+    translate(len,0);
+  } else if (c == '+') {
+    rotate(theta);
+  } else if (c == '-') {
+    rotate(-theta);
+  } else if (c == '[') {
+    pushMatrix();
+  } else if (c == ']') {
+    popMatrix();
+  }
+  //[end]
+}</pre>
+
+<p>The next example will draw a more elaborate structure with the following L-system.</p>
+
+<p><strong formula="">Alphabet: FG+-[]</strong><br />
+<strong formula="">Axiom: F</strong><br />
+<strong formula="">Rules: F -&rarr; FF+[+F-F-F]-[-F+F+F]</strong></p>
+
+<p>The example available for download on the book&rsquo;s website takes all of the L-system code provided in this section and organizes it into three classes:</p>
+
+<ul>
+	<li>
+	<p><strong mono="">Rule</strong>: A class that stores the predecessor and successor strings for an L-system rule.</p>
+	</li>
+	<li>
+	<p><strong mono="">LSystem</strong>: A class to iterate a new L-system generation (as demonstrated with the <strong klass="">StringBuffer</strong> technique).</p>
+	</li>
+	<li>
+	<p><strong mono="">Turtle</strong>: A class to manage reading the L-system sentence and following its instructions to draw on the screen.</p>
+	</li>
+</ul>
+
+<p>We won&rsquo;t write out these classes here since they simply duplicate the code we&rsquo;ve already worked out in this chapter. However, let&rsquo;s see how they are put together in the main tab.</p>
+
+<figure><img alt="ch08 ex09" src="images/chapter08/ch08_ex09.png" />
+<figcaption>&nbsp;</figcaption>
+</figure>
+
+<p><strong example="">Example 8.10: LSystem</strong></p>
+
+<pre data-code-language="java" data-type="programlisting">
+LSystem lsys;
+Turtle turtle;
+void setup() {
+  size(600,600);
+  // A ruleset is an array of Rule objects.
+  Rule[] ruleset = new Rule[1];
+  ruleset[0] = new Rule('F',&quot;FF+[+F-F-F]-[-F+F+F]&quot;);
+  // The L-system is created with an axiom and a ruleset.
+  lsys = new LSystem(&quot;F&quot;,ruleset);
+  //[offset-down] The Turtle graphics renderer is given a sentence,
+  // a starting length, and an angle for rotations.
+  turtle = new Turtle(lsys.getSentence(),width/4,radians(25));
+}
+void draw() {
+  background(255);
+  // Start at the bottom of the window and draw.
+  translate(width/2,height);
+  turtle.render();
+}
+void mousePressed() {
+  // Generate a new sentence when the mouse is pressed.
+  lsys.generate();
+  turtle.setToDo(lsys.getSentence());
+  // The length shrinks each generation.
+  turtle.changeLen(0.5);
+}</pre>
+
+<div data-type="example">
+<h5>Exercise 8.12</h5>
+
+<p>Use an L-system as a set of instructions for creating objects stored in an <strong klass="">ArrayList</strong>. Use trigonometry and vector math to perform the rotations instead of matrix transformations (much like we did in the Koch curve example).</p>
+</div>
+
+<p><a data-primary="" data-type="indexterm" em="">Algorithmic Beauty of Plants&quot; data-secondary=&quot;The (Prusinkiewicz/Lindenmayer)&quot;&quot;/&gt; </a> </p>
+
+<div data-type="example">
+<h5>Exercise 8.13</h5>
+
+<p>The seminal work in L-systems and plant structures, <em>The Algorithmic Beauty of Plants</em> by Przemysław Prusinkiewicz and Aristid Lindenmayer, was published in 1990. It is available for free in its entirety <a href="http://algorithmicbotany.org/papers/#abop">online</a>. Chapter 1 describes many sophisticated L-systems with additional drawing rules and available alphabet characters. In addition, it describes several methods for generating stochastic L-systems. Expand the L-system example to include one or more additional features described by Prusinkiewicz and Lindenmayer.</p>
+</div>
+
+<div data-type="example">
+<h5>Exercise 8.14</h5>
+
+<p>In this chapter, we emphasized using fractal algorithms for generating visual patterns. However, fractals can be found in other creative mediums. For example, fractal patterns are evident in Johann Sebastian Bach&rsquo;s Cello Suite no. 3. The structure of David Foster Wallace&rsquo;s novel <em>Infinite Jest</em> was inspired by fractals. Consider using the examples in this chapter to generate audio or text.</p>
+</div>
+
+<div data-type="tip">
+<h1>The Ecosystem Project</h1>
+
+<p>Step 8 Exercise:</p>
+
+<p>Incorporate fractals into your ecosystem. Some possibilities:</p>
+
+<ul>
+	<li>
+	<p>Add plant-like creatures to the ecosystem environment.</p>
+	</li>
+	<li>
+	<p>Let&rsquo;s say one of your plants is similar to a tree. Can you add leaves or flowers to the end of the branches? What if the leaves can fall off the tree (depending on a wind force)? What if you add fruit that can be picked and eaten by the creatures?</p>
+	</li>
+	<li>
+	<p>Design a creature with a fractal pattern.</p>
+	</li>
+	<li>
+	<p>Use an L-system to generate instructions for how a creature should move or behave.</p>
+	</li>
+</ul>
+</div>
+</section>
+</section>
