@@ -199,13 +199,13 @@ void draw() {
 
 <p>Since we only draw the background once in <strong function="">setup()</strong>, rather than clearing it continually each time through <strong function="">draw()</strong>, we see the trail of the random walk in our Processing window.</p>
 
-<figure><img alt="intro ex01" src="images/intro/intro_ex01.png" />
+<figure><img alt="intro ex01" src="../images/intro/intro_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>There are a couple improvements we could make to the random walker. For one, this <strong klass="">Walker</strong><code>&rsquo;</code>s step choices are limited to four options&mdash;up, down, left, and right. But any given pixel in the window has eight possible neighbors, and a ninth possibility is to stay in the same place.</p>
 
-<figure id="intro_figure1"><img alt="Figure I.1" src="images/intro/intro_01.png" />
+<figure id="intro_figure1"><img alt="Figure I.1" src="../images/intro/intro_01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -239,7 +239,7 @@ void draw() {
 
 <p>Conveniently, this is how the <strong function="">random()</strong> function works. Processing&rsquo;s random number generator (which operates behind the scenes) produces what is known as a &ldquo;uniform&rdquo; distribution of numbers. We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
 
-<figure><img alt="intro ex02" src="images/intro/intro_ex02.png" />
+<figure><img alt="intro ex02" src="../images/intro/intro_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -398,7 +398,7 @@ if (num &lt; 0.6) {
 	</li>
 </ul>
 
-<figure><img alt="intro ex03" src="images/intro/intro_ex03.png" />
+<figure><img alt="intro ex03" src="../images/intro/intro_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -445,11 +445,11 @@ float h = random(200,300);</pre>
 
 <p>When you graph the distribution, you get something that looks like the following, informally known as a bell curve:</p>
 
-<figure id="intro_figure2"><img alt="Figure I.2" src="images/intro/intro_02.png" />
+<figure id="intro_figure2"><img alt="Figure I.2" src="../images/intro/intro_02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure3"><img alt="Figure I.3" src="images/intro/intro_03.png" />
+<figure id="intro_figure3"><img alt="Figure I.3" src="../images/intro/intro_03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -560,7 +560,7 @@ void draw() {
 
 <p>The <strong function="">nextGaussian()</strong> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let&rsquo;s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
 
-<figure><img alt="intro ex04" src="images/intro/intro_ex04.png" />
+<figure><img alt="intro ex04" src="../images/intro/intro_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -623,7 +623,7 @@ if (r &lt; 0.01) {
 
 <p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more general rule&mdash;the higher a number, the more likely it is to be picked? 3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if <strong class="var">x</strong> is the random number, we could map the likelihood on the y-axis with <strong class="var">y</strong> = <strong class="var">x</strong>.</p>
 
-<figure id="intro_figure4"><img alt="Figure I.4" src="images/intro/intro_04.png" />
+<figure id="intro_figure4"><img alt="Figure I.4" src="../images/intro/intro_04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -707,11 +707,11 @@ y += stepy;</pre>
 
 <p>Perlin noise has a more organic appearance because it produces a naturally ordered (&ldquo;smooth&rdquo;) sequence of pseudo-random numbers. The graph on the left below shows Perlin noise over time, with the x-axis representing time; note the smoothness of the curve. The graph on the right shows pure random numbers over time. (The code for generating these graphs is available in the accompanying book downloads.)</p>
 
-<figure><img alt="Figure I.5: Noise" src="images/intro/intro_05.png" />
+<figure><img alt="Figure I.5: Noise" src="../images/intro/intro_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="Figure I.6: Random" src="images/intro/intro_06.png" />
+<figure><img alt="Figure I.6: Random" src="../images/intro/intro_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -828,7 +828,7 @@ void draw() {
 
 <p>How quickly we increment <strong class="var">t</strong> also affects the smoothness of the noise. If we make large jumps in time, then we are skipping ahead and the values will be more random.</p>
 
-<figure id="intro_figure7"><img alt="Figure I.7" src="images/intro/intro_07.png" />
+<figure id="intro_figure7"><img alt="Figure I.7" src="../images/intro/intro_07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -841,7 +841,7 @@ void draw() {
 
 <p>Now we&rsquo;re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it&rsquo;s up to us to map that range to what we want. The easiest way to do this is with Processing&rsquo;s <strong function="">map()</strong> function. The <strong function="">map()</strong> function takes five arguments. First up is the value we want to map, in this case <strong class="var">n</strong>. Then we have to give it the value&rsquo;s current range (minimum and maximum), followed by our desired range.</p>
 
-<figure id="intro_figure8"><img alt="Figure I.8" src="images/intro/intro_08.png" />
+<figure id="intro_figure8"><img alt="Figure I.8" src="../images/intro/intro_08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -859,7 +859,7 @@ void draw() {
 
 <p>We can apply the exact same logic to our random walker, and assign both its x- and y-values according to Perlin noise.</p>
 
-<figure><img alt="intro ex05" src="images/intro/intro_ex05.png" />
+<figure><img alt="intro ex05" src="../images/intro/intro_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -887,7 +887,7 @@ class Walker {
 
 <p>Notice how the above example requires an additional pair of variables: <strong class="var">tx</strong> and <strong class="var">ty</strong>. This is because we need to keep track of two time variables, one for the x-location of the <strong klass="">Walker</strong> object and one for the y-location. But there is something a bit odd about these variables. Why does <strong class="var">tx</strong> start at 0 and <strong class="var">ty</strong> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <strong class="var">t</strong> each and every time. If we asked for the noise value at the same time <strong class="var">t</strong> for both <strong class="var">x</strong> and <strong class="var">y</strong>, then <strong class="var">x</strong> and <strong class="var">y</strong> would always be equal, meaning that the <strong klass="">Walker</strong> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <strong class="var">x</strong> and 10,000 for <strong class="var">y</strong> so that <strong class="var">x</strong> and <strong class="var">y</strong> can appear to act independently of each other.</p>
 
-<figure id="intro_figure9"><img alt="Figure I.9" src="images/intro/intro_09.png" />
+<figure id="intro_figure9"><img alt="Figure I.9" src="../images/intro/intro_09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -907,11 +907,11 @@ class Walker {
 
 <p>This idea of noise values living in a one-dimensional space is important because it leads us right into a discussion of two-dimensional space. Let&rsquo;s think about this for a moment. With one-dimensional noise, we have a sequence of values in which any given value is similar to its neighbor. Because the value is in one dimension, it only has two neighbors: a value that comes before it (to the left on the graph) and one that comes after it (to the right).</p>
 
-<figure id="intro_figure10"><img alt="Figure I.10: 1D Noise" src="images/intro/intro_10.png" />
+<figure id="intro_figure10"><img alt="Figure I.10: 1D Noise" src="../images/intro/intro_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure11"><img alt="Figure I.11: 2D Noise" src="images/intro/intro_11.png" />
+<figure id="intro_figure11"><img alt="Figure I.11: 2D Noise" src="../images/intro/intro_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -919,7 +919,7 @@ class Walker {
 
 <p>If you were to visualize this graph paper with each value mapped to the brightness of a color, you would get something that looks like clouds. White sits next to light gray, which sits next to gray, which sits next to dark gray, which sits next to black, which sits next to dark gray, etc.</p>
 
-<figure><img alt="intro ex06" src="images/intro/intro_ex06.png" />
+<figure><img alt="intro ex06" src="../images/intro/intro_ex06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -983,18 +983,18 @@ for (int x = 0; x &lt; width; x++) {
 
 <p>Use the noise values as the elevations of a landscape. See the screenshot below as a reference.</p>
 
-<figure><img alt="intro exc10" src="images/intro/intro_exc10.png" />
+<figure><img alt="intro exc10" src="../images/intro/intro_exc10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
 
 <p>We&rsquo;ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise, we used smooth values to assign the location of an object to give the appearance of wandering. With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It&rsquo;s important to remember, however, that Perlin noise values are just that&mdash;values. They aren&rsquo;t inherently tied to pixel locations or color. Any example in this book that has a variable could be controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and direction of objects moving along a grid in a flow field simulation.</p>
 
-<figure id="intro_figure12"><img alt="Figure I.12: Tree with Perlin noise" src="images/intro/intro_12.png" />
+<figure id="intro_figure12"><img alt="Figure I.12: Tree with Perlin noise" src="../images/intro/intro_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure13"><img alt="Figure I.13: Flow field with Perlin noise" src="images/intro/intro_13.png" />
+<figure id="intro_figure13"><img alt="Figure I.13: Flow field with Perlin noise" src="../images/intro/intro_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </section>
