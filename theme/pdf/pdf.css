@@ -1,0 +1,1078 @@
+@charset "UTF-8";
+
+@import url("/usr/local/app/orm-pdfrenderer/ah-default.css");
+
+@page { /* defining overall trim size and page layout */
+  size: 7in 9.1875in; /* width, height */
+  margin-top: 0.75in; /* white space around the page */
+  margin-bottom: 0.75in;
+  @sidenote {
+    float: outside;
+    width: 1.1in;
+    clear: both;
+  }
+}
+
+head title { display: none; }
+
+figure[data-type="cover"] {
+  page: cover;
+}
+
+figure[data-type="cover"] img {
+  max-width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+@page cover {
+  margin: 0;
+  padding: 0;
+}
+
+@page :left {
+  margin-left: 1.625in;
+  margin-right: 1in;
+  @bottom-left-corner {
+    font-family: SourceSansPro, sans-serif;
+    font-size: 9pt;
+    text-align: left;
+    margin-left: 0.375in;
+    margin-top: 5pt;
+  }
+  @top-left {
+    font-family: SourceSansPro, sans-serif;
+    font-size: 8pt;
+    text-align: left;
+    margin-left: -0.65in;
+    margin-top: 6pt;
+  }
+  @sidenote { margin-left: -1.25in; } 
+}
+
+@page :right {
+  margin-right: 1.625in;
+  margin-left: 1in;
+  @bottom-right-corner {
+    font-family: SourceSansPro, sans-serif;
+    font-size: 9pt;
+    text-align: right;
+    margin-top: 5pt;
+    margin-right: 0.375in;
+  }
+  @top-right {
+    font-family: SourceSansPro, sans-serif;
+    font-size: 8pt;
+    text-align: right;
+    margin-right: -0.65in;
+    margin-top: 6pt;
+  }
+  @sidenote { margin-right: -1.25in; } 
+}
+
+@page :blank { /* defining a truly blank master page */
+  @bottom-left-corner { content: none; }
+  @bottom-right-corner { content: none; }
+  @top-right { content: none; }
+  @top-left { content: none; }
+}
+
+/* general blocks */
+
+li > p, dd p,
+section[data-type="titlepage"] p,
+section[data-type="copyright-page"] p,
+p[data-type="author"], p.author,
+section[data-type="preface"] > h1 + p, 
+section[data-type="foreword"] > h1 + p,
+div[data-type="part"] > h1 + p, 
+section[data-type="chapter"] > h1 + p, 
+section[data-type="chapter"] > h1 + div.author p, 
+section[data-type="sect1"] > h1 + p, 
+section[data-type="sect2"] > h2 + p,
+section[data-type="sect3"] > h3 + p,
+h1 + p, h2 + p, h3 + P { 
+  text-indent: 0; /* first paragraph following a heading has no indent */
+}
+
+p, dd { /* general text styles */
+  font-family: 'SourceSansPro', sans-serif;
+  text-indent: 0.167in;
+  font-size: 9.5pt;
+  line-height: 13pt;
+  margin: 0;
+  text-align: justify;
+}
+
+/* global styles */
+
+body {
+  -ah-kerning-mode: pair;
+  -ah-hyphenate-hyphenated-word: false;
+  hyphens: auto;
+}
+
+/* general inlines */
+
+a {
+  color: cmyk(0%,0%,0%,80%);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* PDF bookmarks */
+
+nav[data-type="toc"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+div[data-type="part"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+section[data-type="preface"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+section[data-type="foreword"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+section[data-type="chapter"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+section[data-type="appendix"] > h1 {
+  bookmark-level: 1;
+  bookmark-state: closed;
+}
+
+section[data-type="sect1"] > h1 {
+  bookmark-level: 2;
+  bookmark-state: closed;
+}
+
+/* reset counters */
+
+/* counters add auto-numbering to elements in the book. 
+   This reset initiates the counters, enabling them 
+   to begin numbering correctly. */
+
+body[data-type="book"] {
+  counter-reset: page 1 PartNumber ChapterNumber AppendixNumber FigureNumber TableNumber ExampleNumber EquationNumber footnote;
+}
+
+/* frontmatter */
+
+section[data-type="halftitlepage"], 
+section[data-type="titlepage"] {
+  page: blank;
+  text-align: right;
+  page-break-before: right; /* titlepages always start on a right-hand page */
+  page-break-after: always;
+}
+
+section[data-type="halftitlepage"] h1, 
+section[data-type="titlepage"] h1 {
+  font-family: Merriweather, serif;
+  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+  margin-top: 126pt;
+  padding-bottom: 7pt;
+  text-align: left;
+}
+
+section[data-type="halftitlepage"] h2, 
+section[data-type="titlepage"] h2 {
+  font-family: SourceSansPro-Semibold; 
+  font-size: 13pt;
+  text-align: left;
+}
+
+section[data-type="halftitlepage"] h1 {
+  font-size: 16pt;
+  line-height: 18pt;
+}
+
+section[data-type="titlepage"] h1 {
+  font-size: 20pt;
+  line-height: 24pt;
+  font-weight: normal;
+}
+
+/* titlepage text font */
+
+/* styling and positioning for author names */
+
+section[data-type="titlepage"] p[data-type="author"] {
+  font-family: Merriweather, serif;
+  font-size: 11pt;
+  margin-top: 66pt;
+}
+
+/* copyright page */
+
+section[data-type="copyright-page"] {
+  page: blank;
+  page-break-after: always;
+}
+
+section[data-type="copyright-page"] h1 {
+  font-family: 'SourceSansPro', sans-serif;
+  font-weight: bold;
+  font-size: 8pt;
+  margin: 0;
+}
+
+section[data-type="copyright-page"] p.author {
+  font-size: 8pt;
+}
+
+section[data-type="copyright-page"] p {
+}
+
+section[data-type="copyright-page"] p.isbn {
+}
+
+/* dedication */
+
+section[data-type="dedication"] {
+  font-family: 'Crimson-Italic', serif;
+  font-style: italic;
+  page: blank;
+  page-break-after: always;
+  text-align: center;
+  padding-top: 96pt;
+}
+
+/* table of contents */
+
+/* paged media */
+@page toc:first {
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+  @top-right {
+    content: none;
+  }
+}
+
+@page toc:left {
+  @bottom-left-corner {
+    content: counter(page, lower-roman);
+  }
+  @top-left {
+    content: "Table of Contents";
+  }
+}
+
+@page toc:right {
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+  @top-right {
+    content: "Table of Contents";
+  }
+}
+
+@page toc:blank { 
+  @bottom-left-corner {
+    content: none;
+  }
+  @bottom-right-corner {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @top-left {
+    content: none;
+  }
+}
+
+nav[data-type="toc"] > h1 { /* table of contents heading */
+  font-family: Merriweather, serif;
+  font-size: 16pt;
+  line-height: 22pt;
+  margin-top: 87pt;
+  margin-bottom: 77pt;
+  text-align: right;
+}
+
+nav[data-type="toc"] { /* table of contents is a series of nested lists in a nav element */
+  page: toc;
+  page-break-before: right;
+  font-variant: tabular-nums;
+  hyphens: none;
+  counter-reset: ChapterNumberTOC PartNumberTOC AppendixNumberTOC;
+}
+
+nav[data-type="toc"] a {
+  font-weight: normal;
+  color: cmyk(0%,0%,0%,100%);
+  font-style: normal;
+}
+
+nav[data-type="toc"] li { /* no list marker on table of contents entries */
+  list-style-type: none;
+  margin-left: 0;
+  text-align: left;
+}
+
+nav[data-type="toc"] ol { margin-left: 0; }
+
+/* global styles for the table of contents */
+nav[data-type="toc"] li[data-type="chapter"],
+nav[data-type="toc"] li[data-type="appendix"],
+nav[data-type="toc"] li[data-type="glossary"],
+nav[data-type="toc"] li[data-type="index"]
+/*nav[data-type="toc"] ul li.preface.afterword*/ {
+  font-family: SourceSansPro-Semibold, sans-serif;
+  font-size: 9.5pt;
+  font-weight: 600;
+  margin-top: 14.4pt;
+  display: list-item;
+  page-break-after: avoid;
+}
+
+nav[data-type="toc"] li[data-type="preface"],
+nav[data-type="toc"] li[data-type="foreword"] {
+  font-family: SourceSansPro-Semibold, sans-serif;
+  font-style: italic;
+  font-size: 9.5pt;
+  font-weight: 600;
+  display: list-item;
+}
+
+nav[data-type="toc"] li[data-type="chapter"] > a:after,
+nav[data-type="toc"] li[data-type="appendix"] > a:after,
+nav[data-type="toc"] li[data-type="index"] > a:after,
+nav[data-type="toc"] li[data-type="glossary"] > a:after
+/* nav[data-type="toc"] ul li.preface.afterword a:after*/ {
+  content: leader(space) " " target-counter(attr(href, url), page);
+  font-weight: 600;
+}
+
+nav[data-type="toc"] li[data-type="sect1"] a:after,
+nav[data-type="toc"] li[data-type="sect2"] a:after {
+  content: leader(space) target-counter(attr(href, url), page);
+  margin-right: -0.25in; /* for long lines */
+}
+
+nav[data-type="toc"] li[data-type="preface"] > a:after,
+nav[data-type="toc"] li[data-type="foreword"] > a:after {
+  content: leader(space) " " target-counter(attr(href, url), page, lower-roman);
+}
+
+nav[data-type="toc"] li[data-type="preface"] li[data-type="sect1"],
+nav[data-type="toc"] li[data-type="preface"] li[data-type="sect2"], /* show no heads in preface */
+nav[data-type="toc"] li[data-type="foreword"] li[data-type="sect1"],
+nav[data-type="toc"] li[data-type="foreword"] li[data-type="sect2"], /* show no heads in foreword */
+nav[data-type="toc"] li[data-type="appendix"] li[data-type="sect1"],
+nav[data-type="toc"] li[data-type="appendix"] li[data-type="sect2"] { /* and appendix */
+  display: none;
+}
+
+nav[data-type="toc"] li[data-type="part"]:before {
+  content: "Part " counter(PartNumberTOC, upper-roman) ".\2003";
+  counter-increment: PartNumberTOC;
+}
+
+nav[data-type="toc"] li[data-type="chapter"]:before {
+  content: "CHAPTER " counter(ChapterNumberTOC, decimal) ": ";
+  counter-increment: ChapterNumberTOC;
+}
+
+li[data-type="sect1"], li[data-type="sect2"] {
+  font-family: SourceSansPro, sans-serif;
+  font-size: 9.5pt;
+  font-weight: normal;
+  page-break-after: auto;
+  margin-bottom: 5pt;
+  margin-top: 5pt; /* otherwise, cascades from above */ 
+}
+
+li[data-type="sect1"] {
+  padding-left: 24pt;
+  text-indent: -12pt;
+  padding-right: 0.25in; /* for long lines; cascades to sect2s */
+}
+
+li[data-type="sect2"] {
+  padding-left: 0.12in;
+  margin-left: 0;
+}
+
+/* appendixes */
+nav[data-type="toc"] li[data-type="appendix"] {
+  padding-left: 0;
+  margin-left: 0;
+  list-style-position: inside;
+}
+
+nav[data-type="toc"] li[data-type="appendix"]::marker {
+  content: counter(AppendixNumberTOC, upper-alpha) ".";
+  counter-increment: AppendixNumberTOC;
+  margin-right: 5pt;
+}
+
+/* preface, chapter, and appendix headings */
+
+/* shared styles for all chapter-level headings */
+section[data-type="preface"] > h1,
+section[data-type="foreword"] > h1, 
+section[data-type="chapter"] > h1, 
+section[data-type="appendix"] > h1 {
+  font-family: 'Merriweather', serif;
+  line-height: 22pt;
+  margin-bottom: 0.9in;
+  margin-top: 0.5in;
+  text-align: right;
+}
+
+section[data-type="preface"] > h1 {
+  string-set: ChapterTitle self;
+}
+
+section[data-type="foreword"] > h1 {
+  string-set: ChapterTitle self;
+}
+
+section[data-type="chapter"] > h1 {
+  string-set: ChapterTitle self, SectionTitle self;
+  counter-increment: ChapterNumber;
+}
+
+section[data-type="appendix"] > h1 {
+  string-set: ChapterTitle self;
+  counter-increment: AppendixNumber;
+}
+
+/* chapter and appendix headings include auto-numbering */
+section[data-type="chapter"] > h1:after, 
+section[data-type="appendix"] > h1:after {
+  font-size: 65pt;
+  font-family: 'SourceSansPro-ExtraLight', sans-serif;
+  letter-spacing: -3pt;
+  display: block;
+  position: relative;
+  bottom: 0.445in;
+  left: 4.5in;
+  text-align: center;
+  width: 0.75in;
+}
+
+section[data-type="chapter"] > h1:after {
+  content: counter(ChapterNumber);
+}
+
+section[data-type="appendix"] > h1:after {
+  content: counter(AppendixNumber, upper-alpha);
+}
+
+/* section headings */
+
+h1, h2, h3, h4, h5, h6 {
+  hyphens: none;
+  text-align: left;
+  font-weight: normal;
+}
+
+section[data-type="sect1"] > h1 { /* A-level headings */
+  font-family: 'Merriweather', serif;
+  font-weight: bold;
+  font-size: 12pt;
+  line-height: 16pt;
+  margin-top: 18pt;
+  margin-bottom: 14pt;
+  string-set: SectionTitle self; /* A-heads are also displayed in chapter footers */
+}
+
+section[data-type="sect2"] > h2 { /* B-level headings */
+  font-family: SourceSansPro, sans-serif;
+  font-weight: bold;
+  font-size: 11pt;
+  line-height: 12pt;
+  margin-top: 18pt;
+  margin-bottom: 13pt;
+}
+
+section[data-type="sect3"] > h3 { /* C-level headings */
+  font-family: SourceSansPro-Semibold, sans-serif;
+  font-size: 9.5pt;
+  margin-top: 14pt;
+  margin-bottom: 10pt;
+  line-height: 14pt;
+  text-transform: uppercase;
+}
+
+/* prefaces */
+
+section[data-type="preface"] > h1 {
+  font-size: 16pt;
+  font-weight: normal;
+}
+
+@page preface:first {
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+  @top-right {
+    content: none;
+  }
+}
+
+@page preface:left {
+  @top-left {
+    content: string(ChapterTitle);
+  }
+  @bottom-left-corner {
+    content: counter(page, lower-roman);
+  }
+}
+
+@page preface:right {
+  @top-right {
+    content: string(ChapterTitle);
+  }
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+}
+
+@page preface:blank { 
+  @bottom-left-corner {
+    content: none;
+  }
+  @bottom-right-corner {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @top-left {
+    content: none;
+  }
+}
+
+section[data-type="preface"] {
+  page: preface;
+  page-break-before: right; /* forces the preface to start on a right hand page */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+}
+
+/* forewords */
+
+section[data-type="foreword"] > h1 {
+  font-size: 16pt;
+  font-weight: normal;
+}
+
+@page foreword:first {
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+  @top-right {
+    content: none;
+  }
+}
+
+@page foreword:left {
+  @top-left {
+    content: string(ChapterTitle);
+  }
+  @bottom-left-corner {
+    content: counter(page, lower-roman);
+  }
+}
+
+@page foreword:right {
+  @top-right {
+    content: string(ChapterTitle);
+  }
+  @bottom-right-corner {
+    content: counter(page, lower-roman);
+  }
+}
+
+@page foreword:blank { 
+  @bottom-left-corner {
+    content: none;
+  }
+  @bottom-right-corner {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @top-left {
+    content: none;
+  }
+}
+
+section[data-type="foreword"] {
+  page: foreword;
+  page-break-before: right; /* forces the foreword to start on a right hand page */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+}
+
+/* parts */
+
+div[data-type="part"] {
+  page: blank;
+  page-break-before: right;
+}
+
+div[data-type="part"] > h1 {
+  font-family: 'OpenSans-CondBold', sans-serif;
+  font-size: 18pt;
+  line-height: 22pt;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 28pt;
+  counter-increment: PartNumber;
+}
+
+div[data-type="part"] > h1:before {
+  font-family: 'OpenSans-Semibold', sans-serif;
+  font-size: 11pt;
+  text-transform: uppercase;
+  content: "Part " counter(PartNumber);
+  display: block;
+  text-align: center;
+  margin-top: 72pt;
+  margin-bottom: 34pt;
+}
+
+/* chapters */
+
+@page chapter:first {
+  @top-right {
+    content: none;
+  }
+}
+
+@page chapter:left {
+  @bottom-left-corner {
+    content: counter(page);
+  }
+  @top-left {
+    content: "CHAPTER "counter(ChapterNumber)": "string(ChapterTitle);
+  }
+}
+
+@page chapter:right {
+  @bottom-right-corner {
+    content: counter(page);
+  }
+  @top-right {
+    content: string(SectionTitle);
+  }
+}
+
+@page chapter:blank { 
+  @bottom-left-corner {
+    content: none;
+  }
+  @bottom-right-corner {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @top-left {
+    content: none;
+  }
+}
+
+/* page number resets to 1 on the first chapter */
+
+section.pagenumrestart {
+  counter-reset: page 1;
+}
+
+section[data-type="chapter"] {
+  page: chapter;
+  page-break-before: right; /* forces new chapters to start on a right hand page */
+  counter-reset: TableNumber FigureNumber ExampleNumber EquationNumber footnote;
+}
+
+/* appendixes */
+
+@page appendix:first {
+  @bottom-left {
+    content: normal;
+  }
+}
+
+@page appendix:left {
+  @bottom-left {
+    content: counter(page);
+  }
+  @bottom-right {
+    content: "Appendix "counter(AppendixNumber, upper-alpha)", "string(ChapterTitle);
+  }
+}
+
+@page appendix:right {
+  @bottom-right {
+    content: counter(page);
+  }
+  @bottom-left {
+    content: string(SectionTitle);
+  }
+}
+
+section[data-type="appendix"] {
+  page: appendix;
+  page-break-before: right; /* forces new chapters to start on a right hand page */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote;
+}
+
+/* lists */
+
+ul, ol { /* bulleted and numbered lists */
+  margin: 7pt 0 7pt .33in;
+}
+
+ul li, ol li {
+  font-family: SourceSansPro, sans-serif;
+  font-size: 9.5pt;
+  margin-top: 3pt;
+}
+
+dl { /* definition lists */
+  margin-bottom: 7pt;
+}
+
+dt { /* definition list terms */
+  font-family: SourceSansPro-Semibold, sans-serif;
+  font-size: 9.5pt;
+  line-height: 14pt;
+  margin-top: 7pt;
+}
+
+dd { /* definition list descriptions */
+  text-indent: 0;
+  margin-left: 0.1667in;
+}
+
+/* tables */
+
+table {
+  margin: 12pt 0;
+  border-collapse: collapse;
+}
+
+thead+tbody {
+  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+}
+
+table caption {
+  margin-bottom: 5pt;
+  page-break-after: avoid;
+  text-align: left;
+  font-family: Merriweather, serif;
+  font-style: italic;
+  font-size: 7.5pt;
+  line-height: 10pt;
+  hyphens: none;
+}
+
+table caption:before {
+  font-family: SourceSansPro-Black, sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+  counter-increment: TableNumber;
+  content: "TABLE " counter(ChapterNumber) "-" counter(TableNumber)". ";
+  margin-bottom: 7.2pt;
+  margin-top: 0;
+}
+
+tr {
+  border-width: 0;
+}
+
+th { /* table heading rows */
+  font-family: SourceSansPro, sans-serif;
+  font-weight: bold;
+  font-size: 9pt;
+  text-align: left;
+  margin-top: 0;
+  border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
+  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+}
+
+th, td {
+  padding: 4.5pt 0.0625in 4.5pt 0.0625in;
+}
+
+td, table p { /* table body text */
+  font-family: SourceSansPro, sans-serif;
+  font-size: 9pt;
+  line-height: 10pt;
+}
+
+table p { /* table body text */
+  text-indent: 0;
+  margin: 0;
+}
+
+td pre.programlisting, td pre.screen, td pre.literallayout, td code { /* allow code in tables to wrap */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* figures */
+
+figure {
+  display: block;
+  border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
+  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+  margin: 20pt -1.625in;
+  padding: 8.64pt 1.625in;
+  width: 4.375in;
+  clear: both;
+  text-align: center; /* in AH Land, this is how you center an img in a block */
+  overflow: auto;
+}
+
+figure figcaption {
+  display: block;
+  -ah-float: outside page; 
+  clear: both;
+  margin-left: -1.25in;
+  margin-right: -1.25in;
+  width: 1in;
+  text-align: left;
+  font-family: Merriweather, serif;
+  font-style: italic;
+  font-size: 7.5pt;
+  line-height: 10pt;
+  hyphens: none;
+}
+
+figcaption:before {
+  font-family: SourceSansPro-Black, sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+  counter-increment: FigureNumber;
+  content: "FIGURE " counter(ChapterNumber) "-" counter(FigureNumber);
+  display: block;
+  margin-bottom: 7.2pt;
+}
+
+section[data-type="preface"] figcaption:before {
+  content: "Figure P-"counter(FigureNumber)". ";
+}
+
+section[data-type="foreword"] figcaption:before {
+  content: "Figure F-"counter(FigureNumber)". ";
+}
+
+section[data-type="appendix"] figcaption:before {
+  content: "Figure " counter(AppendixNumber)"-"counter(FigureNumber)". ";
+}
+
+img {
+  max-width: 100%;
+  margin: 15pt auto;
+}
+
+figure img { 
+  max-width: 4.375in;
+  margin: 0 auto;
+}
+
+dt img {
+  display: inline-block;
+  margin: 0;
+}
+
+figure div.border-box { display: inline }
+
+/* sidebars */
+
+aside[data-type="sidebar"] { /* sidebar containers */
+  background-color: cmyk(0%,0%,0%,15%);
+  margin: 0.25in -1.625in;
+  padding: 0.25in 1.625in;
+  width: 4.375in;
+  clear: both;
+}
+
+aside h5 { /* sidebar titles */
+  font-family: SourceSansPro-Bold, sans-serif;
+  font-size: 11pt;
+  line-height: 13pt;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 0.2in;
+  margin-top: 0;
+}
+
+aside h6 { /* sidebar subtitles */
+}
+
+aside p, aside dd { /* sidebar text */
+  font-size: 7.5pt;
+  font-family: Merriweather, serif;
+  line-height: 11.5pt;
+  text-indent: 0;
+  margin-bottom: 6pt;
+}
+
+aside dt {
+  font-size: 7.5pt;
+  font-family: Merriweather, serif;
+  font-weight: bold;
+}
+  
+/* admonitions */
+
+div[data-type="note"], div[data-type="warning"] { /* admonition containers */
+  margin: 10pt 20pt;
+  padding-top: 5pt;
+  border-top: solid 0.5pt cmyk(0%,0%,0%,100%);
+  border-bottom: solid 0.5pt cmyk(0%,0%,0%,100%);
+  page-break-inside: avoid;
+}
+
+div[data-type="note"] p, div[data-type="warning"] p { /* admon text */
+  font-family: Merriweather, serif;
+  text-align: left;
+  text-indent: 0;
+  font-size: 7.5pt;
+  line-height: 11pt;
+  margin-bottom: 6pt;
+}
+
+div[data-type="note"] li, div[data-type="warning"] li {
+  font-family: Merriweather, serif;
+  font-size: 7.5pt;
+}
+
+div[data-type="note"] h1, 
+div[data-type="warning"] h1 { /* admonition titles */
+  font-family: 'SourceSansPro-Black', sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.75pt;
+  margin-bottom: 7pt;
+  margin-top: 0;
+}
+
+div[data-type="note"] pre, div[data-type="warning"] pre {
+  font-size: 7.5pt;
+  margin: 0 0 6pt 4pt;
+} 
+
+/* code */
+
+pre, code { /* monospace font for both code blocks and inline code */
+  font-family: 'UbuntuMono', monospace;
+}
+
+pre { /* code blocks */
+  font-size: 9pt;
+  line-height: 11pt;
+  margin: 12pt 0 12pt 0.167in;
+  white-space: pre-wrap;
+  -ah-ignore-leading-newline: true;
+}
+
+code { font-size: 107%; }
+
+pre code { font-size: inherit; }
+
+div[data-type="example"] h5 {
+  margin-bottom: 5pt;
+  page-break-after: avoid;
+  text-align: left;
+  font-family: Merriweather, serif;
+  font-style: italic;
+  font-size: 7.5pt;
+  line-height: 10pt;
+  hyphens: none;
+}
+
+div[data-type="example"] h5:before {
+  font-family: 'SourceSansPro-Black', sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+  counter-increment: ExampleNumber;
+  content: "EXAMPLE " counter(ChapterNumber) "-" counter(ExampleNumber)". ";
+  margin-bottom: 7.2pt;
+  margin-top: 0;
+}
+
+div[data-type="example"] pre {
+  margin-left: 0;
+}
+/* blockquote */
+
+blockquote {
+  margin: 15pt 0.1667in;
+}
+
+blockquote p {
+  text-indent: 0;
+  font-family: 'SourceSansPro', sans-serif;
+  font-size: 7.5pt;
+}
+
+p[data-type="attribution"] {
+  text-align: right;
+  margin-top: 6pt;
+}
+
+/* math */
+
+div[data-type="equation"] {
+  margin: 12pt 0 12pt 0.167in;
+}
+
+@namespace mml "http://www.w3.org/1998/Math/MathML";
+
+mml|math {
+  font-size: 12pt;
+}
+
+div[data-type="equation"] h5 {
+  -ah-float: outside page;
+  clear: both;
+  margin: 0 -1.25in;
+  padding-top: 5pt;
+  border-top: solid 0.5pt cmyk(0%,0%,0%,100%);
+  width: 1in;
+  page-break-inside: avoid;
+  text-align: left;
+  font-family: Merriweather, serif;
+  font-style: italic;
+  font-size: 7.5pt;
+  line-height: 10pt;
+  hyphens: none;
+}
+
+div[data-type="equation"] h5:before {
+  font-family: SourceSansPro-Black, sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+  counter-increment: EquationNumber;
+  content: "EQUATION " counter(ChapterNumber) "-" counter(EquationNumber);
+  display: block;
+  margin-bottom: 7.2pt;
+}
+
+/* ------------------- PAGEBREAK HANDLING ------------------- */
+
+/* force a page break */
+
+div.hard-pagebreak {
+  page-break-after: always;
+}
