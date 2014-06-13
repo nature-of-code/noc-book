@@ -7,8 +7,8 @@
 <p data-type="attribution">&#8212; — Victor Hugo</p>
 </blockquote>
 
-<p><a data-type="indexterm" data-primary="physics" data-secondary="open-source libraries for"/>
-<a data-type="indexterm" data-primary="physics libraries"/></p>
+<p><a data-type="indexterm" data-primary=""physics"" data-secondary=""open-source libraries for"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""physics libraries"">&nbsp;</a></p>
 
 <p>Before we move on to anything else, let’s revisit some of the things we’ve done in the first four chapters. We have:</p>
 
@@ -32,22 +32,22 @@
 
 <section data-type="sect1" id="chapter05_section1">
 <h1>5.1 What Is Box2D and When Is It Useful?</h1>
-<p><a data-type="indexterm" data-primary="Angry Birds"/>
-<a data-type="indexterm" data-primary="Box2D"/>
-<a data-type="indexterm" data-primary="Catto" data-secondary="Erin"/>
-<a data-type="indexterm" data-primary="Crayon Physics"/>
-<a data-type="indexterm" data-primary="physics libraries" data-secondary="Box2D"/></p>
+<p><a data-type="indexterm" data-primary=""Angry Birds"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Box2D"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Catto" data-secondary="Erin"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Crayon Physics"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""physics libraries"" data-secondary=""Box2D"">&nbsp;</a></p>
 
 <p>Box2D began as a set of physics tutorials written in C++ by Erin Catto for the Game Developer’s Conference in 2006. Over the last five years it has evolved into an rich and elaborate open-source physics engine.   It’s been used for countless projects, most notably highly successful games such as the award-winning puzzle game Crayon Physics and the runaway mobile and tablet hit Angry Birds.</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="overhead with"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""overhead with"">&nbsp;</a></p>
 
 <p>One of the key things to realize about Box2D is that it is a true physics engine.  Box2D knows nothing about computer graphics and the world of pixels; it is simply a library that takes in numbers and spits out more numbers. And what are those numbers?  Meters, kilograms, seconds, etc.  All of Box2D’s measurements and calculations are for real-world measurements—only its “world” is a two-dimensional plane with top, bottom, left, and right edges.  You tell it things like: “The gravity of our world is 9.81 newtons per kilogram, and a circle with a radius of four meters and a mass of fifty kilograms is located ten meters above the world’s bottom.”   Box2D will then tell you things like: “One second later, the rectangle is at five meters from the bottom; two seconds later, it is ten meters below,” etc.  While this provides for an amazing and realistic physics engine, it also necessitates lots of complicated code in order to translate back and forth between the physics “world” (a key term in Box2D) and the world we want to draw on —the “pixel” world of Processing.</p>
 
 <p>So when is it worth it to have this additional overhead?  If I just want to simulate a circle falling down a Processing window with gravity, do I really need to write all the extra Box2D code just to get that effect?  Certainly, the answer is no.  We saw how to do this rather easily in the first chapter of this book.    Let’s consider another scenario.  What if I want to have a hundred of those circles falling?  And what if those circles aren’t circles at all, but irregularly shaped polygons?  And what if I want these polygons to bounce off each other in a realistic manner when they collide?</p>
 
-<p><a data-type="indexterm" data-primary="collisions"/>
-<a data-type="indexterm" data-primary="physics" data-secondary="collisions"/></p>
+<p><a data-type="indexterm" data-primary=""collisions"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""physics"" data-secondary=""collisions"">&nbsp;</a></p>
 
 <p>You may have noticed that the first four chapters of this book, while covering motion and forces in detail, has skipped over a rather important aspect of physics simulation—<em>collisions</em>.   Let’s pretend for a moment that you aren’t reading a chapter about libraries and that we decided right now to cover how to handle collisions in a particle system.   We’d have to evaluate and learn two distinct algorithms that address these questions:</p>
 
@@ -79,15 +79,15 @@
 
 <section data-type="sect1" id="chapter05_section2">
 <h1>5.2 Getting Box2D in Processing</h1>
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="Processing and"/>
-<a data-type="indexterm" data-primary="Processing" data-secondary="Box2D and"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""Processing and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Processing"" data-secondary=""Box2D and"">&nbsp;</a></p>
 
 <p>So, if Box2D is a physics engine that knows nothing about pixel-based computer graphics and is written in C++, how are we supposed to use it in Processing?</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="JBox2D and"/>
-<a data-type="indexterm" data-primary="Java"/>
-<a data-type="indexterm" data-primary="JBox2D"/>
-<a data-type="indexterm" data-primary="Processing" data-secondary="JBox2D"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""JBox2D and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Java"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""JBox2D"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Processing"" data-secondary=""JBox2D"">&nbsp;</a></p>
 
 <p>The good news is that Box2D is such an amazing and useful library that everyone wants to use it—Flash, Javascript, Python, Ruby programmers.  Oh, and Java programmers.  There is something called JBox2D, a Java port of Box2D.  And because Processing is built on top of Java, JBox2D can be used directly in Processing!</p>
 
@@ -100,8 +100,8 @@
 <p><a href="http://www.jbox2d.org/">JBox2D site</a> for Processing compatibility.</p></li>
 </ul>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="PBox2D helper class"/>
-<a data-type="indexterm" data-primary="PBox2D helper class"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""PBox2D helper class"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""PBox2D helper class"">&nbsp;</a></p>
 
 <p>This is all you need to get started writing Box2D code in Processing.  However, as we are going to see in a moment, there are several pieces of functionality we’ll repeatedly need in our Processing code, and so it’s worth having one additional layer between our sketches and JBox2D.  I’m calling this PBox2D—a Processing Box2D “helper” library included as part of this book’s code example downloads.</p>
 
@@ -112,9 +112,9 @@
 
 <p>It’s important to realize that PBox2D is not a Processing wrapper for all of Box2D.   After all, Box2D is a thoughtfully organized and well-structured API and there’s no reason to take it apart and re-implement it.  However, it’s useful to have a small set of functions that help you get your Box2D world set up, as well as help you figure out where to draw your Box2D shapes.  And this is what PBox2D will provide.</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="Fisica"/>
-<a data-type="indexterm" data-primary="Fisica"/>
-<a data-type="indexterm" data-primary="Marxer" data-secondary="Ricard"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""Fisica"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Fisica"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Marxer" data-secondary="Ricard"">&nbsp;</a></p>
 
 <p>I should also mention before we move forward that there are other Processing libraries that wrap Box2D for you. One I would recommend taking a look at is <a href="http://www.ricardmarxer.com/fisica/">Fisica</a> by Ricard Marxer.</p>
 </section>
@@ -127,7 +127,7 @@
 
 <section data-type="sect1" id="chapter05_section3">
 <h1>5.3 Box2D Basics</h1>
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="usage"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""usage"">&nbsp;</a></p>
 
 <p>Do not despair! We really are going to get to the code very soon, and in some ways we’ll blow our previous work out of the water.  But before we’re ready to do that, it’s important to walk through the overall process of using Box2D in Processing.   Let’s begin by writing a pseudocode generalization of all of our examples in Chapters 1 through 4.</p>
 
@@ -191,14 +191,14 @@
 
 <p>Now that we understand that anything we create in our Processing sketch has to be placed into the Box2D world, let’s look at an overview of the elements that make up that world.</p>
 
-<p><a data-type="indexterm" data-primary="body (Box2D element)"/>
-<a data-type="indexterm" data-primary="Box2D" data-secondary="core elements"/>
-<a data-type="indexterm" data-primary="fixture (Box2D element)"/>
-<a data-type="indexterm" data-primary="joint (Box2D element)"/>
-<a data-type="indexterm" data-primary="shape (Box2D element)"/>
-<a data-type="indexterm" data-primary="Vec2 (Box2D element)"/>
-<a data-type="indexterm" data-primary="vectors" data-secondary="Vec2 (Box2D element)"/>
-<a data-type="indexterm" data-primary="World class (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Box2D"" data-secondary=""core elements"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""fixture (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""joint (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""shape (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Vec2 (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""vectors"" data-secondary=""Vec2 (Box2D element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""World class (Box2D)"">&nbsp;</a></p>
 
 <ol>
 <li>
@@ -219,16 +219,16 @@
 
 <p>And so here we are, arriving with trepidation at an unfortunate truth in the world of using physics libraries.   Any physics simulation is going to involve the concept of a vector.  This is the good part.  After all, we just spent several chapters familiarizing ourselves with what it means to describe motion and forces with vectors.   We don’t have to learn anything new conceptually.</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="PVector vs."/>
-<a data-type="indexterm" data-primary="PVector class (Processing)" data-secondary="Box2D vs."/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""PVector vs."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""PVector class (Processing)"" data-secondary=""Box2D vs."">&nbsp;</a></p>
 
 <p>Now for the part that makes the single tear fall from my eye: we don’t get to use <strong klass>PVector</strong>. It’s nice that Processing has <strong klass>PVector</strong> for us, but anytime you use a physics library you will probably discover that the library includes its own vector implementation.  This makes sense, after all; why should Box2D be expected to know about <strong klass>PVector</strong>?   And in many cases, the physics engine will want to implement a vector class in a specific way so that it is especially compatible with the rest of the library’s code.   So while we don’t have to learn anything new conceptually, we do have to get used to some new naming conventions and syntax.  Let’s quickly demonstrate a few of the basics in <strong klass>Vec2</strong> as compared to those in <strong klass>PVector</strong>.</p>
 
 <p>Let’s say we want to add two vectors together.</p>
 
-<p><a data-type="indexterm" data-primary="add() function (Vec2 class)"/>
-<a data-type="indexterm" data-primary="addLocal() function (Vec2)"/>
-<a data-type="indexterm" data-primary="Vec2 (Box2D element)" data-secondary="adding vectors with"/></p>
+<p><a data-type="indexterm" data-primary=""add() function (Vec2 class)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""addLocal() function (Vec2)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Vec2 (Box2D element)"" data-secondary=""adding vectors with"">&nbsp;</a></p>
 
 <table class="code">
 <tr>
@@ -268,8 +268,8 @@ Vec2 c = a.add(b);
 </td>
 </tr>
 </table>
-<p><a data-type="indexterm" data-primary="Vec2 (Box2D element)" data-secondary="multiplying vectors with"/>
-<a data-type="indexterm" data-primary="Vec2 (Box2D element)" data-secondary="scaling vectors with"/></p>
+<p><a data-type="indexterm" data-primary=""Vec2 (Box2D element)"" data-secondary=""multiplying vectors with"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Vec2 (Box2D element)"" data-secondary=""scaling vectors with"">&nbsp;</a></p>
 
 <p>How about if we want to multiply and scale them?</p>
 
@@ -313,8 +313,8 @@ Vec2 c = a.mul(n);
 </table>
 <p>Magnitude and normalize?</p>
 
-<p><a data-type="indexterm" data-primary="Vec2 (Box2D element)" data-secondary="manitude" data-tertiary="finding"/>
-<a data-type="indexterm" data-primary="Vec2 (Box2D element)" data-secondary="normalizing vectors"/></p>
+<p><a data-type="indexterm" data-primary=""Vec2 (Box2D element)"" data-secondary=""manitude" data-tertiary="finding"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Vec2 (Box2D element)"" data-secondary=""normalizing vectors"">&nbsp;</a></p>
 
 <table class="code">
 <tr>
@@ -338,7 +338,7 @@ a.normalize();
 </td>
 </tr>
 </table>
-<p><a data-type="indexterm" data-primary="JBox2D" data-secondary="full documentation for"/></p>
+<p><a data-type="indexterm" data-primary=""JBox2D"" data-secondary=""full documentation for"">&nbsp;</a></p>
 
 <p>As you can see, the concepts are the same, but the function names and the arguments are slightly different.  For example, instead of static and non-static <strong function>add()</strong> and <strong function>mult()</strong>, if a <strong klass>Vec2</strong> is altered, the word “local” is included in the function name—<strong function>addLocal()</strong>, <strong function>multLocal()</strong>.</p>
 
@@ -353,12 +353,12 @@ a.normalize();
 
 <section data-type="sect1" id="chapter05_section4">
 <h1>5.4 Living in a Box2D World</h1>
-<p><a data-type="indexterm" data-primary="World class (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""World class (Box2D)"">&nbsp;</a></p>
 
 <p>The Box2D <strong klass>World</strong> object is in charge of everything. It manages the coordinate space of the world, all of the stuff that lives in the world, and decides when time moves forward in the world.</p>
 
-<p><a data-type="indexterm" data-primary="PBox2D helper class" data-secondary="createWorld() function"/>
-<a data-type="indexterm" data-primary="World class (Box2D)" data-secondary="createWorld() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""PBox2D helper class"" data-secondary=""createWorld() function"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""World class (Box2D)"" data-secondary=""createWorld() function (PBox2D)"">&nbsp;</a></p>
 
 <p>In order to have Box2D as part of our Processing sketches, the <strong klass>World</strong> is the very first thing that needs to be set up.  Here is where PBox2D comes in handy and takes care of making the world for us.</p>
 
@@ -372,7 +372,7 @@ void setup() {
 
 <p>When you call <strong function>createWorld()</strong>, PBox2D will set up a default gravity for you (pointing down); however, you can always alter the gravity of your world by saying:</p>
 
-<p><a data-type="indexterm" data-primary="setGravity() function (World class)"/></p>
+<p><a data-type="indexterm" data-primary=""setGravity() function (World class)"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">  box2d.setGravity(0, -10);</pre>
 
@@ -380,9 +380,9 @@ void setup() {
 
 <p>So, what are those numbers 0 and -10?   This should remind us of one of the most important details of using Box2D: the Box2D coordinate system is not your pixel coordinate system!   Let’s look at how Box2D and a Processing window think differently of their worlds.</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="coordinate system vs. Processing"/>
-<a data-type="indexterm" data-primary="coordinate systems" data-secondary="Box2D vs. Processing"/>
-<a data-type="indexterm" data-primary="Processing" data-secondary="coordinate systems vs. Box2D"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""coordinate system vs. Processing"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""coordinate systems"" data-secondary=""Box2D vs. Processing"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Processing"" data-secondary=""coordinate systems vs. Box2D"">&nbsp;</a></p>
 
 <figure id="chapter05_figure2">
 <img src="imgs/chapter05/ch05_02.png" alt="Figure 5.2"/>
@@ -394,8 +394,8 @@ void setup() {
 
 <p>Luckily for us, if we prefer to think in terms of pixel coordinates (which as Processing programmers, we are likely to do), PBox2D offers a series of helper functions that convert between pixel space and Box2D space.  Before we move onto the next section and begin creating Box2D bodies, let’s take a look at how these helper functions work.</p>
 
-<p><a data-type="indexterm" data-primary="coordPixelsToWorld() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="PBox2D helper class" data-secondary="coordinate systems" data-tertiary="converting between"/></p>
+<p><a data-type="indexterm" data-primary=""coordPixelsToWorld() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""PBox2D helper class"" data-secondary=""coordinate systems" data-tertiary="converting between"">&nbsp;</a></p>
 
 <p>Let’s say we want to tell Box2D where the mouse is in its world.  We know the mouse is located at <strong var>(mouseX,mouseY)</strong> in Processing.  To convert it, we say we want to convert a “coordinate” from “pixels” to “world”—<strong function>coordPixelsToWorld()</strong>.  Or:</p>
 
@@ -416,9 +416,9 @@ ellipse(pixelPos.x, pixelPos.y,16,16);</pre>
 
 <p>PBox2D has a set of functions to take care of translating back and forth between the Box2D world and pixels.  It’s probably easier to learn about all of these functions during the course of actually implementing our examples, but let’s quickly look over the list of the possibilities.</p>
 
-<p><a data-type="indexterm" data-primary="coordWorldToPixels() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="scalarPixelsToWorld() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="scalarWorldToPixels() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""coordWorldToPixels() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""scalarPixelsToWorld() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""scalarWorldToPixels() function (PBox2D)"">&nbsp;</a></p>
 
 <table class="code">
 <tr>
@@ -466,7 +466,7 @@ ellipse(pixelPos.x, pixelPos.y,16,16);</pre>
 
 <section data-type="sect1" id="chapter05_section5">
 <h1>5.5 Building a Box2D Body</h1>
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="building"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""building"">&nbsp;</a></p>
 
 <p>A Box2D body is the primary element in the Box2D world.  It’s the equivalent to the <strong klass>Mover</strong> class we built on our own in previous chapters—the thing that moves around the space and experiences forces. It can also be static (meaning fixed and not moving). It’s important to note, however, that a body has no geometry; it isn’t anything physical.   Rather, bodies have Box2D shapes attached to them. (This way, a body can be a single rectangle or a rectangle attached to a circle, etc.) We’ll look at shapes in a moment; first, let’s build a body.</p>
 
@@ -476,8 +476,8 @@ ellipse(pixelPos.x, pixelPos.y,16,16);</pre>
 
 <section data-type="sect2" id="_step_1_define_a_body">
 <h2>Step 1:  Define a body.</h2>
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="BodyDef type"/>
-<a data-type="indexterm" data-primary="BodyDef type (body element)"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""BodyDef type"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""BodyDef type (body element)"">&nbsp;</a></p>
 
 <p>The first thing we have to do is create a “body definition.” This will let us define the properties of the body we intend to make.  This may seem a bit awkward at first, but it’s how Box2D is structured.  Anytime you want to make a “thing,” you have to make a “thing definition” first.  This will hold true for bodies, shapes, and joints.</p>
 
@@ -493,7 +493,7 @@ BodyDef bd = new BodyDef();</pre>
 
 <section data-type="sect2" id="_step_2_configure_the_body_definition">
 <h2>Step 2:  Configure the body definition.</h2>
-<p><a data-type="indexterm" data-primary="BodyDef type (body element)" data-secondary="configuring"/></p>
+<p><a data-type="indexterm" data-primary=""BodyDef type (body element)"" data-secondary=""configuring"">&nbsp;</a></p>
 
 <p>The body definition is where we can set specific properties or attributes of the body we intend to make.  One attribute of a body, for example, is its starting location.  Let’s say we want to position the body in the center of the Processing window.</p>
 
@@ -508,10 +508,10 @@ Vec2 center = box2d.coordPixelsToWorld(width/2,height/2));
 // Setting the position attribute of the Box2D body definition
 bd.position.set(center);</pre>
 
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="types of"/>
-<a data-type="indexterm" data-primary="dynamic (body type)"/>
-<a data-type="indexterm" data-primary="kinematic (body type)"/>
-<a data-type="indexterm" data-primary="static (body type)"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""types of"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""dynamic (body type)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""kinematic (body type)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""static (body type)"">&nbsp;</a></p>
 
 <p>The body definition must also specify the “type” of body we want to make.  There are three possibilities:</p>
 
@@ -533,7 +533,7 @@ bd.position.set(center);</pre>
 <pre data-type="programlisting" data-code-language="java">bd.linearDamping = 0.8;
 bd.angularDamping = 0.9;</pre>
 
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="bullet setting for"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""bullet setting for"">&nbsp;</a></p>
 
 <p>In addition, fast-moving objects in Box2D should be set as bullets.  This tells the Box2D engine that the object may move very quickly and to check its collisions more carefully so that it doesn’t accidentally jump over another body.</p>
 
@@ -548,8 +548,8 @@ bd.angularDamping = 0.9;</pre>
 
 <section data-type="sect2" id="_step_3_create_the_body">
 <h2>Step 3:  Create the body.</h2>
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="object" data-tertiary="creating"/>
-<a data-type="indexterm" data-primary="createBody() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""object" data-tertiary="creating"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""createBody() function (PBox2D)"">&nbsp;</a></p>
 
 <p>Once we’re done with the definition (<strong klass>BodyDef</strong>), we can create the <strong klass>Body</strong> object itself.  PBox2D provides a helper function for this—<strong function>createBody</strong>().</p>
 
@@ -567,7 +567,7 @@ Body body = box2d.createBody(bd);</pre>
 
 <section data-type="sect2" id="_step_4_set_any_other_conditions_for_the_body_s_starting_state">
 <h2>Step 4:  Set any other conditions for the body’s starting state.</h2>
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="initial settings for"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""initial settings for"">&nbsp;</a></p>
 
 <p>Finally, though not required, if you want to set any other initial conditions for the body, such as linear or angular velocity, you can do so with the newly created <strong klass>Body</strong> object.</p>
 
@@ -588,12 +588,12 @@ body.setAngularVelocity(1.2);</pre>
 
 <section data-type="sect1" id="chapter05_section6">
 <h1>5.6 Three’s Company: Bodies and Shapes and Fixtures</h1>
-<p><a data-type="indexterm" data-primary="Shape (Box2D element)"/></p>
+<p><a data-type="indexterm" data-primary=""Shape (Box2D element)"">&nbsp;</a></p>
 
 <p>A body on its own doesn’t physically exist in the world. It’s like a soul with no human form to inhabit. For a body to have mass, we must first define a shape and attach that shape to the body with something known as a fixture.</p>
 
-<p><a data-type="indexterm" data-primary="Shape (Box2D element)" data-secondary="friction attribute"/>
-<a data-type="indexterm" data-primary="Shape (Box2D element)" data-secondary="restitution attribute"/></p>
+<p><a data-type="indexterm" data-primary=""Shape (Box2D element)"" data-secondary=""friction attribute"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Shape (Box2D element)"" data-secondary=""restitution attribute"">&nbsp;</a></p>
 
 <p>The job of the Box2D <strong klass>Shape</strong> class is to keep track of all the necessary collision geometry attached to a body.  A shape also has several important properties that affect the body’s motion.  There is density, which ultimately determines that body’s mass.  Shapes also have <em>friction</em> and <em>restitution</em> (“bounciness”) which will be defined through a fixture. One of the nice things about Box2D’s methodology, which separates the concepts of bodies and shapes into two separate objects, is that you can attach multiple shapes to a single body in order to create more complex forms.  We’ll see this in a future example.</p>
 
@@ -605,7 +605,7 @@ body.setAngularVelocity(1.2);</pre>
 
 <section data-type="sect2" id="_step_1_define_a_shape">
 <h2>Step 1:  Define a shape.</h2>
-<p><a data-type="indexterm" data-primary="Shape (Box2D element)" data-secondary="defining"/></p>
+<p><a data-type="indexterm" data-primary=""Shape (Box2D element)"" data-secondary=""defining"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">// Define the shape: a polygon.
 PolygonShape ps = new PolygonShape();</pre>
@@ -629,7 +629,7 @@ ps.setAsBox(box2Dw, box2Dh);</pre>
 
 <section data-type="sect2" id="_step_2_create_a_fixture">
 <h2>Step 2:  Create a fixture.</h2>
-<p><a data-type="indexterm" data-primary="fixture (Box2D element)" data-secondary="creating"/></p>
+<p><a data-type="indexterm" data-primary=""fixture (Box2D element)"" data-secondary=""creating"">&nbsp;</a></p>
 
 <p>The shape and body are made as two separate entities.  In order to attach a shape to a body, we must make a fixture.   A fixture is created, just as with the body, via a fixture definition (i.e. <strong klass>FixtureDef</strong> class) and assigned a shape.</p>
 
@@ -658,9 +658,9 @@ fd.density = 1.0;</pre>
 
 <section data-type="sect2" id="_step_3_attach_the_shape_to_the_body_with_the_fixture">
 <h2>Step 3:  Attach the shape to the body with the fixture.</h2>
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="attaching fixture element to"/>
-<a data-type="indexterm" data-primary="createFixture() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="fixture (Box2D element)" data-secondary="attaching to body element"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""attaching fixture element to"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""createFixture() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""fixture (Box2D element)"" data-secondary=""attaching to body element"">&nbsp;</a></p>
 
 <p>Once the fixture is defined, all we have left to do is attach the shape to the body with the fixture by calling the <strong function>createFixture()</strong> function.</p>
 
@@ -742,10 +742,10 @@ body.createFixture(fd);</pre>
 <h1>5.7  Box2D and Processing: Reunited and It Feels So Good</h1>
 <p>Once a body is made, it lives in the Box2D physics world. Box2D will always know it’s there, check it for collisions, move it appropriately according to the forces, etc. It’ll do all that for you without you having to lift a finger! What it won’t do, however, is display the body for you. This is a good thing. This is your time to shine. When working with Box2D, what we’re essentially saying is, “I want to be the designer of my world, and I want you, Box2D, to compute all the physics.”</p>
 
-<p><a data-type="indexterm" data-primary="body lists" data-secondary="maintaining in Processing"/>
-<a data-type="indexterm" data-primary="getBodyList() function (World class)"/>
-<a data-type="indexterm" data-primary="Processing" data-secondary="body lists" data-tertiary="maintaining"/>
-<a data-type="indexterm" data-primary="World class (Box2D)" data-secondary="getBodyList() function"/></p>
+<p><a data-type="indexterm" data-primary=""body lists" data-secondary="maintaining in Processing"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""getBodyList() function (World class)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Processing"" data-secondary=""body lists" data-tertiary="maintaining"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""World class (Box2D)"" data-secondary=""getBodyList() function"">&nbsp;</a></p>
 
 <p>Now, Box2D will keep a list of all the bodies that exist in the world. This can be accessed by calling the World object’s <strong function>getBodyList()</strong> function. Nevertheless, what I’m going to demonstrate here is a technique for keeping your own body lists. Yes, this may be a bit redundant and we perhaps sacrifice a bit of efficiency. But we more than make up for that with ease of use. This methodology will allow us to program like we’re used to in Processing, and we can easily keep track of which bodies are which and render them appropriately. Let’s consider the structure of the following Processing sketch:</p>
 
@@ -823,7 +823,7 @@ void draw() {
 
 <section data-type="sect2" id="_step_1_add_box2d_to_our_main_program_i_e_setup_and_draw">
 <h2>Step 1: Add Box2D to our main program (i.e. setup() and draw()).</h2>
-<p><a data-type="indexterm" data-primary="Processing" data-secondary="Box2D objects" data-tertiary="adding to projects"/></p>
+<p><a data-type="indexterm" data-primary=""Processing"" data-secondary=""Box2D objects" data-tertiary="adding to projects"">&nbsp;</a></p>
 
 <p>This part is not too tough.  We saw this already in our discussion of building a Box2D world.  This is taken care of for us by the PBox2D helper class.  We can create a PBox2D object and initialize it in <strong function>setup()</strong>.</p>
 
@@ -836,7 +836,7 @@ void setup() {
   //[end]
 }</pre>
 
-<p><a data-type="indexterm" data-primary="step() function (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""step() function (Box2D)"">&nbsp;</a></p>
 
 <p>Then in <strong function>draw()</strong>, we need to make sure we call one very important function: <strong function>step()</strong>. Without this function, nothing would ever happen! <strong function>step()</strong> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <strong function>step()</strong> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the PBox2D source).</p>
 
@@ -910,8 +910,8 @@ void setup() {
   }
   //[end]</pre>
 
-<p><a data-type="indexterm" data-primary="getBodyPixelCoord() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="PBox2D helper class" data-secondary="getBodyPixelCoord() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""getBodyPixelCoord() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""PBox2D helper class"" data-secondary=""getBodyPixelCoord() function (PBox2D)"">&nbsp;</a></p>
 
 <p>But now Box2D manages the object’s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <strong klass>Box</strong> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, “Pardon me, where are you located?” Since this is a task we’ll need to do quite often, PBox2D includes a helper function: <strong function>getBodyPixelCoord()</strong>.</p>
 
@@ -919,12 +919,12 @@ void setup() {
 
 <p>Just knowing the location of a body isn’t enough; we also need to know its angle of rotation.</p>
 
-<p><a data-type="indexterm" data-primary="getAngle() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""getAngle() function (PBox2D)"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">float a = body.getAngle();</pre>
 
-<p><a data-type="indexterm" data-primary="rotate() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="translate() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""rotate() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""translate() function (PBox2D)"">&nbsp;</a></p>
 
 <p>Once we have the location and angle, it’s easy to display the object using <strong function>translate()</strong> and <strong function>rotate()</strong>.  Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
 
@@ -953,7 +953,7 @@ void setup() {
 
 <p>In case we want to have objects that can be removed from the Box2D world, it’s also useful to include a function to destroy a body, such as:</p>
 
-<p><a data-type="indexterm" data-primary="destroyBody() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""destroyBody() function (PBox2D)"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">  // This function removes a body from the Box2D world.
   void killBody() {
@@ -981,10 +981,10 @@ void setup() {
 
 <section data-type="sect1" id="chapter05_section8">
 <h1>5.8  Fixed Box2D Objects</h1>
-<p><a data-type="indexterm" data-primary="BodyDef type (body element)" data-secondary="STATIC type"/>
-<a data-type="indexterm" data-primary="boundaries" data-secondary="fixed"/>
-<a data-type="indexterm" data-primary="Box2D" data-secondary="fixed objects in"/>
-<a data-type="indexterm" data-primary="static (body type)"/></p>
+<p><a data-type="indexterm" data-primary=""BodyDef type (body element)"" data-secondary=""STATIC type"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""boundaries"" data-secondary=""fixed"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Box2D"" data-secondary=""fixed objects in"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""static (body type)"">&nbsp;</a></p>
 
 <p>In the example we just created, the <strong klass>Box</strong> objects appear at the mouse location and fall downwards due to Box2D’s default gravity force.  What if we wanted to install some immovable boundaries in the Box2D world that would block the path of the <strong klass>Box</strong> objects (as in the illustration below)?</p>
 
@@ -1055,8 +1055,8 @@ void setup() {
 
 <section data-type="sect1" id="chapter05_section9">
 <h1>5.9  A Curvy Boundary</h1>
-<p><a data-type="indexterm" data-primary="boundaries" data-secondary="curvy"/>
-<a data-type="indexterm" data-primary="ChainShape class"/></p>
+<p><a data-type="indexterm" data-primary=""boundaries"" data-secondary=""curvy"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""ChainShape class"">&nbsp;</a></p>
 
 <p>If you want a fixed boundary that is a curved surface (as opposed to a polygon), this can be achieved with the shape <strong klass>ChainShape</strong>.</p>
 
@@ -1095,7 +1095,7 @@ Body body = box2d.world.createBody(bd);</pre>
 
 <section data-type="sect2" id="_step_3_configure_the_shape">
 <h2>Step 3: Configure the Shape.</h2>
-<p><a data-type="indexterm" data-primary="ChainShape class" data-secondary="configuring"/></p>
+<p><a data-type="indexterm" data-primary=""ChainShape class"" data-secondary=""configuring"">&nbsp;</a></p>
 
 <p>The <strong klass>ChainShape</strong> object is a series of connected vertices.  To create the chain, we must first specify an array of vertices (each as a <strong klass>Vec2</strong> object).  For example, if we wanted a straight line from the left-hand side of our window to the right-hand side, we would just need an array of two vertices: (0,150) and (width,150).  (Note that if you want to create a loop where the first vertex connects to the last vertex in a loop, you can use the <strong klass>ChainLoop</strong> class instead.)</p>
 
@@ -1244,7 +1244,7 @@ void draw() {
 
 <section data-type="sect1" id="chapter05_section10">
 <h1>5.10  Complex Forms</h1>
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="complex forms in"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""complex forms in"">&nbsp;</a></p>
 
 <figure id="chapter05_figure5">
 <img src="imgs/chapter05/ch05_05.png" alt="Figure 5.5"/>
@@ -1257,7 +1257,7 @@ void draw() {
 <pre data-type="programlisting" data-code-language="java">  PolygonShape ps = new PolygonShape();
   ps.setAsBox(box2dW, box2dH);</pre>
 
-<p><a data-type="indexterm" data-primary="PolygonShape class" data-secondary="as list of vectors"/></p>
+<p><a data-type="indexterm" data-primary=""PolygonShape class"" data-secondary=""as list of vectors"">&nbsp;</a></p>
 
 <p>This was a good way to start because of the inherent simplicity of working with rectangles.  However, a <strong klass>PolygonShape</strong> object can also be generated from an array of vectors, which allows you to build a completely custom shape as a series of connected vertices.  This works very similarly to the <strong klass>ChainShape</strong> class.</p>
 
@@ -1284,7 +1284,7 @@ ps.set(vertices, vertices.length);
 <img src="imgs/chapter05/ch05_06.png" alt="Figure 5.6"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="order of vertices"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""order of vertices"">&nbsp;</a></p>
 
 <ol>
 <li>
@@ -1293,14 +1293,14 @@ ps.set(vertices, vertices.length);
 <p><strong>Convex shapes only!</strong>  A concave shape is one where the surface curves inward. Convex is the opposite (see illustration below).  Note how in a convex shape every internal angle must be 180 degrees or less.  Box2D is not capable of handling collisions for concave shapes.  If you need a concave shape, you will have to build one out of multiple convex shapes (more about that in a moment).</p></li>
 </ol>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="concave shapes and"/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""concave shapes and"">&nbsp;</a></p>
 
 <figure id="chapter05_figure7">
 <img src="imgs/chapter05/ch05_07.png" alt="Figure 5.7: A concave shape can be drawn with multiple convex shapes."/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="beginShape() function (Processing)"/>
-<a data-type="indexterm" data-primary="endShape() function (Processing)"/></p>
+<p><a data-type="indexterm" data-primary=""beginShape() function (Processing)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""endShape() function (Processing)"">&nbsp;</a></p>
 
 <p>Now, when it comes time to display the shape in Processing, we can no longer just use <strong function>rect()</strong> or <strong function>ellipse()</strong>.  Since the shape is built out of custom vertices, we’ll want to use Processing’s <strong function>beginShape()</strong>, <strong function>endShape()</strong>, and <strong function>vertex()</strong> functions.   As we saw with the <strong klass>ChainShape</strong>, we could choose to store the pixel locations of the vertices in our own <strong klass>ArrayList</strong> for drawing.  However, it’s also useful to see how we can ask Box2D to report back to use the vertex locations.</p>
 
@@ -1338,7 +1338,7 @@ ps.set(vertices, vertices.length);
 <figcaption/>
 </figure></div>
 
-<p><a data-type="indexterm" data-primary="body (Box2D element)" data-secondary="multiple shapes and"/></p>
+<p><a data-type="indexterm" data-primary=""body (Box2D element)"" data-secondary=""multiple shapes and"">&nbsp;</a></p>
 
 <p>A polygon shape will get us pretty far in Box2D.  Nevertheless, the convex shape requirement will severely limit the range of possibilities.  The good news is that we can completely eliminate this restriction by creating a single Box2D body out of multiple shapes!  Let’s return to our little alien creature and simplify the shape to be a thin rectangle with a circle on top.</p>
 
@@ -1396,8 +1396,8 @@ body.createFixture(cs, 1.0);
 <img src="imgs/chapter05/ch05_09.png" alt="Figure 5.9"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="m_p variable (Vec2 class)"/>
-<a data-type="indexterm" data-primary="Shape (Box2D element)" data-secondary="local position for"/></p>
+<p><a data-type="indexterm" data-primary=""m_p variable (Vec2 class)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Shape (Box2D element)"" data-secondary=""local position for"">&nbsp;</a></p>
 
 <p>This is achieved by using the local position of a shape, accessed via a <strong klass>Vec2</strong> variable called <strong var>m_p</strong>.</p>
 
@@ -1463,7 +1463,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
 
 <section data-type="sect1" id="chapter05_section11">
 <h1>5.11 Feeling Attached—Box2D Joints</h1>
-<p><a data-type="indexterm" data-primary="joint (Box2D element)"/></p>
+<p><a data-type="indexterm" data-primary=""joint (Box2D element)"">&nbsp;</a></p>
 
 <figure id="chapter05_figure10">
 <img src="imgs/chapter05/ch05_10.png" alt="Figure 5.10"/>
@@ -1471,8 +1471,8 @@ circle.m_p.set(offset.x,offset.y);</pre>
 </figure>
 <p>Box2D joints allow you to connect one body to another, enabling more advanced simulations of swinging pendulums, elastic bridges, squishy characters, wheels spinning on an axle, etc.  There are many different kinds of Box2D joints. In this chapter we’re going to look at three: distance joints, revolute joints, and “mouse” joints.</p>
 
-<p><a data-type="indexterm" data-primary="distance joints"/>
-<a data-type="indexterm" data-primary="joint (Box2D element)" data-secondary="distance"/></p>
+<p><a data-type="indexterm" data-primary=""distance joints"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""joint (Box2D element)"" data-secondary=""distance"">&nbsp;</a></p>
 
 <p>Let’s begin with a distance joint, a joint that connects two bodies with a fixed length.  The joint is attached to each body at a specified anchor point (a point relative to the body’s center).  For any Box2D joint, we need to follow these steps.  This, of course, is similar to the methodology we used to build bodies and shapes, with some quirks.</p>
 
@@ -1486,7 +1486,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
 <pre data-type="programlisting" data-code-language="java">Particle p1 = new Particle();
 Particle p2 = new Particle();</pre>
 
-<p><a data-type="indexterm" data-primary="DistanceJointDef (Box2D joint type)"/></p>
+<p><a data-type="indexterm" data-primary=""DistanceJointDef (Box2D joint type)"">&nbsp;</a></p>
 
 <p>OK, onto Step 2.  Let’s define the joint.</p>
 
@@ -1497,14 +1497,14 @@ Particle p2 = new Particle();</pre>
 <pre data-type="programlisting" data-code-language="java">djd.bodyA = p1.body;
 djd.bodyB = p2.body;</pre>
 
-<p><a data-type="indexterm" data-primary="rest length (Box2D joint element)"/></p>
+<p><a data-type="indexterm" data-primary=""rest length (Box2D joint element)"">&nbsp;</a></p>
 
 <p>Then we set up a rest length.  Remember, if our rest length is in pixels, we need to convert it!</p>
 
 <pre data-type="programlisting" data-code-language="java">djd.length = box2d.scalarPixelsToWorld(10);</pre>
 
-<p><a data-type="indexterm" data-primary="dampingRatio setting (Box2D joint element)"/>
-<a data-type="indexterm" data-primary="frequencyHz setting (Box2D joint element)"/></p>
+<p><a data-type="indexterm" data-primary=""dampingRatio setting (Box2D joint element)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""frequencyHz setting (Box2D joint element)"">&nbsp;</a></p>
 
 <p>A distance joint also includes two optional settings that can make the joint soft, like a spring connection: <strong var>frequencyHz</strong> and <strong var>dampingRatio</strong>.</p>
 
@@ -1582,8 +1582,8 @@ djd.bodyB = p2.body;</pre>
 <img src="imgs/chapter05/ch05_11.png" alt="Figure 5.11"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="joint (Box2D element)" data-secondary="revolute type"/>
-<a data-type="indexterm" data-primary="revolute joint type (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""joint (Box2D element)"" data-secondary=""revolute type"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""revolute joint type (Box2D)"">&nbsp;</a></p>
 
 <p>Another joint you can create in Box2D is a <em>revolute joint</em>. A revolute joint connects two Box2D bodies at a common anchor point, which can also be referred to as a “hinge.”   The joint has an “angle” that describes the relative rotation of each body.   To use a revolute joint, we follow the same steps we did with the distance joint.</p>
 
@@ -1607,7 +1607,7 @@ Box box2 = new Box();</pre>
 
 <section data-type="sect2" id="_step_2_define_the_joint">
 <h2>Step 2: Define the joint.</h2>
-<p><a data-type="indexterm" data-primary="RevoluteJointDef object (Box2D joint element)"/></p>
+<p><a data-type="indexterm" data-primary=""RevoluteJointDef object (Box2D joint element)"">&nbsp;</a></p>
 
 <p>Now we want a <strong klass>RevoluteJointDef</strong> object.</p>
 
@@ -1622,7 +1622,7 @@ Box box2 = new Box();</pre>
 
 <section data-type="sect2" id="_step_3_configure_the_joint_s_properties">
 <h2>Step 3: Configure the joint’s properties.</h2>
-<p><a data-type="indexterm" data-primary="revolute joint type (Box2D)" data-secondary="properties" data-tertiary="configuring"/></p>
+<p><a data-type="indexterm" data-primary=""revolute joint type (Box2D)"" data-secondary=""properties" data-tertiary="configuring"">&nbsp;</a></p>
 
 <p>The most important properties of a revolute joint are the two bodies it connects as well as their mutual anchor point (i.e. where they are connected).   They are set with the function <strong function>initialize()</strong>.</p>
 
@@ -1723,13 +1723,13 @@ rjd.upperAngle = PI/8;</pre>
 <figcaption/>
 </figure></div>
 
-<p><a data-type="indexterm" data-primary="joint (Box2D element)" data-secondary="mouse type"/>
-<a data-type="indexterm" data-primary="mouse joint (Box2D Joint type)"/></p>
+<p><a data-type="indexterm" data-primary=""joint (Box2D element)"" data-secondary=""mouse type"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""mouse joint (Box2D Joint type)"">&nbsp;</a></p>
 
 <p>The last joint we’ll look at is a mouse joint.  A mouse joint is typically used for moving a body with the mouse.  However, it can also be used to drag an object around the screen according to some arbitrary <em>x</em> and <em>y</em>.   The joint functions by pulling the body towards a “target” position.</p>
 
-<p><a data-type="indexterm" data-primary="mouse joint (Box2D joint type)" data-secondary="setTransform() function"/>
-<a data-type="indexterm" data-primary="setTransform() function (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""mouse joint (Box2D joint type)"" data-secondary=""setTransform() function"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""setTransform() function (Box2D)"">&nbsp;</a></p>
 
 <p>Before we look at the <strong klass>MouseJoint</strong> object itself, let’s ask ourselves why we even need it in the first place.  If you look at the Box2D documentation, there is a function called <strong function>setTransform()</strong> that specifically “sets the position of the body&#8217;s origin and rotation (radians).”  If a body has a position, can’t we just assign the body’s position to the mouse?</p>
 
@@ -1756,7 +1756,7 @@ md.dampingRatio = 0.9;
 // Create the joint.
 MouseJoint mouseJoint = (MouseJoint) box2d.world.createJoint(md);.</pre>
 
-<p><a data-type="indexterm" data-primary="getGroundBody() function (Box2D joint element)"/></p>
+<p><a data-type="indexterm" data-primary=""getGroundBody() function (Box2D joint element)"">&nbsp;</a></p>
 
 <p>So, what’s this line of code all about?</p>
 
@@ -1835,7 +1835,7 @@ void draw() {
 <p>Use a mouse joint to move a Box2D body around the screen according to an algorithm or input other than the mouse.  For example, assign it a location according to Perlin noise or key presses.  Or build your own controller using an <a href="http://www.arduino.cc/">Arduino</a>.</p>
 </div>
 
-<p><a data-type="indexterm" data-primary="kinematic (body type)" data-secondary="MouseJoints and"/></p>
+<p><a data-type="indexterm" data-primary=""kinematic (body type)"" data-secondary=""MouseJoints and"">&nbsp;</a></p>
 
 <p>It’s worth noting that while the technique for dragging an object around using a <strong klass>MouseJoint</strong> is useful, Box2D also allows a body to have a <strong var>KINEMATIC</strong> type.</p>
 
@@ -1887,8 +1887,8 @@ body.setLinearVelocity(v);</pre>
   // Setting the global gravity force
   box2d.setGravity(0, -20);</pre>
 
-<p><a data-type="indexterm" data-primary="applyForce() function (Box2D)"/>
-<a data-type="indexterm" data-primary="forces" data-secondary="applyForce() function"/></p>
+<p><a data-type="indexterm" data-primary=""applyForce() function (Box2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""forces"" data-secondary=""applyForce() function"">&nbsp;</a></p>
 
 <p>If we want to use any of our Chapter 2 techniques with Box2D, we need look no further than our trusty <strong function>applyForce()</strong> function.   In our <strong klass>Mover</strong> class we wrote a function called <strong function>applyForce()</strong>, which received a vector, divided it by mass, and accumulated it into the mover&#8217;s acceleration.  With Box2D, the same function exists, but we don’t need to write it ourselves.  Instead, we can call the Box2D body’s <strong function>applyForce()</strong> function!</p>
 
@@ -1950,7 +1950,7 @@ body.setLinearVelocity(v);</pre>
 
 <section data-type="sect1" id="chapter05_section13">
 <h1>5.13 Collision Events</h1>
-<p><a data-type="indexterm" data-primary="collisions" data-secondary="Box2D and"/></p>
+<p><a data-type="indexterm" data-primary=""collisions"" data-secondary=""Box2D and"">&nbsp;</a></p>
 
 <p>Now we’ve seen a survey of what can be done with Box2D.   Since this book is not called “The Nature of Box2D,” it’s not my intention to cover every single possible feature of the Box2D engine.  But hopefully by looking at the basics of building bodies, shapes, and joints, when it comes time to use an aspect of Box2D that we haven’t covered, the skills we’ve gained here will make that process considerably less painful.  There is one more feature of Box2D, however, that I do think is worth covering.</p>
 
@@ -1960,14 +1960,14 @@ body.setLinearVelocity(v);</pre>
 
 <p>Your first thoughts when considering an event during which two objects collide might be as follows:  Well, if I know all the bodies in the system, and I know where they are all located, then I can just start comparing the locations, see which ones are intersecting, and determine that they’ve collided.  That’s a nice thought, but hello??!?  The whole point of using Box2D is that Box2D will take care of that for us.  If we are going to do the geometry to test for intersection ourselves, then all we’re doing is re-implementing Box2D.</p>
 
-<p><a data-type="indexterm" data-primary="ContactListener class (JBox2D)"/>
-<a data-type="indexterm" data-primary="interfaces"/>
-<a data-type="indexterm" data-primary="JBox2D" data-secondary="ContactListener class"/></p>
+<p><a data-type="indexterm" data-primary=""ContactListener class (JBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""interfaces"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""JBox2D"" data-secondary=""ContactListener class"">&nbsp;</a></p>
 
 <p>Of course, Box2D has thought of this problem before.  It’s a pretty common one.  After all, if you intend to make a bajillion dollars selling some game called Angry Birds, you better well make something happen when an ill-tempered pigeon smashes into a cardboard box.   Box2D alerts you to moments of collision with something called an “interface.”  It’s worth learning about interfaces, an advanced feature of object-oriented programming. You can take a look at the <a href="http://download.oracle.com/javase/tutorial/java/concepts/interface.html">Java Interface Tutorial</a> as well as the JBox2D <strong klass>ContactListener</strong> class. (I have also included an example on the website that demonstrates using the interface directly.)</p>
 
-<p><a data-type="indexterm" data-primary="beginContact() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="collisions" data-secondary="beginContact() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""beginContact() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""collisions"" data-secondary=""beginContact() function (PBox2D)"">&nbsp;</a></p>
 
 <p>If you are using PBox2D, as we are here, you don’t need to implement your own interface.  Detecting collision events is done through a callback function.  Much like <strong function>mousePressed()</strong> is triggered when the mouse is pressed, <strong function>beginContact()</strong> is triggered when two shapes collide.</p>
 
@@ -1992,9 +1992,9 @@ void beginContact(Contact cp) {
 
 <p>There are four collision event callbacks.</p>
 
-<p><a data-type="indexterm" data-primary="endContact() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="postSolve() function (PBox2D)"/>
-<a data-type="indexterm" data-primary="preSolve() function (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""endContact() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""postSolve() function (PBox2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""preSolve() function (PBox2D)"">&nbsp;</a></p>
 
 <ol>
 <li>
@@ -2015,7 +2015,7 @@ void beginContact(Contact cp) {
 
 }</pre>
 
-<p><a data-type="indexterm" data-primary="Contact objects (PBox2D)"/></p>
+<p><a data-type="indexterm" data-primary=""Contact objects (PBox2D)"">&nbsp;</a></p>
 
 <p>Notice that the function above includes an argument of type <strong klass>Contact</strong>.  A <strong klass>Contact</strong> object includes all the data associated with a collision—the geometry and the forces.  Let’s say we have a Processing sketch with <strong klass>Particle</strong> objects that store a reference to a Box2D body.    Here is the process we are going to follow.</p>
 
@@ -2142,14 +2142,14 @@ Body b2 = f2.getBody();
 
 <section data-type="sect1" id="chapter05_section14">
 <h1>5.14 A Brief Interlude—Integration Methods</h1>
-<p><a data-type="indexterm" data-primary="integration"/></p>
+<p><a data-type="indexterm" data-primary=""integration"">&nbsp;</a></p>
 
 <p>Has the following ever happened to you?  You’re at a fancy cocktail party regaling your friends with tall tales of software physics simulations.   Someone pipes up: “Enchanting! But what integration method are you using?”  “What?!” you think to yourself.  “Integration?”</p>
 
 <p>Maybe you’ve heard the term before.  Along with “differentiation,” it’s one of the two main operations in calculus.  Right, calculus.  The good news is, we’ve gotten through about 90% of the material in this book related to physics simulation and we haven’t really needed to dive into calculus.  But as we’re coming close to finishing this topic, it’s worth taking a moment to examine the calculus behind what we have been doing and how it relates to the methodology in certain physics libraries (like Box2D and the upcoming toxiclibs).</p>
 
-<p><a data-type="indexterm" data-primary="derivatives"/>
-<a data-type="indexterm" data-primary="differentiation"/></p>
+<p><a data-type="indexterm" data-primary=""derivatives"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""differentiation"">&nbsp;</a></p>
 
 <p>Let’s begin by answering the question: “What does integration have to do with location, velocity, and acceleration?”   Well, first let’s define <strong><em>differentiation</em></strong>, the process of finding a “derivative.”  The derivative of a function is a measure of how a function changes over time.  Consider location and its derivative.  Location is a point in space, while velocity is change in location over time.  Therefore, velocity can be described as the “derivative” of location.   What is acceleration?  The change in velocity over time—i.e. the “derivative” of velocity.</p>
 
@@ -2160,9 +2160,9 @@ Body b2 = f2.getBody();
 <pre data-type="programlisting" data-code-language="java">velocity.add(acceleration);
 location.add(velocity);</pre>
 
-<p><a data-type="indexterm" data-primary="Euler integration"/>
-<a data-type="indexterm" data-primary="Euler" data-secondary="Leonhard"/>
-<a data-type="indexterm" data-primary="integration" data-secondary="Euler integration"/></p>
+<p><a data-type="indexterm" data-primary=""Euler integration"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Euler" data-secondary="Leonhard"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""integration"" data-secondary=""Euler integration"">&nbsp;</a></p>
 
 <p>The above methodology is known as Euler integration (named for the mathematician Leonhard Euler, pronounced “Oiler”) or the Euler method.    It’s essentially the simplest form of integration and very easy to implement in our code (see the two lines above!)  However, it is not necessarily the most efficient form, nor is it close to being the most accurate.    Why is Euler inaccurate?  Let’s think about it this way.  When you drive a car down the road pressing the gas pedal with your foot and accelerating, does the car sit in one location at time equals one second, then disappear and suddenly reappear in a new location at time equals two seconds, and do the same thing for three seconds, and four, and five?  No, of course not.  The car moves continuously down the road.  But what’s happening in our Processing sketch?  A circle is at one location at frame 0, another at frame 1, another at frame 2.  Sure, at thirty frames per second, we’re seeing the illusion of motion.  But we only calculate a new location every <strong var>N</strong> units of time, whereas the real world is perfectly continuous.   This results in some inaccuracies, as shown in the diagram below:</p>
 
@@ -2174,20 +2174,20 @@ location.add(velocity);</pre>
 
 <p>One option to improve on Euler is to use smaller timesteps—instead of once per frame, we could recalculate an object’s location twenty times per frame.  But this isn’t practical; our sketch would then run too slowly.</p>
 
-<p><a data-type="indexterm" data-primary="Euler integration" data-secondary="symplectic Euler (Box2D)"/>
-<a data-type="indexterm" data-primary="symplectic Euler (Box2D)"/></p>
+<p><a data-type="indexterm" data-primary=""Euler integration"" data-secondary=""symplectic Euler (Box2D)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""symplectic Euler (Box2D)"">&nbsp;</a></p>
 
 <p>I still believe that Euler is the best method for learning the basics, and it’s also perfectly adequate for most of the projects we might make in Processing.  Anything we lose in efficiency or inaccuracy we make up in ease of use and understandability.    For better accuracy, Box2D uses something called <a href="http://en.wikipedia.org/wiki/Symplectic_Euler_method">symplectic Euler or semi-explicit Euler</a>, a slight modification of Euler.</p>
 
-<p><a data-type="indexterm" data-primary="integration" data-secondary="Runge-Kutta method"/>
-<a data-type="indexterm" data-primary="Kutta" data-secondary="M. W."/>
-<a data-type="indexterm" data-primary="Runge" data-secondary="C."/>
-<a data-type="indexterm" data-primary="Runge-Kutta method"/></p>
+<p><a data-type="indexterm" data-primary=""integration"" data-secondary=""Runge-Kutta method"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Kutta" data-secondary="M. W."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Runge" data-secondary="C."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Runge-Kutta method"">&nbsp;</a></p>
 
 <p>There is also an integration method called Runge-Kutta (named for German mathematicians C. Runge and M. W. Kutta), which is used in some physics engines.</p>
 
-<p><a data-type="indexterm" data-primary="particle systems" data-secondary="Verlet integration and"/>
-<a data-type="indexterm" data-primary="Verlet integration"/></p>
+<p><a data-type="indexterm" data-primary=""particle systems"" data-secondary=""Verlet integration and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Verlet integration"">&nbsp;</a></p>
 
 <p>A very popular integration method that our next physics library uses is known as “Verlet integration.”  A simple way to describe Verlet integration is to think of our typical motion algorithm without velocity.  After all, we don&#8217;t really need to store the velocity.  If we always know where an object was at one point in time and where it is now, we can extrapolate its velocity.  Verlet integration does precisely this, though instead of having a variable for velocity, it calculates velocity while the program is running.   Verlet integration is particularly well suited for particle systems, especially particle systems with spring connections between the particles.    We don&#8217;t need to worry about the details because toxiclibs, as we’ll see below, takes care of them for us.  However, if you are interested, here is the seminal paper on Verlet physics, from which just about every Verlet computer graphics simulation is derived: <a href="http://www.gamasutra.com/resource_guide/20030121/jacobson_pfv.htm">"Advanced Character Physics"</a>. And of course, you can find out more about Verlet integration from <a href="http://en.wikipedia.org/wiki/Verlet_integration">Wikipedia</a>.</p>
 </section>
@@ -2200,10 +2200,10 @@ location.add(velocity);</pre>
 
 <section data-type="sect1" id="chapter05_section15">
 <h1>5.15 Verlet Physics with toxiclibs</h1>
-<p><a data-type="indexterm" data-primary="Processing" data-secondary="toxiclibs and"/>
-<a data-type="indexterm" data-primary="Schmidt" data-secondary="Karsten"/>
-<a data-type="indexterm" data-primary="toxiclibs"/>
-<a data-type="indexterm" data-primary="Verlet integration" data-secondary="toxiclibs"/></p>
+<p><a data-type="indexterm" data-primary=""Processing"" data-secondary=""toxiclibs and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Schmidt" data-secondary="Karsten"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Verlet integration"" data-secondary=""toxiclibs"">&nbsp;</a></p>
 
 <p>From toxiclibs.org:</p>
 
@@ -2213,9 +2213,9 @@ location.add(velocity);</pre>
 
 <p>We should note that toxiclibs was designed specifically for use with Processing.  This is great news.  The trouble we had with making Box2D work in Processing (multiple coordinate systems, Box2D vs. JBox2D vs. PBox2D) is not an issue here.  toxiclibs is a library that you just download, stick in your libraries folder, and use.  And the coordinate system that we’ll use for the physics engine is the coordinate system of Processing, so no translating back and forth.   In addition, toxiclibs is not limited to a 2D world; all of the physics simulations and functions work in both two and three dimensions.  So how do you decide which library you should use?  Box2D or toxiclibs?  If you fall into one of the following two categories, your decision is a bit easier:</p>
 
-<p><a data-type="indexterm" data-primary="Box2D" data-secondary="toxiclibs vs."/>
-<a data-type="indexterm" data-primary="collisions" data-secondary="toxiclibs and"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="Box2D vs."/></p>
+<p><a data-type="indexterm" data-primary=""Box2D"" data-secondary=""toxiclibs vs."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""collisions"" data-secondary=""toxiclibs and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""Box2D vs."">&nbsp;</a></p>
 
 <p><strong>1. My project involves collisions.   I have circles, squares, and other strangely shaped objects that knock each other around and bounce off each other.</strong></p>
 
@@ -2281,7 +2281,7 @@ location.add(velocity);</pre>
 
 <section data-type="sect2" id="_getting_toxiclibs">
 <h2>Getting toxiclibs</h2>
-<p><a data-type="indexterm" data-primary="toxiclibs" data-secondary="downloading"/></p>
+<p><a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""downloading"">&nbsp;</a></p>
 
 <p>Everything you need to download and install toxiclibs can be found at:</p>
 
@@ -2300,7 +2300,7 @@ location.add(velocity);</pre>
 
 <section data-type="sect2" id="_core_elements_of_verletphysics">
 <h2>Core Elements of VerletPhysics</h2>
-<p><a data-type="indexterm" data-primary="VerletPhysics class (toxiclibs)" data-secondary="core elements of"/></p>
+<p><a data-type="indexterm" data-primary=""VerletPhysics class (toxiclibs)"" data-secondary=""core elements of"">&nbsp;</a></p>
 
 <p>We spent a lot of time working through the core elements of a Box2D world: world, body, shape, joint.   This gives us a head start on understanding toxiclibs, since it follows a similar structure.</p>
 
@@ -2345,8 +2345,8 @@ location.add(velocity);</pre>
 
 <section data-type="sect2" id="_vectors_with_toxiclibs">
 <h2>Vectors with toxiclibs</h2>
-<p><a data-type="indexterm" data-primary="Vec2D (toxiclibs type)"/>
-<a data-type="indexterm" data-primary="Vec3D (toxiclibs type)"/></p>
+<p><a data-type="indexterm" data-primary=""Vec2D (toxiclibs type)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Vec3D (toxiclibs type)"">&nbsp;</a></p>
 
 <p>Here we go again.  Remember all that time we spent learning the ins and outs of the <strong klass>PVector</strong> class?  Then remember how when we got to Box2D, we had to translate all those concepts to a Box2D vector class: <strong klass>Vec2</strong>?  Well, it’s time to do it again.  toxiclibs also includes its own vector classes, one for two dimensions and one for three:  <strong klass>Vec2D</strong> and <strong klass>Vec3D</strong>.</p>
 
@@ -2357,7 +2357,7 @@ location.add(velocity);</pre>
 
 <p>And let’s just review some of the basic vector math operations with <strong klass>PVector</strong> translated to <strong klass>Vec2D</strong> (we’re sticking with 2D for simplicity’s sake).</p>
 
-<p><a data-type="indexterm" data-primary="Vec2D (toxiclibs type)" data-secondary="math functions for"/></p>
+<p><a data-type="indexterm" data-primary=""Vec2D (toxiclibs type)"" data-secondary=""math functions for"">&nbsp;</a></p>
 
 <table class="code">
 <tr>
@@ -2425,7 +2425,7 @@ a.normalize();
 
 <section data-type="sect2" id="_building_the_toxiclibs_physics_world">
 <h2>Building the toxiclibs physics world</h2>
-<p><a data-type="indexterm" data-primary="toxiclibs" data-secondary="world" data-tertiary="building"/></p>
+<p><a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""world" data-tertiary="building"">&nbsp;</a></p>
 
 <p>The first thing we need to do to create a toxiclibs physics world in our examples is import the library itself.</p>
 
@@ -2435,10 +2435,10 @@ import toxi.physics2d.behaviors.*;
 import toxi.geom.*;
 //[end]</pre>
 
-<p><a data-type="indexterm" data-primary="toxiclibs" data-secondary="VerletPhysics class"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="VerletPhysics2D class"/>
-<a data-type="indexterm" data-primary="VerletPhysics class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="VerletPhysics2D class (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""VerletPhysics class"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""VerletPhysics2D class"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletPhysics class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletPhysics2D class (toxiclibs)"">&nbsp;</a></p>
 
 <p>Then we’ll need a reference to our physics world, a <strong klass>VerletPhysics</strong> or <strong klass>VerletPhysics2D</strong> object (depending on whether we are working in two or three dimensions).  The examples in this chapter will operate in 2D only for simplicity, but they could easily be extended into 3D (and 3D versions are available with the chapter download).</p>
 
@@ -2452,15 +2452,15 @@ void setup() {
 
 <pre data-type="programlisting" data-code-language="java">  physics.setWorldBounds(new Rect(0,0,width,height));</pre>
 
-<p><a data-type="indexterm" data-primary="gravity" data-secondary="GravityBehavior (toxiclibs)"/>
-<a data-type="indexterm" data-primary="GravityBehavior class (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""gravity"" data-secondary=""GravityBehavior (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""GravityBehavior class (toxiclibs)"">&nbsp;</a></p>
 
 <p>In addition, you can add gravity to the physics world with a <strong klass>GravityBehavior</strong> object.  A gravity behavior requires a vector—how strong and in what direction is the gravity?</p>
 
 <pre data-type="programlisting" data-code-language="java">  physics.addBehavior(new GravityBehavior(new Vec2D(0,0.5)));
 }</pre>
 
-<p><a data-type="indexterm" data-primary="update() function (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""update() function (toxiclibs)"">&nbsp;</a></p>
 
 <p>Finally, in order to calculate the physics of the world and move the objects in the world, we have to call <strong function>update()</strong>.  Typically this would happen once per frame in <strong function>draw()</strong>.</p>
 
@@ -2481,8 +2481,8 @@ void setup() {
 
 <section data-type="sect1" id="chapter05_section16">
 <h1>5.16 Particles and Springs in toxiclibs</h1>
-<p><a data-type="indexterm" data-primary="particles" data-secondary="toxiclibs implementation of"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="particles" data-tertiary="implementing in"/></p>
+<p><a data-type="indexterm" data-primary=""particles"" data-secondary=""toxiclibs implementation of"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""particles" data-tertiary="implementing in"">&nbsp;</a></p>
 
 <p>In the Box2D examples, we saw how we can create our own class (called, say, <strong klass>Particle</strong>) and include a reference to a Box2D body.</p>
 
@@ -2491,8 +2491,8 @@ void setup() {
 
 <p>This technique is somewhat redundant since Box2D itself keeps track of all of the bodies in its world.  However, it allows us to manage which body is which (and therefore how each body is drawn) without having to rely on iterating through Box2D’s internal lists.</p>
 
-<p><a data-type="indexterm" data-primary="particles" data-secondary="VerletParticle2D object (toxiclibs)"/>
-<a data-type="indexterm" data-primary="VerletParticle2D object (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""particles"" data-secondary=""VerletParticle2D object (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletParticle2D object (toxiclibs)"">&nbsp;</a></p>
 
 <p>Let’s look at how we might take the same approach with the class <strong klass>VerletParticle2D</strong> in toxiclibs. We want to make our own <strong klass>Particle</strong> class so that we can draw our particles a certain way and include any custom properties. We’d probably write our code as follows:</p>
 
@@ -2534,7 +2534,7 @@ void setup() {
 
 <p>Remember our multi-step process with the Box2D examples?  We had to ask the body for its location, then convert that location to pixels, then use that location in a drawing function.  Now, because we have inherited everything from the <strong klass>VerletParticle</strong> class, our only step is to draw the shape at <strong var>x</strong> and <strong var>y</strong>!</p>
 
-<p><a data-type="indexterm" data-primary="Vec2D (toxiclibs type)" data-secondary="VerletParticle2D class and"/></p>
+<p><a data-type="indexterm" data-primary=""Vec2D (toxiclibs type)"" data-secondary=""VerletParticle2D class and"">&nbsp;</a></p>
 
 <p>Incidentally, it’s interesting to note that the <strong klass>VerletParticle2D</strong> class is a subclass of <strong klass>Vec2D</strong>. So in addition to inheriting everything from <strong klass>VerletParticle2D</strong>, our <strong klass>Particle</strong> class actually has all of the <strong klass>Vec2D</strong> functions available as well.</p>
 
@@ -2543,8 +2543,8 @@ void setup() {
 <pre data-type="programlisting" data-code-language="java">  Particle p1 = new Particle(new Vec2D(100,20));
   Particle p2 = new Particle(new Vec2D(100,180));</pre>
 
-<p><a data-type="indexterm" data-primary="addParticle() function (toxiclibs)"/>
-<a data-type="indexterm" data-primary="particle systems" data-secondary="addParticle() function (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""addParticle() function (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""particle systems"" data-secondary=""addParticle() function (toxiclibs)"">&nbsp;</a></p>
 
 <p>Just making a particle isn’t enough, however.  We have to make sure we tell our physics world about them with the <strong function>addParticle()</strong> function.</p>
 
@@ -2557,17 +2557,17 @@ void setup() {
 
 <p>And how can we then pass into the function our own <strong klass>Particle</strong> object?   Remember that other tenet of object-oriented programming—polymorphism? Here, because our <strong klass>Particle</strong> class <strong klass>extends VerletParticle2D</strong>, we can choose to treat our particle in two different ways—as a <strong klass>Particle</strong> or as a <strong klass>VerletParticle2D</strong>.   This is an incredibly powerful feature of object-oriented programming.  If we build our custom classes based on classes from toxiclibs, we can use our objects in conjunction with all of the functions toxiclibs has to offer.</p>
 
-<p><a data-type="indexterm" data-primary="springs" data-secondary="toxiclibs and"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="springs"/></p>
+<p><a data-type="indexterm" data-primary=""springs"" data-secondary=""toxiclibs and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""springs"">&nbsp;</a></p>
 
 <p>In addition to the <strong klass>VerletParticle</strong> class, toxiclibs has a set of classes that allow you to connect particles with spring forces.  There are three types of springs in toxiclibs:</p>
 
-<p><a data-type="indexterm" data-primary="springs" data-secondary="VerletConstrainedSpring class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="springs" data-secondary="VerletMinDistanceSpring class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="springs" data-secondary="VerletSpring class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="VerletConstrainedSpring class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="VerletMinDistanceSpring class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="VerletSpring class (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""springs"" data-secondary=""VerletConstrainedSpring class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""springs"" data-secondary=""VerletMinDistanceSpring class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""springs"" data-secondary=""VerletSpring class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletConstrainedSpring class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletMinDistanceSpring class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""VerletSpring class (toxiclibs)"">&nbsp;</a></p>
 
 <ul>
 <li>
@@ -2599,8 +2599,8 @@ VerletSpring2D spring=new VerletSpring2D(p1,p2,len,strength);</pre>
 
 <section data-type="sect1" id="chapter05_section17">
 <h1>5.17 Putting It All Together: A Simple Interactive Spring</h1>
-<p><a data-type="indexterm" data-primary="lock() function (toxiclibs)"/>
-<a data-type="indexterm" data-primary="springs" data-secondary="lock() function (toxiclibs)"/></p>
+<p><a data-type="indexterm" data-primary=""lock() function (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""springs"" data-secondary=""lock() function (toxiclibs)"">&nbsp;</a></p>
 
 <p>One thing we saw with Box2D is that the physics simulation broke down when we overrode it and manually set the location of a body. With toxiclibs, we don’t have this problem.  If we want to move the location of a particle, we can simply set its <em>x</em> and <em>y</em> location manually.  However, before we do so, it’s generally a good idea to call the <strong function>lock()</strong> function.</p>
 
@@ -2700,8 +2700,8 @@ class Particle extends VerletParticle2D {
 
 <section data-type="sect1" id="chapter05_section18">
 <h1>5.18 Connected Systems, Part I: String</h1>
-<p><a data-type="indexterm" data-primary="connected systems" data-secondary="strings"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="connected systems"/></p>
+<p><a data-type="indexterm" data-primary=""connected systems"" data-secondary=""strings"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""connected systems"">&nbsp;</a></p>
 
 <p>The above example, two particles connected with a single spring, is the core building block for what toxiclibs’ physics is particularly well suited for: soft body simulations.  For example, a string can be simulated by connecting a line of particles with springs.  A blanket can be simulated by connecting a grid of particles with springs.  And a cute, cuddly, squishy cartoon character can be simulated by a custom layout of particles connected with springs.</p>
 
@@ -2760,7 +2760,7 @@ float numParticles = 20;</pre>
   physics.addSpring(spring);
 }</pre>
 
-<p><a data-type="indexterm" data-primary="strings" data-secondary="hanging from fixed points"/></p>
+<p><a data-type="indexterm" data-primary=""strings"" data-secondary=""hanging from fixed points"">&nbsp;</a></p>
 
 <p>Now, what if we want the string to hang from a fixed point?  We can lock one of the particles—the first, the last, the middle one, etc.  Here’s how we would access the first particle (in the <strong klass>ArrayList</strong>) and lock it.</p>
 
@@ -2807,9 +2807,9 @@ tail.display();</pre>
 
 <section data-type="sect1" id="chapter05_section19">
 <h1>5.19 Connected Systems, Part II: Force-Directed Graph</h1>
-<p><a data-type="indexterm" data-primary="connected systems" data-secondary="force-directed graphs"/>
-<a data-type="indexterm" data-primary="force-directed graphs"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="force-directed graphs"/></p>
+<p><a data-type="indexterm" data-primary=""connected systems"" data-secondary=""force-directed graphs"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""force-directed graphs"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""force-directed graphs"">&nbsp;</a></p>
 
 <p>Have you ever encountered the following scenario?</p>
 
@@ -2960,13 +2960,13 @@ void draw() {
 
 <section data-type="sect1" id="chapter05_section20">
 <h1>5.20 Attraction and Repulsion Behaviors</h1>
-<p><a data-type="indexterm" data-primary="addForce() function (toxiclibs)"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="attraction/repulsion behaviors and"/></p>
+<p><a data-type="indexterm" data-primary=""addForce() function (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""attraction/repulsion behaviors and"">&nbsp;</a></p>
 
 <p>When we looked at adding an attraction force to Box2D, we found that the Box2D <strong klass>Body</strong> class included an <strong function>applyForce()</strong> function.  All we needed to do was calculate the attraction force (Force = G * mass1 * mass2 / distance squared) as a vector and apply it to the body.  toxiclibs <strong klass>VerletParticle</strong> class also includes a function called <strong function>addForce()</strong> that we can use to apply any calculated force to a particle.</p>
 
-<p><a data-type="indexterm" data-primary="AttractionBehavior class (toxiclibs)"/>
-<a data-type="indexterm" data-primary="toxiclibs" data-secondary="AttractionBehavior class"/></p>
+<p><a data-type="indexterm" data-primary=""AttractionBehavior class (toxiclibs)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""toxiclibs"" data-secondary=""AttractionBehavior class"">&nbsp;</a></p>
 
 <p>However, toxiclibs also takes this idea one step further by allowing us to attach some common forces (let’s call them “behaviors”) to particles, calculating them and applying them for us!  For example, if we attach an <strong klass>AttractionBehavior</strong> object to a particle, then all other particles in the physics world will be attracted to that particle.</p>
 

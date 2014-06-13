@@ -7,8 +7,8 @@
 <p data-type="attribution">&#8212; — Valentino Braitenberg</p>
 </blockquote>
 
-<p><a data-type="indexterm" data-primary="autonomous agents"/>
-<a data-type="indexterm" data-primary="natural phenomena" data-secondary="autonomous agents"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""autonomous agents"">&nbsp;</a></p>
 
 <p>Believe it or not, there is a purpose.  Well, at least there&#8217;s a purpose to the first five chapters of this book.  We could stop right here; after all, we’ve looked at several different ways of modeling motion and simulating physics.  Angry Birds, here we come!</p>
 
@@ -19,13 +19,13 @@
 
 <section data-type="sect1" id="chapter06_section1">
 <h1>6.1  Forces from Within</h1>
-<p><a data-type="indexterm" data-primary="forces" data-secondary="autonomous agents and"/></p>
+<p><a data-type="indexterm" data-primary=""forces"" data-secondary=""autonomous agents and"">&nbsp;</a></p>
 
 <p>The term <strong><em>autonomous agent</em></strong> generally refers to an entity that makes its own choices about how to act in its environment without any influence from a leader or global plan.  For us, “acting” will mean moving.   This addition is a significant conceptual leap.  Instead of a box sitting on a boundary waiting to be pushed by another falling box, we are now going to design a box that has the ability and “desire” to leap out of the way of that other falling box, if it so chooses.   While the concept of forces that come from within is a major shift in our design thinking, our code base will barely change, as these desires and actions are simply that—<em>forces</em>.</p>
 
 <p>Here are three key components of autonomous agents that we’ll want to keep in mind as we build our examples.</p>
 
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="key components of"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""key components of"">&nbsp;</a></p>
 
 <ul>
 <li>
@@ -36,8 +36,8 @@
 <p><strong>An autonomous agent has no leader.</strong>  This third principle is something we care a little less about.  After all, if you are designing a system where it makes sense to have a leader barking commands at various entities, then that’s what you’ll want to implement.  Nevertheless, many of these examples will have no leader for an important reason.   As we get to the end of this chapter and examine group behaviors, we will look at designing collections of autonomous agents that exhibit the properties of complex systems— intelligent and structured group dynamics that emerge not from a leader, but from the local interactions of the elements themselves.</p></li>
 </ul>
 
-<p><a data-type="indexterm" data-primary="boids model"/>
-<a data-type="indexterm" data-primary="Reynolds" data-secondary="Craig"/></p>
+<p><a data-type="indexterm" data-primary=""boids model"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Reynolds" data-secondary="Craig"">&nbsp;</a></p>
 
 <p>In the late 1980s, computer scientist <a href="http://www.red3d.com/cwr/">Craig Reynolds</a> developed algorithmic steering behaviors for animated characters. These behaviors allowed individual elements to navigate their digital environments in a “lifelike” manner with strategies for fleeing, wandering, arriving, pursuing, evading, etc. Used in the case of a single autonomous agent, these behaviors are fairly simple to understand and implement. In addition, by building a system of multiple characters that steer themselves according to simple, locally based rules, surprising levels of complexity emerge.  The most famous example is Reynolds’s “boids” model for “flocking/swarming” behavior.</p>
 </section>
@@ -50,8 +50,8 @@
 
 <section data-type="sect1" id="chapter06_section2">
 <h1>6.2  Vehicles and Steering</h1>
-<p><a data-type="indexterm" data-primary="<em>Turtles" data-secondary="Termites" data-tertiary="and Traffic Jams</em> (Resnick)"/>
-<a data-type="indexterm" data-primary="Resnick" data-secondary="Mitchel"/></p>
+<p><a data-type="indexterm" data-primary=""<em>Turtles" data-secondary="Termites" data-tertiary="and Traffic Jams</em> (Resnick)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Resnick" data-secondary="Mitchel"">&nbsp;</a></p>
 
 <p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code.  There are many places where  we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents. (For more on this topic, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick.)  However, we want to begin by examining agent behaviors that build on the work we’ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces.  And so it’s time to rename our <strong klass>Mover</strong> class that became our <strong klass>Particle</strong> class once again.  This time we are going to call it <strong klass>Vehicle</strong>.</p>
 
@@ -63,22 +63,22 @@
 
   [inline]// What else do we need to add?</pre>
 
-<p><a data-type="indexterm" data-primary="Steering Behaviors for Autonomous Characters (Reynolds)"/></p>
+<p><a data-type="indexterm" data-primary=""Steering Behaviors for Autonomous Characters (Reynolds)"">&nbsp;</a></p>
 
 <p>In his 1999 paper “Steering Behaviors for Autonomous Characters,” Reynolds uses the word “vehicle” to describe his autonomous agents, so we will follow suit.</p>
 
-<p><a data-type="indexterm" data-primary="<em>Vehicles: Experiments in Synthetic Psychology</em> (Braitenberg)"/>
-<a data-type="indexterm" data-primary="Braitenberg" data-secondary="Valentino"/></p>
+<p><a data-type="indexterm" data-primary=""<em>Vehicles: Experiments in Synthetic Psychology</em> (Braitenberg)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Braitenberg" data-secondary="Valentino"">&nbsp;</a></p>
 
 <div data-type="note">
 <h1>Why Vehicle?</h1><p>In 1986, Italian neuroscientist and cyberneticist Valentino Braitenberg described a series of hypothetical vehicles with simple internal structures in his book <em>Vehicles: Experiments in Synthetic Psychology</em>.  Braitenberg argues that his extraordinarily simple mechanical vehicles manifest behaviors such as fear, aggression, love, foresight, and optimism.  Reynolds took his inspiration from Braitenberg, and we’ll take ours from Reynolds.</p>
 </div>
 <p>Reynolds describes the motion of <em>idealized</em> vehicles (idealized because we are not concerned with the actual engineering of such vehicles, but simply assume that they exist and will respond to our rules) as a series of three layers—<strong>Action Selection</strong>, <strong>Steering</strong>, and <strong>Locomotion</strong>.</p>
 
-<p><a data-type="indexterm" data-primary="action selection"/>
-<a data-type="indexterm" data-primary="autonomous agents" data-secondary="action selection"/>
-<a data-type="indexterm" data-primary="autonomous agents" data-secondary="steering"/>
-<a data-type="indexterm" data-primary="steering force"/></p>
+<p><a data-type="indexterm" data-primary=""action selection"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""action selection"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""steering"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""steering force"">&nbsp;</a></p>
 
 <ol>
 <li>
@@ -89,8 +89,8 @@
 <p><strong><em>Locomotion.</em></strong>  For the most part, we’re going to ignore this third layer.   In the case of fleeing zombies, the locomotion could be described as “left foot, right foot, left foot, right foot, as fast as you can.”   In our Processing world, however, a rectangle or circle or triangle’s actual movement across a window is irrelevant given that it’s all an illusion in the first place.  Nevertheless, this isn’t to say that you should ignore locomotion entirely.   You will find great value in thinking about the locomotive design of your vehicle and how you choose to animate it.   The examples in this chapter will remain visually bare, and a good exercise would be to elaborate on the animation style —could you add spinning wheels or oscillating paddles or shuffling legs?</p></li>
 </ol>
 
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="locomotion"/>
-<a data-type="indexterm" data-primary="locomotion"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""locomotion"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""locomotion"">&nbsp;</a></p>
 
 <p>Ultimately, the most important layer for you to consider is #1—<em>Action Selection</em>.  What are the elements of your system and what are their goals?  In this chapter, we are going to look at a series of steering behaviors (i.e. actions): seek, flee, follow a path, follow a flow field, flock with your neighbors, etc.   It’s important to realize, however, that the point of understanding how to write the code for these behaviors is not because you should use them in all of your projects.  Rather, these are a set of building blocks, a foundation from which you can design and develop vehicles with creative goals and new and exciting behaviors.   And even though we will think literally in this chapter (follow that pixel!), you should allow yourself to think more abstractly (like Braitenberg). What would it mean for your vehicle to have “love” or “fear” as its goal, its driving force?    Finally (and we’ll address this later in the chapter), you won’t get very far by developing simulations with only one action.  Yes, our first example will be “seek a target.”  But for you to be creative—to make these steering behaviors <em>your own</em><code>—</code>it will all come down to mixing and matching multiple actions within the same vehicle.  So view these examples not as singular behaviors to be emulated, but as pieces of a larger puzzle that you will eventually assemble.</p>
 </section>
@@ -103,7 +103,7 @@
 
 <section data-type="sect1" id="chapter06_section3">
 <h1>6.3  The Steering Force</h1>
-<p><a data-type="indexterm" data-primary="forces" data-secondary="steering"/></p>
+<p><a data-type="indexterm" data-primary=""forces"" data-secondary=""steering"">&nbsp;</a></p>
 
 <p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can’t get anywhere without first understanding the concept of a steering force. Consider the following scenario.  A vehicle moving with velocity desires to seek a target.</p>
 
@@ -119,8 +119,8 @@
 
 <pre data-type="programlisting" data-code-language="java">PVector steer = PVector.sub(desired,velocity);</pre>
 
-<p><a data-type="indexterm" data-primary="desired velocity"/>
-<a data-type="indexterm" data-primary="steering force" data-secondary="desired velocity"/></p>
+<p><a data-type="indexterm" data-primary=""desired velocity"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""steering force"" data-secondary=""desired velocity"">&nbsp;</a></p>
 
 <p>In the above formula, velocity is no problem.  After all, we’ve got a variable for that.   However, we don’t have the <em>desired velocity</em>; this is something we have to calculate.  Let’s take a look at Figure 6.2.   If we’ve defined the vehicle’s goal as “seeking the target,” then its desired velocity is a vector that points from its current location to the target location.</p>
 
@@ -181,7 +181,7 @@ desired.mult(maxspeed);</pre>
 </figure>
 <p>Again, notice how this is not at all the same force as gravitational attraction.  Remember one of our principles of autonomous agents: An autonomous agent has a <em>limited</em> ability to perceive its environment.  Here is that ability, subtly embedded into Reynolds’s steering formula.  If the vehicle weren’t moving at all (zero velocity), desired minus velocity would be equal to desired.  But this is not the case.  The vehicle is aware of its own velocity and its steering force compensates accordingly.   This creates a more active simulation, as the way in which the vehicle moves towards the targets depends on the way it is moving in the first place.</p>
 
-<p><a data-type="indexterm" data-primary="steering force" data-secondary="magnitude of"/></p>
+<p><a data-type="indexterm" data-primary=""steering force"" data-secondary=""magnitude of"">&nbsp;</a></p>
 
 <p>In all of this excitement, however, we’ve missed one last step.  What sort of vehicle is this?  Is it a super sleek race car with amazing handling?  Or a giant Mack truck that needs a lot of advance notice to turn?   A graceful panda, or a lumbering elephant?  Our example code, as it stands, has no feature to account for this variability in steering ability.   Steering ability can be controlled by limiting the magnitude of the steering force.  Let’s call that limit the “maximum force” (or <strong var>maxforce</strong> for short).  And so finally, we have:</p>
 
@@ -309,8 +309,8 @@ desired.mult(maxspeed);</pre>
 
 <section data-type="sect1" id="chapter06_section4">
 <h1>6.4  Arriving Behavior</h1>
-<p><a data-type="indexterm" data-primary="arriving behavior"/>
-<a data-type="indexterm" data-primary="autonomous agents" data-secondary="arriving behavior"/></p>
+<p><a data-type="indexterm" data-primary=""arriving behavior"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""arriving behavior"">&nbsp;</a></p>
 
 <p>After working for a bit with the seeking behavior, you probably are asking yourself,  “What if I want my vehicle to slow down as it approaches the target?”   Before we can even begin to answer this question, we should look at the reasons behind why the seek behavior causes the vehicle to fly past the target so that it has to turn around and go back.  Let’s consider the brain of a seeking vehicle.  What is it thinking?</p>
 
@@ -408,8 +408,8 @@ Frame 6: I’m there. I want to stop!</p>
 
 <p>The arrive behavior is a great demonstration of the magic of “desired minus velocity.”   Let’s examine this model again relative to how we calculated forces in earlier chapters.   In the “gravitational attraction” examples, the force always pointed directly from the object to the target (the exact direction of the desired velocity), whether the force was strong or weak.</p>
 
-<p><a data-type="indexterm" data-primary="arriving behavior" data-secondary="steering force and"/>
-<a data-type="indexterm" data-primary="steering force" data-secondary="arriving behavior and"/></p>
+<p><a data-type="indexterm" data-primary=""arriving behavior"" data-secondary=""steering force and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""steering force"" data-secondary=""arriving behavior and"">&nbsp;</a></p>
 
 <p>The steering function, however, says: “I have the ability to perceive the environment.”  The force isn’t based on just the desired velocity, but on the desired velocity relative to the current velocity.  Only things that are alive can know their current velocity.  A box falling off a table doesn’t know it’s falling.  A cheetah chasing its prey, however, knows it is chasing.</p>
 
@@ -428,15 +428,15 @@ Frame 6: I’m there. I want to stop!</p>
 
 <section data-type="sect1" id="chapter06_section5">
 <h1>6.5 Your Own Desires: Desired Velocity</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="desired velocity"/>
-<a data-type="indexterm" data-primary="desired velocity"/>
-<a data-type="indexterm" data-primary="velocity" data-secondary="desired" data-tertiary="for autonomous agents"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""desired velocity"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""desired velocity"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""velocity"" data-secondary=""desired" data-tertiary="for autonomous agents"">&nbsp;</a></p>
 
 <p>The first two examples we’ve covered—seek and arrive—boil down to calculating a single vector for each behavior: the <em>desired</em> velocity.  And in fact, every single one of Reynolds’s steering behaviors follows this same pattern.  In this chapter, we’re going to walk through several more of Reynolds’s behaviors—flow field, path-following, flocking.  First, however, I want to emphasize again that these are <em>examples</em>—demonstrations of common steering behaviors that are useful in procedural animation.   They are not the be-all and end-all of what <em>you</em> can do.  As long as you can come up with a vector that describes a vehicle’s <em>desired</em> velocity, then you have created your own steering behavior.</p>
 
 <p>Let’s see how Reynolds defines the desired velocity for his wandering behavior.</p>
 
-<p><a data-type="indexterm" data-primary="wandering behavior (Reynolds)"/></p>
+<p><a data-type="indexterm" data-primary=""wandering behavior (Reynolds)"">&nbsp;</a></p>
 
 <blockquote >
 “Wandering is a type of random steering which has some long term order: the steering direction on one frame is related to the steering direction on the next frame. This produces more interesting motion than, for example, simply generating a random steering direction each frame.”
@@ -448,7 +448,7 @@ Frame 6: I’m there. I want to stop!</p>
 <img src="imgs/chapter06/ch06_12.png" alt="Figure 6.12"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="steering behaviors" data-secondary="wandering"/></p>
+<p><a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""wandering"">&nbsp;</a></p>
 
 <p>For Reynolds, the goal of wandering is not simply random motion, but rather a sense of moving in one direction for a little while, wandering off to the next for a little bit, and so on and so forth.  So how does Reynolds calculate a desired vector to achieve such an effect?</p>
 
@@ -507,9 +507,9 @@ Frame 6: I’m there. I want to stop!</p>
 
 <section data-type="sect1" id="chapter06_section6">
 <h1>6.6  Flow Fields</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="flow field following"/>
-<a data-type="indexterm" data-primary="flow field following"/>
-<a data-type="indexterm" data-primary="steering behaviors" data-secondary="flow field following"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""flow field following"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""flow field following"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""flow field following"">&nbsp;</a></p>
 
 <p>Now back to the task at hand.  Let’s examine a couple more of Reynolds’s steering behaviors.  First, <strong><em>flow field following</em></strong>.  What is a flow field?   Think of your Processing window as a grid.  In each cell of the grid lives an arrow pointing in some direction—you know, a vector.   As a vehicle moves around the screen, it asks, “Hey, what arrow is beneath me?  That’s my desired velocity!”</p>
 
@@ -519,7 +519,7 @@ Frame 6: I’m there. I want to stop!</p>
 </figure>
 <p>Reynolds’s flow field following example has the vehicle predicting its future location and following the vector at that spot, but for simplicity’s sake, we’ll have the vehicle simply look to the vector at its current location.</p>
 
-<p><a data-type="indexterm" data-primary="arrays (2D)"/></p>
+<p><a data-type="indexterm" data-primary=""arrays (2D)"">&nbsp;</a></p>
 
 <p>Before we can write the additional code for our <strong klass>Vehicle</strong> class, we’ll need to build a class that describes the flow field itself, the grid of vectors.   A two-dimensional array is a convenient data structure in which to store a grid of information. If you are not familiar with 2D arrays, I suggest reviewing this online Processing tutorial: <a href="http://processing.org/learning/2darray/">2D array</a>.   The 2D array is convenient because we reference each element with two indices, which we can think of as columns and rows.</p>
 
@@ -533,8 +533,8 @@ Frame 6: I’m there. I want to stop!</p>
   // width and height in pixels
   int resolution;</pre>
 
-<p><a data-type="indexterm" data-primary="flow field following" data-secondary="resolution and"/>
-<a data-type="indexterm" data-primary="resolution" data-secondary="flow field following and"/></p>
+<p><a data-type="indexterm" data-primary=""flow field following"" data-secondary=""resolution and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""resolution" data-secondary="flow field following and"">&nbsp;</a></p>
 
 <p>Notice how we are defining a third variable called <strong var>resolution</strong> above.   What is this variable?  Let’s say we have a Processing window that is 200 pixels wide by 200 pixels high.  We could make a flow field that has a <strong klass>PVector</strong> object for every single pixel, or 40,000 <strong klass>PVector</strong><code>s</code> (200 * 200).  This isn’t terribly unreasonable, but in our case, it’s overkill.  We don’t need a <strong klass>PVector</strong> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400).   We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
 
@@ -547,7 +547,7 @@ Frame 6: I’m there. I want to stop!</p>
     field = new PVector[cols][rows];
   }</pre>
 
-<p><a data-type="indexterm" data-primary="vectors" data-secondary="flow fields" data-tertiary="computing for"/></p>
+<p><a data-type="indexterm" data-primary=""vectors"" data-secondary=""flow fields" data-tertiary="computing for"">&nbsp;</a></p>
 
 <p>Now that we’ve set up the flow field’s data structures, it’s time to compute the vectors in the flow field itself.  How do we do that? However we feel like it!  Perhaps we want to have every vector in the flow field pointing to the right.</p>
 
@@ -581,7 +581,7 @@ for (int i = 0; i &lt; cols; i++) {
 
 <p>What if we use 2D Perlin noise (mapped to an angle)?</p>
 
-<p><a data-type="indexterm" data-primary="Perlin noise" data-secondary="flow field following and"/></p>
+<p><a data-type="indexterm" data-primary=""Perlin noise"" data-secondary=""flow field following and"">&nbsp;</a></p>
 
 <figure id="chapter06_figure17">
 <img src="imgs/chapter06/ch06_17.png" alt="Figure 6.17"/>
@@ -619,7 +619,7 @@ field[i][j] = v;</pre>
 <pre data-type="programlisting" data-code-language="java">int column = int(location.x/resolution);
 int row = int(location.y/resolution);</pre>
 
-<p><a data-type="indexterm" data-primary="constrain() function (Processing)"/></p>
+<p><a data-type="indexterm" data-primary=""constrain() function (Processing)"">&nbsp;</a></p>
 
 <p>Because a vehicle could theoretically wander off the Processing window, it’s also useful for us to employ the <strong function>constrain()</strong> function to make sure we don’t look outside of the flow field array.  Here is a function we’ll call <strong function>lookup()</strong> that goes in the <strong klass>FlowField</strong> class—it receives a <strong klass>PVector</strong> (presumably the location of our vehicle) and returns the corresponding flow field <strong klass>PVector</strong> for that location.</p>
 
@@ -719,9 +719,9 @@ int row = int(location.y/resolution);</pre>
 
 <section data-type="sect1" id="chapter06_section7">
 <h1>6.7  The Dot Product</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="dot product"/>
-<a data-type="indexterm" data-primary="dot product (PVector)"/>
-<a data-type="indexterm" data-primary="vectors" data-secondary="dot product"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""dot product"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""dot product (PVector)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""vectors"" data-secondary=""dot product"">&nbsp;</a></p>
 
 <p>In a moment, we’re going to work through the algorithm (along with accompanying mathematics) and code for another of Craig Reynolds’s steering behaviors: <a href="http://www.red3d.com/cwr/steer/PathFollow.html">Path Following</a>.  Before we can do this, however, we have to spend some time learning about another piece of vector math that we skipped in Chapter 1—the dot product.  We haven’t needed it yet, but it’s likely going to prove quite useful for you (beyond just this path-following example), so we’ll go over it in detail now.</p>
 
@@ -733,7 +733,7 @@ int row = int(location.y/resolution);</pre>
 </figure>
 <p>Notice how in the above diagram, vector multiplication involves multiplying a vector by a scalar value.  This makes sense; when we want a vector to be twice as large (but facing the same direction), we multiply it by 2.  When we want it to be half the size, we multiply it by 0.5.</p>
 
-<p><a data-type="indexterm" data-primary="dot product (PVector)" data-secondary="defined"/></p>
+<p><a data-type="indexterm" data-primary=""dot product (PVector)"" data-secondary=""defined"">&nbsp;</a></p>
 
 <p>However, there are two other <em>multiplication-like</em> operations with vectors that are useful in certain scenarios—the dot product and the cross product. For now we’re going to focus on the dot product, which is defined as follows.  Assume vectors {vectora} and {vectorb}:</p>
 
@@ -772,8 +772,8 @@ float n = a.dot(b);</pre>
 
 <p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
 
-<p><a data-type="indexterm" data-primary="dot product (PVector)" data-secondary="theta"/>
-<a data-type="indexterm" data-primary="theta (θ)" data-secondary="dot product and"/></p>
+<p><a data-type="indexterm" data-primary=""dot product (PVector)"" data-secondary=""theta"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""theta (θ)"" data-secondary=""dot product and"">&nbsp;</a></p>
 
 <p>In other words, A dot B is equal to the magnitude of A times magnitude of B times cosine of theta (with theta defined as <em>the angle between the two vectors A and B</em>).</p>
 
@@ -859,11 +859,11 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <section data-type="sect1" id="chapter06_section8">
 <h1>6.8  Path Following</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="path following"/>
-<a data-type="indexterm" data-primary="path following"/>
-<a data-type="indexterm" data-primary="path following" data-secondary="pathfinding vs."/>
-<a data-type="indexterm" data-primary="pathfinding"/>
-<a data-type="indexterm" data-primary="Reynolds" data-secondary="Craig" data-tertiary="path following algorithm"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""path following"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""path following"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""path following"" data-secondary=""pathfinding vs."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""pathfinding"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Reynolds" data-secondary="Craig"" data-tertiary=""path following algorithm"">&nbsp;</a></p>
 
 <p>Now that we’ve got a basic understanding of the dot product under our belt, we can return to a discussion of Craig Reynolds’s path-following algorithm.     Let’s quickly clarify something.  We are talking about path <em>following</em>, not path <em>finding</em>.  Pathfinding refers to a research topic (commonly studied in artificial intelligence) that involves solving for the shortest distance between two points, often in a maze.   With <strong><em>path following</em></strong>, the path already exists and we’re asking a vehicle to follow that path.</p>
 
@@ -873,7 +873,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 <img src="imgs/chapter06/ch06_20.png" alt="Figure 6.20"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="path"/></p>
+<p><a data-type="indexterm" data-primary=""path"">&nbsp;</a></p>
 
 <p>We&#8217;ll first define what we mean by a path.  There are many ways we could implement a path, but for us, a simple way will be to define a path as a series of connected points:</p>
 
@@ -943,7 +943,7 @@ predict.mult(25);
 // predicted location.
 PVector predictLoc = PVector.add(loc, predict);</pre>
 
-<p><a data-type="indexterm" data-primary="path following" data-secondary="current distance from path" data-tertiary="finding"/></p>
+<p><a data-type="indexterm" data-primary=""path following"" data-secondary=""current distance from path" data-tertiary="finding"">&nbsp;</a></p>
 
 <p>Once we have that location, it’s now our job to find out the vehicle&#8217;s current distance from the path of that predicted location.  If it’s very far away, well, then, we’ve strayed from the path and need to steer back towards it.  If it’s close, then we’re doing OK and are following the path nicely.</p>
 
@@ -1021,7 +1021,7 @@ b.mult(a.dot(b));
 
 PVector normalPoint = PVector.add(path.start,b);</pre>
 
-<p><a data-type="indexterm" data-primary="scalar projection"/></p>
+<p><a data-type="indexterm" data-primary=""scalar projection"">&nbsp;</a></p>
 
 <p>This process is commonly known as “scalar projection.”  <strong><em>|A| cos(θ) is the scalar projection of A onto B.</em></strong></p>
 
@@ -1029,8 +1029,8 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 <img src="imgs/chapter06/ch06_26.png" alt="Figure 6.26"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="normal points"/>
-<a data-type="indexterm" data-primary="path following" data-secondary="normal points"/></p>
+<p><a data-type="indexterm" data-primary=""normal points"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""path following"" data-secondary=""normal points"">&nbsp;</a></p>
 
 <p>Once we have the normal point along the path, we have to decide whether the vehicle should steer towards the path and how.  Reynolds’s algorithm states that the vehicle should only steer towards the path if it strays beyond the path (i.e., if the distance between the normal point and the predicted future location is greater than the path radius).</p>
 
@@ -1051,7 +1051,7 @@ if (distance &gt; path.radius) {
 
 <p>But what is the target?</p>
 
-<p><a data-type="indexterm" data-primary="path following" data-secondary="target" data-tertiary="determining"/></p>
+<p><a data-type="indexterm" data-primary=""path following"" data-secondary=""target" data-tertiary="determining"">&nbsp;</a></p>
 
 <p>Reynolds’s algorithm involves picking a point ahead of the normal on the path (see step #3 above).  But for simplicity, we could just say that the target is the normal itself. This will work fairly well:</p>
 
@@ -1154,7 +1154,7 @@ if (distance &gt; path.radius) {
 
 <section data-type="sect1" id="chapter06_section9">
 <h1>6.9 Path Following with Multiple Segments</h1>
-<p><a data-type="indexterm" data-primary="path following" data-secondary="multiple segments"/></p>
+<p><a data-type="indexterm" data-primary=""path following"" data-secondary=""multiple segments"">&nbsp;</a></p>
 
 <figure id="chapter06_figure30">
 <img src="imgs/chapter06/ch06_30.png" alt="Figure 6.30"/>
@@ -1172,7 +1172,7 @@ if (distance &gt; path.radius) {
 
 <p><strong><em>Step 3: Find a target point on the path.</em></strong></p>
 
-<p><a data-type="indexterm" data-primary="normal points" data-secondary="series of" data-tertiary="for path following"/></p>
+<p><a data-type="indexterm" data-primary=""normal points"" data-secondary=""series of" data-tertiary="for path following"">&nbsp;</a></p>
 
 <p>To find the target, we need to find the normal to the line segment.  But now that we have a series of line segments, we have a series of normal points (see above)!  Which one do we choose?  The solution we’ll employ is to pick the normal point that is (a) closest and (b) on the path itself.</p>
 
@@ -1293,15 +1293,15 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <section data-type="sect1" id="chapter06_section10">
 <h1>6.10  Complex Systems</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="complex systems and"/>
-<a data-type="indexterm" data-primary="complex systems"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""complex systems and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""complex systems"">&nbsp;</a></p>
 
 <p>Remember our purpose?  To breathe life into the things that move around our Processing windows?  By learning to write the code for an autonomous agent and building a series of examples of individual behaviors, hopefully our souls feel a little more full.  But this is no place to stop and rest on our laurels.  We’re just getting started.   After all, there is a deeper purpose at work here.  Yes, a vehicle is a simulated being that makes decisions about how to seek and flow and follow.  But what is a life led alone, without the love and support of others?  Our purpose here is not only to build individual behaviors for our vehicles, but to put our vehicles into systems of many vehicles and allow those vehicles to interact with each other.</p>
 
-<p><a data-type="indexterm" data-primary="ants" data-secondary="modeling for"/>
-<a data-type="indexterm" data-primary="complex systems" data-secondary="superorganisms"/>
-<a data-type="indexterm" data-primary="natural phenomena" data-secondary="ants" data-tertiary="modeling"/>
-<a data-type="indexterm" data-primary="superorganisms"/></p>
+<p><a data-type="indexterm" data-primary=""ants" data-secondary="modeling for"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""complex systems"" data-secondary=""superorganisms"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""ants" data-tertiary="modeling"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""superorganisms"">&nbsp;</a></p>
 
 <p>Let’s think about a tiny, crawling ant—one single ant.  An ant is an autonomous agent; it can perceive its environment (using antennae to gather information about the direction and strength of chemical signals) and make decisions about how to move based on those signals.  But can a single ant acting alone build a nest, gather food, defend its queen?   An ant is a simple unit and can only perceive its immediate environment.  A colony of ants, however, is a sophisticated complex system, a “superorganism” in which the components work together to accomplish difficult and complicated goals.</p>
 
@@ -1309,8 +1309,8 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>What is a complex system?  A complex system is typically defined as a system that is “more than the sum of its parts.”  While the individual elements of the system may be incredibly simple and easily understood, the behavior of the system as a whole can be highly complex, intelligent, and difficult to predict.  Here are three key principles of complex systems.</p>
 
-<p><a data-type="indexterm" data-primary="complex systems" data-secondary="key principles of"/>
-<a data-type="indexterm" data-primary="short range relationships" data-secondary="complex systems"/></p>
+<p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""key principles of"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""short range relationships"" data-secondary=""complex systems"">&nbsp;</a></p>
 
 <ul>
 <li>
@@ -1323,21 +1323,21 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>Following are three additional features of complex systems that will help frame the discussion, as well as provide guidelines for features we will want to include in our software simulations.  It&#8217;s important to acknowledge that this is a fuzzy set of characteristics and not all complex systems have all of them.</p>
 
-<p><a data-type="indexterm" data-primary="complex systems" data-secondary="non-linearity component"/></p>
+<p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""non-linearity component"">&nbsp;</a></p>
 
 <ul>
 <li>
 <p><strong><em>Non-linearity.</em></strong>  This aspect of complex systems is often casually referred to as “the butterfly effect,” coined by mathematician and meteorologist Edward Norton Lorenz, a pioneer in the study of chaos theory.  In 1961, Lorenz was running a computer weather simulation for the second time and, perhaps to save a little time, typed in a starting value of 0.506 instead of 0.506127.   The end result was completely different from the first result of the simulation.   In other words, the theory is that a single butterfly flapping its wings on the other side of the world could cause a massive weather shift and ruin our weekend at the beach.  We call it “non-linear” because there isn’t a linear relationship between a change in initial conditions and a change in outcome.   A small change in initial conditions can have a massive effect on the outcome.  Non-linear systems are a superset of chaotic systems.  In the next chapter, we’ll see how even in a system of many zeros and ones, if we change just one bit, the result will be completely different.</p></li>
 </ul>
 
-<p><a data-type="indexterm" data-primary="complex systems" data-secondary="competition/cooperation component"/></p>
+<p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""competition/cooperation component"">&nbsp;</a></p>
 
 <ul>
 <li>
 <p><strong><em>Competition and cooperation.</em></strong>  One of the things that often makes a complex system tick is the presence of both competition and cooperation between the elements.   In our upcoming flocking system, we will have three rules—alignment, cohesion, and separation.  Alignment and cohesion will ask the elements to “cooperate”—i.e. work together to stay together and move together.  Separation, however, will ask the elements to “compete” for space.  As we get to the flocking system, try taking out the cooperation or the competition and you’ll see how you are left without complexity. Competition and cooperation are found in living complex systems, but not in non-living complex systems like the weather.</p></li>
 </ul>
 
-<p><a data-type="indexterm" data-primary="complex systems" data-secondary="feedback component"/></p>
+<p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""feedback component"">&nbsp;</a></p>
 
 <ul>
 <li>
@@ -1355,9 +1355,9 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <section data-type="sect1" id="chapter06_section11">
 <h1>6.11  Group Behaviors (or: Let’s not run into each other)</h1>
-<p><a data-type="indexterm" data-primary="complex systems" data-secondary="group behavior"/>
-<a data-type="indexterm" data-primary="group behavior"/>
-<a data-type="indexterm" data-primary="natural phenomena" data-secondary="group behavior"/></p>
+<p><a data-type="indexterm" data-primary=""complex systems"" data-secondary=""group behavior"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""group behavior"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""group behavior"">&nbsp;</a></p>
 
 <p>A group is certainly not a new concept. We’ve done this before—in Chapter 4, where we developed a framework for managing collections of particles in a <strong klass>ParticleSystem</strong> class.   There, we stored a list of particles in an <strong klass>ArrayList</strong>.  We’ll do the same thing here: store a bunch of <strong klass>Vehicle</strong> objects in an <strong klass>ArrayList</strong>.</p>
 
@@ -1386,8 +1386,8 @@ void setup() {
 
 <pre data-type="programlisting" data-code-language="java">    v.seek(mouseX,mouseY);</pre>
 
-<p><a data-type="indexterm" data-primary="collisions" data-secondary="avoiding in group behavior"/>
-<a data-type="indexterm" data-primary="group behavior" data-secondary="collisions" data-tertiary="avoiding"/></p>
+<p><a data-type="indexterm" data-primary=""collisions"" data-secondary=""avoiding in group behavior"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""group behavior"" data-secondary=""collisions" data-tertiary="avoiding"">&nbsp;</a></p>
 
 <p>But that’s an individual behavior.  We’ve already spent thirty-odd pages worrying about individual behaviors.  We’re here because we want to apply a group behavior.  Let’s begin with separation, a behavior that commands, “Avoid colliding with your neighbors!”</p>
 
@@ -1428,8 +1428,8 @@ void draw() {
 <img src="imgs/chapter06/ch06_33.png" alt="Figure 6.33"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="repulsion" data-secondary="group behavior and"/>
-<a data-type="indexterm" data-primary="steering behaviors" data-secondary="group behavior and"/></p>
+<p><a data-type="indexterm" data-primary=""repulsion"" data-secondary=""group behavior and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""steering behaviors"" data-secondary=""group behavior and"">&nbsp;</a></p>
 
 <p>Of course, this is just the beginning.  The real work happens inside the <strong function>separate()</strong> function itself.  Let’s figure out how we want to define separation. Reynolds states: “Steer to avoid crowding.” In other words, if a given vehicle is too close to you, steer away from that vehicle.  Sound familiar?  Remember the seek behavior where a vehicle steers towards a target?  Reverse that force and we have the flee behavior.</p>
 
@@ -1581,9 +1581,9 @@ void draw() {
 
 <section data-type="sect1" id="chapter06_section12">
 <h1>6.12  Combinations</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="combinations"/>
-<a data-type="indexterm" data-primary="combinations"/>
-<a data-type="indexterm" data-primary="group behavior" data-secondary="combinations"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""combinations"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""combinations"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""group behavior"" data-secondary=""combinations"">&nbsp;</a></p>
 
 <p>The previous two exercises hint at what is perhaps the most important aspect of this chapter.  After all, what is a Processing sketch with one steering force compared to one with many?  How could we even begin to simulate emergence in our sketches with only one rule?   The most exciting and intriguing behaviors will come from mixing and matching multiple steering forces, and we’ll need a mechanism for doing so.</p>
 
@@ -1674,11 +1674,11 @@ void draw() {
 
 <section data-type="sect1" id="chapter06_section13">
 <h1>6.13  Flocking</h1>
-<p><a data-type="indexterm" data-primary="Flocks" data-secondary="Herds" data-tertiary="and Schools: A Distributed Behavioral Model (Reynolds)"/>
-<a data-type="indexterm" data-primary="autonomous agents" data-secondary="flocking"/>
-<a data-type="indexterm" data-primary="flocking"/>
-<a data-type="indexterm" data-primary="group behavior" data-secondary="flocking"/>
-<a data-type="indexterm" data-primary="natural phenomena" data-secondary="flocking"/></p>
+<p><a data-type="indexterm" data-primary=""Flocks" data-secondary="Herds" data-tertiary="and Schools: A Distributed Behavioral Model (Reynolds)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""flocking"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""flocking"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""group behavior"" data-secondary=""flocking"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""natural phenomena"" data-secondary=""flocking"">&nbsp;</a></p>
 
 <p>Flocking is an group animal behavior that is characteristic of many living creatures, such as birds, fish, and insects.   In 1986, Craig Reynolds created a computer simulation of flocking behavior and documented the algorithm in his paper, “Flocks, Herds, and Schools: A Distributed Behavioral Model.”    Recreating this simulation in Processing will bring together all the concepts in this chapter.</p>
 
@@ -1699,10 +1699,10 @@ void draw() {
 
 <p>Let’s take an overview of the three rules of flocking.</p>
 
-<p><a data-type="indexterm" data-primary="alignment (flocking)"/>
-<a data-type="indexterm" data-primary="cohesion (flocking)"/>
-<a data-type="indexterm" data-primary="flocking" data-secondary="rules of"/>
-<a data-type="indexterm" data-primary="separation (flocking)"/></p>
+<p><a data-type="indexterm" data-primary=""alignment (flocking)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""cohesion (flocking)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""flocking"" data-secondary=""rules of"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""separation (flocking)"">&nbsp;</a></p>
 
 <ol>
 <li>
@@ -1744,7 +1744,7 @@ void draw() {
 
 <p>So our algorithm is to calculate the average velocity of all the other boids and set that to desired.</p>
 
-<p><a data-type="indexterm" data-primary="separation (flocking)" data-secondary="implementing"/></p>
+<p><a data-type="indexterm" data-primary=""separation (flocking)"" data-secondary=""implementing"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">  PVector align (ArrayList&lt;Boid&gt; boids) {
     //[full] Add up all the velocities
@@ -1768,7 +1768,7 @@ void draw() {
     return steer;
   }</pre>
 
-<p><a data-type="indexterm" data-primary="short range relationships" data-secondary="flocking behavior and"/></p>
+<p><a data-type="indexterm" data-primary=""short range relationships"" data-secondary=""flocking behavior and"">&nbsp;</a></p>
 
 <p>The above is pretty good, but it’s missing one rather crucial detail.  One of the key principles behind complex systems like flocking is that the elements (in this case, boids) have short-range relationships.   Thinking about ants again, it’s pretty easy to imagine an ant being able to sense its immediate environment, but less so an ant having an awareness of what another ant is doing hundreds of feet away.  The fact that the ants can perform such complex collective behavior from only these neighboring relationships is what makes them so exciting in the first place.</p>
 
@@ -1780,7 +1780,7 @@ void draw() {
 </figure>
 <p>Much like we did with separation (only calculating a force for others within a certain distance), we’ll want to do the same with alignment (and cohesion).</p>
 
-<p><a data-type="indexterm" data-primary="alignment (flocking)" data-secondary="implementing"/></p>
+<p><a data-type="indexterm" data-primary=""alignment (flocking)"" data-secondary=""implementing"">&nbsp;</a></p>
 
 <pre data-type="programlisting" data-code-language="java">  PVector align (ArrayList&lt;Boid&gt; boids) {
     // This is an arbitrary value and could
@@ -1825,7 +1825,7 @@ void draw() {
 <figcaption/>
 </figure></div>
 
-<p><a data-type="indexterm" data-primary="cohesion (flocking)" data-secondary="implementing"/></p>
+<p><a data-type="indexterm" data-primary=""cohesion (flocking)"" data-secondary=""implementing"">&nbsp;</a></p>
 
 <p>Finally, we are ready for cohesion.  Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average location of the boid’s neighbors (and use that as a target to seek).</p>
 
@@ -1912,8 +1912,8 @@ void draw() {
 <img src="imgs/chapter06/ch06_exc17.png" alt="ch06 exc17"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="<em>Computational Beauty of Nature</em> (Flake)"/>
-<a data-type="indexterm" data-primary="Flake" data-secondary="Gary"/></p>
+<p><a data-type="indexterm" data-primary=""<em>Computational Beauty of Nature</em> (Flake)"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""Flake" data-secondary="Gary"">&nbsp;</a></p>
 
 <p>In his book The <em>Computational Beauty of Nature</em> (MIT Press, 2000), Gary Flake describes a fourth rule for flocking: “View: move laterally away from any boid that blocks the view.” Have your boids follow this rule.</p>
 
@@ -1941,15 +1941,15 @@ void draw() {
 
 <section data-type="sect1" id="chapter06_section14">
 <h1>6.14  Algorithmic Efficiency (or: Why does my $@(*%! run so slowly?)</h1>
-<p><a data-type="indexterm" data-primary="efficiency"/>
-<a data-type="indexterm" data-primary="performance"/></p>
+<p><a data-type="indexterm" data-primary=""efficiency"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"">&nbsp;</a></p>
 
 <p>I would like to hide the dark truth behind we’ve just done, because I would like you to be happy and live a fulfilling and meaningful life.  But I also would like to be able to sleep at night without worrying about you so much.  So it is with a heavy heart that I must bring up this topic.  Group behaviors are wonderful.  But they can be slow, and the more elements in the group, the slower they can be.  Usually, when we talk about Processing sketches running slowly, it’s because drawing to the screen can be slow—the more you draw, the slower your sketch runs.  This is actually a case, however, where the slowness derives from the algorithm itself.  Let’s discuss.</p>
 
-<p><a data-type="indexterm" data-primary="Big O Notation"/>
-<a data-type="indexterm" data-primary="efficiency" data-secondary="Big O Notation"/>
-<a data-type="indexterm" data-primary="flocking" data-secondary="performance and"/>
-<a data-type="indexterm" data-primary="performance" data-secondary="Big O Notation"/></p>
+<p><a data-type="indexterm" data-primary=""Big O Notation"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""efficiency"" data-secondary=""Big O Notation"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""flocking"" data-secondary=""performance and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""Big O Notation"">&nbsp;</a></p>
 
 <p>Computer scientists classify algorithms with something called “Big O notation,” which describes the efficiency of an algorithm: how many computational cycles does it require to complete?  Let’s consider a simple analog search problem.  You have a basket containing one hundred chocolate treats, only one of which is pure dark chocolate. That’s the one you want to eat.  To find it, you pick the chocolates out of the basket one by one.  Sure, you might be lucky and find it on the first try, but in the worst-case scenario you have to check all one hundred before you find the dark chocolate.   To find one thing in one hundred, you have to check one hundred things (or to find one thing in N things, you have to check N times.)  Your Big O Notation is N.  This, incidentally, is the Big O Notation that describes our simple particle system.  If we have N particles, we have to run and display those particles N times.</p>
 
@@ -1963,9 +1963,9 @@ void draw() {
 
 <p>Now, we’re really getting slow. Really, really, really slow.</p>
 
-<p><a data-type="indexterm" data-primary="Big O Notation N-Squared"/>
-<a data-type="indexterm" data-primary="efficiency" data-secondary="Big O Notation N-Squared"/>
-<a data-type="indexterm" data-primary="performance" data-secondary="Big O Notation N-Squared"/></p>
+<p><a data-type="indexterm" data-primary=""Big O Notation N-Squared"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""efficiency"" data-secondary=""Big O Notation N-Squared"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""Big O Notation N-Squared"">&nbsp;</a></p>
 
 <p>Notice something odd?  As the number of elements increases by a factor of 10, the number of required cycles increases by a factor of 100.  Or as the number of elements increases by a factor of N, the cycles increase by a factor of N times N.  This is known as Big O Notation N-Squared.</p>
 
@@ -1975,10 +1975,10 @@ void draw() {
 
 <p>Let’s take a number that we might actually want to use, but would still run too slowly: 2,000 (4,000,000 cycles required).</p>
 
-<p><a data-type="indexterm" data-primary="bin-lattice spatial subdivision"/>
-<a data-type="indexterm" data-primary="efficiency" data-secondary="bin-lattice spatial subdivision"/>
-<a data-type="indexterm" data-primary="flocking" data-secondary="bin-lattice spatial subdivision"/>
-<a data-type="indexterm" data-primary="performance" data-secondary="bin-lattice spatial subdivision"/></p>
+<p><a data-type="indexterm" data-primary=""bin-lattice spatial subdivision"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""efficiency"" data-secondary=""bin-lattice spatial subdivision"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""flocking"" data-secondary=""bin-lattice spatial subdivision"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""bin-lattice spatial subdivision"">&nbsp;</a></p>
 
 <p>What if we could divide the screen into a grid?  We would take all 2,000 boids and assign each boid to a cell within that grid.   We would then be able to look at each boid and compare it to its neighbors within that cell at any given moment. Imagine a 10 x 10 grid. In a system of 2,000 elements, on average, approximately 20 elements would be found in each cell (20 x 10 x 10 = 2,000).  Each cell would then require 20 x 20 = 400 cycles. With 100 cells, we’d have 100 x 400 = 40,000 cycles, a massive savings over 4,000,000.</p>
 
@@ -1986,7 +1986,7 @@ void draw() {
 <img src="imgs/chapter06/ch06_37.png" alt="Figure 6.37"/>
 <figcaption/>
 </figure>
-<p><a data-type="indexterm" data-primary="Interaction with Groups of Autonomous Characters (Reynolds)"/></p>
+<p><a data-type="indexterm" data-primary=""Interaction with Groups of Autonomous Characters (Reynolds)"">&nbsp;</a></p>
 
 <p>This technique is known as “bin-lattice spatial subdivision” and is outlined in more detail in (surprise, surprise) Reynolds’s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">“Interaction with Groups of Autonomous Characters”</a>.   How do we implement such an algorithm in Processing?  One way is to keep multiple <strong klass>ArrayList</strong><code>s</code>.  One <strong klass>ArrayList</strong> would keep track of all the boids, just like in our flocking example.</p>
 
@@ -2028,9 +2028,9 @@ boid.flock(grid[column][row]);</pre>
 
 <section data-type="sect1" id="chapter06_section15">
 <h1>6.15  A Few Last Notes: Optimization Tricks</h1>
-<p><a data-type="indexterm" data-primary="autonomous agents" data-secondary="efficiency"/>
-<a data-type="indexterm" data-primary="efficiency"/>
-<a data-type="indexterm" data-primary="performance"/></p>
+<p><a data-type="indexterm" data-primary=""autonomous agents"" data-secondary=""efficiency"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""efficiency"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"">&nbsp;</a></p>
 
 <p>This is something of a momentous occasion.  The end of Chapter 6 marks the end of our story of motion (in the context of this book, that is).  We started with the concept of a vector, moved on to forces, designed systems of many elements, examined physics libraries, built entities with hopes and dreams and fears, and simulated emergence.  The story doesn’t end here, but it does take a bit of a turn.  The next two chapters won’t focus on moving bodies, but rather on systems of rules.   Before we get there, I have a few quick items I’d like to mention that are important when working with the examples in Chapters 1 through 6.  They also relate to optimizing your code, which fits in with the previous section.</p>
 
@@ -2064,11 +2064,11 @@ boid.flock(grid[column][row]);</pre>
   return x*x + y*y;
 }</pre>
 
-<p><a data-type="indexterm" data-primary="efficiency" data-secondary="magSq() function (PVector class)."/>
-<a data-type="indexterm" data-primary="mag() function (PVector class)" data-secondary="magSq() function vs."/>
-<a data-type="indexterm" data-primary="magSq() function (PVector class)."/>
-<a data-type="indexterm" data-primary="optimization" data-secondary="magSq() function (PVector class)."/>
-<a data-type="indexterm" data-primary="performance" data-secondary="magSq() function (PVector class)."/></p>
+<p><a data-type="indexterm" data-primary=""efficiency"" data-secondary=""magSq() function (PVector class)."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""mag() function (PVector class)"" data-secondary=""magSq() function vs."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""magSq() function (PVector class)."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""optimization"" data-secondary=""magSq() function (PVector class)."">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""magSq() function (PVector class)."">&nbsp;</a></p>
 
 <p>Same as magnitude, but without the square root.  In the case of a single <strong klass>PVector</strong> object, this will never make a significant difference on a Processing sketch.  However, if you are computing the magnitude of thousands of <strong klass>PVector</strong> objects each time through <strong function>draw()</strong>, using <strong function>magSq()</strong> instead of <strong function>mag()</strong> could help your code run a wee bit faster.  (Note: <strong function>magSq()</strong> is only available in Processing 2.0a1 or later.)</p>
 </section>
@@ -2081,11 +2081,11 @@ boid.flock(grid[column][row]);</pre>
 
 <section data-type="sect2" id="_2_sine_and_cosine_lookup_tables">
 <h2>2) Sine and cosine lookup tables</h2>
-<p><a data-type="indexterm" data-primary="cosine lookup tables"/>
-<a data-type="indexterm" data-primary="efficiency" data-secondary="sine/cosine lookup tables"/>
-<a data-type="indexterm" data-primary="optimization" data-secondary="sine/cosine lookup tables"/>
-<a data-type="indexterm" data-primary="performance" data-secondary="sine/cosine lookup tables"/>
-<a data-type="indexterm" data-primary="sine lookup tables"/></p>
+<p><a data-type="indexterm" data-primary=""cosine lookup tables"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""efficiency"" data-secondary=""sine/cosine lookup tables"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""optimization"" data-secondary=""sine/cosine lookup tables"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""sine/cosine lookup tables"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""sine lookup tables"">&nbsp;</a></p>
 
 <p>There’s a pattern here.  What kinds of functions are slow to compute? Square root. Sine. Cosine.  Tangent.  Again, if you just need a sine or cosine value here or there in your code, you are never going to run into a problem.  But what if you had something like this?</p>
 
@@ -2120,9 +2120,9 @@ float answer = sinvalues[angle];</pre>
 
 <section data-type="sect2" id="_3_making_gajillions_of_unnecessary_pvector_objects">
 <h2>3) Making gajillions of unnecessary PVector objects</h2>
-<p><a data-type="indexterm" data-primary="efficiency" data-secondary="temporary objects and"/>
-<a data-type="indexterm" data-primary="optimization" data-secondary="temporary objects and"/>
-<a data-type="indexterm" data-primary="performance" data-secondary="temporary objects and"/></p>
+<p><a data-type="indexterm" data-primary=""efficiency"" data-secondary=""temporary objects and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""optimization"" data-secondary=""temporary objects and"">&nbsp;</a>
+<a data-type="indexterm" data-primary=""performance"" data-secondary=""temporary objects and"">&nbsp;</a></p>
 
 <p>I have to admit, I am perhaps the biggest culprit of this last note.  In fact, in the interest of writing clear and understandable examples, I often choose to make extra <strong klass>PVector</strong> objects when I absolutely do not need to.  For the most part, this is not a problem at all.   But sometimes, it can be.  Let’s take a look at an example.</p>
 
