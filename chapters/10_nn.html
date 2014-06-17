@@ -40,7 +40,7 @@
 
 <p>The most common application of neural networks in computing today is to perform one of these &ldquo;easy-for-a-human, difficult-for-a-machine&rdquo; tasks, often referred to as pattern recognition. Applications range from optical character recognition (turning printed or handwritten scans into digital text) to facial recognition. We don&rsquo;t have the time or need to use some of these more elaborate artificial intelligence algorithms here, but if you are interested in researching neural networks, I&rsquo;d recommend the books <em>Artificial Intelligence: A Modern Approach</em> by Stuart J. Russell and Peter Norvig and <em>AI for Game Developers</em> by David M. Bourg and Glenn Seemann.</p>
 
-<figure id="chapter10_figure2"><img alt="Figure 10.2" src="../images/chapter10/ch10_02.png" />
+<figure class="half-width-right" id="chapter10_figure2"><img alt="Figure 10.2" src="../images/chapter10/ch10_02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -201,6 +201,7 @@ for (int i = 0; i &lt; inputs.length; i++) {
 // Step 3: Passing the sum
 // through an activation function
 float output = activate(sum);
+
 // The activation function
 int activate(float sum) {
   //[full] Return a 1 if positive, -1 if negative.
@@ -217,7 +218,7 @@ int activate(float sum) {
 
 <p>Now that we understand the computational process of a perceptron, we can look at an example of one in action. We stated that neural networks are often used for pattern recognition applications, such as facial recognition. Even simple perceptrons can demonstrate the basics of classification, as in the following example.</p>
 
-<figure id="chapter10_figure4"><img alt="Figure 10.4" src="../images/chapter10/ch10_04.png" />
+<figure class="half-width-right" id="chapter10_figure4"><img alt="Figure 10.4" src="../images/chapter10/ch10_04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -257,7 +258,7 @@ int activate(float sum) {
 
 <pre data-code-language="java" data-type="programlisting">
 class Perceptron {
-float[] weights;</pre>
+  float[] weights;</pre>
 
 <p>The constructor could receive an argument indicating the number of inputs (in this case three: x, y, and a bias) and size the array accordingly.</p>
 
@@ -268,7 +269,7 @@ float[] weights;</pre>
       // The weights are picked randomly to start.
       weights[i] = random(-1,1);
     }
-}</pre>
+  }</pre>
 
 <p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <strong function="">feedforward()</strong>. In this example, we&rsquo;ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
 
@@ -282,7 +283,7 @@ float[] weights;</pre>
     // Here the perceptron is making a guess.
     // Is it on one side of the line or the other?
     return activate(sum);
-}</pre>
+  }</pre>
 
 <p>Presumably, we could now create a <strong klass="">Perceptron</strong> object and ask it to make a guess for any given point.</p>
 
@@ -424,14 +425,18 @@ int result = p.feedforward(point);</pre>
 // A new variable is introduced
 // to control the learning rate.
 float c = 0.01;
+
 // Step 1: Provide the inputs and known answer.
 // These are passed in as arguments to train().
 void train(float[] inputs, int desired) {
+
   // Step 2: Guess according to those inputs.
   int guess = feedforward(inputs);
+
   // Step 3: Compute the error (difference
   // between answer and guess).
   float error = desired - guess;
+
   //[full] Step 4: Adjust all the weights according
   // to the error and learning constant.
   for (int i = 0; i &lt; weights.length; i++) {
@@ -448,6 +453,7 @@ class Perceptron {
   float[] weights;
   float c = 0.01;
   //[end]
+
   Perceptron(int n) {
     weights = new float[n];
     //[full] Weights start off random.
@@ -456,6 +462,7 @@ class Perceptron {
     }
     //[end]
   }
+
   //[full] Return an output based on inputs.
   int feedforward(float[] inputs) {
     float sum = 0;
@@ -465,12 +472,14 @@ class Perceptron {
     return activate(sum);
   }
   //[end]
+
   //[full] Output is a +1 or -1.
   int activate(float sum) {
     if (sum &gt; 0) return 1;
     else return -1;
   }
   //[end]
+
   //[full] Train the network against known data.
   void train(float[] inputs, int desired) {
     int guess = feedforward(inputs);
@@ -488,9 +497,11 @@ class Perceptron {
 
 <pre data-code-language="java" data-type="programlisting">
 class Trainer {
+
   // A &quot;Trainer&quot; object stores the inputs and the correct answer.
   float[] inputs;
   int answer;
+
   Trainer(float x, float y, int a) {
     inputs = new float[3];
     inputs[0] = x;
@@ -562,7 +573,7 @@ ptron.train(t.inputs,t.answer);</pre>
 
 <p>Let&rsquo;s look at how the perceptron works with an array of many training points.</p>
 
-<figure><img alt="ch10 ex01" src="../images/chapter10/ch10_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter10/_10_01_SimplePerceptron/_10_01_SimplePerceptron.pde processingjs/chapter10/_10_01_SimplePerceptron/Perceptron.pde processingjs/chapter10/_10_01_SimplePerceptron/Trainer.pde"><img alt="ch10 ex01" src="../images/chapter10/ch10_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -574,14 +585,18 @@ Perceptron ptron;
 // 2,000 training points
 Trainer[] training = new Trainer[2000];
 int count = 0;
+
 //[full] The formula for a line
 float f(float x) {
   return 2*x+1;
 }
 //[end]
+
 void setup() {
   size(640, 360);
+
   ptron = new Perceptron(3);
+
   // Make 2,000 training points.
   for (int i = 0; i &lt; training.length; i++) {
     float x = random(-width/2,width/2);
@@ -593,12 +608,16 @@ void setup() {
     training[i] = new Trainer(x, y, answer);
   }
 }
+
+
 void draw() {
   background(255);
   translate(width/2,height/2);
+
   ptron.train(training[count].inputs, training[count].answer);
   // For animation, we are training one point at a time.
   count = (count + 1) % training.length;
+
   for (int i = 0; i &lt; count; i++) {
     stroke(0);
     int guess = ptron.feedforward(training[i].inputs);
@@ -638,12 +657,14 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
+
   // Giving the vehicle a brain!
   Perceptron brain;
+
   PVector location;
   PVector velocity;
   PVector acceleration;
-[inline]//etc...</pre>
+  [inline]//etc...</pre>
 
 <p>Here&rsquo;s our scenario. Let&rsquo;s say we have a Processing sketch with an <strong klass="">ArrayList</strong> of targets and a single vehicle.</p>
 
@@ -660,7 +681,7 @@ class Vehicle {
       PVector force = seek(targets.get(i));
       applyForce(force);
     }
-}</pre>
+  }</pre>
 
 <p>In Chapter 6, we also examined how we could create more dynamic simulations by weighting each steering force according to some rule. For example, we could say that the farther you are from a target, the stronger the force.</p>
 
@@ -674,24 +695,27 @@ class Vehicle {
       force.mult(weight);
       applyForce(force);
     }
-}</pre>
+  }</pre>
 
 <p>But what if instead we could ask our brain (i.e. perceptron) to take in all the forces as an input, process them according to weights of the perceptron inputs, and generate an output steering force? What if we could instead say:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void seek(ArrayList&lt;PVector&gt; targets) {
+
     // Make an array of inputs for our brain.
     PVector[] forces = new PVector[targets.size()];
+
     for (int i = 0; i &lt; forces.length; i++) {
       // Fill the array with a steering force
       // for each target.
       forces[i] = seek(targets.get(i));
     }
+
     //[full] Ask our brain for a result and apply that as the force!
     PVector output = brain.process(forces);
     applyForce(output);
     //[end]
-}</pre>
+  }</pre>
 
 <p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an array of forces to the vehicle&rsquo;s &ldquo;brain&rdquo; object and allow the brain to weight and sum the forces for us. The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could make decisions as to how to steer on its own, learning from its mistakes and responding to stimuli in its environment. Let&rsquo;s see how this works.</p>
 
@@ -727,6 +751,7 @@ int feedforward(float[] inputs) {
   for (int i = 0; i &lt; weights.length; i++) {
     // Scalar addition and multiplication
     <b>sum += inputs[i]*weights[i];</b>
+
   }
   // Activation function
   <b>return activate(sum);</b>
@@ -757,9 +782,9 @@ int feedforward(float[] inputs) {
 <pre data-code-language="java" data-type="programlisting">
     PVector desired = new PVector(width/2,height/2);
     PVector error = PVector.sub(desired, location);
-brain.train(forces,error);</pre>
+    brain.train(forces,error);</pre>
 
-<figure id="chapter10_figure10"><img alt="Figure 10.10" src="../images/chapter10/ch10_10.png" />
+<figure class="half-width-right" id="chapter10_figure10"><img alt="Figure 10.10" src="../images/chapter10/ch10_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -777,6 +802,10 @@ brain.train(forces,error);</pre>
 			<td>
 			<pre>
 void train(PVector[] forces, PVector error) {
+
+
+
+
   for (int i = 0; i &lt; weights.length; i++) {
     weights[i] += c*error.x*forces[i].x;
     weights[i] += c*error.y*forces[i].y;
@@ -787,10 +816,13 @@ void train(PVector[] forces, PVector error) {
 			<td>
 			<pre>
 void train(float[] inputs, int desired) {
+
   int guess = feedforward(inputs);
   float error = desired - guess;
+
   for (int i = 0; i &lt; weights.length; i++) {
     weights[i] += c * error * inputs[i];
+
   }
 }
 </pre>
@@ -807,7 +839,7 @@ weights[i] += c*error.y*forces[i].y;</pre>
 
 <p>We can now look at the <strong klass="">Vehicle</strong> class and see how the <strong function="">steer</strong> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
 
-<figure><img alt="ch10 ex02" src="../images/chapter10/ch10_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter10/_10_02_SeekingNeural/_10_02_SeekingNeural.pde processingjs/chapter10/_10_02_SeekingNeural/Perceptron.pde processingjs/chapter10/_10_02_SeekingNeural/Vehicle.pde"><img alt="ch10 ex02" src="../images/chapter10/ch10_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -815,8 +847,10 @@ weights[i] += c*error.y*forces[i].y;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
+
   // The Vehicle now has a brain.
   Perceptron brain; //[bold]
+
   //[full] Same old variables for physics
   PVector location;
   PVector velocity;
@@ -824,6 +858,7 @@ class Vehicle {
   float maxforce;
   float maxspeed;
   //[end]
+
   // The Vehicle creates a perceptron with n inputs and a learning constant.
   Vehicle(int n, float x, float y) {
     brain = new Perceptron(n,0.001); //[bold]
@@ -833,6 +868,7 @@ class Vehicle {
     maxspeed = 4;
     maxforce = 0.1;
   }
+
   //[full] Same old update() function
   void update() {
     velocity.add(acceleration);
@@ -841,26 +877,34 @@ class Vehicle {
     acceleration.mult(0);
   }
   //[end]
+
   //[full] Same old applyForce() function
   void applyForce(PVector force) {
     acceleration.add(force);
   }
   //[end]
+
   void steer(ArrayList&lt;PVector&gt; targets) {
     PVector[] forces = new PVector[targets.size()];
+
     for (int i = 0; i &lt; forces.length; i++) {
       forces[i] = seek(targets.get(i));
     }
     // All the steering forces are inputs.
     PVector result = brain.feedforward(forces); //[bold]
+
     // The result is applied.
     applyForce(result);
+
     //[offset-down] The brain is trained according to
     // the distance to the center.
     PVector desired = new PVector(width/2,height/2); //[bold]
     PVector error = PVector.sub(desired, location); //[bold]
     brain.train(forces,error); //[bold]
+
   }
+
+
   //[full] Same old seek() function
   PVector seek(PVector target) {
     PVector desired = PVector.sub(target,location);
@@ -871,6 +915,7 @@ class Vehicle {
     return steer;
   }
   //[end]
+
 }</pre>
 
 <div data-type="example" id="chapter10_exercise3">
@@ -955,9 +1000,11 @@ class Vehicle {
 // An incredibly simple Neuron class stores and displays the location of a single neuron.
 class Neuron {
   PVector location;
+
   Neuron(float x, float y) {
     location = new PVector(x, y);
   }
+
   void display() {
     stroke(0);
     fill(0);
@@ -973,15 +1020,18 @@ class Network {
   ArrayList&lt;Neuron&gt; neurons;
   //[end]
   PVector location;
+
   Network(float x, float y) {
     location = new PVector(x,y);
     neurons = new ArrayList&lt;Neuron&gt;();
   }
+
   //[full] We can add a neuron to the network.
   void addNeuron(Neuron n) {
     neurons.add(n);
   }
   //[end]
+
   //[full] We can draw the entire network.
   void display() {
     pushMatrix();
@@ -998,16 +1048,19 @@ class Network {
 
 <pre data-code-language="java" data-type="programlisting">
 Network network;
+
 void setup() {
   size(640, 360);
   // Make a Network.
   network = new Network(width/2,height/2);
+
   //[full] Make the Neurons.
   Neuron a = new Neuron(-200,0);
   Neuron b = new Neuron(0,100);
   Neuron c = new Neuron(0,-100);
   Neuron d = new Neuron(200,0);
   //[end]
+
   //[full] Add the Neurons to the network.
   network.addNeuron(a);
   network.addNeuron(b);
@@ -1015,6 +1068,7 @@ void setup() {
   network.addNeuron(d);
   //[end]
 }
+
 void draw() {
   background(255);
   // Show the network.
@@ -1023,7 +1077,7 @@ void draw() {
 
 <p>The above yields:</p>
 
-<figure><img alt="ch10 ex03a" src="../images/chapter10/ch10_ex03a.png" />
+<figure class="screenshot"><img alt="ch10 ex03a" src="../images/chapter10/ch10_ex03a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1037,11 +1091,13 @@ class Connection {
   //[end]
   // A connection has a weight.
   float weight;
+
   Connection(Neuron from, Neuron to,float w) {
     weight = w;
     a = from;
     b = to;
   }
+
   // A connection is drawn as a line.
   void display() {
     stroke(0);
@@ -1056,15 +1112,18 @@ class Connection {
 void setup() {
   size(640, 360);
   network = new Network(width/2,height/2);
+
   Neuron a = new Neuron(-200,0);
   Neuron b = new Neuron(0,100);
   Neuron c = new Neuron(0,-100);
   Neuron d = new Neuron(200,0);
+
   // Making connections between the neurons
   network.connect(a,b);
   network.connect(a,c);
   network.connect(b,d);
   network.connect(c,d);
+
   network.addNeuron(a);
   network.addNeuron(b);
   network.addNeuron(c);
@@ -1077,8 +1136,9 @@ void setup() {
   void connect(Neuron a, Neuron b) {
     // Connection has a random weight.
     Connection c = new Connection(a, b, random(1));
+
     [inline]// But what do we do with the Connection object?
-}</pre>
+  }</pre>
 
 <p>Presumably, we might think that the <strong klass="">Network</strong> should store an <strong klass="">ArrayList</strong> of connections, just like it stores an <strong klass="">ArrayList</strong> of neurons. While useful, in this case such an <strong klass="">ArrayList</strong> is not necessary and is missing an important feature that we need. Ultimately we plan to &ldquo;feed forward&quot; the neurons through the network, so the <strong klass="">Neuron</strong> objects themselves must know to which neurons they are connected in the &ldquo;forward&rdquo; direction. In other words, each neuron should have its own list of <strong klass="">Connection</strong> objects. When <strong class="var">a</strong> connects to <strong class="var">b</strong>, we want <strong class="var">a</strong> to store a reference of that connection so that it can pass its output to <strong class="var">b</strong> when the time comes.</p>
 
@@ -1086,7 +1146,7 @@ void setup() {
   void connect(Neuron a, Neuron b) {
     Connection c = new Connection(a, b, random(1));
     a.addConnection(c);
-}</pre>
+  }</pre>
 
 <p>In some cases, we also might want <strong klass="">Neuron</strong> <strong class="var">b</strong> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
 
@@ -1095,21 +1155,24 @@ void setup() {
 <pre data-code-language="java" data-type="programlisting">
 class Neuron {
   PVector location;
+
   // The neuron stores its connections.
   ArrayList&lt;Connection&gt; connections;
+
   Neuron(float x, float y) {
     location = new PVector(x, y);
     connections = new ArrayList&lt;Connection&gt;();
   }
+
   //[full] Adding a connection to this neuron
   void addConnection(Connection c) {
     connections.add(c);
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p>The neuron&rsquo;s <strong function="">display()</strong> function can draw the connections as well. And finally, we have our network diagram.</p>
 
-<figure><img alt="ch10 ex03" src="../images/chapter10/ch10_ex03.png" />
+<figure class="screenshot" data-pde="processingjs/chapter10/_10_03_NetworkViz/_10_03_NetworkViz.pde processingjs/chapter10/_10_03_NetworkViz/Connection.pde processingjs/chapter10/_10_03_NetworkViz/Network.pde processingjs/chapter10/_10_03_NetworkViz/Neuron.pde"><img alt="ch10 ex03" src="../images/chapter10/ch10_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1121,6 +1184,7 @@ class Neuron {
     strokeWeight(1);
     fill(0);
     ellipse(location.x, location.y, 16, 16);
+
     //[full] Drawing all the connections
     for (Connection c : connections) {
       c.display();
@@ -1142,6 +1206,8 @@ class Neuron {
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
   // All our old network set up code
+
+
   // A new function to send in an input
   network.feedforward(random(1));
 }</pre>
@@ -1150,30 +1216,35 @@ void setup() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Network {
+
   //[full] A new function to feed an input into the neuron
   void feedforward(float input) {
     Neuron start = neurons.get(0);
     start.feedforward(input);
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p>What did we do? Well, we made it necessary to add a function called <strong function="">feedforward()</strong> in the <strong klass="">Neuron</strong> class that will receive the input and process it.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Neuron
+
   void feedforward(float input) {
      // What do we do with the input?
-}</pre>
+
+  }</pre>
 
 <p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <strong klass="">Neuron</strong> class adds a variable called <strong class="var">sum</strong>, it can simply accumulate the inputs as they are received.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Neuron
+
   int sum = 0; //[bold]
+
   void feedforward(float input) {
     // Accumulate the sums.
     sum += input; //[bold]
-}</pre>
+  }</pre>
 
 <p>The neuron can then decide whether it should &ldquo;fire,&rdquo; or pass an output through any of its connections to the next layer in the network. Here we can create a really simple activation function: if the sum is greater than 1, fire!</p>
 
@@ -1187,7 +1258,7 @@ class Neuron
       // we can reset our sum to 0.
       sum = 0;
     }
-}</pre>
+  }</pre>
 
 <p>Now, what do we do in the <strong function="">fire()</strong> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <strong function="">feedforward()</strong> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <strong class="var">sum</strong> variable and make it the output.</p>
 
@@ -1198,7 +1269,7 @@ class Neuron
       // through all of its connections
       c.feedforward(sum);
     }
-}</pre>
+  }</pre>
 
 <p><a data-primary="neural networks" data-secondary="real vs. simulated" data-type="indexterm">&nbsp;</a></p>
 
@@ -1206,9 +1277,10 @@ class Neuron
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
+
   void feedforward(float val) {
     b.feedforward(val*weight);
-}</pre>
+  }</pre>
 
 <p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <strong klass="">Neuron</strong> <strong class="var">a</strong> to <strong klass="">Neuron</strong> <strong class="var">b</strong>.</p>
 
@@ -1221,7 +1293,7 @@ class Connection {
 
 <pre data-code-language="java" data-type="programlisting">
   sender.x = lerp(sender.x, b.location.x, 0.1);
-sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
+  sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
 
 <p>Along with the connection&rsquo;s line, we can then draw a circle at that location:</p>
 
@@ -1229,7 +1301,7 @@ sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
   stroke(0);
   line(a.location.x, a.location.y, b.location.x, b.location.y);
   fill(0);
-ellipse(sender.x, sender.y, 8, 8); //[bold]</pre>
+  ellipse(sender.x, sender.y, 8, 8); //[bold]</pre>
 
 <p>This resembles the following:</p>
 
@@ -1242,15 +1314,17 @@ ellipse(sender.x, sender.y, 8, 8); //[bold]</pre>
 <pre data-code-language="java" data-type="programlisting">
   void feedforward(float val) {
     b.feedforward(val*weight);
-}</pre>
+  }</pre>
 
 <p>Now, instead of sending the value on straight away, we&rsquo;ll trigger an animation:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
+
   boolean sending = false;
   PVector sender;
   float output;
+
   void feedforward(float val) {
     // Sending is now true.
     sending = true;
@@ -1258,7 +1332,7 @@ class Connection {
     sender = a.location.get();
     // Store the output for when it is actually time to feed it forward.
     output = val*weight;
-}</pre>
+  }</pre>
 
 <p>Notice how our <strong klass="">Connection</strong> class now needs three new variables. We need a <strong klass="">boolean</strong> &ldquo;sending&rdquo; that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <strong klass="">PVector</strong> &ldquo;sender&rdquo; for the location where we&rsquo;ll draw the traveling dot. And since we aren&rsquo;t passing the output along this instant, we&rsquo;ll need to store it in a variable that will do the job later.</p>
 
@@ -1272,7 +1346,7 @@ class Connection {
       sender.y = lerp(sender.y, b.location.y, 0.1);
       //[end]
     }
-}</pre>
+  }</pre>
 
 <p>We&rsquo;re missing a key element, however. We need to check if the sender has arrived at location b, and if it has, feed forward that output to the next neuron.</p>
 
@@ -1281,19 +1355,21 @@ class Connection {
     if (sending) {
       sender.x = lerp(sender.x, b.location.x, 0.1);
       sender.y = lerp(sender.y, b.location.y, 0.1);
+
       // How far are we from neuron b?
       float d = PVector.dist(sender, b.location); //[bold]
+
       // If we&rsquo;re close enough (within one pixel) pass on the output. Turn off sending.
       if (d &lt; 1) { //[bold]
         b.feedforward(output); //[bold]
         sending = false; //[bold]
       }
     }
-}</pre>
+  }</pre>
 
 <p>Let&rsquo;s look at the <strong klass="">Connection</strong> class all together, as well as our new <strong function="">draw()</strong> function.</p>
 
-<figure><img alt="ch10 ex04" src="../images/chapter10/ch10_ex04.png" />
+<figure class="screenshot" data-pde="processingjs/chapter10/_10_04_NetworkAnimation/_10_04_NetworkAnimation.pde processingjs/chapter10/_10_04_NetworkAnimation/Connection.pde processingjs/chapter10/_10_04_NetworkAnimation/Network.pde processingjs/chapter10/_10_04_NetworkAnimation/Neuron.pde"><img alt="ch10 ex04" src="../images/chapter10/ch10_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1305,31 +1381,37 @@ void draw() {
   // The Network now has a new update() method that updates all of the Connection objects.
   network.update(); //[bold]
   network.display();
+
   if (frameCount % 30 == 0) { //[bold]
     // We are choosing to send in an input every 30 frames.
     network.feedforward(random(1)); //[bold]
   } //[bold]
 }
+
 class Connection {
   // The Connection&rsquo;s data
   float weight;
   Neuron a;
   Neuron b;
+
   // Variables to track the animation
   boolean sending = false;
   PVector sender;
   float output = 0;
+
   Connection(Neuron from, Neuron to, float w) {
     weight = w;
     a = from;
     b = to;
   }
+
   // The Connection is active with data traveling from a to b.
   void feedforward(float val) {
     output = val*weight;
     sender = a.location.get();
     sending = true;
   }
+
   // Update the animation if it is sending.
   void update() {
     if (sending) {
@@ -1342,11 +1424,13 @@ class Connection {
       }
     }
   }
+
   // Draw the connection as a line and traveling circle.
   void display() {
     stroke(0);
     strokeWeight(1+weight*4);
     line(a.location.x, a.location.y, b.location.x, b.location.y);
+
     if (sending) {
       fill(0);
       strokeWeight(1);
@@ -1360,7 +1444,7 @@ class Connection {
 
 <p>The network in the above example was manually configured by setting the location of each neuron and its connections with hard-coded values. Rewrite this example to generate the network&rsquo;s layout via an algorithm. Can you make a circular network diagram? A random one? An example of a multi-layered network is below.</p>
 
-<figure><img alt="ch10 exc05" src="../images/chapter10/ch10_exc05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Ex_10_5_LayeredNetworkAnimation.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Connection.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Network.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Neuron.pde"><img alt="ch10 exc05" src="../images/chapter10/ch10_exc05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>

@@ -466,7 +466,7 @@ Parent B: PLAY</strong></p>
 
 <p>Once the child DNA has been created via crossover, we apply one final process before adding the child to the next generation&mdash;<strong><em>mutation</em></strong>. Mutation is an optional step, as there are some cases in which it is unnecessary. However, it exists because of the Darwinian principle of variation. We created an initial population randomly, making sure that we start with a variety of elements. However, there can only be so much variety when seeding the first generation, and mutation allows us to introduce additional variety throughout the evolutionary process itself.</p>
 
-<figure id="chapter09_figure6"><img alt="Figure 9.6" src="../images/chapter09/ch09_06.png" />
+<figure class="half-width-right" id="chapter09_figure6"><img alt="Figure 9.6" src="../images/chapter09/ch09_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -510,6 +510,7 @@ Parent B: PLAY</strong></p>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
 }</pre>
 
 <p>The population will then be an array of <strong klass="">DNA</strong> objects.</p>
@@ -541,6 +542,7 @@ class DNA {
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
   char[] genes = new char[18];
+
   DNA() {
     for (int i = 0; i &lt; genes.length; i++) {
       // Picking randomly from a range of characters
@@ -556,6 +558,7 @@ class DNA {
 
 <pre data-code-language="java" data-type="programlisting">
 DNA[] population = new DNA[100];
+
 void setup() {
   for (int i = 0; i &lt; population.length; i++) {
     // Initializing each member of the population
@@ -587,6 +590,7 @@ class DNA {
   // We are adding another variable to the
   // DNA class to track fitness.
   float fitness;
+
   // Function to score fitness
   void fitness () {
     int score = 0;
@@ -599,15 +603,16 @@ class DNA {
     }
     // Fitness is the percentage correct.
     fitness = float(score)/target.length();
-}</pre>
+  }</pre>
 
 <p>In the main tab&rsquo;s <strong function="">draw()</strong>, the very first step we&rsquo;ll take is to call the fitness function for each member of the population.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
+
   for (int i = 0; i &lt; population.length; i++) {
     population[i].fitness();
-}</pre>
+  }</pre>
 
 <p><a data-primary="mating pools (natural selection)" data-secondary="implementing" data-type="indexterm">&nbsp;</a></p>
 
@@ -621,7 +626,7 @@ void draw() {
 
 <p>It might be fun to do something ridiculous and actually program a simulation of a spinning wheel as depicted above. But this is quite unnecessary.</p>
 
-<figure id="chapter09_figure7"><img alt="Figure 9.7" src="../images/chapter09/ch09_07.png" />
+<figure class="half-width-right" id="chapter09_figure7"><img alt="Figure 9.7" src="../images/chapter09/ch09_07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -632,7 +637,9 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
   // Start with an empty mating pool.
   ArrayList&lt;DNA&gt; matingPool = new ArrayList&lt;DNA&gt;();
+
   for (int i = 0; i &lt; population.length; i++) {
+
     // n is equal to fitness times 100,
     // which leaves us with an integer between 0 and 100.
     int n = int(population[i].fitness * 100);
@@ -641,7 +648,7 @@ void draw() {
       // to the mating pool N times.
       matingPool.add(population[i]);
     }
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter09_exercise2">
 <h5>Exercise 9.2</h5>
@@ -679,13 +686,13 @@ C: 17% (1/6)</strong></p>
 
 <pre data-code-language="java" data-type="programlisting">
   int a = int(random(matingPool.size()));
-int b = int(random(matingPool.size()));</pre>
+  int b = int(random(matingPool.size()));</pre>
 
 <p>We can use these indices to retrieve an actual DNA instance from the mating pool.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   DNA parentA = matingPool.get(a);
-DNA parentB = matingPool.get(b);</pre>
+  DNA parentB = matingPool.get(b);</pre>
 
 <p>Because we have multiple instances of the same <strong klass="">DNA</strong> objects in the mating pool (not to mention that we could pick the same random number twice), it&rsquo;s possible that <strong class="var">parentA</strong> and <strong class="var">parentB</strong> could be the same <strong klass="">DNA</strong> object. If we wanted to be strict, we could write some code to ensure that we haven&rsquo;t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it&lsquo;s worth trying this as an exercise.</p>
 
@@ -703,28 +710,32 @@ DNA parentB = matingPool.get(b);</pre>
   // A function for crossover
   DNA child = parentA.crossover(parentB);
   // A function for mutation
-child.mutate();</pre>
+  child.mutate();</pre>
 
 <p>Of course, the functions <strong function="">crossover()</strong> and <strong function="">mutate()</strong> don&rsquo;t magically exist in our <strong klass="">DNA</strong> class; we have to write them. The way we called <strong function="">crossover()</strong> above indicates that the function receives an instance of DNA as an argument and returns a new instance of DNA, the child.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // The function receives one argument (DNA) and returns DNA.
   DNA crossover(DNA partner) {
+
     // The child is a new instance of DNA.
     // Note that the DNA is generated randomly in the constructor,
     // but we will overwrite it below with DNA from parents.
     DNA child = new DNA();
+
     // Picking a random &ldquo;midpoint&rdquo; in the genes array
     int midpoint = int(random(genes.length));
+
     for (int i = 0; i &lt; genes.length; i++) {
       //[full] Before midpoint copy genes from one parent, after midpoint copy genes from the other parent
       if (i &gt; midpoint) child.genes[i] = genes[i];
       else child.genes[i] = partner.genes[i];
       //[end]
     }
+
     // Return the new child DNA
     return child;
-}</pre>
+  }</pre>
 
 <p>The above crossover function uses the &ldquo;random midpoint&rdquo; method of crossover, in which the first section of genes is taken from parent A and the second section from parent B.</p>
 
@@ -740,8 +751,10 @@ child.mutate();</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 float mutationRate = 0.01;
+
 if (random(1) &lt; mutationRate) {
   // Any code here would be executed 1% of the time.
+
 }</pre>
 
 <p>The entire function therefore reads:</p>
@@ -755,7 +768,7 @@ if (random(1) &lt; mutationRate) {
         genes[i] = (char) random(32,128);
       }
     }
-}</pre>
+  }</pre>
 </section>
 </section>
 
@@ -766,7 +779,7 @@ if (random(1) &lt; mutationRate) {
 
 <p>You may have noticed that we&rsquo;ve essentially walked through the steps of the genetic algorithm twice, once describing it in narrative form and another time with code snippets implementing each of the steps. What I&rsquo;d like to do in this section is condense the previous two sections into one page, with the algorithm described in just three steps and the corresponding code alongside.</p>
 
-<figure><img alt="ch09 ex01" src="../images/chapter09/ch09_ex01.png" />
+<figure class="screenshot"><img alt="ch09 ex01" src="../images/chapter09/ch09_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -774,35 +787,45 @@ if (random(1) &lt; mutationRate) {
 
 <pre data-code-language="java" data-type="programlisting">
 // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Variables we need for our GA&lt;/b&gt;&lt;/span&gt;
+
 // Mutation rate
 float mutationRate;
 // Population total
 int totalPopulation = 150;
+
 // Population array
 DNA[] population;
 // Mating pool ArrayList
 ArrayList&lt;DNA&gt; matingPool;
 // Target phrase
 String target;
+
 void setup() {
   size(640, 360);
+
   // Initializing target phrase and mutation rate
   target = &quot;to be or not to be&quot;;
   mutationRate = 0.01;
+
   // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 1: Initialize Population&lt;/b&gt;&lt;/span&gt;
   population = new DNA[totalPopulation];
   for (int i = 0; i &lt; population.length; i++) {
     population[i] = new DNA();
   }
 }
+
 void draw() {
+
   // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 2: Selection&lt;/b&gt;&lt;/span&gt;
+
   // Step 2a: Calculate fitness.
   for (int i = 0; i &lt; population.length; i++) {
     population[i].fitness();
   }
+
   // Step 2b: Build mating pool.
   ArrayList&lt;DNA&gt; matingPool = new ArrayList&lt;DNA&gt;();
+
   for (int i = 0; i &lt; population.length; i++) {
     //[full] Add each member n times according to its fitness score.
     int n = int(population[i].fitness * 100);
@@ -811,6 +834,7 @@ void draw() {
     }
     //[end]
   }
+
   // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 3: Reproduction&lt;/b&gt;&lt;/span&gt;
   for (int i = 0; i &lt; population.length; i++) {
     int a = int(random(matingPool.size()));
@@ -821,6 +845,7 @@ void draw() {
     DNA child = partnerA.crossover(partnerB);
     // Step 3b: Mutation
     child.mutate(mutationRate);
+
     // Note that we are overwriting the population with the new
     // children.  When draw() loops, we will perform all the same
     // steps with the new population of children.
@@ -832,8 +857,11 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
+
   char[] genes;
   float fitness;
+
   //[full] Create DNA randomly.
   DNA() {
     genes = new char[target.length()];
@@ -842,6 +870,7 @@ class DNA {
     }
   }
   //[end]
+
   //[full] Calculate fitness.
   void fitness() {
      int score = 0;
@@ -853,6 +882,7 @@ class DNA {
      fitness = float(score)/target.length();
   }
   //[end]
+
   //[full] Crossover
   DNA crossover(DNA partner) {
     DNA child = new DNA(genes.length);
@@ -864,6 +894,7 @@ class DNA {
     return child;
   }
   //[end]
+
   //[full] Mutation
   void mutate(float mutationRate) {
     for (int i = 0; i &lt; genes.length; i++) {
@@ -873,11 +904,13 @@ class DNA {
     }
   }
   //[end]
+
   //[full] Convert to String&mdash;PHENOTYPE.
   String getPhrase() {
     return new String(genes);
   }
   //[end]
+
 }</pre>
 
 <div data-type="example" id="chapter09_exercise6">
@@ -885,7 +918,7 @@ class DNA {
 
 <p>Add features to the above example to report more information about the progress of the genetic algorithm itself. For example, show the phrase closest to the target each generation, as well as report on the number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase. Consider writing a <strong klass="">Population</strong> class to manage the GA, instead of including all the code in draw().</p>
 
-<figure><img alt="ch09 exc01" src="../images/chapter09/ch09_exc01.png" />
+<figure class="screenshot"><img alt="ch09 exc01" src="../images/chapter09/ch09_exc01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1247,21 +1280,23 @@ class Vehicle {
   float maxforce;
   float size;
   float separationWeight;
-[inline]// etc.</pre>
+  [inline]// etc.</pre>
 
 <p>All we need to do to evolve those parameters is to turn them into an array, so that the array can be used with all of the functions&mdash;<strong function="">crossover()</strong>, <strong function="">mutate()</strong>, etc.&mdash;found in the <strong klass="">DNA</strong> class. One common solution is to use an array of floating point numbers between 0 and 1.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   // An array of floats
   float[] genes;
+
   DNA(int num) {
     genes = new float[num];
     for (int i = 0; i &lt; genes.length; i++) {
       // Always pick a number between 0 and 1.
       genes[i] = float(1);
     }
-}</pre>
+  }</pre>
 
 <p>Notice how we&rsquo;ve now put the genetic data (genotype) and its expression (phenotype) into two separate classes. The <strong klass="">DNA</strong> class is the genotype and the <strong klass="">Vehicle</strong> class uses a <strong klass="">DNA</strong> object to drive its behaviors and express that data visually&mdash;it is the phenotype. The two can be linked by creating a <strong klass="">DNA</strong> instance inside the <strong klass="">Vehicle</strong> class itself.</p>
 
@@ -1269,11 +1304,13 @@ class DNA {
 class Vehicle {
   // A DNA object embedded into the Vehicle class
   DNA dna;
+
   float maxspeed;
   float maxforce;
   float size;
   float separationWeight;
   // Etc.
+
   Vehicle() {
     DNA = new DNA(4);
     // Using the genes to set variables
@@ -1282,7 +1319,7 @@ class Vehicle {
     size = dna.genes[2];
     separationWeight = dna.genes[3];
     // Etc.
-}</pre>
+  }</pre>
 
 <p>Of course, you most likely don&rsquo;t want all your variables to have a range between 0 and 1. But rather than try to remember how to adjust those ranges in the <strong klass="">DNA</strong> class itself, it&rsquo;s easier to pull the genetic information from the <strong klass="">DNA</strong> object and use Processing&rsquo;s <strong function="">map()</strong> function to change the range. For example, if you want a size variable between 10 and 72, you would say:</p>
 
@@ -1293,8 +1330,10 @@ class Vehicle {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   // The genotype is an array of PVectors.
   PVector[] genes;
+
   DNA(int num) {
     genes = new PVector[num];
     for (int i = 0; i &lt; genes.length; i++) {
@@ -1303,14 +1342,14 @@ class DNA {
       // And scaled randomly
       genes[i].mult(random(10));
     }
-}</pre>
+  }</pre>
 
 <p>The phenotype would be a <strong klass="">Rocket</strong> class that participates in a physics system.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Rocket {
   DNA dna;
-[inline]// etc.</pre>
+  [inline]// etc.</pre>
 
 <p><a data-primary="object-oriented programming" data-secondary="genotype/phenotype objects and" data-type="indexterm">&nbsp;</a></p>
 
@@ -1329,11 +1368,11 @@ class Rocket {
 
 <p>A population of rockets launches from the bottom of the screen with the goal of hitting a target at the top of the screen (with obstacles blocking a straight line path).</p>
 
-<figure id="chapter09_figure10"><img alt="Figure 9.10" src="../images/chapter09/ch09_10.png" />
+<figure class="screenshot" id="chapter09_figure10"><img alt="Figure 9.10" src="../images/chapter09/ch09_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="chapter09_figure11"><img alt="Figure 9.11" src="../images/chapter09/ch09_11.png" />
+<figure class="half-width-right" id="chapter09_figure11"><img alt="Figure 9.11" src="../images/chapter09/ch09_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1347,16 +1386,19 @@ class Rocket {
 
 <pre data-code-language="java" data-type="programlisting">
 class Rocket {
+
   //[full] A rocket has three vectors: location, velocity, acceleration.
   PVector location;
   PVector velocity;
   PVector acceleration;
   //[end]
+
   //[full] Accumulating forces into acceleration (Newton&rsquo;s 2nd law)
   void applyForce(PVector f) {
     acceleration.add(f);
   }
   //[end]
+
   // Our simple physics model (Euler integration)
   void update() {
     // Velocity changes according to acceleration.
@@ -1387,7 +1429,7 @@ class Rocket {
     float d = PVector.dist(location,target);
     // Fitness is inversely proportional to distance.
     fitness = 1/d;
-}</pre>
+  }</pre>
 
 <p>This is perhaps the simplest fitness function we could write. By using one divided by distance, large distances become small numbers and small distances become large.</p>
 
@@ -1526,20 +1568,20 @@ void fitness() {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
-PVector[] genes;</pre>
+  PVector[] genes;</pre>
 
 <p>The happy news here is that we don&rsquo;t really have to do anything else to the <strong klass="">DNA</strong> class. All of the functionality we developed for the typing monkey (crossover and mutation) applies here. The one difference we do have to consider is how we initialize the array of genes. With the typing monkey, we had an array of characters and picked a random character for each element of the array. Here we&rsquo;ll do exactly the same thing and initialize a DNA sequence as an array of random <strong klass="">PVector</strong><code>s</code>. Now, your instinct in creating a random <strong klass="">PVector</strong> might be as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector v = new PVector(random(-1,1),random(-1,1));</pre>
 
-<figure id="chapter09_figure12"><img alt="Figure 9.12" src="../images/chapter09/ch09_12.png" />
+<figure class="half-width-right" id="chapter09_figure12"><img alt="Figure 9.12" src="../images/chapter09/ch09_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>This is perfectly fine and will likely do the trick. However, if we were to draw every single possible vector we might pick, the result would fill a square (see Figure 9.12). In this case, it probably doesn&rsquo;t matter, but there is a slight bias to diagonals here given that a <strong klass="">PVector</strong> from the center of a square to a corner is longer than a purely vertical or horizontal one.</p>
 
-<figure id="chapter09_figure13"><img alt="Figure 9.13" src="../images/chapter09/ch09_13.png" />
+<figure class="half-width-right" id="chapter09_figure13"><img alt="Figure 9.13" src="../images/chapter09/ch09_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1555,10 +1597,13 @@ for (int i = 0; i &lt; genes.length; i++) {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   // The genetic sequence is an array of PVectors.
   PVector[] genes;
+
   // How strong can the thrusters be?
   float maxforce = 0.1;
+
   DNA() {
     // We need a PVector for every frame of the rocket&rsquo;s life.
     genes = new PVector[lifetime];
@@ -1568,7 +1613,7 @@ class DNA {
       // but no stronger than maximum force
       genes[i].mult(random(0, maxforce));
     }
-}</pre>
+  }</pre>
 
 <p>Notice also that we created an array of <strong klass="">PVector</strong><code>s</code> with length lifetime. We need a <strong klass="">PVector</strong> for each frame of the rocket&rsquo;s life, and the above assumes the existence of a global variable lifetime that stores the total number of frames in each generation&rsquo;s life cycle.</p>
 
@@ -1576,18 +1621,21 @@ class DNA {
 
 <pre data-code-language="java" data-type="programlisting">
 class Rocket {
+
   // A Rocket has DNA.
   DNA dna;
   // A Rocket has fitness.
   float fitness;
+
   PVector location;
   PVector velocity;
-PVector acceleration;</pre>
+  PVector acceleration;</pre>
 
 <p>What are we using the DNA for? We are marching through the array of <strong klass="">PVector</strong><code>s</code> and applying them one at a time as a force to the rocket. To do this, we&rsquo;ll also have to add an integer that acts as a counter to walk through the array.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   int geneCounter = 0;
+
   void run() {
     // Apply a force from the genes array.
     applyForce(dna.genes[geneCounter]);
@@ -1595,7 +1643,7 @@ PVector acceleration;</pre>
     geneCounter++;
     // Update the Rocket&rsquo;s physics.
     update();
-}</pre>
+  }</pre>
 </section>
 
 <section data-type="sect1" id="chapter09_section11">
@@ -1605,6 +1653,7 @@ PVector acceleration;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Population {
+
   // Population has variables to keep
   // track of mutation rate, current
   // population array, mating pool, and
@@ -1613,12 +1662,13 @@ class Population {
   Rocket[] population;
   ArrayList&lt;Rocket&gt; matingPool;
   int generations;
+
   //[full] These functions haven&rsquo;t changed, so
   // no need to go through the code again.
   void fitness() {}
   void selection() {}
   void reproduction() {}
-//[end]</pre>
+  //[end]</pre>
 
 <p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <strong klass="">Population</strong> class that runs the physics simulation itself. This is identical to what we did in the <strong function="">run()</strong> function of a particle system&mdash;update all the particle locations and draw them.</p>
 
@@ -1630,14 +1680,14 @@ class Population {
       // location, and displaying it.
       population[i].run();
     }
-}</pre>
+  }</pre>
 
 <p>Finally, we&rsquo;re ready for <strong function="">setup()</strong> and <strong function="">draw()</strong>. Here in the main tab, our primary responsibility is to implement the steps of the genetic algorithm in the appropriate order by calling the functions in the <strong klass="">Population</strong> class.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     population.fitness();
     population.selection();
-population.reproduction();</pre>
+    population.reproduction();</pre>
 
 <p>However, unlike the Shakespeare example, we don&rsquo;t want to do this every frame. Rather, our steps work as follows:</p>
 
@@ -1665,7 +1715,7 @@ population.reproduction();</pre>
 	</li>
 </ol>
 
-<figure><img alt="ch09 ex02" src="../images/chapter09/ch09_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter09/_9_02_SmartRockets_superbasic/DNA.pde processingjs/chapter09/_9_02_SmartRockets_superbasic/Population.pde  processingjs/chapter09/_9_02_SmartRockets_superbasic/Rocket.pde processingjs/chapter09/_9_02_SmartRockets_superbasic/_9_02_SmartRockets_superbasic.pde"><img alt="ch09 ex02" src="../images/chapter09/ch09_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1674,20 +1724,25 @@ population.reproduction();</pre>
 <pre data-code-language="java" data-type="programlisting">
 // How many frames does a generation live for?
 int lifetime;
+
 // What frame are we on?
 int lifeCounter;
+
 // The population
 Population population;
+
 void setup() {
   size(640, 480);
   lifetime = 500;
   lifeCounter = 0;
+
   float mutationRate = 0.01;
   // Step 1: Create the population.
   // Here is where we could play with
   // the mutation rate and population size.
   population = new Population(mutationRate, 50);
 }
+
 void draw() {
   background(255);
   // The revised genetic algorithm
@@ -1710,7 +1765,7 @@ void draw() {
 
 <p>The above example works, but it isn&rsquo;t particularly interesting. After all, the rockets simply evolve to having DNA with a bunch of vectors that point straight upwards. In the next example, we&rsquo;re going to talk through two suggested improvements for the example and provide code snippets that implement these improvements.</p>
 
-<figure><img alt="ch09 ex03" src="../images/chapter09/ch09_ex03.png" />
+<figure class="screenshot" data-pde="processingjs/chapter09/_9_03_SmartRockets/DNA.pde processingjs/chapter09/_9_03_SmartRockets/Obstacle.pde processingjs/chapter09/_9_03_SmartRockets/Population.pde  processingjs/chapter09/_9_03_SmartRockets/Rocket.pde processingjs/chapter09/_9_03_SmartRockets/_9_03_SmartRockets.pde"><img alt="ch09 ex03" src="../images/chapter09/ch09_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1724,10 +1779,11 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Obstacle {
+
   // An obstacle is a location (top left
   // corner of rectangle) with a width and height.
   PVector location;
-float w,h;</pre>
+  float w,h;</pre>
 
 <p>We can also write a <strong function="">contains()</strong> function that will <strong class="var">return true</strong> or <strong class="var">return false</strong> to determine if a rocket has hit the obstacle.</p>
 
@@ -1738,7 +1794,7 @@ float w,h;</pre>
     } else {
       return false;
     }
-}</pre>
+  }</pre>
 
 <p>Assuming we make an <strong klass="">ArrayList</strong> of obstacles, we can then have each rocket check to see if it has collided with an obstacle and set a <strong klass="">boolean</strong> flag to be true if it does, adding a function to the rocket class.</p>
 
@@ -1752,7 +1808,7 @@ float w,h;</pre>
         stopped = true;
       }
     }
-}</pre>
+  }</pre>
 
 <p>If the rocket hits an obstacle, we choose to stop it from updating its location.</p>
 
@@ -1765,7 +1821,7 @@ float w,h;</pre>
       update();
       obstacles(); //[bold]
     }
-}</pre>
+  }</pre>
 
 <p>And we also have an opportunity to adjust the rocket&rsquo;s fitness. We consider it to be pretty terrible if the rocket hits an obstacle, and so its fitness should be greatly reduced.</p>
 
@@ -1774,7 +1830,7 @@ float w,h;</pre>
     float d = dist(location.x, location.y, target.location.x, target.location.y);
     fitness = pow(1/d, 2);
     if (stopped) fitness *= 0.1; //[bold]
-}</pre>
+  }</pre>
 
 <p><strong highlight="">Improvement #2: Evolve reaching the target faster</strong></p>
 
@@ -1790,7 +1846,7 @@ float w,h;</pre>
     // Every frame, we check its distance and see
     // if it&rsquo;s closer than the &ldquo;record&rdquo; distance.
     // If it is, we have a new record.
-if (d &lt; recordDist) recordDist = d;</pre>
+    if (d &lt; recordDist) recordDist = d;</pre>
 
 <p>In addition, a rocket should be rewarded according to how quickly it reaches the target. The faster it reaches the target, the higher the fitness. The slower, the lower. To accomplish this, we can increment a counter every cycle of the rocket&rsquo;s life until it reaches the target. At the end of its life, the counter will equal the amount of time the rocket took to reach that target.</p>
 
@@ -1810,15 +1866,17 @@ if (d &lt; recordDist) recordDist = d;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   void fitness() {
+
     // Finish time and record distance!
     fitness = (1/(finishTime*recordDist));
     // Make it exponential.
     fitness = pow(fitness, 2);
+
     // Fitness goes way down if you hit an obstacle.
     if (stopped) fitness *= 0.1;
     // You are rewarded for reaching the target.
     if (hitTarget) fitness *= 2;
-}</pre>
+  }</pre>
 
 <p>These improvements are both incorporated into the code for Example 9.3: Smart Rockets.</p>
 
@@ -1855,7 +1913,7 @@ if (d &lt; recordDist) recordDist = d;</pre>
 <div data-type="example" id="chapter09_exercise12">
 <h5>Exercise 9.12</h5>
 
-<figure><img alt="ch09 exc12" src="../images/chapter09/ch09_exc12.png" />
+<figure class="half-width-right"><img alt="ch09 exc12" src="../images/chapter09/ch09_exc12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1876,7 +1934,7 @@ if (d &lt; recordDist) recordDist = d;</pre>
 
 <p>Think of all the rating systems you&rsquo;ve ever used. Could you evolve the perfect movie by scoring all films according to your Netflix ratings? The perfect singer according to American Idol voting?</p>
 
-<figure id="chapter09_figure14"><img alt="Figure 9.14" src="../images/chapter09/ch09_14.png" />
+<figure class="half-width-right" id="chapter09_figure14"><img alt="Figure 9.14" src="../images/chapter09/ch09_14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1886,23 +1944,26 @@ if (d &lt; recordDist) recordDist = d;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   float[] genes;
   // We need 20 numbers to draw the face.
   int len = 20;
+
   DNA() {
     genes = new float[len];
     for (int i = 0; i &lt; genes.length; i++) {
       // Each gene is a random float between 0 and 1.
       genes[i] = random(0,1);
     }
-}</pre>
+  }</pre>
 
 <p>The phenotype is a <strong klass="">Face</strong> class that includes an instance of a <strong klass="">DNA</strong> object.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Face {
+
   DNA dna;
-float fitness;</pre>
+  float fitness;</pre>
 
 <p>When it comes time to draw the face on screen, we can use Processing&rsquo;s <strong function="">map()</strong> function to convert any gene value to the appropriate range for pixel dimensions or color values. (In this case, we are also using <strong function="">colorMode()</strong> to set the RGB ranges between 0 and 1.)</p>
 
@@ -1910,6 +1971,7 @@ float fitness;</pre>
   void display() {
     //[full] Using map() to convert the genes to a range for drawing the face.
     float r          = map(dna.genes[0],0,1,0,70);
+
     color c          = color(dna.genes[1],dna.genes[2],dna.genes[3]);
     float eye_y      = map(dna.genes[4],0,1,0,5);
     float eye_x      = map(dna.genes[5],0,1,0,10);
@@ -1920,7 +1982,7 @@ float fitness;</pre>
     float mouth_x    = map(dna.genes[5],0,1,-25,25);
     float mouthw     = map(dna.genes[5],0,1,0,50);
     float mouthh     = map(dna.genes[5],0,1,0,10);
-//[end]</pre>
+    //[end]</pre>
 
 <p>So far, we&rsquo;re not really doing anything new. This is what we&rsquo;ve done in every GA example so far. What&rsquo;s new is that we are not going to write a <strong function="">fitness()</strong> function in which the score is computed based on a math formula. Instead, we are going to ask the user to assign the fitness.</p>
 
@@ -1932,7 +1994,7 @@ float fitness;</pre>
 
 <p>Let&rsquo;s look at how the steps of the genetic algorithm are applied in the main tab, noting how fitness is assigned according to mouse interaction and the next generation is created on a button press. The rest of the code for checking mouse locations, button interactions, etc. can be found in the accompanying example code.</p>
 
-<figure><img alt="ch09 ex04" src="../images/chapter09/ch09_ex04.png" />
+<figure class="screenshot" data-pde="processingjs/chapter09/_9_04_Faces_interactiveselection/Button.pde processingjs/chapter09/_9_04_Faces_interactiveselection/DNA.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Face.pde processingjs/chapter09/_9_04_Faces_interactiveselection/_9_04_Faces_interactiveselection.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Population.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Rectangle.pde"><img alt="ch09 ex04" src="../images/chapter09/ch09_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1941,13 +2003,16 @@ float fitness;</pre>
 <pre data-code-language="java" data-type="programlisting">
 Population population;
 Button button;
+
 void setup() {
   size(780,200);
   float mutationRate = 0.05;
   population = new Population(mutationRate,10);
   button = new Button(15,150,160,20, &quot;evolve new generation&quot;);
 }
+
 void draw() {
+
   population.display();
   // The mouse location is passed to
   // the population, which will score
@@ -1955,6 +2020,7 @@ void draw() {
   population.rollover(mouseX,mouseY); //[bold]
   button.display();
 }
+
 void mousePressed() {
   // When a button is pressed,
   // the new generation is created
@@ -1999,11 +2065,14 @@ void mousePressed() {
 class Bloop {
   // A location
   PVector location;
+
   // Variables for size and speed
   float r;
   float maxspeed;
+
   // Some variables for Perlin noise calculations
   float xoff, yoff;
+
   void update() {
     float vx = map(noise(xoff),0,1,-maxspeed,maxspeed);
     float vy = map(noise(yoff),0,1,-maxspeed,maxspeed);
@@ -2011,9 +2080,11 @@ class Bloop {
     PVector velocity = new PVector(vx,vy);
     xoff += 0.01;
     yoff += 0.01;
+
     // The bloop moves.
     location.add(velocity);
   }
+
   // A bloop is a circle.
   void display() {
     ellipse(location.x, location.y, r, r);
@@ -2026,15 +2097,18 @@ class Bloop {
 
 <pre data-code-language="java" data-type="programlisting">
 class World {
+
   // A list of bloops
   ArrayList&lt;Bloop&gt; bloops;
+
   World(int num) {
     bloops = new ArrayList&lt;Bloop&gt;();
+
     for (int i = 0; i &lt; num; i++) {
       // Making an initial population of bloops
       bloops.add(new Bloop());
     }
-}</pre>
+  }</pre>
 
 <p>So far, what we have is just a rehashing of our particle system example from Chapter 5. We have an entity (<strong klass="">Bloop</strong>) that moves around the window and a class (<strong klass="">World</strong>) that manages a variable quantity of these entities. To turn this into a system that evolves, we need to add two additional features to our world:</p>
 
@@ -2054,16 +2128,17 @@ class World {
 <pre data-code-language="java" data-type="programlisting">
 class Bloop {
   // A bloop is born with 100 health points.
-float health = 100;</pre>
+  float health = 100;</pre>
 
 <p>In each frame of animation, a bloop loses some health.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
     // All that other stuff for movement
+
     // Death is always looming!
     health -= 1;
-}</pre>
+  }</pre>
 
 <p>If health drops below 0, the bloop dies.</p>
 
@@ -2077,7 +2152,7 @@ float health = 100;</pre>
       return false;
     }
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p>This is a good first step, but we haven&rsquo;t really achieved anything. After all, if all bloops start with 100 health points and lose 1 point per frame, then all bloops will live for the exact same amount of time and die together. If every single bloop lives the same amount of time, they all have equal chances of reproducing and therefore nothing will evolve.</p>
 
@@ -2094,13 +2169,14 @@ float health = 100;</pre>
       float d = PVector.dist(location, foodLocation);
       // Is the Bloop close to the food?
       if (d &lt; r/2) {
+
         // If so, it gets 100 more health points.
         health += 100;
         // The food is no longer available for other Bloops.
         food.remove(i);
       }
     }
-}</pre>
+  }</pre>
 
 <p>Now we have a scenario in which bloops that eat more food live longer and have a greater likelihood of reproducing. Therefore, we expect that our system would evolve bloops with an optimal ability to find and eat food.</p>
 
@@ -2113,7 +2189,7 @@ float health = 100;</pre>
 
 <p>The ability for a bloop to find food is tied to two variables&mdash;size and speed. Bigger bloops will find food more easily simply because their size will allow them to intersect with food locations more often. And faster bloops will find more food because they can cover more ground in a shorter period of time.</p>
 
-<figure id="chapter09_figure15"><img alt="Figure 9.15" src="../images/chapter09/ch09_15.png" />
+<figure class="half-width-right" id="chapter09_figure15"><img alt="Figure 9.15" src="../images/chapter09/ch09_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2121,7 +2197,9 @@ float health = 100;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   float[] genes;
+
   DNA() {
     // It may seem absurd to use an
     // array when all we have is a single
@@ -2131,7 +2209,7 @@ class DNA {
     for (int i = 0; i &lt; genes.length; i++) {
       genes[i] = random(0,1);
     }
-}</pre>
+  }</pre>
 
 <p>The phenotype then is the bloop itself, whose size and speed is assigned by adding an instance of a <strong klass="">DNA</strong> object to the <strong klass="">Bloop</strong> class.</p>
 
@@ -2139,20 +2217,23 @@ class DNA {
 class Bloop {
   PVector location;
   float health;
+
   // A bloop now has DNA.
   DNA dna;
   float r;
   float maxspeed;
+
   Bloop(DNA dna_) {
     location = new PVector(width/2,height/2);
     health = 200;
     dna = dna_;
+
     //[full] maxspeed and r (radius) are mapped
     // to values according to the DNA.
     maxspeed = map(dna.genes[0], 0, 1, 15, 0);
     r        = map(dna.genes[0], 0, 1, 0, 50);
     //[end]
-}</pre>
+  }</pre>
 
 <p>Notice that with <strong class="var">maxspeed</strong>, the range is mapped to between 15 and 0, meaning a bloop with a gene value of 0 moves at a speed of 15 and a bloop with a gene value of 1 doesn&rsquo;t move at all (speed of 0).</p>
 </section>
@@ -2177,12 +2258,13 @@ class Bloop {
 <pre data-code-language="java" data-type="programlisting">
   // This function will return a new bloop, the child.
   Bloop reproduce() {
+
     // A 1% chance of executing the code in
     // this conditional, i.e. a 1% chance of reproducing
     if (random(1) &lt; 0.01) {
       [inline] // Make the Bloop baby
     }
-}</pre>
+  }</pre>
 
 <p>How does a bloop reproduce? In our previous examples, the reproduction process involved calling the <strong function="">crossover()</strong> function in the <strong klass="">DNA</strong> class and making a new object from the newly made DNA. Here, since we are making a child from a single parent, we&rsquo;ll call a function called <strong function="">copy()</strong> instead.</p>
 
@@ -2195,12 +2277,13 @@ class Bloop {
       childDNA.mutate(0.01); //[bold]
       // Make a new bloop at the same location with the new DNA.
       return new Bloop(location, childDNA); //[bold]
+
     } else { //[bold]
       // If the bloop does not
       // reproduce, return null.
       return null; //[bold]
     }
-}</pre>
+  }</pre>
 
 <p>Note also that we&rsquo;ve reduced the probability of reproducing from 1% to 0.05%. This value makes quite a difference; with a high probability of reproducing, the system will quickly tend towards overpopulation. Too low a probability, and everything will likely quickly die out.</p>
 
@@ -2208,9 +2291,11 @@ class Bloop {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
+
   // This copy() function replaces
   // crossover() in this example.
   DNA copy() {
+
     // Make a new array the same
     // length and copy its contents.
     float[] newgenes = new float[genes.length];
@@ -2223,7 +2308,7 @@ class DNA {
 
 <p>Before you run the example, take a moment to guess what size and speed of bloops the system will evolve towards. We&rsquo;ll discuss following the code.</p>
 
-<figure><img alt="ch09 ex05" src="../images/chapter09/ch09_ex05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter09/_9_05_EvolutionEcosystem/_9_05_EvolutionEcosystem.pde processingjs/chapter09/_9_05_EvolutionEcosystem/Bloop.pde processingjs/chapter09/_9_05_EvolutionEcosystem/DNA.pde processingjs/chapter09/_9_05_EvolutionEcosystem/Food.pde processingjs/chapter09/_9_05_EvolutionEcosystem/World.pde"><img alt="ch09 ex05" src="../images/chapter09/ch09_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2231,25 +2316,31 @@ class DNA {
 
 <pre data-code-language="java" data-type="programlisting">
 World world;
+
 //[full] setup() and draw() do nothing more than create
 // and run a World object.
 void setup() {
   size(600,400);
   world = new World(20);
 }
+
 void draw() {
   background(255);
   world.run();
 }
 //[end]
+
 class World {
+
   // The World object keeps track of the
   // population bloops as well as the food.
   ArrayList&lt;Bloop&gt; bloops;
   Food food;
+
   World(int num) {
     food = new Food(num);
     bloops = new ArrayList&lt;Bloop&gt;();
+
     // Creating the population
     for (int i = 0; i &lt; num; i++) {
       PVector location = new PVector(random(width),random(height));
@@ -2257,8 +2348,10 @@ class World {
       bloops.add(new Bloop(l,dna));
     }
   }
+
   void run() {
     food.run();
+
     for (int i = bloops.size()-1; i &gt;= 0; i--) {
       // The bloops live their life.
       Bloop b = bloops.get(i);
@@ -2270,12 +2363,15 @@ class World {
         food.add(b.location);
       }
       //[end]
+
       //[full] Here is where each living bloop has
       // a chance to reproduce.  As long as a
       // child is made (i.e. not null) it is
       // added to the population.
       Bloop child = b.reproduce();
       if (child != null) bloops.add(child);
+
+
       //[end]
     }
   }

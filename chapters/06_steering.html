@@ -52,10 +52,12 @@
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
+
   PVector location;
   PVector velocity;
   PVector acceleration;
-[inline]// What else do we need to add?</pre>
+
+  [inline]// What else do we need to add?</pre>
 
 <p><a data-primary="Steering Behaviors for Autonomous Characters (Reynolds)" data-type="indexterm">&nbsp;</a></p>
 
@@ -97,7 +99,7 @@ class Vehicle {
 
 <p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can&rsquo;t get anywhere without first understanding the concept of a steering force. Consider the following scenario. A vehicle moving with velocity desires to seek a target.</p>
 
-<figure id="chapter06_figure1"><img alt="Figure 6.1" src="../images/chapter06/ch06_01.png" />
+<figure class="half-width-right" id="chapter06_figure1"><img alt="Figure 6.1" src="../images/chapter06/ch06_01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -135,7 +137,7 @@ class Vehicle {
   PVector velocity;
   PVector acceleration;
   // Maximum speed
-float maxspeed;</pre>
+  float maxspeed;</pre>
 
 <p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
 
@@ -157,12 +159,13 @@ desired.mult(maxspeed);</pre>
     // Calculating the desired velocity
     // to target at max speed
     desired.mult(maxspeed);
+
     // Reynolds&rsquo;s formula for steering force
     PVector steer = PVector.sub(desired,velocity);
     // Using our physics model and applying the force
     // to the object&rsquo;s acceleration
     applyForce(steer);
-}</pre>
+  }</pre>
 
 <p>Note how in the above function we finish by passing the steering force into <strong function="">applyForce()</strong>. This assumes that we are basing this example on the foundation we built in <a href="#chapter02_section2">Chapter 2</a>. However, you could just as easily use the steering force with Box2D&rsquo;s <strong function="">applyForce()</strong> function or toxiclibs&rsquo; <strong function="">addForce()</strong> function.</p>
 
@@ -186,7 +189,7 @@ class Vehicle {
   // Maximum speed
   float maxspeed;
   // Now we also have maximum force.
-float maxforce;</pre>
+  float maxforce;</pre>
 
 <p>followed by:</p>
 
@@ -196,10 +199,12 @@ float maxforce;</pre>
     desired.normalize();
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired,velocity);
+
     // Limit the magnitude of the steering force.
     steer.limit(maxforce);
+
     applyForce(steer);
-}</pre>
+  }</pre>
 
 <p>Limiting the steering force brings up an important point. We must always remember that it&rsquo;s not actually our goal to get the vehicle to the target as fast as possible. If that were the case, we would just say &ldquo;location equals target&rdquo; and there the vehicle would be. Our goal, as Reynolds puts it, is to move the vehicle in a &ldquo;lifelike and improvisational manner.&rdquo; We&rsquo;re trying to make it appear as if the vehicle is steering its way to the target, and so it&rsquo;s up to us to play with the forces and variables of the system to simulate a given behavior. For example, a large maximum steering force would result in a very different path than a small one. One is not inherently better or worse than the other; it depends on your desired effect. (And of course, these values need not be fixed and could change based on other conditions. Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
 
@@ -209,7 +214,7 @@ float maxforce;</pre>
 
 <p>Here is the full <strong klass="">Vehicle</strong> class, incorporating the rest of the elements from the Chapter 2 <strong klass="">Mover</strong> object.</p>
 
-<figure><img alt="ch06 ex1" src="../images/chapter06/ch06_ex1.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_01_Seek/_6_01_Seek.pde processingjs/chapter06/_6_01_Seek/Vehicle.pde"><img alt="ch06 ex1" src="../images/chapter06/ch06_ex1.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -217,6 +222,7 @@ float maxforce;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
+
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -224,6 +230,7 @@ class Vehicle {
   float r;
   float maxforce;
   float maxspeed;
+
   Vehicle(float x, float y) {
     acceleration = new PVector(0,0);
     velocity = new PVector(0,0);
@@ -235,6 +242,7 @@ class Vehicle {
     maxforce = 0.1;
     //[end]
   }
+
   // Our standard &ldquo;Euler integration&rdquo; motion model
   void update() {
     velocity.add(acceleration);
@@ -242,10 +250,12 @@ class Vehicle {
     location.add(velocity);
     acceleration.mult(0);
   }
+
   // Newton&rsquo;s second law; we could divide by mass if we wanted.
   void applyForce(PVector force) {
     acceleration.add(force);
   }
+
   // Our seek steering force algorithm
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);
@@ -255,6 +265,7 @@ class Vehicle {
     steer.limit(maxforce);
     applyForce(steer);
   }
+
   void display() {
     // Vehicle is a triangle pointing in
     // the direction of velocity; since it is drawn
@@ -271,7 +282,7 @@ class Vehicle {
     vertex(r, r*2);
     endShape(CLOSE);
     popMatrix();
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter06_exercise1">
 <h5>Exercise 6.1</h5>
@@ -330,7 +341,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 <pre data-code-language="java" data-type="programlisting">
    PVector desired = PVector.sub(target,location);
    desired.normalize();
-desired.mult(maxspeed);</pre>
+   desired.mult(maxspeed);</pre>
 
 <p>In Example 6.1, the magnitude of the desired vector is always &ldquo;maximum&rdquo; speed.</p>
 
@@ -346,13 +357,13 @@ desired.mult(maxspeed);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
    PVector desired = PVector.sub(target,location);
-desired.div(2);</pre>
+   desired.div(2);</pre>
 
 <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it&rsquo;s not particularly reasonable. After all, 10 pixels away is rather close and a desired speed of 5 is rather large. Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector desired = PVector.sub(target,location);
-desired.mult(0.05);</pre>
+  desired.mult(0.05);</pre>
 
 <p>Reynolds describes a more sophisticated approach. Let&rsquo;s imagine a circle around the target with a given radius. If the vehicle is within that circle, it slows down&mdash;at the edge of the circle, its desired speed is maximum speed, and at the target itself, its desired speed is 0.</p>
 
@@ -362,7 +373,7 @@ desired.mult(0.05);</pre>
 
 <p>In other words, if the distance from the target is less than r, the desired speed is between 0 and maximum speed mapped according to that distance.</p>
 
-<figure><img alt="ch06 ex2" src="../images/chapter06/ch06_ex2.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_02_Arrive/_6_02_Arrive.pde processingjs/chapter06/_6_02_Arrive/Vehicle.pde"><img alt="ch06 ex2" src="../images/chapter06/ch06_ex2.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -371,6 +382,7 @@ desired.mult(0.05);</pre>
 <pre data-code-language="java" data-type="programlisting">
   void arrive(PVector target) {
     PVector desired = PVector.sub(target,location);
+
     // The distance is the magnitude of
     // the vector pointing from
     // location to target.
@@ -387,11 +399,12 @@ desired.mult(0.05);</pre>
       // Otherwise, proceed at maximum speed.
       desired.mult(maxspeed);
     }
+
     // The usual steering = desired - velocity
     PVector steer = PVector.sub(desired,velocity);
     steer.limit(maxforce);
     applyForce(steer);
-}</pre>
+  }</pre>
 
 <p>The arrive behavior is a great demonstration of the magic of &ldquo;desired minus velocity.&rdquo; Let&rsquo;s examine this model again relative to how we calculated forces in earlier chapters. In the &ldquo;gravitational attraction&rdquo; examples, the force always pointed directly from the object to the target (the exact direction of the desired velocity), whether the force was strong or weak.</p>
 
@@ -419,7 +432,7 @@ desired.mult(0.05);</pre>
 
 <blockquote>&ldquo;Wandering is a type of random steering which has some long term order: the steering direction on one frame is related to the steering direction on the next frame. This produces more interesting motion than, for example, simply generating a random steering direction each frame.&rdquo; <span class="attribution"> <a href="http://www.red3d.com/cwr/steer/Wander.html">&mdash;Craig Reynolds</a> </span></blockquote>
 
-<figure id="chapter06_figure12"><img alt="Figure 6.12" src="../images/chapter06/ch06_12.png" />
+<figure class="half-width-right" id="chapter06_figure12"><img alt="Figure 6.12" src="../images/chapter06/ch06_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -438,7 +451,7 @@ desired.mult(0.05);</pre>
 
 <p>Write the code for Reynolds&rsquo;s wandering behavior. Use polar coordinates to calculate the vehicle&rsquo;s target along a circular path.</p>
 
-<figure><img alt="ch06 exc4" src="../images/chapter06/ch06_exc4.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_04_Wander/Ex_6_04_Wander.pde processingjs/chapter06/Ex_6_04_Wander/Vehicle.pde"><img alt="ch06 exc4" src="../images/chapter06/ch06_exc4.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -453,7 +466,7 @@ desired.mult(0.05);</pre>
 
 <p>If we define the walls of the space as the edges of a Processing window and the distance <strong class="var">d</strong> as 25, the code is rather simple.</p>
 
-<figure><img alt="ch06 ex3" src="../images/chapter06/ch06_ex3.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_03_StayWithinWalls/_6_03_StayWithinWalls.pde processingjs/chapter06/_6_03_StayWithinWalls/Vehicle.pde"><img alt="ch06 ex3" src="../images/chapter06/ch06_ex3.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -496,13 +509,14 @@ if (location. x &gt; 25) {
 
 <pre data-code-language="java" data-type="programlisting">
 class FlowField {
+
   // Declaring a 2D array of PVectors
   PVector[][] field;
   // How many columns and how many rows in the grid?
   int cols, rows;
   // Resolution of grid relative to window
   // width and height in pixels
-int resolution;</pre>
+  int resolution;</pre>
 
 <p><a data-primary="flow field following" data-secondary="resolution and" data-type="indexterm">&nbsp;</a> <a data-primary="resolution" data-secondary="flow field following and" data-type="indexterm">&nbsp;</a></p>
 
@@ -516,7 +530,7 @@ int resolution;</pre>
     // Total rows equals height divided by resolution.
     rows = height/resolution;
     field = new PVector[cols][rows];
-}</pre>
+  }</pre>
 
 <p><a data-primary="vectors" data-secondary="flow fields" data-tertiary="computing for" data-type="indexterm">&nbsp;</a></p>
 
@@ -546,6 +560,7 @@ for (int i = 0; i &lt; cols; i++) {
 <pre data-code-language="java" data-type="programlisting">
 for (int i = 0; i &lt; cols; i++) {
   for (int j = 0; j &lt; rows; j++) {
+
     // A random PVector
     field[i][j] = PVector.2D();
   }
@@ -603,22 +618,25 @@ int row = int(location.y/resolution);</pre>
   PVector lookup(PVector lookup) {
     //[full]
     // Using constrain()
+
     int column = int(constrain(lookup.x/resolution,0,cols-1));
     int row = int(constrain(lookup.y/resolution,0,rows-1));
     //[end]
     // Note the use of get() to ensure
     // we return a copy of the PVector.
     return field[column][row].get();
-}</pre>
+  }</pre>
 
 <p>Before we move on to the <strong klass="">Vehicle</strong> class, let&rsquo;s take a look at the <strong klass="">FlowField</strong> class all together.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class FlowField {
+
   // A flow field is a two-dimensional array of PVectors.
   PVector[][] field;
   int cols, rows;
   int resolution;
+
   FlowField(int r) {
     resolution = r;
     //[full] Determine the number of columns and rows.
@@ -628,6 +646,7 @@ class FlowField {
     field = new PVector[cols][rows];
     init();
   }
+
   void init() {
     float xoff = 0;
     for (int i = 0; i &lt; cols; i++) {
@@ -642,8 +661,10 @@ class FlowField {
       xoff += 0.1;
     }
   }
+
   //[full] A function to return a PVector based on a location
   PVector lookup(PVector lookup) {
+
     int column = int(constrain(lookup.x/resolution,0,cols-1));
     int row = int(constrain(lookup.y/resolution,0,rows-1));
     return field[column][row].get();
@@ -653,7 +674,7 @@ class FlowField {
 
 <p>So let&rsquo;s assume we have a <strong klass="">FlowField</strong> object called &ldquo;flow&rdquo;. Using the <strong function="">lookup()</strong> function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds&rsquo;s rules (steering = desired - velocity) to calculate a steering force.</p>
 
-<figure><img alt="ch06 ex4" src="../images/chapter06/ch06_ex4.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_04_Flowfield/_6_04_Flowfield.pde processingjs/chapter06/_6_04_Flowfield/Flowfield.pde processingjs/chapter06/_6_04_Flowfield/Vehicle.pde"><img alt="ch06 ex4" src="../images/chapter06/ch06_ex4.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -661,15 +682,17 @@ class FlowField {
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
+
   void follow(FlowField flow) {
     // What is the vector at that spot in the flow field?
     PVector desired = flow.lookup(location);
     desired.mult(maxspeed);
+
     // Steering is desired minus velocity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);
     applyForce(steer);
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter06_exercise7">
 <h5>Exercise 6.7</h5>
@@ -722,6 +745,7 @@ class Vehicle {
 <pre data-code-language="java" data-type="programlisting">
 PVector a = new PVector(-3,5);
 PVector b = new PVector(10,1);
+
 // The PVector class includes a
 // function to calculate the dot product.
 float n = a.dot(b);</pre>
@@ -752,7 +776,7 @@ public float dot(PVector v) {
 
 <p>{dotform} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
 
-<figure id="chapter06_figure19"><img alt="Figure 6.19" src="../images/chapter06/ch06_19.png" />
+<figure class="half-width-right" id="chapter06_figure19"><img alt="Figure 6.19" src="../images/chapter06/ch06_19.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -794,12 +818,12 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
     float dot = v1.dot(v2);
     float theta = (float) Math.acos(dot / (v1.mag() * v2.mag()));
     return theta;
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter06_exercise9">
 <h5>Exercise 6.9</h5>
 
-<figure><img alt="ch06 exc9" src="../images/chapter06/ch06_exc9.png" />
+<figure class="half-width-right"><img alt="ch06 exc9" src="../images/chapter06/ch06_exc9.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -853,24 +877,28 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <p>Putting this into a class, we have:</p>
 
-<figure><img alt="ch06 ex5 a" src="../images/chapter06/ch06_ex5_a.png" />
+<figure class="screenshot"><img alt="ch06 ex5 a" src="../images/chapter06/ch06_ex5_a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
 class Path {
+
   //[full] A path is only two points, start and end.
   PVector start;
   PVector end;
   //[end]
+
   // A path has a radius, i.e. how wide it is.
   float radius;
+
   Path() {
     // Picking some arbitrary values to initialize the path
     radius = 20;
     start = new PVector(0,height/3);
     end = new PVector(width,2*height/3);
   }
+
   void display() {  // Display the path.
     strokeWeight(radius*2);
     stroke(0,100);
@@ -892,11 +920,13 @@ class Path {
 <pre data-code-language="java" data-type="programlisting">
 // Start by making a copy of the velocity.
 PVector predict = vel.get();
+
 //[full] Normalize it and look 25 pixels
 // ahead by scaling the vector up.
 predict.normalize();
 predict.mult(25);
 //[end]
+
 // Add vector to location to find the
 // predicted location.
 PVector predictLoc = PVector.add(loc, predict);</pre>
@@ -978,9 +1008,11 @@ b.normalize();</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 float theta = PVector.angleBetween(a,b); //[line-through]
+
 b.normalize();
 // We can use the dot product to scale b&rsquo;s length.
 b.mult(a.dot(b));
+
 PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p><a data-primary="scalar projection" data-type="indexterm">&nbsp;</a></p>
@@ -1001,6 +1033,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 float distance = PVector.dist(predictLoc, normalPoint);
+
 // If the vehicle is outside the path,
 // seek the target.
 if (distance &gt; path.radius) {
@@ -1039,12 +1072,13 @@ if (distance &gt; path.radius) {
   // By adding b to normalPoint, we now move
   // 25 pixels ahead on the path.
   PVector target = PVector.add(normalPoint,b);
+
   seek(target);
 }</pre>
 
 <p>Putting it all together, we have the following steering function in our <strong klass="">Vehicle</strong> class.</p>
 
-<figure><img alt="ch06 ex5" src="../images/chapter06/ch06_ex5.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_05_PathFollowingSimple/_6_05_PathFollowingSimple.pde processingjs/chapter06/_6_05_PathFollowingSimple/Path.pde processingjs/chapter06/_6_05_PathFollowingSimple/Vehicle.pde"><img alt="ch06 ex5" src="../images/chapter06/ch06_ex5.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1052,23 +1086,27 @@ if (distance &gt; path.radius) {
 
 <pre data-code-language="java" data-type="programlisting">
   void follow(Path p) {
+
     //[full] Step 1: Predict the vehicle&rsquo;s future location.
     PVector predict = vel.get();
     predict.normalize();
     predict.mult(25);
     PVector predictLoc = PVector.add(loc, predict);
     //[end]
+
     //[full] Step 2: Find the normal point along the path.
     PVector a = p.start;
     PVector b = p.end;
     PVector normalPoint = getNormalPoint(predictLoc, a, b);
     //[end]
+
     //[full] Step 3: Move a little further along the path and set a target.
     PVector dir = PVector.sub(b, a);
     dir.normalize();
     dir.mult(10);
     PVector target = PVector.add(normalPoint, dir);
     //[end]
+
     //[full] Step 4: If we are off the path,
     // seek that target in order to stay on the path.
     float distance =
@@ -1076,7 +1114,7 @@ if (distance &gt; path.radius) {
     if (distance &gt; p.radius) {
       seek(target);
     }//[end]
-}</pre>
+  }</pre>
 
 <p>Now, you may notice above that instead of using all that dot product/scalar projection code to find the normal point, we instead call a function: <strong function="">getNormalPoint()</strong>. In cases like this, it&rsquo;s useful to break out the code that performs a specific task (finding a normal point) into a function that it can be used generically in any case where it is required. The function takes three <strong klass="">PVector</strong><code>s</code>: the first defines a point in Cartesian space and the second and third arguments define a line segment.</p>
 
@@ -1090,14 +1128,16 @@ if (distance &gt; path.radius) {
     PVector ap = PVector.sub(p, a);
     // PVector that points from a to b
     PVector ab = PVector.sub(b, a);
+
     //[full] Using the dot product for scalar projection
     ab.normalize();
     ab.mult(ap.dot(ab));
     //[end]
     // Finding the normal point along the line segment
     PVector normalPoint = PVector.add(a, ab);
+
     return normalPoint;
-}</pre>
+  }</pre>
 
 <p>What do we have so far? We have a <strong klass="">Path</strong> class that defines a path as a line between two points. We have a <strong klass="">Vehicle</strong> class that defines a vehicle that can follow the path (using a steering behavior to seek a target along the path). What is missing?</p>
 
@@ -1109,13 +1149,13 @@ if (distance &gt; path.radius) {
 
 <p><a data-primary="path following" data-secondary="multiple segments" data-type="indexterm">&nbsp;</a></p>
 
-<figure id="chapter06_figure30"><img alt="Figure 6.30" src="../images/chapter06/ch06_30.png" />
+<figure class="A Curvy Path" id="chapter06_figure30"><img alt="Figure 6.30" src="../images/chapter06/ch06_30.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>We&rsquo;ve built a great example so far, yes, but it&rsquo;s pretty darn limiting. After all, what if we want our path to be something that looks more like:</p>
 
-<figure id="chapter06_figure31"><img alt="Figure 6.31" src="../images/chapter06/ch06_31.png" />
+<figure class="Path defined as line segments" id="chapter06_figure31"><img alt="Figure 6.31" src="../images/chapter06/ch06_31.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1137,25 +1177,29 @@ if (distance &gt; path.radius) {
 
 <p>In order to write the code for this, we&rsquo;ll have to expand our <strong klass="">Path</strong> class to have an <strong klass="">ArrayList</strong> of points (rather than just two, a start and an end).</p>
 
-<figure><img alt="ch06 ex6 a" src="../images/chapter06/ch06_ex6_a.png" />
+<figure class="screenshot"><img alt="ch06 ex6 a" src="../images/chapter06/ch06_ex6_a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
  class Path {
+
   // A Path is now an ArrayList of points (PVector objects).
   ArrayList&lt;PVector&gt; points;
   float radius;
+
   Path() {
     radius = 20;
     points = new ArrayList&lt;PVector&gt;();
   }
+
   //[full] This function allows us to add points to the path.
   void addPoint(float x, float y) {   .
     PVector point = new PVector(x,y);
     points.add(point);
   }
   //[end]
+
   //[full] Display the path as a series of points.
   void display() {
     stroke(0);
@@ -1186,13 +1230,13 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
       // Use the end point of the segment
       // as our normal point if we can&rsquo;t find one.
       normalPoint = b.get();
-}</pre>
+   }</pre>
 
 <p>As a little trick, we&rsquo;ll say that if it&rsquo;s not within the line segment, let&rsquo;s just pretend the end point of that line segment is the normal. This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>
 
 <p>Finally, we&rsquo;ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high &ldquo;world record&rdquo; distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <strong class="var">target</strong>. At the end of the loop, we&rsquo;ll have the closest normal point in that variable.</p>
 
-<figure><img alt="ch06 ex6" src="../images/chapter06/ch06_ex6.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_06_PathFollowing/_6_06_PathFollowing.pde processingjs/chapter06/_6_06_PathFollowing/Path.pde processingjs/chapter06/_6_06_PathFollowing/Vehicle.pde"><img alt="ch06 ex6" src="../images/chapter06/ch06_ex6.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1203,6 +1247,7 @@ PVector target = null;
 // Start with a very high record
 // that can easily be beaten.
 float worldRecord = 1000000;
+
 for (int i = 0; i &lt; p.points.size()-1; i++) {
   PVector a = p.points.get(i);
   PVector b = p.points.get(i+1);
@@ -1210,7 +1255,9 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
   if (normalPoint.x &lt; a.x || normalPoint.x &gt; b.x) {
     normalPoint = b.get();
   }
+
   float distance = PVector.dist(predictLoc, normalPoint);
+
   //[full] If we beat the record, then
   // this should be our target!
   if (distance &lt; worldRecord) {
@@ -1306,6 +1353,7 @@ if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
 <pre data-code-language="java" data-type="programlisting">
 // Declare an ArrayList of Vehicle objects.
 ArrayList&lt;Vehicle&gt; vehicles;
+
 void setup() {
   // Initialize and fill the ArrayList
   // with a bunch of Vehicles.
@@ -1348,6 +1396,7 @@ void draw(){
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Vehicle&gt; vehicles;
+
 void setup() {
   size(320,240);
   vehicles = new ArrayList&lt;Vehicle&gt;();
@@ -1355,8 +1404,10 @@ void setup() {
     vehicles.add(new Vehicle(random(width),random(height)));
   }
 }
+
 void draw() {
   background(255);
+
   for (Vehicle v : vehicles) {
     // This is really the only new thing we&rsquo;re doing in this section.  We&rsquo;re asking
     // a Vehicle object to examine all the other vehicles in the process of calculating a
@@ -1367,7 +1418,7 @@ void draw() {
   }
 }</pre>
 
-<figure id="chapter06_figure33"><img alt="Figure 6.33" src="../images/chapter06/ch06_33.png" />
+<figure class="half-width-right" id="chapter06_figure33"><img alt="Figure 6.33" src="../images/chapter06/ch06_33.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1375,7 +1426,7 @@ void draw() {
 
 <p>Of course, this is just the beginning. The real work happens inside the <strong function="">separate()</strong> function itself. Let&rsquo;s figure out how we want to define separation. Reynolds states: &ldquo;Steer to avoid crowding.&rdquo; In other words, if a given vehicle is too close to you, steer away from that vehicle. Sound familiar? Remember the seek behavior where a vehicle steers towards a target? Reverse that force and we have the flee behavior.</p>
 
-<figure id="chapter06_figure34"><img alt="Figure 6.34" src="../images/chapter06/ch06_34.png" />
+<figure class="half-width-right" id="chapter06_figure34"><img alt="Figure 6.34" src="../images/chapter06/ch06_34.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1385,6 +1436,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 void separate (ArrayList&lt;Vehicle&gt; vehicles) {
+
 }</pre>
 
 <p>Inside this function, we&rsquo;re going to loop through all of the vehicles and see if any are too close.</p>
@@ -1392,13 +1444,18 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 <pre data-code-language="java" data-type="programlisting">
   // This variable specifies how close is too close.
   float desiredseparation = 20;
+
   for (Vehicle other : vehicles) {
+
     //[offset-down] What is the distance between me and another Vehicle?
     float d = PVector.dist(location, other.location);
+
+
     if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
       // Any code here will be executed if the Vehicle is within 20 pixels.
+
     }
-}</pre>
+  }</pre>
 
 <p>Notice how in the above code, we are not only checking if the distance is less than a desired separation (i.e. too close!), but also if the distance is greater than zero. This is a little trick that makes sure we don&rsquo;t ask a vehicle to separate from itself. Remember, all the vehicles are in the <strong klass="">ArrayList</strong>, so if you aren&rsquo;t careful you&rsquo;ll be comparing each vehicle to itself!</p>
 
@@ -1409,7 +1466,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
       //[offset-down] A PVector pointing away from the other&rsquo;s location
       PVector diff = PVector.sub(location, other.location);
       diff.normalize();
-}</pre>
+    }</pre>
 
 <p>This is not enough. We have that vector now, but we need to make sure we calculate the average of all vectors pointing away from close vehicles. How do we compute average? We add up all the vectors and divide by the total.</p>
 
@@ -1419,6 +1476,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
   int count = 0;  //[bold]
   // We have to keep track of how many Vehicles are too close.
   for (Vehicle other : vehicles) {
+
     float d = PVector.dist(location, other.location);
     if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
       PVector diff = PVector.sub(location, other.location); //[bold]
@@ -1428,33 +1486,37 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
       count++;
     }
   }
+
   // We have to make sure we found at least one close
   // vehicle.  We don&rsquo;t want to bother doing anything
   // if nothing is too close (not to mention we can&rsquo;t
   // divide by zero!)
   if (count &gt; 0) { //[bold]
     sum.div(count); //[bold]
-} //[bold]</pre>
+  } //[bold]</pre>
 
 <p>Once we have the average vector (stored in the <strong klass="">PVector</strong> object &ldquo;sum&rdquo;), that <strong klass="">PVector</strong> can be scaled to maximum speed and become our desired velocity&mdash;we <em>desire</em> to move in that direction at maximum speed! And once we have the desired velocity, it&rsquo;s the same old Reynolds story: steering equals desired minus velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   if (count &gt; 0) {
     sum.div(count);
+
     // Scale average to maxspeed
     // (this becomes desired).
     sum.setMag(maxspeed);
+
     // Reynolds&rsquo;s steering formula
     PVector steer = PVector.sub(sum,vel);
     steer.limit(maxforce);
+
     // Apply the force to the Vehicle&rsquo;s
     // acceleration.
     applyForce(steer);
-}</pre>
+  }</pre>
 
 <p>Let&rsquo;s see the function in its entirety. There are two additional improvements, noted in the code comments.</p>
 
-<figure><img alt="ch06 ex7" src="../images/chapter06/ch06_ex7.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_07_Separation/_6_07_Separation.pde processingjs/chapter06/_6_07_Separation/Vehicle.pde"><img alt="ch06 ex7" src="../images/chapter06/ch06_ex7.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1480,6 +1542,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
         diff.div(d);  //[bold]
         sum.add(diff);
         count++;
+
       }
     }
     if (count &gt; 0) {
@@ -1490,7 +1553,8 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
       steer.limit(maxforce);
       applyForce(steer);
     }
-}</pre>
+
+  }</pre>
 
 <div data-type="example" id="chapter06_exercise12">
 <h5>Exercise 6.12</h5>
@@ -1505,7 +1569,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Add the separation force to path following to create a simulation of Reynolds&rsquo;s &ldquo;Crowd Path Following.&rdquo;</p>
 
-<figure><img alt="ch06 exc13" src="../images/chapter06/ch06_exc13.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Ex_6_13_CrowdPathFollowing.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Path.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Vehicle.pde"><img alt="ch06 exc13" src="../images/chapter06/ch06_exc13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1524,7 +1588,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
   PVector wind = new PVector(0.001,0);
   PVector gravity = new PVector(0,0.1);
   mover.applyForce(wind);
-mover.applyForce(gravity);</pre>
+  mover.applyForce(gravity);</pre>
 
 <p>Here we have a mover that responds to two forces. This all works nicely because of the way we designed the <strong klass="">Mover</strong> class to accumulate the force vectors into its acceleration vector. In this chapter, however, our forces stem from internal desires of the movers (now called vehicles). And those desires can be weighted. Let&rsquo;s consider a sketch where all vehicles have two desires:</p>
 
@@ -1555,7 +1619,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     applyForce(separate);
     applyForce(seek);
     //[end]
-}</pre>
+  }</pre>
 
 <p>Let&rsquo;s look at how the seek function changed.</p>
 
@@ -1566,15 +1630,16 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired,vel);
     steer.limit(maxforce);
+
     //[full] Instead of applying the force we return the PVector.
     applyForce(steer); //[line-through]
     return steer;
     //[end]
-}</pre>
+  }</pre>
 
 <p>This is a subtle change, but incredibly important for us: it allows us to alter the strength of these forces in one place.</p>
 
-<figure><img alt="ch06 ex8" src="../images/chapter06/ch06_ex8.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_08_SeparationAndSeek/_6_08_SeparationAndSeek.pde processingjs/chapter06/_6_08_SeparationAndSeek/Vehicle.pde"><img alt="ch06 ex8" src="../images/chapter06/ch06_ex8.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1584,11 +1649,14 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
   PVector separate = separate(vehicles);
   PVector seek = seek(new PVector(mouseX,mouseY));
+
   //[full] These values can be whatever you want them to be!
   // They can be variables that are customized for
   // each vehicle, or they can change over time.
   separate.mult(1.5); //[bold]
   seek.mult(0.5); //[bold]
+
+
   //[end]
   applyForce(separate);
   applyForce(seek);
@@ -1656,18 +1724,20 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     PVector ali = align(boids);
     PVector coh = cohesion(boids);
     //[end]
+
     //[full] Arbitrary weights for these forces
     // (Try different ones!)
     sep.mult(1.5);
     ali.mult(1.0);
     coh.mult(1.0);
     //[end]
+
     //[full] Applying all the forces
     applyForce(sep);
     applyForce(ali);
     applyForce(coh);
     //[end]
-}</pre>
+  }</pre>
 
 <p>Now, it&rsquo;s just a matter of implementing the three rules. We did separation before; it&rsquo;s identical to our previous example. Let&rsquo;s take a look at alignment, or steering in the same direction as your neighbors. As with all of our steering behaviors, we&rsquo;ve got to boil down this concept into a desire: the boid&rsquo;s desired velocity is the average velocity of its neighbors.</p>
 
@@ -1686,15 +1756,17 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     }
     sum.div(boids.size());
     //[end]
+
     // We desire to go in that
     // direction at maximum speed.
     sum.setMag(maxspeed);
+
     // Reynolds&rsquo;s steering
     // force formula
     PVector steer = PVector.sub(sum,velocity);
     steer.limit(maxforce);
     return steer;
-}</pre>
+  }</pre>
 
 <p><a data-primary="short range relationships" data-secondary="flocking behavior and" data-type="indexterm">&nbsp;</a></p>
 
@@ -1739,12 +1811,12 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       return new PVector(0,0);
     }
     //[end]
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter06_exercise15">
 <h5>Exercise 6.15</h5>
 
-<figure><img alt="ch06 exc15" src="../images/chapter06/ch06_exc15.png" />
+<figure class="half-width-right"><img alt="ch06 exc15" src="../images/chapter06/ch06_exc15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1782,16 +1854,18 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     } else {
       return new PVector(0,0);
     }
-}</pre>
+  }</pre>
 
 <p>It&rsquo;s also worth taking the time to write a class called <strong klass="">Flock</strong>, which will be virtually identical to the <strong klass="">ParticleSystem</strong> class we wrote in Chapter 4 with only one tiny change: When we call <strong function="">run()</strong> on each <strong klass="">Boid</strong> object (as we did to each <strong klass="">Particle</strong> object), we&rsquo;ll pass in a reference to the entire <strong klass="">ArrayList</strong> of boids.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Flock {
   ArrayList&lt;Boid&gt; boids;
+
   Flock() {
     boids = new ArrayList&lt;Boid&gt;();
   }
+
   void run() {
     for (Boid b : boids) {
       // Each Boid object must know about
@@ -1799,6 +1873,7 @@ class Flock {
       b.run(boids); //[bold]
     }
   }
+
   void addBoid(Boid b) {
     boids.add(b);
   }
@@ -1806,7 +1881,7 @@ class Flock {
 
 <p>And our main program will look like:</p>
 
-<figure><img alt="ch06 ex9" src="../images/chapter06/ch06_ex9.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_09_Flocking/_6_09_Flocking.pde processingjs/chapter06/_6_09_Flocking/Flock.pde processingjs/chapter06/_6_09_Flocking/Boid.pde"><img alt="ch06 ex9" src="../images/chapter06/ch06_ex9.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1825,6 +1900,7 @@ void setup() {
     flock.addBoid(b);
   }
 }
+
 void draw() {
   background(255);
   flock.run();
@@ -1839,7 +1915,7 @@ void draw() {
 <div data-type="example" id="chapter06_exercise17">
 <h5>Exercise 6.17</h5>
 
-<figure><img alt="ch06 exc17" src="../images/chapter06/ch06_exc17.png" />
+<figure class="half-width-right"><img alt="ch06 exc17" src="../images/chapter06/ch06_exc17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2049,6 +2125,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 PVector mouse = new PVector();
+
 void draw() {
   mouse.x = mouseX;
   mouse.y = mouseY;
@@ -2065,10 +2142,11 @@ void draw() {
     PVector desired = PVector.sub(target,location);
     desired.normalize();
     desired.mult(maxspeed);
+
     // Create a new PVector to store the steering force.
     PVector steer = PVector.sub(desired,velocity); //[bold]
     steer.limit(maxforce);
-return steer;</pre>
+    return steer;</pre>
 
 <p>See how we&rsquo;ve made two <strong klass="">PVector</strong> objects? First, we figure out the desired vector, then we calculate the steering force. Notice how we could rewrite this to create only one <strong klass="">PVector</strong>.</p>
 
@@ -2076,10 +2154,11 @@ return steer;</pre>
     PVector desired = PVector.sub(target, location);
     desired.normalize();
     desired.mult(maxspeed);
+
     // Calculate the steering force in the desired PVector.
     desired.sub(velocity); //[bold]
     desired.limit(maxforce);
-return desired;</pre>
+    return desired;</pre>
 
 <p>We don&rsquo;t actually need a second <strong klass="">PVector</strong> called <strong class="var">steer</strong>. We could just use the desired <strong klass="">PVector</strong> object and turn it into the steering force by subtracting velocity. I didn&rsquo;t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
 

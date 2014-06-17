@@ -34,7 +34,7 @@
 
 <p>Before we dive into more of the details about vectors, let&rsquo;s look at a basic Processing example that demonstrates why we should care about vectors in the first place. If you&rsquo;ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you&rsquo;ve done one of these things to help prepare you for this book), you probably, at one point or another, learned how to write a simple bouncing ball sketch.</p>
 
-<figure><img alt="If you are reading this book as a PDF or in print, then you will only see screenshots of the code.  Motion, of course, is a key element of our discussion, so to the extent possible, the static screenshots will include trails to give a sense of the behavior. For more about how to draw trails, see the code examples available for download." src="../images/chapter01/ch01_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_1_bouncingball_novectors/_1_1_bouncingball_novectors.pde"><img alt="If you are reading this book as a PDF or in print, then you will only see screenshots of the code.  Motion, of course, is a key element of our discussion, so to the extent possible, the static screenshots will include trails to give a sense of the behavior. For more about how to draw trails, see the code examples available for download." src="../images/chapter01/ch01_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -47,18 +47,22 @@ float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;
 //[end]
+
 //[full] Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
 void setup() {
   size(640,360);
   background(255);
 }
 //[end]
+
 void draw() {
   background(255);
+
   //[full] Move the ball according to its speed.
   x = x + xspeed;
   y = y + yspeed;
   //[end]
+
   //[full] Check for bouncing.
   if ((x &gt; width) || (x &lt; 0)) {
     xspeed = xspeed * -1;
@@ -67,6 +71,7 @@ void draw() {
     yspeed = yspeed * -1;
   }
   //[end]
+
   stroke(0);
   fill(175);
   // Display the ball at the location (x,y).
@@ -203,12 +208,15 @@ Vector speed;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class PVector {
+
   float x;
   float y;
+
   PVector(float x_, float y_) {
     x = x_;
     y = y_;
   }
+
 }</pre>
 
 <p>At its core, a <strong klass="">PVector</strong> is just a convenient way to store two values (or three, as we&rsquo;ll see in 3D examples).</p>
@@ -308,12 +316,15 @@ location = location + velocity;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class PVector {
+
   float x;
   float y;
+
   PVector(float x_, float y_) {
     x = x_;
     y = y_;
   }
+
   //[full] New! A function to add another PVector to this PVector.  Simply add the &lt;em&gt;x&lt;/em&gt; components and the &lt;em&gt;y&lt;/em&gt; components together.
   void add(PVector v) { //[bold]
     y = y + v.y; //[bold]
@@ -342,13 +353,16 @@ location.add(velocity);</pre>
 PVector location; //[bold]
 PVector velocity; //[bold]
 //[end]
+
 void setup() {
   size(640,360);
   location = new PVector(100,100); //[bold]
   velocity = new PVector(2.5,5); //[bold]
 }
+
 void draw() {
   background(255);
+
   location.add(velocity); //[bold]
   //[full] We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
   if ((location.x &gt; width) || (location.x &lt; 0)) { //[bold]
@@ -358,6 +372,7 @@ void draw() {
     velocity.y = velocity.y * -1; //[bold]
   } //[bold]
   //[end]
+
   stroke(0);
   fill(175);
   ellipse(location.x,location.y,16,16); //[bold]
@@ -486,11 +501,11 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
   void sub(PVector v) {
     x = x - v.x;
     y = y - v.y;
-}</pre>
+  }</pre>
 
 <p>The following example demonstrates vector subtraction by taking the difference between two points&mdash;the mouse location and the center of the window.</p>
 
-<figure><img alt="ch01 ex03" src="../images/chapter01/ch01_ex03.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_3_vector_subtraction/_1_3_vector_subtraction.pde"><img alt="ch01 ex03" src="../images/chapter01/ch01_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -500,6 +515,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
   //[full] Two PVectors, one for the mouse location and one for the center of the window
@@ -539,7 +555,7 @@ void draw() {
 
 <p>To scale a vector, we multiply each component (<strong class="var">x</strong> and <strong class="var">y</strong>) by a scalar.</p>
 
-<figure id="chapter01_figure8"><img alt="Figure 1.8: Scaling a vector" src="../images/chapter01/ch01_08.png" />
+<figure class="half-width-right" id="chapter01_figure8"><img alt="Figure 1.8: Scaling a vector" src="../images/chapter01/ch01_08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -569,7 +585,7 @@ void mult(float n) {
    x = x * n;
    y = y * n;
    //[end]
-}</pre>
+ }</pre>
 
 <p>And implementing multiplication in code is as simple as:</p>
 
@@ -580,7 +596,7 @@ PVector u = new PVector(-3,7);
 // This PVector is now three times the size and is equal to (-9,21).
 u.mult(3);</pre>
 
-<figure><img alt="ch01 ex04" src="../images/chapter01/ch01_ex04.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_4_vector_multiplication/_1_4_vector_multiplication.pde"><img alt="ch01 ex04" src="../images/chapter01/ch01_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -590,18 +606,23 @@ u.mult(3);</pre>
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
+
   PVector mouse = new PVector(mouseX,mouseY);
   PVector center = new PVector(width/2,height/2);
   mouse.sub(center);
+
   // Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
   mouse.mult(0.5);
+
   translate(width/2,height/2);
   line(0,0,mouse.x,mouse.y);
+
 }</pre>
 
-<figure id="chapter01_figure9"><img alt="Figure 1.9" src="../images/chapter01/ch01_09.png" />
+<figure class="half-width-right" id="chapter01_figure9"><img alt="Figure 1.9" src="../images/chapter01/ch01_09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -614,6 +635,7 @@ void div(float n) {
   x = x / n;
   y = y / n;
 }
+
 PVector u = new PVector(8,-4);
 // Dividing a vector!  The vector is now half its original size (divided by 2).
 u.div(2);</pre>
@@ -647,7 +669,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 
 <p>Notice in the above diagram how the vector, drawn as an arrow and two components (<strong class="var">x</strong> and <strong class="var">y</strong>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We&rsquo;re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
 
-<figure id="chapter01_figure11"><img alt="Figure 1.11: The Pythagorean Theorem" src="../images/chapter01/ch01_11.png" />
+<figure class="half-width-right" id="chapter01_figure11"><img alt="Figure 1.11: The Pythagorean Theorem" src="../images/chapter01/ch01_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -664,7 +686,7 @@ float mag() {
   return sqrt(x*x + y*y);
 }</pre>
 
-<figure><img alt="ch01 ex05" src="../images/chapter01/ch01_ex05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_5_vector_magnitude/_1_5_vector_magnitude.pde"><img alt="ch01 ex05" src="../images/chapter01/ch01_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -676,18 +698,24 @@ float mag() {
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
+
   PVector mouse = new PVector(mouseX,mouseY);
   PVector center = new PVector(width/2,height/2);
   mouse.sub(center);
+
   //[full] The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
   float m = mouse.mag();
   fill(0);
   rect(0,0,m,10);
+
   //[end]
+
   translate(width/2,height/2);
   line(0,0,mouse.x,mouse.y);
+
 }</pre>
 </section>
 
@@ -698,7 +726,7 @@ void draw() {
 
 <p>Calculating the magnitude of a vector is only the beginning. The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>. Normalizing refers to the process of making something &ldquo;standard&rdquo; or, well, &ldquo;normal.&rdquo; In the case of vectors, let&rsquo;s assume for the moment that a standard vector has a length of 1. To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to 1, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
 
-<figure id="chapter01_figure12"><img alt="Figure 1.12" src="../images/chapter01/ch01_12.png" />
+<figure class="half-width-right" id="chapter01_figure12"><img alt="Figure 1.12" src="../images/chapter01/ch01_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -712,7 +740,7 @@ void draw() {
 
 <p><a data-primary="normalize() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="normalize() function" data-type="indexterm">&nbsp;</a></p>
 
-<figure id="chapter01_figure13"><img alt="Figure 1.13" src="../images/chapter01/ch01_13.png" />
+<figure class="half-width-right" id="chapter01_figure13"><img alt="Figure 1.13" src="../images/chapter01/ch01_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -734,7 +762,7 @@ void normalize() {
  }
 }</pre>
 
-<figure><img alt="ch01 ex06" src="../images/chapter01/ch01_ex06.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_6_vector_normalize/_1_6_vector_normalize.pde"><img alt="ch01 ex06" src="../images/chapter01/ch01_ex06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -743,14 +771,17 @@ void normalize() {
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
   background(255);
+
   PVector mouse = new PVector(mouseX,mouseY);
   PVector center = new PVector(width/2,height/2);
   mouse.sub(center);
+
   // In this example, after the vector is normalized, it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
   mouse.normalize();
   mouse.mult(50);
   translate(width/2,height/2);
   line(0,0,mouse.x,mouse.y);
+
 }</pre>
 </section>
 
@@ -801,8 +832,9 @@ ellipse(location.x,location.y,16,16);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
+
   PVector location;
-PVector velocity;</pre>
+  PVector velocity;</pre>
 
 <p>Its functionality is just about as simple. The <strong klass="">Mover</strong> needs to move and it needs to be seen. We&rsquo;ll implement these needs as functions named <strong function="">update()</strong> and <strong function="">display()</strong>. We&rsquo;ll put all of our motion logic code in <strong function="">update()</strong> and draw the object in <strong function="">display()</strong>.</p>
 
@@ -811,12 +843,14 @@ PVector velocity;</pre>
     // The Mover moves.
     location.add(velocity);
   }
+
   void display() {
     stroke(0);
     fill(175);
     // The Mover is displayed.
     ellipse(location.x,location.y,16,16);
   }
+
 }</pre>
 
 <p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
@@ -832,7 +866,7 @@ PVector velocity;</pre>
   Mover() {
     location = new PVector(random(width),random(height));
     velocity = new PVector(random(-2,2),random(-2,2));
-}</pre>
+  }</pre>
 
 <p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing. After all, we spent the beginning of this chapter discussing the <strong klass="">PVector</strong> class. The <strong klass="">PVector</strong> class is the template for making the <strong klass="">location</strong> object and the <strong klass="">velocity</strong> object. So what are they doing inside of yet another object, the <strong klass="">Mover</strong> object? In fact, this is just about the most normal thing ever. An object is simply something that holds data (and functionality). That data can be numbers (integers, floats, etc.) or other objects! We&rsquo;ll see this over and over again in this book. For example, in <a href="#chapter04_section1">Chapter 4</a> we&rsquo;ll write a class to describe a system of particles. That <strong klass="">ParticleSystem</strong> object will have as its data a list of <strong klass="">Particle</strong> objects&hellip;and each <strong klass="">Particle</strong> object will have as its data several <strong klass="">PVector</strong> objects!</p>
 
@@ -840,19 +874,22 @@ PVector velocity;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   void checkEdges() {
+
     //[full] When it reaches one edge, set location to the other.
     if (location.x &gt; width) {
       location.x = 0;
     } else if (location.x &lt; 0) {
       location.x = width;
     }
+
     if (location.y &gt; height) {
       location.y = 0;
     } else if (location.y &lt; 0) {
       location.y = height;
     }
     //[end]
-}</pre>
+
+  }</pre>
 
 <p>Now that the <strong klass="">Mover</strong> class is finished, we can look at what we need to do in our main program. We first declare a <strong klass="">Mover</strong> object:</p>
 
@@ -873,7 +910,7 @@ mover.display();</pre>
 
 <p>Here is the entire example for reference:</p>
 
-<figure><img alt="ch01 ex07" src="../images/chapter01/ch01_ex07.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_7_motion101/_1_7_motion101.pde processingjs/chapter01/_1_7_motion101/Mover.pde"><img alt="ch01 ex07" src="../images/chapter01/ch01_ex07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -882,43 +919,53 @@ mover.display();</pre>
 <pre data-code-language="java" data-type="programlisting">
 // Declare Mover object.
 Mover mover;
+
 void setup() {
   size(640,360);
   // Create Mover object.
   mover = new Mover();
 }
+
 void draw() {
   background(255);
+
   //[full] Call functions on Mover object.
   mover.update();
   mover.checkEdges();
   mover.display();
   //[end]
 }
+
 class Mover {
+
   //[full] Our object has two PVectors: location and velocity.
   PVector location;
   PVector velocity;
   //[end]
+
   Mover() {
     location = new PVector(random(width),random(height));
     velocity = new PVector(random(-2,2),random(-2,2));
   }
+
   void update() {
     // Motion 101: Location changes by velocity.
     location.add(velocity);
   }
+
   void display() {
     stroke(0);
     fill(175);
     ellipse(location.x,location.y,16,16);
   }
+
   void checkEdges() {
     if (location.x &gt; width) {
       location.x = 0;
     } else if (location.x &lt; 0) {
       location.x = width;
     }
+
     if (location.y &gt; height) {
       location.y = 0;
     } else if (location.y &lt; 0) {
@@ -966,10 +1013,11 @@ location.add(velocity);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
+
   PVector location;
   PVector velocity;
   // A new PVector for acceleration
-PVector acceleration;  //[bold]</pre>
+  PVector acceleration;  //[bold]</pre>
 
 <p>And incorporate acceleration into the <strong function="">update()</strong> function:</p>
 
@@ -979,7 +1027,7 @@ PVector acceleration;  //[bold]</pre>
     velocity.add(acceleration); //[bold]
     location.add(velocity);
     //[end]
-}</pre>
+ }</pre>
 
 <p>We&rsquo;re almost done. The only missing piece is initialization in the constructor.</p>
 
@@ -1000,7 +1048,7 @@ PVector acceleration;  //[bold]</pre>
 
 <pre data-code-language="java" data-type="programlisting">
     acceleration = new PVector(-0.001,0.01);
-}</pre>
+  }</pre>
 
 <p>Maybe you&rsquo;re thinking, &ldquo;Gosh, those values seem awfully small!&rdquo; That&rsquo;s right, they are quite tiny. It&rsquo;s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch&rsquo;s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <strong klass="">PVector</strong> function <strong function="">limit()</strong>.</p>
 
@@ -1025,12 +1073,12 @@ velocity.limit(10);</pre>
       _________();
       ____(max);
     }
-}</pre>
+  }</pre>
 </div>
 
 <p>Let&rsquo;s take a look at the changes to the <strong klass="">Mover</strong> class, complete with <strong function="">acceleration</strong> and <strong function="">limit()</strong>.</p>
 
-<figure><img alt="ch01 ex08" src="../images/chapter01/ch01_ex08.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_8_motion101_acceleration/_1_8_motion101_acceleration.pde processingjs/chapter01/_1_8_motion101_acceleration/Mover.pde"><img alt="ch01 ex08" src="../images/chapter01/ch01_ex08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1038,18 +1086,21 @@ velocity.limit(10);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
+
   PVector location;
   PVector velocity;
   // Acceleration is the key!
   PVector acceleration;
   // The variable topspeed will limit the magnitude of velocity.
   float topspeed;
+
   Mover() {
     location = new PVector(width/2,height/2);
     velocity = new PVector(0,0);
     acceleration = new PVector(-0.001,0.01);
     topspeed = 10;
   }
+
   void update() {
     //[full] Velocity changes by acceleration and is limited by topspeed.
     velocity.add(acceleration);
@@ -1057,6 +1108,7 @@ class Mover {
     //[end]
     location.add(velocity);
   }
+
   // display() is the same.
   void display() {}
   // checkEdges() is the same.
@@ -1073,7 +1125,7 @@ class Mover {
 
 <p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object&rsquo;s constructor, we want to pick a new acceleration each cycle, i.e. each time <strong function="">update()</strong> is called.</p>
 
-<figure><img alt="ch01 ex09" src="../images/chapter01/ch01_ex09.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_9_motion101_acceleration/_1_9_motion101_acceleration.pde processingjs/chapter01/_1_9_motion101_acceleration/Mover.pde"><img alt="ch01 ex09" src="../images/chapter01/ch01_ex09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1081,12 +1133,14 @@ class Mover {
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
+
     // The random2D() function will give us a PVector of length 1 pointing in a random direction.
     acceleration = PVector.random2D();
+
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
-}</pre>
+  }</pre>
 
 <p>Because the random vector is a normalized one, we can try scaling it:</p>
 
@@ -1128,6 +1182,7 @@ acceleration.mult(random(2)); //[bold]</pre>
 <pre data-code-language="java" data-type="programlisting">
 float x = 0;
 float y = 5;
+
 x = x + y;</pre>
 
 <p>Pretty simple, right? <strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and now <strong class="var">x</strong> is equal to 5. We could write the corresponding code pretty easily based on what we&rsquo;ve learned about <strong klass="">PVector</strong>.</p>
@@ -1144,6 +1199,7 @@ v.add(u);</pre>
 <pre data-code-language="java" data-type="programlisting">
 float x = 0;
 float y = 5;
+
 float z = x + y;</pre>
 
 <p><strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and store the result in a new variable <strong class="var">z</strong>. The value of <strong class="var">x</strong> does not change in this example (neither does <strong class="var">y</strong>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it&rsquo;s not so obvious with mathematical operations in <strong klass="">PVector</strong>. Let&rsquo;s try to write the code based on what we know so far.</p>
@@ -1160,7 +1216,7 @@ PVector w = v.add(u); //[line-through]</pre>
 void add(PVector v) {
     x = x + v.x;
     y = y + v.y;
-}</pre>
+ }</pre>
 
 <p>we see that this code does not accomplish our goal. First, it does not return a new <strong klass="">PVector</strong> (the return type is &ldquo;void&rdquo;) and second, it changes the value of the <strong klass="">PVector</strong> upon which it is called. In order to add two <strong klass="">PVector</strong> objects together and return the result as a new <strong klass="">PVector</strong>, we must use the static <strong function="">add()</strong> function.</p>
 
@@ -1179,9 +1235,12 @@ v.add(u);</pre>
 <pre data-code-language="java" data-type="programlisting">
   //The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
   static PVector add(PVector v1, PVector v2) {
+
+
+
     PVector v3 = new PVector(v1.x + v2.x, v1.y + v2.y);
     return v3;
-}</pre>
+  }</pre>
 
 <p>There are several differences here:</p>
 
@@ -1240,7 +1299,7 @@ ___________;</pre>
 
 <p><a data-primary="acceleration algorithms" data-secondary="interactive" data-type="indexterm">&nbsp;</a></p>
 
-<figure id="chapter01_figure14"><img alt="Figure 1.14" src="../images/chapter01/ch01_14.png" />
+<figure class="half-width-right" id="chapter01_figure14"><img alt="Figure 1.14" src="../images/chapter01/ch01_14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1248,7 +1307,7 @@ ___________;</pre>
 
 <p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let&rsquo;s start with direction. We know the acceleration vector should point from the object&rsquo;s location towards the mouse location. Let&rsquo;s say the object is located at the point (<strong class="var">x</strong>,<strong class="var">y</strong>) and the mouse at (<strong class="var">mouseX</strong>,<strong class="var">mouseY</strong>).</p>
 
-<figure id="chapter01_figure15"><img alt="Figure 1.15" src="../images/chapter01/ch01_15.png" />
+<figure class="half-width-right" id="chapter01_figure15"><img alt="Figure 1.15" src="../images/chapter01/ch01_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1298,7 +1357,7 @@ dir.mult(anything);</pre>
 
 <p>And here are those steps in the <strong function="">update()</strong> function itself:</p>
 
-<figure><img alt="ch01 ex10" src="../images/chapter01/ch01_ex10.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_10_motion101_acceleration/_1_10_motion101_acceleration.pde processingjs/chapter01/_1_10_motion101_acceleration/Mover.pde"><img alt="ch01 ex10" src="../images/chapter01/ch01_ex10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1306,19 +1365,25 @@ dir.mult(anything);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
+
     PVector mouse = new PVector(mouseX,mouseY);
     // Step 1: Compute direction
     PVector dir = PVector.sub(mouse,location);
+
     // Step 2: Normalize
     dir.normalize();
+
     // Step 3: Scale
     dir.mult(0.5);
+
     // Step 4: Accelerate
     acceleration = dir;
+
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
-}</pre>
+
+  }</pre>
 
 <p>You may be wondering why the circle doesn&rsquo;t stop when it reaches the target. It&rsquo;s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on and so forth. Stay tuned; in later chapters we&rsquo;ll learn how to program an object to <strong><em>arrive</em></strong> at a location (slow down on approach).</p>
 
@@ -1332,7 +1397,7 @@ dir.mult(anything);</pre>
 
 <p>Let&rsquo;s see what this example would look like with an array of movers (rather than just one).</p>
 
-<figure><img alt="ch01 ex11" src="../images/chapter01/ch01_ex11.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_11_motion101_acceleration_array/_1_11_motion101_acceleration_array.pde processingjs/chapter01/_1_11_motion101_acceleration_array/Mover.pde"><img alt="ch01 ex11" src="../images/chapter01/ch01_ex11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1341,6 +1406,7 @@ dir.mult(anything);</pre>
 <pre data-code-language="java" data-type="programlisting">
 // An array of objects
 Mover[] movers = new Mover[20];
+
 void setup() {
   size(640,360);
   background(255);
@@ -1349,8 +1415,10 @@ void setup() {
     movers[i] = new Mover();
   }
 }
+
 void draw() {
   background(255);
+
   for (int i = 0; i &lt; movers.length; i++) {
     //[full] Calling functions on all the objects in the array
     movers[i].update();
@@ -1359,18 +1427,24 @@ void draw() {
     //[end]
   }
 }
+
 class Mover {
+
   PVector location;
   PVector velocity;
   PVector acceleration;
   float topspeed;
+
   Mover() {
     location = new PVector(random(width),random(height));
     velocity = new PVector(0,0);
     topspeed = 4;
   }
+
   void update() {
+
     // &lt;b&gt;&lt;u&gt;Our algorithm for calculating acceleration&lt;/b&gt;&lt;/u&gt;:
+
     //[full] Find the vector pointing towards the mouse.
     PVector mouse = new PVector(mouseX,mouseY);
     PVector dir = PVector.sub(mouse,location);
@@ -1381,25 +1455,30 @@ class Mover {
     dir.mult(0.5);
     // Set to acceleration.
     acceleration = dir;
+
     //[full] Motion 101! Velocity changes by acceleration.  Location changes by velocity.
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
     //[end]
   }
+
   // Display the Mover
   void display() {
     stroke(0);
     fill(175);
     ellipse(location.x,location.y,16,16);
   }
+
   // What to do at the edges
   void checkEdges() {
+
     if (location.x &gt; width) {
       location.x = 0;
     } else if (location.x &lt; 0) {
       location.x = width;
     }
+
     if (location.y &gt; height) {
       location.y = 0;
     }  else if (location.y &lt; 0) {
@@ -1410,7 +1489,7 @@ class Mover {
 
 <div style="page-break-after:always;">&nbsp;</div>
 
-<figure id="chapter01_figure16"><img alt="Figure 1.16: The Ecosystem Project" src="../images/chapter01/ch01_16.png" />
+<figure class="screenshot" id="chapter01_figure16"><img alt="Figure 1.16: The Ecosystem Project" src="../images/chapter01/ch01_16.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 

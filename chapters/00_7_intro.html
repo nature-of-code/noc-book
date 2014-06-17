@@ -113,7 +113,7 @@ class Walker {
   //[full] Objects have data.
   int x;
   int y;
-//[end]</pre>
+  //[end]</pre>
 
 <p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
 
@@ -125,7 +125,7 @@ class Walker {
     x = width/2;
     y = height/2;
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p><a data-primary="class (Processing)" data-secondary="functionality" data-type="indexterm">&nbsp;</a> <a data-primary="functionality" data-type="indexterm">&nbsp;</a></p>
 
@@ -137,7 +137,7 @@ class Walker {
     stroke(0);
     point(x,y);
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p>The second function directs the <strong klass="">Walker</strong> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <strong class="var">x</strong> (<strong class="var">x</strong><code>++</code>); to the left by decrementing <strong class="var">x</strong> (<strong class="var">x--</strong>); forward by going down a pixel (<strong class="var">y++</strong>); and backward by going up a pixel (<strong class="var">y--</strong>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <strong function="">random()</strong>.</p>
 
@@ -146,7 +146,7 @@ class Walker {
 <pre data-code-language="java" data-type="programlisting">
   void step() {
     // 0, 1, 2, or 3
-int choice = int(random(4));</pre>
+    int choice = int(random(4));</pre>
 
 <p>The above line of code picks a random floating point number between 0 and 4 and converts it to an integer, with a result of 0, 1, 2, or 3. Technically speaking, the highest number will never be 4.0, but rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an integer lops off the decimal place, the highest <strong class="var">int</strong> we can get is 3. Next, we take the appropriate step (left, right, up, or down) depending on which random number was picked.</p>
 
@@ -199,7 +199,7 @@ void draw() {
 
 <p>Since we only draw the background once in <strong function="">setup()</strong>, rather than clearing it continually each time through <strong function="">draw()</strong>, we see the trail of the random walk in our Processing window.</p>
 
-<figure><img alt="intro ex01" src="../images/intro/intro_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/intro/_I_1_RandomWalkTraditional/_I_1_RandomWalkTraditional.pde processingjs/intro/_I_1_RandomWalkTraditional/Walker.pde"><img alt="intro ex01" src="../images/intro/intro_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -219,7 +219,7 @@ void draw() {
     //[end]
     x += stepx;
     y += stepy;
-}</pre>
+  }</pre>
 
 <p>Taking this further, we could use floating point numbers (i.e. decimal numbers) for <strong class="var">x</strong> and <strong class="var">y</strong> instead and move according to an arbitrary random value between -1 and 1.</p>
 
@@ -231,7 +231,7 @@ void draw() {
     //[end]
     x += stepx;
     y += stepy;
-}</pre>
+  }</pre>
 
 <p>All of these variations on the &ldquo;traditional&rdquo; random walk have one thing in common: at any moment in time, the probability that the <strong klass="">Walker</strong> will take a step in a given direction is equal to the probability that the <strong klass="">Walker</strong> will take a step in any direction. In other words, if there are four possible steps, there is a 1 in 4 (or 25%) chance the <strong klass="">Walker</strong> will take any given step. With nine possible steps, it&rsquo;s a 1 in 9 (or 11.1%) chance.</p>
 
@@ -239,7 +239,7 @@ void draw() {
 
 <p>Conveniently, this is how the <strong function="">random()</strong> function works. Processing&rsquo;s random number generator (which operates behind the scenes) produces what is known as a &ldquo;uniform&rdquo; distribution of numbers. We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
 
-<figure><img alt="intro ex02" src="../images/intro/intro_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/intro/_I_2_RandomDistribution/_I_2_RandomDistribution.pde"><img alt="intro ex02" src="../images/intro/intro_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -248,15 +248,19 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
 // An array to keep track of how often random numbers are picked
 int[] randomCounts;
+
 void setup() {
   size(640,240);
   randomCounts = new int[20];
 }
+
 void draw() {
   background(255);
+
   // Pick a random number and increase the count.
   int index = int(random(randomCounts.length));
   randomCounts[index]++;
+
   stroke(0);
   fill(175);
   int w = width/randomCounts.length;
@@ -348,6 +352,7 @@ int index = int(random(stuff.length));</pre>
 float prob = 0.10;
 // A random floating point value between 0 and 1
 float r = random(1);
+
 //[full] If our random number is less than 0.1, try again!
 if (r &lt; prob) {
    [inline]// try again!
@@ -370,6 +375,7 @@ if (r &lt; prob) {
 
 <pre data-code-language="java" data-type="programlisting">
 float num = random(1);
+
 // If random number is less than 0.6
 if (num &lt; 0.6) {
   println(&quot;Outcome A&quot;);
@@ -398,7 +404,7 @@ if (num &lt; 0.6) {
 	</li>
 </ul>
 
-<figure><img alt="intro ex03" src="../images/intro/intro_ex03.png" />
+<figure class="screenshot" data-pde="processingjs/intro/_I_3_RandomWalkTendsToRight/_I_3_RandomWalkTendsToRight.pde processingjs/intro/_I_3_RandomWalkTendsToRight/Walker.pde"><img alt="intro ex03" src="../images/intro/intro_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -406,6 +412,7 @@ if (num &lt; 0.6) {
 
 <pre data-code-language="java" data-type="programlisting">
   void step() {
+
     float r = random(1);
     //[full] A 40% chance of moving to the right!
     if (r &lt; 0.4) {
@@ -418,7 +425,7 @@ if (num &lt; 0.6) {
     } else {
       y--;
     }
-}</pre>
+  }</pre>
 
 <div data-type="example" id="intro_exercise3">
 <h5>Exercise I.3</h5>
@@ -445,11 +452,11 @@ float h = random(200,300);</pre>
 
 <p>When you graph the distribution, you get something that looks like the following, informally known as a bell curve:</p>
 
-<figure id="intro_figure2"><img alt="Figure I.2" src="../images/intro/intro_02.png" />
+<figure class="two-col" id="intro_figure2"><img alt="Figure I.2" src="../images/intro/intro_02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure3"><img alt="Figure I.3" src="../images/intro/intro_03.png" />
+<figure class="two-col" id="intro_figure3"><img alt="Figure I.3" src="../images/intro/intro_03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -539,6 +546,7 @@ float h = random(200,300);</pre>
 // We use the variable name &ldquo;generator&rdquo; because what we
 // have here can be thought of as a random number generator.
 Random generator;
+
 void setup() {
   size(640,360);
   generator = new Random();
@@ -560,7 +568,7 @@ void draw() {
 
 <p>The <strong function="">nextGaussian()</strong> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let&rsquo;s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
 
-<figure><img alt="intro ex04" src="../images/intro/intro_ex04.png" />
+<figure class="screenshot" data-pde="processingjs/intro/_I_4_Gaussian/_I_4_Gaussian.pde"><img alt="intro ex04" src="../images/intro/intro_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -572,8 +580,10 @@ void draw() {
   float num = (float) generator.nextGaussian();
   float sd = 60;
   float mean = 320;
+
   // Multiply by the standard deviation and add the mean.
   float x = sd * num + mean;
+
   noStroke();
   fill(255,10);
   ellipse(x,180,16,16);
@@ -669,6 +679,7 @@ float montecarlo() {
     float probability = r1;
     // Pick a second random value.
     float r2 = random(1);
+
     //[full] Does it qualify?  If so, we&rsquo;re done!
     if (r2 &lt; probability) {
       return r1;
@@ -685,10 +696,12 @@ float montecarlo() {
 <pre data-code-language="java" data-type="programlisting">
   // A uniform distribution of step sizes. Change this!
   float stepsize = random(0,10);
+
   float stepx = random(-stepsize,stepsize);
   float stepy = random(-stepsize,stepsize);
+
   x += stepx;
-y += stepy;</pre>
+  y += stepy;</pre>
 
 <p>(Later we&rsquo;ll see how to do this more efficiently using vectors.)</p>
 </div>
@@ -705,11 +718,11 @@ y += stepy;</pre>
 
 <p>Perlin noise has a more organic appearance because it produces a naturally ordered (&ldquo;smooth&rdquo;) sequence of pseudo-random numbers. The graph on the left below shows Perlin noise over time, with the x-axis representing time; note the smoothness of the curve. The graph on the right shows pure random numbers over time. (The code for generating these graphs is available in the accompanying book downloads.)</p>
 
-<figure><img alt="Figure I.5: Noise" src="../images/intro/intro_05.png" />
+<figure class="two-col"><img alt="Figure I.5: Noise" src="../images/intro/intro_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="Figure I.6: Random" src="../images/intro/intro_06.png" />
+<figure class="two-col"><img alt="Figure I.6: Random" src="../images/intro/intro_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -806,6 +819,7 @@ float n = noise(3);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 float t = 3;
+
 void draw() {
   // We need the noise value for a specific moment in time.
   float n = noise(t);
@@ -817,6 +831,7 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
 // Typically we would start at time = 0, though this is arbitrary.
 float t = 0;
+
 void draw() {
   float n = noise(t);
   println(n);
@@ -847,17 +862,19 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 float t = 0;
+
 void draw() {
   float n = noise(t);
   // Using map() to customize the range of Perlin noise
   float x = map(n,0,1,0,width);
   ellipse(x,180,16,16);
+
   t += 0.01;
 }</pre>
 
 <p>We can apply the exact same logic to our random walker, and assign both its x- and y-values according to Perlin noise.</p>
 
-<figure><img alt="intro ex05" src="../images/intro/intro_ex05.png" />
+<figure class="screenshot" data-pde="processingjs/intro/_I_5_NoiseWalk/_I_5_NoiseWalk.pde processingjs/intro/_I_5_NoiseWalk/Walker.pde"><img alt="intro ex05" src="../images/intro/intro_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -866,16 +883,20 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
 class Walker {
   float x,y;
+
   float tx,ty;
+
   Walker() {
     tx = 0;
     ty = 10000;
   }
+
   void step() {
     //[full] x- and y-location mapped from noise
     x = map(noise(tx), 0, 1, 0, width);
     y = map(noise(ty), 0, 1, 0, height);
     //[end]
+
     //[full] Move forward through &ldquo;time.&rdquo;
     tx += 0.01;
     ty += 0.01;
@@ -905,11 +926,11 @@ class Walker {
 
 <p>This idea of noise values living in a one-dimensional space is important because it leads us right into a discussion of two-dimensional space. Let&rsquo;s think about this for a moment. With one-dimensional noise, we have a sequence of values in which any given value is similar to its neighbor. Because the value is in one dimension, it only has two neighbors: a value that comes before it (to the left on the graph) and one that comes after it (to the right).</p>
 
-<figure id="intro_figure10"><img alt="Figure I.10: 1D Noise" src="../images/intro/intro_10.png" />
+<figure class="two-col-borderless" id="intro_figure10"><img alt="Figure I.10: 1D Noise" src="../images/intro/intro_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure11"><img alt="Figure I.11: 2D Noise" src="../images/intro/intro_11.png" />
+<figure class="two-col-borderless" id="intro_figure11"><img alt="Figure I.11: 2D Noise" src="../images/intro/intro_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -940,7 +961,7 @@ updatePixels();</pre>
 
 <pre data-code-language="java" data-type="programlisting">
    // A Perlin noise brightness!
-float bright = map(noise(x,y),0,1,0,255); //[bold]</pre>
+   float bright = map(noise(x,y),0,1,0,255); //[bold]</pre>
 
 <p>This is a nice start conceptually&mdash;it gives you a noise value for every (<strong class="var">x</strong>,<strong class="var">y</strong>) location in our two-dimensional space. The problem is that this won&rsquo;t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <strong class="var">xoff</strong> each time we move horizontally, and a <strong class="var">yoff</strong> variable each time we move vertically through the nested loops.</p>
 
@@ -949,9 +970,11 @@ float bright = map(noise(x,y),0,1,0,255); //[bold]</pre>
 <pre data-code-language="java" data-type="programlisting">
 // Start xoff at 0.
 float xoff = 0.0; //[bold]
+
 for (int x = 0; x &lt; width; x++) {
   // For every xoff, start yoff at 0.
   float yoff = 0.0; //[bold]
+
   for (int y = 0; y &lt; height; y++) {
     // Use xoff and yoff for noise().
     float bright = map(noise(xoff,yoff),0,1,0,255); //[bold]
@@ -988,11 +1011,11 @@ for (int x = 0; x &lt; width; x++) {
 
 <p>We&rsquo;ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise, we used smooth values to assign the location of an object to give the appearance of wandering. With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It&rsquo;s important to remember, however, that Perlin noise values are just that&mdash;values. They aren&rsquo;t inherently tied to pixel locations or color. Any example in this book that has a variable could be controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and direction of objects moving along a grid in a flow field simulation.</p>
 
-<figure id="intro_figure12"><img alt="Figure I.12: Tree with Perlin noise" src="../images/intro/intro_12.png" />
+<figure class="two-col" data-pde="processingjs/intro/TreeStochasticNoise/TreeStochasticNoise.pde" id="intro_figure12"><img alt="Figure I.12: Tree with Perlin noise" src="../images/intro/intro_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="intro_figure13"><img alt="Figure I.13: Flow field with Perlin noise" src="../images/intro/intro_13.png" />
+<figure class="two-col" data-pde="processingjs/intro/_6_04_Flowfield/_6_04_Flowfield.pde processingjs/intro/_6_04_Flowfield/FlowField.pde processingjs/intro/_6_04_Flowfield/Vehicle.pde" id="intro_figure13"><img alt="Figure I.13: Flow field with Perlin noise" src="../images/intro/intro_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </section>

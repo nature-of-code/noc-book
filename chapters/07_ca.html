@@ -132,7 +132,7 @@
 
 <p>Now, let&rsquo;s go past just one generation and color the cells &mdash;0 means white, 1 means black&mdash;and stack the generations, with each new generation appearing below the previous one.</p>
 
-<figure id="chapter07_figure12"><img alt="Figure 7.12: Rule 90" src="../images/chapter07/ch07_12.png" />
+<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12: Rule 90" src="../images/chapter07/ch07_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -140,7 +140,7 @@
 
 <p>The low-resolution shape we&rsquo;re seeing above is the &ldquo;Sierpiński triangle.&rdquo; Named after the Polish mathematician Wacław Sierpiński, it&rsquo;s a fractal pattern that we&rsquo;ll examine in the next chapter. That&rsquo;s right: this incredibly simple system of 0s and 1s, with little neighborhoods of three cells, can generate a shape as sophisticated and detailed as the Sierpiński triangle. Let&rsquo;s look at it again, only with each cell a single pixel wide so that the resolution is much higher.</p>
 
-<figure id="chapter07_figure13"><img alt="Figure 7.13: Rule 90" src="../images/chapter07/ch07_13.png" />
+<figure class="screenshot" id="chapter07_figure13"><img alt="Figure 7.13: Rule 90" src="../images/chapter07/ch07_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -156,11 +156,11 @@
 
 <p>In terms of a Wolfram elementary CA, we have now discovered that there are 256 possible rulesets. The above ruleset is commonly referred to as &ldquo;Rule 90&rdquo; because if you convert the binary sequence&mdash;01011010&mdash;to a decimal number, you&rsquo;ll get the integer 90. Let&rsquo;s try looking at the results of another ruleset.</p>
 
-<figure id="chapter07_figure15"><img alt="Figure 7.15: Rule 222" src="../images/chapter07/ch07_15.png" />
+<figure class="screenshot" id="chapter07_figure15"><img alt="Figure 7.15: Rule 222" src="../images/chapter07/ch07_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="chapter07_figure16"><img alt="Figure 7.16: A Textile Cone Snail (Conus textile), Cod Hole, Great Barrier Reef, Australia, 7 August 2005. Photographer: Richard Ling richard@research.canon.com.au" src="../images/chapter07/ch07_16.jpeg" />
+<figure class="half-width-right" id="chapter07_figure16"><img alt="Figure 7.16: A Textile Cone Snail (Conus textile), Cod Hole, Great Barrier Reef, Australia, 7 August 2005. Photographer: Richard Ling richard@research.canon.com.au" src="../images/chapter07/ch07_16.jpeg" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -178,6 +178,7 @@
 
 <pre data-code-language="java" data-type="programlisting">
 class Cell {
+
 }</pre>
 
 <p>This line of thinking, however, is not the road we will first travel. Later in this chapter, we will discuss why an object-oriented approach could prove valuable in developing a CA simulation, but to begin, we can work with a more elementary data structure. After all, what is an elementary CA but a list of 0s and 1s? Certainly, we could describe the following CA generation using an array:</p>
@@ -222,13 +223,16 @@ for (int i = 0; i &lt; cells.length; i++) {
 <pre data-code-language="java" data-type="programlisting">
 // For every cell in the array...
 for (int i = 0; i &lt; cells.length; i++) {
+
   //[full] ...take a look at the neighborhood.
   int left   = cell[i-1];
   int middle = cell[i];
   int right  = cell[i+1];
   //[end]
+
   // Look up the new value according to the rules.
   int newstate = rules(left,middle,right);
+
   // Set the cell&rsquo;s state to the new value.
   cell[i] = newstate;
 }</pre>
@@ -292,6 +296,7 @@ for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
 // Another array to store the states
 // for the next generation.
 int[] newcells = new int[cells.length]; //[bold]
+
 for (int i = 1; i &lt; cells.length-1; i++) {
   //[full] Look at the states from the current array.
   int left   = cell[i-1];
@@ -313,7 +318,7 @@ cells = newcells; //[bold]</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   // Function receives 3 ints and returns 1.
-int rules (int a, int b, int c) {</pre>
+  int rules (int a, int b, int c) {</pre>
 
 <p>Now, there are many ways we could write this function, but I&rsquo;d like to start with a long-winded one that will hopefully provide a clear illustration of what we are doing.</p>
 
@@ -351,7 +356,7 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
     // in cases where the states do not match one of the eight possibilities.
     // We know this is impossible given the rest of our code, but Processing does not.
     return 0;
-}</pre>
+  }</pre>
 
 <p>I like having the example written as above because it describes line by line exactly what is happening for each neighborhood configuration. However, it&rsquo;s not a great solution. After all, what if we design a CA that has 4 possible states (0-3) and suddenly we have 64 possible neighborhood configurations? With 10 possible states, we have 1,000 configurations. Certainly we don&rsquo;t want to type in 1,000 lines of code!</p>
 
@@ -361,11 +366,13 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
   int rules (int a, int b, int c) {
     // A quick way to join three bits into a String
     String s = &quot;&quot; + a + b + c;
+
     // The second argument &lsquo;2&rsquo; indicates that we intend to
     // parse a binary number (base 2).
     int index = Integer.parseInt(s,2);
+
     return ruleset[index];
-}</pre>
+  }</pre>
 
 <p>There&rsquo;s one tiny problem with this solution, however. Let&rsquo;s say we are implementing rule 222:</p>
 
@@ -393,10 +400,12 @@ class CA {
   int[] cells;
   int[] ruleset;
   //[end]
+
   CA() {
     cells = new int[width];
     // Arbitrarily starting with rule 90
     ruleset = {0,1,0,1,1,0,1,0};
+
     for (int i = 0; i &lt; cells.length; i++) {
       cells[i] = 0;
     }
@@ -404,6 +413,7 @@ class CA {
     // cell has state 1.
     cells[cells.length/2] = 1;
   }
+
   void generate() {
     //[full] Compute the next generation.
     int[] nextgen = new int[cells.length];
@@ -416,6 +426,7 @@ class CA {
     //[end]
     cells = nextgen;
   }
+
   //[full] Look up a new state from the ruleset.
   int rules (int a, int b, int c) {
     String s = &quot;&quot; + a + b + c;
@@ -433,7 +444,7 @@ class CA {
 
 <p>What&rsquo;s missing? Presumably, it&rsquo;s our intention to display cells and their states in visual form. As we saw earlier, the standard technique for doing this is to stack the generations one on top of each other and draw a rectangle that is black (for state 1) or white (for state 0).</p>
 
-<figure id="chapter07_figure12"><img alt="Figure 7.12 (repeated)" src="../images/chapter07/ch07_12.png" />
+<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12 (repeated)" src="../images/chapter07/ch07_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -467,7 +478,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <p>In the above code, you&rsquo;ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we&rsquo;ll also need to compute a y-location based on how many iterations of the CA we&rsquo;ve executed. We could accomplish this by adding a &ldquo;generation&rdquo; variable (an integer) to our CA class and incrementing it each time through <strong function="">generate()</strong>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
-<figure><img alt="ch07 ex01" src="../images/chapter07/ch07_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="../images/chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -486,6 +497,7 @@ class CA {
     ruleset = {0,1,0,1,1,0,1,0};
     cells[cells.length/2] = 1;
   }
+
   // Function to compute the next generation
   void generate() {
     int[] nextgen = new int[cells.length];
@@ -499,11 +511,13 @@ class CA {
     // Increment the generation counter.
     generation++;
   }
+
   int rules(int a, int b, int c) {
     String s = &quot;&quot; + a + b + c;
     int index = Integer.parseInt(s,2);
     return ruleset[index];
   }
+
   for (int i = 0; i &lt; cells.length; i++) {
     if (cells[i] == 1) fill(0);
     else               fill(255);
@@ -518,17 +532,23 @@ class CA {
 <p>Expand Example 7.1 to have the following feature: when the CA reaches the bottom of the Processing window, the CA starts over with a new, random ruleset.</p>
 </div>
 
+<p>&nbsp;</p>
+
 <div data-type="example" id="chapter07_exercise2">
 <h5>Exercise 7.2</h5>
 
 <p>Examine what patterns occur if you initialize the first generation with each cell having a random state.</p>
 </div>
 
+<p>&nbsp;</p>
+
 <div data-type="example" id="chapter07_exercise3">
 <h5>Exercise 7.3</h5>
 
 <p>Visualize the CA in a non-traditional way. Break all the rules you can; don&rsquo;t feel tied to using squares on a perfect grid with black and white.</p>
 </div>
+
+<p>&nbsp;</p>
 
 <div data-type="example" id="chapter07_exercise4">
 <h5>Exercise 7.4</h5>
@@ -544,7 +564,7 @@ class CA {
 
 <p>Before we move on to looking at CA in two dimensions, it&rsquo;s worth taking a brief look at Wolfram&rsquo;s classification for cellular automata. As we noted earlier, the vast majority of elementary CA rulesets produce uninspiring results, while some result in wondrously complex patterns like those found in nature. Wolfram has divided up the range of outcomes into four classes:</p>
 
-<figure id="chapter07_figure18"><img alt="Figure 7.18: Rule 222" src="../images/chapter07/ch07_18.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/Ex_7_04_WolframCA_scrolling_222.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/CA.pde" id="chapter07_figure18"><img alt="Figure 7.18: Rule 222" src="../images/chapter07/ch07_18.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -552,7 +572,7 @@ class CA {
 
 <p><strong><em>Class 1: Uniformity.</em></strong> Class 1 CAs end up, after some number of generations, with every cell constant. This is not terribly exciting to watch. Rule 222 (above) is a class 1 CA; if you run it for enough generations, every cell will eventually become and remain black.</p>
 
-<figure id="chapter07_figure19"><img alt="Figure 7.19: Rule 190" src="../images/chapter07/ch07_19.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/Ex_7_04_WolframCA_scrolling_190.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/CA.pde" id="chapter07_figure19"><img alt="Figure 7.19: Rule 190" src="../images/chapter07/ch07_19.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -560,7 +580,7 @@ class CA {
 
 <p><strong><em>Class 2: Repetition.</em></strong> Like class 1 CAs, class 2 CAs remain stable, but the cell states are not constant. Rather, they oscillate in some regular pattern back and forth from 0 to 1 to 0 to 1 and so on. In rule 190 (above), each cell follows the sequence 11101110111011101110.</p>
 
-<figure id="chapter07_figure20"><img alt="Figure 7.20: Rule 30" src="../images/chapter07/ch07_20.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/Ex_7_04_WolframCA_scrolling_30.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/CA.pde" id="chapter07_figure20"><img alt="Figure 7.20: Rule 30" src="../images/chapter07/ch07_20.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -568,7 +588,7 @@ class CA {
 
 <p><strong><em>Class 3: Random.</em></strong> Class 3 CAs appear random and have no easily discernible pattern. In fact, rule 30 (above) is used as a random number generator in Wolfram&rsquo;s Mathematica software. Again, this is a moment where we can feel amazed that such a simple system with simple rules can descend into a chaotic and random pattern.</p>
 
-<figure id="chapter07_figure21"><img alt="Figure 7.21: Rule 110" src="../images/chapter07/ch07_21.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/Ex_7_04_WolframCA_scrolling_110.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/CA.pde" id="chapter07_figure21"><img alt="Figure 7.21: Rule 110" src="../images/chapter07/ch07_21.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -602,7 +622,7 @@ class CA {
 
 <p>Let&rsquo;s look at how the Game of Life works. It won&rsquo;t take up too much time or space, since we&rsquo;ve covered the basics of CA already.</p>
 
-<figure id="chapter07_figure22"><img alt="Figure 7.22" src="../images/chapter07/ch07_22.png" />
+<figure class="half-width-right" id="chapter07_figure22"><img alt="Figure 7.22" src="../images/chapter07/ch07_22.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -712,14 +732,17 @@ for (int x = 0; x &lt; columns; x++) {
 
 <pre data-code-language="java" data-type="programlisting">
 int[][] next = new int[columns][rows];
+
 for (int x = 0; x &lt; columns; x++) {
   for (int y = 0; y &lt; rows; y++) {
+
     // We need a new state for each cell.
     next[x][y] = _______________?;
+
   }
 }</pre>
 
-<figure id="chapter07_figure27"><img alt="Figure 7.27" src="../images/chapter07/ch07_27.png" />
+<figure class="half-width-right" id="chapter07_figure27"><img alt="Figure 7.27" src="../images/chapter07/ch07_27.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -729,16 +752,19 @@ for (int x = 0; x &lt; columns; x++) {
 
 <pre data-code-language="java" data-type="programlisting">
 int neighbors = 0;
+
 //[full] Top row of neighbors
 if (board[x-1][y-1] == 1) neighbors++;
 if (board[x  ][y-1] == 1) neighbors++;
 if (board[x+1][y-1] == 1) neighbors++;
 //[end]
+
 //[full] Middle row of neighbors
 // (note we don&rsquo;t count self)
 if (board[x-1][y]   == 1) neighbors++;
 if (board[x+1][y]   == 1) neighbors++;
 //[end]
+
 //[full] Bottom row of neighbors
 if (board[x-1][y+1] == 1) neighbors++;
 if (board[x  ][y+1] == 1) neighbors++;
@@ -770,16 +796,19 @@ if      ((board[x][y] == 1) &amp;&amp; (neighbors &lt;  2)) {
   next[x][y] = 0;
 }
 //[end]
+
 //[full] If it is alive and has more than 3 live neighbors, it dies from overpopulation.
 else if ((board[x][y] == 1) &amp;&amp; (neighbors &gt;  3)) {
   next[x][y] = 0;
 }
 //[end]
+
 //[full] If it is dead and has exactly 3 live neighbors, it is born!
 else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) {
   next[x][y] = 1;
 }
 //[end]
+
 //[full] In all other cases, its state remains the same.
 else {
   next[x][y] = board[x][y];
@@ -791,10 +820,12 @@ else {
 <pre data-code-language="java" data-type="programlisting">
 // The next board
 int[][] next = new int[columns][rows];
+
 //[full] Looping but skipping the edge cells
 for (int x = 1; x &lt; columns-1; x++) {
   for (int y = 1; y &lt; rows-1; y++) {
   //[end]
+
     // Add up all the neighbor states to
     // calculate the number of live neighbors.
     int neighbors = 0;
@@ -803,9 +834,12 @@ for (int x = 1; x &lt; columns-1; x++) {
         neighbors += board[x+i][y+j];
       }
     }
+
     // Correct by subtracting the cell state itself.
     neighbors -= board[x][y];
+
     //[full] &lt;b&gt;The rules of life!&lt;/b&gt;
+
     if      ((board[x][y] == 1) &amp;&amp; (neighbors &lt;  2)) next[x][y] = 0;
     else if ((board[x][y] == 1) &amp;&amp; (neighbors &gt;  3)) next[x][y] = 0;
     else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) next[x][y] = 1;
@@ -813,12 +847,13 @@ for (int x = 1; x &lt; columns-1; x++) {
     //[end]
   }
 }
+
 // The 2D array &ldquo;next&rdquo; is now the current board.
 board = next;</pre>
 
 <p>Finally, once the next generation is calculated, we can employ the same method we used to draw the Wolfram CA&mdash;a square for each spot, white for off, black for on.</p>
 
-<figure><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/_7_02_GameOfLifeSimple/_7_02_GameOfLifeSimple.pde processingjs/chapter07/_7_02_GameOfLifeSimple/GOL.pde"><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -827,11 +862,13 @@ board = next;</pre>
 <pre data-code-language="java" data-type="programlisting">
 for ( int i = 0; i &lt; columns;i++) {
   for ( int j = 0; j &lt; rows;j++) {
+
     // Black when state = 1
     if ((board[i][j] == 1)) fill(0);
     // White when state = 0
     else fill(255);
     stroke(0);
+
     rect(i*w, j*w, w, w);
   }
 }</pre>
@@ -876,22 +913,24 @@ for ( int i = 0; i &lt; columns;i++) {
 
 <pre data-code-language="java" data-type="programlisting">
 class Cell {
+
   //[full] Location and size
   float x, y;
   float w;
   //[end]
+
   // What is the cell&rsquo;s state?
-int state;</pre>
+  int state;</pre>
 
 <p>In the non-OOP version, we used a separate 2D array to keep track of the states for the current and next generation. By making a cell an object, however, each cell could keep track of both states. In this case, we&rsquo;ll think of the cell as remembering its previous state (for when new states need to be computed).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // What was its previous state?
-int previous;</pre>
+  int previous;</pre>
 
 <p>This allows us to visualize more information about what the state is doing. For example, we could choose to color a cell differently if its state has changed. For example:</p>
 
-<figure><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/_7_03_GameOfLifeOOP/_7_03_GameOfLifeOOP.pde processingjs/chapter07/_7_03_GameOfLifeOOP/GOL.pde processingjs/chapter07/_7_03_GameOfLifeOOP/Cell.pde"><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -902,9 +941,11 @@ void display() {
   // If the cell is born, color it blue!
   if (previous == 0 &amp;&amp; state == 1) fill(0,0,255);
   else if (state == 1) fill(0);
+
   //[offset-down] If the cell dies, color it red!
   else if (previous == 1 &amp;&amp; state == 0) fill(255,0,0);
   else fill(255);
+
   rect(x, y, w, w);
 }</pre>
 
@@ -913,6 +954,7 @@ void display() {
 <pre data-code-language="java" data-type="programlisting">
 for (int x = 1; x &lt; columns-1; x++) {
   for (int y = 1; y &lt; rows-1; y++) {
+
     int neighbors = 0;
     for (int i = -1; i &lt;= 1; i++) {
       for (int j = -1; j &lt;= 1; j++) {
@@ -921,8 +963,11 @@ for (int x = 1; x &lt; columns-1; x++) {
       }
     }
     neighbors -= board[x][y].previous;
+
     //[full]
     // We are calling a function newState() to assign a new state to each cell.
+
+
     if      ((board[x][y].state == 1) &amp;&amp; (neighbors &lt;  2)) board[x][y].newState(0);
     else if ((board[x][y].state == 1) &amp;&amp; (neighbors &gt;  3)) board[x][y].newState(0);
     else if ((board[x][y].state == 0) &amp;&amp; (neighbors == 3)) board[x][y].newState(1);

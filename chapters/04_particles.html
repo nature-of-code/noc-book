@@ -33,10 +33,12 @@
 <pre data-code-language="java" data-type="programlisting">
 //[full] Ah, isn&rsquo;t this main program so simple and lovely?
 ParticleSystem ps;
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem();
 }
+
 void draw() {
   background(255);
   ps.run();
@@ -68,15 +70,18 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   //[end]
+
   Particle(PVector l) {
     location = l.get();
     acceleration = new PVector();
     velocity = new PVector();
   }
+
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
   }
+
   void display() {
     stroke(0);
     fill(175);
@@ -98,6 +103,7 @@ class Particle {
   // A new variable to keep track of how long the particle
   // has been &ldquo;alive&rdquo;
   float lifespan; //[bold]
+
   Particle(PVector l) {
     location = l.get();
     acceleration = new PVector();
@@ -105,12 +111,14 @@ class Particle {
     // We start at 255 and count down for convenience
     lifespan = 255; //[bold]
   }
+
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
     // Lifespan decreases
     lifespan -= 2.0; //[bold]
   }
+
   void display() {
     //[full] Since our life ranges from 255 to 0 we can use it for alpha
     stroke(0,lifespan); //[bold]
@@ -135,13 +143,13 @@ class Particle {
       return false;
     }
     //[end]
-}</pre>
+  }</pre>
 
 <p><a data-primary="particles" data-secondary="testing" data-type="indexterm">&nbsp;</a></p>
 
 <p>Before we get to the next step of making many particles, it&rsquo;s worth taking a moment to make sure our particle works correctly and create a sketch with one single <strong klass="">Particle</strong> object. Here is the full code below, with two small additions. We add a convenience function called <strong function="">run()</strong> that simply calls both <strong function="">update()</strong> and <strong function="">display()</strong> for us. In addition, we give the particle a random initial velocity as well as a downward acceleration (to simulate gravity).</p>
 
-<figure><img alt="ch04 ex01" src="../images/chapter04/ch04_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_01_SingleParticle/_4_01_SingleParticle.pde processingjs/chapter04/_4_01_SingleParticle/Particle.pde"><img alt="ch04 ex01" src="../images/chapter04/ch04_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -149,10 +157,12 @@ class Particle {
 
 <pre data-code-language="java" data-type="programlisting">
 Particle p;
+
 void setup() {
   size(640,360);
   p = new Particle(new PVector(width/2,10));
 }
+
 void draw() {
   background(255);
   // Operating the single Particle
@@ -161,11 +171,13 @@ void draw() {
     println(&quot;Particle dead!&quot;);
   }
 }
+
 class Particle {
   PVector location;
   PVector velocity;
   PVector acceleration;
   float lifespan;
+
   Particle(PVector l) {
     //[offset-up] For demonstration purposes we assign the Particle an initial velocity and constant acceleration.
     acceleration = new PVector(0,0.05);
@@ -173,22 +185,26 @@ class Particle {
     location = l.get();
     lifespan = 255.0;
   }
+
   // Sometimes it&rsquo;s convenient to have a &ldquo;run&rdquo;
   // function that calls all the other functions we need.
   void run() {
     update();
     display();
   }
+
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
     lifespan -= 2.0;
   }
+
   void display() {
     stroke(0,lifespan);
     fill(0,lifespan);
     ellipse(location.x,location.y,8,8);
   }
+
   // Is the Particle alive or dead?
   boolean isDead() {
     if (lifespan &lt; 0.0) {
@@ -228,6 +244,7 @@ class Particle {
 <pre data-code-language="java" data-type="programlisting">
 int total = 10;
 Particle[] parray = new Particle[total];
+
 void setup() {
   //[full] This is what we&rsquo;re used to, accessing elements on the array via an index and brackets&mdash;&amp;#91; &amp;#93;.
   for (int i = 0; i &lt; parray.length; i++) {
@@ -235,6 +252,7 @@ void setup() {
   }
   //[end]
 }
+
 void draw() {
   for (int i = 0; i &lt; parray.length; i++) {
     Particle p = parray[i];
@@ -248,6 +266,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 int total = 10;
+
 //[offset-up] Have you ever seen this syntax before? This is a new feature in Java 1.6 (called &quot;generics&quot;) that Processing now supports. It allows us to specify in advance what type of object we intend to put in the ArrayList.
 ArrayList&lt;Particle&gt; plist = new ArrayList&lt;Particle&gt;();
 void setup() {
@@ -256,6 +275,7 @@ void setup() {
     plist.add(new Particle());
   }
 }
+
 void draw() {
   // The size of the ArrayList is returned by size().
   for (int i = 0; i &lt; plist.size(); i++) {
@@ -271,6 +291,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
+
 for (Particle p: particles) {
   p.run();
 }</pre>
@@ -295,14 +316,17 @@ for (Particle p : particles) {
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Particle&gt; particles;
+
 void setup() {
   size(640,360);
   particles = new ArrayList&lt;Particle&gt;();
 }
+
 void draw() {
   background(255);
   //[offset-down] A new Particle object is added to the ArrayList every cycle through draw().
   particles.add(new Particle(new PVector(width/2,50)));
+
   for (int i = 0; i &lt; particles.size(); i++) {
     Particle p = particles.get(i);
     p.run();
@@ -324,7 +348,7 @@ void draw() {
       particles.remove(i);
     }
     //[end]
-}</pre>
+  }</pre>
 
 <p>Although the above code will run just fine (and the program will never grind to a halt), we have opened up a medium-sized can of worms. Whenever we manipulate the contents of a list while iterating through that very list, we can get ourselves into trouble. Take, for example, the following code.</p>
 
@@ -334,7 +358,7 @@ void draw() {
     p.run();
     //[offset-down] Adding a new Particle to the list while iterating?
     particles.add(new Particle(new PVector(width/2,50)));
-}</pre>
+  }</pre>
 
 <p><a data-primary="size() function (ArrayList class)" data-type="indexterm">&nbsp;</a></p>
 
@@ -368,7 +392,7 @@ void draw() {
     if (p.isDead()) {
       particles.remove(i);
     }
-}</pre>
+  }</pre>
 
 <p><a data-primary="ArrayList class (Java)" data-secondary="Iterator class and" data-type="indexterm">&nbsp;</a> <a data-primary="iterating" data-secondary="Iterator class (Java)" data-type="indexterm">&nbsp;</a> <a data-primary="Iterator class (Java)" data-type="indexterm">&nbsp;</a></p>
 
@@ -392,7 +416,7 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre>
   while (it.hasNext()) {
     Particle p = it.next();
     p.run();
-//[end]</pre>
+  //[end]</pre>
 
 <p>And if you call the <strong function="">remove()</strong> function on the <strong klass="">Iterator</strong> object during the loop, it will delete the current <strong klass="">Particle</strong> object (and not skip ahead past the next one, as we saw with counting forward through the <strong klass="">ArrayList</strong>).</p>
 
@@ -401,11 +425,11 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre>
       // An Iterator object doing the deleting for you
       it.remove();
     }
-}</pre>
+  }</pre>
 
 <p>Putting it all together, we have:</p>
 
-<figure><img alt="ch04 ex02" src="../images/chapter04/ch04_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_02_ArrayListParticles/_4_02_ArrayListParticles.pde processingjs/chapter04/_4_02_ArrayListParticles/Particle.pde"><img alt="ch04 ex02" src="../images/chapter04/ch04_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -413,13 +437,17 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Particle&gt; particles;
+
 void setup() {
   size(640,360);
   particles = new ArrayList&lt;Particle&gt;();
 }
+
 void draw() {
   background(255);
+
   particles.add(new Particle(new PVector(width/2,50)));
+
   Iterator&lt;Particle&gt; it = particles.iterator();
   //[full] Using an Iterator object instead of counting with int i
   while (it.hasNext()) {
@@ -447,10 +475,12 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
 // Just one wee ParticleSystem!
 ParticleSystem ps;
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem();
 }
+
 void draw() {
   background(255);
   ps.run();
@@ -468,13 +498,19 @@ void draw() {
 			<td>
 			<pre>
 <b>ArrayList&lt;Particle&gt; particles;</b>
+
 void setup() {
   size(640,360);
   <b>particles = new ArrayList&lt;Particle&gt;();</b>
 }
+
 void draw() {
   background(255);
+
   <b>particles.add(new Particle());</b>
+
+
+
   <b>Iterator&lt;Particle&gt; it =
       particles.iterator();
   while (it.hasNext()) {
@@ -491,12 +527,18 @@ void draw() {
 			<pre>
 class ParticleSystem {
   <b>ArrayList&lt;Particle&gt; particles;</b>
+
+
   ParticleSystem() {
     <b>particles = new ArrayList&lt;Particle&gt;();</b>
   }
+
+
+
   void addParticle() {
     <b>particles.add(new Particle());</b>
   }
+
   void run() {
     <b>Iterator&lt;Particle&gt; it =
         particles.iterator();
@@ -527,14 +569,16 @@ class ParticleSystem {
   // This particular ParticleSystem implementation
   // includes an origin point where each Particle begins.
   PVector origin; //[bold]
+
   ParticleSystem(PVector location) {
     origin = location.get();
     particles = new ArrayList();
   }
+
   void addParticle() {
     // The origin is passed to each Particle when it is added.
     particles.add(new Particle(origin)); //[bold]
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter04_exercise3">
 <h5>Exercise 4.3</h5>
@@ -560,19 +604,19 @@ class ParticleSystem {
 
 <p>You start with a blank screen.</p>
 
-<figure><img alt="ch04 ex04a" src="../images/chapter04/ch04_ex04a.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems/_4_04_SystemofSystems.pde processingjs/chapter04/_4_04_SystemofSystems/Particle.pde processingjs/chapter04/_4_04_SystemofSystems/ParticleSystem.pde"><img alt="ch04 ex04a" src="../images/chapter04/ch04_ex04a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>You click the mouse and generate a particle system at the mouse&rsquo;s location.</p>
 
-<figure><img alt="ch04 ex04b" src="../images/chapter04/ch04_ex04b.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems_b/_4_04_SystemofSystems_b.pde processingjs/chapter04/_4_04_SystemofSystems_b/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_b/ParticleSystem.pde"><img alt="ch04 ex04b" src="../images/chapter04/ch04_ex04b.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Each time you click the mouse, a new particle system is created at the mouse&rsquo;s location.</p>
 
-<figure><img alt="ch04 ex04c" src="../images/chapter04/ch04_ex04c.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems_c/_4_04_SystemofSystems_c.pde processingjs/chapter04/_4_04_SystemofSystems_c/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_c/ParticleSystem.pde"><img alt="ch04 ex04c" src="../images/chapter04/ch04_ex04c.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -580,10 +624,12 @@ class ParticleSystem {
 
 <pre data-code-language="java" data-type="programlisting">
 ParticleSystem ps;
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem(1,new PVector(width/2,50));
 }
+
 void draw() {
   background(255);
   ps.run();
@@ -651,10 +697,15 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class HappyConfetti {
+
 }
+
 class FunConfetti {
+
 }
+
 class WackyConfetti {
+
 }</pre>
 
 <p>This is a nice solution: we have three different classes to describe the different kinds of pieces of confetti that could be part of our particle system. The <strong klass="">ParticleSystem</strong> constructor could then have some code to pick randomly from the three classes when filling the <strong klass="">ArrayList</strong>. Note that this probabilistic method is the same one we employed in our random walk examples in the <a href="#intro_section2">Introduction</a>.</p>
@@ -667,12 +718,13 @@ class ParticleSystem {
       float r = random(1);
       //[full]
       // Randomly picking a &quot;kind&quot; of particle
+
       if      (r &lt; 0.33) { particles.add(new HappyConfetti()); }
       else if (r &lt; 0.67) { particles.add(new FunConfetti());   }
       else               { particles.add(new WackyConfetti()); }
       //[end]
     }
-}</pre>
+  }</pre>
 
 <p>OK, we now need to pause for a moment. We&rsquo;ve done nothing wrong. All we wanted to do was wish our friend a happy birthday and enjoy writing some code. But while the reasoning behind the above approach is quite sound, we&rsquo;ve opened up two major problems.</p>
 
@@ -710,13 +762,16 @@ class Dog {
   Dog() {
     age = 0;
   }
+
   void eat() {
     println(&quot;Yum!&quot;);
   }
+
   void sleep() {
     println(&quot;Zzzzzz&quot;);
   }
   //[end]
+
   //[full] A unique function for barking.
   void bark() {
     println(&quot;WOOF!&quot;);
@@ -729,15 +784,19 @@ class Dog {
 <pre data-code-language="java" data-type="programlisting">
 class Cat {
   int age;
+
   Cat() {
     age = 0;
   }
+
   void eat() {
     println(&quot;Yum!&quot;);
   }
+
   void sleep() {
     println(&quot;Zzzzzz&quot;);
   }
+
   void meow() {
     println(&quot;MEOW!&quot;);
   }
@@ -771,18 +830,22 @@ class Cat {
 class Animal {
   // Dog and Cat inherit the variable age.
   int age;
+
   Animal() {
     age = 0;
   }
+
   //[full] Dog and Cat inherit the functions eat() and sleep().
   void eat() {
     println(&quot;Yum!&quot;);
   }
+
   void sleep() {
     println(&quot;Zzzzzz&quot;);
   }
   //[end]
 }
+
 // The Dog class is the child (or sub) class, indicated by the code &quot;extends Animal&quot;.
 class Dog extends Animal { //[bold]
   Dog() {
@@ -794,6 +857,7 @@ class Dog extends Animal { //[bold]
     println(&quot;WOOF!&quot;);
   }
 }
+
 class Cat extends Animal {
   Cat() {
     super();
@@ -827,6 +891,7 @@ class Dog extends Animal {
     super();
     haircolor = color(random(255));
   }
+
   void bark() {
     println(&quot;WOOF!&quot;);
   }
@@ -839,15 +904,18 @@ class Dog extends Animal {
 <pre data-code-language="java" data-type="programlisting">
 class Dog extends Animal {
   color haircolor;
+
   Dog() {
      super();
      haircolor = color(random(255));
   }
+
   // A child can override a parent function if necessary.
   void eat() {
     // A Dog's specific eating characteristics
     println(&quot;Woof! Woof! Slurp.&quot;)
   }
+
   void bark() {
     println(&quot;WOOF!&quot;);
   }
@@ -860,10 +928,12 @@ class Dog extends Animal {
 <pre data-code-language="java" data-type="programlisting">
 class Dog extends Animal {
    color haircolor;
+
    Dog() {
      super();
      haircolor = color(random(255));
    }
+
    void eat() {
      // Call eat() from Animal.
      // A child can execute a function from the parent
@@ -873,6 +943,7 @@ class Dog extends Animal {
      // for a Dog's specific eating characteristics.
      println(&quot;Woof!!!&quot;);
    }
+
    void bark() {
     println(&quot;WOOF!&quot;);
   }
@@ -893,19 +964,23 @@ class Particle {
   PVector location;
   PVector velocity;
   PVector acceleration;
+
   Particle(PVector l) {
     acceleration = new PVector(0,0.05);
     velocity = new PVector(random(-1,1),random(-2,0));
     location = l.get();
   }
+
   void run() {
     update();
     display();
   }
+
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
   }
+
   void display() {
     fill(0);
     ellipse(location.x,location.y,8,8);
@@ -916,11 +991,16 @@ class Particle {
 
 <pre data-code-language="java" data-type="programlisting">
 class Confetti extends Particle {
+
   // We could add variables for only Confetti here.
+
   Confetti(PVector l) {
     super(l);
   }
+
   // There is no code here because we inherit update() from parent.
+
+
   //[full] Override the display method.
   void display() {
     rectMode(CENTER);
@@ -943,6 +1023,7 @@ float angle = map(location.x,0,width,0,TWO_PI);</pre>
 <pre data-code-language="java" data-type="programlisting">
   void display() {
     float theta = map(location.x,0,width,0,TWO_PI*2);
+
     rectMode(CENTER);
     fill(0,lifespan);
     stroke(0,lifespan);
@@ -953,7 +1034,7 @@ float angle = map(location.x,0,width,0,TWO_PI);</pre>
     rect(0,0,8,8);
     popMatrix();
     //[end]
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter04_exercise7">
 <h5>Exercise 4.7</h5>
@@ -978,6 +1059,7 @@ ArrayList&lt;Cat&gt; cats = new ArrayList&lt;Cat&gt;();
 ArrayList&lt;Turtle&gt; turtles = new ArrayList&lt;Turtle&gt;();
 ArrayList&lt;Kiwi&gt; kiwis = new ArrayList&lt;Kiwi&gt;();
 //[end]
+
 for (int i = 0; i &lt; 10; i++) {
   dogs.add(new Dog());
 }
@@ -1016,12 +1098,14 @@ for (Kiwi k: kiwis) {
 <pre data-code-language="java" data-type="programlisting">
 //[offset-down] Just one ArrayList for all the animals!
 ArrayList&lt;Animal&gt; kingdom = new ArrayList&lt;Animal&gt;();
+
 for (int i = 0; i &lt; 1000; i++) {
   if (i &lt; 100) kingdom.add(new Dog());
   else if (i &lt; 400) kingdom.add(new Cat());
   else if (i &lt; 900) kingdom.add(new Turtle());
   else kingdom.add(new Kiwi());
 }
+
 for (Animal a: kingdom) {
   a.eat();
 }</pre>
@@ -1057,6 +1141,7 @@ class ParticleSystem {
   ArrayList&lt;Confetti&gt; confetti; //[bold]
   //[end]
   PVector origin;
+
   ParticleSystem(PVector location) {
     origin = location.get();
     //[full] We&rsquo;re stuck doing everything twice with two lists!
@@ -1064,12 +1149,14 @@ class ParticleSystem {
     confetti = new ArrayList&lt;Confetti&gt;(); //[bold]
     //[end]
   }
+
   void addParticle() {
     //[full] We&rsquo;re stuck doing everything twice with two lists!
     particles.add(new Particle(origin)); //[bold]
     particles.add(new Confetti(origin)); //[bold]
     //[end]
   }
+
   void run() {
     //[full] We&rsquo;re stuck doing everything twice with two lists!
     Iterator&lt;Particle&gt; it = particles.iterator(); //[bold]
@@ -1094,7 +1181,7 @@ class ParticleSystem {
 
 <p>Notice how we have two separate lists, one for particles and one for confetti. Every action we want to perform we have to do twice! Polymorphism allows us to simplify the above by just making one <strong klass="">ArrayList</strong> of particles that contains both standard <strong klass="">Particle</strong> objects as well as <strong klass="">Confetti</strong> objects. We don&rsquo;t have to worry about which are which; this will all be taken care of for us! (Also, note that the code for the main program and the classes has not changed, so we aren&rsquo;t including it here. See the website for the full example.)</p>
 
-<figure><img alt="ch04 ex05" src="../images/chapter04/ch04_ex05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/_4_05_ParticleSystemInheritancePolymorphism.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Confetti.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Particle.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/ParticleSystem.pde"><img alt="ch04 ex05" src="../images/chapter04/ch04_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1106,10 +1193,12 @@ class ParticleSystem {
   // or extends Particle
   ArrayList&lt;Particle&gt; particles;  //[bold]
   PVector origin;
+
   ParticleSystem(PVector location) {
     origin = location.get();
     particles = new ArrayList&lt;Particle&gt;();
   }
+
   void addParticle() {
     float r = random(1);
     // We have a 50% chance of adding each kind of Particle.
@@ -1119,6 +1208,7 @@ class ParticleSystem {
       particles.add(new Confetti(origin));  //[bold]
     }
   }
+
   void run() {
     Iterator&lt;Particle&gt; it = particles.iterator();
     while (it.hasNext()) {
@@ -1151,10 +1241,11 @@ class ParticleSystem {
   Particle(PVector l) {
     // We&rsquo;re setting acceleration to a constant value!
     acceleration = new PVector(0,0.05); //[bold]
+
     velocity = new PVector(random(-1,1),random(-2,0));
     location = l.get();
     lifespan = 255.0;
-}</pre>
+  }</pre>
 
 <p>And now let&rsquo;s look at the <strong function="">update()</strong> function.</p>
 
@@ -1162,9 +1253,11 @@ class ParticleSystem {
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
+
     [inline]// Where is the line of code to clear acceleration?
+
     lifespan -= 2.0;
-}</pre>
+  }</pre>
 
 <p>Our <strong klass="">Particle</strong> class is structured to have a constant acceleration, one that never changes. A much better framework would be to follow Newton&rsquo;s second law (F = M* A) and incorporate the force accumulation algorithm we worked so hard on in <a href="#chapter02_section3">Chapter 2</a>.</p>
 
@@ -1175,7 +1268,7 @@ class ParticleSystem {
     PVector f = force.get();
     f.div(mass);
     acceleration.add(f);
-}</pre>
+  }</pre>
 
 <p>Once we have this, we can add in one more line of code to clear the acceleration at the end of <strong function="">update()</strong>.</p>
 
@@ -1186,7 +1279,7 @@ class ParticleSystem {
    // There it is!
    acceleration.mult(0);
    lifespan -= 2.0;
-}</pre>
+  }</pre>
 
 <p>And our <strong klass="">Particle</strong> class is complete!</p>
 
@@ -1196,8 +1289,10 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   float lifespan;
+
   // We could vary mass for more interesting results.
   float mass = 1;
+
   Particle(PVector l) {
     // We now start with acceleration of 0.
     acceleration = new PVector(0,0);
@@ -1205,10 +1300,12 @@ class Particle {
     location = l.get();
     lifespan = 255.0;
   }
+
   void run() {
     update();
     display();
   }
+
   //[full] Newton&rsquo;s second law &amp; force accumulation
   void applyForce(PVector force) {
     PVector f = force.get();
@@ -1216,6 +1313,7 @@ class Particle {
     acceleration.add(f);
   }
   //[end]
+
   //[full] Standard update
   void update() {
     velocity.add(acceleration);
@@ -1224,6 +1322,7 @@ class Particle {
     lifespan -= 2.0;
   }
   //[end]
+
   //[full] Our Particle is a circle.
   void display() {
     stroke(255,lifespan);
@@ -1231,6 +1330,7 @@ class Particle {
     ellipse(location.x,location.y,8,8);
   }
   //[end]
+
   //[full] Should the Particle be deleted?
   boolean isDead() {
     if (lifespan &lt; 0.0) {
@@ -1265,6 +1365,7 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
   background(100);
+
   PVector gravity = new PVector(0,0.1);
   // Applying a force to the system as a whole
   ps.applyForce(gravity);
@@ -1283,13 +1384,13 @@ void draw() {
     for (Particle p: particles) {
       p.applyForce(f);
     }
-}</pre>
+  }</pre>
 
 <p>It almost seems silly to write this function. What we&rsquo;re saying is &ldquo;apply a force to a particle system so that the system can apply that force to all of the individual particles.&rdquo; Nevertheless, it&rsquo;s really quite reasonable. After all, the <strong klass="">ParticleSystem</strong> object is in charge of managing the particles, so if we want to talk to the particles, we&rsquo;ve got to talk to them through their manager. (Also, here&rsquo;s a chance for the enhanced loop since we aren&rsquo;t deleting particles!)</p>
 
 <p>Here is the full example (assuming the existence of the <strong klass="">Particle</strong> class written above; no need to include it again since nothing has changed):</p>
 
-<figure><img alt="ch04 ex06" src="../images/chapter04/ch04_ex06.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_06_ParticleSystemForces/_4_06_ParticleSystemForces.pde processingjs/chapter04/_4_06_ParticleSystemForces/Particle.pde processingjs/chapter04/_4_06_ParticleSystemForces/ParticleSystem.pde"><img alt="ch04 ex06" src="../images/chapter04/ch04_ex06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1297,28 +1398,37 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 ParticleSystem ps;
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem(new PVector(width/2,50));
 }
+
 void draw() {
   background(100);
+
   // Apply a force to all particles.
   PVector gravity = new PVector(0,0.1); //[bold]
   ps.applyForce(gravity); //[bold]
+
   ps.addParticle();
   ps.run();
 }
+
+
 class ParticleSystem {
   ArrayList&lt;Particle&gt; particles;
   PVector origin;
+
   ParticleSystem(PVector location) {
     origin = location.get();
     particles = new ArrayList&lt;Particle&gt;();
   }
+
   void addParticle() {
     particles.add(new Particle(origin));
   }
+
   void applyForce(PVector f) {
     //[full] Using an enhanced loop to apply the force to all particles
     for (Particle p: particles) {
@@ -1326,6 +1436,7 @@ class ParticleSystem {
     }
     //[end]
   }
+
   void run() {
     //[full] Can&rsquo;t use the enhanced loop because we want to check for particles to delete.
     Iterator&lt;Particle&gt; it = particles.iterator();
@@ -1348,11 +1459,11 @@ class ParticleSystem {
 
 <p>What if we wanted to take this example one step further and add a <strong klass="">Repeller</strong> object&mdash;the inverse of the <strong klass="">Attractor</strong> object we covered in <a href="#chapter02_section9">Chapter 2</a> that pushes any particles away that get close? This requires a bit more sophistication because, unlike the gravity force, each force an attractor or repeller exerts on a particle must be calculated for each particle.</p>
 
-<figure id="chapter04_figure3"><img alt="Figure 4.3: Gravity force—vectors are all identical" src="../images/chapter04/ch04_03.png" />
+<figure class="two-col-borderless" id="chapter04_figure3"><img alt="Figure 4.3: Gravity force—vectors are all identical" src="../images/chapter04/ch04_03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="chapter04_figure4"><img alt="Figure 4.4: Attractor force—vectors are all different" src="../images/chapter04/ch04_04.png" />
+<figure class="two-col-borderless" id="chapter04_figure4"><img alt="Figure 4.4: Attractor force—vectors are all different" src="../images/chapter04/ch04_04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1371,19 +1482,24 @@ class ParticleSystem {
 ParticleSystem ps;
 // New thing: we declare a Repeller object.
 Repeller repeller; //[bold]
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem(new PVector(width/2,50));
   // New thing: we initialize a Repeller object.
   repeller = new Repeller(width/2-20,height/2); //[bold]
 }
+
 void draw() {
   background(100);
   ps.addParticle();
+
   PVector gravity = new PVector(0,0.1);
   ps.applyForce(gravity);
+
   // New thing: we need a function to apply a force from a repeller.
   ps.applyRepeller(repeller); //[bold]
+
   ps.run();
   // New thing: we display the Repeller object.
   repeller.display(); //[bold]
@@ -1396,9 +1512,11 @@ class Repeller {
   // A Repeller doesn&rsquo;t move, so you just need location.
   PVector location;
   float r = 10;
+
   Repeller(float x, float y)  {
     location = new PVector(x,y);
   }
+
   void display() {
     stroke(255);
     fill(255);
@@ -1457,13 +1575,13 @@ void applyRepeller(Repeller r) {
     // 4) Make a vector out of direction and magnitude.
     dir.mult(force);
     return dir;
-}</pre>
+  }</pre>
 
 <p>Notice how throughout this entire process of adding a repeller to the environment, we&rsquo;ve never once considered editing the <strong klass="">Particle</strong> class itself. A particle doesn&rsquo;t actually have to know anything about the details of its environment; it simply needs to manage its location, velocity, and acceleration, as well as have the ability to receive an external force and act on it.</p>
 
 <p>So we can now look at this example in its entirety, again leaving out the <strong klass="">Particle</strong> class, which hasn&rsquo;t changed.</p>
 
-<figure><img alt="ch04 ex07" src="../images/chapter04/ch04_ex07.png" />
+<figure class="screenshot" data-pde="processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/_4_07_ParticleSystemForcesRepeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Repeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Particle.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/ParticleSystem.pde"><img alt="ch04 ex07" src="../images/chapter04/ch04_ex07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1474,11 +1592,13 @@ void applyRepeller(Repeller r) {
 ParticleSystem ps;
 // One repeller
 Repeller repeller;
+
 void setup() {
   size(640,360);
   ps = new ParticleSystem(new PVector(width/2,50));
   repeller = new Repeller(width/2-20,height/2);
 }
+
 void draw() {
   background(100);
   ps.addParticle();
@@ -1487,26 +1607,33 @@ void draw() {
   ps.applyForce(gravity);
   // Applying the repeller
   ps.applyRepeller(repeller);
+
   ps.run();
   repeller.display();
 }
+
+
 // The ParticleSystem manages all the Particles.
 class ParticleSystem {
   ArrayList&lt;Particle&gt; particles;
   PVector origin;
+
   ParticleSystem(PVector location) {
     origin = location.get();
     particles = new ArrayList&lt;Particle&gt;();
   }
+
   void addParticle() {
     particles.add(new Particle(origin));
   }
+
   // Applying a force as a PVector
   void applyForce(PVector f) {
     for (Particle p: particles) {
       p.applyForce(f);
     }
   }
+
   void applyRepeller(Repeller r) {
     //[full] Calculating a force for each Particle based on a Repeller
     for (Particle p: particles) {
@@ -1515,6 +1642,7 @@ class ParticleSystem {
     }
     //[end]
   }
+
   void run() {
     Iterator&lt;Particle&gt; it = particles.iterator();
     while (it.hasNext()) {
@@ -1526,19 +1654,24 @@ class ParticleSystem {
     }
   }
 }
+
 class Repeller {
+
   // How strong is the repeller?
   float strength = 100;
   PVector location;
   float r = 10;
+
   Repeller(float x, float y)  {
     location = new PVector(x,y);
   }
+
   void display() {
     stroke(255);
     fill(255);
     ellipse(location.x,location.y,r*2,r*2);
   }
+
   PVector repel(Particle p) {
     //[full] This is the same repel algorithm we used in Chapter 2: forces based on gravitational attraction.
     PVector dir = PVector.sub(location,p.location);
@@ -1574,11 +1707,11 @@ class Repeller {
 
 <p>Let&rsquo;s try to create a smoke simulation in Processing. Take a look at the following two images:</p>
 
-<figure><img alt="White circles" src="../images/chapter04/ch04_ex08b.png" />
+<figure class="two-col-borderless" data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke_b/_4_08_ParticleSystemSmoke_b.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/ParticleSystem.pde"><img alt="White circles" src="../images/chapter04/ch04_ex08b.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="Fuzzy images with transparency" src="../images/chapter04/ch04_ex08a.png" />
+<figure class="two-col-borderless" data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke/_4_08_ParticleSystemSmoke.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/ParticleSystem.pde"><img alt="Fuzzy images with transparency" src="../images/chapter04/ch04_ex08a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1617,7 +1750,7 @@ void setup() {
     // Note how tint() is the image equivalent of shape&rsquo;s fill().
     tint(255,lifespan);
     image(img,loc.x,loc.y);
-}</pre>
+  }</pre>
 
 <p><a data-primary="natural phenomena" data-secondary="smoke" data-tertiary="modeling with particle systems" data-type="indexterm">&nbsp;</a> <a data-primary="particle systems" data-secondary="smoke" data-tertiary="modeling" data-type="indexterm">&nbsp;</a></p>
 
@@ -1628,13 +1761,14 @@ void setup() {
 <pre data-code-language="java" data-type="programlisting">
     float vx = (float) generator.nextGaussian()*0.3;
     float vy = (float) generator.nextGaussian()*0.3 - 1.0;
-vel = new PVector(vx,vy);</pre>
+    vel = new PVector(vx,vy);</pre>
 
 <p>Finally, in this example, a wind force is applied to the smoke mapped from the mouse&rsquo;s horizontal location.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
   background(0);
+
   float dx = map(mouseX,0,width,-0.2,0.2);
   // Wind force points towards mouseX.
   PVector wind = new PVector(dx,0);
@@ -1689,11 +1823,14 @@ void setup() {
 void draw() {
   // Additive blending
   blendMode(ADD);
+
   // Note that the &ldquo;glowing&rdquo; effect of additive
   // blending will not work with a white
   // (or very bright) background.
   background(0);
+
   // All your other particle stuff would go here.
+
 }</pre>
 
 <div data-type="example" id="chapter04_exercise13">

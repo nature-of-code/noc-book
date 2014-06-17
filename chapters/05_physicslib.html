@@ -357,6 +357,7 @@ a.normalize();
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
+
 void setup() {
   box2d = new PBox2D(this);
   // Initializes a Box2D world with default settings
@@ -401,6 +402,7 @@ Vec2 mouseWorld = box2d.coordPixelsToWorld(mouseX,mouseY);</pre>
 <pre data-code-language="java" data-type="programlisting">
 // To demonstrate, let&rsquo;s just make up a world position.
 Vec2 worldPos = new Vec2(-10,25);
+
 // Convert to pixel space.
 // This is necessary because ultimately we
 // are going to want to draw the elements in our window.
@@ -599,6 +601,7 @@ PolygonShape ps = new PolygonShape();</pre>
 float box2Dw = box2d.scalarPixelsToWorld(150);
 float box2Dh = box2d.scalarPixelsToWorld(100);
 //[end]
+
 // Use setAsBox() function to define shape as a rectangle.
 ps.setAsBox(box2Dw, box2Dh);</pre>
 </section>
@@ -672,19 +675,23 @@ body.createFixture(ps,1);</pre>
 // Step 1. Define the body.
 BodyDef bd = new BodyDef();
 bd.position.set(box2d.coordPixelsToWorld(width/2,height/2));
+
 // Step 2. Create the body.
 Body body = box2d.createBody(bd);
+
 // Step 3. Define the shape.
 PolygonShape ps = new PolygonShape();
 float w = box2d.scalarPixelsToWorld(150);
 float h = box2d.scalarPixelsToWorld(100);
 ps.setAsBox(w, h);
+
 // Step 4. Define the fixture.
 FixtureDef fd = new FixtureDef();
 fd.shape = ps;
 fd.density = 1;
 fd.friction = 0.3;
 fd.restitution = 0.5;
+
 // Step 5. Attach the shape to the body with the Fixture.
 body.createFixture(fd);</pre>
 
@@ -702,6 +709,7 @@ fd.shape = cs;
 fd.density = 1;
 fd.friction = 0.1;
 fd.restitution = 0.3;
+
 body.createFixture(fd);</pre>
 </div>
 </section>
@@ -724,10 +732,12 @@ body.createFixture(fd);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Box  {
+
   //[full] Our Box object has an x,y location and a width and a height.
   float x,y;
   float w,h;
   //[end]
+
   Box(float x_, float y_) {
     //[full] The location is initalized in the constructor via arguments
     x = x_;
@@ -736,6 +746,7 @@ class Box  {
     w = 16;
     h = 16;
   }
+
   void display() {
     // We draw the Box object using Processing&rsquo;s rect() function.
     fill(175);
@@ -747,7 +758,7 @@ class Box  {
 
 <p>Let&rsquo;s write a main tab that creates a new <strong klass="">Box</strong> whenever the mouse is pressed and stores all the <strong klass="">Box</strong> objects in an <strong klass="">ArrayList</strong>. (This is very similar to our approach in the particle system examples from Chapter 4.)</p>
 
-<figure><img alt="ch05 ex01" src="../images/chapter05/ch05_ex01.png" />
+<figure class="screenshot"><img alt="ch05 ex01" src="../images/chapter05/ch05_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -756,18 +767,22 @@ class Box  {
 <pre data-code-language="java" data-type="programlisting">
 // A list to store all Box objects
 ArrayList&lt;Box&gt; boxes;
+
 void setup() {
   size(400,300);
   boxes = new ArrayList&lt;Box&gt;();
 }
+
 void draw() {
   background(255);
+
   //[full] When the mouse is pressed, add a new Box object.
   if (mousePressed) {
     Box p = new Box(mouseX,mouseY);
     boxes.add(p);
   }
   //[end]
+
   //[full] Display all the Box objects.
   for (Box b: boxes) {
     b.display();
@@ -788,6 +803,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
+
 void setup() {
   //[full] Initialize and create the Box2D world.
   box2d = new PBox2D(this);
@@ -815,11 +831,12 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Box  {
+
   // Instead of any of the usual variables,
   // we will store a reference to a Box2D body.
   Body body;
   float w;
-float h;</pre>
+  float h;</pre>
 
 <p>We don&rsquo;t need <em>(x,y)</em> anymore since, as we&rsquo;ll see, the body itself will keep track of its location. The body technically could also keep track of the width and height for us, but since Box2D isn&rsquo;t going to do anything to alter those values over the life of the <strong klass="">Box</strong> object, we might as well just hold onto them ourselves until it&rsquo;s time to draw the <strong klass="">Box</strong>.</p>
 
@@ -829,11 +846,13 @@ float h;</pre>
   Box() {
     w = 16;
     h = 16;
+
     // Build body.
     BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(mouseX,mouseY));
     body = box2d.createBody(bd);
+
     // Build shape.
     PolygonShape ps = new PolygonShape();
     //[full] Box2D considers the width and height of a rectangle to be the distance from the center to the edge (so half of what we normally think of as width or height).
@@ -841,15 +860,17 @@ float h;</pre>
     float box2dH = box2d.scalarPixelsToWorld(h/2);
     //[end]
     ps.setAsBox(box2dW, box2dH);
+
     FixtureDef fd = new FixtureDef();
     fd.shape = ps;
     fd.density = 1;
     // Set physics parameters.
     fd.friction = 0.3;
     fd.restitution = 0.5;
+
     // Attach the Shape to the Body with the Fixture.
     body.createFixture(fd);
-}</pre>
+ }</pre>
 
 <p>OK, we&rsquo;re almost there. Before we introduced Box2D, it was easy to draw the <strong klass="">Box</strong>. The object&rsquo;s location was stored in variables <strong class="var">x</strong> and <strong class="var">y</strong>.</p>
 
@@ -861,7 +882,7 @@ float h;</pre>
     rectMode(CENTER);
     rect(x,y,w,h);
   }
-//[end]</pre>
+  //[end]</pre>
 
 <p><a data-primary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
 
@@ -891,6 +912,7 @@ float a = body.getAngle();</pre>
     Vec2 pos = box2d.getBodyPixelCoord(body);
     float a = body.getAngle();
     //[end]
+
     pushMatrix();
     //[full] Using the Vec2 position and float angle to translate and rotate the rectangle
     translate(pos.x,pos.y);
@@ -901,7 +923,7 @@ float a = body.getAngle();</pre>
     rectMode(CENTER);
     rect(0,0,w,h);
     popMatrix();
-}</pre>
+  }</pre>
 
 <p>In case we want to have objects that can be removed from the Box2D world, it&rsquo;s also useful to include a function to destroy a body, such as:</p>
 
@@ -911,12 +933,12 @@ float a = body.getAngle();</pre>
   // This function removes a body from the Box2D world.
   void killBody() {
     box2d.destroyBody(body);
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter05_exercise2">
 <h5>Exercise 5.2</h5>
 
-<figure><img alt="ch05 exc02" src="../images/chapter05/ch05_exc02.png" />
+<figure class="screenshot"><img alt="ch05 exc02" src="../images/chapter05/ch05_exc02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -938,11 +960,11 @@ float a = body.getAngle();</pre>
  BodyDef bd = new BodyDef();
  // When BodyDef type = STATIC, the
  // Body is locked in place.
-bd.type = BodyType.STATIC;</pre>
+ bd.type = BodyType.STATIC;</pre>
 
 <p>We can add this feature to our Boxes example by writing a <strong klass="">Boundary</strong> class and having each boundary create a fixed Box2D body.</p>
 
-<figure><img alt="ch05 ex02" src="../images/chapter05/ch05_ex02.png" />
+<figure class="screenshot"><img alt="ch05 ex02" src="../images/chapter05/ch05_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -950,30 +972,36 @@ bd.type = BodyType.STATIC;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Boundary {
+
   //[full] A boundary is a simple rectangle with x, y, width, and height.
   float x,y;
   float w,h;
   //[end]
   Body b;
+
   Boundary(float x_,float y_, float w_, float h_) {
     x = x_;
     y = y_;
     w = w_;
     h = h_;
+
     // Build the Box2D Body and Shape.
     BodyDef bd = new BodyDef();
     bd.position.set(box2d.coordPixelsToWorld(x,y));
     // Make it fixed by setting type to STATIC!
     bd.type = BodyType.STATIC;
     b = box2d.createBody(bd);
+
     float box2dW = box2d.scalarPixelsToWorld(w/2);
     float box2dH = box2d.scalarPixelsToWorld(h/2);
     PolygonShape ps = new PolygonShape();
     // The PolygonShape is just a box.
     ps.setAsBox(box2dW, box2dH);
+
     // Using the createFixture() shortcut
     b.createFixture(ps,1);
   }
+
   // Since we know it can never move, we can just draw it
   // the old-fashioned way, using our original
   // variables. No need to query Box2D.
@@ -983,6 +1011,7 @@ class Boundary {
     rectMode(CENTER);
     rect(x,y,w,h);
   }
+
 }</pre>
 </section>
 
@@ -1035,7 +1064,7 @@ vertices[1] = box2d.coordPixelsToWorld(width,150);</pre>
 // you can specify a value less than length.
 chain.createChain(vertices, vertices.length);</pre>
 
-<figure><img alt="ch05 ex03" src="../images/chapter05/ch05_ex03.png" />
+<figure class="screenshot"><img alt="ch05 ex03" src="../images/chapter05/ch05_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </section>
@@ -1052,11 +1081,12 @@ fd.shape = chain;
 fd.density = 1;
 fd.friction = 0.3;
 fd.restitution = 0.5;
+
 body.createFixture(fd);</pre>
 
 <p>Now, if we want to include a <strong klass="">ChainShape</strong> object in our sketch, we can follow the same strategy as we did with a fixed boundary. Let&rsquo;s write a class called <strong klass="">Surface</strong>:</p>
 
-<figure><img alt="ch05 ex04" src="../images/chapter05/ch05_ex04.png" />
+<figure class="screenshot"><img alt="ch05 ex04" src="../images/chapter05/ch05_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1065,28 +1095,36 @@ body.createFixture(fd);</pre>
 <pre data-code-language="java" data-type="programlisting">
 class Surface {
   ArrayList&lt;Vec2&gt; surface;
+
   Surface() {
+
     surface = new ArrayList&lt;Vec2&gt;();
     //[full] 3 vertices in pixel coordinates
     surface.add(new Vec2(0, height/2+50));
     surface.add(new Vec2(width/2, height/2+50));
     surface.add(new Vec2(width, height/2));
     //[end]
+
     ChainShape chain = new ChainShape();
+
     // Make an array of Vec2 for the ChainShape.
     Vec2[] vertices = new Vec2[surface.size()];
+
+
     for (int i = 0; i &lt; vertices.length; i++) {
       //[offset-up] Convert each vertex to Box2D World coordinates.
       vertices[i] = box2d.coordPixelsToWorld(surface.get(i));
     }
+
     // Create the ChainShape with array of Vec2.
     chain.createChain(vertices, vertices.length);
+
     //[full] Attach the Shape to the Body.
     BodyDef bd = new BodyDef();
     Body body = box2d.world.createBody(bd);
     body.createFixture(chain, 1);
     //[end]
-}</pre>
+  }</pre>
 
 <p>Notice how the above class includes an <strong klass="">ArrayList</strong> to store a series of <strong klass="">Vec2</strong> objects. Even though we fully intend to store the coordinates of the chain in the chain shape itself, we are choosing the ease of redundancy and keeping our own list of those points as well. Later, when we go to draw the <strong klass="">Surface</strong> object, we don&rsquo;t have to ask Box2D for the locations of the chain shape&rsquo;s vertices.</p>
 
@@ -1109,16 +1147,21 @@ class Surface {
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
+
 Surface surface;
+
 void setup() {
   size(500,300);
   box2d = new PBox2D(this);
   box2d.createWorld();
+
   // Make a Surface object.
   surface = new Surface();
 }
+
 void draw() {
   box2d.step();
+
   background(255);
   // Draw the Surface.
   surface.display();
@@ -1129,11 +1172,11 @@ void draw() {
 
 <p>Review how we learned to draw a wave pattern in Chapter 3. Create a <strong klass="">ChainShape</strong> object out of a sine wave. Try using <a href="#intro_section6">Perlin noise</a> as well.</p>
 
-<figure><img alt="sine wave" src="../images/chapter05/ch05_exc03a.png" />
+<figure class="two-col"><img alt="sine wave" src="../images/chapter05/ch05_exc03a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="Perlin noise" src="../images/chapter05/ch05_exc03b.png" />
+<figure class="two-col"><img alt="Perlin noise" src="../images/chapter05/ch05_exc03b.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1149,7 +1192,7 @@ void draw() {
 
 <p><a data-primary="Box2D" data-secondary="complex forms in" data-type="indexterm">&nbsp;</a></p>
 
-<figure id="chapter05_figure5"><img alt="Figure 5.5" src="../images/chapter05/ch05_05.png" />
+<figure class="half-width-right" id="chapter05_figure5"><img alt="Figure 5.5" src="../images/chapter05/ch05_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1159,24 +1202,25 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
   PolygonShape ps = new PolygonShape();
-ps.setAsBox(box2dW, box2dH);</pre>
+  ps.setAsBox(box2dW, box2dH);</pre>
 
 <p><a data-primary="PolygonShape class" data-secondary="as list of vectors" data-type="indexterm">&nbsp;</a></p>
 
 <p>This was a good way to start because of the inherent simplicity of working with rectangles. However, a <strong klass="">PolygonShape</strong> object can also be generated from an array of vectors, which allows you to build a completely custom shape as a series of connected vertices. This works very similarly to the <strong klass="">ChainShape</strong> class.</p>
 
-<figure><img alt="ch05 ex05" src="../images/chapter05/ch05_ex05.png" />
+<figure class="screenshot"><img alt="ch05 ex05" src="../images/chapter05/ch05_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p><strong example="">Example 5.4: Polygon shapes</strong></p>
 
 <pre data-code-language="java" data-type="programlisting">
-Vec2[] vertices = new Vec2[4];// An array of 4 vectors
+Vec2[] vertices = new Vec2[4];	// An array of 4 vectors
 vertices[0] = box2d.vectorPixelsToWorld(new Vec2(-15, 25));
 vertices[1] = box2d.vectorPixelsToWorld(new Vec2(15, 0));
 vertices[2] = box2d.vectorPixelsToWorld(new Vec2(20, -15));
 vertices[3] = box2d.vectorPixelsToWorld(new Vec2(-10, -10));
+
 //[full] Making a polygon from that array
 PolygonShape ps = new PolygonShape();
 ps.set(vertices, vertices.length);
@@ -1184,7 +1228,7 @@ ps.set(vertices, vertices.length);
 
 <p>When building your own polygon in Box2D, you must remember two important details.</p>
 
-<figure id="chapter05_figure6"><img alt="Figure 5.6" src="../images/chapter05/ch05_06.png" />
+<figure class="half-width-left" id="chapter05_figure6"><img alt="Figure 5.6" src="../images/chapter05/ch05_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1213,10 +1257,12 @@ ps.set(vertices, vertices.length);
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     float a = body.getAngle();
+
     // First we get the Fixture attached to the body...
     Fixture f = body.getFixtureList();
     // ...then the Shape attached to the Fixture.
     PolygonShape ps = (PolygonShape) f.getShape();
+
     rectMode(CENTER);
     pushMatrix();
     translate(pos.x,pos.y);
@@ -1231,7 +1277,7 @@ ps.set(vertices, vertices.length);
     }
     endShape(CLOSE);
     popMatrix();
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter05_exercise4">
 <h5>Exercise 5.4</h5>
@@ -1272,16 +1318,19 @@ bd.type = BodyType.DYNAMIC;
 bd.position.set(box2d.coordPixelsToWorld(center));
 body = box2d.createBody(bd);
 //[end]
+
 //[full] Making shape 1 (the rectangle)
 PolygonShape ps = new PolygonShape();
 float box2dW = box2d.scalarPixelsToWorld(w/2);
 float box2dH = box2d.scalarPixelsToWorld(h/2);
 sd.setAsBox(box2dW, box2dH);
 //[end]
+
 //[full] Making shape 2 (the circle)
 CircleShape cs = new CircleShape();
 cs.m_radius = box2d.scalarPixelsToWorld(r);
 //[end]
+
 //[full] Attach both shapes with a fixture.
 body.createFixture(ps,1.0);
 body.createFixture(cs, 1.0);
@@ -1313,7 +1362,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
 
 <p>Then, when we go to draw the body, we use both <strong function="">rect()</strong> and <strong function="">ellipse()</strong> with the circle offset the same way.</p>
 
-<figure><img alt="ch05 ex06" src="../images/chapter05/ch05_ex06.png" />
+<figure class="screenshot"><img alt="ch05 ex06" src="../images/chapter05/ch05_ex06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1323,6 +1372,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     float a = body.getAngle();
+
     rectMode(CENTER);
     pushMatrix();
     translate(pos.x,pos.y);
@@ -1334,7 +1384,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
     // Then the ellipse offset at (0,-h/2)
     ellipse(0,-h/2,r*2,r*2);
     popMatrix();
-}</pre>
+  }</pre>
 
 <p>Finishing off this section, I want to stress the following: the stuff you draw in your Processing window doesn&rsquo;t magically experience physics simply because we created some Box2D bodies and shapes. These examples work because we very carefully matched how we draw our elements with how we defined the bodies and shapes we put into the Box2D world. If you accidentally draw your shape differently, you won&rsquo;t get an error, not from Processing or from Box2D. However, your sketch will look odd and the physics won&rsquo;t work correctly. For example, what if we had written:</p>
 
@@ -1348,7 +1398,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 
 <p>when it came time to display the shape?</p>
 
-<figure><img alt="ch05 ex07" src="../images/chapter05/ch05_ex07.png" />
+<figure class="screenshot"><img alt="ch05 ex07" src="../images/chapter05/ch05_ex07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1366,7 +1416,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 
 <p><a data-primary="joint (Box2D element)" data-type="indexterm">&nbsp;</a></p>
 
-<figure id="chapter05_figure10"><img alt="Figure 5.10" src="../images/chapter05/ch05_10.png" />
+<figure class="half-width-right" id="chapter05_figure10"><img alt="Figure 5.10" src="../images/chapter05/ch05_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1416,7 +1466,7 @@ djd.length = box2d.scalarPixelsToWorld(10);</pre>
   // oscillation; try values between 1 and 5.
   djd.frequencyHz  = ___;
   // Dampens the spring; typically a number between 0 and 1.
-djd.dampingRatio = ___;</pre>
+  djd.dampingRatio = ___;</pre>
 
 <p>Finally, we create the joint.</p>
 
@@ -1427,7 +1477,7 @@ DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);</pre>
 
 <p>We can create Box2D joints anywhere in our Processing sketch. Here&rsquo;s an example of how we might write a class to describe two Box2D bodies connected with a single joint.</p>
 
-<figure><img alt="ch05 ex08" src="../images/chapter05/ch05_ex08.png" />
+<figure class="screenshot"><img alt="ch05 ex08" src="../images/chapter05/ch05_ex08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1435,18 +1485,23 @@ DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Pair {
+
   //[full] Two objects that each have a Box2D body
   Particle p1;
   Particle p2;
   //[end]
   // Arbitrary rest length
   float len = 32;
+
   Pair(float x, float y) {
+
     //[full]
     // Problems can result if the bodies are initialized at the same location.
+
     p1 = new Particle(x,y);
     p2 = new Particle(x+random(-1,1),y+random(-1,1));
     //[end]
+
     // Making the joint!
     DistanceJointDef djd = new DistanceJointDef();
     djd.bodyA = p1.body;
@@ -1454,14 +1509,17 @@ class Pair {
     djd.length = box2d.scalarPixelsToWorld(len);
     djd.frequencyHz = 0;  // Try a value less than 5
     djd.dampingRatio = 0; // Ranges between 0 and 1
+
     //[offset-down] Make the joint.  Note that we aren't storing a reference to the joint anywhere! We might need to someday, but for now it's OK.
     DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);
   }
+
   void display() {
     Vec2 pos1 = box2d.getBodyPixelCoord(p1.body);
     Vec2 pos2 = box2d.getBodyPixelCoord(p2.body);
     stroke(0);
     line(pos1.x,pos1.y,pos2.x,pos2.y);
+
     p1.display();
     p2.display();
   }
@@ -1472,12 +1530,12 @@ class Pair {
 
 <p>Create a simulation of a bridge by using distance joints to connect a sequence of circles (or rectangles) as illustrated to the right. Assign a density of zero to lock the endpoints in place. Experiment with different values to make the bridge more or less &ldquo;springy.&rdquo; It should also be noted that the joints themselves have no physical geometry, so in order for your bridge not to have holes, spacing between the nodes will be important.</p>
 
-<figure><img alt="ch05 exc06" src="../images/chapter05/ch05_exc06.png" />
+<figure class="screenshot"><img alt="ch05 exc06" src="../images/chapter05/ch05_exc06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
 
-<figure id="chapter05_figure11"><img alt="Figure 5.11" src="../images/chapter05/ch05_11.png" />
+<figure class="half-width-right" id="chapter05_figure11"><img alt="Figure 5.11" src="../images/chapter05/ch05_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1546,7 +1604,7 @@ RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 
 <p>Let&rsquo;s take a look at all of these steps together in a class called <strong klass="">Windmill</strong>, which connects two boxes with a revolute joint. In this case, <strong class="var">box1</strong> has a density of zero, so only <strong class="var">box2</strong> spins around a fixed point.</p>
 
-<figure><img alt="ch05 ex09" src="../images/chapter05/ch05_ex09.png" />
+<figure class="screenshot"><img alt="ch05 ex09" src="../images/chapter05/ch05_ex09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1554,31 +1612,43 @@ RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Windmill {
+
   // Our &ldquo;Windmill&rdquo; is two boxes and one joint.
   RevoluteJoint joint;
   Box box1;
   Box box2;
+
   Windmill(float x, float y) {
+
     //[full] In this example, the Box class expects a boolean argument that will be used to determine if the Box is fixed or not.  See website for the Box class code.
     box1 = new Box(x,y,120,10,false);
     box2 = new Box(x,y,10,40,true);
+
+
     //[end]
+
     RevoluteJointDef rjd = new RevoluteJointDef();
     //[offset-down] The joint connects two bodies and is anchored at the center of the first body.
     rjd.initialize(box1.body, box2.body, box1.body.getWorldCenter());
+
+
+
     // A motor!
     rjd.motorSpeed = PI*2;
     rjd.maxMotorTorque = 1000.0;
     rjd.enableMotor = true;
+
     //[offset-down] Create the Joint.
     joint = (RevoluteJoint) box2d.world.createJoint(rjd);
   }
+
   //[full] Turning the motor on or off
   void toggleMotor() {
     boolean motorstatus = joint.isMotorEnabled();
     joint.enableMotor(!motorstatus);
   }
   //[end]
+
   void display() {
     box1.display();
     box2.display();
@@ -1588,7 +1658,7 @@ class Windmill {
 <div data-type="example" id="chapter05_exercise7">
 <h5>Exercise 5.7</h5>
 
-<figure><img alt="ch05 exc07" src="../images/chapter05/ch05_exc07.png" />
+<figure class="half-width-right"><img alt="ch05 exc07" src="../images/chapter05/ch05_exc07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1618,14 +1688,17 @@ body.setTransform(mouse,0);</pre>
 <pre data-code-language="java" data-type="programlisting">
 // Just like before, define the Joint.
 MouseJointDef md = new MouseJointDef();
+
 // Whoa, this is new!
 md.bodyA = box2d.getGroundBody(); //[bold]
 // Attach the Box body.
 md.bodyB = box.body;
+
 // Set properties.
 md.maxForce = 5000.0;
 md.frequencyHz = 5.0;
 md.dampingRatio = 0.9;
+
 // Create the joint.
 MouseJoint mouseJoint = (MouseJoint) box2d.world.createJoint(md);.</pre>
 
@@ -1660,7 +1733,7 @@ mouseJoint.setTarget(mouseWorld);</pre>
 
 <p>Let&rsquo;s take a look at the main tab. You can find the rest of the code for the <strong klass="">Box</strong> and <strong klass="">Spring</strong> classes via the book website.</p>
 
-<figure><img alt="ch05 ex10" src="../images/chapter05/ch05_ex10.png" />
+<figure class="screenshot"><img alt="ch05 ex10" src="../images/chapter05/ch05_ex10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1668,18 +1741,22 @@ mouseJoint.setTarget(mouseWorld);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
+
 // One Box
 Box box;
 // Object to manage MouseJoint
 Spring spring;
+
 void setup() {
   size(400,300);
   box2d = new PBox2D(this);
   box2d.createWorld();
+
   box = new Box(width/2,height/2);
   // The MouseJoint is really null until we click the mouse.
   spring = new Spring();
 }
+
 void mousePressed() {
   // Was the mouse clicked inside the Box?
   if (box.contains(mouseX, mouseY)) {
@@ -1687,15 +1764,20 @@ void mousePressed() {
     spring.bind(mouseX,mouseY,box);
   }
 }
+
 void mouseReleased() {
   // When the mouse is released, we&rsquo;re done with the MouseJoint.
   spring.destroy();
 }
+
 void draw() {
   background(255);
+
   box2d.step();
+
   // We must always update the MouseJoint&rsquo;s target.
   spring.update(mouseX,mouseY);
+
   box.display();
   spring.display();
 }</pre>
@@ -1715,7 +1797,7 @@ BodyDef bd = new BodyDef();
 // Setting the body type to Kinematic
 bd.type = BodyType.KINEMATIC;</pre>
 
-<figure id="chapter05_figure12"><img alt="Figure 5.12" src="../images/chapter05/ch05_12.png" />
+<figure class="half-width-right" id="chapter05_figure12"><img alt="Figure 5.12" src="../images/chapter05/ch05_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1754,7 +1836,7 @@ body.setLinearVelocity(v);</pre>
   box2d = new PBox2D(this);
   box2d.createWorld();
   // Setting the global gravity force
-box2d.setGravity(0, -20);</pre>
+  box2d.setGravity(0, -20);</pre>
 
 <p><a data-primary="applyForce() function (Box2D)" data-type="indexterm">&nbsp;</a> <a data-primary="forces" data-secondary="applyForce() function" data-type="indexterm">&nbsp;</a></p>
 
@@ -1763,6 +1845,7 @@ box2d.setGravity(0, -20);</pre>
 <pre data-code-language="java" data-type="programlisting">
 class Box {
   Body body;
+
   void applyForce(Vec2 force) {
     Vec2 pos = body.getWorldCenter();
     // Calling the Body's applyForce() function
@@ -1807,7 +1890,7 @@ Vec2 attract(Mover m) {
 
 <p>Take any example you made previously using a force calculation and bring that force calculation into Box2D.</p>
 
-<figure><img alt="ch05 exc10" src="../images/chapter05/ch05_exc10.png" />
+<figure class="screenshot"><img alt="ch05 exc10" src="../images/chapter05/ch05_exc10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1839,6 +1922,7 @@ Vec2 attract(Mover m) {
 void mousePressed() {
   println(&quot;The mouse was pressed!&quot;);
 }
+
 // What our &quot;beginContact&quot; event looks like.
 void beginContact(Contact cp) {
   println(&quot;Something collided in the Box2D World!&quot;);
@@ -1879,6 +1963,7 @@ void setup() {
 
 <pre data-code-language="java" data-type="programlisting">
 void beginContact(Contact cp) {
+
 }</pre>
 
 <p><a data-primary="Contact objects (PBox2D)" data-type="indexterm">&nbsp;</a></p>
@@ -1917,6 +2002,7 @@ Body b2 = f2.getBody();
 <pre data-code-language="java" data-type="programlisting">
 class Particle {
   Body body;
+
   Particle(float x, float y, float r) {
     BodyDef bd = new BodyDef();
     bd.position = box2d.coordPixelsToWorld(x, y);
@@ -1925,16 +2011,17 @@ class Particle {
     CircleShape cs = new CircleShape();
     cs.m_radius = box2d.scalarPixelsToWorld(r);
     body.createFixture(fd,1);
+
     // &quot;this&quot; refers to this Particle object.
     // We are telling the Box2D Body to store a
     // reference to this Particle that we can
     // access later.
     body.setUserData(this);  //[bold]
-}</pre>
+  }</pre>
 
 <p>Later, in our <strong function="">addContact()</strong> function, once we know the body, we can access the <strong klass="">Particle</strong> object with <strong function="">getUserData()</strong>.</p>
 
-<figure><img alt="ch05 ex11" src="../images/chapter05/ch05_ex11.png" />
+<figure class="screenshot"><img alt="ch05 ex11" src="../images/chapter05/ch05_ex11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1942,18 +2029,24 @@ class Particle {
 
 <pre data-code-language="java" data-type="programlisting">
 void beginContact(Contact cp) {
+
   Fixture f1 = cp.getFixtureA();
   Fixture f2 = cp.getFixtureB();
+
   Body b1 = f1.getBody();
   Body b2 = f2.getBody();
+
   //[full] When we pull the &ldquo;user data&rdquo; object out of the Body object, we have to remind our program that it is a Particle object.  Box2D doesn&rsquo;t know this.
   Particle p1 = (Particle) b1.getUserData();
   Particle p2 = (Particle) b2.getUserData();
+
+
   //[end]
   //[full] Once we have the particles, we can do anything to them.  Here we
   // just call a function that changes their color.
   p1.change();
   p2.change();
+
   //[end]
 }</pre>
 
@@ -1966,7 +2059,7 @@ void beginContact(Contact cp) {
   if (o1.getClass() == Particle.class) {
     Particle p = (Particle) o1;
     p.change();
-}</pre>
+  }</pre>
 
 <p>It should also be noted that due to how Box2D triggers these callbacks, you cannot create or destroy Box2D entities inside of <strong function="">beginContact()</strong>, <strong function="">endContact()</strong>, <strong function="">preSolve()</strong>, or <strong function="">postSolve()</strong>. If you want to do this, you&rsquo;ll need to set a variable inside an object (something like: <strong function="">markForDeletion = true</strong>), which you check during <strong function="">draw()</strong> and then delete objects.</p>
 
@@ -2311,9 +2404,10 @@ import toxi.geom.*;
 
 <pre data-code-language="java" data-type="programlisting">
 VerletPhysics2D physics;
+
 void setup() {
   // Creating a toxiclibs Verlet physics world
-physics=new VerletPhysics2D();</pre>
+  physics=new VerletPhysics2D();</pre>
 
 <p>Once you have your <strong klass="">VerletPhysics</strong> object, you can set some global properties for your world. For example, if you want it to have hard boundaries past which objects cannot travel, you can set its limits:</p>
 
@@ -2349,7 +2443,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Particle {
-Body body;</pre>
+  Body body;</pre>
 
 <p>This technique is somewhat redundant since Box2D itself keeps track of all of the bodies in its world. However, it allows us to manage which body is which (and therefore how each body is drawn) without having to rely on iterating through Box2D&rsquo;s internal lists.</p>
 
@@ -2361,10 +2455,12 @@ Body body;</pre>
 class Particle {
   // Our Particle has a reference to a VerletParticle.
   VerletParticle2D p;
+
   Particle(Vec2D pos) {
     // A VerletParticle needs an initial location (an x and y).
     p = new VerletParticle2D(pos);
   }
+
   void display() {
     fill(0,150);
     stroke(0);
@@ -2378,10 +2474,12 @@ class Particle {
 
 <pre data-code-language="java" data-type="programlisting">
 class Particle extends VerletParticle2D {
+
   Particle(Vec2D loc) {
     // Calling super() so that the object is initialized properly
     super(loc);
   }
+
   // We want this to be just like a VerletParticle, only with a display() method.
   void display() {
     fill(175);
@@ -2401,7 +2499,7 @@ class Particle extends VerletParticle2D {
 
 <pre data-code-language="java" data-type="programlisting">
   Particle p1 = new Particle(new Vec2D(100,20));
-Particle p2 = new Particle(new Vec2D(100,180));</pre>
+  Particle p2 = new Particle(new Vec2D(100,180));</pre>
 
 <p><a data-primary="addParticle() function (toxiclibs)" data-type="indexterm">&nbsp;</a> <a data-primary="particle systems" data-secondary="addParticle() function (toxiclibs)" data-type="indexterm">&nbsp;</a></p>
 
@@ -2409,7 +2507,7 @@ Particle p2 = new Particle(new Vec2D(100,180));</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   physics.addParticle(p1);
-physics.addParticle(p2);</pre>
+  physics.addParticle(p2);</pre>
 
 <p>If you look at the toxiclibs documentation, you&rsquo;ll see that the <strong function="">addParticle()</strong> expects a <strong klass="">VerletParticle2D</strong> object.</p>
 
@@ -2457,7 +2555,7 @@ physics.addSpring(spring);</pre>
 
 <p>One thing we saw with Box2D is that the physics simulation broke down when we overrode it and manually set the location of a body. With toxiclibs, we don&rsquo;t have this problem. If we want to move the location of a particle, we can simply set its <em>x</em> and <em>y</em> location manually. However, before we do so, it&rsquo;s generally a good idea to call the <strong function="">lock()</strong> function.</p>
 
-<p><strong function="">lock()</strong> is typically used to lock a particle in place and is identical to setting a Box2D body&rsquo;s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation. Let&rsquo;s say you want to move a given particle whenever you click the mouse.</p>
+<p><strong function="">lock()</strong> is typically used to lock a particle in place and is identical to setting a Box2D body&rsquo;s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation.  Let&rsquo;s say you want to move a given particle whenever you click the mouse.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   if (mousePressed) {
@@ -2467,11 +2565,11 @@ physics.addSpring(spring);</pre>
     p2.y = mouseY;
     p2.unlock();
     //[end]
-}</pre>
+  }</pre>
 
 <p>And now we&rsquo;re ready to put all of these elements together in a simple example that connects two particles with a spring. One particle is locked in place, and the other can be moved by dragging the mouse. Note that this example is virtually identical to <a href="#chapter03_example11">Example 3.11</a>.</p>
 
-<figure><img alt="ch05 ex12" src="../images/chapter05/ch05_ex12.png" />
+<figure class="screenshot"><img alt="ch05 ex12" src="../images/chapter05/ch05_ex12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2481,35 +2579,45 @@ physics.addSpring(spring);</pre>
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
 import toxi.geom.*;
+
 VerletPhysics2D physics;
 Particle p1;
 Particle p2;
+
 void setup() {
   size(640,360);
+
   // Creating a physics world
   physics=new VerletPhysics2D();
   physics.addBehavior(new GravityBehavior2D(new Vec2D(0,0.5)));
   physics.setWorldBounds(new Rect(0,0,width,height));
+
   // Creating two Particles
   p1 = new Particle(new Vec2D(100,20));
   p2 = new Particle(new Vec2D(100,180));
   // Locking Particle 1 in place
   p1.lock();
+
   //[offset-down] Creating one Spring
   VerletSpring2D spring=new VerletSpring2D(p1,p2,80,0.01);
+
   // Must add everything to the world
   physics.addParticle(p1);
   physics.addParticle(p2);
   physics.addSpring(spring);
 }
+
 void draw() {
   // Must update the physics
   physics.update();
+
   background(255);
+
   // Drawing everything
   line(p1.x,p1.y,p2.x,p2.y);
   p1.display();
   p2.display();
+
   if (mousePressed) {
     //[full] Moving a Particle according to the mouse
     p2.lock();
@@ -2519,11 +2627,14 @@ void draw() {
     //[end]
   }
 }
+
 //[full] How cute is our simple Particle class?!
 class Particle extends VerletParticle2D {
+
   Particle(Vec2D loc) {
     super(loc);
   }
+
   void display() {
     fill(175);
     stroke(0);
@@ -2587,8 +2698,13 @@ for(int i=0; i &lt; numPoints; i++) {
 if (i != 0) {
   // First we need a reference to the previous particle.
   Particle previous = particles.get(i-1);
+
   //[offset-down] Then we make a spring connection between the particle and the previous particle with a rest length and strength (both floats).
   VerletSpring2D spring = new VerletSpring2D(particle,previous,len,strength);
+
+
+
+
   // We must not forget to add the spring to the physics world.
   physics.addSpring(spring);
 }</pre>
@@ -2603,7 +2719,7 @@ head.lock();</pre>
 
 <p>And if we want to draw all the particles as being connected with a line, along with a circle for the last particle, we can use <strong function="">beginShape()</strong>, <strong function="">endShape()</strong>, and <strong function="">vertex()</strong>, accessing the particle locations from our <strong klass="">ArrayList</strong>.</p>
 
-<figure><img alt="ch05 ex13" src="../images/chapter05/ch05_ex13.png" />
+<figure class="screenshot"><img alt="ch05 ex13" src="../images/chapter05/ch05_ex13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2629,7 +2745,7 @@ tail.display();</pre>
 
 <p>Create a hanging cloth simulation using the technique above, but connect all the particles with a grid as demonstrated in the screenshot below.</p>
 
-<figure><img alt="ch05 exc13" src="../images/chapter05/ch05_exc13.png" />
+<figure class="screenshot"><img alt="ch05 exc13" src="../images/chapter05/ch05_exc13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -2646,15 +2762,15 @@ tail.display();</pre>
 
 <p>This is not an uncommon problem in computational design. One solution is typically referred to as a &ldquo;force-directed graph.&rdquo; A force-directed graph is a visualization of elements&mdash;let&rsquo;s call them &ldquo;nodes&rdquo;&mdash;in which the positions of those nodes are not manually assigned. Rather, the nodes arrange themselves according to a set of forces. While any forces can be used, a typical example involves spring forces. And so toxiclibs is perfect for this scenario.</p>
 
-<figure><img alt="ch05 ex14" src="../images/chapter05/ch05_ex14.png" />
+<figure class="three-col"><img alt="ch05 ex14" src="../images/chapter05/ch05_ex14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="ch05 ex15" src="../images/chapter05/ch05_ex15.png" />
+<figure class="three-col"><img alt="ch05 ex15" src="../images/chapter05/ch05_ex15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="ch05 ex16" src="../images/chapter05/ch05_ex16.png" />
+<figure class="three-col"><img alt="ch05 ex16" src="../images/chapter05/ch05_ex16.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2667,6 +2783,7 @@ class Node extends VerletParticle2D {
   Node(Vec2D pos) {
     super(pos);
   }
+
   void display() {
     fill(0,150);
     stroke(0);
@@ -2678,21 +2795,28 @@ class Node extends VerletParticle2D {
 
 <pre data-code-language="java" data-type="programlisting">
 class Cluster {
+
   ArrayList&lt;Node&gt; nodes;
+
   // We&rsquo;ll use this variable for the rest
   // length between all the nodes.
   float diameter;
+
   Cluster(int n, float d, Vec2D center) {
     nodes = new ArrayList&lt;Node&gt;();
     diameter = d;
+
     for (int i = 0; i &lt; n; i++) {
       //[offset-down] Here&rsquo;s a funny little detail.  We&rsquo;re going to have a problem
       // if all the Node objects start in exactly the same location.
       // So we add a random vector to the center location so that each
       // Node is slightly offset.
       nodes.add(new Node(center.add(Vec2D.randomVector())));
+
+
+
     }
-}</pre>
+  }</pre>
 
 <p>Let&rsquo;s assume we added a <strong function="">display()</strong> function to draw all the nodes in the cluster and created a <strong klass="">Cluster</strong> object in <strong function="">setup()</strong> and displayed it in <strong function="">draw()</strong>. If we ran the sketch as is, nothing would happen. Why? Because we forgot the whole force-directed graph part! We need to connect every single node to every other node with a force. But what exactly do we mean by that? Let&rsquo;s assume we have four <strong klass="">Node</strong> objects: 0, 1, 2 and 3. Here are our connections:</p>
 
@@ -2720,14 +2844,14 @@ class Cluster {
 
 <pre data-code-language="java" data-type="programlisting">
     for (int i = 0; i &lt; nodes.size()-1; i++) {
-VerletParticle2D ni = nodes.get(i);</pre>
+      VerletParticle2D ni = nodes.get(i);</pre>
 
 <p>Now, we know we need to connect node 0 to nodes 1,2,3. For node 1: 2,3. For node 2: 3. So for every node i, we must loop from i+1 until the end of the list.</p>
 
 <pre data-code-language="java" data-type="programlisting">
       // Look how we start j at i + 1.
       for (int j = i+1; j &lt; nodes.size(); j++) { //[bold]
-VerletParticle2D nj = nodes.get(j);</pre>
+        VerletParticle2D nj = nodes.get(j);</pre>
 
 <p>With every two <strong klass="">Node</strong><code>s</code> we find, all we have to do then is make a spring.</p>
 
@@ -2735,11 +2859,11 @@ VerletParticle2D nj = nodes.get(j);</pre>
         // The Spring connects Nodes &ldquo;ni&rdquo; and &ldquo;nj&rdquo;.
         physics.addSpring(new VerletSpring2D(ni,nj,diameter,0.01));
       }
-}</pre>
+    }</pre>
 
 <p>Assuming those connections are made in the <strong klass="">Cluster</strong> constructor, we can now create a cluster in our main tab and see the results!</p>
 
-<figure><img alt="ch05 ex17" src="../images/chapter05/ch05_ex17.png" />
+<figure class="screenshot"><img alt="ch05 ex17" src="../images/chapter05/ch05_ex17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2748,14 +2872,17 @@ VerletParticle2D nj = nodes.get(j);</pre>
 <pre data-code-language="java" data-type="programlisting">
 import toxi.geom.*;
 import toxi.physics2d.*;
+
 VerletPhysics2D physics;
 Cluster cluster;
+
 void setup() {
   size(300,300);
   physics=new VerletPhysics2D();
   //[offset-down] Make a cluster.
   cluster = new Cluster(8,100,new Vec2D(width/2,height/2));
 }
+
 void draw() {
   physics.update();
   background(255);
@@ -2774,7 +2901,7 @@ void draw() {
 
 <p>Expand the force-directed graph to have more than one <strong klass="">Cluster</strong> object. Use a <strong klass="">VerletMinDistanceSpring2D</strong> object to connect cluster to cluster.</p>
 
-<figure><img alt="ch05 exc15" src="../images/chapter05/ch05_exc15.png" />
+<figure class="screenshot"><img alt="ch05 exc15" src="../images/chapter05/ch05_exc15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -2816,8 +2943,10 @@ physics.addBehavior(behavior);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Particle extends VerletParticle2D {
+
   // We&rsquo;ve added a radius to every Particle.
   float r;
+
   Particle (Vec2D loc) {
     super(loc);
     r = 4;
@@ -2827,6 +2956,7 @@ class Particle extends VerletParticle2D {
     // is negative, it&rsquo;s a repulsive force!
     physics.addBehavior(new AttractionBehavior(this, r*4, -1));
   }
+
   void display () {
     fill (255);
     stroke (255);
@@ -2836,7 +2966,7 @@ class Particle extends VerletParticle2D {
 
 <p>We could now recreate our attraction example by having a single <strong klass="">Attractor</strong> object that exerts an attraction behavior over the entire window.</p>
 
-<figure><img alt="ch05 ex18" src="../images/chapter05/ch05_ex18.png" />
+<figure class="screenshot"><img alt="ch05 ex18" src="../images/chapter05/ch05_ex18.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -2844,7 +2974,9 @@ class Particle extends VerletParticle2D {
 
 <pre data-code-language="java" data-type="programlisting">
 class Attractor extends VerletParticle2D {
+
   float r;
+
   Attractor (Vec2D loc) {
     super (loc);
     r = 24;
@@ -2852,6 +2984,7 @@ class Attractor extends VerletParticle2D {
     // the width so that it covers the entire window.
     physics.addBehavior(new AttractionBehavior(this, width, 0.1));
   }
+
   void display () {
     fill(0);
     ellipse (x, y, r*2, r*2);

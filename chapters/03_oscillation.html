@@ -77,7 +77,7 @@ rotate(angle);</pre>
 
 <p>Rotate a baton-like object (see below) around its center using <strong function="">translate()</strong> and <strong function="">rotate()</strong>.</p>
 
-<figure><img alt="ch03 exc01" src="../images/chapter03/ch03_exc01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/Ex_3_01_exercise_baton/Ex_3_01_exercise_baton.pde"><img alt="ch03 exc01" src="../images/chapter03/ch03_exc01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -107,11 +107,11 @@ rotate(angle);</pre>
   rotate(angle);
   line(-50,0,50,0);
   ellipse(50,0,8,8);
-ellipse(-50,0,8,8);</pre>
+  ellipse(-50,0,8,8);</pre>
 
 <p>Adding in our principles of motion brings us to the following example.</p>
 
-<figure><img alt="ch03 ex01" src="../images/chapter03/ch03_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_01_angular_motion/_3_01_angular_motion.pde"><img alt="ch03 ex01" src="../images/chapter03/ch03_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -124,11 +124,14 @@ float angle = 0;
 float aVelocity = 0;
 // Acceleration
 float aAcceleration = 0.001;
+
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
+
   fill(175);
   stroke(0);
   rectMode(CENTER);
@@ -137,6 +140,7 @@ void draw() {
   line(-50,0,50,0);
   ellipse(50,0,8,8);
   ellipse(-50,0,8,8);
+
   // Angular equivalent of velocity.add(acceleration);
   aVelocity += aAcceleration;
   // Angular equivalent of location.add(velocity);
@@ -149,28 +153,33 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
+
   PVector location;
   PVector velocity;
   PVector acceleration;
   float mass;
+
   float angle = 0;
   float aVelocity = 0;
-float aAcceleration = 0;</pre>
+  float aAcceleration = 0;</pre>
 
 <p>And then in <strong function="">update()</strong>, we update both location and angle according to the same algorithm!</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
+
     //[full] Regular old-fashioned motion
     velocity.add(acceleration);
     location.add(velocity);
     //[end]
+
     //[full] Newfangled angular motion
     aVelocity += aAcceleration;
     angle += aVelocity;
     //[end]
+
     acceleration.mult(0);
-}</pre>
+  }</pre>
 
 <p>Of course, for any of this to matter, we also would need to rotate the object when displaying it.</p>
 
@@ -183,13 +192,14 @@ float aAcceleration = 0;</pre>
     // so that the rotation of this shape doesn&rsquo;t
     // affect the rest of our world.
     pushMatrix();
+
     // Set the origin at the shape&rsquo;s location.
     translate(location.x,location.y);
     // Rotate by the angle.
     rotate(angle);
     rect(0,0,mass*16,mass*16);
     popMatrix();
-}</pre>
+  }</pre>
 
 <p>Now, if we were to actually go ahead and run the above code, we wouldn&rsquo;t see anything new. This is because the angular acceleration (<strong function="">float aAcceleration = 0;</strong>) is initialized to zero. For the object to rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.</p>
 
@@ -205,7 +215,7 @@ float aAcceleration = 0.01;</pre>
 
 <p>Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right, its angular rotation accelerates in a clockwise direction; acceleration to the left results in a counterclockwise rotation. Of course, it&rsquo;s important to think about scale in this case. The <em>x</em> component of the acceleration vector might be a quantity that&rsquo;s too large, causing the object to spin in a way that looks ridiculous or unrealistic. So dividing the <em>x</em> component by some value, or perhaps constraining the angular velocity to a reasonable range, could really help. Here&rsquo;s the entire <strong function="">update()</strong> function with these tweaks added.</p>
 
-<figure><img alt="ch03 ex02" src="../images/chapter03/ch03_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_02_forces_angular_motion/_3_02_forces_angular_motion.pde processingjs/chapter03/_3_02_forces_angular_motion/Attractor.pde processingjs/chapter03/_3_02_forces_angular_motion/Mover.pde"><img alt="ch03 ex02" src="../images/chapter03/ch03_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -213,8 +223,10 @@ float aAcceleration = 0.01;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
+
     velocity.add(acceleration);
     location.add(velocity);
+
     // Calculate angular acceleration according to
     // acceleration&rsquo;s horizontal direction and
     // magnitude.
@@ -224,8 +236,9 @@ float aAcceleration = 0.01;</pre>
     // velocity doesn&rsquo;t spin out of control.
     aVelocity = constrain(aVelocity,-0.1,0.1);
     angle += aVelocity;
+
     acceleration.mult(0);
-}</pre>
+  }</pre>
 
 <div data-type="example" id="chapter03_exercise2">
 <h5>Exercise 3.2</h5>
@@ -259,7 +272,7 @@ float aAcceleration = 0.01;</pre>
 	</li>
 </ul>
 
-<figure id="chapter03_figure5"><img alt="Figure 3.5" src="../images/chapter03/ch03_05.png" />
+<figure class="half-width-right" id="chapter03_figure5"><img alt="Figure 3.5" src="../images/chapter03/ch03_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -279,13 +292,13 @@ float aAcceleration = 0.01;</pre>
 
 <p>Let&rsquo;s go all the way back to Example 1.10, which features a <strong klass="">Mover</strong> object accelerating towards the mouse.</p>
 
-<figure><img alt="ch01 ex10" src="../images/chapter01/ch01_ex10.png" />
+<figure class="screenshot" data-pde="processingjs/chapter01/_1_10_motion101_acceleration/_1_10_motion101_acceleration.pde processingjs/chapter01/_1_10_motion101_acceleration/Mover.pde"><img alt="ch01 ex10" src="../images/chapter01/ch01_ex10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>You might notice that almost all of the shapes we&rsquo;ve been drawing so far are circles. This is convenient for a number of reasons, one of which is that we don&rsquo;t have to consider the question of rotation. Rotate a circle and, well, it looks exactly the same. However, there comes a time in all motion programmers&rsquo; lives when they want to draw something on the screen that points in the direction of movement. Perhaps you are drawing an ant, or a car, or a spaceship. And when we say &quot;point in the direction of movement,&quot; what we are really saying is &ldquo;rotate according to the velocity vector.&rdquo; Velocity is a vector, with an <strong class="var">x</strong> and a <strong class="var">y</strong> component, but to rotate in Processing we need an angle, in radians. Let&rsquo;s draw our trigonometry diagram one more time, with an object&rsquo;s velocity vector (Figure 3.6).</p>
 
-<figure id="chapter03_figure6"><img alt="Figure 3.6" src="../images/chapter03/ch03_06.png" />
+<figure class="half-width-right" id="chapter03_figure6"><img alt="Figure 3.6" src="../images/chapter03/ch03_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -331,6 +344,7 @@ float aAcceleration = 0.01;</pre>
   void display() {
     // Solve for angle by using atan().
     float angle = atan(velocity.y/velocity.x);
+
     stroke(0);
     fill(175);
     pushMatrix();
@@ -340,7 +354,7 @@ float aAcceleration = 0.01;</pre>
     rotate(angle);
     rect(0,0,30,10);
     popMatrix();
-}</pre>
+  }</pre>
 
 <p>Now the above code is pretty darn close, and almost works. We still have a big problem, though. Let&rsquo;s consider the two velocity vectors depicted below.</p>
 
@@ -357,7 +371,7 @@ float aAcceleration = 0.01;</pre>
 
 <p>&hellip;we get the same angle for each vector. This can&rsquo;t be right for both; the vectors point in opposite directions! The thing is, this is a pretty common problem in computer graphics. Rather than simply using <strong function="">atan()</strong> along with a bunch of conditional statements to account for positive/negative scenarios, Processing (along with pretty much all programming environments) has a nice function called <strong function="">atan2()</strong> that does it for you.</p>
 
-<figure><img alt="ch03 ex03" src="../images/chapter03/ch03_ex03.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_03_pointing_velocity/_3_03_pointing_velocity.pde  processingjs/chapter03/_3_03_pointing_velocity/Mover.pde"><img alt="ch03 ex03" src="../images/chapter03/ch03_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -367,6 +381,7 @@ float aAcceleration = 0.01;</pre>
   void display() {
     // Using atan2() to account for all possible directions
     float angle = atan2(velocity.y,velocity.x);
+
     stroke(0);
     fill(175);
     pushMatrix();
@@ -376,7 +391,7 @@ float aAcceleration = 0.01;</pre>
     rotate(angle);
     rect(0,0,30,10);
     popMatrix();
-}</pre>
+  }</pre>
 
 <p><a data-primary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="motion" data-secondary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="heading() function" data-type="indexterm">&nbsp;</a> <a data-primary="tangent" data-secondary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a></p>
 
@@ -384,7 +399,7 @@ float aAcceleration = 0.01;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
     // The easiest way to do this!
-float angle = velocity.heading();</pre>
+    float angle = velocity.heading();</pre>
 
 <div data-type="example" id="chapter03_exercise3">
 <h5>Exercise 3.3</h5>
@@ -438,7 +453,7 @@ float y = r * sin(theta);
 
 <p>Here&rsquo;s how it is done with global variables <strong class="var">r</strong> and <strong class="var">theta</strong>.</p>
 
-<figure><img alt="ch03 ex04" src="../images/chapter03/ch03_ex04.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_04_PolarToCartesian/_3_04_PolarToCartesian.pde"><img alt="ch03 ex04" src="../images/chapter03/ch03_ex04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -447,18 +462,23 @@ float y = r * sin(theta);
 <pre data-code-language="java" data-type="programlisting">
 float r = 75;
 float theta = 0;
+
 void setup() {
   size(640,360);
   background(255);
 }
+
 void draw() {
+
   //[full] Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
   float x = r * cos(theta);
   float y = r * sin(theta);
   //[end]
+
   noStroke();
   fill(0);
   ellipse(x+width/2, y+height/2, 16, 16);
+
   theta += 0.01;
 }</pre>
 
@@ -477,7 +497,7 @@ void draw() {
 
 <p>Simulate the spaceship in the game Asteroids. In case you aren&rsquo;t familiar with Asteroids, here is a brief description: A spaceship (represented as a triangle) floats in two dimensional space. The left arrow key turns the spaceship counterclockwise, the right arrow key, clockwise. The <em>z</em> key applies a &ldquo;thrust&rdquo; force in the direction the spaceship is pointing.</p>
 
-<figure><img alt="ch03 exc05" src="../images/chapter03/ch03_exc05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/Ex_3_05_asteroids/Ex_3_05_asteroids.pde processingjs/chapter03/Ex_3_05_asteroids/Spaceship.pde"><img alt="ch03 exc05" src="../images/chapter03/ch03_exc05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -504,7 +524,7 @@ void draw() {
 
 <p>Let&rsquo;s begin with a really basic scenario. We want a circle to oscillate from the left side to the right side of a Processing window.</p>
 
-<figure><img alt="ch03 ex05" src="../images/chapter03/ch03_ex05.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_05_simple_harmonic_motion/_3_05_simple_harmonic_motion.pde"><img alt="ch03 ex05" src="../images/chapter03/ch03_ex05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -629,8 +649,10 @@ float x = amplitude * cos(TWO_PI * frameCount / period);</pre>
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
+
   float period = 120;
   float amplitude = 100;
   //[offset-down] Calculating horizontal location according to the formula for simple harmonic motion
@@ -687,15 +709,19 @@ float x = amplitude * cos(angle);</pre>
 <pre data-code-language="java" data-type="programlisting">
 float angle = 0;
 float aVelocity = 0.05;
+
 void setup() {
   size(640,360);
 }
+
 void draw() {
   background(255);
+
   float amplitude = 100;
   float x = amplitude * cos(angle);
   // Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
+
   ellipseMode(CENTER);
   stroke(0);
   fill(175);
@@ -712,7 +738,7 @@ void draw() {
 
 <p>Let&rsquo;s expand this example a bit more and create an <strong klass="">Oscillator</strong> class. And let&rsquo;s assume we want the oscillation to happen along both the x-axis (as above) and the y-axis. To do this, we&rsquo;ll need two angles, two angular velocities, and two amplitudes (one for each axis). Another perfect opportunity for <strong klass="">PVector</strong>!</p>
 
-<figure><img alt="ch03 ex07" src="../images/chapter03/ch03_ex07.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_07_oscillating_objects/_3_07_oscillating_objects.pde processingjs/chapter03/_3_07_oscillating_objects/Oscillator.pde"><img alt="ch03 ex07" src="../images/chapter03/ch03_ex07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -720,24 +746,29 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting">
 class Oscillator  {
+
   // Using a PVector to track two angles!
   PVector angle;
   PVector velocity;
   PVector amplitude;
+
   Oscillator()  {
     angle = new PVector();
     velocity = new PVector(random(-0.05,0.05),random(-0.05,0.05));
     //[offset-down] Random velocities and amplitudes
     amplitude = new PVector(random(width/2),random(height/2));
   }
+
   void oscillate()  {
     angle.add(velocity);
   }
+
   void display()  {
     // Oscillating on the x-axis
     float x = sin(angle.x)*amplitude.x;
     // Oscillating on the y-axis
     float y = sin(angle.y)*amplitude.y;
+
     pushMatrix();
     translate(width/2,height/2);
     stroke(0);
@@ -769,7 +800,7 @@ class Oscillator  {
 
 <p>If you&rsquo;re saying to yourself, &ldquo;Um, this is all great and everything, but what I really want is to draw a wave onscreen,&rdquo; well, then, the time has come. The thing is, we&rsquo;re about 90% there. When we oscillate a single circle up and down according to the sine function, what we are doing is looking at a single point along the x-axis of a wave pattern. With a little panache and a <strong function="">for</strong> loop, we can place a whole bunch of these oscillating circles next to each other.</p>
 
-<figure><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_09_wave/_3_09_wave.pde"><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -802,32 +833,35 @@ float amplitude = 100;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
   for (int x = 0; x &lt;= width; x += 24) {
+
     // 1) Calculate the y location according to
     // amplitude and sine of the angle.
     float y = amplitude*sin(angle);
+
     // 2) Draw a circle at the (x,y) location.
     ellipse(x,y+height/2,48,48);
+
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
-}</pre>
+  }</pre>
 
 <p>Let&rsquo;s look at the results with different values for <strong class="var">angleVel</strong>:</p>
 
-<figure><img alt="angleVel = 0.05" src="../images/chapter03/ch03_ex09a.png" />
+<figure class="three-col" data-pde="processingjs/chapter03/_3_09_wave_a/_3_09_wave_a.pde"><img alt="angleVel = 0.05" src="../images/chapter03/ch03_ex09a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="angleVel = 0.2" src="../images/chapter03/ch03_ex09b.png" />
+<figure class="three-col" data-pde="processingjs/chapter03/_3_09_wave_b/_3_09_wave_b.pde"><img alt="angleVel = 0.2" src="../images/chapter03/ch03_ex09b.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure><img alt="angleVel = 0.4" src="../images/chapter03/ch03_ex09c.png" />
+<figure class="three-col" data-pde="processingjs/chapter03/_3_09_wave_c/_3_09_wave_c.pde"><img alt="angleVel = 0.4" src="../images/chapter03/ch03_ex09c.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Notice how, although we&rsquo;re not precisely computing the period of the wave, the higher the angular velocity, the shorter the period. It&rsquo;s also worth noting that as the period becomes shorter, it becomes more and more difficult to make out the wave itself as the distance between the individual points increases. One option we have is to use <strong function="">beginShape()</strong> and <strong function="">endShape()</strong> to connect the points with a line.</p>
 
-<figure><img alt="ch03 ex08" src="../images/chapter03/ch03_ex08.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_08_static_wave_lines/_3_08_static_wave_lines.pde"><img alt="ch03 ex08" src="../images/chapter03/ch03_ex08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -837,11 +871,14 @@ float amplitude = 100;</pre>
 float angle = 0;
 float angleVel = 0.2;
 float amplitude = 100;
+
 size(400,200);
 background(255);
+
 stroke(0);
 strokeWeight(2);
 noFill();
+
 beginShape();
 for (int x = 0; x &lt;= width; x += 5) {
   // Here&rsquo;s an example of using the map() function
@@ -860,7 +897,7 @@ endShape();</pre>
 
 <p>While it&rsquo;s a nice thought, it doesn&rsquo;t work. If you look at the wave, the righthand edge doesn&rsquo;t match the lefthand; where it ends in one cycle of <strong function="">draw()</strong> can&rsquo;t be where it starts in the next. Instead, what we need to do is have a variable dedicated entirely to tracking what value of angle the wave should start with. This angle (which we&rsquo;ll call <strong class="var">startAngle</strong>) increments with its own angular velocity.</p>
 
-<figure><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_09_wave/_3_09_wave.pde"><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -869,14 +906,18 @@ endShape();</pre>
 <pre data-code-language="java" data-type="programlisting">
 float startAngle = 0;
 float angleVel = 0.1;
+
 void setup() {
   size(400,200);
 }
+
 void draw() {
   background(255);
+
   //[full] In order to move the wave, we start at a different theta value each frame.  startAngle += 0.02;
 float angle = startAngle;
   //[end]
+
   for (int x = 0; x &lt;= width; x += 24) {
     float y = map(sin(angle),-1,1,0,height);
     stroke(0);
@@ -897,7 +938,7 @@ float angle = startAngle;
 
 <p>Encapsulate the above examples into a <strong klass="">Wave</strong> class and create a sketch that displays two waves (with different amplitudes/periods) as in the screenshot below. Move beyond plain circles and lines and try visualizing the wave in a more creative way.</p>
 
-<figure><img alt="ch03 exc10" src="../images/chapter03/ch03_exc10.png" />
+<figure data-pde="processingjs/chapter03/Ex_3_10_OOPWave/Ex_3_10_OOPWave.pde processingjs/chapter03/Ex_3_10_OOPWave/Wave.pde"><img alt="ch03 exc10" src="../images/chapter03/ch03_exc10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -907,7 +948,7 @@ float angle = startAngle;
 
 <p>More complex waves can be produced by the values of multiple waves together. Create a sketch that implements this, as in the screenshot below.</p>
 
-<figure><img alt="ch03 exc11" src="../images/chapter03/ch03_exc11.png" />
+<figure data-pde="processingjs/chapter03/Ex_3_11_AdditiveWave/Ex_3_11_AdditiveWave.pde"><img alt="ch03 exc11" src="../images/chapter03/ch03_exc11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -920,11 +961,11 @@ float angle = startAngle;
 
 <p>Do you miss Newton&rsquo;s laws of motion? I know I sure do. Well, lucky for you, it&rsquo;s time to bring it all back home. After all, it&rsquo;s been nice learning about triangles and tangents and waves, but really, the core of this book is about simulating the physics of moving bodies. Let&rsquo;s take a look at how trigonometry can help us with this pursuit.</p>
 
-<figure id="chapter03_figure10"><img alt="Figure 3.10" src="../images/chapter03/ch03_10.png" />
+<figure class="two-col-borderless" id="chapter03_figure10"><img alt="Figure 3.10" src="../images/chapter03/ch03_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure id="chapter03_figure11"><img alt="Figure 3.11" src="../images/chapter03/ch03_11.png" />
+<figure class="two-col-borderless" id="chapter03_figure11"><img alt="Figure 3.11" src="../images/chapter03/ch03_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -938,7 +979,7 @@ float angle = startAngle;
 
 <p>Let&rsquo;s zoom in on the right triangle from the pendulum diagram.</p>
 
-<figure id="chapter03_figure12"><img alt="Figure 3.12" src="../images/chapter03/ch03_12.png" />
+<figure class="half-width-right" id="chapter03_figure12"><img alt="Figure 3.12" src="../images/chapter03/ch03_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -988,6 +1029,7 @@ float angle = startAngle;
 
 <pre data-code-language="java" data-type="programlisting">
 class Pendulum  {
+
   // Length of arm
   float r;
   // Pendulum arm angle
@@ -995,7 +1037,7 @@ class Pendulum  {
   // Angular velocity
   float aVelocity;
   // Angular acceleration
-float aAcceleration;</pre>
+  float aAcceleration;</pre>
 
 <p>We&rsquo;ll also need to write a function <strong function="">update()</strong> to update the pendulum&rsquo;s angle according to our formula&hellip;</p>
 
@@ -1009,9 +1051,9 @@ float aAcceleration;</pre>
     aVelocity += aAcceleration;
     // Increment angle.
     angle += aVelocity;
-}</pre>
+  }</pre>
 
-<figure id="chapter03_figure13"><img alt="Figure 3.13" src="../images/chapter03/ch03_13.png" />
+<figure class="half-width-right" id="chapter03_figure13"><img alt="Figure 3.13" src="../images/chapter03/ch03_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1055,7 +1097,7 @@ aVelocity *= 0.99;</pre>
 
 <p>Putting everything together, we have the following example (with the pendulum beginning at a 45-degree angle).</p>
 
-<figure><img alt="ch03 ex10" src="../images/chapter03/ch03_ex10.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_10_PendulumExample/_3_10_PendulumExample.pde processingjs/chapter03/_3_10_PendulumExample/Pendulum.pde"><img alt="ch03 ex10" src="../images/chapter03/ch03_ex10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1063,16 +1105,19 @@ aVelocity *= 0.99;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 Pendulum p;
+
 void setup() {
   size(640,360);
   // We make a new Pendulum object with
   // an origin location and arm length.
   p = new Pendulum(new PVector(width/2,10),125);
 }
+
 void draw() {
   background(255);
   p.go();
 }
+
 class Pendulum  {
   //[full] Many, many variables to keep track of the Pendulum&rsquo;s various properties
   PVector location;    // Location of bob
@@ -1083,37 +1128,45 @@ class Pendulum  {
   float aAcceleration; // Angle acceleration
   float damping;       // Arbitrary damping amount
   //[end]
+
   Pendulum(PVector origin_, float r_) {
     origin = origin_.get();
     location = new PVector();
     r = r_;
     angle = PI/4;
+
     aVelocity = 0.0;
     aAcceleration = 0.0;
     // An arbitrary damping so that the Pendulum slows
     // over time
     damping = 0.995;
   }
+
   void go() {
     update();
     display();
   }
+
   void update() {
     float gravity = 0.4;
     //[offset-up] Formula we worked out for angular acceleration
     aAcceleration = (-1 * gravity / r) * sin(angle);
+
     //[full] Standard angular motion algorithm
     aVelocity += aAcceleration;
     angle += aVelocity;
     //[end]
+
     // Apply some damping.
     aVelocity *= damping;
   }
+
   void display() {
     // Where is the bob relative to the origin?
     // Polar to Cartesian coordinates will tell us!
     location.set(r*sin(angle),r*cos(angle),0);
     location.add(origin);
+
     stroke(0);
     // The arm
     line(origin.x,origin.y,location.x,location.y);
@@ -1134,7 +1187,7 @@ class Pendulum  {
 <div data-type="example" id="chapter03_exercise13">
 <h5>Exercise 3.13</h5>
 
-<figure><img alt="ch03 exc13" src="../images/chapter03/ch03_exc13.png" />
+<figure class="half-width-right"><img alt="ch03 exc13" src="../images/chapter03/ch03_exc13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1169,7 +1222,7 @@ class Pendulum  {
 
 <p><strong highlight="">The force of the spring is directly proportional to the extension of the spring.</strong></p>
 
-<figure id="chapter03_figure15"><img alt="Figure 3.15: x = current length - rest length" src="../images/chapter03/ch03_15.png" />
+<figure class="half-width-right" id="chapter03_figure15"><img alt="Figure 3.15: x = current length - rest length" src="../images/chapter03/ch03_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1235,8 +1288,10 @@ float k = 0.1;
 PVector force = PVector.sub(bob,anchor);
 float currentLength = force.mag();
 float x = restLength - currentLength;
+
 // Direction of spring force (unit vector)
 force.normalize();
+
 // Putting it together: direction and magnitude!
 force.mult(-1 * k * x);</pre>
 
@@ -1246,9 +1301,11 @@ force.mult(-1 * k * x);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 Bob bob;
+
 void setup() {
   bob = new Bob();
 }
+
 void draw()  {
   // Our Chapter 2 &ldquo;make-up-a-gravity force&rdquo;
   PVector gravity = new PVector(0,1);
@@ -1257,6 +1314,7 @@ void draw()  {
   PVector springForce = _______________????  //[bold]
   bob.applyForce(spring); //[bold]
   //[end]
+
   // Our standard update() and display() functions
   bob.update();
   bob.display();
@@ -1274,16 +1332,20 @@ void draw()  {
 Bob bob;
 // Adding a Spring object
 Spring spring;  //[bold]
+
 void setup() {
   bob = new Bob();
   spring = new Spring();
 }
+
 void draw()  {
   PVector gravity = new PVector(0,1);
   bob.applyForce(gravity);
+
   // This new function in the Spring class will take care of
   // computing the force of the spring on the bob.
   spring.connect(bob); //[bold]
+
   bob.update();
   bob.display();
   spring.display();
@@ -1293,13 +1355,13 @@ void draw()  {
 
 <pre data-code-language="java" data-type="programlisting">
   PVector force = attractor.attract(mover);
-mover.applyForce(force);</pre>
+  mover.applyForce(force);</pre>
 
 <p>The analogous situation here with a spring would be:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector force = spring.connect(bob);
-bob.applyForce(force);</pre>
+  bob.applyForce(force);</pre>
 
 <p>Nevertheless, in this example all we said was:</p>
 
@@ -1311,17 +1373,18 @@ bob.applyForce(force);</pre>
 <pre data-code-language="java" data-type="programlisting">
   void connect(Bob b) {
     PVector force = some fancy calculations
+
     // The function connect() takes care of calling applyForce()
     // and therefore doesn&rsquo;t have to return a vector to the calling
     // area.
     b.applyForce(force);
-}</pre>
+  }</pre>
 
 <p>Why do it one way with the <strong klass="">Attractor</strong> class and another way with the <strong klass="">Spring</strong> class? When we were first learning about forces, it was a bit clearer to show all the forces being applied in the main <strong function="">draw()</strong> loop, and hopefully this helped you learn about force accumulation. Now that we&rsquo;re more comfortable with that, perhaps it&rsquo;s simpler to embed some of the details inside the objects themselves.</p>
 
 <p>Let&rsquo;s take a look at the rest of the elements in the <strong klass="">Spring</strong> class.</p>
 
-<figure><img alt="ch03 ex11" src="../images/chapter03/ch03_ex11.png" />
+<figure class="screenshot" data-pde="processingjs/chapter03/_3_11_spring/_3_11_spring.pde processingjs/chapter03/_3_11_spring/Mover.pde processingjs/chapter03/_3_11_spring/Spring.pde"><img alt="ch03 ex11" src="../images/chapter03/ch03_ex11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1329,19 +1392,24 @@ bob.applyForce(force);</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 class Spring {
+
   // We need to keep track of the spring&rsquo;s anchor location.
   PVector anchor;
+
   // Rest length and spring constant variables
   float len;
   float k = 0.1;
+
   //[full] The constructor initializes the anchor point and rest length.
   Spring(float x, float y, int l) {
     anchor = new PVector(x,y);
     len = l;
   }
   //[end]
+
   // Calculate spring force&mdash;our implementation of Hooke&rsquo;s Law.
   void connect(Bob b) {
+
     //[full] Get a vector pointing from anchor to Bob location.
     PVector force = //[bold]
       PVector.sub(b.location,anchor); //[bold]
@@ -1350,13 +1418,16 @@ class Spring {
     // Calculate the displacement between
     // distance and rest length.
     float stretch = d - len; //[bold]
+
     //[full] Direction and magnitude together!
     force.normalize(); //[bold]
     force.mult(-1 * k * stretch); //[bold]
     //[end]
+
     // Call applyForce() right here!
     b.applyForce(force);
   }
+
   //[full] Draw the anchor.
   void display() {
     fill(100);
@@ -1364,12 +1435,14 @@ class Spring {
     rect(anchor.x,anchor.y,10,10);
   }
   //[end]
+
   //[full] Draw the spring connection between Bob location and anchor.
   void displayLine(Bob b) {
     stroke(255);
     line(b.location.x,b.location.y,anchor.x,anchor.y);
   }
   //[end]
+
 }</pre>
 
 <p>The full code for this example is included on the book website, and the Web version also incorporates two additional features: (1) the <strong klass="">Bob</strong> class includes functions for mouse interactivity so that the bob can be dragged around the window, and (2) the <strong klass="">Spring</strong> object includes a function to constrain the connection&rsquo;s length between a minimum and a maximum.</p>
@@ -1384,6 +1457,7 @@ void constrainLength(Bob b, float minlen, float maxlen) {
   // Vector pointing from Bob to Anchor
   PVector dir = PVector.sub(______,______);
   float d = dir.mag();
+
   // Is it too short?
   if (d &lt; minlen) {
     dir.normalize();
