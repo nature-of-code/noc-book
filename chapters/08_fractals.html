@@ -362,7 +362,7 @@ void cantor(float x, float y, float len) {
 
 <p><a data-primary="ArrayList class (Java)" data-secondary="fractals and" data-type="indexterm">&nbsp;</a> <a data-primary="fractals" data-secondary="Koch curve" data-type="indexterm">&nbsp;</a> <a data-primary="Koch curve" data-type="indexterm">&nbsp;</a> <a data-primary="recursion" data-secondary="ArrayList objects and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects that could be moved independently? The recursive function is simple and elegant, but it does not allow you to do much besides simply generating the pattern itself. However, there is another way we can apply recursion in combination with an <strong klass="">ArrayList</strong> that will allow us to not only generate a fractal pattern, but keep track of all its individual parts as objects.</p>
+<p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects that could be moved independently? The recursive function is simple and elegant, but it does not allow you to do much besides simply generating the pattern itself. However, there is another way we can apply recursion in combination with an <span class="klass">(.*?)</span> that will allow us to not only generate a fractal pattern, but keep track of all its individual parts as objects.</p>
 
 <p>To demonstrate this technique, let&rsquo;s look at another famous fractal pattern, discovered in 1904 by Swedish mathematician Helge von Koch. Here are the rules. (Note that it starts the same way as the Cantor set, with a single line.)</p>
 
@@ -390,7 +390,7 @@ void cantor(float x, float y, float len) {
 
 <p>In order to accomplish our goal of treating each segment as an individual object, we must first decide what this object should be in the first place. What data should it store? What functions should it have?</p>
 
-<p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each <strong klass="">KochLine</strong> object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are <strong klass="">PVector</strong> objects, and the line is drawn with Processing&rsquo;s <span class="function">(.*?)</span> function.</p>
+<p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each <span class="klass">(.*?)</span> object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are <span class="klass">(.*?)</span> objects, and the line is drawn with Processing&rsquo;s <span class="function">(.*?)</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class KochLine {
@@ -412,12 +412,12 @@ class KochLine {
   }
 }</pre>
 
-<p>Now that we have our <strong klass="">KochLine</strong> class, we can get started on the main program. We&rsquo;ll need a data structure to keep track of what will eventually become many <strong klass="">KochLine</strong> objects, and an <strong klass="">ArrayList</strong> (see Chapter 4 for a review of <strong klass="">ArrayList</strong><code>s</code>) will do just fine.</p>
+<p>Now that we have our <span class="klass">(.*?)</span> class, we can get started on the main program. We&rsquo;ll need a data structure to keep track of what will eventually become many <span class="klass">(.*?)</span> objects, and an <span class="klass">(.*?)</span> (see Chapter 4 for a review of <span class="klass">(.*?)</span><code>s</code>) will do just fine.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;KochLine&gt; lines;</pre>
 
-<p>In <span class="function">(.*?)</span>, we&rsquo;ll want to create the <strong klass="">ArrayList</strong> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
+<p>In <span class="function">(.*?)</span>, we&rsquo;ll want to create the <span class="klass">(.*?)</span> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -434,7 +434,7 @@ void setup() {
   lines.add(new KochLine(start, end));
 }</pre>
 
-<p>Then in <span class="function">(.*?)</span>, all <strong klass="">KochLine</strong> objects (just one right now) can be displayed in a loop.</p>
+<p>Then in <span class="function">(.*?)</span>, all <span class="klass">(.*?)</span> objects (just one right now) can be displayed in a loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -451,7 +451,7 @@ void draw() {
 	<p><strong><em>KochLine class:</em></strong> A class to keep track of a line from point A to B.</p>
 	</li>
 	<li>
-	<p><strong><em>ArrayList:</em></strong> A list of all <strong klass="">KochLine</strong> objects.</p>
+	<p><strong><em>ArrayList:</em></strong> A list of all <span class="klass">(.*?)</span> objects.</p>
 	</li>
 </ul>
 
@@ -459,7 +459,7 @@ void draw() {
 
 <p><a data-primary="Koch curve" data-secondary="implementing" data-type="indexterm">&nbsp;</a></p>
 
-<p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation.  We are going to apply a similar technique here. We have an <strong klass="">ArrayList</strong> that keeps track of the current set of <strong klass="">KochLine</strong> objects (at the start of the program, there is only one). We will need a second <strong klass="">ArrayList</strong> (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new <strong klass="">KochLine</strong> objects that are generated from applying the Koch rules. For every <strong klass="">KochLine</strong> object in the current <strong klass="">ArrayList</strong>, four new <strong klass="">KochLine</strong> objects are added to the next <strong klass="">ArrayList</strong>. When we&rsquo;re done, the next <strong klass="">ArrayList</strong> becomes the current one.</p>
+<p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation.  We are going to apply a similar technique here. We have an <span class="klass">(.*?)</span> that keeps track of the current set of <span class="klass">(.*?)</span> objects (at the start of the program, there is only one). We will need a second <span class="klass">(.*?)</span> (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new <span class="klass">(.*?)</span> objects that are generated from applying the Koch rules. For every <span class="klass">(.*?)</span> object in the current <span class="klass">(.*?)</span>, four new <span class="klass">(.*?)</span> objects are added to the next <span class="klass">(.*?)</span>. When we&rsquo;re done, the next <span class="klass">(.*?)</span> becomes the current one.</p>
 
 <figure id="chapter08_figure15"><img alt="Figure 8.15" src="../images/chapter08/ch08_15.png" />
 <figcaption>&nbsp;</figcaption>
@@ -488,13 +488,13 @@ void generate() {
   lines = next;
 }</pre>
 
-<p>By calling <span class="function">(.*?)</span> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong klass="">KochLine</strong> objects.  Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong klass="">KochLine</strong> object uses <strong klass="">PVector</strong>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <strong klass="">KochLine</strong> object.</p>
+<p>By calling <span class="function">(.*?)</span> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <span class="klass">(.*?)</span> objects.  Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <span class="klass">(.*?)</span> object uses <span class="klass">(.*?)</span>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <span class="klass">(.*?)</span> object.</p>
 
 <figure id="chapter08_figure16"><img alt="Figure 8.16" src="../images/chapter08/ch08_16.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new <strong klass="">KochLine</strong> objects and make the new line segments (ab, cb, cd, and de).</p>
+<p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new <span class="klass">(.*?)</span> objects and make the new line segments (ab, cb, cd, and de).</p>
 
 <pre data-code-language="java" data-type="programlisting">
     next.add(new KochLine(a,b));
@@ -502,7 +502,7 @@ void generate() {
     next.add(new KochLine(c,d));
     next.add(new KochLine(d,e));</pre>
 
-<p>Where do we get these points? Since we have a <strong klass="">KochLine</strong> object, why not ask the <strong klass="">KochLine</strong> object to compute all these points for us?</p>
+<p>Where do we get these points? Since we have a <span class="klass">(.*?)</span> object, why not ask the <span class="klass">(.*?)</span> object to compute all these points for us?</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void generate() {
@@ -528,7 +528,7 @@ void generate() {
   lines = next;
 }</pre>
 
-<p>Now we just need to write five new functions in the <strong klass="">KochLine</strong> class, each one returning a <strong klass="">PVector</strong> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let&rsquo;s knock off <span class="function">(.*?)</span> and <span class="function">(.*?)</span> first, which are simply the start and end points of the original line.</p>
+<p>Now we just need to write five new functions in the <span class="klass">(.*?)</span> class, each one returning a <span class="klass">(.*?)</span> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let&rsquo;s knock off <span class="function">(.*?)</span> and <span class="function">(.*?)</span> first, which are simply the start and end points of the original line.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector kochA() {
@@ -544,7 +544,7 @@ void generate() {
   }
 </pre>
 
-<p>Now let&rsquo;s move on to points B and D. B is one-third of the way along the line segment and D is two-thirds. Here we can make a <strong klass="">PVector</strong> that points from start to end and shrink it to one-third the length for B and two-thirds the length for D to find these points.</p>
+<p>Now let&rsquo;s move on to points B and D. B is one-third of the way along the line segment and D is two-thirds. Here we can make a <span class="klass">(.*?)</span> that points from start to end and shrink it to one-third the length for B and two-thirds the length for D to find these points.</p>
 
 <figure id="chapter08_figure17"><img alt="Figure 8.17" src="../images/chapter08/ch08_17.png" />
 <figcaption>&nbsp;</figcaption>
@@ -571,7 +571,7 @@ void generate() {
     return v;
   }</pre>
 
-<p>The last point, C, is the most difficult one to find. However, if you recall that the angles of an equilateral triangle are all sixty degrees, this makes it a little bit easier. If we know how to find point B with a <strong klass="">PVector</strong> one-third the length of the line, what if we were to rotate that same <strong klass="">PVector</strong> sixty degrees and move along that vector from point B? We&rsquo;d be at point C!</p>
+<p>The last point, C, is the most difficult one to find. However, if you recall that the angles of an equilateral triangle are all sixty degrees, this makes it a little bit easier. If we know how to find point B with a <span class="klass">(.*?)</span> one-third the length of the line, what if we were to rotate that same <span class="klass">(.*?)</span> sixty degrees and move along that vector from point B? We&rsquo;d be at point C!</p>
 
 <figure id="chapter08_figure18"><img alt="Figure 8.18" src="../images/chapter08/ch08_18.png" />
 <figcaption>&nbsp;</figcaption>
@@ -643,7 +643,7 @@ void setup() {
 <div data-type="exercise">
 <h5>Exercise 8.4</h5>
 
-<p>Rewrite the Cantor set example using objects and an <strong klass="">ArrayList</strong>.</p>
+<p>Rewrite the Cantor set example using objects and an <span class="klass">(.*?)</span>.</p>
 </div>
 
 <div data-type="exercise">
@@ -845,13 +845,13 @@ void draw() {
 <div data-type="exercise">
 <h5>Exercise 8.8</h5>
 
-<p>The tree structure can also be generated using the <strong klass="">ArrayList</strong> technique demonstrated with the Koch curve. Recreate the tree using a <strong class="var">Branch</strong> object and an <strong klass="">ArrayList</strong> to keep track of the branches. Hint: you&rsquo;ll want to keep track of the branch directions and lengths using vector math instead of Processing transformations.</p>
+<p>The tree structure can also be generated using the <span class="klass">(.*?)</span> technique demonstrated with the Koch curve. Recreate the tree using a <strong class="var">Branch</strong> object and an <span class="klass">(.*?)</span> to keep track of the branches. Hint: you&rsquo;ll want to keep track of the branch directions and lengths using vector math instead of Processing transformations.</p>
 </div>
 
 <div data-type="exercise">
 <h5>Exercise 8.9</h5>
 
-<p>Once you have the tree built with an <strong klass="">ArrayList</strong> of <strong class="var">Branch</strong> objects, animate the tree&rsquo;s growth. Can you draw leaves at the end of the branches?</p>
+<p>Once you have the tree built with an <span class="klass">(.*?)</span> of <strong class="var">Branch</strong> objects, animate the tree&rsquo;s growth. Can you draw leaves at the end of the branches?</p>
 </div>
 
 <p>The recursive tree fractal is a nice example of a scenario in which adding a little bit of randomness can make the tree look more natural. Take a look outside and you&rsquo;ll notice that branch lengths and angles vary from branch to branch, not to mention the fact that branches don&rsquo;t all have exactly the same number of smaller branches. First, let&rsquo;s see what happens when we simply vary the angle and length. This is a pretty easy one, given that we can just ask Processing for a random number each time we draw the tree.</p>
@@ -971,12 +971,12 @@ void branch(float len) {
 
 <p>As with our recursive fractal shapes, we can consider each successive application of the L-system rules to be a generation. Generation 0 is, by definition, the axiom.</p>
 
-<p>Let&rsquo;s look at how we might create these generations with code. We&rsquo;ll start by using a <strong klass="">String</strong> object to store the axiom.</p>
+<p>Let&rsquo;s look at how we might create these generations with code. We&rsquo;ll start by using a <span class="klass">(.*?)</span> object to store the axiom.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 String current = &quot;A&quot;;</pre>
 
-<p>And once again, just as we did with the Game of Life and the Koch curve <strong klass="">ArrayList</strong> examples, we will need an entirely separate string to keep track of the &ldquo;next&rdquo; generation.</p>
+<p>And once again, just as we did with the Game of Life and the Koch curve <span class="klass">(.*?)</span> examples, we will need an entirely separate string to keep track of the &ldquo;next&rdquo; generation.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 String next = &quot;&quot;;</pre>
@@ -1037,7 +1037,7 @@ void mousePressed() {
   println(&quot;Generation &quot; + count + &quot;: &quot; + current);
 }</pre>
 
-<p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <strong klass="">String</strong> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <strong klass="">String</strong> object is &ldquo;immutable,&rdquo; which means once the object is created it can never be changed. Whenever you add on to the end of a <strong klass="">String</strong> object, Java has to make a brand new <strong klass="">String</strong> object (even if you are using the same variable name).</p>
+<p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <span class="klass">(.*?)</span> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <span class="klass">(.*?)</span> object is &ldquo;immutable,&rdquo; which means once the object is created it can never be changed. Whenever you add on to the end of a <span class="klass">(.*?)</span> object, Java has to make a brand new <span class="klass">(.*?)</span> object (even if you are using the same variable name).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 String s = &quot;blah&quot;;
@@ -1045,7 +1045,7 @@ s += &quot;add some more stuff&quot;;</pre>
 
 <p><a data-primary="StringBuffer class" data-type="indexterm">&nbsp;</a> <a data-primary="strings" data-secondary="StringBuffer class vs." data-type="indexterm">&nbsp;</a></p>
 
-<p>In most cases, this is fine, but why duplicate a 46,000-character string if you don&rsquo;t have to? For better efficiency in our L-system examples, we&rsquo;ll use the <strong klass="">StringBuffer</strong> class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.</p>
+<p>In most cases, this is fine, but why duplicate a 46,000-character string if you don&rsquo;t have to? For better efficiency in our L-system examples, we&rsquo;ll use the <span class="klass">(.*?)</span> class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // A StringBuffer for the &ldquo;next&rdquo; sentence
@@ -1157,7 +1157,7 @@ for (int i = 0; i &lt; sentence.length(); i++) {
 	<p><strong mono="">Rule</strong>: A class that stores the predecessor and successor strings for an L-system rule.</p>
 	</li>
 	<li>
-	<p><strong mono="">LSystem</strong>: A class to iterate a new L-system generation (as demonstrated with the <strong klass="">StringBuffer</strong> technique).</p>
+	<p><strong mono="">LSystem</strong>: A class to iterate a new L-system generation (as demonstrated with the <span class="klass">(.*?)</span> technique).</p>
 	</li>
 	<li>
 	<p><strong mono="">Turtle</strong>: A class to manage reading the L-system sentence and following its instructions to draw on the screen.</p>
@@ -1210,7 +1210,7 @@ void mousePressed() {
 <div data-type="exercise">
 <h5>Exercise 8.12</h5>
 
-<p>Use an L-system as a set of instructions for creating objects stored in an <strong klass="">ArrayList</strong>. Use trigonometry and vector math to perform the rotations instead of matrix transformations (much like we did in the Koch curve example).</p>
+<p>Use an L-system as a set of instructions for creating objects stored in an <span class="klass">(.*?)</span>. Use trigonometry and vector math to perform the rotations instead of matrix transformations (much like we did in the Koch curve example).</p>
 </div>
 
 <p><a data-primary="&lt;em&gt;Algorithmic Beauty of Plants" data-secondary="The&lt;/em&gt; (Prusinkiewicz/Lindenmayer)" data-type="indexterm">&nbsp;</a> <a data-primary="Lindenmayer" data-secondary="Aristid" data-type="indexterm">&nbsp;</a> <a data-primary="Prusinkiewicz" data-secondary="Przemysław" data-type="indexterm">&nbsp;</a></p>
