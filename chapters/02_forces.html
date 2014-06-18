@@ -195,12 +195,12 @@ mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
 
-<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <strong function="">applyForce()</strong> with wind. And so the <strong klass="">Mover</strong> object&rsquo;s acceleration is now assigned the <strong klass="">PVector</strong> <strong class="var">wind</strong>. Second, we call <strong function="">applyForce()</strong> with gravity. Now the <strong klass="">Mover</strong> object&rsquo;s acceleration is set to the gravity <strong klass="">PVector</strong>. Third, we call <strong function="">update()</strong>. What happens in <strong function="">update()</strong>? Acceleration is added to velocity.</p>
+<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <span class="function">(.*?)</span> with wind. And so the <strong klass="">Mover</strong> object&rsquo;s acceleration is now assigned the <strong klass="">PVector</strong> <strong class="var">wind</strong>. Second, we call <span class="function">(.*?)</span> with gravity. Now the <strong klass="">Mover</strong> object&rsquo;s acceleration is set to the gravity <strong klass="">PVector</strong>. Third, we call <span class="function">(.*?)</span>. What happens in <span class="function">(.*?)</span>? Acceleration is added to velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 velocity.add(acceleration);</pre>
 
-<p>We&rsquo;re not going to see any error in Processing, but zoinks! We&rsquo;ve got a major problem. What is the value of acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If we call <strong function="">applyForce()</strong> more than once, it overrides each previous call. How are we going to handle more than one force?</p>
+<p>We&rsquo;re not going to see any error in Processing, but zoinks! We&rsquo;ve got a major problem. What is the value of acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If we call <span class="function">(.*?)</span> more than once, it overrides each previous call. How are we going to handle more than one force?</p>
 
 <p><a data-primary="force accumulation" data-type="indexterm">&nbsp;</a></p>
 
@@ -217,7 +217,7 @@ velocity.add(acceleration);</pre>
     acceleration.add(force);
  }</pre>
 
-<p>Now, we&rsquo;re not finished just yet. Force accumulation has one more piece. Since we&rsquo;re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <strong function="">update()</strong> is called. Let&rsquo;s think about wind for a moment. Sometimes the wind is very strong, sometimes it&rsquo;s weak, and sometimes there&rsquo;s no wind at all. At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
+<p>Now, we&rsquo;re not finished just yet. Force accumulation has one more piece. Since we&rsquo;re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <span class="function">(.*?)</span> is called. Let&rsquo;s think about wind for a moment. Sometimes the wind is very strong, sometimes it&rsquo;s weak, and sometimes there&rsquo;s no wind at all. At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (mousePressed) {
@@ -229,7 +229,7 @@ if (mousePressed) {
 
 <p>When the user releases the mouse, the wind will stop, and according to Newton&rsquo;s first law, the object will continue to move at a constant velocity. However, if we had forgotten to reset acceleration to zero, the gust of wind would still be in effect. Even worse, it would add onto itself from the previous frame, since we are accumulating forces! Acceleration, in our simulation, has no memory; it is simply calculated based on the environmental forces present at a moment in time. This is different than, say, location, which must remember where the object was in the previous frame in order to move properly to the next.</p>
 
-<p>The easiest way to implement clearing the acceleration for each frame is to multiply the <strong klass="">PVector</strong> by 0 at the end of <strong function="">update()</strong>.</p>
+<p>The easiest way to implement clearing the acceleration for each frame is to multiply the <strong klass="">PVector</strong> by 0 at the end of <span class="function">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
@@ -310,7 +310,7 @@ m2.applyForce(wind);</pre>
 
 <p><a data-primary="object-oriented programming" data-secondary="references to vs. copies of objects" data-type="indexterm">&nbsp;</a></p>
 
-<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <strong klass="">PVector</strong>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <strong klass="">PVector</strong> f before dividing it by mass. Fortunately, the <strong klass="">PVector</strong> class has a convenient method for making a copy&mdash;<strong function="">get()</strong>. <strong function="">get()</strong> returns a new <strong klass="">PVector</strong> object with the same data. And so we can revise <strong function="">applyForce()</strong> as follows:</p>
+<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <strong klass="">PVector</strong>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <strong klass="">PVector</strong> f before dividing it by mass. Fortunately, the <strong klass="">PVector</strong> class has a convenient method for making a copy&mdash;<span class="function">(.*?)</span>. <span class="function">(.*?)</span> returns a new <strong klass="">PVector</strong> object with the same data. And so we can revise <span class="function">(.*?)</span> as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyForce(PVector force) {
@@ -320,12 +320,12 @@ void applyForce(PVector force) {
   acceleration.add(f);
 }</pre>
 
-<p>There&rsquo;s another way we could write the above function, using the static method <strong function="">div()</strong>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
+<p>There&rsquo;s another way we could write the above function, using the static method <span class="function">(.*?)</span>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
 
 <div data-type="exercise" id="chapter02_exercise2">
 <h5>Exercise 2.2</h5>
 
-<p>Rewrite the <strong function="">applyForce()</strong> method using the static method <strong function="">div()</strong> instead of <strong function="">get()</strong>.</p>
+<p>Rewrite the <span class="function">(.*?)</span> method using the static method <span class="function">(.*?)</span> instead of <span class="function">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyForce(PVector force) {
@@ -381,7 +381,7 @@ void applyForce(PVector force) {
 
 <p>Let&rsquo;s look at how we could make this example a bit more exciting with many objects of varying mass. To do this, we&rsquo;ll need a quick review of object-oriented programming. Again, we&rsquo;re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction). However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it&rsquo;s worth taking a moment to walk through the steps of going from one object to many.</p>
 
-<p>This is where we are with the <strong klass="">Mover</strong> class as a whole. Notice how it is identical to the <strong klass="">Mover</strong> class created in Chapter 1, with two additions&mdash;<strong class="var">mass</strong> and a new <strong function="">applyForce()</strong> function.</p>
+<p>This is where we are with the <strong klass="">Mover</strong> class as a whole. Notice how it is identical to the <strong klass="">Mover</strong> class created in Chapter 1, with two additions&mdash;<strong class="var">mass</strong> and a new <span class="function">(.*?)</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -448,7 +448,7 @@ class Mover {
 <pre data-code-language="java" data-type="programlisting">
 Mover[] movers = new Mover[100];</pre>
 
-<p>And then we can initialize all of those <strong klass="">Mover</strong> objects in <strong function="">setup()</strong> with a loop.</p>
+<p>And then we can initialize all of those <strong klass="">Mover</strong> objects in <span class="function">(.*?)</span> with a loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -596,7 +596,7 @@ for (int i = 0; i &lt; movers.length; i++) {
 	</ul>
 	</li>
 	<li>
-	<p>Translating that formula into Processing code that calculates a <strong klass="">PVector</strong> to be sent through our <strong klass="">Mover</strong><code>'s</code> <strong function="">applyForce()</strong> function</p>
+	<p>Translating that formula into Processing code that calculates a <strong klass="">PVector</strong> to be sent through our <strong klass="">Mover</strong><code>'s</code> <span class="function">(.*?)</span> function</p>
 	</li>
 </ul>
 
@@ -764,7 +764,7 @@ void draw() {
 
 <ul>
 	<li>
-	<p>{fd} refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <strong function="">applyForce()</strong> function.</p>
+	<p>{fd} refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <span class="function">(.*?)</span> function.</p>
 	</li>
 	<li>
 	<p>- 1/2 is a constant: -0.5. This is fairly irrelevant in terms of our Processing world, as we will be making up values for other constants anyway. However, the fact that it is negative is important, as it tells us that the force is in the opposite direction of velocity (just as with friction).</p>
@@ -778,7 +778,7 @@ void draw() {
 	<p>{rho} is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don&rsquo;t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
 	</li>
 	<li>
-	<p>{v} refers to the speed of the object moving. OK, we&rsquo;ve got this one! The object&rsquo;s speed is the magnitude of the velocity vector: <strong function="">velocity.magnitude()</strong>. And {v2} just means {v} squared or {v} * {v}.</p>
+	<p>{v} refers to the speed of the object moving. OK, we&rsquo;ve got this one! The object&rsquo;s speed is the magnitude of the velocity vector: <span class="function">(.*?)</span>. And {v2} just means {v} squared or {v} * {v}.</p>
 	</li>
 	<li>
 	<p>{a} refers to the frontal area of the object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p>
@@ -787,7 +787,7 @@ void draw() {
 	<p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction (μ). This is a constant we&rsquo;ll determine based on whether we want the drag force to be strong or weak.</p>
 	</li>
 	<li>
-	<p>{unitv} Look familiar? It should. This refers to the velocity unit vector, i.e. <strong function="">velocity.normalize()</strong>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
+	<p>{unitv} Look familiar? It should. This refers to the velocity unit vector, i.e. <span class="function">(.*?)</span>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
 	</li>
 </ul>
 
@@ -872,7 +872,7 @@ boolean contains(Mover m) {
   return loc.x &gt; x &amp;&amp; loc.x &lt; x + w &amp;&amp; loc.y &gt; y &amp;&amp; loc.y &lt; y + h;
 }</pre>
 
-<p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
+<p>The <span class="function">(.*?)</span> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
 
 <pre data-code-language="java" data-type="programlisting">
  void drag(Mover m) {
@@ -971,7 +971,7 @@ void draw() {
 
 <ul>
 	<li>
-	<p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <strong function="">applyForce()</strong> function.</p>
+	<p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <span class="function">(.*?)</span> function.</p>
 	</li>
 	<li>
 	<p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&rsquo;s not an important number if you are a Processing programmer. Again, it&rsquo;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&rsquo;t such a terrible choice either.</p>
@@ -1057,7 +1057,7 @@ force.mult(m);</pre>
 
 <p>Note that I also renamed the <strong klass="">PVector</strong> &ldquo;dir&rdquo; as &ldquo;force.&rdquo; After all, when we&rsquo;re finished with the calculations, the <strong klass="">PVector</strong> we started with ends up being the actual force vector we wanted all along.</p>
 
-<p>Now that we&rsquo;ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch. In Example 2.1, you may recall how we created a simple <strong klass="">Mover</strong> object&mdash;a class with <strong klass="">PVector</strong><code>&rsquo;s</code> location, velocity, and acceleration as well as an <strong function="">applyForce()</strong>. Let&rsquo;s take this exact class and put it in a sketch with:</p>
+<p>Now that we&rsquo;ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch. In Example 2.1, you may recall how we created a simple <strong klass="">Mover</strong> object&mdash;a class with <strong klass="">PVector</strong><code>&rsquo;s</code> location, velocity, and acceleration as well as an <span class="function">(.*?)</span>. Let&rsquo;s take this exact class and put it in a sketch with:</p>
 
 <figure class="half-width-right" id="chapter02_figure9"><img alt="Figure 2.9" src="../images/chapter02/ch02_09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1165,7 +1165,7 @@ m.applyForce(f);
 
 <p>and so on. . .</p>
 
-<p>It&rsquo;s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities. I&rsquo;d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass="">Mover</strong> or <strong klass="">Attractor</strong> class. Whether you pick option 2 or option 3 is the difference between saying &ldquo;The attractor attracts the mover&rdquo; or &ldquo;The mover is attracted to the attractor.&rdquo; Number 4 is really my favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out the <strong function="">applyForce()</strong> function, and I think our examples will be clearer if we continue with the same methodology.</p>
+<p>It&rsquo;s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities. I&rsquo;d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass="">Mover</strong> or <strong klass="">Attractor</strong> class. Whether you pick option 2 or option 3 is the difference between saying &ldquo;The attractor attracts the mover&rdquo; or &ldquo;The mover is attracted to the attractor.&rdquo; Number 4 is really my favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out the <span class="function">(.*?)</span> function, and I think our examples will be clearer if we continue with the same methodology.</p>
 
 <p>In other words, where we once had:</p>
 
@@ -1181,7 +1181,7 @@ m.applyForce(f);</pre>
 PVector f = a.attract(m); //[bold]
 m.applyForce(f);</pre>
 
-<p>And so our <strong function="">draw()</strong> function can now be written as:</p>
+<p>And so our <span class="function">(.*?)</span> function can now be written as:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -1199,7 +1199,7 @@ void draw() {
 
 }</pre>
 
-<p>We&rsquo;re almost there. Since we decided to put the <strong function="">attract()</strong> function inside of the <strong klass="">Attractor</strong> class, we&rsquo;ll need to actually write that function. The function needs to receive a <strong klass="">Mover</strong> object and return a <strong klass="">PVector</strong>, i.e.:</p>
+<p>We&rsquo;re almost there. Since we decided to put the <span class="function">(.*?)</span> function inside of the <strong klass="">Attractor</strong> class, we&rsquo;ll need to actually write that function. The function needs to receive a <strong klass="">Mover</strong> object and return a <strong klass="">PVector</strong>, i.e.:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector attract(Mover m) {
@@ -1378,7 +1378,7 @@ void draw() {
   }
 }</pre>
 
-<p>The <strong function="">draw()</strong> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <strong class="var">i</strong>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&rdquo;</p>
+<p>The <span class="function">(.*?)</span> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <strong class="var">i</strong>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&rdquo;</p>
 
 <p>To do this, we need to nest a second loop.</p>
 
@@ -1393,7 +1393,7 @@ void draw() {
     movers[i].display();
   }</pre>
 
-<p>In the previous example, we had an <strong klass="">Attractor</strong> object with a function named <strong function="">attract()</strong>. Now, since we have movers attracting movers, all we need to do is copy the <strong function="">attract()</strong> function into the <strong klass="">Mover</strong> class.</p>
+<p>In the previous example, we had an <strong klass="">Attractor</strong> object with a function named <span class="function">(.*?)</span>. Now, since we have movers attracting movers, all we need to do is copy the <span class="function">(.*?)</span> function into the <strong klass="">Mover</strong> class.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
