@@ -76,7 +76,7 @@
 
 <ul>
 	<li>
-	<p><strong><em>Reinforcement Learning</em></strong> &mdash;A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don&rsquo;t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <strong class="var">t</strong>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We&rsquo;ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
+	<p><strong><em>Reinforcement Learning</em></strong> &mdash;A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don&rsquo;t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <span class="var">(.*?)</span>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We&rsquo;ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
 	</li>
 </ul>
 
@@ -419,7 +419,7 @@ int result = p.feedforward(point);</pre>
 
 <p>Notice that a high learning constant means the weight will change more drastically. This may help us arrive at a solution more quickly, but with such large changes in weight it&rsquo;s possible we will overshoot the optimal weights. With a small learning constant, the weights will be adjusted slowly, requiring more training time but allowing the network to make very small adjustments that could improve the network&rsquo;s overall accuracy.</p>
 
-<p>Assuming the addition of a variable <strong class="var">c</strong> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
+<p>Assuming the addition of a variable <span class="var">(.*?)</span> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A new variable is introduced
@@ -512,7 +512,7 @@ class Trainer {
   }
 }</pre>
 
-<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let&rsquo;s start with the formula for a line, where <strong class="var">y</strong> is calculated as a function of <strong class="var">x</strong>:</p>
+<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let&rsquo;s start with the formula for a line, where <span class="var">(.*?)</span> is calculated as a function of <span class="var">(.*?)</span>:</p>
 
 <p><strong formula="">y = f(x)</strong></p>
 
@@ -539,13 +539,13 @@ float f(float x) {
 float x = random(width);
 float y = random(height);</pre>
 
-<p>How do we know if this point is above or below the line? The line function <span class="function">(.*?)</span> gives us the <strong class="var">y</strong> value on the line for that <strong class="var">x</strong> position. Let&rsquo;s call that <strong class="var">yline</strong>.</p>
+<p>How do we know if this point is above or below the line? The line function <span class="function">(.*?)</span> gives us the <span class="var">(.*?)</span> value on the line for that <span class="var">(.*?)</span> position. Let&rsquo;s call that <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The y position on the line
 float yline = f(x);</pre>
 
-<p>If the <strong class="var">y</strong> value we are examining is above the line, it will be less than <strong class="var">yline</strong>.</p>
+<p>If the <span class="var">(.*?)</span> value we are examining is above the line, it will be less than <span class="var">(.*?)</span>.</p>
 
 <figure id="chapter10_figure8"><img alt="Figure 10.8" src="../images/chapter10/ch10_08.png" />
 <figcaption>&nbsp;</figcaption>
@@ -564,7 +564,7 @@ if (y &lt; yline) {
 <pre data-code-language="java" data-type="programlisting">
 Trainer t = new Trainer(x, y, answer);</pre>
 
-<p>Assuming we had a <span class="klass">(.*?)</span> object <strong class="var">ptron</strong>, we could then train it by sending the inputs along with the known answer.</p>
+<p>Assuming we had a <span class="klass">(.*?)</span> object <span class="var">(.*?)</span>, we could then train it by sending the inputs along with the known answer.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ptron.train(t.inputs,t.answer);</pre>
@@ -790,7 +790,7 @@ int feedforward(float[] inputs) {
 
 <p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">(.*?)</span> that points from its current location to where it desires to be. This <span class="klass">(.*?)</span> essentially serves as the error&mdash;the longer the <span class="klass">(.*?)</span>, the worse the vehicle is performing; the shorter, the better.</p>
 
-<p>The brain can then apply this &ldquo;error&rdquo; vector (which has two error values, one for <strong class="var">x</strong> and one for <strong class="var">y</strong>) as a means for adjusting the weights, just as we did in the line classification example.</p>
+<p>The brain can then apply this &ldquo;error&rdquo; vector (which has two error values, one for <span class="var">(.*?)</span> and one for <span class="var">(.*?)</span>) as a means for adjusting the weights, just as we did in the line classification example.</p>
 
 <table class="codewide">
 	<tbody>
@@ -1081,7 +1081,7 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>What&rsquo;s missing, of course, is the connection. We can consider a <span class="klass">(.*?)</span> object to be made up of three elements, two neurons (from <span class="klass">(.*?)</span> <strong class="var">a</strong> to <span class="klass">(.*?)</span> <strong class="var">b</strong>) and a <strong class="var">weight</strong>.</p>
+<p>What&rsquo;s missing, of course, is the connection. We can consider a <span class="klass">(.*?)</span> object to be made up of three elements, two neurons (from <span class="klass">(.*?)</span> <span class="var">(.*?)</span> to <span class="klass">(.*?)</span> <span class="var">(.*?)</span>) and a <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
@@ -1140,7 +1140,7 @@ void setup() {
     [inline]// But what do we do with the Connection object?
   }</pre>
 
-<p>Presumably, we might think that the <span class="klass">(.*?)</span> should store an <span class="klass">(.*?)</span> of connections, just like it stores an <span class="klass">(.*?)</span> of neurons. While useful, in this case such an <span class="klass">(.*?)</span> is not necessary and is missing an important feature that we need. Ultimately we plan to &ldquo;feed forward&quot; the neurons through the network, so the <span class="klass">(.*?)</span> objects themselves must know to which neurons they are connected in the &ldquo;forward&rdquo; direction. In other words, each neuron should have its own list of <span class="klass">(.*?)</span> objects. When <strong class="var">a</strong> connects to <strong class="var">b</strong>, we want <strong class="var">a</strong> to store a reference of that connection so that it can pass its output to <strong class="var">b</strong> when the time comes.</p>
+<p>Presumably, we might think that the <span class="klass">(.*?)</span> should store an <span class="klass">(.*?)</span> of connections, just like it stores an <span class="klass">(.*?)</span> of neurons. While useful, in this case such an <span class="klass">(.*?)</span> is not necessary and is missing an important feature that we need. Ultimately we plan to &ldquo;feed forward&quot; the neurons through the network, so the <span class="klass">(.*?)</span> objects themselves must know to which neurons they are connected in the &ldquo;forward&rdquo; direction. In other words, each neuron should have its own list of <span class="klass">(.*?)</span> objects. When <span class="var">(.*?)</span> connects to <span class="var">(.*?)</span>, we want <span class="var">(.*?)</span> to store a reference of that connection so that it can pass its output to <span class="var">(.*?)</span> when the time comes.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void connect(Neuron a, Neuron b) {
@@ -1148,7 +1148,7 @@ void setup() {
     a.addConnection(c);
   }</pre>
 
-<p>In some cases, we also might want <span class="klass">(.*?)</span> <strong class="var">b</strong> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
+<p>In some cases, we also might want <span class="klass">(.*?)</span> <span class="var">(.*?)</span> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
 
 <p>For this to work, we have to add an <span class="klass">(.*?)</span> of connections to the <span class="klass">(.*?)</span> class. Then we implement the <span class="function">(.*?)</span> function that stores the connection in that <span class="klass">(.*?)</span>.</p>
 
@@ -1234,7 +1234,7 @@ class Neuron
 
   }</pre>
 
-<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">(.*?)</span> class adds a variable called <strong class="var">sum</strong>, it can simply accumulate the inputs as they are received.</p>
+<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">(.*?)</span> class adds a variable called <span class="var">(.*?)</span>, it can simply accumulate the inputs as they are received.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Neuron
@@ -1260,7 +1260,7 @@ class Neuron
     }
   }</pre>
 
-<p>Now, what do we do in the <span class="function">(.*?)</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">(.*?)</span> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <strong class="var">sum</strong> variable and make it the output.</p>
+<p>Now, what do we do in the <span class="function">(.*?)</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">(.*?)</span> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <span class="var">(.*?)</span> variable and make it the output.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void fire() {
@@ -1282,14 +1282,14 @@ class Connection {
     b.feedforward(val*weight);
   }</pre>
 
-<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">(.*?)</span> <strong class="var">a</strong> to <span class="klass">(.*?)</span> <strong class="var">b</strong>.</p>
+<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">(.*?)</span> <span class="var">(.*?)</span> to <span class="klass">(.*?)</span> <span class="var">(.*?)</span>.</p>
 
-<p>Let&rsquo;s first think about how we might do that. We know the location of <span class="klass">(.*?)</span> <strong class="var">a</strong>; it&rsquo;s the <span class="klass">(.*?)</span> <strong class="var">a.location</strong>. <span class="klass">(.*?)</span> <strong class="var">b</strong> is located at <strong class="var">b.location</strong>. We need to start something moving from <span class="klass">(.*?)</span> <strong class="var">a</strong> by creating another <span class="klass">(.*?)</span> that will store the path of our traveling data.</p>
+<p>Let&rsquo;s first think about how we might do that. We know the location of <span class="klass">(.*?)</span> <span class="var">(.*?)</span>; it&rsquo;s the <span class="klass">(.*?)</span> <span class="var">(.*?)</span>. <span class="klass">(.*?)</span> <span class="var">(.*?)</span> is located at <span class="var">(.*?)</span>. We need to start something moving from <span class="klass">(.*?)</span> <span class="var">(.*?)</span> by creating another <span class="klass">(.*?)</span> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector sender = a.location.get();</pre>
 
-<p>Once we have a copy of that location, we can use any of the motion algorithms that we&rsquo;ve studied throughout this book to move along this path. Here&mdash;let&rsquo;s pick something very simple and just interpolate from <strong class="var">a</strong> to <strong class="var">b</strong>.</p>
+<p>Once we have a copy of that location, we can use any of the motion algorithms that we&rsquo;ve studied throughout this book to move along this path. Here&mdash;let&rsquo;s pick something very simple and just interpolate from <span class="var">(.*?)</span> to <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   sender.x = lerp(sender.x, b.location.x, 0.1);

@@ -61,7 +61,7 @@ void draw() {
 
 <p><a data-primary="particle systems" data-secondary="particles in" data-type="indexterm">&nbsp;</a> <a data-primary="particles" data-type="indexterm">&nbsp;</a></p>
 
-<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we&rsquo;ve done this already. Our <span class="klass">(.*?)</span> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <strong class="var">location</strong>, <strong class="var">velocity</strong>, and <strong class="var">acceleration</strong>, a constructor to initialize those variables, and functions to <span class="function">(.*?)</span> itself and <span class="function">(.*?)</span> its location.</p>
+<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we&rsquo;ve done this already. Our <span class="klass">(.*?)</span> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, and <span class="var">(.*?)</span>, a constructor to initialize those variables, and functions to <span class="function">(.*?)</span> itself and <span class="function">(.*?)</span> its location.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Particle {
@@ -93,7 +93,7 @@ class Particle {
 
 <p><a data-primary="emitter" data-type="indexterm">&nbsp;</a> <a data-primary="particle systems" data-secondary="emitter" data-type="indexterm">&nbsp;</a> <a data-primary="particle systems" data-secondary="lifespan of particles" data-type="indexterm">&nbsp;</a> <a data-primary="particles" data-secondary="lifespan of" data-type="indexterm">&nbsp;</a></p>
 
-<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <span class="klass">(.*?)</span> class, however, we&rsquo;re simply going to add a <strong class="var">lifespan</strong> variable. The timer will start at 255 and count down to 0, when the particle will be considered &ldquo;dead.&rdquo; And so we expand the <span class="klass">(.*?)</span> class as follows:</p>
+<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <span class="klass">(.*?)</span> class, however, we&rsquo;re simply going to add a <span class="var">(.*?)</span> variable. The timer will start at 255 and count down to 0, when the particle will be considered &ldquo;dead.&rdquo; And so we expand the <span class="klass">(.*?)</span> class as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Particle {
@@ -128,11 +128,11 @@ class Particle {
   }
 }</pre>
 
-<p>The reason we chose to start the lifespan at 255 and count down to 0 is for convenience. With those values, we can assign <strong class="var">lifespan</strong> to act as the alpha transparency for the ellipse as well. When the particle is &ldquo;dead&rdquo; it will also have faded away onscreen.</p>
+<p>The reason we chose to start the lifespan at 255 and count down to 0 is for convenience. With those values, we can assign <span class="var">(.*?)</span> to act as the alpha transparency for the ellipse as well. When the particle is &ldquo;dead&rdquo; it will also have faded away onscreen.</p>
 
 <p><a data-primary="particle systems" data-secondary="dead particles" data-tertiary="checking for" data-type="indexterm">&nbsp;</a> <a data-primary="particles" data-secondary="death" data-tertiary="checking for" data-type="indexterm">&nbsp;</a></p>
 
-<p>With the addition of the <strong class="var">lifespan</strong> variable, we&rsquo;ll also need one additional function&mdash;a function that can be queried (for a true or false answer) as to whether the particle is alive or dead. This will come in handy when we are writing the <span class="klass">(.*?)</span> class, whose task will be to manage the list of particles themselves. Writing this function is pretty easy; we just need to check and see if the value of <strong class="var">lifespan</strong> is less than 0. If it is we <strong class="var">return true</strong>, if not we <strong class="var">return false</strong>.</p>
+<p>With the addition of the <span class="var">(.*?)</span> variable, we&rsquo;ll also need one additional function&mdash;a function that can be queried (for a true or false answer) as to whether the particle is alive or dead. This will come in handy when we are writing the <span class="klass">(.*?)</span> class, whose task will be to manage the list of particles themselves. Writing this function is pretty easy; we just need to check and see if the value of <span class="var">(.*?)</span> is less than 0. If it is we <span class="var">(.*?)</span>, if not we <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   boolean isDead() {
@@ -285,7 +285,7 @@ void draw() {
   }
 }</pre>
 
-<p>This last <span class="function">(.*?)</span> loop looks pretty similar to our code that looped through a regular array by accessing each index. We initialize a variable called <strong class="var">i</strong> to 0 and count up by 1, accessing each element of the <span class="klass">(.*?)</span> until we get to the end. However, this is a good time to mention the &ldquo;enhanced <span class="function">(.*?)</span> loop&rdquo; available in Java (and Processing), which is a bit more concise. The enhanced loop works with both <span class="klass">(.*?)</span><code>s</code> and regular arrays and looks like this:</p>
+<p>This last <span class="function">(.*?)</span> loop looks pretty similar to our code that looped through a regular array by accessing each index. We initialize a variable called <span class="var">(.*?)</span> to 0 and count up by 1, accessing each element of the <span class="klass">(.*?)</span> until we get to the end. However, this is a good time to mention the &ldquo;enhanced <span class="function">(.*?)</span> loop&rdquo; available in Java (and Processing), which is a bit more concise. The enhanced loop works with both <span class="klass">(.*?)</span><code>s</code> and regular arrays and looks like this:</p>
 
 <p><a data-primary="for loops" data-secondary="enhanced" data-type="indexterm">&nbsp;</a></p>
 
@@ -362,7 +362,7 @@ void draw() {
 
 <p><a data-primary="size() function (ArrayList class)" data-type="indexterm">&nbsp;</a></p>
 
-<p>This is a somewhat extreme example (with flawed logic), but it proves the point. In the above case, for each particle in the list, we add a new particle to the list (manipulating the <span class="function">(.*?)</span> of the <span class="klass">(.*?)</span>). This will result in an infinite loop, as <strong class="var">i</strong> can never increment past the size of the <span class="klass">(.*?)</span>.</p>
+<p>This is a somewhat extreme example (with flawed logic), but it proves the point. In the above case, for each particle in the list, we add a new particle to the list (manipulating the <span class="function">(.*?)</span> of the <span class="klass">(.*?)</span>). This will result in an infinite loop, as <span class="var">(.*?)</span> can never increment past the size of the <span class="klass">(.*?)</span>.</p>
 
 <p><a data-primary="iterating" data-secondary="removing elements in for loops" data-type="indexterm">&nbsp;</a></p>
 
@@ -372,7 +372,7 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Let&rsquo;s pretend we are <strong class="var">i</strong> looping through the <span class="klass">(.*?)</span>.</p>
+<p>Let&rsquo;s pretend we are <span class="var">(.*?)</span> looping through the <span class="klass">(.*?)</span>.</p>
 
 <p><strong formula="">when i = 0 &rarr; Check particle A &rarr; Do not delete</strong><br />
 <strong formula="">when i = 1 &rarr; Check particle B &rarr; Do not delete</strong><br />
@@ -620,7 +620,7 @@ class ParticleSystem {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>In Example <a href="#chapter04_example3">4.3</a>, we stored a single reference to a <span class="klass">(.*?)</span> object in the variable <strong class="var">ps</strong>.</p>
+<p>In Example <a href="#chapter04_example3">4.3</a>, we stored a single reference to a <span class="klass">(.*?)</span> object in the variable <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ParticleSystem ps;
@@ -672,7 +672,7 @@ void draw() {
 <div data-type="exercise" id="chapter04_exercise5">
 <h5>Exercise 4.5</h5>
 
-<p>Rewrite Example 4.4 so that each particle system doesn&rsquo;t live forever. When a particle system is empty (i.e. has no particles left in its <span class="klass">(.*?)</span>), remove it from the <span class="klass">(.*?)</span> <strong class="var">systems</strong>.</p>
+<p>Rewrite Example 4.4 so that each particle system doesn&rsquo;t live forever. When a particle system is empty (i.e. has no particles left in its <span class="klass">(.*?)</span>), remove it from the <span class="klass">(.*?)</span> <span class="var">(.*?)</span>.</p>
 </div>
 
 <div data-type="exercise" id="chapter04_exercise6">
@@ -1013,12 +1013,12 @@ class Confetti extends Particle {
 
 <p>Let&rsquo;s make this a bit more sophisticated. Let&rsquo;s say we want to have the <span class="klass">(.*?)</span> particle rotate as it flies through the air. We could, of course, model angular velocity and acceleration as we did in Chapter 3. Instead, we&rsquo;ll try a quick and dirty solution.</p>
 
-<p>We know a particle has an <em>x</em> location somewhere between 0 and the width of the window. What if we said: when the particle&rsquo;s <em>x</em> location is 0, its rotation should be 0; when its <em>x</em> location is equal to the width, its rotation should be equal to <strong class="var">TWO_PI</strong>? Does this ring a bell? Whenever we have a value with one range that we want to map to another range, we can use Processing&rsquo;s <span class="function">(.*?)</span> function, which we learned about in the <a href="#intro_section6">Introduction</a>!</p>
+<p>We know a particle has an <em>x</em> location somewhere between 0 and the width of the window. What if we said: when the particle&rsquo;s <em>x</em> location is 0, its rotation should be 0; when its <em>x</em> location is equal to the width, its rotation should be equal to <span class="var">(.*?)</span>? Does this ring a bell? Whenever we have a value with one range that we want to map to another range, we can use Processing&rsquo;s <span class="function">(.*?)</span> function, which we learned about in the <a href="#intro_section6">Introduction</a>!</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float angle = map(location.x,0,width,0,TWO_PI);</pre>
 
-<p>And just to give it a bit more spin, we can actually map the angle&rsquo;s range from 0 to <strong class="var">TWO_PI</strong>*2. Let&rsquo;s look at how this code fits into the <span class="function">(.*?)</span> function.</p>
+<p>And just to give it a bit more spin, we can actually map the angle&rsquo;s range from 0 to <span class="var">(.*?)</span>*2. Let&rsquo;s look at how this code fits into the <span class="function">(.*?)</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void display() {
@@ -1118,7 +1118,7 @@ for (Animal a: kingdom) {
 Dog rover = new Dog();
 Animal spot = new Dog();</pre>
 
-<p>Although the second line of code might initially seem to violate syntax rules, both ways of declaring a <span class="klass">(.*?)</span> object are legal. Even though we declare <strong class="var">spot</strong> as an <span class="klass">(.*?)</span> object, we&rsquo;re really making a <span class="klass">(.*?)</span> object and storing it in the <strong class="var">spot</strong> variable. And we can safely call all of the <span class="klass">(.*?)</span> class methods on spot because the rules of inheritance dictate that a dog can do anything an animal can.</p>
+<p>Although the second line of code might initially seem to violate syntax rules, both ways of declaring a <span class="klass">(.*?)</span> object are legal. Even though we declare <span class="var">(.*?)</span> as an <span class="klass">(.*?)</span> object, we&rsquo;re really making a <span class="klass">(.*?)</span> object and storing it in the <span class="var">(.*?)</span> variable. And we can safely call all of the <span class="klass">(.*?)</span> class methods on spot because the rules of inheritance dictate that a dog can do anything an animal can.</p>
 
 <p><a data-primary="superclasses" data-secondary="overriding functions from" data-type="indexterm">&nbsp;</a></p>
 
@@ -1358,7 +1358,7 @@ void draw() {
   ps.run();
 }</pre>
 
-<p>Well, it seems that we have a small problem. <span class="function">(.*?)</span> is a method written inside the <span class="klass">(.*?)</span> class, but we don&rsquo;t have any reference to the individual particles themselves, only the <span class="klass">(.*?)</span> object: the variable <strong class="var">ps</strong>.</p>
+<p>Well, it seems that we have a small problem. <span class="function">(.*?)</span> is a method written inside the <span class="klass">(.*?)</span> class, but we don&rsquo;t have any reference to the individual particles themselves, only the <span class="klass">(.*?)</span> object: the variable <span class="var">(.*?)</span>.</p>
 
 <p>Since we want all particles to receive the force, however, we can decide to apply the force to the particle system and let it manage applying the force to all the individual particles:</p>
 
@@ -1807,7 +1807,7 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>To achieve additive blending in Processing, you&rsquo;ll need to use the <strong class="var">P2D</strong> or <strong class="var">P3D</strong> renderer.</p>
+<p>To achieve additive blending in Processing, you&rsquo;ll need to use the <span class="var">(.*?)</span> or <span class="var">(.*?)</span> renderer.</p>
 
 <div data-type="example"><h5>Example 4.9: Additive blending</h5></div>
 
@@ -1844,7 +1844,7 @@ void draw() {
 <div data-type="exercise" id="chapter04_exercise14">
 <h5>Exercise 4.14</h5>
 
-<p>Try blending with other modes, such as <strong class="var">SUBTRACT</strong>, <strong class="var">LIGHTEST</strong>, <strong class="var">DARKEST</strong>, <strong class="var">DIFFERENCE</strong>, <strong class="var">EXCLUSION</strong>,or <strong class="var">MULTIPLY</strong>.</p>
+<p>Try blending with other modes, such as <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>,or <span class="var">(.*?)</span>.</p>
 </div>
 
 <div style="page-break-after:always;">&nbsp;</div>

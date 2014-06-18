@@ -137,7 +137,7 @@
 	<p>The <strong><em>mass</em></strong> of an object is a measure of the amount of matter in the object (measured in kilograms).</p>
 	</li>
 	<li>
-	<p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton&rsquo;s second law, we can calculate it as mass times the acceleration of gravity (<strong class="var">w</strong> = <strong class="var">m</strong> * <strong class="var">g</strong>). Weight is measured in newtons.</p>
+	<p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton&rsquo;s second law, we can calculate it as mass times the acceleration of gravity (<span class="var">(.*?)</span> = <span class="var">(.*?)</span> * <span class="var">(.*?)</span>). Weight is measured in newtons.</p>
 	</li>
 	<li>
 	<p><strong><em>Density</em></strong> is defined as the amount of mass per unit of volume (grams per cubic centimeter, for example).</p>
@@ -147,7 +147,7 @@
 <p>Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the moon. However, it would weigh only one-sixth as much.</p>
 </div>
 
-<p>Now, in the world of Processing, what is mass anyway? Aren&rsquo;t we dealing with pixels? To start in a simpler place, let&rsquo;s say that in our pretend pixel world, all of our objects have a mass equal to 1. <strong class="var">F</strong>/ 1 = <strong class="var">F</strong>. And so:</p>
+<p>Now, in the world of Processing, what is mass anyway? Aren&rsquo;t we dealing with pixels? To start in a simpler place, let&rsquo;s say that in our pretend pixel world, all of our objects have a mass equal to 1. <span class="var">(.*?)</span>/ 1 = <span class="var">(.*?)</span>. And so:</p>
 
 <p>{aequalsf}</p>
 
@@ -195,7 +195,7 @@ mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
 
-<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <span class="function">(.*?)</span> with wind. And so the <span class="klass">(.*?)</span> object&rsquo;s acceleration is now assigned the <span class="klass">(.*?)</span> <strong class="var">wind</strong>. Second, we call <span class="function">(.*?)</span> with gravity. Now the <span class="klass">(.*?)</span> object&rsquo;s acceleration is set to the gravity <span class="klass">(.*?)</span>. Third, we call <span class="function">(.*?)</span>. What happens in <span class="function">(.*?)</span>? Acceleration is added to velocity.</p>
+<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <span class="function">(.*?)</span> with wind. And so the <span class="klass">(.*?)</span> object&rsquo;s acceleration is now assigned the <span class="klass">(.*?)</span> <span class="var">(.*?)</span>. Second, we call <span class="function">(.*?)</span> with gravity. Now the <span class="klass">(.*?)</span> object&rsquo;s acceleration is set to the gravity <span class="klass">(.*?)</span>. Third, we call <span class="function">(.*?)</span>. What happens in <span class="function">(.*?)</span>? Acceleration is added to velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 velocity.add(acceleration);</pre>
@@ -303,14 +303,14 @@ PVector wind = new PVector(1,0);
 m1.applyForce(wind);
 m2.applyForce(wind);</pre>
 
-<p>Again, let&rsquo;s <em>be</em> the computer. Object <strong class="var">m1</strong> receives the wind force&mdash;(1,0)&mdash;divides it by mass (10), and adds it to acceleration.</p>
+<p>Again, let&rsquo;s <em>be</em> the computer. Object <span class="var">(.*?)</span> receives the wind force&mdash;(1,0)&mdash;divides it by mass (10), and adds it to acceleration.</p>
 
 <p><strong formula="">m1 equals wind force: &nbsp;&nbsp;&nbsp; (1,0)</strong><br />
 <strong formula="">Divided by mass of 10: &nbsp;&nbsp; (0.1,0)</strong></p>
 
 <p><a data-primary="object-oriented programming" data-secondary="references to vs. copies of objects" data-type="indexterm">&nbsp;</a></p>
 
-<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <span class="klass">(.*?)</span>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <span class="klass">(.*?)</span> f before dividing it by mass. Fortunately, the <span class="klass">(.*?)</span> class has a convenient method for making a copy&mdash;<span class="function">(.*?)</span>. <span class="function">(.*?)</span> returns a new <span class="klass">(.*?)</span> object with the same data. And so we can revise <span class="function">(.*?)</span> as follows:</p>
+<p>OK. Moving on to object <span class="var">(.*?)</span>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <span class="klass">(.*?)</span>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <span class="var">(.*?)</span> to receive a force divided by the mass of object <span class="var">(.*?)</span>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <span class="klass">(.*?)</span> f before dividing it by mass. Fortunately, the <span class="klass">(.*?)</span> class has a convenient method for making a copy&mdash;<span class="function">(.*?)</span>. <span class="function">(.*?)</span> returns a new <span class="klass">(.*?)</span> object with the same data. And so we can revise <span class="function">(.*?)</span> as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyForce(PVector force) {
@@ -377,11 +377,11 @@ void applyForce(PVector force) {
   m.applyForce(wind);
   m.applyForce(gravity);</pre>
 
-<p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <strong class="var">m</strong>. We&rsquo;re beginning to get somewhere. We&rsquo;ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
+<p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <span class="var">(.*?)</span>. We&rsquo;re beginning to get somewhere. We&rsquo;ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
 
 <p>Let&rsquo;s look at how we could make this example a bit more exciting with many objects of varying mass. To do this, we&rsquo;ll need a quick review of object-oriented programming. Again, we&rsquo;re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction). However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it&rsquo;s worth taking a moment to walk through the steps of going from one object to many.</p>
 
-<p>This is where we are with the <span class="klass">(.*?)</span> class as a whole. Notice how it is identical to the <span class="klass">(.*?)</span> class created in Chapter 1, with two additions&mdash;<strong class="var">mass</strong> and a new <span class="function">(.*?)</span> function.</p>
+<p>This is where we are with the <span class="klass">(.*?)</span> class as a whole. Notice how it is identical to the <span class="klass">(.*?)</span> class created in Chapter 1, with two additions&mdash;<span class="var">(.*?)</span> and a new <span class="function">(.*?)</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -665,14 +665,14 @@ friction.mult(-1);</pre>
 
 <p><a data-primary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="coefficient of friction" data-type="indexterm">&nbsp;</a> <a data-primary="coefficient of friction" data-secondary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="coefficient of friction" data-type="indexterm">&nbsp;</a></p>
 
-<p>According to the formula, the magnitude is <strong class="var">&mu;</strong> * <strong class="var">N</strong>. <strong class="var">&mu;</strong>, the Greek letter <em>mu</em> (pronounced &ldquo;mew&rdquo;), is used here to describe the <strong><em>coefficient of friction</em></strong>. The coefficient of friction establishes the strength of a friction force for a particular surface. The higher it is, the stronger the friction; the lower, the weaker. A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper. Since we&rsquo;re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
+<p>According to the formula, the magnitude is <span class="var">(.*?)</span> * <span class="var">(.*?)</span>. <span class="var">(.*?)</span>, the Greek letter <em>mu</em> (pronounced &ldquo;mew&rdquo;), is used here to describe the <strong><em>coefficient of friction</em></strong>. The coefficient of friction establishes the strength of a friction force for a particular surface. The higher it is, the stronger the friction; the lower, the weaker. A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper. Since we&rsquo;re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float c = 0.01;</pre>
 
 <p><a data-primary="friction" data-secondary="normal force" data-type="indexterm">&nbsp;</a> <a data-primary="normal force" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now for the second part: <strong class="var">N</strong>. <strong class="var">N</strong> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object&rsquo;s motion along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with gravity, and Newton&rsquo;s third law tells us that the road in turn pushes back against the vehicle. That&rsquo;s the normal force. The greater the gravitational force, the greater the normal force. As we&rsquo;ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck. With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn&rsquo;t point in the same direction as gravity. We&rsquo;ll need to know something about angles and trigonometry.</p>
+<p>Now for the second part: <span class="var">(.*?)</span>. <span class="var">(.*?)</span> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object&rsquo;s motion along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with gravity, and Newton&rsquo;s third law tells us that the road in turn pushes back against the vehicle. That&rsquo;s the normal force. The greater the gravitational force, the greater the normal force. As we&rsquo;ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck. With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn&rsquo;t point in the same direction as gravity. We&rsquo;ll need to know something about angles and trigonometry.</p>
 
 <p>All of these specifics are important; however, in Processing, a &ldquo;good enough&rdquo; simulation can be achieved without them. We can, for example, make friction work with the assumption that the normal force will always have a magnitude of 1. When we get into trigonometry in the next chapter, we&rsquo;ll remember to return to this question and make our friction example a bit more sophisticated. Therefore:</p>
 
@@ -933,7 +933,7 @@ void draw() {
   }
 }</pre>
 
-<p>Running the example, you should notice that we are simulating balls falling into water. The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid). You&rsquo;ll also notice that the smaller objects slow down a great deal more than the larger objects. Remember Newton&rsquo;s second law? <strong class="var">A</strong> = <strong class="var">F</strong> / <strong class="var">M</strong>. Acceleration equals force <em>divided</em> by mass. A massive object will accelerate less. A smaller object will accelerate more. In this case, the acceleration we&rsquo;re talking about is the &ldquo;slowing down&rdquo; due to drag. The smaller objects will slow down at a greater rate than the larger ones.</p>
+<p>Running the example, you should notice that we are simulating balls falling into water. The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid). You&rsquo;ll also notice that the smaller objects slow down a great deal more than the larger objects. Remember Newton&rsquo;s second law? <span class="var">(.*?)</span> = <span class="var">(.*?)</span> / <span class="var">(.*?)</span>. Acceleration equals force <em>divided</em> by mass. A massive object will accelerate less. A smaller object will accelerate more. In this case, the acceleration we&rsquo;re talking about is the &ldquo;slowing down&rdquo; due to drag. The smaller objects will slow down at a greater rate than the larger ones.</p>
 
 <div data-type="exercise" id="chapter02_exercise5">
 <h5>Exercise 2.5</h5>
@@ -971,19 +971,19 @@ void draw() {
 
 <ul>
 	<li>
-	<p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <span class="function">(.*?)</span> function.</p>
+	<p><span class="var">(.*?)</span> refers to the gravitational force, the vector we ultimately want to compute and pass into our <span class="function">(.*?)</span> function.</p>
 	</li>
 	<li>
-	<p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&rsquo;s not an important number if you are a Processing programmer. Again, it&rsquo;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&rsquo;t such a terrible choice either.</p>
+	<p><span class="var">(.*?)</span> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&rsquo;s not an important number if you are a Processing programmer. Again, it&rsquo;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&rsquo;t such a terrible choice either.</p>
 	</li>
 	<li>
-	<p><strong class="var">m<sub>1</sub></strong> and <strong class="var">m<sub>2</sub></strong> are the masses of objects 1 and 2. As we saw with Newton&rsquo;s second law ({newton2a}), mass is also something we could choose to ignore. After all, shapes drawn on the screen don&rsquo;t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which &ldquo;bigger&rdquo; objects exert a stronger gravitational force than smaller ones.</p>
+	<p><span class="var">(.*?)</span> and <span class="var">(.*?)</span> are the masses of objects 1 and 2. As we saw with Newton&rsquo;s second law ({newton2a}), mass is also something we could choose to ignore. After all, shapes drawn on the screen don&rsquo;t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which &ldquo;bigger&rdquo; objects exert a stronger gravitational force than smaller ones.</p>
 	</li>
 	<li>
 	<p>{unitr} refers to the unit vector pointing from object 1 to object 2. As we&rsquo;ll see in a moment, we can compute this direction vector by subtracting the location of one object from the other.</p>
 	</li>
 	<li>
-	<p><strong class="var">r</strong><sup>2</sup> refers to the distance between the two objects squared. Let&rsquo;s take a moment to think about this a bit more. With everything on the top of the formula&mdash;<strong class="var">G</strong>, <strong class="var">m<sub>1</sub></strong>, <strong class="var">m<sub>2</sub></strong>&mdash;the bigger its value, the stronger the force. Big mass, big force. Big <strong class="var">G</strong>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
+	<p><span class="var">(.*?)</span><sup>2</sup> refers to the distance between the two objects squared. Let&rsquo;s take a moment to think about this a bit more. With everything on the top of the formula&mdash;<span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>&mdash;the bigger its value, the stronger the force. Big mass, big force. Big <span class="var">(.*?)</span>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
 	</li>
 </ul>
 
@@ -995,17 +995,17 @@ void draw() {
 
 <ol>
 	<li>
-	<p>Each object has a location: <strong class="var">PVector location1</strong> and <strong class="var">PVector location2</strong>.</p>
+	<p>Each object has a location: <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
 	</li>
 	<li>
-	<p>Each object has a mass: <strong class="var">float mass1</strong> and <strong class="var">float mass2</strong>.</p>
+	<p>Each object has a mass: <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
 	</li>
 	<li>
-	<p>There is a variable <strong class="var">float G</strong> for the universal gravitational constant.</p>
+	<p>There is a variable <span class="var">(.*?)</span> for the universal gravitational constant.</p>
 	</li>
 </ol>
 
-<p>Given these assumptions, we want to compute <strong class="var">PVector force</strong>, the force of gravity. We&rsquo;ll do it in two parts. First, we&rsquo;ll compute the direction of the force {unitr} in the formula above. Second, we&rsquo;ll calculate the strength of the force according to the masses and distance.</p>
+<p>Given these assumptions, we want to compute <span class="var">(.*?)</span>, the force of gravity. We&rsquo;ll do it in two parts. First, we&rsquo;ll compute the direction of the force {unitr} in the formula above. Second, we&rsquo;ll calculate the strength of the force according to the masses and distance.</p>
 
 <figure class="half-width-right" id="chapter02_figure7"><img alt="Figure 2.7" src="../images/chapter02/ch02_07.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1036,7 +1036,7 @@ dir.mult(m);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>The only problem is that we don&rsquo;t know the distance. <strong class="var">G</strong>, <strong class="var">mass1</strong>, and <strong class="var">mass2</strong> were all givens, but we&rsquo;ll need to actually compute distance before the above code will work. Didn&rsquo;t we just make a vector that points all the way from one location to another? Wouldn&rsquo;t the length of that vector be the distance between two objects?</p>
+<p>The only problem is that we don&rsquo;t know the distance. <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, and <span class="var">(.*?)</span> were all givens, but we&rsquo;ll need to actually compute distance before the above code will work. Didn&rsquo;t we just make a vector that points all the way from one location to another? Wouldn&rsquo;t the length of that vector be the distance between two objects?</p>
 
 <p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then we&rsquo;ll have the distance.</p>
 
@@ -1225,7 +1225,7 @@ PVector attract(Mover m) {
 
 <p><a data-primary="gravity" data-secondary="placing limits on model of" data-type="indexterm">&nbsp;</a></p>
 
-<p>And we&rsquo;re done. Sort of. Almost. There&rsquo;s one small kink we need to work out. Let&rsquo;s look at the above code again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves the question: What would happen if the distance happened to be a really, really small number or (even worse!) zero??! Well, we know we can&rsquo;t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000! Yes, this is the real-world formula for the strength of gravity, but we don&rsquo;t live in the real world. We live in the <em>Processing</em> world. And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen. And so with this formula, it&rsquo;s good for us to be practical and constrain the range of what <strong class="var">distance</strong> can actually be. Maybe, no matter where the <span class="klass">(.*?)</span> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
+<p>And we&rsquo;re done. Sort of. Almost. There&rsquo;s one small kink we need to work out. Let&rsquo;s look at the above code again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves the question: What would happen if the distance happened to be a really, really small number or (even worse!) zero??! Well, we know we can&rsquo;t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000! Yes, this is the real-world formula for the strength of gravity, but we don&rsquo;t live in the real world. We live in the <em>Processing</em> world. And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen. And so with this formula, it&rsquo;s good for us to be practical and constrain the range of what <span class="var">(.*?)</span> can actually be. Maybe, no matter where the <span class="klass">(.*?)</span> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   distance = constrain(distance,5,25);</pre>
@@ -1234,7 +1234,7 @@ PVector attract(Mover m) {
 
 <p>Now, it&rsquo;s really up to you to decide what behaviors you want. But in the case of, &ldquo;I want reasonable-looking attraction that is never absurdly weak or strong,&rdquo; then constraining the distance is a good technique.</p>
 
-<p>Our <span class="klass">(.*?)</span> class hasn&rsquo;t changed at all, so let&rsquo;s just look at the main program and the <span class="klass">(.*?)</span> class as a whole, adding a variable <strong class="var">G</strong> for the universal gravitational constant. (On the website, you&rsquo;ll find that this example also has code that allows you to move the <span class="klass">(.*?)</span> object with the mouse.)</p>
+<p>Our <span class="klass">(.*?)</span> class hasn&rsquo;t changed at all, so let&rsquo;s just look at the main program and the <span class="klass">(.*?)</span> class as a whole, adding a variable <span class="var">(.*?)</span> for the universal gravitational constant. (On the website, you&rsquo;ll find that this example also has code that allows you to move the <span class="klass">(.*?)</span> object with the mouse.)</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_6_attraction/_2_6_attraction.pde processingjs/chapter02/_2_6_attraction/Attractor.pde processingjs/chapter02/_2_6_attraction/Mover.pde"><img alt="ch02 ex06" src="../images/chapter02/ch02_ex06.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1378,7 +1378,7 @@ void draw() {
   }
 }</pre>
 
-<p>The <span class="function">(.*?)</span> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <strong class="var">i</strong>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&rdquo;</p>
+<p>The <span class="function">(.*?)</span> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <span class="var">(.*?)</span>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <span class="var">(.*?)</span>, be attracted to every other mover <span class="var">(.*?)</span>, and update and display yourself.&rdquo;</p>
 
 <p>To do this, we need to nest a second loop.</p>
 
@@ -1414,7 +1414,7 @@ class Mover {
   }
 }</pre>
 
-<p>Of course, there&rsquo;s one small problem. When we are looking at every mover <strong class="var">i</strong> and every mover <strong class="var">j</strong>, are we OK with the times that <strong class="var">i</strong> equals <strong class="var">j</strong>? For example, should mover #3 attract mover #3? The answer, of course, is no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
+<p>Of course, there&rsquo;s one small problem. When we are looking at every mover <span class="var">(.*?)</span> and every mover <span class="var">(.*?)</span>, are we OK with the times that <span class="var">(.*?)</span> equals <span class="var">(.*?)</span>? For example, should mover #3 attract mover #3? The answer, of course, is no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_8_mutual_attraction/_2_8_mutual_attraction.pde processingjs/chapter02/_2_8_mutual_attraction/Mover.pde"><img alt="ch02 ex08" src="../images/chapter02/ch02_ex08.png" />
 <figcaption>&nbsp;</figcaption>
