@@ -1495,12 +1495,10 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
     sum.div(count); //[bold]
   } //[bold]</pre>
 
-<p>Once we have the average vector (stored in the <strong klass="">PVector</strong> object &ldquo;sum&rdquo;), that <strong klass="">PVector</strong> can be scaled to maximum speed and become our desired velocity&mdash;we <em>desire</em> to move in that direction at maximum speed! And once we have the desired velocity, it&rsquo;s the same old Reynolds story: steering equals desired minus velocity.</p>
+<p>Once we have the average vector (stored in the <strong klass="">PVector</strong> object &ldquo;sum&rdquo;), that <strong klass="">PVector</strong> can be scaled to maximum speed and become our desired velocity&mdash;we <em>desire</em> to move in that direction at maximum speed! (In fact, we don't have to divide by count anymore since we are manually setting the magnitude.) And once we have the desired velocity, it&rsquo;s the same old Reynolds story: steering equals desired minus velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   if (count &gt; 0) {
-    sum.div(count);
-
     // Scale average to maxspeed
     // (this becomes desired).
     sum.setMag(maxspeed);
@@ -1546,9 +1544,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
       }
     }
     if (count &gt; 0) {
-      sum.div(count);
-      sum.normalize();
-      sum.mult(maxspeed);
+      sum.setMag(maxspeed);
       PVector steer = PVector.sub(sum, vel);
       steer.limit(maxforce);
       applyForce(steer);
@@ -1799,9 +1795,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       }
     }
     if (count &gt; 0) {
-      sum.div(count);
-      sum.normalize();
-      sum.mult(maxspeed);
+      sum.setMag(maxspeed);
       PVector steer = PVector.sub(sum,velocity);
       steer.limit(maxforce);
       return steer;
