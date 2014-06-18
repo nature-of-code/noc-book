@@ -367,7 +367,9 @@ void applyForce(PVector force) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.1: Forces</h5></div>
+<div data-type="example">
+<h5>Example 2.1: Forces</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector wind = new PVector(0.01,0);
@@ -507,7 +509,9 @@ void setup() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.2: Forces acting on many objects</h5></div>
+<div data-type="example">
+<h5>Example 2.2: Forces acting on many objects</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -548,7 +552,9 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.3: Gravity scaled by mass</h5></div>
+<div data-type="example">
+<h5>Example 2.3: Gravity scaled by mass</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int i = 0; i &lt; movers.length; i++) {
@@ -700,7 +706,9 @@ friction.mult(frictionMag);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.4: Including friction</h5></div>
+<div data-type="example">
+<h5>Example 2.4: Including friction</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -848,24 +856,20 @@ void setup() {
 <p>&hellip;or in object-oriented speak (assuming we are looping through an array of <strong klass="">Mover</strong> objects with index i):</p>
 
 <pre data-code-language="java" data-type="programlisting">
-if (movers[i].isInside(liquid)) {
+if (liquid.contains(movers[i])) {
   // If a Mover is inside a Liquid, apply the drag force.
-  movers[i].drag(liquid);
+  liquid[i].drag(movers[i]);
 }</pre>
 
-<p>The above code tells us that we need to add two functions to the <strong klass="">Mover</strong> class: (1) a function that determines if a <strong klass="">Mover</strong> object is inside the <strong klass="">Liquid</strong> object, and (2) a function that computes and applies a drag force on the <strong klass="">Mover</strong> object.</p>
+<p>The above code tells us that we need to add two functions to the <strong klass="">Liquid</strong> class: (1) a function that determines if a <strong klass="">Mover</strong> object is inside the <strong klass="">Liquid</strong> object, and (2) a function that computes and applies a drag force on the <strong klass="">Mover</strong> object.</p>
 
-<p>The first is easy; we can simply use a conditional statement to determine if the location vector rests inside the rectangle defined by the liquid.</p>
+<p>The first is easy; we can simply use a boolean expression&nbsp;to determine if the location vector rests inside the rectangle defined by the liquid.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-boolean isInside(Liquid l) {
-  //[offset-down] This conditional statement determines if the PVector location is inside the rectangle defined by the Liquid class.
-  if (location.x&gt;l.x &amp;&amp; location.x&lt;l.x+l.w &amp;&amp; location.y&gt;l.y &amp;&amp; location.y&lt;l.y+l.h)
-  {
-    return true;
-  } else {
-    return false;
-  }
+boolean contains(Mover m) {
+&nbsp; PVector loc = m.location;
+  //[offset-down] This boolean expression determines if the PVector location is inside the rectangle defined by the Liquid class. &nbsp; 
+  return loc.x &gt; x &amp;&amp; loc.x &lt; x + w &amp;&amp; loc.y &gt; y &amp;&amp; loc.y &lt; y + h;
 }</pre>
 
 <p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
@@ -895,7 +899,9 @@ boolean isInside(Liquid l) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.5: Fluid Resistance</h5></div>
+<div data-type="example">
+<h5>Example 2.5: Fluid Resistance</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 Mover[] movers = new Mover[100];
@@ -1239,7 +1245,9 @@ PVector attract(Mover m) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.6: Attraction</h5></div>
+<div data-type="example">
+<h5>Example 2.6: Attraction</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 // A Mover and an Attractor
@@ -1302,7 +1310,9 @@ class Attractor {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.7: Attraction with many Movers</h5></div>
+<div data-type="example">
+<h5>Example 2.7: Attraction with many Movers</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 // Now we have 10 Movers!
@@ -1415,7 +1425,9 @@ class Mover {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 2.8: Mutual attraction</h5></div>
+<div data-type="example">
+<h5>Example 2.8: Mutual attraction</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 Mover[] movers = new Mover[20];
