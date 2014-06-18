@@ -874,26 +874,21 @@ boolean contains(Mover m) {
 
 <p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
 
-<pre class="pre " data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting">
  void drag(Mover m) {
+  float speed = m.velocity.mag();
+  // The force&rsquo;s magnitude: Cd * v~2~
+  float dragMagnitude = c * speed * speed;
 
-    float speed = m.velocity.mag();
-    // The force&rsquo;s magnitude: Cd * v~2~
-    float dragMagnitude = c * speed * speed;
+  // The force's direction: -1 * velocity 
+  PVector drag = m.velocity.get();
+  // Finalize the force: magnitude and direction together. 
+  drag.setMag(dragMagnitude);
+  // Apply the force.
+  m.applyForce(drag);
+}</pre>
 
-    PVector drag = velocity.get();
-    drag.mult(-1);
-    // The force's direction: -1 * velocity
-    drag.normalize();
-
-    // Finalize the force: magnitude and direction together.
-    drag.mult(dragMagnitude);
-
-    // Apply the force.
-    applyForce(drag);
-  }</pre>
-
-<p>And with these two functions added to the <strong klass="">Mover</strong> class, we&rsquo;re ready to put it all together in the main tab:</p>
+<p>And with these two functions added to the <strong klass="">Liquid</strong> class, we&rsquo;re ready to put it all together in the main tab:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_5_fluidresistance/_2_5_fluidresistance.pde processingjs/chapter02/_2_5_fluidresistance/Liquid.pde processingjs/chapter02/_2_5_fluidresistance/Mover.pde"><img alt="ch02 ex05" src="../images/chapter02/ch02_ex05.png" />
 <figcaption>&nbsp;</figcaption>
