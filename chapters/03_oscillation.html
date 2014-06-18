@@ -564,17 +564,17 @@ float period = 120;</pre>
 <p>Once we have the amplitude and period, it&rsquo;s time to write a formula to calculate x as a function of time, which we now know is the current frame count.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-float x = amplitude * cos(TWO_PI * frameCount / period);</pre>
+float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <p><a data-primary="map() function (Processing)" data-secondary="oscillation and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s dissect the formula a bit more and try to understand each component. The first is probably the easiest. Whatever comes out of the cosine function we multiply by amplitude. We know that cosine will oscillate between -1 and 1. If we take that value and multiply it by amplitude then we&rsquo;ll get the desired result: a value oscillating between -amplitude and amplitude. (Note: this is also a place where we could use Processing&rsquo;s <strong function="">map()</strong> function to map the output of cosine to a custom range.)</p>
+<p>Let&rsquo;s dissect the formula a bit more and try to understand each component. The first is probably the easiest. Whatever comes out of the sine function we multiply by amplitude. We know that sine will oscillate between -1 and 1. If we take that value and multiply it by amplitude then we&rsquo;ll get the desired result: a value oscillating between -amplitude and amplitude. (Note: this is also a place where we could use Processing&rsquo;s <strong function="">map()</strong> function to map the output of sine to a custom range.)</p>
 
-<p>Now, let&rsquo;s look at what is inside the cosine function:</p>
+<p>Now, let&rsquo;s look at what is inside the sine function:</p>
 
 <p><strong formula="">TWO_PI <code>*</code> frameCount / period</strong></p>
 
-<p>What&rsquo;s going on here? Let&rsquo;s start with what we know. We know that cosine will repeat every 2*PI radians&mdash;i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion to repeat when the <strong class="var">frameCount</strong> is at 120 frames, 240 frames, 360 frames, etc. <strong class="var">frameCount</strong> is really the only variable; it starts at 0 and counts upward. Let&rsquo;s take a look at what the formula yields with those values.</p>
+<p>What&rsquo;s going on here? Let&rsquo;s start with what we know. We know that sine will repeat every 2*PI radians&mdash;i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion to repeat when the <strong class="var">frameCount</strong> is at 120 frames, 240 frames, 360 frames, etc. <strong class="var">frameCount</strong> is really the only variable; it starts at 0 and counts upward. Let&rsquo;s take a look at what the formula yields with those values.</p>
 
 <table>
 	<thead>
@@ -639,7 +639,7 @@ float x = amplitude * cos(TWO_PI * frameCount / period);</pre>
 	</tbody>
 </table>
 
-<p><strong class="var">frameCount</strong> divided by <strong class="var">period</strong> tells us how many cycles we&rsquo;ve completed&mdash;are we halfway through the first cycle? Have we completed two cycles? By multiplying that number by <strong class="var">TWO_PI</strong>, we get the result we want, since <strong class="var">TWO_PI</strong> is the number of radians required for one cosine (or sine) to complete one cycle.</p>
+<p><strong class="var">frameCount</strong> divided by <strong class="var">period</strong> tells us how many cycles we&rsquo;ve completed&mdash;are we halfway through the first cycle? Have we completed two cycles? By multiplying that number by <strong class="var">TWO_PI</strong>, we get the result we want, since <strong class="var">TWO_PI</strong> is the number of radians required for one sine (or cosine) to complete one cycle.</p>
 
 <p>Wrapping this all up, here&rsquo;s the Processing example that oscillates the <strong class="var">x</strong> location of a circle with an amplitude of 100 pixels and a period of 120 frames.</p>
 
@@ -656,7 +656,7 @@ void draw() {
   float period = 120;
   float amplitude = 100;
   //[offset-down] Calculating horizontal location according to the formula for simple harmonic motion
-  float x = amplitude * cos(TWO_PI * frameCount / period);
+  float x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
   translate(width/2,height/2);
@@ -683,12 +683,12 @@ void draw() {
 <p>An understanding of the concepts of oscillation, amplitude, and frequency/period is often required in the course of simulating real-world behaviors. However, there is a slightly easier way to rewrite the above example with the same result. Let&rsquo;s take one more look at our oscillation formula:</p>
 
 <pre data-code-language="java" data-type="programlisting">
-float x = amplitude * cos(TWO_PI * frameCount / period);</pre>
+float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <p>And let&rsquo;s rewrite it a slightly different way:</p>
 
 <pre data-code-language="java" data-type="programlisting">
-float x = amplitude * cos ( some value that increments slowly );</pre>
+float x = amplitude * sin ( some value that increments slowly );</pre>
 
 <p>If we care about precisely defining the period of oscillation in terms of frames of animation, we might need the formula the way we first wrote it, but we can just as easily rewrite our example using the concept of angular velocity (and acceleration) from <a href="#chapter03_section2">section 3.2</a>. Assuming:</p>
 
@@ -700,7 +700,7 @@ float aVelocity = 0.05;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 angle += aVelocity;
-float x = amplitude * cos(angle);</pre>
+float x = amplitude * sin(angle);</pre>
 
 <p><strong class="var">angle</strong> is our &ldquo;some value that increments slowly.&rdquo;</p>
 
@@ -718,7 +718,7 @@ void draw() {
   background(255);
 
   float amplitude = 100;
-  float x = amplitude * cos(angle);
+  float x = amplitude * sin(angle);
   // Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
 
