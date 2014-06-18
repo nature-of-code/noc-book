@@ -874,12 +874,12 @@ boolean contains(Mover m) {
 
 <p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
 
-<pre data-code-language="java" data-type="programlisting">
- void drag(Liquid l) {
+<pre class="pre " data-code-language="java" data-type="programlisting">
+ void drag(Mover m) {
 
-    float speed = velocity.mag();
+    float speed = m.velocity.mag();
     // The force&rsquo;s magnitude: Cd * v~2~
-    float dragMagnitude = l.c * speed * speed;
+    float dragMagnitude = c * speed * speed;
 
     PVector drag = velocity.get();
     drag.mult(-1);
