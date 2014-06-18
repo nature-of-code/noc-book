@@ -214,11 +214,11 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
   void step() {
     //[full] Yields -1, 0, or 1
-    int stepx = int(random(3))-1;
-    int stepy = int(random(3))-1;
+    int xstep = int(random(3))-1;
+    int ystep = int(random(3))-1;
     //[end]
-    x += stepx;
-    y += stepy;
+    x += xstep;
+    y += ystep;
   }</pre>
 
 <p>Taking this further, we could use floating point numbers (i.e. decimal numbers) for <strong class="var">x</strong> and <strong class="var">y</strong> instead and move according to an arbitrary random value between -1 and 1.</p>
@@ -226,11 +226,11 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting">
   void step() {
     //[full] Yields any floating point number between -1.0 and 1.0
-    float stepx = random(-1, 1);
-    float stepy = random(-1, 1);
+    float xstep = random(-1, 1);
+    float ystep = random(-1, 1);
     //[end]
-    x += stepx;
-    y += stepy;
+    x += xstep;
+    y += ystep;
   }</pre>
 
 <p>All of these variations on the &ldquo;traditional&rdquo; random walk have one thing in common: at any moment in time, the probability that the <strong klass="">Walker</strong> will take a step in a given direction is equal to the probability that the <strong klass="">Walker</strong> will take a step in any direction. In other words, if there are four possible steps, there is a 1 in 4 (or 25%) chance the <strong klass="">Walker</strong> will take any given step. With nine possible steps, it&rsquo;s a 1 in 9 (or 11.1%) chance.</p>
