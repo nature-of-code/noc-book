@@ -114,7 +114,7 @@ println(s);</pre>
 	</li>
 </ol>
 
-<p>Next I&rsquo;d like to walk through the narrative of the genetic algorithm. We&rsquo;ll do this in the context of the typing monkey. The algorithm itself will be divided into two parts: a set of conditions for initialization (i.e. Processing&rsquo;s <strong function="">setup()</strong>) and the steps that are repeated over and over again (i.e. Processing&rsquo;s <strong function="">draw()</strong>) until we arrive at the correct answer.</p>
+<p>Next I&rsquo;d like to walk through the narrative of the genetic algorithm. We&rsquo;ll do this in the context of the typing monkey. The algorithm itself will be divided into two parts: a set of conditions for initialization (i.e. Processing&rsquo;s <span class="function">setup()</span>) and the steps that are repeated over and over again (i.e. Processing&rsquo;s <span class="function">draw()</span>) until we arrive at the correct answer.</p>
 </section>
 
 <section data-type="sect1" id="chapter09_section4">
@@ -554,7 +554,7 @@ class DNA {
   }
 }</pre>
 
-<p>Now that we have the constructor, we can return to <strong function="">setup()</strong> and initialize each <span class="klass">DNA</span> object in the population array.</p>
+<p>Now that we have the constructor, we can return to <span class="function">setup()</span> and initialize each <span class="klass">DNA</span> object in the population array.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 DNA[] population = new DNA[100];
@@ -605,7 +605,7 @@ class DNA {
     fitness = float(score)/target.length();
   }</pre>
 
-<p>In the main tab&rsquo;s <strong function="">draw()</strong>, the very first step we&rsquo;ll take is to call the fitness function for each member of the population.</p>
+<p>In the main tab&rsquo;s <span class="function">draw()</span>, the very first step we&rsquo;ll take is to call the fitness function for each member of the population.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -712,7 +712,7 @@ C: 17% (1/6)</strong></p>
   // A function for mutation
   child.mutate();</pre>
 
-<p>Of course, the functions <strong function="">crossover()</strong> and <strong function="">mutate()</strong> don&rsquo;t magically exist in our <span class="klass">DNA</span> class; we have to write them. The way we called <strong function="">crossover()</strong> above indicates that the function receives an instance of DNA as an argument and returns a new instance of DNA, the child.</p>
+<p>Of course, the functions <span class="function">crossover()</span> and <span class="function">mutate()</span> don&rsquo;t magically exist in our <span class="klass">DNA</span> class; we have to write them. The way we called <span class="function">crossover()</span> above indicates that the function receives an instance of DNA as an argument and returns a new instance of DNA, the child.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // The function receives one argument (DNA) and returns DNA.
@@ -1282,7 +1282,7 @@ class Vehicle {
   float separationWeight;
   [inline]// etc.</pre>
 
-<p>All we need to do to evolve those parameters is to turn them into an array, so that the array can be used with all of the functions&mdash;<strong function="">crossover()</strong>, <strong function="">mutate()</strong>, etc.&mdash;found in the <span class="klass">DNA</span> class. One common solution is to use an array of floating point numbers between 0 and 1.</p>
+<p>All we need to do to evolve those parameters is to turn them into an array, so that the array can be used with all of the functions&mdash;<span class="function">crossover()</span>, <span class="function">mutate()</span>, etc.&mdash;found in the <span class="klass">DNA</span> class. One common solution is to use an array of floating point numbers between 0 and 1.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
@@ -1321,7 +1321,7 @@ class Vehicle {
     // Etc.
   }</pre>
 
-<p>Of course, you most likely don&rsquo;t want all your variables to have a range between 0 and 1. But rather than try to remember how to adjust those ranges in the <span class="klass">DNA</span> class itself, it&rsquo;s easier to pull the genetic information from the <span class="klass">DNA</span> object and use Processing&rsquo;s <strong function="">map()</strong> function to change the range. For example, if you want a size variable between 10 and 72, you would say:</p>
+<p>Of course, you most likely don&rsquo;t want all your variables to have a range between 0 and 1. But rather than try to remember how to adjust those ranges in the <span class="klass">DNA</span> class itself, it&rsquo;s easier to pull the genetic information from the <span class="klass">DNA</span> object and use Processing&rsquo;s <span class="function">map()</span> function to change the range. For example, if you want a size variable between 10 and 72, you would say:</p>
 
 <pre data-code-language="java" data-type="programlisting">
     size = map(dna.genes[2],0,1,10,72);</pre>
@@ -1409,7 +1409,7 @@ class Rocket {
   }
 }</pre>
 
-<p>Using the above framework, we can implement our smart rocket by saying that for every frame of animation, we call <strong function="">applyForce()</strong> with a new force. The &ldquo;thruster&rdquo; applies a single force to the rocket each time through <strong function="">draw()</strong>.</p>
+<p>Using the above framework, we can implement our smart rocket by saying that for every frame of animation, we call <span class="function">applyForce()</span> with a new force. The &ldquo;thruster&rdquo; applies a single force to the rocket each time through <span class="function">draw()</span>.</p>
 
 <p>Considering this example, let&rsquo;s go through the three keys to programming our own custom genetic algorithm example as outlined in the previous section.</p>
 
@@ -1585,7 +1585,7 @@ PVector v = new PVector(random(-1,1),random(-1,1));</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>What would be better here is to pick a random angle and make a <span class="klass">PVector</span> of length one from that angle, giving us a circle (see Figure 9.13). This could be easily done with a <a href="#chapter03_section5">quick polar to Cartesian conversion</a>, but a quicker path to the result is just to use <span class="klass">PVector</span>'s <strong function="">random2D()</strong>.</p>
+<p>What would be better here is to pick a random angle and make a <span class="klass">PVector</span> of length one from that angle, giving us a circle (see Figure 9.13). This could be easily done with a <a href="#chapter03_section5">quick polar to Cartesian conversion</a>, but a quicker path to the result is just to use <span class="klass">PVector</span>'s <span class="function">random2D()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int i = 0; i &lt; genes.length; i++) {
@@ -1670,7 +1670,7 @@ class Population {
   void reproduction() {}
   //[end]</pre>
 
-<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <span class="klass">Population</span> class that runs the physics simulation itself. This is identical to what we did in the <strong function="">run()</strong> function of a particle system&mdash;update all the particle locations and draw them.</p>
+<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <span class="klass">Population</span> class that runs the physics simulation itself. This is identical to what we did in the <span class="function">run()</span> function of a particle system&mdash;update all the particle locations and draw them.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void live () {
@@ -1682,7 +1682,7 @@ class Population {
     }
   }</pre>
 
-<p>Finally, we&rsquo;re ready for <strong function="">setup()</strong> and <strong function="">draw()</strong>. Here in the main tab, our primary responsibility is to implement the steps of the genetic algorithm in the appropriate order by calling the functions in the <span class="klass">Population</span> class.</p>
+<p>Finally, we&rsquo;re ready for <span class="function">setup()</span> and <span class="function">draw()</span>. Here in the main tab, our primary responsibility is to implement the steps of the genetic algorithm in the appropriate order by calling the functions in the <span class="klass">Population</span> class.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     population.fitness();
@@ -1785,7 +1785,7 @@ class Obstacle {
   PVector location;
   float w,h;</pre>
 
-<p>We can also write a <strong function="">contains()</strong> function that will <strong class="var">return true</strong> or <strong class="var">return false</strong> to determine if a rocket has hit the obstacle.</p>
+<p>We can also write a <span class="function">contains()</span> function that will <strong class="var">return true</strong> or <strong class="var">return false</strong> to determine if a rocket has hit the obstacle.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   boolean contains(PVector v) {
@@ -1965,7 +1965,7 @@ class Face {
   DNA dna;
   float fitness;</pre>
 
-<p>When it comes time to draw the face on screen, we can use Processing&rsquo;s <strong function="">map()</strong> function to convert any gene value to the appropriate range for pixel dimensions or color values. (In this case, we are also using <strong function="">colorMode()</strong> to set the RGB ranges between 0 and 1.)</p>
+<p>When it comes time to draw the face on screen, we can use Processing&rsquo;s <span class="function">map()</span> function to convert any gene value to the appropriate range for pixel dimensions or color values. (In this case, we are also using <span class="function">colorMode()</span> to set the RGB ranges between 0 and 1.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void display() {
@@ -1984,7 +1984,7 @@ class Face {
     float mouthh     = map(dna.genes[5],0,1,0,10);
     //[end]</pre>
 
-<p>So far, we&rsquo;re not really doing anything new. This is what we&rsquo;ve done in every GA example so far. What&rsquo;s new is that we are not going to write a <strong function="">fitness()</strong> function in which the score is computed based on a math formula. Instead, we are going to ask the user to assign the fitness.</p>
+<p>So far, we&rsquo;re not really doing anything new. This is what we&rsquo;ve done in every GA example so far. What&rsquo;s new is that we are not going to write a <span class="function">fitness()</span> function in which the score is computed based on a math formula. Instead, we are going to ask the user to assign the fitness.</p>
 
 <p><a data-primary="interactive selection genetic algorithms" data-secondary="user interaction and" data-type="indexterm">&nbsp;</a></p>
 
@@ -2266,7 +2266,7 @@ class Bloop {
     }
   }</pre>
 
-<p>How does a bloop reproduce? In our previous examples, the reproduction process involved calling the <strong function="">crossover()</strong> function in the <span class="klass">DNA</span> class and making a new object from the newly made DNA. Here, since we are making a child from a single parent, we&rsquo;ll call a function called <strong function="">copy()</strong> instead.</p>
+<p>How does a bloop reproduce? In our previous examples, the reproduction process involved calling the <span class="function">crossover()</span> function in the <span class="klass">DNA</span> class and making a new object from the newly made DNA. Here, since we are making a child from a single parent, we&rsquo;ll call a function called <span class="function">copy()</span> instead.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Bloop reproduce() {
@@ -2287,7 +2287,7 @@ class Bloop {
 
 <p>Note also that we&rsquo;ve reduced the probability of reproducing from 1% to 0.05%. This value makes quite a difference; with a high probability of reproducing, the system will quickly tend towards overpopulation. Too low a probability, and everything will likely quickly die out.</p>
 
-<p>Writing the <strong function="">copy()</strong> function into the <span class="klass">DNA</span> class is easy since Processing includes a function <strong function="">arraycopy()</strong> that copies the contents of one array into another.</p>
+<p>Writing the <span class="function">copy()</span> function into the <span class="klass">DNA</span> class is easy since Processing includes a function <span class="function">arraycopy()</span> that copies the contents of one array into another.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {

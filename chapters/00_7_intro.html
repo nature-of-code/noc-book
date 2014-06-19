@@ -117,7 +117,7 @@ class Walker {
 
 <p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
 
-<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <strong function="">setup()</strong>. There, we&rsquo;ll initialize the <span class="klass">Walker</span><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
+<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <span class="function">setup()</span>. There, we&rsquo;ll initialize the <span class="klass">Walker</span><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   //[full] Objects have a constructor where they are initialized.
@@ -139,7 +139,7 @@ class Walker {
   }
   //[end]</pre>
 
-<p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <strong class="var">x</strong> (<strong class="var">x</strong><code>++</code>); to the left by decrementing <strong class="var">x</strong> (<strong class="var">x--</strong>); forward by going down a pixel (<strong class="var">y++</strong>); and backward by going up a pixel (<strong class="var">y--</strong>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <strong function="">random()</strong>.</p>
+<p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <strong class="var">x</strong> (<strong class="var">x</strong><code>++</code>); to the left by decrementing <strong class="var">x</strong> (<strong class="var">x--</strong>); forward by going down a pixel (<strong class="var">y++</strong>); and backward by going up a pixel (<strong class="var">y--</strong>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <span class="function">random()</span>.</p>
 
 <p><a data-primary="random number generators" data-secondary="random() function" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-type="indexterm">&nbsp;</a></p>
 
@@ -165,7 +165,7 @@ class Walker {
   }
 }</pre>
 
-<p>Now that we&rsquo;ve written the class, it&rsquo;s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch&mdash;<strong function="">setup()</strong> and <strong function="">draw()</strong>. Assuming we are looking to model a single random walk, we declare one global variable of type <strong class="var">Walker</strong>.</p>
+<p>Now that we&rsquo;ve written the class, it&rsquo;s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch&mdash;<span class="function">setup()</span> and <span class="function">draw()</span>. Assuming we are looking to model a single random walk, we declare one global variable of type <strong class="var">Walker</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A Walker object
@@ -173,7 +173,7 @@ Walker w;</pre>
 
 <p><a data-primary="new operator (objects)" data-type="indexterm">&nbsp;</a> <a data-primary="object" data-secondary="new operator" data-type="indexterm">&nbsp;</a></p>
 
-<p>Then we create the object in <strong function="">setup()</strong> by calling the constructor with the <strong function="">new</strong> operator.</p>
+<p>Then we create the object in <span class="function">setup()</span> by calling the constructor with the <span class="function">new</span> operator.</p>
 
 <div data-type="example">
 <h5>Example I.1: Traditional random walk</h5>
@@ -189,7 +189,7 @@ void setup() {
   background(255);
 }</pre>
 
-<p>Finally, during each cycle through <strong function="">draw()</strong>, we ask the <span class="klass">Walker</span> to take a step and draw a dot.</p>
+<p>Finally, during each cycle through <span class="function">draw()</span>, we ask the <span class="klass">Walker</span> to take a step and draw a dot.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -199,7 +199,7 @@ void draw() {
   //[end]
 }</pre>
 
-<p>Since we only draw the background once in <strong function="">setup()</strong>, rather than clearing it continually each time through <strong function="">draw()</strong>, we see the trail of the random walk in our Processing window.</p>
+<p>Since we only draw the background once in <span class="function">setup()</span>, rather than clearing it continually each time through <span class="function">draw()</span>, we see the trail of the random walk in our Processing window.</p>
 
 <figure class="screenshot" data-pde="processingjs/intro/_I_1_RandomWalkTraditional/_I_1_RandomWalkTraditional.pde processingjs/intro/_I_1_RandomWalkTraditional/Walker.pde"><img alt="intro ex01" src="../images/intro/intro_ex01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -239,7 +239,7 @@ void draw() {
 
 <p><a data-primary="random number generators" data-secondary="uniform number distributions and" data-type="indexterm">&nbsp;</a> <a data-primary="uniform number distributions" data-type="indexterm">&nbsp;</a></p>
 
-<p>Conveniently, this is how the <strong function="">random()</strong> function works. Processing&rsquo;s random number generator (which operates behind the scenes) produces what is known as a &ldquo;uniform&rdquo; distribution of numbers. We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
+<p>Conveniently, this is how the <span class="function">random()</span> function works. Processing&rsquo;s random number generator (which operates behind the scenes) produces what is known as a &ldquo;uniform&rdquo; distribution of numbers. We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
 
 <figure class="screenshot" data-pde="processingjs/intro/_I_2_RandomDistribution/_I_2_RandomDistribution.pde"><img alt="intro ex02" src="../images/intro/intro_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -282,7 +282,7 @@ void draw() {
 <div data-type="note">
 <h1>Pseudo-Random Numbers</h1>
 
-<p>The random numbers we get from the <strong function="">random()</strong> function are not truly random; therefore they are known as &ldquo;pseudo-random.&rdquo; They are the result of a mathematical function that simulates randomness. This function would yield a pattern over time, but that time period is so long that for us, it&rsquo;s just as good as pure randomness!</p>
+<p>The random numbers we get from the <span class="function">random()</span> function are not truly random; therefore they are known as &ldquo;pseudo-random.&rdquo; They are the result of a mathematical function that simulates randomness. This function would yield a pattern over time, but that time period is so long that for us, it&rsquo;s just as good as pure randomness!</p>
 </div>
 
 <div data-type="exercise" id="intro_exercise1">
@@ -301,7 +301,7 @@ void draw() {
 
 <p><a data-primary="probability of the fittest" data-type="indexterm">&nbsp;</a></p>
 
-<p>With a few tricks, we can change the way we use <strong function="">random()</strong> to produce &ldquo;non-uniform&rdquo; distributions of random numbers. This will come in handy throughout the book as we look at a number of different scenarios. When we examine genetic algorithms, for example, we&rsquo;ll need a methodology for performing &ldquo;selection&rdquo;&mdash;which members of our population should be selected to pass their DNA to the next generation? Remember the concept of survival of the fittest? Let&rsquo;s say we have a population of monkeys evolving. Not every monkey will have a equal chance of reproducing. To simulate Darwinian evolution, we can&rsquo;t simply pick two random monkeys to be parents. We need the more &ldquo;fit&rdquo; ones to be more likely to be chosen. We need to define the &ldquo;probability of the fittest.&rdquo; For example, a particularly fast and strong monkey might have a 90% chance of procreating, while a weaker one has only a 10% chance.</p>
+<p>With a few tricks, we can change the way we use <span class="function">random()</span> to produce &ldquo;non-uniform&rdquo; distributions of random numbers. This will come in handy throughout the book as we look at a number of different scenarios. When we examine genetic algorithms, for example, we&rsquo;ll need a methodology for performing &ldquo;selection&rdquo;&mdash;which members of our population should be selected to pass their DNA to the next generation? Remember the concept of survival of the fittest? Let&rsquo;s say we have a population of monkeys evolving. Not every monkey will have a equal chance of reproducing. To simulate Darwinian evolution, we can&rsquo;t simply pick two random monkeys to be parents. We need the more &ldquo;fit&rdquo; ones to be more likely to be chosen. We need to define the &ldquo;probability of the fittest.&rdquo; For example, a particularly fast and strong monkey might have a 90% chance of procreating, while a weaker one has only a 10% chance.</p>
 
 <p><a data-primary="probability" data-type="indexterm">&nbsp;</a></p>
 
@@ -333,7 +333,7 @@ void draw() {
 
 <p><a data-primary="arrays" data-secondary="custom distributions" data-tertiary="creating with" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="creating with arrays" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="creating with arrays" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-secondary="non-uniform distributions" data-tertiary="creating with" data-type="indexterm">&nbsp;</a></p>
 
-<p>There are a couple of ways in which we can use the <strong function="">random()</strong> function with probability in code. One technique is to fill an array with a selection of numbers&mdash;some of which are repeated&mdash;then choose random numbers from that array and generate events based on those choices.</p>
+<p>There are a couple of ways in which we can use the <span class="function">random()</span> function with probability in code. One technique is to fill an array with a selection of numbers&mdash;some of which are repeated&mdash;then choose random numbers from that array and generate events based on those choices.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int[] stuff = new int[5];
@@ -450,7 +450,7 @@ float h = random(200,300);</pre>
 
 <p><a data-primary="distributions" data-secondary="normal" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="normal distributions" data-type="indexterm">&nbsp;</a></p>
 
-<p>Does this accurately depict the heights of real-world beings? Think of a crowded sidewalk in New York City. Pick any person off the street and it may appear that their height is random. Nevertheless, it&rsquo;s not the kind of random that <strong function="">random()</strong> produces. People&rsquo;s heights are not uniformly distributed; there are a great deal more people of average height than there are very tall or very short ones. To simulate nature, we may want it to be more likely that our monkeys are of average height (250 pixels), yet still allow them to be, on occasion, very short or very tall.</p>
+<p>Does this accurately depict the heights of real-world beings? Think of a crowded sidewalk in New York City. Pick any person off the street and it may appear that their height is random. Nevertheless, it&rsquo;s not the kind of random that <span class="function">random()</span> produces. People&rsquo;s heights are not uniformly distributed; there are a great deal more people of average height than there are very tall or very short ones. To simulate nature, we may want it to be more likely that our monkeys are of average height (250 pixels), yet still allow them to be, on occasion, very short or very tall.</p>
 
 <p><a data-primary="bell curve" data-type="indexterm">&nbsp;</a> <a data-primary="bell curve" data-secondary="mean and" data-type="indexterm">&nbsp;</a> <a data-primary="Gauss" data-secondary="Carl Friedrich" data-type="indexterm">&nbsp;</a> <a data-primary="Gaussian distribution" data-type="indexterm">&nbsp;</a> <a data-primary="Laplace" data-secondary="Pierre-Simon" data-type="indexterm">&nbsp;</a> <a data-primary="Laplacian distribution" data-type="indexterm">&nbsp;</a> <a data-primary="mean" data-type="indexterm">&nbsp;</a> <a data-primary="normal distribution" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="mean" data-type="indexterm">&nbsp;</a></p>
 
@@ -546,7 +546,7 @@ float h = random(200,300);</pre>
 
 <p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don&rsquo;t have to do any of these calculations ourselves. Instead, we can make use of a class known as <span class="klass">Random</span>, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">the JavaDocs</a> for more information).</p>
 
-<p>To use the <span class="klass">Random</span> class, we must first declare a variable of type <span class="klass">Random</span> and create the <span class="klass">Random</span> object in <strong function="">setup()</strong>.</p>
+<p>To use the <span class="klass">Random</span> class, we must first declare a variable of type <span class="klass">Random</span> and create the <span class="klass">Random</span> object in <span class="function">setup()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // We use the variable name &ldquo;generator&rdquo; because what we
@@ -560,7 +560,7 @@ void setup() {
 
 <p><a data-primary="nextGaussian() function (Random class)" data-type="indexterm">&nbsp;</a> <a data-primary="Random class (Processing)" data-secondary="nextGaussian() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through <strong function="">draw()</strong>, it&rsquo;s as easy as calling the function <strong function="">nextGaussian()</strong>.</p>
+<p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through <span class="function">draw()</span>, it&rsquo;s as easy as calling the function <span class="function">nextGaussian()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -572,7 +572,7 @@ void draw() {
 
 <p><a data-primary="nextGaussian() function (Random class)" data-secondary="default mean/standard deviation settings of" data-type="indexterm">&nbsp;</a></p>
 
-<p>The <strong function="">nextGaussian()</strong> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let&rsquo;s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
+<p>The <span class="function">nextGaussian()</span> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let&rsquo;s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
 
 <figure class="screenshot" data-pde="processingjs/intro/_I_4_Gaussian/_I_4_Gaussian.pde"><img alt="intro ex04" src="../images/intro/intro_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -621,7 +621,7 @@ void draw() {
 
 <p>There will come a time in your life when you do not want a uniform distribution of random values, or a Gaussian one. Let&rsquo;s imagine for a moment that you are a random walker in search of food. Moving randomly around a space seems like a reasonable strategy for finding something to eat. After all, you don&rsquo;t know where the food is, so you might as well search randomly until you find it. The problem, as you may have noticed, is that random walkers return to previously visited locations many times (this is known as &ldquo;oversampling&rdquo;). One strategy to avoid such a problem is to, every so often, take a very large step. This allows the walker to forage randomly around a specific location while periodically jumping very far away to reduce the amount of oversampling. This variation on the random walk (known as a L&eacute;vy flight) requires a custom set of probabilities. Though not an exact implementation of a L&eacute;vy flight, we could state the probability distribution as follows: the longer the step, the less likely it is to be picked; the shorter the step, the more likely.</p>
 
-<p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an array with values (some duplicated so that they would be picked more frequently) or by testing the result of <strong function="">random()</strong>. We could implement a L&eacute;vy flight by saying that there is a 1% chance of the walker taking a large step.</p>
+<p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an array with values (some duplicated so that they would be picked more frequently) or by testing the result of <span class="function">random()</span>. We could implement a L&eacute;vy flight by saying that there is a 1% chance of the walker taking a large step.</p>
 
 <p><a data-primary="arrays" data-secondary="Lévy flights" data-tertiary="implementing with" data-type="indexterm">&nbsp;</a> <a data-primary="Lévy flight" data-secondary="implementing with arrays" data-type="indexterm">&nbsp;</a></p>
 
@@ -736,7 +736,7 @@ float acceptreject() {
 
 <p><a data-primary="noise() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Perlin noise" data-secondary="noise() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="noise() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>Processing has a built-in implementation of the Perlin noise algorithm: the function <strong function="">noise()</strong>. The <strong function="">noise()</strong> function takes one, two, or three arguments, as noise is computed in one, two, or three dimensions. Let&rsquo;s start by looking at one-dimensional noise.</p>
+<p>Processing has a built-in implementation of the Perlin noise algorithm: the function <span class="function">noise()</span>. The <span class="function">noise()</span> function takes one, two, or three arguments, as noise is computed in one, two, or three dimensions. Let&rsquo;s start by looking at one-dimensional noise.</p>
 
 <p><a data-primary="noiseDetail() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="noiseDetail() function" data-type="indexterm">&nbsp;</a></p>
 
@@ -755,7 +755,7 @@ float acceptreject() {
 float x = random(0,width);
 ellipse(x,180,16,16);</pre>
 
-<p>Now, instead of a random x-location, we want a Perlin noise x-location that is &ldquo;smoother.&rdquo; You might think that all you need to do is replace <strong function="">random()</strong> with <strong function="">noise()</strong>, i.e.</p>
+<p>Now, instead of a random x-location, we want a Perlin noise x-location that is &ldquo;smoother.&rdquo; You might think that all you need to do is replace <span class="function">random()</span> with <span class="function">noise()</span>, i.e.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A noise x-location?
@@ -763,7 +763,7 @@ float x = noise(0,width); //[line-through]</pre>
 
 <p><a data-primary="noise() function (Processing)" data-secondary="arguments for" data-type="indexterm">&nbsp;</a></p>
 
-<p>While conceptually this is exactly what we want to do&mdash;calculate an x-value that ranges between 0 and the width according to Perlin noise&mdash;this is not the correct implementation. While the arguments to the <strong function="">random()</strong> function specify a range of values between a minimum and a maximum, <strong function="">noise()</strong> does not work this way. Instead, the output range is fixed&mdash;it always returns a value between 0 and 1. We&rsquo;ll see in a moment that we can get around this easily with Processing&rsquo;s <strong function="">map()</strong> function, but first we must examine what exactly <strong function="">noise()</strong> expects us to pass in as an argument.</p>
+<p>While conceptually this is exactly what we want to do&mdash;calculate an x-value that ranges between 0 and the width according to Perlin noise&mdash;this is not the correct implementation. While the arguments to the <span class="function">random()</span> function specify a range of values between a minimum and a maximum, <span class="function">noise()</span> does not work this way. Instead, the output range is fixed&mdash;it always returns a value between 0 and 1. We&rsquo;ll see in a moment that we can get around this easily with Processing&rsquo;s <span class="function">map()</span> function, but first we must examine what exactly <span class="function">noise()</span> expects us to pass in as an argument.</p>
 
 <p>We can think of one-dimensional Perlin noise as a linear sequence of values over time. For example:</p>
 
@@ -818,12 +818,12 @@ float x = noise(0,width); //[line-through]</pre>
 	</tbody>
 </table>
 
-<p>Now, in order to access a particular noise value in Processing, we have to pass a specific &quot;moment in time&quot; to the <strong function="">noise()</strong> function. For example:</p>
+<p>Now, in order to access a particular noise value in Processing, we have to pass a specific &quot;moment in time&quot; to the <span class="function">noise()</span> function. For example:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float n = noise(3);</pre>
 
-<p>According to the above table, <strong function="">noise(3)</strong> will return 0.364 at time equals 3. We could improve this by using a variable for time and asking for a noise value continuously in <strong function="">draw()</strong>.</p>
+<p>According to the above table, <span class="function">noise(3)</span> will return 0.364 at time equals 3. We could improve this by using a variable for time and asking for a noise value continuously in <span class="function">draw()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float t = 3;
@@ -834,7 +834,7 @@ void draw() {
   println(n);
 }</pre>
 
-<p>The above code results in the same value printed over and over. This happens because we are asking for the result of the <strong function="">noise()</strong> function at the same point in time&mdash;3&mdash;over and over. If we increment the time variable <strong class="var">t</strong>, however, we&rsquo;ll get a different result.</p>
+<p>The above code results in the same value printed over and over. This happens because we are asking for the result of the <span class="function">noise()</span> function at the same point in time&mdash;3&mdash;over and over. If we increment the time variable <strong class="var">t</strong>, however, we&rsquo;ll get a different result.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Typically we would start at time = 0, though this is arbitrary.
@@ -860,7 +860,7 @@ void draw() {
 
 <p><a data-primary="map() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Perlin noise" data-secondary="map() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now we&rsquo;re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it&rsquo;s up to us to map that range to what we want. The easiest way to do this is with Processing&rsquo;s <strong function="">map()</strong> function. The <strong function="">map()</strong> function takes five arguments. First up is the value we want to map, in this case <strong class="var">n</strong>. Then we have to give it the value&rsquo;s current range (minimum and maximum), followed by our desired range.</p>
+<p>Now we&rsquo;re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it&rsquo;s up to us to map that range to what we want. The easiest way to do this is with Processing&rsquo;s <span class="function">map()</span> function. The <span class="function">map()</span> function takes five arguments. First up is the value we want to map, in this case <strong class="var">n</strong>. Then we have to give it the value&rsquo;s current range (minimum and maximum), followed by our desired range.</p>
 
 <figure id="intro_figure8"><img alt="Figure I.8" src="../images/intro/intro_08.png" />
 <figcaption>&nbsp;</figcaption>
@@ -925,7 +925,7 @@ class Walker {
 <div data-type="exercise" id="intro_exercise7">
 <h5>Exercise I.7</h5>
 
-<p>In the above random walker, the result of the noise function is mapped directly to the <span class="klass">Walker</span><code>&rsquo;</code>s location. Create a random walker where you instead map the result of the <strong function="">noise()</strong> function to a <span class="klass">Walker</span><code>&rsquo;</code>s step size.</p>
+<p>In the above random walker, the result of the noise function is mapped directly to the <span class="klass">Walker</span><code>&rsquo;</code>s location. Create a random walker where you instead map the result of the <span class="function">noise()</span> function to a <span class="klass">Walker</span><code>&rsquo;</code>s step size.</p>
 </div>
 </section>
 
@@ -967,7 +967,7 @@ for (int x = 0; x &lt; width; x++) {
 }
 updatePixels();</pre>
 
-<p>To color each pixel according to the <strong function="">noise()</strong> function, we&rsquo;ll do exactly the same thing, only instead of calling <strong function="">random()</strong> we&rsquo;ll call <strong function="">noise()</strong>.</p>
+<p>To color each pixel according to the <span class="function">noise()</span> function, we&rsquo;ll do exactly the same thing, only instead of calling <span class="function">random()</span> we&rsquo;ll call <span class="function">noise()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
    // A Perlin noise brightness!
@@ -1002,13 +1002,13 @@ for (int x = 0; x &lt; width; x++) {
 <div data-type="exercise" id="intro_exercise8">
 <h5>Exercise I.8</h5>
 
-<p>Play with color, <strong function="">noiseDetail()</strong>, and the rate at which <strong class="var">xoff</strong> and <strong class="var">yoff</strong> are incremented to achieve different visual effects.</p>
+<p>Play with color, <span class="function">noiseDetail()</span>, and the rate at which <strong class="var">xoff</strong> and <strong class="var">yoff</strong> are incremented to achieve different visual effects.</p>
 </div>
 
 <div data-type="exercise" id="intro_exercise9">
 <h5>Exercise I.9</h5>
 
-<p>Add a third argument to noise that increments once per cycle through <strong function="">draw()</strong> to animate the two-dimensional noise.</p>
+<p>Add a third argument to noise that increments once per cycle through <span class="function">draw()</span> to animate the two-dimensional noise.</p>
 </div>
 
 <div data-type="exercise" id="intro_exercise10">
