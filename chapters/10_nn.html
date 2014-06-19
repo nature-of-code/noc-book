@@ -327,11 +327,11 @@ int result = p.feedforward(point);</pre>
 
 <p>The perceptron&rsquo;s error can be defined as the difference between the desired answer and its guess.</p>
 
-<p><strong formula="">ERROR = DESIRED OUTPUT - GUESS OUTPUT</strong></p>
+<p><span class="formula">ERROR = DESIRED OUTPUT - GUESS OUTPUT</span></p>
 
 <p>The above formula may look familiar to you. In <a href="#chapter06_section3">Chapter 6</a>, we computed a steering force as the difference between our desired velocity and our current velocity.</p>
 
-<p><strong formula="">STEERING = DESIRED VELOCITY - CURRENT VELOCITY</strong></p>
+<p><span class="formula">STEERING = DESIRED VELOCITY - CURRENT VELOCITY</span></p>
 
 <p>This was also an error calculation. The current velocity acts as a guess and the error (the steering force) tells us how to adjust the velocity in the right direction. In a moment, we&rsquo;ll see how adjusting the vehicle&rsquo;s velocity to follow a target is just like adjusting the weights of a neural network to arrive at the right answer.</p>
 
@@ -399,15 +399,15 @@ int result = p.feedforward(point);</pre>
 
 <p>The error is the determining factor in how the perceptron&rsquo;s weights should be adjusted. For any given weight, what we are looking to calculate is the change in weight, often called <em>&Delta;weight</em> (or &ldquo;delta&rdquo; weight, delta being the Greek letter &Delta;).</p>
 
-<p><strong formula="">NEW WEIGHT = WEIGHT + &Delta;WEIGHT</strong></p>
+<p><span class="formula">NEW WEIGHT = WEIGHT + &Delta;WEIGHT</span></p>
 
 <p>&Delta;weight is calculated as the error multiplied by the input.</p>
 
-<p><strong formula="">&Delta;WEIGHT = ERROR <code>*</code> INPUT</strong></p>
+<p><span class="formula">&Delta;WEIGHT = ERROR <code>*</code> INPUT</span></p>
 
 <p>Therefore:</p>
 
-<p><strong formula="">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT</strong></p>
+<p><span class="formula">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT</span></p>
 
 <p>To understand why this works, we can again return to <a href="#chapter06_section3">steering</a>. A steering force is essentially an error in velocity. If we apply that force as our acceleration (&Delta;velocity), then we adjust our velocity to move in the correct direction. This is what we want to do with our neural network&rsquo;s weights. We want to adjust them in the right direction, as defined by the error.</p>
 
@@ -415,7 +415,7 @@ int result = p.feedforward(point);</pre>
 
 <p>With steering, however, we had an additional variable that controlled the vehicle&rsquo;s ability to steer: the <em>maximum force</em>. With a high maximum force, the vehicle was able to accelerate and turn very quickly; with a lower force, the vehicle would take longer to adjust its velocity. The neural network will employ a similar strategy with a variable called the &ldquo;learning constant.&rdquo; We&rsquo;ll add in the learning constant as follows:</p>
 
-<p><strong formula="">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT <code>*</code> LEARNING CONSTANT</strong></p>
+<p><span class="formula">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT <code>*</code> LEARNING CONSTANT</span></p>
 
 <p>Notice that a high learning constant means the weight will change more drastically. This may help us arrive at a solution more quickly, but with such large changes in weight it&rsquo;s possible we will overshoot the optimal weights. With a small learning constant, the weights will be adjusted slowly, requiring more training time but allowing the network to make very small adjustments that could improve the network&rsquo;s overall accuracy.</p>
 
@@ -514,15 +514,15 @@ class Trainer {
 
 <p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let&rsquo;s start with the formula for a line, where <span class="var">y</span> is calculated as a function of <span class="var">x</span>:</p>
 
-<p><strong formula="">y = f(x)</strong></p>
+<p><span class="formula">y = f(x)</span></p>
 
 <p>In generic terms, a line can be described as:</p>
 
-<p><strong formula="">y = ax + b</strong></p>
+<p><span class="formula">y = ax + b</span></p>
 
 <p>Here&rsquo;s a specific example:</p>
 
-<p><strong formula="">y = 2*x + 1</strong></p>
+<p><span class="formula">y = 2*x + 1</span></p>
 
 <p>We can then write a Processing function with this in mind.</p>
 

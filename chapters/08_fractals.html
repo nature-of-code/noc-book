@@ -119,8 +119,8 @@ void someFunction() {
 
 <p>The factorial of any number n, usually written as n!, is defined as:</p>
 
-<p><strong formula="">n! = n * n &ndash; 1 * . . . . * 3 * 2 * 1</strong><br />
-<strong formula="">0! = 1</strong></p>
+<p><span class="formula">n! = n * n &ndash; 1 * . . . . * 3 * 2 * 1</span><br />
+<span class="formula">0! = 1</span></p>
 
 <p>Here we&rsquo;ll write a function in Processing that uses a <strong function="">for</strong> loop to calculate factorial:</p>
 
@@ -137,17 +137,17 @@ int factorial(int n) {
 
 <p>Upon close examination, you&rsquo;ll notice something interesting about how factorial works. Let&rsquo;s look at 4! and 3!</p>
 
-<p><strong formula="">4! = 4 * 3 * 2 * 1</strong><br />
-<strong formula="">3! = 3 * 2 * 1</strong></p>
+<p><span class="formula">4! = 4 * 3 * 2 * 1</span><br />
+<span class="formula">3! = 3 * 2 * 1</span></p>
 
 <p><strong><em>therefore. . .</em></strong></p>
 
-<p><strong formula="">4! = 4 * 3!</strong></p>
+<p><span class="formula">4! = 4 * 3!</span></p>
 
 <p>In more general terms, for any positive integer n:</p>
 
-<p><strong formula="">n! = n * (n-1)!</strong><br />
-<strong formula="">1! = 1</strong></p>
+<p><span class="formula">n! = n * (n-1)!</span><br />
+<span class="formula">1! = 1</span></p>
 
 <p>Written out:</p>
 
@@ -965,9 +965,9 @@ void branch(float len) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p><strong formula="">Alphabet: A B</strong><br />
-<strong formula="">Axiom: A</strong><br />
-<strong formula="">Rules: (A &rarr; AB) (B &rarr; A)</strong></p>
+<p><span class="formula">Alphabet: A B</span><br />
+<span class="formula">Axiom: A</span><br />
+<span class="formula">Rules: (A &rarr; AB) (B &rarr; A)</span></p>
 
 <p>As with our recursive fractal shapes, we can consider each successive application of the L-system rules to be a generation. Generation 0 is, by definition, the axiom.</p>
 
@@ -1067,21 +1067,21 @@ s += &quot;add some more stuff&quot;;</pre>
 
 <p>What we&rsquo;ve left unsaid until now is that embedded into these L-system sentences are instructions for drawing. Let&rsquo;s see how this works with another example.</p>
 
-<p><strong formula="">Alphabet: A B</strong><br />
-<strong formula="">Axiom: A</strong><br />
-<strong formula="">Rules: (A &rarr; ABA) (B &rarr; BBB)</strong></p>
+<p><span class="formula">Alphabet: A B</span><br />
+<span class="formula">Axiom: A</span><br />
+<span class="formula">Rules: (A &rarr; ABA) (B &rarr; BBB)</span></p>
 
 <p>To read a sentence, we&rsquo;ll translate it in the following way:</p>
 
-<p><strong formula="">A: Draw a line forward.</strong><br />
-<strong formula="">B: Move forward without drawing.</strong></p>
+<p><span class="formula">A: Draw a line forward.</span><br />
+<span class="formula">B: Move forward without drawing.</span></p>
 
 <p>Let&rsquo;s look at the sentence of each generation and its visual output.</p>
 
-<p><strong formula="">Generation 0: A</strong><br />
-<strong formula="">Generation 1: ABA</strong><br />
-<strong formula="">Generation 2: ABABBBABA</strong><br />
-<strong formula="">Generation 3: ABABBBABABBBBBBBBBABABBBABA</strong></p>
+<p><span class="formula">Generation 0: A</span><br />
+<span class="formula">Generation 1: ABA</span><br />
+<span class="formula">Generation 2: ABABBBABA</span><br />
+<span class="formula">Generation 3: ABABBBABABBBBBBBBBABABBBABA</span></p>
 
 <p><a data-primary="Cantor set" data-secondary="L-systems and" data-type="indexterm">&nbsp;</a></p>
 
@@ -1093,12 +1093,12 @@ s += &quot;add some more stuff&quot;;</pre>
 
 <p>The following alphabet is often used with L-systems: &ldquo;FG+-[]&rdquo;, meaning:</p>
 
-<p><strong formula="">F: Draw a line and move forward</strong><br />
-<strong formula="">G: Move forward (without drawing a line)</strong><br />
-<strong formula="">+: Turn right</strong><br />
-<strong formula="">-: Turn left</strong><br />
-<strong formula="">[: Save current location</strong><br />
-<strong formula="">]: Restore previous location</strong></p>
+<p><span class="formula">F: Draw a line and move forward</span><br />
+<span class="formula">G: Move forward (without drawing a line)</span><br />
+<span class="formula">+: Turn right</span><br />
+<span class="formula">-: Turn left</span><br />
+<span class="formula">[: Save current location</span><br />
+<span class="formula">]: Restore previous location</span></p>
 
 <p><a data-primary="Turtle graphics" data-type="indexterm">&nbsp;</a></p>
 
@@ -1108,12 +1108,12 @@ s += &quot;add some more stuff&quot;;</pre>
 
 <p>Here&rsquo;s how we would translate the above L-system alphabet into Processing code.</p>
 
-<p><strong formula="">F: line(0,0,0,len); translate(0,len);</strong><br />
-<strong formula="">G: translate(0,len);</strong><br />
-<strong formula="">+: rotate(angle);</strong><br />
-<strong formula="">-: rotate(-angle);</strong><br />
-<strong formula="">[: pushMatrix();</strong><br />
-<strong formula="">]: popMatrix();</strong></p>
+<p><span class="formula">F: line(0,0,0,len); translate(0,len);</span><br />
+<span class="formula">G: translate(0,len);</span><br />
+<span class="formula">+: rotate(angle);</span><br />
+<span class="formula">-: rotate(-angle);</span><br />
+<span class="formula">[: pushMatrix();</span><br />
+<span class="formula">]: popMatrix();</span></p>
 
 <p>Assuming we have a sentence generated from the L-system, we can walk through the sentence character by character and call the appropriate function as outlined above.</p>
 
@@ -1146,9 +1146,9 @@ for (int i = 0; i &lt; sentence.length(); i++) {
 
 <p>The next example will draw a more elaborate structure with the following L-system.</p>
 
-<p><strong formula="">Alphabet: FG+-[]</strong><br />
-<strong formula="">Axiom: F</strong><br />
-<strong formula="">Rules: F -&rarr; FF+[+F-F-F]-[-F+F+F]</strong></p>
+<p><span class="formula">Alphabet: FG+-[]</span><br />
+<span class="formula">Axiom: F</span><br />
+<span class="formula">Rules: F -&rarr; FF+[+F-F-F]-[-F+F+F]</span></p>
 
 <p>The example available for download on the book&rsquo;s website takes all of the L-system code provided in this section and organizes it into three classes:</p>
 
