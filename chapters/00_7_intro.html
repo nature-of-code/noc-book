@@ -96,17 +96,17 @@
 
 <p><a data-primary="object-oriented programming" data-secondary="review of" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="review of object-oriented programming with" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s review a bit of object-oriented programming (OOP) first by building a <strong klass="">Walker</strong> object. This will be only a cursory review. If you have never worked with OOP before, you may want something more comprehensive; I&rsquo;d suggest stopping here and reviewing the <a href="http://processing.org/learning/objects/">basics on the Processing website</a> before continuing.</p>
+<p>Let&rsquo;s review a bit of object-oriented programming (OOP) first by building a <span class="klass">Walker</span> object. This will be only a cursory review. If you have never worked with OOP before, you may want something more comprehensive; I&rsquo;d suggest stopping here and reviewing the <a href="http://processing.org/learning/objects/">basics on the Processing website</a> before continuing.</p>
 
 <p><a data-primary="object" data-secondary="defined" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="object" data-type="indexterm">&nbsp;</a></p>
 
-<p>An <strong><em>object</em></strong> in Processing is an entity that has both data and functionality. We are looking to design a <strong klass="">Walker</strong> object that both keeps track of its data (where it exists on the screen) and has the capability to perform certain actions (such as draw itself or take a step).</p>
+<p>An <strong><em>object</em></strong> in Processing is an entity that has both data and functionality. We are looking to design a <span class="klass">Walker</span> object that both keeps track of its data (where it exists on the screen) and has the capability to perform certain actions (such as draw itself or take a step).</p>
 
 <p><a data-primary="class (Processing)" data-secondary="defined" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="class" data-type="indexterm">&nbsp;</a></p>
 
 <p>A <strong><em>class</em></strong> is the template for building actual instances of objects. Think of a class as the cookie cutter; the objects are the cookies themselves.</p>
 
-<p>Let&rsquo;s begin by defining the <strong klass="">Walker</strong> class&mdash;what it means to be a <strong klass="">Walker</strong> object. The <strong klass="">Walker</strong> only needs two pieces of data&mdash;a number for its x-location and one for its y-location.</p>
+<p>Let&rsquo;s begin by defining the <span class="klass">Walker</span> class&mdash;what it means to be a <span class="klass">Walker</span> object. The <span class="klass">Walker</span> only needs two pieces of data&mdash;a number for its x-location and one for its y-location.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Walker {
@@ -117,7 +117,7 @@ class Walker {
 
 <p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
 
-<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <strong function="">setup()</strong>. There, we&rsquo;ll initialize the <strong klass="">Walker</strong><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
+<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <strong function="">setup()</strong>. There, we&rsquo;ll initialize the <span class="klass">Walker</span><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   //[full] Objects have a constructor where they are initialized.
@@ -129,7 +129,7 @@ class Walker {
 
 <p><a data-primary="class (Processing)" data-secondary="functionality" data-type="indexterm">&nbsp;</a> <a data-primary="functionality" data-type="indexterm">&nbsp;</a></p>
 
-<p>Finally, in addition to data, classes can be defined with functionality. In this example, a <strong klass="">Walker</strong> has two functions. We first write a function that allows the object to display itself (as a black dot).</p>
+<p>Finally, in addition to data, classes can be defined with functionality. In this example, a <span class="klass">Walker</span> has two functions. We first write a function that allows the object to display itself (as a black dot).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   //[full] Objects have functions.
@@ -139,7 +139,7 @@ class Walker {
   }
   //[end]</pre>
 
-<p>The second function directs the <strong klass="">Walker</strong> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <strong class="var">x</strong> (<strong class="var">x</strong><code>++</code>); to the left by decrementing <strong class="var">x</strong> (<strong class="var">x--</strong>); forward by going down a pixel (<strong class="var">y++</strong>); and backward by going up a pixel (<strong class="var">y--</strong>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <strong function="">random()</strong>.</p>
+<p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <strong class="var">x</strong> (<strong class="var">x</strong><code>++</code>); to the left by decrementing <strong class="var">x</strong> (<strong class="var">x--</strong>); forward by going down a pixel (<strong class="var">y++</strong>); and backward by going up a pixel (<strong class="var">y--</strong>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <strong function="">random()</strong>.</p>
 
 <p><a data-primary="random number generators" data-secondary="random() function" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-type="indexterm">&nbsp;</a></p>
 
@@ -165,7 +165,7 @@ class Walker {
   }
 }</pre>
 
-<p>Now that we&rsquo;ve written the class, it&rsquo;s time to make an actual <strong klass="">Walker</strong> object in the main part of our sketch&mdash;<strong function="">setup()</strong> and <strong function="">draw()</strong>. Assuming we are looking to model a single random walk, we declare one global variable of type <strong class="var">Walker</strong>.</p>
+<p>Now that we&rsquo;ve written the class, it&rsquo;s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch&mdash;<strong function="">setup()</strong> and <strong function="">draw()</strong>. Assuming we are looking to model a single random walk, we declare one global variable of type <strong class="var">Walker</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A Walker object
@@ -189,7 +189,7 @@ void setup() {
   background(255);
 }</pre>
 
-<p>Finally, during each cycle through <strong function="">draw()</strong>, we ask the <strong klass="">Walker</strong> to take a step and draw a dot.</p>
+<p>Finally, during each cycle through <strong function="">draw()</strong>, we ask the <span class="klass">Walker</span> to take a step and draw a dot.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -205,13 +205,13 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>There are a couple improvements we could make to the random walker. For one, this <strong klass="">Walker</strong><code>&rsquo;</code>s step choices are limited to four options&mdash;up, down, left, and right. But any given pixel in the window has eight possible neighbors, and a ninth possibility is to stay in the same place.</p>
+<p>There are a couple improvements we could make to the random walker. For one, this <span class="klass">Walker</span><code>&rsquo;</code>s step choices are limited to four options&mdash;up, down, left, and right. But any given pixel in the window has eight possible neighbors, and a ninth possibility is to stay in the same place.</p>
 
 <figure id="intro_figure1"><img alt="Figure I.1" src="../images/intro/intro_01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>To implement a <strong klass="">Walker</strong> object that can step to any neighboring pixel (or stay put), we could pick a number between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the y-axis.</p>
+<p>To implement a <span class="klass">Walker</span> object that can step to any neighboring pixel (or stay put), we could pick a number between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the y-axis.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void step() {
@@ -235,7 +235,7 @@ void draw() {
     y += ystep;
   }</pre>
 
-<p>All of these variations on the &ldquo;traditional&rdquo; random walk have one thing in common: at any moment in time, the probability that the <strong klass="">Walker</strong> will take a step in a given direction is equal to the probability that the <strong klass="">Walker</strong> will take a step in any direction. In other words, if there are four possible steps, there is a 1 in 4 (or 25%) chance the <strong klass="">Walker</strong> will take any given step. With nine possible steps, it&rsquo;s a 1 in 9 (or 11.1%) chance.</p>
+<p>All of these variations on the &ldquo;traditional&rdquo; random walk have one thing in common: at any moment in time, the probability that the <span class="klass">Walker</span> will take a step in a given direction is equal to the probability that the <span class="klass">Walker</span> will take a step in any direction. In other words, if there are four possible steps, there is a 1 in 4 (or 25%) chance the <span class="klass">Walker</span> will take any given step. With nine possible steps, it&rsquo;s a 1 in 9 (or 11.1%) chance.</p>
 
 <p><a data-primary="random number generators" data-secondary="uniform number distributions and" data-type="indexterm">&nbsp;</a> <a data-primary="uniform number distributions" data-type="indexterm">&nbsp;</a></p>
 
@@ -391,7 +391,7 @@ if (num &lt; 0.6) {
   println(&quot;Outcome C&quot;);
 }</pre>
 
-<p>We could use the above methodology to create a random walker that tends to move to the right. Here is an example of a <strong klass="">Walker</strong> with the following probabilities:</p>
+<p>We could use the above methodology to create a random walker that tends to move to the right. Here is an example of a <span class="klass">Walker</span> with the following probabilities:</p>
 
 <ul>
 	<li>
@@ -544,9 +544,9 @@ float h = random(200,300);</pre>
 
 <p><a data-primary="Processing" data-secondary="Random class" data-type="indexterm">&nbsp;</a> <a data-primary="Random class (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don&rsquo;t have to do any of these calculations ourselves. Instead, we can make use of a class known as <strong klass="">Random</strong>, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">the JavaDocs</a> for more information).</p>
+<p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don&rsquo;t have to do any of these calculations ourselves. Instead, we can make use of a class known as <span class="klass">Random</span>, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">the JavaDocs</a> for more information).</p>
 
-<p>To use the <strong klass="">Random</strong> class, we must first declare a variable of type <strong klass="">Random</strong> and create the <strong klass="">Random</strong> object in <strong function="">setup()</strong>.</p>
+<p>To use the <span class="klass">Random</span> class, we must first declare a variable of type <span class="klass">Random</span> and create the <span class="klass">Random</span> object in <strong function="">setup()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // We use the variable name &ldquo;generator&rdquo; because what we
@@ -914,7 +914,7 @@ class Walker {
   }
 }</pre>
 
-<p>Notice how the above example requires an additional pair of variables: <strong class="var">tx</strong> and <strong class="var">ty</strong>. This is because we need to keep track of two time variables, one for the x-location of the <strong klass="">Walker</strong> object and one for the y-location. But there is something a bit odd about these variables. Why does <strong class="var">tx</strong> start at 0 and <strong class="var">ty</strong> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <strong class="var">t</strong> each and every time. If we asked for the noise value at the same time <strong class="var">t</strong> for both <strong class="var">x</strong> and <strong class="var">y</strong>, then <strong class="var">x</strong> and <strong class="var">y</strong> would always be equal, meaning that the <strong klass="">Walker</strong> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <strong class="var">x</strong> and 10,000 for <strong class="var">y</strong> so that <strong class="var">x</strong> and <strong class="var">y</strong> can appear to act independently of each other.</p>
+<p>Notice how the above example requires an additional pair of variables: <strong class="var">tx</strong> and <strong class="var">ty</strong>. This is because we need to keep track of two time variables, one for the x-location of the <span class="klass">Walker</span> object and one for the y-location. But there is something a bit odd about these variables. Why does <strong class="var">tx</strong> start at 0 and <strong class="var">ty</strong> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <strong class="var">t</strong> each and every time. If we asked for the noise value at the same time <strong class="var">t</strong> for both <strong class="var">x</strong> and <strong class="var">y</strong>, then <strong class="var">x</strong> and <strong class="var">y</strong> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <strong class="var">x</strong> and 10,000 for <strong class="var">y</strong> so that <strong class="var">x</strong> and <strong class="var">y</strong> can appear to act independently of each other.</p>
 
 <figure id="intro_figure9"><img alt="Figure I.9" src="../images/intro/intro_09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -925,7 +925,7 @@ class Walker {
 <div data-type="exercise" id="intro_exercise7">
 <h5>Exercise I.7</h5>
 
-<p>In the above random walker, the result of the noise function is mapped directly to the <strong klass="">Walker</strong><code>&rsquo;</code>s location. Create a random walker where you instead map the result of the <strong function="">noise()</strong> function to a <strong klass="">Walker</strong><code>&rsquo;</code>s step size.</p>
+<p>In the above random walker, the result of the noise function is mapped directly to the <span class="klass">Walker</span><code>&rsquo;</code>s location. Create a random walker where you instead map the result of the <strong function="">noise()</strong> function to a <span class="klass">Walker</span><code>&rsquo;</code>s step size.</p>
 </div>
 </section>
 
