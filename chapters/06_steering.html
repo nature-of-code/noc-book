@@ -48,7 +48,7 @@
 
 <p><a data-primary="&lt;em&gt;Turtles" data-secondary="Termites" data-tertiary="and Traffic Jams&lt;/em&gt; (Resnick)" data-type="indexterm">&nbsp;</a> <a data-primary="Resnick" data-secondary="Mitchel" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code. There are many places where we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents. (For more on this topic, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick.) However, we want to begin by examining agent behaviors that build on the work we&rsquo;ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces. And so it&rsquo;s time to rename our <strong klass="">Mover</strong> class that became our <strong klass="">Particle</strong> class once again. This time we are going to call it <strong klass="">Vehicle</strong>.</p>
+<p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code. There are many places where we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents. (For more on this topic, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick.) However, we want to begin by examining agent behaviors that build on the work we&rsquo;ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces. And so it&rsquo;s time to rename our <span class="klass">(.*?)</span> class that became our <span class="klass">(.*?)</span> class once again. This time we are going to call it <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
@@ -120,7 +120,7 @@ PVector steer = PVector.sub(desired,velocity);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Assuming a <strong klass="">PVector</strong> target, we then have:</p>
+<p>Assuming a <span class="klass">(.*?)</span> target, we then have:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector desired = PVector.sub(target,location);</pre>
@@ -129,7 +129,7 @@ PVector desired = PVector.sub(target,location);</pre>
 
 <p><em>The vehicle desires to move towards the target at maximum speed.</em></p>
 
-<p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So first, we need to make sure we add a variable to our <strong klass="">Vehicle</strong> class that stores maximum speed.</p>
+<p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So first, we need to make sure we add a variable to our <span class="klass">(.*?)</span> class that stores maximum speed.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
@@ -150,7 +150,7 @@ desired.mult(maxspeed);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Putting this all together, we can write a function called <strong function="">seek()</strong> that receives a <strong klass="">PVector</strong> target and calculates a steering force towards that target.</p>
+<p>Putting this all together, we can write a function called <span class="function">(.*?)</span> that receives a <span class="klass">(.*?)</span> target and calculates a steering force towards that target.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void seek(PVector target) {
@@ -167,7 +167,7 @@ desired.mult(maxspeed);</pre>
     applyForce(steer);
   }</pre>
 
-<p>Note how in the above function we finish by passing the steering force into <strong function="">applyForce()</strong>. This assumes that we are basing this example on the foundation we built in <a href="#chapter02_section2">Chapter 2</a>. However, you could just as easily use the steering force with Box2D&rsquo;s <strong function="">applyForce()</strong> function or toxiclibs&rsquo; <strong function="">addForce()</strong> function.</p>
+<p>Note how in the above function we finish by passing the steering force into <span class="function">(.*?)</span>. This assumes that we are basing this example on the foundation we built in <a href="#chapter02_section2">Chapter 2</a>. However, you could just as easily use the steering force with Box2D&rsquo;s <span class="function">(.*?)</span> function or toxiclibs&rsquo; <span class="function">(.*?)</span> function.</p>
 
 <p>So why does this all work so well? Let&rsquo;s see what the steering force looks like relative to the vehicle and target locations.</p>
 
@@ -179,7 +179,7 @@ desired.mult(maxspeed);</pre>
 
 <p><a data-primary="steering force" data-secondary="magnitude of" data-type="indexterm">&nbsp;</a></p>
 
-<p>In all of this excitement, however, we&rsquo;ve missed one last step. What sort of vehicle is this? Is it a super sleek race car with amazing handling? Or a giant Mack truck that needs a lot of advance notice to turn? A graceful panda, or a lumbering elephant? Our example code, as it stands, has no feature to account for this variability in steering ability. Steering ability can be controlled by limiting the magnitude of the steering force. Let&rsquo;s call that limit the &ldquo;maximum force&rdquo; (or <strong class="var">maxforce</strong> for short). And so finally, we have:</p>
+<p>In all of this excitement, however, we&rsquo;ve missed one last step. What sort of vehicle is this? Is it a super sleek race car with amazing handling? Or a giant Mack truck that needs a lot of advance notice to turn? A graceful panda, or a lumbering elephant? Our example code, as it stands, has no feature to account for this variability in steering ability. Steering ability can be controlled by limiting the magnitude of the steering force. Let&rsquo;s call that limit the &ldquo;maximum force&rdquo; (or <span class="var">(.*?)</span> for short). And so finally, we have:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Vehicle {
@@ -212,7 +212,7 @@ class Vehicle {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Here is the full <strong klass="">Vehicle</strong> class, incorporating the rest of the elements from the Chapter 2 <strong klass="">Mover</strong> object.</p>
+<p>Here is the full <span class="klass">(.*?)</span> class, incorporating the rest of the elements from the Chapter 2 <span class="klass">(.*?)</span> object.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_01_Seek/_6_01_Seek.pde processingjs/chapter06/_6_01_Seek/Vehicle.pde"><img alt="ch06 ex1" src="../images/chapter06/ch06_ex1.png" />
 <figcaption>&nbsp;</figcaption>
@@ -336,7 +336,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>How can we implement this &ldquo;arriving&rdquo; behavior in code? Let&rsquo;s return to our <strong function="">seek()</strong> function and find the line of code where we set the magnitude of the desired velocity.</p>
+<p>How can we implement this &ldquo;arriving&rdquo; behavior in code? Let&rsquo;s return to our <span class="function">(.*?)</span> function and find the line of code where we set the magnitude of the desired velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
    PVector desired = PVector.sub(target,location);
@@ -440,7 +440,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p>For Reynolds, the goal of wandering is not simply random motion, but rather a sense of moving in one direction for a little while, wandering off to the next for a little bit, and so on and so forth. So how does Reynolds calculate a desired vector to achieve such an effect?</p>
 
-<p>Figure 6.12 illustrates how the vehicle predicts its future location as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <strong class="var">r</strong> at that location, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle&rsquo;s target, its desired vector pointing in that direction.</p>
+<p>Figure 6.12 illustrates how the vehicle predicts its future location as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <span class="var">(.*?)</span> at that location, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle&rsquo;s target, its desired vector pointing in that direction.</p>
 
 <p>Sounds a bit absurd, right? Or, at the very least, rather arbitrary. In fact, this is a very clever and thoughtful solution&mdash;it uses randomness to drive a vehicle&rsquo;s steering, but constrains that randomness along the path of a circle to keep the vehicle&rsquo;s movement from appearing jittery, and, well, random.</p>
 
@@ -464,7 +464,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>If we define the walls of the space as the edges of a Processing window and the distance <strong class="var">d</strong> as 25, the code is rather simple.</p>
+<p>If we define the walls of the space as the edges of a Processing window and the distance <span class="var">(.*?)</span> as 25, the code is rather simple.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_03_StayWithinWalls/_6_03_StayWithinWalls.pde processingjs/chapter06/_6_03_StayWithinWalls/Vehicle.pde"><img alt="ch06 ex3" src="../images/chapter06/ch06_ex3.png" />
 <figcaption>&nbsp;</figcaption>
@@ -505,7 +505,7 @@ if (location. x &gt; 25) {
 
 <p><a data-primary="arrays (2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Before we can write the additional code for our <strong klass="">Vehicle</strong> class, we&rsquo;ll need to build a class that describes the flow field itself, the grid of vectors. A two-dimensional array is a convenient data structure in which to store a grid of information. If you are not familiar with 2D arrays, I suggest reviewing this online Processing tutorial: <a href="http://processing.org/learning/2darray/">2D array</a>. The 2D array is convenient because we reference each element with two indices, which we can think of as columns and rows.</p>
+<p>Before we can write the additional code for our <span class="klass">(.*?)</span> class, we&rsquo;ll need to build a class that describes the flow field itself, the grid of vectors. A two-dimensional array is a convenient data structure in which to store a grid of information. If you are not familiar with 2D arrays, I suggest reviewing this online Processing tutorial: <a href="http://processing.org/learning/2darray/">2D array</a>. The 2D array is convenient because we reference each element with two indices, which we can think of as columns and rows.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class FlowField {
@@ -520,7 +520,7 @@ class FlowField {
 
 <p><a data-primary="flow field following" data-secondary="resolution and" data-type="indexterm">&nbsp;</a> <a data-primary="resolution" data-secondary="flow field following and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Notice how we are defining a third variable called <strong class="var">resolution</strong> above. What is this variable? Let&rsquo;s say we have a Processing window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a <strong klass="">PVector</strong> object for every single pixel, or 40,000 <strong klass="">PVector</strong><code>s</code> (200 * 200). This isn&rsquo;t terribly unreasonable, but in our case, it&rsquo;s overkill. We don&rsquo;t need a <strong klass="">PVector</strong> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
+<p>Notice how we are defining a third variable called <span class="var">(.*?)</span> above. What is this variable? Let&rsquo;s say we have a Processing window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a <span class="klass">(.*?)</span> object for every single pixel, or 40,000 <span class="klass">(.*?)</span><code>s</code> (200 * 200). This isn&rsquo;t terribly unreasonable, but in our case, it&rsquo;s overkill. We don&rsquo;t need a <span class="klass">(.*?)</span> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   FlowField() {
@@ -592,7 +592,7 @@ for (int i = 0; i &lt; cols; i++) {
 <div data-type="exercise" id="chapter06_exercise6">
 <h5>Exercise 6.6</h5>
 
-<p>Write the code to calculate a <strong klass="">PVector</strong> at every location in the flow field that points towards the center of a window.</p>
+<p>Write the code to calculate a <span class="klass">(.*?)</span> at every location in the flow field that points towards the center of a window.</p>
 
 <figure><img alt="ch06 exc6" src="../images/chapter06/ch06_exc6.png" />
 <figcaption>&nbsp;</figcaption>
@@ -604,7 +604,7 @@ v.______________();
 field[i][j] = v;</pre>
 </div>
 
-<p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let&rsquo;s say we have a vehicle that lives at a <strong klass="">PVector</strong>: its location. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
+<p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let&rsquo;s say we have a vehicle that lives at a <span class="klass">(.*?)</span>: its location. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int column = int(location.x/resolution);
@@ -612,7 +612,7 @@ int row = int(location.y/resolution);</pre>
 
 <p><a data-primary="constrain() function (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Because a vehicle could theoretically wander off the Processing window, it&rsquo;s also useful for us to employ the <strong function="">constrain()</strong> function to make sure we don&rsquo;t look outside of the flow field array. Here is a function we&rsquo;ll call <strong function="">lookup()</strong> that goes in the <strong klass="">FlowField</strong> class&mdash;it receives a <strong klass="">PVector</strong> (presumably the location of our vehicle) and returns the corresponding flow field <strong klass="">PVector</strong> for that location.</p>
+<p>Because a vehicle could theoretically wander off the Processing window, it&rsquo;s also useful for us to employ the <span class="function">(.*?)</span> function to make sure we don&rsquo;t look outside of the flow field array. Here is a function we&rsquo;ll call <span class="function">(.*?)</span> that goes in the <span class="klass">(.*?)</span> class&mdash;it receives a <span class="klass">(.*?)</span> (presumably the location of our vehicle) and returns the corresponding flow field <span class="klass">(.*?)</span> for that location.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector lookup(PVector lookup) {
@@ -627,7 +627,7 @@ int row = int(location.y/resolution);</pre>
     return field[column][row].get();
   }</pre>
 
-<p>Before we move on to the <strong klass="">Vehicle</strong> class, let&rsquo;s take a look at the <strong klass="">FlowField</strong> class all together.</p>
+<p>Before we move on to the <span class="klass">(.*?)</span> class, let&rsquo;s take a look at the <span class="klass">(.*?)</span> class all together.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class FlowField {
@@ -672,7 +672,7 @@ class FlowField {
   //[end]
 }</pre>
 
-<p>So let&rsquo;s assume we have a <strong klass="">FlowField</strong> object called &ldquo;flow&rdquo;. Using the <strong function="">lookup()</strong> function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds&rsquo;s rules (steering = desired - velocity) to calculate a steering force.</p>
+<p>So let&rsquo;s assume we have a <span class="klass">(.*?)</span> object called &ldquo;flow&rdquo;. Using the <span class="function">(.*?)</span> function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds&rsquo;s rules (steering = desired - velocity) to calculate a steering force.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_04_FlowField/_6_04_FlowField.pde processingjs/chapter06/_6_04_FlowField/FlowField.pde processingjs/chapter06/_6_04_FlowField/Vehicle.pde"><img alt="ch06 ex4" src="../images/chapter06/ch06_ex4.png" />
 <figcaption>&nbsp;</figcaption>
@@ -697,13 +697,13 @@ class Vehicle {
 <div data-type="exercise" id="chapter06_exercise7">
 <h5>Exercise 6.7</h5>
 
-<p>Adapt the flow field example so that the <strong klass="">PVector</strong><code>s</code> change over time. (Hint: try using the third dimension of Perlin noise!)</p>
+<p>Adapt the flow field example so that the <span class="klass">(.*?)</span><code>s</code> change over time. (Hint: try using the third dimension of Perlin noise!)</p>
 </div>
 
 <div data-type="exercise" id="chapter06_exercise8">
 <h5>Exercise 6.8</h5>
 
-<p>Can you seed a flow field from a <strong klass="">PImage</strong>? For example, try having the <strong klass="">PVector</strong><code>s</code> point from dark to light colors (or vice versa).</p>
+<p>Can you seed a flow field from a <span class="klass">(.*?)</span>? For example, try having the <span class="klass">(.*?)</span><code>s</code> point from dark to light colors (or vice versa).</p>
 </div>
 </section>
 
@@ -750,7 +750,7 @@ PVector b = new PVector(10,1);
 // function to calculate the dot product.
 float n = a.dot(b);</pre>
 
-<p>And if we were to look in the guts of the <strong klass="">PVector</strong> source, we&rsquo;d find a pretty simple implementation of this function:</p>
+<p>And if we were to look in the guts of the <span class="klass">(.*?)</span> source, we&rsquo;d find a pretty simple implementation of this function:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 public float dot(PVector v) {
@@ -827,7 +827,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Create a sketch that displays the angle between two <strong klass="">PVector</strong> objects.</p>
+<p>Create a sketch that displays the angle between two <span class="klass">(.*?)</span> objects.</p>
 
 <figure><img alt="blank" src="../images/blank.png" />
 <figcaption>&nbsp;</figcaption>
@@ -951,7 +951,7 @@ PVector a = PVector.sub(predictLoc,path.start);</pre>
 <pre data-code-language="java" data-type="programlisting">
 PVector b = PVector.sub(path.end,path.start);</pre>
 
-<p>Now, with basic trigonometry, we know that the distance from the path&rsquo;s start to the normal point is: <strong formula="">|A| * cos(theta)</strong>.</p>
+<p>Now, with basic trigonometry, we know that the distance from the path&rsquo;s start to the normal point is: <span class="formula">|A| * cos(theta)</span>.</p>
 
 <figure id="chapter06_figure25"><img alt="Figure 6.25" src="../images/chapter06/ch06_25.png" />
 <figcaption>&nbsp;</figcaption>
@@ -981,7 +981,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p>While the above code will work, there&rsquo;s one more simplification we can make. If you&rsquo;ll notice, the desired magnitude for vector {vectorb} is:</p>
 
-<p><strong formula="">a.mag()*cos(theta)</strong></p>
+<p><span class="formula">a.mag()*cos(theta)</span></p>
 
 <p>which is the code translation of:</p>
 
@@ -1076,7 +1076,7 @@ if (distance &gt; path.radius) {
   seek(target);
 }</pre>
 
-<p>Putting it all together, we have the following steering function in our <strong klass="">Vehicle</strong> class.</p>
+<p>Putting it all together, we have the following steering function in our <span class="klass">(.*?)</span> class.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_05_PathFollowingSimple/_6_05_PathFollowingSimple.pde processingjs/chapter06/_6_05_PathFollowingSimple/Path.pde processingjs/chapter06/_6_05_PathFollowingSimple/Vehicle.pde"><img alt="ch06 ex5" src="../images/chapter06/ch06_ex5.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1116,7 +1116,7 @@ if (distance &gt; path.radius) {
     }//[end]
   }</pre>
 
-<p>Now, you may notice above that instead of using all that dot product/scalar projection code to find the normal point, we instead call a function: <strong function="">getNormalPoint()</strong>. In cases like this, it&rsquo;s useful to break out the code that performs a specific task (finding a normal point) into a function that it can be used generically in any case where it is required. The function takes three <strong klass="">PVector</strong><code>s</code>: the first defines a point in Cartesian space and the second and third arguments define a line segment.</p>
+<p>Now, you may notice above that instead of using all that dot product/scalar projection code to find the normal point, we instead call a function: <span class="function">(.*?)</span>. In cases like this, it&rsquo;s useful to break out the code that performs a specific task (finding a normal point) into a function that it can be used generically in any case where it is required. The function takes three <span class="klass">(.*?)</span><code>s</code>: the first defines a point in Cartesian space and the second and third arguments define a line segment.</p>
 
 <figure id="chapter06_figure29"><img alt="Figure 6.29" src="../images/chapter06/ch06_29.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1139,7 +1139,7 @@ if (distance &gt; path.radius) {
     return normalPoint;
   }</pre>
 
-<p>What do we have so far? We have a <strong klass="">Path</strong> class that defines a path as a line between two points. We have a <strong klass="">Vehicle</strong> class that defines a vehicle that can follow the path (using a steering behavior to seek a target along the path). What is missing?</p>
+<p>What do we have so far? We have a <span class="klass">(.*?)</span> class that defines a path as a line between two points. We have a <span class="klass">(.*?)</span> class that defines a vehicle that can follow the path (using a steering behavior to seek a target along the path). What is missing?</p>
 
 <p>Take a deep breath. We&rsquo;re almost there.</p>
 </section>
@@ -1175,7 +1175,7 @@ if (distance &gt; path.radius) {
 
 <p>If we have a point and an infinitely long line, we&rsquo;ll always have a normal. But, as in the path-following example, if we have a point and a line segment, we won&rsquo;t necessarily find a normal that is on the line segment itself. So if this happens for any of the segments, we can disqualify those normals. Once we are left with normals that are on the path itself (only two in the above diagram), we simply pick the one that is closest to our vehicle&rsquo;s location.</p>
 
-<p>In order to write the code for this, we&rsquo;ll have to expand our <strong klass="">Path</strong> class to have an <strong klass="">ArrayList</strong> of points (rather than just two, a start and an end).</p>
+<p>In order to write the code for this, we&rsquo;ll have to expand our <span class="klass">(.*?)</span> class to have an <span class="klass">(.*?)</span> of points (rather than just two, a start and an end).</p>
 
 <figure class="screenshot"><img alt="ch06 ex6 a" src="../images/chapter06/ch06_ex6_a.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1213,7 +1213,7 @@ if (distance &gt; path.radius) {
   //[end]
 }</pre>
 
-<p>Now that we have the <strong klass="">Path</strong> class defined, it&rsquo;s the vehicle&rsquo;s turn to deal with multiple line segments. All we did before was find the normal for one line segment. We can now find the normals for all the line segments in a loop.</p>
+<p>Now that we have the <span class="klass">(.*?)</span> class defined, it&rsquo;s the vehicle&rsquo;s turn to deal with multiple line segments. All we did before was find the normal for one line segment. We can now find the normals for all the line segments in a loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int i = 0; i &lt; p.points.size()-1; i++) {
@@ -1223,7 +1223,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
   PVector normalPoint = getNormalPoint(predictLoc, a, b);
 </pre>
 
-<p>Then we should make sure the normal point is actually between points <strong class="var">a</strong> and <strong class="var">b</strong>. Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <strong class="var">normalPoint</strong> is outside the <em>x</em> components of <strong class="var">a</strong> and <strong class="var">b</strong>.</p>
+<p>Then we should make sure the normal point is actually between points <span class="var">(.*?)</span> and <span class="var">(.*?)</span>. Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <span class="var">(.*?)</span> is outside the <em>x</em> components of <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
    if (normalPoint.x &lt; a.x || normalPoint.x &gt; b.x) {
@@ -1234,7 +1234,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>As a little trick, we&rsquo;ll say that if it&rsquo;s not within the line segment, let&rsquo;s just pretend the end point of that line segment is the normal. This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>
 
-<p>Finally, we&rsquo;ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high &ldquo;world record&rdquo; distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <strong class="var">target</strong>. At the end of the loop, we&rsquo;ll have the closest normal point in that variable.</p>
+<p>Finally, we&rsquo;ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high &ldquo;world record&rdquo; distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <span class="var">(.*?)</span>. At the end of the loop, we&rsquo;ll have the closest normal point in that variable.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_06_PathFollowing/_6_06_PathFollowing.pde processingjs/chapter06/_6_06_PathFollowing/Path.pde processingjs/chapter06/_6_06_PathFollowing/Vehicle.pde"><img alt="ch06 ex6" src="../images/chapter06/ch06_ex6.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1270,7 +1270,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 <div data-type="exercise" id="chapter06_exercise10">
 <h5>Exercise 6.10</h5>
 
-<p>Update the path-following example so that the path can go in any direction. (Hint: you&rsquo;ll need to use the <strong function="">min()</strong> and <strong function="">max()</strong> function when determining if the normal point is inside the line segment.)</p>
+<p>Update the path-following example so that the path can go in any direction. (Hint: you&rsquo;ll need to use the <span class="function">(.*?)</span> and <span class="function">(.*?)</span> function when determining if the normal point is inside the line segment.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
@@ -1307,7 +1307,7 @@ if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
 	<p><strong><em>Simple units with short-range relationships.</em></strong> This is what we&rsquo;ve been building all along: vehicles that have a limited perception of their environment.</p>
 	</li>
 	<li>
-	<p><strong><em>Simple units operate in parallel.</em></strong> This is what we need to simulate in code. For every cycle through Processing&rsquo;s <strong function="">draw()</strong> loop, each unit will decide how to move (to create the appearance of them all working in parallel).</p>
+	<p><strong><em>Simple units operate in parallel.</em></strong> This is what we need to simulate in code. For every cycle through Processing&rsquo;s <span class="function">(.*?)</span> loop, each unit will decide how to move (to create the appearance of them all working in parallel).</p>
 	</li>
 	<li>
 	<p><strong><em>System as a whole exhibits emergent phenomena.</em></strong> Out of the interactions between these simple units emerges complex behavior, patterns, and intelligence. Here we&rsquo;re talking about the result we are hoping for in our sketches. Yes, we know this happens in nature (ant colonies, termites, migration patterns, earthquakes, snowflakes, etc.), but can we achieve the same result in our Processing sketches?</p>
@@ -1340,7 +1340,7 @@ if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
 	</li>
 </ul>
 
-<p>Complexity will serve as a theme for the remaining content in this book. In this chapter, we&rsquo;ll begin by adding one more feature to our <strong klass="">Vehicle</strong> class: an ability to look at neighboring vehicles.</p>
+<p>Complexity will serve as a theme for the remaining content in this book. In this chapter, we&rsquo;ll begin by adding one more feature to our <span class="klass">(.*?)</span> class: an ability to look at neighboring vehicles.</p>
 </section>
 
 <section data-type="sect1" id="chapter06_section11">
@@ -1348,7 +1348,7 @@ if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
 
 <p><a data-primary="complex systems" data-secondary="group behavior" data-type="indexterm">&nbsp;</a> <a data-primary="group behavior" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="group behavior" data-type="indexterm">&nbsp;</a></p>
 
-<p>A group is certainly not a new concept. We&rsquo;ve done this before&mdash;in Chapter 4, where we developed a framework for managing collections of particles in a <strong klass="">ParticleSystem</strong> class. There, we stored a list of particles in an <strong klass="">ArrayList</strong>. We&rsquo;ll do the same thing here: store a bunch of <strong klass="">Vehicle</strong> objects in an <strong klass="">ArrayList</strong>.</p>
+<p>A group is certainly not a new concept. We&rsquo;ve done this before&mdash;in Chapter 4, where we developed a framework for managing collections of particles in a <span class="klass">(.*?)</span> class. There, we stored a list of particles in an <span class="klass">(.*?)</span>. We&rsquo;ll do the same thing here: store a bunch of <span class="klass">(.*?)</span> objects in an <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Declare an ArrayList of Vehicle objects.
@@ -1363,7 +1363,7 @@ void setup() {
   }
 }</pre>
 
-<p>Now when it comes time to deal with all the vehicles in <strong function="">draw()</strong>, we simply loop through all of them and call the necessary functions.</p>
+<p>Now when it comes time to deal with all the vehicles in <span class="function">(.*?)</span>, we simply loop through all of them and call the necessary functions.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw(){
@@ -1385,14 +1385,14 @@ void draw(){
 <pre data-code-language="java" data-type="programlisting">
     v.separate();</pre>
 
-<p>Is that right? It sounds good, but it&rsquo;s not. What&rsquo;s missing? In the case of seek, we said, &ldquo;Seek <strong class="var">mouseX</strong> and <strong class="var">mouseY</strong>.&rdquo; In the case of separate, we&rsquo;re saying &ldquo;separate from <em>everyone else</em>.&rdquo; Who is everyone else? It&rsquo;s the list of all the other vehicles.</p>
+<p>Is that right? It sounds good, but it&rsquo;s not. What&rsquo;s missing? In the case of seek, we said, &ldquo;Seek <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.&rdquo; In the case of separate, we&rsquo;re saying &ldquo;separate from <em>everyone else</em>.&rdquo; Who is everyone else? It&rsquo;s the list of all the other vehicles.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     v.separate(vehicles);</pre>
 
-<p>This is the big leap beyond what we did before with particle systems. Instead of having each element (particle or vehicle) operate on its own, we&rsquo;re now saying, &ldquo;Hey you, the vehicle! When it comes time for you to operate, you need to operate with an awareness of everyone else. So I&rsquo;m going to go ahead and pass you the <strong klass="">ArrayList</strong> of everyone else.&rdquo;</p>
+<p>This is the big leap beyond what we did before with particle systems. Instead of having each element (particle or vehicle) operate on its own, we&rsquo;re now saying, &ldquo;Hey you, the vehicle! When it comes time for you to operate, you need to operate with an awareness of everyone else. So I&rsquo;m going to go ahead and pass you the <span class="klass">(.*?)</span> of everyone else.&rdquo;</p>
 
-<p>This is how we&rsquo;ve mapped out <strong function="">setup()</strong> and <strong function="">draw()</strong> to deal with a group behavior.</p>
+<p>This is how we&rsquo;ve mapped out <span class="function">(.*?)</span> and <span class="function">(.*?)</span> to deal with a group behavior.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Vehicle&gt; vehicles;
@@ -1424,7 +1424,7 @@ void draw() {
 
 <p><a data-primary="repulsion" data-secondary="group behavior and" data-type="indexterm">&nbsp;</a> <a data-primary="steering behaviors" data-secondary="group behavior and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Of course, this is just the beginning. The real work happens inside the <strong function="">separate()</strong> function itself. Let&rsquo;s figure out how we want to define separation. Reynolds states: &ldquo;Steer to avoid crowding.&rdquo; In other words, if a given vehicle is too close to you, steer away from that vehicle. Sound familiar? Remember the seek behavior where a vehicle steers towards a target? Reverse that force and we have the flee behavior.</p>
+<p>Of course, this is just the beginning. The real work happens inside the <span class="function">(.*?)</span> function itself. Let&rsquo;s figure out how we want to define separation. Reynolds states: &ldquo;Steer to avoid crowding.&rdquo; In other words, if a given vehicle is too close to you, steer away from that vehicle. Sound familiar? Remember the seek behavior where a vehicle steers towards a target? Reverse that force and we have the flee behavior.</p>
 
 <figure class="half-width-right" id="chapter06_figure34"><img alt="Figure 6.34" src="../images/chapter06/ch06_34.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1432,7 +1432,7 @@ void draw() {
 
 <p>But what if more than one vehicle is too close? In this case, we&rsquo;ll define separation as the average of all the vectors pointing away from any close vehicles.</p>
 
-<p>Let&rsquo;s begin to write the code. As we just worked out, we&rsquo;re writing a function called <strong function="">separate()</strong> that receives an <strong klass="">ArrayList</strong> of Vehicle objects as an argument.</p>
+<p>Let&rsquo;s begin to write the code. As we just worked out, we&rsquo;re writing a function called <span class="function">(.*?)</span> that receives an <span class="klass">(.*?)</span> of Vehicle objects as an argument.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void separate (ArrayList&lt;Vehicle&gt; vehicles) {
@@ -1457,7 +1457,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
     }
   }</pre>
 
-<p>Notice how in the above code, we are not only checking if the distance is less than a desired separation (i.e. too close!), but also if the distance is greater than zero. This is a little trick that makes sure we don&rsquo;t ask a vehicle to separate from itself. Remember, all the vehicles are in the <strong klass="">ArrayList</strong>, so if you aren&rsquo;t careful you&rsquo;ll be comparing each vehicle to itself!</p>
+<p>Notice how in the above code, we are not only checking if the distance is less than a desired separation (i.e. too close!), but also if the distance is greater than zero. This is a little trick that makes sure we don&rsquo;t ask a vehicle to separate from itself. Remember, all the vehicles are in the <span class="klass">(.*?)</span>, so if you aren&rsquo;t careful you&rsquo;ll be comparing each vehicle to itself!</p>
 
 <p>Once we know that two vehicles are too close, we need to make a vector that points away from the offending vehicle.</p>
 
@@ -1495,7 +1495,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
     sum.div(count); //[bold]
   } //[bold]</pre>
 
-<p>Once we have the average vector (stored in the <strong klass="">PVector</strong> object &ldquo;sum&rdquo;), that <strong klass="">PVector</strong> can be scaled to maximum speed and become our desired velocity&mdash;we <em>desire</em> to move in that direction at maximum speed! (In fact, we don't have to divide by count anymore since we are manually setting the magnitude.) And once we have the desired velocity, it&rsquo;s the same old Reynolds story: steering equals desired minus velocity.</p>
+<p>Once we have the average vector (stored in the <span class="klass">(.*?)</span> object &ldquo;sum&rdquo;), that <span class="klass">(.*?)</span> can be scaled to maximum speed and become our desired velocity&mdash;we <em>desire</em> to move in that direction at maximum speed! (In fact, we don't have to divide by count anymore since we are manually setting the magnitude.) And once we have the desired velocity, it&rsquo;s the same old Reynolds story: steering equals desired minus velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   if (count &gt; 0) {
@@ -1555,7 +1555,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 <div data-type="exercise" id="chapter06_exercise12">
 <h5>Exercise 6.12</h5>
 
-<p>Rewrite <strong function="">separate()</strong> to work in the opposite fashion (&ldquo;cohesion&rdquo;). If a vehicle is beyond a certain distance, steer towards that vehicle. This will keep the group together. (Note that in a moment, we&rsquo;re going to look at what happens when we have both cohesion and separation in the same simulation.)</p>
+<p>Rewrite <span class="function">(.*?)</span> to work in the opposite fashion (&ldquo;cohesion&rdquo;). If a vehicle is beyond a certain distance, steer towards that vehicle. This will keep the group together. (Note that in a moment, we&rsquo;re going to look at what happens when we have both cohesion and separation in the same simulation.)</p>
 </div>
 
 <div style="page-break-after:always;">&nbsp;</div>
@@ -1586,7 +1586,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
   mover.applyForce(wind);
   mover.applyForce(gravity);</pre>
 
-<p>Here we have a mover that responds to two forces. This all works nicely because of the way we designed the <strong klass="">Mover</strong> class to accumulate the force vectors into its acceleration vector. In this chapter, however, our forces stem from internal desires of the movers (now called vehicles). And those desires can be weighted. Let&rsquo;s consider a sketch where all vehicles have two desires:</p>
+<p>Here we have a mover that responds to two forces. This all works nicely because of the way we designed the <span class="klass">(.*?)</span> class to accumulate the force vectors into its acceleration vector. In this chapter, however, our forces stem from internal desires of the movers (now called vehicles). And those desires can be weighted. Let&rsquo;s consider a sketch where all vehicles have two desires:</p>
 
 <ul>
 	<li>
@@ -1597,7 +1597,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 	</li>
 </ul>
 
-<p>We might begin by adding a function to the <strong klass="">Vehicle</strong> class that manages all of the behaviors. Let&rsquo;s call it <strong function="">applyBehaviors()</strong>.</p>
+<p>We might begin by adding a function to the <span class="klass">(.*?)</span> class that manages all of the behaviors. Let&rsquo;s call it <span class="function">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
@@ -1605,7 +1605,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
   seek(new PVector(mouseX,mouseY));
 }</pre>
 
-<p>Here we see how a single function takes care of calling the other functions that apply the forces&mdash;<strong function="">separate()</strong> and <strong function="">seek()</strong>. We could start mucking around with those functions and see if we can adjust the strength of the forces they are calculating. But it would be easier for us to ask those functions to return the forces so that we can adjust their strength before applying them to the vehicle&rsquo;s acceleration.</p>
+<p>Here we see how a single function takes care of calling the other functions that apply the forces&mdash;<span class="function">(.*?)</span> and <span class="function">(.*?)</span>. We could start mucking around with those functions and see if we can adjust the strength of the forces they are calculating. But it would be easier for us to ask those functions to return the forces so that we can adjust their strength before applying them to the vehicle&rsquo;s acceleration.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
@@ -1689,7 +1689,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>The good news is, we&rsquo;ve already done items 1 through 3 in this chapter, so this section will be about just putting it all together and seeing the result.</p>
 
-<p>Before we begin, I should mention that we&rsquo;re going to change the name of our <strong klass="">Vehicle</strong> class (yet again). Reynolds uses the term &ldquo;boid&rdquo; (a made-up word that refers to a bird-like object) to describe the elements of a flocking system and we will do the same.</p>
+<p>Before we begin, I should mention that we&rsquo;re going to change the name of our <span class="klass">(.*?)</span> class (yet again). Reynolds uses the term &ldquo;boid&rdquo; (a made-up word that refers to a bird-like object) to describe the elements of a flocking system and we will do the same.</p>
 
 <p>Let&rsquo;s take an overview of the three rules of flocking.</p>
 
@@ -1711,7 +1711,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Just as we did with our separate and seek example, we&rsquo;ll want our <strong klass="">Boid</strong> objects to have a single function that manages all the above behaviors. We&rsquo;ll call this function <strong function="">flock()</strong>.</p>
+<p>Just as we did with our separate and seek example, we&rsquo;ll want our <span class="klass">(.*?)</span> objects to have a single function that manages all the above behaviors. We&rsquo;ll call this function <span class="function">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void flock(ArrayList&lt;Boid&gt; boids) {
@@ -1850,7 +1850,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     }
   }</pre>
 
-<p>It&rsquo;s also worth taking the time to write a class called <strong klass="">Flock</strong>, which will be virtually identical to the <strong klass="">ParticleSystem</strong> class we wrote in Chapter 4 with only one tiny change: When we call <strong function="">run()</strong> on each <strong klass="">Boid</strong> object (as we did to each <strong klass="">Particle</strong> object), we&rsquo;ll pass in a reference to the entire <strong klass="">ArrayList</strong> of boids.</p>
+<p>It&rsquo;s also worth taking the time to write a class called <span class="klass">(.*?)</span>, which will be virtually identical to the <span class="klass">(.*?)</span> class we wrote in Chapter 4 with only one tiny change: When we call <span class="function">(.*?)</span> on each <span class="klass">(.*?)</span> object (as we did to each <span class="klass">(.*?)</span> object), we&rsquo;ll pass in a reference to the entire <span class="klass">(.*?)</span> of boids.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Flock {
@@ -1946,7 +1946,7 @@ void draw() {
 
 <p>Computer scientists classify algorithms with something called &ldquo;Big O notation,&rdquo; which describes the efficiency of an algorithm: how many computational cycles does it require to complete? Let&rsquo;s consider a simple analog search problem. You have a basket containing one hundred chocolate treats, only one of which is pure dark chocolate. That&rsquo;s the one you want to eat. To find it, you pick the chocolates out of the basket one by one. Sure, you might be lucky and find it on the first try, but in the worst-case scenario you have to check all one hundred before you find the dark chocolate. To find one thing in one hundred, you have to check one hundred things (or to find one thing in N things, you have to check N times.) Your Big O Notation is N. This, incidentally, is the Big O Notation that describes our simple particle system. If we have N particles, we have to run and display those particles N times.</p>
 
-<p>Now, let&rsquo;s think about a group behavior (such as flocking). For every <strong klass="">Boid</strong> object, we have to check every other <strong klass="">Boid</strong> object (for its velocity and location). Let&rsquo;s say we have one hundred boids. For boid #1, we need to check one hundred boids; for boid #2, we need to check one hundred boids, and so on and so forth. For one hundred boids, we need to perform one hundred times one hundred checks, or ten thousand. No problem: computers are fast and can do things ten thousand times pretty easily. Let&rsquo;s try one thousand.</p>
+<p>Now, let&rsquo;s think about a group behavior (such as flocking). For every <span class="klass">(.*?)</span> object, we have to check every other <span class="klass">(.*?)</span> object (for its velocity and location). Let&rsquo;s say we have one hundred boids. For boid #1, we need to check one hundred boids; for boid #2, we need to check one hundred boids, and so on and so forth. For one hundred boids, we need to perform one hundred times one hundred checks, or ten thousand. No problem: computers are fast and can do things ten thousand times pretty easily. Let&rsquo;s try one thousand.</p>
 
 <p>1,000 x 1,000 = 1,000,000 cycles.</p>
 
@@ -1976,17 +1976,17 @@ void draw() {
 
 <p><a data-primary="Interaction with Groups of Autonomous Characters (Reynolds)" data-type="indexterm">&nbsp;</a></p>
 
-<p>This technique is known as &ldquo;bin-lattice spatial subdivision&rdquo; and is outlined in more detail in (surprise, surprise) Reynolds&rsquo;s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">&ldquo;Interaction with Groups of Autonomous Characters&rdquo;</a>. How do we implement such an algorithm in Processing? One way is to keep multiple <strong klass="">ArrayList</strong><code>s</code>. One <strong klass="">ArrayList</strong> would keep track of all the boids, just like in our flocking example.</p>
+<p>This technique is known as &ldquo;bin-lattice spatial subdivision&rdquo; and is outlined in more detail in (surprise, surprise) Reynolds&rsquo;s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">&ldquo;Interaction with Groups of Autonomous Characters&rdquo;</a>. How do we implement such an algorithm in Processing? One way is to keep multiple <span class="klass">(.*?)</span><code>s</code>. One <span class="klass">(.*?)</span> would keep track of all the boids, just like in our flocking example.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Boid&gt; boids;</pre>
 
-<p>In addition to that <strong klass="">ArrayList</strong>, we store an additional reference to each <strong klass="">Boid</strong> object in a two-dimensional <strong klass="">ArrayList</strong>. For each cell in the grid, there is an <strong klass="">ArrayList</strong> that tracks the objects in that cell.</p>
+<p>In addition to that <span class="klass">(.*?)</span>, we store an additional reference to each <span class="klass">(.*?)</span> object in a two-dimensional <span class="klass">(.*?)</span>. For each cell in the grid, there is an <span class="klass">(.*?)</span> that tracks the objects in that cell.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;Boid&gt;[][] grid;</pre>
 
-<p>In the main <strong function="">draw()</strong> loop, each <strong klass="">Boid</strong> object then registers itself in the appropriate cell according to its location.</p>
+<p>In the main <span class="function">(.*?)</span> loop, each <span class="klass">(.*?)</span> object then registers itself in the appropriate cell according to its location.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int column = int(boid.x) / resolution;
@@ -2029,7 +2029,7 @@ float mag() {
   return sqrt(x*x + y*y);
 }</pre>
 
-<p>Magnitude requires the square root operation. And it should. After all, if you want the magnitude of a vector, then you&rsquo;ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1). However, if you could somehow skip using the square root, your code would run faster. Let&rsquo;s consider a situation where you just want to know the relative magnitude of a vector. For example, is the magnitude greater than ten? (Assume a <strong klass="">PVector</strong> <strong class="var">v</strong>.)</p>
+<p>Magnitude requires the square root operation. And it should. After all, if you want the magnitude of a vector, then you&rsquo;ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1). However, if you could somehow skip using the square root, your code would run faster. Let&rsquo;s consider a situation where you just want to know the relative magnitude of a vector. For example, is the magnitude greater than ten? (Assume a <span class="klass">(.*?)</span> <span class="var">(.*?)</span>.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (v.mag() &gt; 10) {
@@ -2052,7 +2052,7 @@ float magSq() {
 
 <p><a data-primary="efficiency" data-secondary="magSq() function (PVector class)." data-type="indexterm">&nbsp;</a> <a data-primary="mag() function (PVector class)" data-secondary="magSq() function vs." data-type="indexterm">&nbsp;</a> <a data-primary="magSq() function (PVector class)." data-type="indexterm">&nbsp;</a> <a data-primary="optimization" data-secondary="magSq() function (PVector class)." data-type="indexterm">&nbsp;</a> <a data-primary="performance" data-secondary="magSq() function (PVector class)." data-type="indexterm">&nbsp;</a></p>
 
-<p>Same as magnitude, but without the square root. In the case of a single <strong klass="">PVector</strong> object, this will never make a significant difference on a Processing sketch. However, if you are computing the magnitude of thousands of <strong klass="">PVector</strong> objects each time through <strong function="">draw()</strong>, using <strong function="">magSq()</strong> instead of <strong function="">mag()</strong> could help your code run a wee bit faster. (Note: <strong function="">magSq()</strong> is only available in Processing 2.0a1 or later.)</p>
+<p>Same as magnitude, but without the square root. In the case of a single <span class="klass">(.*?)</span> object, this will never make a significant difference on a Processing sketch. However, if you are computing the magnitude of thousands of <span class="klass">(.*?)</span> objects each time through <span class="function">(.*?)</span>, using <span class="function">(.*?)</span> instead of <span class="function">(.*?)</span> could help your code run a wee bit faster. (Note: <span class="function">(.*?)</span> is only available in Processing 2.0a1 or later.)</p>
 </section>
 
 <section data-type="sect2" id="_2_sine_and_cosine_lookup_tables">
@@ -2069,7 +2069,7 @@ void draw() {
   }
 }</pre>
 
-<p>Sure, this is a totally ridiculous code snippet that you would never write. But it illustrates a certain point. If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary? This is the principle behind sine and cosine lookup tables. Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <strong class="var">TWO_PI</strong> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
+<p>Sure, this is a totally ridiculous code snippet that you would never write. But it illustrates a certain point. If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary? This is the principle behind sine and cosine lookup tables. Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <span class="var">(.*?)</span> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float sinvalues[] = new float[360];
@@ -2093,7 +2093,7 @@ float answer = sinvalues[angle];</pre>
 
 <p><a data-primary="efficiency" data-secondary="temporary objects and" data-type="indexterm">&nbsp;</a> <a data-primary="optimization" data-secondary="temporary objects and" data-type="indexterm">&nbsp;</a> <a data-primary="performance" data-secondary="temporary objects and" data-type="indexterm">&nbsp;</a></p>
 
-<p>I have to admit, I am perhaps the biggest culprit of this last note. In fact, in the interest of writing clear and understandable examples, I often choose to make extra <strong klass="">PVector</strong> objects when I absolutely do not need to. For the most part, this is not a problem at all. But sometimes, it can be. Let&rsquo;s take a look at an example.</p>
+<p>I have to admit, I am perhaps the biggest culprit of this last note. In fact, in the interest of writing clear and understandable examples, I often choose to make extra <span class="klass">(.*?)</span> objects when I absolutely do not need to. For the most part, this is not a problem at all. But sometimes, it can be. Let&rsquo;s take a look at an example.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -2103,9 +2103,9 @@ void draw() {
   }
 }</pre>
 
-<p>Let&rsquo;s say our <strong klass="">ArrayList</strong> of vehicles has one thousand vehicles in it. We just made one thousand new <strong klass="">PVector</strong> objects every single time through <strong function="">draw()</strong>. Now, on any ol&rsquo; laptop or desktop computer you&rsquo;ve purchased in recent times, your sketch will likely not register a complaint, run slowly, or have any problems. After all, you&rsquo;ve got tons of RAM, and Java will be able to handle making a thousand or so temporary objects and dispose of them without much of a problem.</p>
+<p>Let&rsquo;s say our <span class="klass">(.*?)</span> of vehicles has one thousand vehicles in it. We just made one thousand new <span class="klass">(.*?)</span> objects every single time through <span class="function">(.*?)</span>. Now, on any ol&rsquo; laptop or desktop computer you&rsquo;ve purchased in recent times, your sketch will likely not register a complaint, run slowly, or have any problems. After all, you&rsquo;ve got tons of RAM, and Java will be able to handle making a thousand or so temporary objects and dispose of them without much of a problem.</p>
 
-<p>If your numbers grow larger (and they easily could) or perhaps more likely, if you are working with Processing on Android, you will almost certainly run into a problem. In cases like this you want to look for ways to reduce the number of <strong klass="">PVector</strong> objects you make. An obvious fix for the above code is:</p>
+<p>If your numbers grow larger (and they easily could) or perhaps more likely, if you are working with Processing on Android, you will almost certainly run into a problem. In cases like this you want to look for ways to reduce the number of <span class="klass">(.*?)</span> objects you make. An obvious fix for the above code is:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -2115,7 +2115,7 @@ void draw() {
   }
 }</pre>
 
-<p>Now you&rsquo;ve made just one <strong klass="">PVector</strong> instead of one thousand. Even better, you could turn the <strong klass="">PVector</strong> into a global variable and just assign the <strong class="var">x</strong> and <strong class="var">y</strong> value:</p>
+<p>Now you&rsquo;ve made just one <span class="klass">(.*?)</span> instead of one thousand. Even better, you could turn the <span class="klass">(.*?)</span> into a global variable and just assign the <span class="var">(.*?)</span> and <span class="var">(.*?)</span> value:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector mouse = new PVector();
@@ -2128,9 +2128,9 @@ void draw() {
   }
 }</pre>
 
-<p>Now you never make a new <strong klass="">PVector</strong>; you use just one over the length of your sketch!</p>
+<p>Now you never make a new <span class="klass">(.*?)</span>; you use just one over the length of your sketch!</p>
 
-<p>Throughout the book&rsquo;s examples, you can find lots of opportunities to reduce the number of temporary objects. Let&rsquo;s look at one more. Here is a snippet from our <strong function="">seek()</strong> function.</p>
+<p>Throughout the book&rsquo;s examples, you can find lots of opportunities to reduce the number of temporary objects. Let&rsquo;s look at one more. Here is a snippet from our <span class="function">(.*?)</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     PVector desired = PVector.sub(target,location);
@@ -2142,7 +2142,7 @@ void draw() {
     steer.limit(maxforce);
     return steer;</pre>
 
-<p>See how we&rsquo;ve made two <strong klass="">PVector</strong> objects? First, we figure out the desired vector, then we calculate the steering force. Notice how we could rewrite this to create only one <strong klass="">PVector</strong>.</p>
+<p>See how we&rsquo;ve made two <span class="klass">(.*?)</span> objects? First, we figure out the desired vector, then we calculate the steering force. Notice how we could rewrite this to create only one <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     PVector desired = PVector.sub(target, location);
@@ -2154,12 +2154,12 @@ void draw() {
     desired.limit(maxforce);
     return desired;</pre>
 
-<p>We don&rsquo;t actually need a second <strong klass="">PVector</strong> called <strong class="var">steer</strong>. We could just use the desired <strong klass="">PVector</strong> object and turn it into the steering force by subtracting velocity. I didn&rsquo;t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
+<p>We don&rsquo;t actually need a second <span class="klass">(.*?)</span> called <span class="var">(.*?)</span>. We could just use the desired <span class="klass">(.*?)</span> object and turn it into the steering force by subtracting velocity. I didn&rsquo;t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
 
 <div data-type="exercise" id="chapter06_exercise20">
 <h5>Exercise 6.20</h5>
 
-<p>Eliminate as many temporary <strong klass="">PVector</strong> objects from the flocking example as possible. Also use <strong function="">magSq()</strong> where possible.</p>
+<p>Eliminate as many temporary <span class="klass">(.*?)</span> objects from the flocking example as possible. Also use <span class="function">(.*?)</span> where possible.</p>
 </div>
 
 <div data-type="exercise" id="chapter06_exercise21">

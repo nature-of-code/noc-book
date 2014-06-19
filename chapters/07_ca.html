@@ -92,9 +92,9 @@
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Let&rsquo;s say we have an individual cell in the CA, and let&rsquo;s call it CELL. The formula for calculating CELL&rsquo;s state at any given time <strong class="var">t</strong> is as follows:</p>
+<p>Let&rsquo;s say we have an individual cell in the CA, and let&rsquo;s call it CELL. The formula for calculating CELL&rsquo;s state at any given time <span class="var">(.*?)</span> is as follows:</p>
 
-<p><strong formula="">CELL state at time t = f(CELL neighborhood at time t - 1)</strong></p>
+<p><span class="formula">CELL state at time t = f(CELL neighborhood at time t - 1)</span></p>
 
 <p>In other words, a cell&rsquo;s new state is a function of all the states in the cell&rsquo;s neighborhood at the previous moment in time (or during the previous generation). We calculate a new state value by looking at all the previous neighbor states.</p>
 
@@ -239,13 +239,13 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <p>We&rsquo;re fairly close to getting this right, but we&rsquo;ve made one minor blunder and one major blunder in the above code. Let&rsquo;s talk about what we&rsquo;ve done well so far.</p>
 
-<p>Notice how easy it is to look at a cell&rsquo;s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <strong class="var">i</strong>, its neighbors are <strong class="var">i-1</strong> and <strong class="var">i+1</strong>.</p>
+<p>Notice how easy it is to look at a cell&rsquo;s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <span class="var">(.*?)</span>, its neighbors are <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
 
 <p><a data-primary="elementary cellular automata" data-secondary="edge cases and" data-type="indexterm">&nbsp;</a></p>
 
-<p>We&rsquo;re also farming out the calculation of a new state value to some function called <strong function="">rules()</strong>. Obviously, we&rsquo;re going to have to write this function ourselves, but the point we&rsquo;re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don&rsquo;t have to touch that framework; we can simply rewrite the <strong function="">rules()</strong> function to compute the new states differently.</p>
+<p>We&rsquo;re also farming out the calculation of a new state value to some function called <span class="function">(.*?)</span>. Obviously, we&rsquo;re going to have to write this function ourselves, but the point we&rsquo;re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don&rsquo;t have to touch that framework; we can simply rewrite the <span class="function">(.*?)</span> function to compute the new states differently.</p>
 
-<p>So what have we done wrong? Let&rsquo;s talk through how the code will execute. First, we look at cell index <strong class="var">i</strong> equals 0. Now let&rsquo;s look at 0&rsquo;s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we&rsquo;ve alluded to before: the edge cases.</p>
+<p>So what have we done wrong? Let&rsquo;s talk through how the code will execute. First, we look at cell index <span class="var">(.*?)</span> equals 0. Now let&rsquo;s look at 0&rsquo;s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we&rsquo;ve alluded to before: the edge cases.</p>
 
 <p>How do we deal with the cells on the edge who don&rsquo;t have a neighbor to both their left and their right? Here are three possible solutions to this problem:</p>
 
@@ -314,7 +314,7 @@ for (int i = 1; i &lt; cells.length-1; i++) {
 // The new generation becomes the current generation.
 cells = newcells; //[bold]</pre>
 
-<p>We&rsquo;re almost done. The above code is complete except for the fact that we haven&rsquo;t yet written the <strong function="">rules()</strong> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
+<p>We&rsquo;re almost done. The above code is complete except for the fact that we haven&rsquo;t yet written the <span class="function">(.*?)</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // Function receives 3 ints and returns 1.
@@ -474,9 +474,9 @@ for (int i = 0; i &lt; cells.length; i++) {
   rect(i*w, 0, w, w);
 }</pre>
 
-<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing&rsquo;s <strong function="">rect()</strong> function, but rather access the pixel array directly.</p>
+<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing&rsquo;s <span class="function">(.*?)</span> function, but rather access the pixel array directly.</p>
 
-<p>In the above code, you&rsquo;ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we&rsquo;ll also need to compute a y-location based on how many iterations of the CA we&rsquo;ve executed. We could accomplish this by adding a &ldquo;generation&rdquo; variable (an integer) to our CA class and incrementing it each time through <strong function="">generate()</strong>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
+<p>In the above code, you&rsquo;ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we&rsquo;ll also need to compute a y-location based on how many iterations of the CA we&rsquo;ve executed. We could accomplish this by adding a &ldquo;generation&rdquo; variable (an integer) to our CA class and incrementing it each time through <span class="function">(.*?)</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="../images/chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -748,7 +748,7 @@ for (int x = 0; x &lt; columns; x++) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell&rsquo;s neighbor. In the case of the 1D CA, this was simple: if a cell index was <strong class="var">i</strong>, its neighbors were i-1 and i+1. Here each cell doesn&rsquo;t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
+<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell&rsquo;s neighbor. In the case of the 1D CA, this was simple: if a cell index was <span class="var">(.*?)</span>, its neighbors were i-1 and i+1. Here each cell doesn&rsquo;t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
 
 <p>All of the Game of Life rules operate by knowing how many neighbors are alive. So if we create a neighbor counter variable and increment it each time we find a neighbor with a state of 1, we&rsquo;ll have the total of live neighbors.</p>
 
@@ -783,7 +783,7 @@ for (int i = -1; i &lt;= 1; i++) {
    }
 }</pre>
 
-<p>Of course, we&rsquo;ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <strong class="var">i</strong> and <strong class="var">j</strong> equal 0, but another option would be to just subtract the cell state once we&rsquo;ve finished the loop.</p>
+<p>Of course, we&rsquo;ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">(.*?)</span> and <span class="var">(.*?)</span> equal 0, but another option would be to just subtract the cell state once we&rsquo;ve finished the loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Whoops! Subtract the cell&rsquo;s state,
@@ -911,7 +911,7 @@ for ( int i = 0; i &lt; columns;i++) {
 <pre data-code-language="java" data-type="programlisting">
   Cell[][] board;</pre>
 
-<p>where <strong klass="">Cell</strong> is a class we will write. What are the properties of a <strong klass="">Cell</strong> object? In our Game of Life example, each cell has a location and size, as well as a state.</p>
+<p>where <span class="klass">(.*?)</span> is a class we will write. What are the properties of a <span class="klass">(.*?)</span> object? In our Game of Life example, each cell has a location and size, as well as a state.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Cell {

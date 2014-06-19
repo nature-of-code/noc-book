@@ -20,7 +20,7 @@
 
 <p><a data-primary="angles" data-type="indexterm">&nbsp;</a></p>
 
-<p>OK. Before we can do any of this stuff, we need to make sure we understand what it means to be an angle in Processing. If you have experience with Processing, you&rsquo;ve undoubtedly encountered this issue while using the <strong function="">rotate()</strong> function to rotate and spin objects.</p>
+<p>OK. Before we can do any of this stuff, we need to make sure we understand what it means to be an angle in Processing. If you have experience with Processing, you&rsquo;ve undoubtedly encountered this issue while using the <span class="function">(.*?)</span> function to rotate and spin objects.</p>
 
 <p><a data-primary="angles" data-secondary="measuring in degrees" data-type="indexterm">&nbsp;</a> <a data-primary="degrees" data-type="indexterm">&nbsp;</a></p>
 
@@ -52,7 +52,7 @@
 
 <p><a data-primary="Processing" data-secondary="radians() function" data-type="indexterm">&nbsp;</a> <a data-primary="radians() function (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Thankfully, if we prefer to think in degrees but code with radians, Processing makes this easy. The <strong function="">radians()</strong> function will automatically convert values from degrees to radians, and the constants <strong class="var">PI</strong> and <strong class="var">TWO_PI</strong> provide convenient access to these commonly used numbers (equivalent to 180 and 360 degrees, respectively). The following code, for example, will rotate shapes by 60 degrees.</p>
+<p>Thankfully, if we prefer to think in degrees but code with radians, Processing makes this easy. The <span class="function">(.*?)</span> function will automatically convert values from degrees to radians, and the constants <span class="var">(.*?)</span> and <span class="var">(.*?)</span> provide convenient access to these commonly used numbers (equivalent to 180 and 360 degrees, respectively). The following code, for example, will rotate shapes by 60 degrees.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float angle = radians(60);
@@ -67,7 +67,7 @@ rotate(angle);</pre>
 <div data-type="note">
 <h1>What is PI?</h1>
 
-<p>The mathematical constant pi (or &pi;) is a real number defined as the ratio of a circle&rsquo;s circumference (the distance around the perimeter) to its diameter (a straight line that passes through the circle&rsquo;s center). It is equal to approximately 3.14159 and can be accessed in Processing with the built-in variable <strong class="var">PI</strong>.</p>
+<p>The mathematical constant pi (or &pi;) is a real number defined as the ratio of a circle&rsquo;s circumference (the distance around the perimeter) to its diameter (a straight line that passes through the circle&rsquo;s center). It is equal to approximately 3.14159 and can be accessed in Processing with the built-in variable <span class="var">(.*?)</span>.</p>
 </div>
 
 <div style="page-break-after:always;">&nbsp;</div>
@@ -75,7 +75,7 @@ rotate(angle);</pre>
 <div data-type="exercise" id="chapter03_exercise1">
 <h5>Exercise 3.1</h5>
 
-<p>Rotate a baton-like object (see below) around its center using <strong function="">translate()</strong> and <strong function="">rotate()</strong>.</p>
+<p>Rotate a baton-like object (see below) around its center using <span class="function">(.*?)</span> and <span class="function">(.*?)</span>.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/Ex_3_01_exercise_baton/Ex_3_01_exercise_baton.pde"><img alt="ch03 exc01" src="../images/chapter03/ch03_exc01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -90,13 +90,13 @@ rotate(angle);</pre>
 
 <p>Remember all this stuff?</p>
 
-<p><strong formula="">location = location + velocity</strong><br />
-<strong formula="">velocity = velocity + acceleration</strong></p>
+<p><span class="formula">location = location + velocity</span><br />
+<span class="formula">velocity = velocity + acceleration</span></p>
 
 <p>The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can apply exactly the same logic to a rotating object.</p>
 
-<p><strong formula="">angle = angle + angular velocity</strong><br />
-<strong formula="">angular velocity = angular velocity + angular acceleration</strong></p>
+<p><span class="formula">angle = angle + angular velocity</span><br />
+<span class="formula">angular velocity = angular velocity + angular acceleration</span></p>
 
 <p>In fact, the above is actually simpler than what we started with because an angle is a <em>scalar</em> quantity&mdash;a single number, not a vector!</p>
 
@@ -149,7 +149,7 @@ void draw() {
 
 <p>The baton starts onscreen with no rotation and then spins faster and faster as the angle of rotation accelerates.</p>
 
-<p>This idea can be incorporated into our <strong klass="">Mover</strong> object. For example, we can add the variables related to angular motion to our <strong klass="">Mover</strong>.</p>
+<p>This idea can be incorporated into our <span class="klass">(.*?)</span> object. For example, we can add the variables related to angular motion to our <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -163,7 +163,7 @@ class Mover {
   float aVelocity = 0;
   float aAcceleration = 0;</pre>
 
-<p>And then in <strong function="">update()</strong>, we update both location and angle according to the same algorithm!</p>
+<p>And then in <span class="function">(.*?)</span>, we update both location and angle according to the same algorithm!</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
@@ -201,7 +201,7 @@ class Mover {
     popMatrix();
   }</pre>
 
-<p>Now, if we were to actually go ahead and run the above code, we wouldn&rsquo;t see anything new. This is because the angular acceleration (<strong function="">float aAcceleration = 0;</strong>) is initialized to zero. For the object to rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.</p>
+<p>Now, if we were to actually go ahead and run the above code, we wouldn&rsquo;t see anything new. This is because the angular acceleration (<span class="function">(.*?)</span>) is initialized to zero. For the object to rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float aAcceleration = 0.01;</pre>
@@ -213,7 +213,7 @@ float aAcceleration = 0.01;</pre>
 <pre data-code-language="java" data-type="programlisting">
     aAcceleration = acceleration.x;</pre>
 
-<p>Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right, its angular rotation accelerates in a clockwise direction; acceleration to the left results in a counterclockwise rotation. Of course, it&rsquo;s important to think about scale in this case. The <em>x</em> component of the acceleration vector might be a quantity that&rsquo;s too large, causing the object to spin in a way that looks ridiculous or unrealistic. So dividing the <em>x</em> component by some value, or perhaps constraining the angular velocity to a reasonable range, could really help. Here&rsquo;s the entire <strong function="">update()</strong> function with these tweaks added.</p>
+<p>Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right, its angular rotation accelerates in a clockwise direction; acceleration to the left results in a counterclockwise rotation. Of course, it&rsquo;s important to think about scale in this case. The <em>x</em> component of the acceleration vector might be a quantity that&rsquo;s too large, causing the object to spin in a way that looks ridiculous or unrealistic. So dividing the <em>x</em> component by some value, or perhaps constraining the angular velocity to a reasonable range, could really help. Here&rsquo;s the entire <span class="function">(.*?)</span> function with these tweaks added.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_02_forces_angular_motion/_3_02_forces_angular_motion.pde processingjs/chapter03/_3_02_forces_angular_motion/Attractor.pde processingjs/chapter03/_3_02_forces_angular_motion/Mover.pde"><img alt="ch03 ex02" src="../images/chapter03/ch03_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -280,7 +280,7 @@ float aAcceleration = 0.01;</pre>
 
 <p><a data-primary="vectors" data-secondary="as right triangles" data-type="indexterm">&nbsp;</a></p>
 
-<p>See how we create a right triangle out of a vector? The vector arrow itself is the hypotenuse and the components of the vector (<strong class="var">x</strong> and <strong class="var">y</strong>) are the sides of the triangle. The angle is an additional means for specifying the vector&rsquo;s direction (or &ldquo;heading&rdquo;).</p>
+<p>See how we create a right triangle out of a vector? The vector arrow itself is the hypotenuse and the components of the vector (<span class="var">(.*?)</span> and <span class="var">(.*?)</span>) are the sides of the triangle. The angle is an additional means for specifying the vector&rsquo;s direction (or &ldquo;heading&rdquo;).</p>
 
 <p>Because the trigonometric functions allow us to establish a relationship between the components of a vector and its direction + magnitude, they will prove very useful throughout this book. We&rsquo;ll begin by looking at an example that requires the tangent function.</p>
 </section>
@@ -290,13 +290,13 @@ float aAcceleration = 0.01;</pre>
 
 <p><a data-primary="rotation" data-secondary="pointing towards movement" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s go all the way back to Example 1.10, which features a <strong klass="">Mover</strong> object accelerating towards the mouse.</p>
+<p>Let&rsquo;s go all the way back to Example 1.10, which features a <span class="klass">(.*?)</span> object accelerating towards the mouse.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_10_motion101_acceleration/_1_10_motion101_acceleration.pde processingjs/chapter01/_1_10_motion101_acceleration/Mover.pde"><img alt="ch01 ex10" src="../images/chapter01/ch01_ex10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>You might notice that almost all of the shapes we&rsquo;ve been drawing so far are circles. This is convenient for a number of reasons, one of which is that we don&rsquo;t have to consider the question of rotation. Rotate a circle and, well, it looks exactly the same. However, there comes a time in all motion programmers&rsquo; lives when they want to draw something on the screen that points in the direction of movement. Perhaps you are drawing an ant, or a car, or a spaceship. And when we say &quot;point in the direction of movement,&quot; what we are really saying is &ldquo;rotate according to the velocity vector.&rdquo; Velocity is a vector, with an <strong class="var">x</strong> and a <strong class="var">y</strong> component, but to rotate in Processing we need an angle, in radians. Let&rsquo;s draw our trigonometry diagram one more time, with an object&rsquo;s velocity vector (Figure 3.6).</p>
+<p>You might notice that almost all of the shapes we&rsquo;ve been drawing so far are circles. This is convenient for a number of reasons, one of which is that we don&rsquo;t have to consider the question of rotation. Rotate a circle and, well, it looks exactly the same. However, there comes a time in all motion programmers&rsquo; lives when they want to draw something on the screen that points in the direction of movement. Perhaps you are drawing an ant, or a car, or a spaceship. And when we say &quot;point in the direction of movement,&quot; what we are really saying is &ldquo;rotate according to the velocity vector.&rdquo; Velocity is a vector, with an <span class="var">(.*?)</span> and a <span class="var">(.*?)</span> component, but to rotate in Processing we need an angle, in radians. Let&rsquo;s draw our trigonometry diagram one more time, with an object&rsquo;s velocity vector (Figure 3.6).</p>
 
 <figure class="half-width-right" id="chapter03_figure6"><img alt="Figure 3.6" src="../images/chapter03/ch03_06.png" />
 <figcaption>&nbsp;</figcaption>
@@ -310,7 +310,7 @@ float aAcceleration = 0.01;</pre>
 
 <p>The problem with the above is that we know velocity, but we don&rsquo;t know the angle. We have to solve for the angle. This is where a special function known as <em>inverse tangent</em> comes in, sometimes referred to as <em>arctangent</em> or <em>tan<sup>-1</sup></em>. (There is also an <em>inverse sine</em> and an <em>inverse cosine</em>.)</p>
 
-<p>If the tangent of some value <strong class="var">a</strong> equals some value <strong class="var">b</strong>, then the inverse tangent of <strong class="var">b</strong> equals <strong class="var">a</strong>. For example:</p>
+<p>If the tangent of some value <span class="var">(.*?)</span> equals some value <span class="var">(.*?)</span>, then the inverse tangent of <span class="var">(.*?)</span> equals <span class="var">(.*?)</span>. For example:</p>
 
 <dl>
 	<dt><em>if</em></dt>
@@ -338,7 +338,7 @@ float aAcceleration = 0.01;</pre>
 
 <p><a data-primary="atan() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="atan() function" data-type="indexterm">&nbsp;</a> <a data-primary="tangent" data-secondary="atan() function (arctangent)" data-type="indexterm">&nbsp;</a> <a data-primary="trigonometry" data-secondary="atan() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we have the formula, let&rsquo;s see where it should go in our mover&rsquo;s <strong function="">display()</strong> function. Notice that in Processing, the function for arctangent is called <strong function="">atan()</strong>.</p>
+<p>Now that we have the formula, let&rsquo;s see where it should go in our mover&rsquo;s <span class="function">(.*?)</span> function. Notice that in Processing, the function for arctangent is called <span class="function">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void display() {
@@ -364,12 +364,12 @@ float aAcceleration = 0.01;</pre>
 
 <p>Though superficially similar, the two vectors point in quite different directions&mdash;opposite directions, in fact! However, if we were to apply our formula to solve for the angle to each vector&hellip;</p>
 
-<p><strong formula="">V1 &rArr; angle = atan(-4/3) = atan(-1.25) = -0.9272952 radians = -53 degrees</strong><br />
-<strong formula="">V2 &rArr; angle = atan(4/-3) = atan(-1.25) = -0.9272952 radians = -53 degrees</strong></p>
+<p><span class="formula">V1 &rArr; angle = atan(-4/3) = atan(-1.25) = -0.9272952 radians = -53 degrees</span><br />
+<span class="formula">V2 &rArr; angle = atan(4/-3) = atan(-1.25) = -0.9272952 radians = -53 degrees</span></p>
 
 <p><a data-primary="atan2() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="atan2() function" data-type="indexterm">&nbsp;</a> <a data-primary="tangent" data-secondary="atan2() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>&hellip;we get the same angle for each vector. This can&rsquo;t be right for both; the vectors point in opposite directions! The thing is, this is a pretty common problem in computer graphics. Rather than simply using <strong function="">atan()</strong> along with a bunch of conditional statements to account for positive/negative scenarios, Processing (along with pretty much all programming environments) has a nice function called <strong function="">atan2()</strong> that does it for you.</p>
+<p>&hellip;we get the same angle for each vector. This can&rsquo;t be right for both; the vectors point in opposite directions! The thing is, this is a pretty common problem in computer graphics. Rather than simply using <span class="function">(.*?)</span> along with a bunch of conditional statements to account for positive/negative scenarios, Processing (along with pretty much all programming environments) has a nice function called <span class="function">(.*?)</span> that does it for you.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_03_pointing_velocity/_3_03_pointing_velocity.pde  processingjs/chapter03/_3_03_pointing_velocity/Mover.pde"><img alt="ch03 ex03" src="../images/chapter03/ch03_ex03.png" />
 <figcaption>&nbsp;</figcaption>
@@ -395,7 +395,7 @@ float aAcceleration = 0.01;</pre>
 
 <p><a data-primary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="motion" data-secondary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="heading() function" data-type="indexterm">&nbsp;</a> <a data-primary="tangent" data-secondary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a></p>
 
-<p>To simplify this even further, the <strong klass="">PVector</strong> class itself provides a function called <strong klass="">heading()</strong>, which takes care of calling <strong function="">atan2()</strong> for you so you can get the 2D direction angle, in radians, for any Processing <strong klass="">PVector</strong>.</p>
+<p>To simplify this even further, the <span class="klass">(.*?)</span> class itself provides a function called <span class="klass">(.*?)</span>, which takes care of calling <span class="function">(.*?)</span> for you so you can get the 2D direction angle, in radians, for any Processing <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     // The easiest way to do this!
@@ -413,7 +413,7 @@ float aAcceleration = 0.01;</pre>
 
 <p><a data-primary="Cartesian coordinates" data-type="indexterm">&nbsp;</a> <a data-primary="coordinate systems" data-type="indexterm">&nbsp;</a> <a data-primary="coordinate systems" data-secondary="Cartesian" data-type="indexterm">&nbsp;</a> <a data-primary="Descartes" data-secondary="René" data-type="indexterm">&nbsp;</a> <a data-primary="shapes" data-secondary="displaying" data-type="indexterm">&nbsp;</a></p>
 
-<p>Any time we display a shape in Processing, we have to specify a pixel location, a set of <strong class="var">x</strong> and <strong class="var">y</strong> coordinates. These coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for Ren&eacute; Descartes, the French mathematician who developed the ideas behind Cartesian space.</p>
+<p>Any time we display a shape in Processing, we have to specify a pixel location, a set of <span class="var">(.*?)</span> and <span class="var">(.*?)</span> coordinates. These coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for Ren&eacute; Descartes, the French mathematician who developed the ideas behind Cartesian space.</p>
 
 <p><a data-primary="coordinate systems" data-secondary="polar" data-type="indexterm">&nbsp;</a> <a data-primary="polar coordinates" data-type="indexterm">&nbsp;</a></p>
 
@@ -432,12 +432,12 @@ Polar coordinate&mdash;the magnitude (length) and direction (angle) of a vector<
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p><strong formula="">sine(theta) &nbsp;&nbsp;= y/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; y = r <code>*</code> sine(theta)</strong><br />
-<strong formula="">cosine(theta) = x/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; x = r <code>*</code> cosine(theta)</strong></p>
+<p><span class="formula">sine(theta) &nbsp;&nbsp;= y/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; y = r <code>*</code> sine(theta)</span><br />
+<span class="formula">cosine(theta) = x/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; x = r <code>*</code> cosine(theta)</span></p>
 
 <p><a data-primary="Cartesian coordinates" data-secondary="polar coordinates" data-tertiary="converting from" data-type="indexterm">&nbsp;</a> <a data-primary="cos() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="polar coordinates" data-secondary="Cartesian coordinates" data-tertiary="converting to" data-type="indexterm">&nbsp;</a> <a data-primary="sin() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="trigonometry" data-secondary="cos() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="trigonometry" data-secondary="sin() function (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>For example, if <strong class="var">r</strong> is 75 and <strong class="var">theta</strong> is 45 degrees (or PI/4 radians), we can calculate <strong class="var">x</strong> and <strong class="var">y</strong> as below. The functions for sine and cosine in Processing are <strong function="">sin()</strong> and <strong function="">cos()</strong>, respectively. They each take one argument, an angle measured in radians.</p>
+<p>For example, if <span class="var">(.*?)</span> is 75 and <span class="var">(.*?)</span> is 45 degrees (or PI/4 radians), we can calculate <span class="var">(.*?)</span> and <span class="var">(.*?)</span> as below. The functions for sine and cosine in Processing are <span class="function">(.*?)</span> and <span class="function">(.*?)</span>, respectively. They each take one argument, an angle measured in radians.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float r = 75;
@@ -451,7 +451,7 @@ float y = r * sin(theta);
 
 <p>This type of conversion can be useful in certain applications. For example, to move a shape along a circular path using Cartesian coordinates is not so easy. With polar coordinates, on the other hand, it&rsquo;s simple: increment the angle!</p>
 
-<p>Here&rsquo;s how it is done with global variables <strong class="var">r</strong> and <strong class="var">theta</strong>.</p>
+<p>Here&rsquo;s how it is done with global variables <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_04_PolarToCartesian/_3_04_PolarToCartesian.pde"><img alt="ch03 ex04" src="../images/chapter03/ch03_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -532,7 +532,7 @@ void draw() {
 
 <p>This is what is known as <strong><em>simple harmonic motion</em></strong> (or, to be fancier, &ldquo;the periodic sinusoidal oscillation of an object&rdquo;). It&rsquo;s going to be a simple program to write, but before we get into the code, let&rsquo;s familiarize ourselves with some of the terminology of oscillation (and waves).</p>
 
-<p>Simple harmonic motion can be expressed as any location (in our case, the <strong class="var">x</strong> location) as a function of time, with the following two elements:</p>
+<p>Simple harmonic motion can be expressed as any location (in our case, the <span class="var">(.*?)</span> location) as a function of time, with the following two elements:</p>
 
 <p><a data-primary="amplitude" data-type="indexterm">&nbsp;</a> <a data-primary="oscillation" data-secondary="amplitude" data-type="indexterm">&nbsp;</a> <a data-primary="oscillation" data-secondary="period" data-type="indexterm">&nbsp;</a> <a data-primary="period" data-type="indexterm">&nbsp;</a></p>
 
@@ -545,7 +545,7 @@ void draw() {
 	</li>
 </ul>
 
-<p>Looking at the graph of sine (Figure 3.9), we can see that the amplitude is 1 and the period is <strong class="var">TWO_PI</strong>; the output of sine never rises above 1 or below -1; and every <strong class="var">TWO_PI</strong> radians (or 360 degrees) the wave pattern repeats.</p>
+<p>Looking at the graph of sine (Figure 3.9), we can see that the amplitude is 1 and the period is <span class="var">(.*?)</span>; the output of sine never rises above 1 or below -1; and every <span class="var">(.*?)</span> radians (or 360 degrees) the wave pattern repeats.</p>
 
 <p>Now, in the Processing world we live in, what is amplitude and what is period? Amplitude can be measured rather easily in pixels. In the case of a window 200 pixels wide, we would oscillate from the center 100 pixels to the right and 100 pixels to the left. Therefore:</p>
 
@@ -555,7 +555,7 @@ float amplitude = 100;</pre>
 
 <p><a data-primary="millis() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="measuring time in" data-type="indexterm">&nbsp;</a> <a data-primary="time" data-secondary="millis() function" data-tertiary="measuring with" data-type="indexterm">&nbsp;</a> <a data-primary="period" data-type="indexterm">&nbsp;</a></p>
 
-<p><em>Period</em> is the amount of time it takes for one cycle, but what is time in our Processing world? I mean, certainly we could say we want the circle to oscillate every three seconds. And we could track the milliseconds&mdash;using <strong function="">millis()</strong> &mdash;in Processing and come up with an elaborate algorithm for oscillating an object according to real-world time. But for us, real-world time doesn&rsquo;t really matter. The real measure of time in Processing is in frames. The oscillating motion should repeat every 30 frames, or 50 frames, or 1000 frames, etc.</p>
+<p><em>Period</em> is the amount of time it takes for one cycle, but what is time in our Processing world? I mean, certainly we could say we want the circle to oscillate every three seconds. And we could track the milliseconds&mdash;using <span class="function">(.*?)</span> &mdash;in Processing and come up with an elaborate algorithm for oscillating an object according to real-world time. But for us, real-world time doesn&rsquo;t really matter. The real measure of time in Processing is in frames. The oscillating motion should repeat every 30 frames, or 50 frames, or 1000 frames, etc.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Our period is measured in frames (our unit of time for animation).
@@ -568,13 +568,13 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <p><a data-primary="map() function (Processing)" data-secondary="oscillation and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s dissect the formula a bit more and try to understand each component. The first is probably the easiest. Whatever comes out of the sine function we multiply by amplitude. We know that sine will oscillate between -1 and 1. If we take that value and multiply it by amplitude then we&rsquo;ll get the desired result: a value oscillating between -amplitude and amplitude. (Note: this is also a place where we could use Processing&rsquo;s <strong function="">map()</strong> function to map the output of sine to a custom range.)</p>
+<p>Let&rsquo;s dissect the formula a bit more and try to understand each component. The first is probably the easiest. Whatever comes out of the sine function we multiply by amplitude. We know that sine will oscillate between -1 and 1. If we take that value and multiply it by amplitude then we&rsquo;ll get the desired result: a value oscillating between -amplitude and amplitude. (Note: this is also a place where we could use Processing&rsquo;s <span class="function">(.*?)</span> function to map the output of sine to a custom range.)</p>
 
 <p>Now, let&rsquo;s look at what is inside the sine function:</p>
 
-<p><strong formula="">TWO_PI <code>*</code> frameCount / period</strong></p>
+<p><span class="formula">TWO_PI <code>*</code> frameCount / period</span></p>
 
-<p>What&rsquo;s going on here? Let&rsquo;s start with what we know. We know that sine will repeat every 2*PI radians&mdash;i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion to repeat when the <strong class="var">frameCount</strong> is at 120 frames, 240 frames, 360 frames, etc. <strong class="var">frameCount</strong> is really the only variable; it starts at 0 and counts upward. Let&rsquo;s take a look at what the formula yields with those values.</p>
+<p>What&rsquo;s going on here? Let&rsquo;s start with what we know. We know that sine will repeat every 2*PI radians&mdash;i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion to repeat when the <span class="var">(.*?)</span> is at 120 frames, 240 frames, 360 frames, etc. <span class="var">(.*?)</span> is really the only variable; it starts at 0 and counts upward. Let&rsquo;s take a look at what the formula yields with those values.</p>
 
 <table>
 	<thead>
@@ -639,9 +639,9 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 	</tbody>
 </table>
 
-<p><strong class="var">frameCount</strong> divided by <strong class="var">period</strong> tells us how many cycles we&rsquo;ve completed&mdash;are we halfway through the first cycle? Have we completed two cycles? By multiplying that number by <strong class="var">TWO_PI</strong>, we get the result we want, since <strong class="var">TWO_PI</strong> is the number of radians required for one sine (or cosine) to complete one cycle.</p>
+<p><span class="var">(.*?)</span> divided by <span class="var">(.*?)</span> tells us how many cycles we&rsquo;ve completed&mdash;are we halfway through the first cycle? Have we completed two cycles? By multiplying that number by <span class="var">(.*?)</span>, we get the result we want, since <span class="var">(.*?)</span> is the number of radians required for one sine (or cosine) to complete one cycle.</p>
 
-<p>Wrapping this all up, here&rsquo;s the Processing example that oscillates the <strong class="var">x</strong> location of a circle with an amplitude of 100 pixels and a period of 120 frames.</p>
+<p>Wrapping this all up, here&rsquo;s the Processing example that oscillates the <span class="var">(.*?)</span> location of a circle with an amplitude of 100 pixels and a period of 120 frames.</p>
 
 <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
 
@@ -666,12 +666,12 @@ void draw() {
 
 <p><a data-primary="frequency (of oscillations)" data-type="indexterm">&nbsp;</a> <a data-primary="oscillation" data-secondary="frequency of" data-type="indexterm">&nbsp;</a></p>
 
-<p>It&rsquo;s also worth mentioning the term <strong><em>frequency</em></strong>: the number of cycles per time unit. Frequency is equal to 1 divided by <strong class="var">period</strong>. If the period is 120 frames, then only 1/120th of a cycle is completed in one frame, and so frequency = 1/120. In the above example, we simply chose to define the rate of oscillation in terms of period and therefore did not need a variable for frequency.</p>
+<p>It&rsquo;s also worth mentioning the term <strong><em>frequency</em></strong>: the number of cycles per time unit. Frequency is equal to 1 divided by <span class="var">(.*?)</span>. If the period is 120 frames, then only 1/120th of a cycle is completed in one frame, and so frequency = 1/120. In the above example, we simply chose to define the rate of oscillation in terms of period and therefore did not need a variable for frequency.</p>
 
 <div data-type="exercise" id="chapter03_exercise6">
 <h5>Exercise 3.6</h5>
 
-<p>Using the sine function, create a simulation of a weight (sometimes referred to as a &ldquo;bob&rdquo;) that hangs from a spring from the top of the window. Use the <strong function="">map()</strong> function to calculate the vertical location of the bob. Later in this chapter, we&rsquo;ll see how to recreate this same simulation by modeling the forces of a spring according to Hooke&rsquo;s law.</p>
+<p>Using the sine function, create a simulation of a weight (sometimes referred to as a &ldquo;bob&rdquo;) that hangs from a spring from the top of the window. Use the <span class="function">(.*?)</span> function to calculate the vertical location of the bob. Later in this chapter, we&rsquo;ll see how to recreate this same simulation by modeling the forces of a spring according to Hooke&rsquo;s law.</p>
 </div>
 </section>
 
@@ -696,13 +696,13 @@ float x = amplitude * sin ( some value that increments slowly );</pre>
 float angle = 0;
 float aVelocity = 0.05;</pre>
 
-<p>in <strong function="">draw()</strong>, we can simply say:</p>
+<p>in <span class="function">(.*?)</span>, we can simply say:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 angle += aVelocity;
 float x = amplitude * sin(angle);</pre>
 
-<p><strong class="var">angle</strong> is our &ldquo;some value that increments slowly.&rdquo;</p>
+<p><span class="var">(.*?)</span> is our &ldquo;some value that increments slowly.&rdquo;</p>
 
 <div data-type="example"><h5>Example 3.6: Simple Harmonic Motion II</h5></div>
 
@@ -730,13 +730,13 @@ void draw() {
   ellipse(x,0,20,20);
 }</pre>
 
-<p>Just because we&rsquo;re not referencing it directly doesn&rsquo;t mean that we&rsquo;ve eliminated the concept of <strong class="var">period</strong>. After all, the greater the angular velocity, the faster the circle will oscillate (therefore lowering the period). In fact, the number of times it takes to add up the angular velocity to get to <strong class="var">TWO_PI</strong> is the period or:</p>
+<p>Just because we&rsquo;re not referencing it directly doesn&rsquo;t mean that we&rsquo;ve eliminated the concept of <span class="var">(.*?)</span>. After all, the greater the angular velocity, the faster the circle will oscillate (therefore lowering the period). In fact, the number of times it takes to add up the angular velocity to get to <span class="var">(.*?)</span> is the period or:</p>
 
-<p><strong formula="">period = TWO_PI / angular velocity</strong></p>
+<p><span class="formula">period = TWO_PI / angular velocity</span></p>
 
 <p><a data-primary="oscillation" data-secondary="on two axes" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s expand this example a bit more and create an <strong klass="">Oscillator</strong> class. And let&rsquo;s assume we want the oscillation to happen along both the x-axis (as above) and the y-axis. To do this, we&rsquo;ll need two angles, two angular velocities, and two amplitudes (one for each axis). Another perfect opportunity for <strong klass="">PVector</strong>!</p>
+<p>Let&rsquo;s expand this example a bit more and create an <span class="klass">(.*?)</span> class. And let&rsquo;s assume we want the oscillation to happen along both the x-axis (as above) and the y-axis. To do this, we&rsquo;ll need two angles, two angular velocities, and two amplitudes (one for each axis). Another perfect opportunity for <span class="klass">(.*?)</span>!</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_07_oscillating_objects/_3_07_oscillating_objects.pde processingjs/chapter03/_3_07_oscillating_objects/Oscillator.pde"><img alt="ch03 ex07" src="../images/chapter03/ch03_ex07.png" />
 <figcaption>&nbsp;</figcaption>
@@ -783,13 +783,13 @@ class Oscillator  {
 <div data-type="exercise" id="chapter03_exercise7">
 <h5>Exercise 3.7</h5>
 
-<p>Try initializing each <strong klass="">Oscillator</strong> object with velocities and amplitudes that are not random to create some sort of regular pattern. Can you make the oscillators appear to be the legs of an insect-like creature?</p>
+<p>Try initializing each <span class="klass">(.*?)</span> object with velocities and amplitudes that are not random to create some sort of regular pattern. Can you make the oscillators appear to be the legs of an insect-like creature?</p>
 </div>
 
 <div data-type="exercise" id="chapter03_exercise8">
 <h5>Exercise 3.8</h5>
 
-<p>Incorporate angular acceleration into the <strong klass="">Oscillator</strong> object.</p>
+<p>Incorporate angular acceleration into the <span class="klass">(.*?)</span> object.</p>
 </div>
 </section>
 
@@ -798,7 +798,7 @@ class Oscillator  {
 
 <p><a data-primary="oscillation" data-secondary="waves" data-type="indexterm">&nbsp;</a> <a data-primary="waves" data-type="indexterm">&nbsp;</a></p>
 
-<p>If you&rsquo;re saying to yourself, &ldquo;Um, this is all great and everything, but what I really want is to draw a wave onscreen,&rdquo; well, then, the time has come. The thing is, we&rsquo;re about 90% there. When we oscillate a single circle up and down according to the sine function, what we are doing is looking at a single point along the x-axis of a wave pattern. With a little panache and a <strong function="">for</strong> loop, we can place a whole bunch of these oscillating circles next to each other.</p>
+<p>If you&rsquo;re saying to yourself, &ldquo;Um, this is all great and everything, but what I really want is to draw a wave onscreen,&rdquo; well, then, the time has come. The thing is, we&rsquo;re about 90% there. When we oscillate a single circle up and down according to the sine function, what we are doing is looking at a single point along the x-axis of a wave pattern. With a little panache and a <span class="function">(.*?)</span> loop, we can place a whole bunch of these oscillating circles next to each other.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_09_wave/_3_09_wave.pde"><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -817,7 +817,7 @@ float angle = 0;
 float angleVel = 0.2;
 float amplitude = 100;</pre>
 
-<p>Then we&rsquo;re going to loop through all of the <strong class="var">x</strong> values where we want to draw a point of the wave. Let&rsquo;s say every 24 pixels for now. In that loop, we&rsquo;re going to want to do three things:</p>
+<p>Then we&rsquo;re going to loop through all of the <span class="var">(.*?)</span> values where we want to draw a point of the wave. Let&rsquo;s say every 24 pixels for now. In that loop, we&rsquo;re going to want to do three things:</p>
 
 <ol>
 	<li>
@@ -845,7 +845,7 @@ float amplitude = 100;</pre>
     angle += angleVel;
   }</pre>
 
-<p>Let&rsquo;s look at the results with different values for <strong class="var">angleVel</strong>:</p>
+<p>Let&rsquo;s look at the results with different values for <span class="var">(.*?)</span>:</p>
 
 <figure class="three-col" data-pde="processingjs/chapter03/_3_09_wave_a/_3_09_wave_a.pde"><img alt="angleVel = 0.05" src="../images/chapter03/ch03_ex09a.png" />
 <figcaption>&nbsp;</figcaption>
@@ -859,7 +859,7 @@ float amplitude = 100;</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Notice how, although we&rsquo;re not precisely computing the period of the wave, the higher the angular velocity, the shorter the period. It&rsquo;s also worth noting that as the period becomes shorter, it becomes more and more difficult to make out the wave itself as the distance between the individual points increases. One option we have is to use <strong function="">beginShape()</strong> and <strong function="">endShape()</strong> to connect the points with a line.</p>
+<p>Notice how, although we&rsquo;re not precisely computing the period of the wave, the higher the angular velocity, the shorter the period. It&rsquo;s also worth noting that as the period becomes shorter, it becomes more and more difficult to make out the wave itself as the distance between the individual points increases. One option we have is to use <span class="function">(.*?)</span> and <span class="function">(.*?)</span> to connect the points with a line.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_08_static_wave_lines/_3_08_static_wave_lines.pde"><img alt="ch03 ex08" src="../images/chapter03/ch03_ex08.png" />
 <figcaption>&nbsp;</figcaption>
@@ -893,9 +893,9 @@ endShape();</pre>
 
 <p><a data-primary="oscillation" data-secondary="varying" data-type="indexterm">&nbsp;</a> <a data-primary="waves" data-secondary="varying" data-type="indexterm">&nbsp;</a></p>
 
-<p>You may have noticed that the above example is static. The wave never changes, never undulates. This additional step is a bit tricky. Your first instinct might be to say: &ldquo;Hey, no problem, we&rsquo;ll just let theta be a global variable and let it increment from one cycle through <strong function="">draw()</strong> to another.&rdquo;</p>
+<p>You may have noticed that the above example is static. The wave never changes, never undulates. This additional step is a bit tricky. Your first instinct might be to say: &ldquo;Hey, no problem, we&rsquo;ll just let theta be a global variable and let it increment from one cycle through <span class="function">(.*?)</span> to another.&rdquo;</p>
 
-<p>While it&rsquo;s a nice thought, it doesn&rsquo;t work. If you look at the wave, the righthand edge doesn&rsquo;t match the lefthand; where it ends in one cycle of <strong function="">draw()</strong> can&rsquo;t be where it starts in the next. Instead, what we need to do is have a variable dedicated entirely to tracking what value of angle the wave should start with. This angle (which we&rsquo;ll call <strong class="var">startAngle</strong>) increments with its own angular velocity.</p>
+<p>While it&rsquo;s a nice thought, it doesn&rsquo;t work. If you look at the wave, the righthand edge doesn&rsquo;t match the lefthand; where it ends in one cycle of <span class="function">(.*?)</span> can&rsquo;t be where it starts in the next. Instead, what we need to do is have a variable dedicated entirely to tracking what value of angle the wave should start with. This angle (which we&rsquo;ll call <span class="var">(.*?)</span>) increments with its own angular velocity.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_09_wave/_3_09_wave.pde"><img alt="ch03 ex09" src="../images/chapter03/ch03_ex09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -936,7 +936,7 @@ float angle = startAngle;
 <div data-type="exercise" id="chapter03_exercise10">
 <h5>Exercise 3.10</h5>
 
-<p>Encapsulate the above examples into a <strong klass="">Wave</strong> class and create a sketch that displays two waves (with different amplitudes/periods) as in the screenshot below. Move beyond plain circles and lines and try visualizing the wave in a more creative way.</p>
+<p>Encapsulate the above examples into a <span class="klass">(.*?)</span> class and create a sketch that displays two waves (with different amplitudes/periods) as in the screenshot below. Move beyond plain circles and lines and try visualizing the wave in a more creative way.</p>
 
 <figure data-pde="processingjs/chapter03/Ex_3_10_OOPWave/Ex_3_10_OOPWave.pde processingjs/chapter03/Ex_3_10_OOPWave/Wave.pde"><img alt="ch03 exc10" src="../images/chapter03/ch03_exc10.png" />
 <figcaption>&nbsp;</figcaption>
@@ -985,32 +985,32 @@ float angle = startAngle;
 
 <p><a data-primary="gravity" data-secondary="modeling with trigonometry" data-type="indexterm">&nbsp;</a></p>
 
-<p>We can see that the force of the pendulum (<strong class="var">F<sub>p</sub></strong>) should point perpendicular to the arm of the pendulum in the direction that the pendulum is swinging. After all, if there were no arm, the bob would just fall straight down. It&rsquo;s the tension force of the arm that keeps the bob accelerating towards the pendulum&rsquo;s rest state. Since the force of gravity (<strong class="var">F<sub>g</sub></strong>) points downward, by making a right triangle out of these two vectors, we&rsquo;ve accomplished something quite magnificent. We&rsquo;ve made the force of gravity the hypotenuse of a right triangle and separated the vector into two components, one of which represents the force of the pendulum. Since sine equals opposite over hypotenuse, we have:</p>
+<p>We can see that the force of the pendulum (<span class="var">(.*?)</span>) should point perpendicular to the arm of the pendulum in the direction that the pendulum is swinging. After all, if there were no arm, the bob would just fall straight down. It&rsquo;s the tension force of the arm that keeps the bob accelerating towards the pendulum&rsquo;s rest state. Since the force of gravity (<span class="var">(.*?)</span>) points downward, by making a right triangle out of these two vectors, we&rsquo;ve accomplished something quite magnificent. We&rsquo;ve made the force of gravity the hypotenuse of a right triangle and separated the vector into two components, one of which represents the force of the pendulum. Since sine equals opposite over hypotenuse, we have:</p>
 
-<p><strong formula="">sine(&theta;) = F<sub>p</sub> / F<sub>g</sub></strong></p>
+<p><span class="formula">sine(&theta;) = F<sub>p</sub> / F<sub>g</sub></span></p>
 
 <p>Therefore:</p>
 
-<p><strong formula="">F<sub>p</sub> = F<sub>g</sub> <code>*</code> sine(&theta;)</strong></p>
+<p><span class="formula">F<sub>p</sub> = F<sub>g</sub> <code>*</code> sine(&theta;)</span></p>
 
 <p>Lest we forget, we&rsquo;ve been doing all of this with a single question in mind: What is the angular acceleration of the pendulum? Once we have the angular acceleration, we&rsquo;ll be able to apply our rules of motion to find the new angle for the pendulum.</p>
 
-<p><strong formula="">angular velocity = angular velocity + angular acceleration</strong><br />
-<strong formula="">angle = angle + angular velocity</strong></p>
+<p><span class="formula">angular velocity = angular velocity + angular acceleration</span><br />
+<span class="formula">angle = angle + angular velocity</span></p>
 
 <p>The good news is that with Newton&rsquo;s second law, we know that there is a relationship between force and acceleration, namely F = M * A, or A = F / M. So if the force of the pendulum is equal to the force of gravity times sine of the angle, then:</p>
 
-<p><strong formula="">pendulum angular acceleration = acceleration due to gravity <code>*</code> sine (&theta;)</strong></p>
+<p><span class="formula">pendulum angular acceleration = acceleration due to gravity <code>*</code> sine (&theta;)</span></p>
 
 <p><a data-primary="gravity" data-secondary="modeling reality vs. arbitrary values" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="modeling reality vs. arbitrary values" data-type="indexterm">&nbsp;</a></p>
 
-<p>This is a good time to remind ourselves that we&rsquo;re Processing programmers and not physicists. Yes, we know that the acceleration due to gravity on earth is 9.8 meters per second squared. But this number isn&rsquo;t relevant to us. What we have here is just an arbitrary constant (we&rsquo;ll call it <strong class="var">gravity</strong>), one that we can use to scale the acceleration to something that feels right.</p>
+<p>This is a good time to remind ourselves that we&rsquo;re Processing programmers and not physicists. Yes, we know that the acceleration due to gravity on earth is 9.8 meters per second squared. But this number isn&rsquo;t relevant to us. What we have here is just an arbitrary constant (we&rsquo;ll call it <span class="var">(.*?)</span>), one that we can use to scale the acceleration to something that feels right.</p>
 
-<p><strong formula="">angular acceleration = gravity <code>*</code> sine(&theta;)</strong></p>
+<p><span class="formula">angular acceleration = gravity <code>*</code> sine(&theta;)</span></p>
 
 <p>Amazing. After all that, the formula is so simple. You might be wondering, why bother going through the derivation at all? I mean, learning is great and all, but we could have easily just said, &quot;Hey, the angular acceleration of a pendulum is some constant times the sine of the angle.&quot; This is just another moment in which we remind ourselves that the purpose of the book is not to learn how pendulums swing or gravity works. The point is to think creatively about how things can move about the screen in a computationally based graphics system. The pendulum is just a case study. If you can understand the approach to programming a pendulum, then however you choose to design your onscreen world, you can apply the same techniques.</p>
 
-<p>Of course, we&rsquo;re not finished yet. We may be happy with our simple, elegant formula, but we still have to apply it in code. This is most definitely a good time to practice our object-oriented programming skills and create a <strong klass="">Pendulum</strong> class. Let&rsquo;s think about all the properties we&rsquo;ve encountered in our pendulum discussion that the class will need:</p>
+<p>Of course, we&rsquo;re not finished yet. We may be happy with our simple, elegant formula, but we still have to apply it in code. This is most definitely a good time to practice our object-oriented programming skills and create a <span class="klass">(.*?)</span> class. Let&rsquo;s think about all the properties we&rsquo;ve encountered in our pendulum discussion that the class will need:</p>
 
 <ul>
 	<li>
@@ -1039,7 +1039,7 @@ class Pendulum  {
   // Angular acceleration
   float aAcceleration;</pre>
 
-<p>We&rsquo;ll also need to write a function <strong function="">update()</strong> to update the pendulum&rsquo;s angle according to our formula&hellip;</p>
+<p>We&rsquo;ll also need to write a function <span class="function">(.*?)</span> to update the pendulum&rsquo;s angle according to our formula&hellip;</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
@@ -1057,7 +1057,7 @@ class Pendulum  {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>&hellip;as well as a function <strong function="">display()</strong> to draw the pendulum in the window. This begs the question: &ldquo;Um, where do we draw the pendulum?&rdquo; We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum&rsquo;s pivot point (let&rsquo;s call it origin) and bob location (let&rsquo;s call it location)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
+<p>&hellip;as well as a function <span class="function">(.*?)</span> to draw the pendulum in the window. This begs the question: &ldquo;Um, where do we draw the pendulum?&rdquo; We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum&rsquo;s pivot point (let&rsquo;s call it origin) and bob location (let&rsquo;s call it location)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
 
 <p>The origin is just something we make up, as is the arm length. Let&rsquo;s say:</p>
 
@@ -1065,12 +1065,12 @@ class Pendulum  {
 PVector origin = new PVector(100,10);
 float r = 125;</pre>
 
-<p>We&rsquo;ve got the current angle stored in our variable <strong class="var">angle</strong>. So relative to the origin, the pendulum&rsquo;s location is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
+<p>We&rsquo;ve got the current angle stored in our variable <span class="var">(.*?)</span>. So relative to the origin, the pendulum&rsquo;s location is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector location = new PVector(r*sin(angle),r*cos(angle));</pre>
 
-<p>Since the location is relative to wherever the origin happens to be, we can just add origin to the location <strong klass="">PVector</strong>:</p>
+<p>Since the location is relative to wherever the origin happens to be, we can just add origin to the location <span class="klass">(.*?)</span>:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 location.add(origin);</pre>
@@ -1083,7 +1083,7 @@ fill(175);
 line(origin.x,origin.y,location.x,location.y);
 ellipse(location.x,location.y,16,16);</pre>
 
-<p>Before we put everything together, there&rsquo;s one last little detail I neglected to mention. Let&rsquo;s think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a lot of questions that we could continue to ask that would affect the simulation. We&rsquo;re living, of course, in a fantasy world, one where the pendulum&rsquo;s arm is some idealized rod that never bends and the mass of the bob is concentrated in a single, infinitesimally small point. Nevertheless, even though we don&rsquo;t want to worry ourselves with all of the questions, we should add one more variable to our calculation of angular acceleration. To keep things simple, in our derivation of the pendulum&rsquo;s acceleration, we assumed that the length of the pendulum&rsquo;s arm is 1. In fact, the length of the pendulum&rsquo;s arm affects the acceleration greatly: the longer the arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that length, in this case <strong class="var">r</strong>. For a more involved explanation, visit <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum website</a>.</p>
+<p>Before we put everything together, there&rsquo;s one last little detail I neglected to mention. Let&rsquo;s think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a lot of questions that we could continue to ask that would affect the simulation. We&rsquo;re living, of course, in a fantasy world, one where the pendulum&rsquo;s arm is some idealized rod that never bends and the mass of the bob is concentrated in a single, infinitesimally small point. Nevertheless, even though we don&rsquo;t want to worry ourselves with all of the questions, we should add one more variable to our calculation of angular acceleration. To keep things simple, in our derivation of the pendulum&rsquo;s acceleration, we assumed that the length of the pendulum&rsquo;s arm is 1. In fact, the length of the pendulum&rsquo;s arm affects the acceleration greatly: the longer the arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that length, in this case <span class="var">(.*?)</span>. For a more involved explanation, visit <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum website</a>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 aAcceleration = (-1 * G * sin(angle)) / r;</pre>
@@ -1210,7 +1210,7 @@ class Pendulum  {
 
 <p><a data-primary="forces" data-secondary="springs" data-type="indexterm">&nbsp;</a> <a data-primary="springs" data-type="indexterm">&nbsp;</a></p>
 
-<p>In <a href="#chapter03_section6">section 3.6</a>, we looked at modeling simple harmonic motion by mapping the sine wave to a pixel range. <a href="#chapter03_exercise6">Exercise 3.6</a> asked you to use this technique to create a simulation of a bob hanging from a spring. While using the <strong function="">sin()</strong> function is a quick-and-dirty, one-line-of-code way of getting something up and running, it won&rsquo;t do if what we really want is to have a bob hanging from a spring in a two-dimensional space that responds to other forces in the environment (wind, gravity, etc.) To accomplish a simulation like this (one that is identical to the pendulum example, only now the arm is a springy connection), we need to model the forces of a spring using <strong klass="">PVector</strong>.</p>
+<p>In <a href="#chapter03_section6">section 3.6</a>, we looked at modeling simple harmonic motion by mapping the sine wave to a pixel range. <a href="#chapter03_exercise6">Exercise 3.6</a> asked you to use this technique to create a simulation of a bob hanging from a spring. While using the <span class="function">(.*?)</span> function is a quick-and-dirty, one-line-of-code way of getting something up and running, it won&rsquo;t do if what we really want is to have a bob hanging from a spring in a two-dimensional space that responds to other forces in the environment (wind, gravity, etc.) To accomplish a simulation like this (one that is identical to the pendulum example, only now the arm is a springy connection), we need to model the forces of a spring using <span class="klass">(.*?)</span>.</p>
 
 <figure id="chapter03_figure14"><img alt="Figure 3.14" src="../images/chapter03/ch03_14.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1230,14 +1230,14 @@ class Pendulum  {
 
 <p><a data-primary="Hooke's law" data-secondary="formula for expressing" data-type="indexterm">&nbsp;</a></p>
 
-<p><strong formula="">F<sub>spring</sub> = - k <code>*</code> x</strong></p>
+<p><span class="formula">F<sub>spring</sub> = - k <code>*</code> x</span></p>
 
 <ul>
 	<li>
-	<p><strong class="var">k</strong> is constant and its value will ultimately scale the force. Is the spring highly elastic or quite rigid?</p>
+	<p><span class="var">(.*?)</span> is constant and its value will ultimately scale the force. Is the spring highly elastic or quite rigid?</p>
 	</li>
 	<li>
-	<p><strong class="var">x</strong> refers to the displacement of the spring, i.e. the difference between the current length and the rest length. The rest length is defined as the length of the spring in a state of equilibrium.</p>
+	<p><span class="var">(.*?)</span> refers to the displacement of the spring, i.e. the difference between the current length and the rest length. The rest length is defined as the length of the spring in a state of equilibrium.</p>
 	</li>
 </ul>
 
@@ -1256,14 +1256,14 @@ float restLength;</pre>
 
 <p><a data-primary="springs" data-secondary="magnitude of force" data-tertiary="determining" data-type="indexterm">&nbsp;</a></p>
 
-<p>First, let&rsquo;s use Hooke&rsquo;s law to calculate the magnitude of the force. We need to know <strong class="var">k</strong> and <strong class="var">x</strong>. <strong class="var">k</strong> is easy; it&rsquo;s just a constant, so let&rsquo;s make something up.</p>
+<p>First, let&rsquo;s use Hooke&rsquo;s law to calculate the magnitude of the force. We need to know <span class="var">(.*?)</span> and <span class="var">(.*?)</span>. <span class="var">(.*?)</span> is easy; it&rsquo;s just a constant, so let&rsquo;s make something up.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float k = 0.1;</pre>
 
 <p><a data-primary="springs" data-secondary="rest length" data-type="indexterm">&nbsp;</a></p>
 
-<p><strong class="var">x</strong> is perhaps a bit more difficult. We need to know the &ldquo;difference between the current length and the rest length.&rdquo; The rest length is defined as the variable <strong class="var">restLength</strong>. What&rsquo;s the current length? The distance between the anchor and the bob. And how can we calculate that distance? How about the magnitude of a vector that points from the anchor to the bob? (Note that this is exactly the same process we employed when calculating distance in Example 2.9: gravitational attraction.)</p>
+<p><span class="var">(.*?)</span> is perhaps a bit more difficult. We need to know the &ldquo;difference between the current length and the rest length.&rdquo; The rest length is defined as the variable <span class="var">(.*?)</span>. What&rsquo;s the current length? The distance between the anchor and the bob. And how can we calculate that distance? How about the magnitude of a vector that points from the anchor to the bob? (Note that this is exactly the same process we employed when calculating distance in Example 2.9: gravitational attraction.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A vector pointing from anchor to bob
@@ -1274,13 +1274,13 @@ float x = currentLength - restLength;</pre>
 
 <p><a data-primary="springs" data-secondary="direction of force" data-tertiary="determining" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we&rsquo;ve sorted out the elements necessary for the magnitude of the force (-1 * <strong class="var">k</strong> * <strong class="var">x</strong>), we need to figure out the direction, a unit vector pointing in the direction of the force. The good news is that we already have this vector. Right? Just a moment ago we thought to ourselves: &ldquo;How we can calculate that distance? How about the magnitude of a vector that points from the anchor to the bob?&rdquo; Well, that is the direction of the force!</p>
+<p>Now that we&rsquo;ve sorted out the elements necessary for the magnitude of the force (-1 * <span class="var">(.*?)</span> * <span class="var">(.*?)</span>), we need to figure out the direction, a unit vector pointing in the direction of the force. The good news is that we already have this vector. Right? Just a moment ago we thought to ourselves: &ldquo;How we can calculate that distance? How about the magnitude of a vector that points from the anchor to the bob?&rdquo; Well, that is the direction of the force!</p>
 
 <figure id="chapter03_figure17"><img alt="Figure 3.17" src="../images/chapter03/ch03_17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>In Figure 3.17, we can see that if we stretch the spring beyond its rest length, there should be a force pulling it back towards the anchor. And if it shrinks below its rest length, the force should push it away from the anchor. This reversal of direction is accounted for in the formula with the -1. And so all we need to do is normalize the <strong klass="">PVector</strong> we used for the distance calculation! Let&rsquo;s take a look at the code and rename that <strong klass="">PVector</strong> variable as &ldquo;force.&rdquo;</p>
+<p>In Figure 3.17, we can see that if we stretch the spring beyond its rest length, there should be a force pulling it back towards the anchor. And if it shrinks below its rest length, the force should push it away from the anchor. This reversal of direction is accounted for in the formula with the -1. And so all we need to do is normalize the <span class="klass">(.*?)</span> we used for the distance calculation! Let&rsquo;s take a look at the code and rename that <span class="klass">(.*?)</span> variable as &ldquo;force.&rdquo;</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Magnitude of spring force according to Hooke&rsquo;s law
@@ -1297,7 +1297,7 @@ force.mult(-1 * k * x);</pre>
 
 <p><a data-primary="object-oriented programming" data-secondary="structures" data-tertiary="choosing between" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we have the algorithm worked out for computing the spring force vector, the question remains: what object-oriented programming structure should we use? This, again, is one of those situations in which there is no &ldquo;correct&rdquo; answer. There are several possibilities; which one we choose depends on the program&rsquo;s goals and one&rsquo;s own personal coding style. Still, since we&rsquo;ve been working all along with a <strong klass="">Mover</strong> class, let&rsquo;s keep going with this same framework. Let&rsquo;s think of our <strong klass="">Mover</strong> class as the spring&rsquo;s &ldquo;bob.&rdquo; The bob needs <strong class="var">location</strong>, <strong class="var">velocity</strong>, and <strong class="var">acceleration</strong> vectors to move about the screen. Perfect&mdash;we&rsquo;ve got that already! And perhaps the bob experiences a gravity force via the <strong function="">applyForce()</strong> function. Just one more step&mdash;we need to apply the spring force:</p>
+<p>Now that we have the algorithm worked out for computing the spring force vector, the question remains: what object-oriented programming structure should we use? This, again, is one of those situations in which there is no &ldquo;correct&rdquo; answer. There are several possibilities; which one we choose depends on the program&rsquo;s goals and one&rsquo;s own personal coding style. Still, since we&rsquo;ve been working all along with a <span class="klass">(.*?)</span> class, let&rsquo;s keep going with this same framework. Let&rsquo;s think of our <span class="klass">(.*?)</span> class as the spring&rsquo;s &ldquo;bob.&rdquo; The bob needs <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, and <span class="var">(.*?)</span> vectors to move about the screen. Perfect&mdash;we&rsquo;ve got that already! And perhaps the bob experiences a gravity force via the <span class="function">(.*?)</span> function. Just one more step&mdash;we need to apply the spring force:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Bob bob;
@@ -1324,7 +1324,7 @@ void draw()  {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>One option would be to write out all of the spring force code in the main <strong function="">draw()</strong> loop. But thinking ahead to when you might have multiple bobs and multiple spring connections, it makes a good deal of sense to write an additional class, a <strong klass="">Spring</strong> class. As shown in Figure 3.18, the <strong klass="">Bob</strong> class keeps track of the movements of the bob; the <strong klass="">Spring</strong> class keeps track of the spring&rsquo;s anchor and its rest length and calculates the spring force on the bob.</p>
+<p>One option would be to write out all of the spring force code in the main <span class="function">(.*?)</span> loop. But thinking ahead to when you might have multiple bobs and multiple spring connections, it makes a good deal of sense to write an additional class, a <span class="klass">(.*?)</span> class. As shown in Figure 3.18, the <span class="klass">(.*?)</span> class keeps track of the movements of the bob; the <span class="klass">(.*?)</span> class keeps track of the spring&rsquo;s anchor and its rest length and calculates the spring force on the bob.</p>
 
 <p>This allows us to write a lovely main program as follows:</p>
 
@@ -1368,7 +1368,7 @@ void draw()  {
 <pre data-code-language="java" data-type="programlisting">
   spring.connect(bob);</pre>
 
-<p>What gives? Why don&rsquo;t we need to call <strong function="">applyForce()</strong> on the bob? The answer is, of course, that we do need to call <strong function="">applyForce()</strong> on the bob. Only instead of doing it in <strong function="">draw()</strong>, we&rsquo;re just demonstrating that a perfectly reasonable (and sometimes preferable) alternative is to ask the <strong function="">connect()</strong> function to internally handle calling <strong function="">applyForce()</strong> on the bob.</p>
+<p>What gives? Why don&rsquo;t we need to call <span class="function">(.*?)</span> on the bob? The answer is, of course, that we do need to call <span class="function">(.*?)</span> on the bob. Only instead of doing it in <span class="function">(.*?)</span>, we&rsquo;re just demonstrating that a perfectly reasonable (and sometimes preferable) alternative is to ask the <span class="function">(.*?)</span> function to internally handle calling <span class="function">(.*?)</span> on the bob.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void connect(Bob b) {
@@ -1380,9 +1380,9 @@ void draw()  {
     b.applyForce(force);
   }</pre>
 
-<p>Why do it one way with the <strong klass="">Attractor</strong> class and another way with the <strong klass="">Spring</strong> class? When we were first learning about forces, it was a bit clearer to show all the forces being applied in the main <strong function="">draw()</strong> loop, and hopefully this helped you learn about force accumulation. Now that we&rsquo;re more comfortable with that, perhaps it&rsquo;s simpler to embed some of the details inside the objects themselves.</p>
+<p>Why do it one way with the <span class="klass">(.*?)</span> class and another way with the <span class="klass">(.*?)</span> class? When we were first learning about forces, it was a bit clearer to show all the forces being applied in the main <span class="function">(.*?)</span> loop, and hopefully this helped you learn about force accumulation. Now that we&rsquo;re more comfortable with that, perhaps it&rsquo;s simpler to embed some of the details inside the objects themselves.</p>
 
-<p>Let&rsquo;s take a look at the rest of the elements in the <strong klass="">Spring</strong> class.</p>
+<p>Let&rsquo;s take a look at the rest of the elements in the <span class="klass">(.*?)</span> class.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter03/_3_11_spring/_3_11_spring.pde processingjs/chapter03/_3_11_spring/Mover.pde processingjs/chapter03/_3_11_spring/Spring.pde"><img alt="ch03 ex11" src="../images/chapter03/ch03_ex11.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1445,7 +1445,7 @@ class Spring {
 
 }</pre>
 
-<p>The full code for this example is included on the book website, and the Web version also incorporates two additional features: (1) the <strong klass="">Bob</strong> class includes functions for mouse interactivity so that the bob can be dragged around the window, and (2) the <strong klass="">Spring</strong> object includes a function to constrain the connection&rsquo;s length between a minimum and a maximum.</p>
+<p>The full code for this example is included on the book website, and the Web version also incorporates two additional features: (1) the <span class="klass">(.*?)</span> class includes functions for mouse interactivity so that the bob can be dragged around the window, and (2) the <span class="klass">(.*?)</span> object includes a function to constrain the connection&rsquo;s length between a minimum and a maximum.</p>
 
 <div data-type="exercise" id="chapter03_exercise15">
 <h5>Exercise 3.15</h5>
@@ -1489,7 +1489,7 @@ void constrainLength(Bob b, float minlen, float maxlen) {
 
 <p>Step 3 Exercise:</p>
 
-<p>Take one of your creatures and incorporate oscillation into its motion. You can use the <strong klass="">Oscillator</strong> class from Example 3.7 as a model. The <strong klass="">Oscillator</strong> object, however, oscillates around a single point (the middle of the window). Try oscillating around a moving point. In other words, design a creature that moves around the screen according to location, velocity, and acceleration. But that creature isn&rsquo;t just a static shape, it&rsquo;s an oscillating body. Consider tying the speed of oscillation to the speed of motion. Think of a butterfly&rsquo;s flapping wings or the legs of an insect. Can you make it appear that the creature&rsquo;s internal mechanics (oscillation) drive its locomotion? For a sample, check out the &ldquo;AttractionArrayWithOscillation&rdquo; example with the code download.</p>
+<p>Take one of your creatures and incorporate oscillation into its motion. You can use the <span class="klass">(.*?)</span> class from Example 3.7 as a model. The <span class="klass">(.*?)</span> object, however, oscillates around a single point (the middle of the window). Try oscillating around a moving point. In other words, design a creature that moves around the screen according to location, velocity, and acceleration. But that creature isn&rsquo;t just a static shape, it&rsquo;s an oscillating body. Consider tying the speed of oscillation to the speed of motion. Think of a butterfly&rsquo;s flapping wings or the legs of an insect. Can you make it appear that the creature&rsquo;s internal mechanics (oscillation) drive its locomotion? For a sample, check out the &ldquo;AttractionArrayWithOscillation&rdquo; example with the code download.</p>
 </div>
 </section>
 </section>
