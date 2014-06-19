@@ -13,7 +13,7 @@
 
 <p><a data-primary="evolution" data-secondary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="evolution" data-type="indexterm">&nbsp;</a></p>
 
-<p>In each and every example in this book, the variables of these objects have to be initialized. Perhaps you made a whole bunch of particles with random colors and sizes or a list of vehicles all starting at the same <strong class="var">x</strong>,<strong class="var">y</strong> location on screen. But instead of acting as &ldquo;intelligent designers&rdquo; and assigning the properties of our objects through randomness or thoughtful consideration, we can let a process found in nature<code>&mdash;</code><em>evolution</em><code>&mdash;</code>decide for us.</p>
+<p>In each and every example in this book, the variables of these objects have to be initialized. Perhaps you made a whole bunch of particles with random colors and sizes or a list of vehicles all starting at the same <span class="var">x</span>,<span class="var">y</span> location on screen. But instead of acting as &ldquo;intelligent designers&rdquo; and assigning the properties of our objects through randomness or thoughtful consideration, we can let a process found in nature<code>&mdash;</code><em>evolution</em><code>&mdash;</code>decide for us.</p>
 
 <p>Can we think of the variables of an object as its DNA? Can objects make other objects and pass down their DNA to a new generation? Can our simulation evolve?</p>
 
@@ -476,7 +476,7 @@ Parent B: PLAY</strong></p>
 
 <p>As we&rsquo;ll see in some of the examples, the mutation rate can greatly affect the behavior of the system. Certainly, a very high mutation rate (such as, say, 80%) would negate the evolutionary process itself. If the majority of a child&rsquo;s genes are generated randomly, then we cannot guarantee that the more &ldquo;fit&rdquo; genes occur with greater frequency with each successive generation.</p>
 
-<p>The process of selection (picking two parents) and reproduction (crossover and mutation) is applied over and over again <strong class="var">N</strong> times until we have a new population of <strong class="var">N</strong> elements. At this point, the new population of children becomes the current population and we loop back to evaluate fitness and perform selection and reproduction again.</p>
+<p>The process of selection (picking two parents) and reproduction (crossover and mutation) is applied over and over again <span class="var">N</span> times until we have a new population of <span class="var">N</span> elements. At this point, the new population of children becomes the current population and we loop back to evaluate fitness and perform selection and reproduction again.</p>
 
 <p>Now that we have described all the steps of the genetic algorithm in detail, it&rsquo;s time to translate these steps into Processing code. Because the previous description was a bit longwinded, let&rsquo;s look at an overview of the algorithm first. We&rsquo;ll then cover each of the three steps in its own section, working out the code.</p>
 
@@ -680,7 +680,7 @@ C: 17% (1/6)</strong></p>
 
 <p><a data-primary="reproduction (natural selection algorithms)" data-secondary="implementing" data-type="indexterm">&nbsp;</a></p>
 
-<p>With the mating pool ready to go, it&rsquo;s time to make some babies. The first step is to pick two parents. Again, it&rsquo;s somewhat of an arbitrary decision to pick two parents. It certainly mirrors human reproduction and is the standard means in the traditional GA, but in terms of your work, there really aren&rsquo;t any restrictions here. You could choose to perform &ldquo;asexual&rdquo; reproduction with one parent, or come up with a scheme for picking three or four parents from which to generate child DNA. For this code demonstration, we&rsquo;ll stick to two parents and call them <strong class="var">parentA</strong> and <strong class="var">parentB</strong>.</p>
+<p>With the mating pool ready to go, it&rsquo;s time to make some babies. The first step is to pick two parents. Again, it&rsquo;s somewhat of an arbitrary decision to pick two parents. It certainly mirrors human reproduction and is the standard means in the traditional GA, but in terms of your work, there really aren&rsquo;t any restrictions here. You could choose to perform &ldquo;asexual&rdquo; reproduction with one parent, or come up with a scheme for picking three or four parents from which to generate child DNA. For this code demonstration, we&rsquo;ll stick to two parents and call them <span class="var">parentA</span> and <span class="var">parentB</span>.</p>
 
 <p>First thing we need are two random indices into the mating pool&mdash;random numbers between 0 and the size of the <span class="klass">ArrayList</span>.</p>
 
@@ -694,7 +694,7 @@ C: 17% (1/6)</strong></p>
   DNA parentA = matingPool.get(a);
   DNA parentB = matingPool.get(b);</pre>
 
-<p>Because we have multiple instances of the same <span class="klass">DNA</span> objects in the mating pool (not to mention that we could pick the same random number twice), it&rsquo;s possible that <strong class="var">parentA</strong> and <strong class="var">parentB</strong> could be the same <span class="klass">DNA</span> object. If we wanted to be strict, we could write some code to ensure that we haven&rsquo;t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it&lsquo;s worth trying this as an exercise.</p>
+<p>Because we have multiple instances of the same <span class="klass">DNA</span> objects in the mating pool (not to mention that we could pick the same random number twice), it&rsquo;s possible that <span class="var">parentA</span> and <span class="var">parentB</span> could be the same <span class="klass">DNA</span> object. If we wanted to be strict, we could write some code to ensure that we haven&rsquo;t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it&lsquo;s worth trying this as an exercise.</p>
 
 <div data-type="exercise" id="chapter09_exercise4">
 <h5>Exercise 9.4</h5>
@@ -1785,7 +1785,7 @@ class Obstacle {
   PVector location;
   float w,h;</pre>
 
-<p>We can also write a <span class="function">contains()</span> function that will <strong class="var">return true</strong> or <strong class="var">return false</strong> to determine if a rocket has hit the obstacle.</p>
+<p>We can also write a <span class="function">contains()</span> function that will <span class="var">return true</span> or <span class="var">return false</span> to determine if a rocket has hit the obstacle.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   boolean contains(PVector v) {
@@ -1862,7 +1862,7 @@ class Obstacle {
     }
 }</pre>
 
-<p>Fitness is also inversely proportional to <strong class="var">finishTime</strong>, and so we can improve our fitness function as follows:</p>
+<p>Fitness is also inversely proportional to <span class="var">finishTime</span>, and so we can improve our fitness function as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void fitness() {
@@ -2123,7 +2123,7 @@ class World {
 
 <p><a data-primary="fitness functions (natural selection algorithms)" data-secondary="ecosystem simulations and" data-type="indexterm">&nbsp;</a></p>
 
-<p>Bloops dying is our replacement for a fitness function, the process of &ldquo;selection.&rdquo; If a bloop dies, it cannot be selected to be a parent, because it simply no longer exists! One way we can build a mechanism to ensure bloop deaths in our world is by adding a <strong class="var">health</strong> variable to the <span class="klass">Bloop</span> class.</p>
+<p>Bloops dying is our replacement for a fitness function, the process of &ldquo;selection.&rdquo; If a bloop dies, it cannot be selected to be a parent, because it simply no longer exists! One way we can build a mechanism to ensure bloop deaths in our world is by adding a <span class="var">health</span> variable to the <span class="klass">Bloop</span> class.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Bloop {
@@ -2235,7 +2235,7 @@ class Bloop {
     //[end]
   }</pre>
 
-<p>Notice that with <strong class="var">maxspeed</strong>, the range is mapped to between 15 and 0, meaning a bloop with a gene value of 0 moves at a speed of 15 and a bloop with a gene value of 1 doesn&rsquo;t move at all (speed of 0).</p>
+<p>Notice that with <span class="var">maxspeed</span>, the range is mapped to between 15 and 0, meaning a bloop with a gene value of 0 moves at a speed of 15 and a bloop with a gene value of 1 doesn&rsquo;t move at all (speed of 0).</p>
 </section>
 
 <section data-type="sect2" id="_selection_and_reproduction">
