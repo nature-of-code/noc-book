@@ -161,7 +161,7 @@
 
 <p>This, of course, is the fantasy of Box2D. We&rsquo;ve eliminated all of those painful steps of figuring out how the objects are moving according to velocity and acceleration. Box2D is going to take care of this for us! The good news is that this does accurately reflect the overall process. Let&rsquo;s imagine Box2D as a magic box.</p>
 
-<p>In <span class="function">(.*?)</span>, we&rsquo;re going to say to Box2D: &ldquo;Hello there. Here are all of the things I want in my world.&rdquo; In <span class="function">(.*?)</span>, we&rsquo;re going to politely ask Box2D: &ldquo;Oh, hello again. If it&rsquo;s not too much trouble, I&rsquo;d like to draw all of those things in my world. Could you tell me where they are?&rdquo;</p>
+<p>In <strong function="">setup()</strong>, we&rsquo;re going to say to Box2D: &ldquo;Hello there. Here are all of the things I want in my world.&rdquo; In <strong function="">draw()</strong>, we&rsquo;re going to politely ask Box2D: &ldquo;Oh, hello again. If it&rsquo;s not too much trouble, I&rsquo;d like to draw all of those things in my world. Could you tell me where they are?&rdquo;</p>
 
 <p>The bad news: it&rsquo;s not as simple as the above explanation would lead you to believe. For one, making the stuff that goes in the Box2D world involves wading through the documentation for how different kinds of shapes are built and configured. Second, we have to remember that we can&rsquo;t tell Box2D anything about pixels, as it will simply get confused and fall apart. Before we tell Box2D what we want in our world, we have to convert our pixel units to Box2D &ldquo;world&rdquo; units. And the same is true when it comes time to draw our stuff. Box2D is going to tell us the location of the things in its world, which we then have to translate for the pixel world.</p>
 
@@ -339,7 +339,7 @@ a.normalize();
 
 <p><a data-primary="JBox2D" data-secondary="full documentation for" data-type="indexterm">&nbsp;</a></p>
 
-<p>As you can see, the concepts are the same, but the function names and the arguments are slightly different. For example, instead of static and non-static <span class="function">(.*?)</span> and <span class="function">(.*?)</span>, if a <strong klass="">Vec2</strong> is altered, the word &ldquo;local&rdquo; is included in the function name&mdash;<span class="function">(.*?)</span>, <span class="function">(.*?)</span>.</p>
+<p>As you can see, the concepts are the same, but the function names and the arguments are slightly different. For example, instead of static and non-static <strong function="">add()</strong> and <strong function="">mult()</strong>, if a <strong klass="">Vec2</strong> is altered, the word &ldquo;local&rdquo; is included in the function name&mdash;<strong function="">addLocal()</strong>, <strong function="">multLocal()</strong>.</p>
 
 <p>We&rsquo;ll cover the basics of what you need to know here, but if you are looking for more, full documentation of <strong klass="">Vec2</strong> can be found by downloading the <a href="http://code.google.com/p/jbox2d/">JBox2D source code</a>.</p>
 </section>
@@ -364,7 +364,7 @@ void setup() {
   box2d.createWorld();
 }</pre>
 
-<p>When you call <span class="function">(.*?)</span>, PBox2D will set up a default gravity for you (pointing down); however, you can always alter the gravity of your world by saying:</p>
+<p>When you call <strong function="">createWorld()</strong>, PBox2D will set up a default gravity for you (pointing down); however, you can always alter the gravity of your world by saying:</p>
 
 <p><a data-primary="setGravity() function (World class)" data-type="indexterm">&nbsp;</a></p>
 
@@ -390,7 +390,7 @@ Vec2 gravity = new Vec2(0, -10);</pre>
 
 <p><a data-primary="coordPixelsToWorld() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="coordinate systems" data-tertiary="converting between" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <strong class="var">(mouseX,mouseY)</strong> in Processing. To convert it, we say we want to convert a &ldquo;coordinate&rdquo; from &ldquo;pixels&rdquo; to &ldquo;world&rdquo;&mdash;<span class="function">(.*?)</span>. Or:</p>
+<p>Let&rsquo;s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <strong class="var">(mouseX,mouseY)</strong> in Processing. To convert it, we say we want to convert a &ldquo;coordinate&rdquo; from &ldquo;pixels&rdquo; to &ldquo;world&rdquo;&mdash;<strong function="">coordPixelsToWorld()</strong>. Or:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Convert mouseX,mouseY to
@@ -548,7 +548,7 @@ bd.bullet = true;</pre>
 
 <p><a data-primary="body (Box2D element)" data-secondary="object" data-tertiary="creating" data-type="indexterm">&nbsp;</a> <a data-primary="createBody() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Once we&rsquo;re done with the definition (<strong klass="">BodyDef</strong>), we can create the <strong klass="">Body</strong> object itself. PBox2D provides a helper function for this&mdash;<span class="function">(.*?)</span>().</p>
+<p>Once we&rsquo;re done with the definition (<strong klass="">BodyDef</strong>), we can create the <strong klass="">Body</strong> object itself. PBox2D provides a helper function for this&mdash;<strong function="">createBody</strong>().</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The Body object is created by passing in the Body
@@ -637,7 +637,7 @@ fd.density = 1.0;</pre>
 
 <p><a data-primary="body (Box2D element)" data-secondary="attaching fixture element to" data-type="indexterm">&nbsp;</a> <a data-primary="createFixture() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="fixture (Box2D element)" data-secondary="attaching to body element" data-type="indexterm">&nbsp;</a></p>
 
-<p>Once the fixture is defined, all we have left to do is attach the shape to the body with the fixture by calling the <span class="function">(.*?)</span> function.</p>
+<p>Once the fixture is defined, all we have left to do is attach the shape to the body with the fixture by calling the <strong function="">createFixture()</strong> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Creates the Fixture and attaches the Shape to the Body object
@@ -722,7 +722,7 @@ body.createFixture(fd);</pre>
 
 <p><a data-primary="body lists" data-secondary="maintaining in Processing" data-type="indexterm">&nbsp;</a> <a data-primary="getBodyList() function (World class)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="body lists" data-tertiary="maintaining" data-type="indexterm">&nbsp;</a> <a data-primary="World class (Box2D)" data-secondary="getBodyList() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now, Box2D will keep a list of all the bodies that exist in the world. This can be accessed by calling the World object&rsquo;s <span class="function">(.*?)</span> function. Nevertheless, what I&rsquo;m going to demonstrate here is a technique for keeping your own body lists. Yes, this may be a bit redundant and we perhaps sacrifice a bit of efficiency. But we more than make up for that with ease of use. This methodology will allow us to program like we&rsquo;re used to in Processing, and we can easily keep track of which bodies are which and render them appropriately. Let&rsquo;s consider the structure of the following Processing sketch:</p>
+<p>Now, Box2D will keep a list of all the bodies that exist in the world. This can be accessed by calling the World object&rsquo;s <strong function="">getBodyList()</strong> function. Nevertheless, what I&rsquo;m going to demonstrate here is a technique for keeping your own body lists. Yes, this may be a bit redundant and we perhaps sacrifice a bit of efficiency. But we more than make up for that with ease of use. This methodology will allow us to program like we&rsquo;re used to in Processing, and we can easily keep track of which bodies are which and render them appropriately. Let&rsquo;s consider the structure of the following Processing sketch:</p>
 
 <figure id="chapter05_figure3"><img alt="Figure 5.3" src="../images/chapter05/ch05_03.png" />
 <figcaption>&nbsp;</figcaption>
@@ -799,7 +799,7 @@ void draw() {
 
 <p><a data-primary="Processing" data-secondary="Box2D objects" data-tertiary="adding to projects" data-type="indexterm">&nbsp;</a></p>
 
-<p>This part is not too tough. We saw this already in our discussion of building a Box2D world. This is taken care of for us by the PBox2D helper class. We can create a PBox2D object and initialize it in <span class="function">(.*?)</span>.</p>
+<p>This part is not too tough. We saw this already in our discussion of building a Box2D world. This is taken care of for us by the PBox2D helper class. We can create a PBox2D object and initialize it in <strong function="">setup()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
@@ -813,7 +813,7 @@ void setup() {
 
 <p><a data-primary="step() function (Box2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Then in <span class="function">(.*?)</span>, we need to make sure we call one very important function: <span class="function">(.*?)</span>. Without this function, nothing would ever happen! <span class="function">(.*?)</span> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <span class="function">(.*?)</span> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the PBox2D source).</p>
+<p>Then in <strong function="">draw()</strong>, we need to make sure we call one very important function: <strong function="">step()</strong>. Without this function, nothing would ever happen! <strong function="">step()</strong> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <strong function="">step()</strong> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the PBox2D source).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -886,7 +886,7 @@ class Box  {
 
 <p><a data-primary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>But now Box2D manages the object&rsquo;s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <strong klass="">Box</strong> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, &ldquo;Pardon me, where are you located?&rdquo; Since this is a task we&rsquo;ll need to do quite often, PBox2D includes a helper function: <span class="function">(.*?)</span>.</p>
+<p>But now Box2D manages the object&rsquo;s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <strong klass="">Box</strong> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, &ldquo;Pardon me, where are you located?&rdquo; Since this is a task we&rsquo;ll need to do quite often, PBox2D includes a helper function: <strong function="">getBodyPixelCoord()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Vec2 pos = box2d.getBodyPixelCoord(body);</pre>
@@ -900,7 +900,7 @@ float a = body.getAngle();</pre>
 
 <p><a data-primary="rotate() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="translate() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Once we have the location and angle, it&rsquo;s easy to display the object using <span class="function">(.*?)</span> and <span class="function">(.*?)</span>. Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
+<p>Once we have the location and angle, it&rsquo;s easy to display the object using <strong function="">translate()</strong> and <strong function="">rotate()</strong>. Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
 
 <figure id="chapter05_figure4"><img alt="Figure 5.4" src="../images/chapter05/ch05_04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1057,7 +1057,7 @@ vertices[0] = box2d.coordPixelsToWorld(0,150);
 // Adding a vertex on the left side of window
 vertices[1] = box2d.coordPixelsToWorld(width,150);</pre>
 
-<p>To create the chain with the vertices, the array is then passed into a function called <span class="function">(.*?)</span>.   (Note that if you want to create a loop where the first vertex connects to the last vertex in a loop, you can use the <span class="function">(.*?)</span> function instead.)</p>
+<p>To create the chain with the vertices, the array is then passed into a function called <strong function="">createChain()</strong>.   (Note that if you want to create a loop where the first vertex connects to the last vertex in a loop, you can use the <strong function="">createLoop()</strong> function instead.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // If you don&rsquo;t want to use the entire array,
@@ -1138,7 +1138,7 @@ class Surface {
   }
 }</pre>
 
-<p>What we need in <span class="function">(.*?)</span> and <span class="function">(.*?)</span> for the <strong klass="">Surface</strong> object is quite simple, given that Box2D takes care of all of the physics for us.</p>
+<p>What we need in <strong function="">setup()</strong> and <strong function="">draw()</strong> for the <strong klass="">Surface</strong> object is quite simple, given that Box2D takes care of all of the physics for us.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PBox2D box2d;
@@ -1193,7 +1193,7 @@ void draw() {
 
 <p>Now that we&rsquo;ve seen how easy it is to make simple geometric forms in Box2D, let&rsquo;s imagine that you want to have a more complex form, such as a little alien stick figure.</p>
 
-<p>There are two strategies in Box2D for making forms that are more advanced than a basic circle or square. One is to use a <strong klass="">PolygonShape</strong> in a different way. In our previous examples, we used <strong klass="">PolygonShape</strong> to generate a rectangular shape with the <span class="function">(.*?)</span> function.</p>
+<p>There are two strategies in Box2D for making forms that are more advanced than a basic circle or square. One is to use a <strong klass="">PolygonShape</strong> in a different way. In our previous examples, we used <strong klass="">PolygonShape</strong> to generate a rectangular shape with the <strong function="">setAsBox()</strong> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PolygonShape ps = new PolygonShape();
@@ -1246,7 +1246,7 @@ ps.set(vertices, vertices.length);
 
 <p><a data-primary="beginShape() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="endShape() function (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now, when it comes time to display the shape in Processing, we can no longer just use <span class="function">(.*?)</span> or <span class="function">(.*?)</span>. Since the shape is built out of custom vertices, we&rsquo;ll want to use Processing&rsquo;s <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, and <span class="function">(.*?)</span> functions. As we saw with the <strong klass="">ChainShape</strong>, we could choose to store the pixel locations of the vertices in our own <strong klass="">ArrayList</strong> for drawing. However, it&rsquo;s also useful to see how we can ask Box2D to report back to use the vertex locations.</p>
+<p>Now, when it comes time to display the shape in Processing, we can no longer just use <strong function="">rect()</strong> or <strong function="">ellipse()</strong>. Since the shape is built out of custom vertices, we&rsquo;ll want to use Processing&rsquo;s <strong function="">beginShape()</strong>, <strong function="">endShape()</strong>, and <strong function="">vertex()</strong> functions. As we saw with the <strong klass="">ChainShape</strong>, we could choose to store the pixel locations of the vertices in our own <strong klass="">ArrayList</strong> for drawing. However, it&rsquo;s also useful to see how we can ask Box2D to report back to use the vertex locations.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void display() {
@@ -1355,7 +1355,7 @@ offset = box2d.vectorPixelsToWorld(offset);
 // Setting the local position of the circle
 circle.m_p.set(offset.x,offset.y);</pre>
 
-<p>Then, when we go to draw the body, we use both <span class="function">(.*?)</span> and <span class="function">(.*?)</span> with the circle offset the same way.</p>
+<p>Then, when we go to draw the body, we use both <strong function="">rect()</strong> and <strong function="">ellipse()</strong> with the circle offset the same way.</p>
 
 <figure class="screenshot"><img alt="ch05 ex06" src="../images/chapter05/ch05_ex06.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1564,7 +1564,7 @@ RevoluteJointDef rjd = new RevoluteJointDef();</pre>
 
 <p><a data-primary="revolute joint type (Box2D)" data-secondary="properties" data-tertiary="configuring" data-type="indexterm">&nbsp;</a></p>
 
-<p>The most important properties of a revolute joint are the two bodies it connects as well as their mutual anchor point (i.e. where they are connected). They are set with the function <span class="function">(.*?)</span>.</p>
+<p>The most important properties of a revolute joint are the two bodies it connects as well as their mutual anchor point (i.e. where they are connected). They are set with the function <strong function="">initialize()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 rjd.initialize(box1.body, box2.body, box1.body.getWorldCenter());</pre>
@@ -1670,7 +1670,7 @@ class Windmill {
 
 <p><a data-primary="mouse joint (Box2D joint type)" data-secondary="setTransform() function" data-type="indexterm">&nbsp;</a> <a data-primary="setTransform() function (Box2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Before we look at the <strong klass="">MouseJoint</strong> object itself, let&rsquo;s ask ourselves why we even need it in the first place. If you look at the Box2D documentation, there is a function called <span class="function">(.*?)</span> that specifically &ldquo;sets the position of the body&rsquo;s origin and rotation (radians).&rdquo; If a body has a position, can&rsquo;t we just assign the body&rsquo;s position to the mouse?</p>
+<p>Before we look at the <strong klass="">MouseJoint</strong> object itself, let&rsquo;s ask ourselves why we even need it in the first place. If you look at the Box2D documentation, there is a function called <strong function="">setTransform()</strong> that specifically &ldquo;sets the position of the body&rsquo;s origin and rotation (radians).&rdquo; If a body has a position, can&rsquo;t we just assign the body&rsquo;s position to the mouse?</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Vec2 mouse = box2d.screenToWorld(x,y);
@@ -1722,7 +1722,7 @@ mouseJoint.setTarget(mouseWorld);</pre>
 	<p><strong><em>Spring class</em></strong><code>&mdash;</code>An object that manages the mouse joint that drags the <strong klass="">Box</strong> object around.</p>
 	</li>
 	<li>
-	<p><strong><em>Main tab</em></strong><code>&mdash;</code>Whenever <span class="function">(.*?)</span> is called, the mouse joint is created; whenever <span class="function">(.*?)</span> is called, the mouse joint is destroyed. This allows us to interact with a body only when the mouse is pressed.</p>
+	<p><strong><em>Main tab</em></strong><code>&mdash;</code>Whenever <strong function="">mousePressed()</strong> is called, the mouse joint is created; whenever <strong function="">mouseReleased()</strong> is called, the mouse joint is destroyed. This allows us to interact with a body only when the mouse is pressed.</p>
 	</li>
 </ol>
 
@@ -1835,7 +1835,7 @@ body.setLinearVelocity(v);</pre>
 
 <p><a data-primary="applyForce() function (Box2D)" data-type="indexterm">&nbsp;</a> <a data-primary="forces" data-secondary="applyForce() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>If we want to use any of our Chapter 2 techniques with Box2D, we need look no further than our trusty <span class="function">(.*?)</span> function. In our <strong klass="">Mover</strong> class we wrote a function called <span class="function">(.*?)</span>, which received a vector, divided it by mass, and accumulated it into the mover&rsquo;s acceleration. With Box2D, the same function exists, but we don&rsquo;t need to write it ourselves. Instead, we can call the Box2D body&rsquo;s <span class="function">(.*?)</span> function!</p>
+<p>If we want to use any of our Chapter 2 techniques with Box2D, we need look no further than our trusty <strong function="">applyForce()</strong> function. In our <strong klass="">Mover</strong> class we wrote a function called <strong function="">applyForce()</strong>, which received a vector, divided it by mass, and accumulated it into the mover&rsquo;s acceleration. With Box2D, the same function exists, but we don&rsquo;t need to write it ourselves. Instead, we can call the Box2D body&rsquo;s <strong function="">applyForce()</strong> function!</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Box {
@@ -1910,7 +1910,7 @@ Vec2 attract(Mover m) {
 
 <p><a data-primary="beginContact() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="collisions" data-secondary="beginContact() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>If you are using PBox2D, as we are here, you don&rsquo;t need to implement your own interface. Detecting collision events is done through a callback function. Much like <span class="function">(.*?)</span> is triggered when the mouse is pressed, <span class="function">(.*?)</span> is triggered when two shapes collide.</p>
+<p>If you are using PBox2D, as we are here, you don&rsquo;t need to implement your own interface. Detecting collision events is done through a callback function. Much like <strong function="">mousePressed()</strong> is triggered when the mouse is pressed, <strong function="">beginContact()</strong> is triggered when two shapes collide.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The mousePressed event with which we are comfortable.
@@ -1939,22 +1939,22 @@ void setup() {
 
 <ol>
 	<li>
-	<p><span class="function">(.*?)</span> &mdash;Triggered whenever two shapes first come into contact with each other.</p>
+	<p><strong function="">beginContact()</strong> &mdash;Triggered whenever two shapes first come into contact with each other.</p>
 	</li>
 	<li>
-	<p><span class="function">(.*?)</span> &mdash;Triggered over and over again as long as shapes continue to be in contact.</p>
+	<p><strong function="">endContact()</strong> &mdash;Triggered over and over again as long as shapes continue to be in contact.</p>
 	</li>
 	<li>
-	<p><span class="function">(.*?)</span> &mdash;Triggered before Box2D solves the outcome of the collision, i.e. before <span class="function">(.*?)</span>. It can be used to disable a collision if necessary.</p>
+	<p><strong function="">preSolve()</strong> &mdash;Triggered before Box2D solves the outcome of the collision, i.e. before <strong function="">beginContact()</strong>. It can be used to disable a collision if necessary.</p>
 	</li>
 	<li>
-	<p><span class="function">(.*?)</span> &mdash;Triggered after the outcome of the collision is solved. It allows you to gather information about that &ldquo;solution&rdquo; (known as an &ldquo;impulse&rdquo;).</p>
+	<p><strong function="">postSolve()</strong> &mdash;Triggered after the outcome of the collision is solved. It allows you to gather information about that &ldquo;solution&rdquo; (known as an &ldquo;impulse&rdquo;).</p>
 	</li>
 </ol>
 
-<p>The details behind <span class="function">(.*?)</span> and <span class="function">(.*?)</span> are beyond the scope of this book; however, we are going to take a close look at <span class="function">(.*?)</span>, which will cover the majority of conventional cases in which you want to trigger an action when a collision occurs. <span class="function">(.*?)</span> works identically to <span class="function">(.*?)</span>, the only difference being that it occurs the moment bodies separate.</p>
+<p>The details behind <strong function="">preSolve()</strong> and <strong function="">postSolve()</strong> are beyond the scope of this book; however, we are going to take a close look at <strong function="">beginContact()</strong>, which will cover the majority of conventional cases in which you want to trigger an action when a collision occurs. <strong function="">endContact()</strong> works identically to <strong function="">beginContact()</strong>, the only difference being that it occurs the moment bodies separate.</p>
 
-<p><span class="function">(.*?)</span> is written as follows:</p>
+<p><strong function="">beginContact()</strong> is written as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void beginContact(Contact cp) {
@@ -1990,7 +1990,7 @@ Body b2 = f2.getBody();
 <section data-type="sect2" id="_step_3_bodies_could_you_tell_me_which_particles_you_are_associated_with">
 <h2>Step 3: Bodies, could you tell me which Particles you are associated with?</h2>
 
-<p>OK, this is the harder part. After all, Box2D doesn&rsquo;t know anything about our code. Sure, it is doing all sorts of stuff to keep track of the relationships between shapes and bodies and joints, but it&rsquo;s up to us to manage our own objects and their associations with Box2D elements. Luckily for us, Box2D provides a function that allows us to attach our Processing object (a <strong klass="">Particle</strong>) to a Box2D body via the <span class="function">(.*?)</span> and <span class="function">(.*?)</span> methods.</p>
+<p>OK, this is the harder part. After all, Box2D doesn&rsquo;t know anything about our code. Sure, it is doing all sorts of stuff to keep track of the relationships between shapes and bodies and joints, but it&rsquo;s up to us to manage our own objects and their associations with Box2D elements. Luckily for us, Box2D provides a function that allows us to attach our Processing object (a <strong klass="">Particle</strong>) to a Box2D body via the <strong function="">setUserData()</strong> and <strong function="">getUserData()</strong> methods.</p>
 
 <p>Let&rsquo;s take a look at the constructor in our <strong klass="">Particle</strong> class where the body is made. We are expanding our body-making procedure by one line of code, noted below.</p>
 
@@ -2014,7 +2014,7 @@ class Particle {
     body.setUserData(this);  //[bold]
   }</pre>
 
-<p>Later, in our <span class="function">(.*?)</span> function, once we know the body, we can access the <strong klass="">Particle</strong> object with <span class="function">(.*?)</span>.</p>
+<p>Later, in our <strong function="">addContact()</strong> function, once we know the body, we can access the <strong klass="">Particle</strong> object with <strong function="">getUserData()</strong>.</p>
 
 <figure class="screenshot"><img alt="ch05 ex11" src="../images/chapter05/ch05_ex11.png" />
 <figcaption>&nbsp;</figcaption>
@@ -2056,7 +2056,7 @@ void beginContact(Contact cp) {
     p.change();
   }</pre>
 
-<p>It should also be noted that due to how Box2D triggers these callbacks, you cannot create or destroy Box2D entities inside of <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, or <span class="function">(.*?)</span>. If you want to do this, you&rsquo;ll need to set a variable inside an object (something like: <span class="function">(.*?)</span>), which you check during <span class="function">(.*?)</span> and then delete objects.</p>
+<p>It should also be noted that due to how Box2D triggers these callbacks, you cannot create or destroy Box2D entities inside of <strong function="">beginContact()</strong>, <strong function="">endContact()</strong>, <strong function="">preSolve()</strong>, or <strong function="">postSolve()</strong>. If you want to do this, you&rsquo;ll need to set a variable inside an object (something like: <strong function="">markForDeletion = true</strong>), which you check during <strong function="">draw()</strong> and then delete objects.</p>
 
 <div data-type="exercise" id="chapter05_exercise11">
 <h5>Exercise 5.11</h5>
@@ -2419,7 +2419,7 @@ void setup() {
 
 <p><a data-primary="update() function (toxiclibs)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Finally, in order to calculate the physics of the world and move the objects in the world, we have to call <span class="function">(.*?)</span>. Typically this would happen once per frame in <span class="function">(.*?)</span>.</p>
+<p>Finally, in order to calculate the physics of the world and move the objects in the world, we have to call <strong function="">update()</strong>. Typically this would happen once per frame in <strong function="">draw()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -2498,15 +2498,15 @@ class Particle extends VerletParticle2D {
 
 <p><a data-primary="addParticle() function (toxiclibs)" data-type="indexterm">&nbsp;</a> <a data-primary="particle systems" data-secondary="addParticle() function (toxiclibs)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Just making a particle isn&rsquo;t enough, however. We have to make sure we tell our physics world about them with the <span class="function">(.*?)</span> function.</p>
+<p>Just making a particle isn&rsquo;t enough, however. We have to make sure we tell our physics world about them with the <strong function="">addParticle()</strong> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   physics.addParticle(p1);
   physics.addParticle(p2);</pre>
 
-<p>If you look at the toxiclibs documentation, you&rsquo;ll see that the <span class="function">(.*?)</span> expects a <strong klass="">VerletParticle2D</strong> object.</p>
+<p>If you look at the toxiclibs documentation, you&rsquo;ll see that the <strong function="">addParticle()</strong> expects a <strong klass="">VerletParticle2D</strong> object.</p>
 
-<p><span class="function">(.*?)</span></p>
+<p><strong function="">addParticle(VerletParticle2D particle)</strong></p>
 
 <p>And how can we then pass into the function our own <strong klass="">Particle</strong> object? Remember that other tenet of object-oriented programming&mdash;polymorphism? Here, because our <strong klass="">Particle</strong> class <strong klass="">extends VerletParticle2D</strong>, we can choose to treat our particle in two different ways&mdash;as a <strong klass="">Particle</strong> or as a <strong klass="">VerletParticle2D</strong>. This is an incredibly powerful feature of object-oriented programming. If we build our custom classes based on classes from toxiclibs, we can use our objects in conjunction with all of the functions toxiclibs has to offer.</p>
 
@@ -2548,9 +2548,9 @@ physics.addSpring(spring);</pre>
 
 <p><a data-primary="lock() function (toxiclibs)" data-type="indexterm">&nbsp;</a> <a data-primary="springs" data-secondary="lock() function (toxiclibs)" data-type="indexterm">&nbsp;</a></p>
 
-<p>One thing we saw with Box2D is that the physics simulation broke down when we overrode it and manually set the location of a body. With toxiclibs, we don&rsquo;t have this problem. If we want to move the location of a particle, we can simply set its <em>x</em> and <em>y</em> location manually. However, before we do so, it&rsquo;s generally a good idea to call the <span class="function">(.*?)</span> function.</p>
+<p>One thing we saw with Box2D is that the physics simulation broke down when we overrode it and manually set the location of a body. With toxiclibs, we don&rsquo;t have this problem. If we want to move the location of a particle, we can simply set its <em>x</em> and <em>y</em> location manually. However, before we do so, it&rsquo;s generally a good idea to call the <strong function="">lock()</strong> function.</p>
 
-<p><span class="function">(.*?)</span> is typically used to lock a particle in place and is identical to setting a Box2D body&rsquo;s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation.  Let&rsquo;s say you want to move a given particle whenever you click the mouse.</p>
+<p><strong function="">lock()</strong> is typically used to lock a particle in place and is identical to setting a Box2D body&rsquo;s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation.  Let&rsquo;s say you want to move a given particle whenever you click the mouse.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   if (mousePressed) {
@@ -2712,7 +2712,7 @@ if (i != 0) {
 Particle head=particles.get(0);
 head.lock();</pre>
 
-<p>And if we want to draw all the particles as being connected with a line, along with a circle for the last particle, we can use <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, and <span class="function">(.*?)</span>, accessing the particle locations from our <strong klass="">ArrayList</strong>.</p>
+<p>And if we want to draw all the particles as being connected with a line, along with a circle for the last particle, we can use <strong function="">beginShape()</strong>, <strong function="">endShape()</strong>, and <strong function="">vertex()</strong>, accessing the particle locations from our <strong klass="">ArrayList</strong>.</p>
 
 <figure class="screenshot"><img alt="ch05 ex13" src="../images/chapter05/ch05_ex13.png" />
 <figcaption>&nbsp;</figcaption>
@@ -2813,7 +2813,7 @@ class Cluster {
     }
   }</pre>
 
-<p>Let&rsquo;s assume we added a <span class="function">(.*?)</span> function to draw all the nodes in the cluster and created a <strong klass="">Cluster</strong> object in <span class="function">(.*?)</span> and displayed it in <span class="function">(.*?)</span>. If we ran the sketch as is, nothing would happen. Why? Because we forgot the whole force-directed graph part! We need to connect every single node to every other node with a force. But what exactly do we mean by that? Let&rsquo;s assume we have four <strong klass="">Node</strong> objects: 0, 1, 2 and 3. Here are our connections:</p>
+<p>Let&rsquo;s assume we added a <strong function="">display()</strong> function to draw all the nodes in the cluster and created a <strong klass="">Cluster</strong> object in <strong function="">setup()</strong> and displayed it in <strong function="">draw()</strong>. If we ran the sketch as is, nothing would happen. Why? Because we forgot the whole force-directed graph part! We need to connect every single node to every other node with a force. But what exactly do we mean by that? Let&rsquo;s assume we have four <strong klass="">Node</strong> objects: 0, 1, 2 and 3. Here are our connections:</p>
 
 <p><strong mono="">0 connected to 1<br />
 0 connected to 2<br />
@@ -2907,7 +2907,7 @@ void draw() {
 
 <p><a data-primary="addForce() function (toxiclibs)" data-type="indexterm">&nbsp;</a> <a data-primary="toxiclibs" data-secondary="attraction/repulsion behaviors and" data-type="indexterm">&nbsp;</a></p>
 
-<p>When we looked at adding an attraction force to Box2D, we found that the Box2D <strong klass="">Body</strong> class included an <span class="function">(.*?)</span> function. All we needed to do was calculate the attraction force (Force = G * mass1 * mass2 / distance squared) as a vector and apply it to the body. toxiclibs <strong klass="">VerletParticle</strong> class also includes a function called <span class="function">(.*?)</span> that we can use to apply any calculated force to a particle.</p>
+<p>When we looked at adding an attraction force to Box2D, we found that the Box2D <strong klass="">Body</strong> class included an <strong function="">applyForce()</strong> function. All we needed to do was calculate the attraction force (Force = G * mass1 * mass2 / distance squared) as a vector and apply it to the body. toxiclibs <strong klass="">VerletParticle</strong> class also includes a function called <strong function="">addForce()</strong> that we can use to apply any calculated force to a particle.</p>
 
 <p><a data-primary="AttractionBehavior class (toxiclibs)" data-type="indexterm">&nbsp;</a> <a data-primary="toxiclibs" data-secondary="AttractionBehavior class" data-type="indexterm">&nbsp;</a></p>
 

@@ -271,7 +271,7 @@ class Perceptron {
     }
   }</pre>
 
-<p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <span class="function">(.*?)</span>. In this example, we&rsquo;ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
+<p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <strong function="">feedforward()</strong>. In this example, we&rsquo;ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   int feedforward(float[] inputs) {
@@ -539,7 +539,7 @@ float f(float x) {
 float x = random(width);
 float y = random(height);</pre>
 
-<p>How do we know if this point is above or below the line? The line function <span class="function">(.*?)</span> gives us the <strong class="var">y</strong> value on the line for that <strong class="var">x</strong> position. Let&rsquo;s call that <strong class="var">yline</strong>.</p>
+<p>How do we know if this point is above or below the line? The line function <strong function="">f(x)</strong> gives us the <strong class="var">y</strong> value on the line for that <strong class="var">x</strong> position. Let&rsquo;s call that <strong class="var">yline</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The y position on the line
@@ -651,7 +651,7 @@ void draw() {
 
 <p>We are now going to take significant creative license with the concept of a neural network. This will allow us to stick with the basics and avoid some of the highly complex algorithms associated with more sophisticated neural networks. Here we&rsquo;re not so concerned with following rules outlined in artificial intelligence textbooks&mdash;we&rsquo;re just hoping to make something interesting and brain-like.</p>
 
-<p>Remember our good friend the <strong klass="">Vehicle</strong> class? You know, that one for making objects with a location, velocity, and acceleration? That could obey Newton&rsquo;s laws with an <span class="function">(.*?)</span> function and move around the window according to a variety of steering rules?</p>
+<p>Remember our good friend the <strong klass="">Vehicle</strong> class? You know, that one for making objects with a location, velocity, and acceleration? That could obey Newton&rsquo;s laws with an <strong function="">applyForce()</strong> function and move around the window according to a variety of steering rules?</p>
 
 <p>What if we added one more variable to our <strong klass="">Vehicle</strong> class?</p>
 
@@ -719,7 +719,7 @@ class Vehicle {
 
 <p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an array of forces to the vehicle&rsquo;s &ldquo;brain&rdquo; object and allow the brain to weight and sum the forces for us. The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could make decisions as to how to steer on its own, learning from its mistakes and responding to stimuli in its environment. Let&rsquo;s see how this works.</p>
 
-<p>We can use the line classification perceptron as a model, with one important difference&mdash;the inputs are not single numbers, but vectors! Let&rsquo;s look at how the <span class="function">(.*?)</span> function works in our vehicle&rsquo;s perceptron, alongside the one from our previous example.</p>
+<p>We can use the line classification perceptron as a model, with one important difference&mdash;the inputs are not single numbers, but vectors! Let&rsquo;s look at how the <strong function="">feedforward()</strong> function works in our vehicle&rsquo;s perceptron, alongside the one from our previous example.</p>
 
 <table class="codewide">
 	<tbody>
@@ -837,7 +837,7 @@ void train(float[] inputs, int desired) {
 weights[i] += c*error.x*forces[i].x;
 weights[i] += c*error.y*forces[i].y;</pre>
 
-<p>We can now look at the <strong klass="">Vehicle</strong> class and see how the <span class="function">(.*?)</span> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
+<p>We can now look at the <strong klass="">Vehicle</strong> class and see how the <strong function="">steer</strong> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_02_SeekingNeural/_10_02_SeekingNeural.pde processingjs/chapter10/_10_02_SeekingNeural/Perceptron.pde processingjs/chapter10/_10_02_SeekingNeural/Vehicle.pde"><img alt="ch10 ex02" src="../images/chapter10/ch10_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1106,7 +1106,7 @@ class Connection {
   }
 }</pre>
 
-<p>Once we have the idea of a <strong klass="">Connection</strong> object, we can write a function (let&rsquo;s put it inside the <strong klass="">Network</strong> class) that connects two neurons together&mdash;the goal being that in addition to making the neurons in <span class="function">(.*?)</span>, we can also connect them.</p>
+<p>Once we have the idea of a <strong klass="">Connection</strong> object, we can write a function (let&rsquo;s put it inside the <strong klass="">Network</strong> class) that connects two neurons together&mdash;the goal being that in addition to making the neurons in <strong function="">setup()</strong>, we can also connect them.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -1130,7 +1130,7 @@ void setup() {
   network.addNeuron(d);
 }</pre>
 
-<p>The <strong klass="">Network</strong> class therefore needs a new function called <span class="function">(.*?)</span>, which makes a <strong klass="">Connection</strong> object between the two specified neurons.</p>
+<p>The <strong klass="">Network</strong> class therefore needs a new function called <strong function="">connect()</strong>, which makes a <strong klass="">Connection</strong> object between the two specified neurons.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void connect(Neuron a, Neuron b) {
@@ -1150,7 +1150,7 @@ void setup() {
 
 <p>In some cases, we also might want <strong klass="">Neuron</strong> <strong class="var">b</strong> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
 
-<p>For this to work, we have to add an <strong klass="">ArrayList</strong> of connections to the <strong klass="">Neuron</strong> class. Then we implement the <span class="function">(.*?)</span> function that stores the connection in that <strong klass="">ArrayList</strong>.</p>
+<p>For this to work, we have to add an <strong klass="">ArrayList</strong> of connections to the <strong klass="">Neuron</strong> class. Then we implement the <strong function="">addConnection()</strong> function that stores the connection in that <strong klass="">ArrayList</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Neuron {
@@ -1170,7 +1170,7 @@ class Neuron {
   }
   //[end]</pre>
 
-<p>The neuron&rsquo;s <span class="function">(.*?)</span> function can draw the connections as well. And finally, we have our network diagram.</p>
+<p>The neuron&rsquo;s <strong function="">display()</strong> function can draw the connections as well. And finally, we have our network diagram.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_03_NetworkViz/_10_03_NetworkViz.pde processingjs/chapter10/_10_03_NetworkViz/Connection.pde processingjs/chapter10/_10_03_NetworkViz/Network.pde processingjs/chapter10/_10_03_NetworkViz/Neuron.pde"><img alt="ch10 ex03" src="../images/chapter10/ch10_ex03.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1224,7 +1224,7 @@ class Network {
   }
   //[end]</pre>
 
-<p>What did we do? Well, we made it necessary to add a function called <span class="function">(.*?)</span> in the <strong klass="">Neuron</strong> class that will receive the input and process it.</p>
+<p>What did we do? Well, we made it necessary to add a function called <strong function="">feedforward()</strong> in the <strong klass="">Neuron</strong> class that will receive the input and process it.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Neuron
@@ -1260,7 +1260,7 @@ class Neuron
     }
   }</pre>
 
-<p>Now, what do we do in the <span class="function">(.*?)</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">(.*?)</span> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <strong class="var">sum</strong> variable and make it the output.</p>
+<p>Now, what do we do in the <strong function="">fire()</strong> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <strong function="">feedforward()</strong> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <strong class="var">sum</strong> variable and make it the output.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void fire() {
@@ -1336,7 +1336,7 @@ class Connection {
 
 <p>Notice how our <strong klass="">Connection</strong> class now needs three new variables. We need a <strong klass="">boolean</strong> &ldquo;sending&rdquo; that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <strong klass="">PVector</strong> &ldquo;sender&rdquo; for the location where we&rsquo;ll draw the traveling dot. And since we aren&rsquo;t passing the output along this instant, we&rsquo;ll need to store it in a variable that will do the job later.</p>
 
-<p>The <span class="function">(.*?)</span> function is called the moment the connection becomes active. Once it&rsquo;s active, we&rsquo;ll need to call another function continuously (each time through <span class="function">(.*?)</span>), one that will update the location of the traveling data.</p>
+<p>The <strong function="">feedforward()</strong> function is called the moment the connection becomes active. Once it&rsquo;s active, we&rsquo;ll need to call another function continuously (each time through <strong function="">draw()</strong>), one that will update the location of the traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
@@ -1367,7 +1367,7 @@ class Connection {
     }
   }</pre>
 
-<p>Let&rsquo;s look at the <strong klass="">Connection</strong> class all together, as well as our new <span class="function">(.*?)</span> function.</p>
+<p>Let&rsquo;s look at the <strong klass="">Connection</strong> class all together, as well as our new <strong function="">draw()</strong> function.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_04_NetworkAnimation/_10_04_NetworkAnimation.pde processingjs/chapter10/_10_04_NetworkAnimation/Connection.pde processingjs/chapter10/_10_04_NetworkAnimation/Network.pde processingjs/chapter10/_10_04_NetworkAnimation/Neuron.pde"><img alt="ch10 ex04" src="../images/chapter10/ch10_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1458,7 +1458,7 @@ class Connection {
 <div data-type="exercise" id="chapter10_exercise7">
 <h5>Exercise 10.7</h5>
 
-<p>Instead of <span class="function">(.*?)</span>, use moving bodies with steering forces to visualize the flow of information in the network.</p>
+<p>Instead of <strong function="">lerp()</strong>, use moving bodies with steering forces to visualize the flow of information in the network.</p>
 </div>
 
 <div style="page-break-after:always;">&nbsp;</div>

@@ -22,7 +22,7 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;<br />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>For us nature coders, we have to ask the question: Can we describe our world with Euclidean geometry? The LCD screen I&rsquo;m staring at right now sure looks like a rectangle. And the plum I ate this morning is circular. But what if I were to look further, and consider the trees that line the street, the leaves that hang off those trees, the lightning from last night&rsquo;s thunderstorm, the cauliflower I ate for dinner, the blood vessels in my body, and the mountains and coastlines that cover land beyond New York City? Most of the stuff you find in nature cannot be described by the idealized geometrical forms of Euclidean geometry. So if we want to start building computational designs with patterns beyond the simple shapes <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, and <span class="function">(.*?)</span>, it&rsquo;s time for us to learn about the concepts behind and techniques for simulating the geometry of nature: fractals.</p>
+<p>For us nature coders, we have to ask the question: Can we describe our world with Euclidean geometry? The LCD screen I&rsquo;m staring at right now sure looks like a rectangle. And the plum I ate this morning is circular. But what if I were to look further, and consider the trees that line the street, the leaves that hang off those trees, the lightning from last night&rsquo;s thunderstorm, the cauliflower I ate for dinner, the blood vessels in my body, and the mountains and coastlines that cover land beyond New York City? Most of the stuff you find in nature cannot be described by the idealized geometrical forms of Euclidean geometry. So if we want to start building computational designs with patterns beyond the simple shapes <strong function="">ellipse()</strong>, <strong function="">rect()</strong>, and <strong function="">line()</strong>, it&rsquo;s time for us to learn about the concepts behind and techniques for simulating the geometry of nature: fractals.</p>
 
 <section data-type="sect1" id="chapter08_section1">
 <h1>8.1 What Is a Fractal?</h1>
@@ -106,7 +106,7 @@ void someFunction() {
   background(0);
 }</pre>
 
-<p>What would happen if we called the function we are defining within the function itself? Can <span class="function">(.*?)</span> call <span class="function">(.*?)</span>?</p>
+<p>What would happen if we called the function we are defining within the function itself? Can <strong function="">someFunction()</strong> call <strong function="">someFunction()</strong>?</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void someFunction() {
@@ -122,7 +122,7 @@ void someFunction() {
 <p><strong formula="">n! = n * n &ndash; 1 * . . . . * 3 * 2 * 1</strong><br />
 <strong formula="">0! = 1</strong></p>
 
-<p>Here we&rsquo;ll write a function in Processing that uses a <span class="function">(.*?)</span> loop to calculate factorial:</p>
+<p>Here we&rsquo;ll write a function in Processing that uses a <strong function="">for</strong> loop to calculate factorial:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int factorial(int n) {
@@ -164,7 +164,7 @@ int factorial(int n) {
   }
 }</pre>
 
-<p>It may look crazy, but it works. Here are the steps that happen when <span class="function">(.*?)</span> is called.</p>
+<p>It may look crazy, but it works. Here are the steps that happen when <strong function="">factorial(4)</strong> is called.</p>
 
 <figure id="chapter08_figure9"><img alt="Figure 8.9" src="../images/chapter08/ch08_09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -189,15 +189,15 @@ void drawCircle(int x, int y, float radius) {
   }
 }</pre>
 
-<p><span class="function">(.*?)</span> draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.</p>
+<p><strong function="">drawCircle()</strong> draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.</p>
 
 <p><a data-primary="exit conditions for recursion" data-type="indexterm">&nbsp;</a> <a data-primary="recursion" data-secondary="exit conditions" data-type="indexterm">&nbsp;</a></p>
 
-<p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a crucial point. As with iteration, <em>all recursive functions must have an exit condition!</em> You likely are already aware that all <span class="function">(.*?)</span> and <span class="function">(.*?)</span> loops must include a boolean expression that eventually evaluates to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite loop. The same can be said about recursion. If a recursive function calls itself forever and ever, you&rsquo;ll be most likely be treated to a nice frozen screen.</p>
+<p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a crucial point. As with iteration, <em>all recursive functions must have an exit condition!</em> You likely are already aware that all <strong function="">for</strong> and <strong function="">while</strong> loops must include a boolean expression that eventually evaluates to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite loop. The same can be said about recursion. If a recursive function calls itself forever and ever, you&rsquo;ll be most likely be treated to a nice frozen screen.</p>
 
 <p>This circles example is rather trivial; it could easily be achieved through simple iteration. However, for scenarios in which a function calls itself more than once, recursion becomes wonderfully elegant.</p>
 
-<p>Let&rsquo;s make <span class="function">(.*?)</span> a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
+<p>Let&rsquo;s make <strong function="">drawCircle()</strong> a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter08/_8_02_Recursion/_8_02_Recursion.pde"><img alt="ch08 ex02" src="../images/chapter08/ch08_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -264,7 +264,7 @@ void cantor(float x, float y, float len) {
   line(x,y,x+len,y);
 }</pre>
 
-<p>The above <span class="function">(.*?)</span> function draws a line that starts at pixel coordinate <em>(x,y)</em> with a length of <strong class="var">len</strong>. (The line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function, saying:</p>
+<p>The above <strong function="">cantor()</strong> function draws a line that starts at pixel coordinate <em>(x,y)</em> with a length of <strong class="var">len</strong>. (The line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function, saying:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 cantor(10, 20, width-20);</pre>
@@ -298,14 +298,14 @@ void cantor(float x, float y, float len) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>While this is a fine start, such a manual approach of calling <span class="function">(.*?)</span> for each line is not what we want. It will get unwieldy very quickly, as we&rsquo;d need four, then eight, then sixteen calls to <span class="function">(.*?)</span>. Yes, a <span class="function">(.*?)</span> loop is our usual way around such a problem, but give that a try and you&rsquo;ll see that working out the math for each iteration quickly proves inordinately complicated. Here is where recursion comes and rescues us.</p>
+<p>While this is a fine start, such a manual approach of calling <strong function="">line()</strong> for each line is not what we want. It will get unwieldy very quickly, as we&rsquo;d need four, then eight, then sixteen calls to <strong function="">line()</strong>. Yes, a <strong function="">for</strong> loop is our usual way around such a problem, but give that a try and you&rsquo;ll see that working out the math for each iteration quickly proves inordinately complicated. Here is where recursion comes and rescues us.</p>
 
 <p>Take a look at where we draw that first line from the start to the one-third mark.</p>
 
 <pre data-code-language="java" data-type="programlisting">
    line(x,y,x+len/3,y);</pre>
 
-<p>Instead of calling the <span class="function">(.*?)</span> function directly, we can simply call the <span class="function">(.*?)</span> function itself. After all, what does the <span class="function">(.*?)</span> function do? It draws a line at an <em>(x,y)</em> location with a given length! And so:</p>
+<p>Instead of calling the <strong function="">line()</strong> function directly, we can simply call the <strong function="">cantor()</strong> function itself. After all, what does the <strong function="">cantor()</strong> function do? It draws a line at an <em>(x,y)</em> location with a given length! And so:</p>
 
 <pre data-code-language="java" data-type="programlisting">
    line(x,y,x+len/3,y);         becomes -------&gt;  cantor(x,y,len/3);</pre>
@@ -327,7 +327,7 @@ void cantor(float x, float y, float len) {
   cantor(x+len*2/3,y,len/3);
 }</pre>
 
-<p>And since the <span class="function">(.*?)</span> function is called recursively, the same rule will be applied to the next lines and to the next and to the next as <span class="function">(.*?)</span> calls itself again and again! Now, don&rsquo;t go and run this code yet. We&rsquo;re missing that crucial element: an exit condition. We&rsquo;ll want to make sure we stop at some point&mdash;for example, if the length of the line ever is less than 1 pixel.</p>
+<p>And since the <strong function="">cantor()</strong> function is called recursively, the same rule will be applied to the next lines and to the next and to the next as <strong function="">cantor()</strong> calls itself again and again! Now, don&rsquo;t go and run this code yet. We&rsquo;re missing that crucial element: an exit condition. We&rsquo;ll want to make sure we stop at some point&mdash;for example, if the length of the line ever is less than 1 pixel.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter08/_8_04_CantorSet/_8_04_CantorSet.pde"><img alt="ch08 ex04" src="../images/chapter08/ch08_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -349,7 +349,7 @@ void cantor(float x, float y, float len) {
 <div data-type="exercise">
 <h5>Exercise 8.1</h5>
 
-<p>Using <span class="function">(.*?)</span> and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</p>
+<p>Using <strong function="">drawCircle()</strong> and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</p>
 
 <figure class="screenshot"><img alt="ch08 exc01" src="../images/chapter08/ch08_exc01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -390,7 +390,7 @@ void cantor(float x, float y, float len) {
 
 <p>In order to accomplish our goal of treating each segment as an individual object, we must first decide what this object should be in the first place. What data should it store? What functions should it have?</p>
 
-<p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each <strong klass="">KochLine</strong> object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are <strong klass="">PVector</strong> objects, and the line is drawn with Processing&rsquo;s <span class="function">(.*?)</span> function.</p>
+<p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each <strong klass="">KochLine</strong> object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are <strong klass="">PVector</strong> objects, and the line is drawn with Processing&rsquo;s <strong function="">line()</strong> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class KochLine {
@@ -417,7 +417,7 @@ class KochLine {
 <pre data-code-language="java" data-type="programlisting">
 ArrayList&lt;KochLine&gt; lines;</pre>
 
-<p>In <span class="function">(.*?)</span>, we&rsquo;ll want to create the <strong klass="">ArrayList</strong> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
+<p>In <strong function="">setup()</strong>, we&rsquo;ll want to create the <strong klass="">ArrayList</strong> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -434,7 +434,7 @@ void setup() {
   lines.add(new KochLine(start, end));
 }</pre>
 
-<p>Then in <span class="function">(.*?)</span>, all <strong klass="">KochLine</strong> objects (just one right now) can be displayed in a loop.</p>
+<p>Then in <strong function="">draw()</strong>, all <strong klass="">KochLine</strong> objects (just one right now) can be displayed in a loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -488,7 +488,7 @@ void generate() {
   lines = next;
 }</pre>
 
-<p>By calling <span class="function">(.*?)</span> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong klass="">KochLine</strong> objects.  Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong klass="">KochLine</strong> object uses <strong klass="">PVector</strong>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <strong klass="">KochLine</strong> object.</p>
+<p>By calling <strong function="">generate()</strong> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong klass="">KochLine</strong> objects.  Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong klass="">KochLine</strong> object uses <strong klass="">PVector</strong>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <strong klass="">KochLine</strong> object.</p>
 
 <figure id="chapter08_figure16"><img alt="Figure 8.16" src="../images/chapter08/ch08_16.png" />
 <figcaption>&nbsp;</figcaption>
@@ -528,7 +528,7 @@ void generate() {
   lines = next;
 }</pre>
 
-<p>Now we just need to write five new functions in the <strong klass="">KochLine</strong> class, each one returning a <strong klass="">PVector</strong> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let&rsquo;s knock off <span class="function">(.*?)</span> and <span class="function">(.*?)</span> first, which are simply the start and end points of the original line.</p>
+<p>Now we just need to write five new functions in the <strong klass="">KochLine</strong> class, each one returning a <strong klass="">PVector</strong> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let&rsquo;s knock off <strong function="">kochA()</strong> and <strong function="">kochE()</strong> first, which are simply the start and end points of the original line.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector kochA() {
@@ -595,7 +595,7 @@ void generate() {
     return a;
   }</pre>
 
-<p>Putting it all together, if we call <span class="function">(.*?)</span> five times in <span class="function">(.*?)</span>, we&rsquo;ll see the following result.</p>
+<p>Putting it all together, if we call <strong function="">generate()</strong> five times in <strong function="">setup()</strong>, we&rsquo;ll see the following result.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter08/_8_05_Koch/_8_05_Koch.pde processingjs/chapter08/_8_05_Koch/KochFractal.pde processingjs/chapter08/_8_05_Koch/KochLine.pde"><img alt="ch08 ex05" src="../images/chapter08/ch08_ex05.png" />
 <figcaption>&nbsp;</figcaption>
@@ -676,9 +676,9 @@ void setup() {
 
 <p><a data-primary="Transformations tutorial (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="fractals" data-secondary="transformation matrix (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="popMatrix() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="pushMatrix() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="transformation matrix (Processing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>The part that is a bit more difficult than our previous fractals lies in the use of the word <em>rotate</em> in the fractal&rsquo;s rules. Each new branch must rotate relative to the previous branch, which is rotated relative to all its previous branches. Luckily for us, Processing has a mechanism to keep track of rotations for us&mdash;the <strong><em>transformation matrix</em></strong>. If you aren&rsquo;t familiar with the functions <span class="function">(.*?)</span> and <span class="function">(.*?)</span>, I suggest you read the online Processing tutorial <a href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover the concepts you&rsquo;ll need for this particular example.</p>
+<p>The part that is a bit more difficult than our previous fractals lies in the use of the word <em>rotate</em> in the fractal&rsquo;s rules. Each new branch must rotate relative to the previous branch, which is rotated relative to all its previous branches. Luckily for us, Processing has a mechanism to keep track of rotations for us&mdash;the <strong><em>transformation matrix</em></strong>. If you aren&rsquo;t familiar with the functions <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong>, I suggest you read the online Processing tutorial <a href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover the concepts you&rsquo;ll need for this particular example.</p>
 
-<p>Let&rsquo;s begin by drawing a single branch, the trunk of the tree. Since we are going to involve the <span class="function">(.*?)</span> function, we&rsquo;ll need to make sure we are continuously translating along the branches while we draw the tree. And since the root starts at the bottom of the window (see above), the first step requires translating to that spot:</p>
+<p>Let&rsquo;s begin by drawing a single branch, the trunk of the tree. Since we are going to involve the <strong function="">rotate()</strong> function, we&rsquo;ll need to make sure we are continuously translating along the branches while we draw the tree. And since the root starts at the bottom of the window (see above), the first step requires translating to that spot:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 translate(width/2,height);</pre>
@@ -705,7 +705,7 @@ translate(0,-100);
 rotate(PI/6);
 line(0,0,0,-100);</pre>
 
-<p>Now that we have a branch going to the right, we need one going to the left. We can use <span class="function">(.*?)</span> to save the transformation state before we rotate, letting us call <span class="function">(.*?)</span> to restore that state and draw the branch to the left. Let&rsquo;s look at all the code together.</p>
+<p>Now that we have a branch going to the right, we need one going to the left. We can use <strong function="">pushMatrix()</strong> to save the transformation state before we rotate, letting us call <strong function="">popMatrix()</strong> to restore that state and draw the branch to the left. Let&rsquo;s look at all the code together.</p>
 
 <figure class="two-col" id="chapter08_figure22"><img alt="Figure 8.22" src="../images/chapter08/ch08_22.png" />
 <figcaption>&nbsp;</figcaption>
@@ -731,7 +731,7 @@ rotate(-PI/6);
 // Branch to the left
 line(0,0,0,-100);</pre>
 
-<p>If you think of each call to the function <span class="function">(.*?)</span> as a &ldquo;branch,&rdquo; you can see from the code above that we have implemented our definition of branching as a line that has two lines connected to its end. We could keep adding more and more calls to <span class="function">(.*?)</span> for more and more branches, but just as with the Cantor set and Koch curve, our code would become incredibly complicated and unwieldy. Instead, we can use the above logic as our foundation for writing a recursive function, replacing the direct calls to <span class="function">(.*?)</span> with our own function called <span class="function">(.*?)</span>. Let&rsquo;s take a look.</p>
+<p>If you think of each call to the function <strong function="">line()</strong> as a &ldquo;branch,&rdquo; you can see from the code above that we have implemented our definition of branching as a line that has two lines connected to its end. We could keep adding more and more calls to <strong function="">line()</strong> for more and more branches, but just as with the Cantor set and Koch curve, our code would become incredibly complicated and unwieldy. Instead, we can use the above logic as our foundation for writing a recursive function, replacing the direct calls to <strong function="">line()</strong> with our own function called <strong function="">branch()</strong>. Let&rsquo;s take a look.</p>
 
 <div data-type="example"><h5>Example 8.6: Recursive tree</h5></div>
 
@@ -755,7 +755,7 @@ void branch() {
   popMatrix();
 }</pre>
 
-<p>Notice how in the above code we use <span class="function">(.*?)</span> and <span class="function">(.*?)</span> around each subsequent call to <span class="function">(.*?)</span>. This is one of those elegant code solutions that feels almost like magic. Each call to <span class="function">(.*?)</span> takes a moment to remember the location of that particular branch. If you turn yourself into Processing for a moment and try to follow the recursive function with pencil and paper, you&rsquo;ll notice that it draws all of the branches to the right first. When it gets to the end, <span class="function">(.*?)</span> will pop us back along all of the branches we&rsquo;ve drawn and start sending branches out to the left.</p>
+<p>Notice how in the above code we use <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong> around each subsequent call to <strong function="">branch()</strong>. This is one of those elegant code solutions that feels almost like magic. Each call to <strong function="">branch()</strong> takes a moment to remember the location of that particular branch. If you turn yourself into Processing for a moment and try to follow the recursive function with pencil and paper, you&rsquo;ll notice that it draws all of the branches to the right first. When it gets to the end, <strong function="">popMatrix()</strong> will pop us back along all of the branches we&rsquo;ve drawn and start sending branches out to the left.</p>
 
 <div data-type="exercise">
 <h5>Exercise 8.6</h5>
@@ -796,7 +796,7 @@ void branch(float len) {
   }
 }</pre>
 
-<p>We&rsquo;ve also included a variable for theta that allows us, when writing the rest of the code in <span class="function">(.*?)</span> and <span class="function">(.*?)</span>, to vary the branching angle according to, say, the <strong class="var">mouseX</strong> location.</p>
+<p>We&rsquo;ve also included a variable for theta that allows us, when writing the rest of the code in <strong function="">setup()</strong> and <strong function="">draw()</strong>, to vary the branching angle according to, say, the <strong class="var">mouseX</strong> location.</p>
 
 <figure class="three-col"><img alt="ch08 ex06a" src="../images/chapter08/ch08_ex06a.png" />
 <figcaption>&nbsp;</figcaption>
@@ -835,7 +835,7 @@ void draw() {
 <div data-type="exercise">
 <h5>Exercise 8.7</h5>
 
-<p>Vary the <span class="function">(.*?)</span> for each branch. Make the root thick and each subsequent branch thinner.</p>
+<p>Vary the <strong function="">strokeWeight()</strong> for each branch. Make the root thick and each subsequent branch thinner.</p>
 
 <figure class="screenshot"><img alt="ch08 exc07" src="../images/chapter08/ch08_exc07.png" />
 <figcaption>&nbsp;</figcaption>
@@ -881,7 +881,7 @@ void branch(float len) {
   }
 }</pre>
 
-<p>In the above function, we always call <span class="function">(.*?)</span> twice. But why not pick a random number of branches and call <span class="function">(.*?)</span> that number of times?</p>
+<p>In the above function, we always call <strong function="">branch()</strong> twice. But why not pick a random number of branches and call <strong function="">branch()</strong> that number of times?</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter08/_8_07_TreeStochastic/_8_07_TreeStochastic.pde"><img alt="ch08 ex07b" src="../images/chapter08/ch08_ex07b.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1102,7 +1102,7 @@ s += &quot;add some more stuff&quot;;</pre>
 
 <p><a data-primary="Turtle graphics" data-type="indexterm">&nbsp;</a></p>
 
-<p>This type of drawing framework is often referred to as &ldquo;Turtle graphics&rdquo; (from the old days of LOGO programming). Imagine a turtle sitting on your computer screen to which you could issue a small set of commands: turn left, turn right, draw a line, etc. Processing isn&rsquo;t set up to operate this way by default, but by using <span class="function">(.*?)</span>, <span class="function">(.*?)</span>, and <span class="function">(.*?)</span>, we can emulate a Turtle graphics engine fairly easily.</p>
+<p>This type of drawing framework is often referred to as &ldquo;Turtle graphics&rdquo; (from the old days of LOGO programming). Imagine a turtle sitting on your computer screen to which you could issue a small set of commands: turn left, turn right, draw a line, etc. Processing isn&rsquo;t set up to operate this way by default, but by using <strong function="">translate()</strong>, <strong function="">rotate()</strong>, and <strong function="">line()</strong>, we can emulate a Turtle graphics engine fairly easily.</p>
 
 <p><a data-primary="L-systems" data-secondary="translating into code" data-type="indexterm">&nbsp;</a></p>
 
