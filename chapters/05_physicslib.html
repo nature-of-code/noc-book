@@ -390,7 +390,7 @@ Vec2 gravity = new Vec2(0, -10);</pre>
 
 <p><a data-primary="coordPixelsToWorld() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="coordinate systems" data-tertiary="converting between" data-type="indexterm">&nbsp;</a></p>
 
-<p>Let&rsquo;s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <span class="var">(.*?)</span> in Processing. To convert it, we say we want to convert a &ldquo;coordinate&rdquo; from &ldquo;pixels&rdquo; to &ldquo;world&rdquo;&mdash;<span class="function">(.*?)</span>. Or:</p>
+<p>Let&rsquo;s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <strong class="var">(mouseX,mouseY)</strong> in Processing. To convert it, we say we want to convert a &ldquo;coordinate&rdquo; from &ldquo;pixels&rdquo; to &ldquo;world&rdquo;&mdash;<span class="function">(.*?)</span>. Or:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Convert mouseX,mouseY to
@@ -872,7 +872,7 @@ class Box  {
     body.createFixture(fd);
  }</pre>
 
-<p>OK, we&rsquo;re almost there. Before we introduced Box2D, it was easy to draw the <span class="klass">(.*?)</span>. The object&rsquo;s location was stored in variables <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
+<p>OK, we&rsquo;re almost there. Before we introduced Box2D, it was easy to draw the <span class="klass">(.*?)</span>. The object&rsquo;s location was stored in variables <strong class="var">x</strong> and <strong class="var">y</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   //[full] Drawing the object using rect()
@@ -954,7 +954,7 @@ float a = body.getAngle();</pre>
 
 <p>In the example we just created, the <span class="klass">(.*?)</span> objects appear at the mouse location and fall downwards due to Box2D&rsquo;s default gravity force. What if we wanted to install some immovable boundaries in the Box2D world that would block the path of the <span class="klass">(.*?)</span> objects (as in the illustration below)?</p>
 
-<p>Box2D makes this easy for us by providing a means to lock a body (and any associated shapes) in place. Just set the <span class="klass">(.*?)</span> object&rsquo;s type to <span class="var">(.*?)</span>.</p>
+<p>Box2D makes this easy for us by providing a means to lock a body (and any associated shapes) in place. Just set the <span class="klass">(.*?)</span> object&rsquo;s type to <strong class="var">STATIC</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  BodyDef bd = new BodyDef();
@@ -1345,7 +1345,7 @@ body.createFixture(cs, 1.0);
 
 <p><a data-primary="m_p variable (Vec2 class)" data-type="indexterm">&nbsp;</a> <a data-primary="Shape (Box2D element)" data-secondary="local position for" data-type="indexterm">&nbsp;</a></p>
 
-<p>This is achieved by using the local position of a shape, accessed via a <span class="klass">(.*?)</span> variable called <span class="var">(.*?)</span>.</p>
+<p>This is achieved by using the local position of a shape, accessed via a <span class="klass">(.*?)</span> variable called <strong class="var">m_p</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Our offset in pixels
@@ -1426,7 +1426,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 <strong><em>Step 3. Configure the joint&rsquo;s properties (What are the bodies? Where are the anchors? What is its rest length? Is it elastic or rigid?)</em></strong><br />
 <strong><em>Step 4. Create the joint.</em></strong></p>
 
-<p>Let&rsquo;s assume we have two <span class="klass">(.*?)</span> objects that each store a reference to a Box2D <span class="klass">(.*?)</span> object. We&rsquo;ll call them particles <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
+<p>Let&rsquo;s assume we have two <span class="klass">(.*?)</span> objects that each store a reference to a Box2D <span class="klass">(.*?)</span> object. We&rsquo;ll call them particles <strong class="var">p1</strong> and <strong class="var">p2</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Particle p1 = new Particle();
@@ -1454,7 +1454,7 @@ djd.length = box2d.scalarPixelsToWorld(10);</pre>
 
 <p><a data-primary="dampingRatio setting (Box2D joint element)" data-type="indexterm">&nbsp;</a> <a data-primary="frequencyHz setting (Box2D joint element)" data-type="indexterm">&nbsp;</a></p>
 
-<p>A distance joint also includes two optional settings that can make the joint soft, like a spring connection: <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
+<p>A distance joint also includes two optional settings that can make the joint soft, like a spring connection: <strong class="var">frequencyHz</strong> and <strong class="var">dampingRatio</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // Measured in Hz, like the frequency of harmonic
@@ -1583,7 +1583,7 @@ rjd.maxMotorTorque = 1000.0;</pre>
 
 <p>The motor can be enabled and disabled while the program is running.</p>
 
-<p>Finally, the ability for a revolute joint to spin can be constrained between two angles. (By default, it can rotate a full 360 degrees, or <span class="var">(.*?)</span> radians.)</p>
+<p>Finally, the ability for a revolute joint to spin can be constrained between two angles. (By default, it can rotate a full 360 degrees, or <strong class="var">TWO_PI</strong> radians.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 rjd.enableLimit = true;
@@ -1597,7 +1597,7 @@ rjd.upperAngle = PI/8;</pre>
 <pre data-code-language="java" data-type="programlisting">
 RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 
-<p>Let&rsquo;s take a look at all of these steps together in a class called <span class="klass">(.*?)</span>, which connects two boxes with a revolute joint. In this case, <span class="var">(.*?)</span> has a density of zero, so only <span class="var">(.*?)</span> spins around a fixed point.</p>
+<p>Let&rsquo;s take a look at all of these steps together in a class called <span class="klass">(.*?)</span>, which connects two boxes with a revolute joint. In this case, <strong class="var">box1</strong> has a density of zero, so only <strong class="var">box2</strong> spins around a fixed point.</p>
 
 <figure class="screenshot"><img alt="ch05 ex09" src="../images/chapter05/ch05_ex09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1678,7 +1678,7 @@ body.setTransform(mouse,0);</pre>
 
 <p>While this will in fact move the body, it will also have the unfortunate result of breaking the physics. Let&rsquo;s imagine you built a teleportation machine that allows you to teleport from your bedroom to your kitchen (good for late-night snacking). Now, go ahead and rewrite Newton&rsquo;s laws of motion to account for the possibility of teleportation. Not so easy, right? Box2D has the same problem. If you manually assign the location of an body, it&rsquo;s like saying &ldquo;teleport that body&rdquo; and Box2D no longer knows how to compute the physics properly. However, Box2D does allow you to tie a rope to yourself and get a friend of yours to stand in the kitchen and drag you there. This is what the <span class="klass">(.*?)</span> does. It&rsquo;s like a string you attach to a body and pull towards a target.</p>
 
-<p>Let&rsquo;s look at making this joint, assuming we have a <span class="klass">(.*?)</span> object called <span class="var">(.*?)</span>. This code will look identical to our distance joint with one small difference.</p>
+<p>Let&rsquo;s look at making this joint, assuming we have a <span class="klass">(.*?)</span> object called <strong class="var">box</strong>. This code will look identical to our distance joint with one small difference.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Just like before, define the Joint.
@@ -1785,7 +1785,7 @@ void draw() {
 
 <p><a data-primary="kinematic (body type)" data-secondary="MouseJoints and" data-type="indexterm">&nbsp;</a></p>
 
-<p>It&rsquo;s worth noting that while the technique for dragging an object around using a <span class="klass">(.*?)</span> is useful, Box2D also allows a body to have a <span class="var">(.*?)</span> type.</p>
+<p>It&rsquo;s worth noting that while the technique for dragging an object around using a <span class="klass">(.*?)</span> is useful, Box2D also allows a body to have a <strong class="var">KINEMATIC</strong> type.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 BodyDef bd = new BodyDef();
@@ -2095,7 +2095,7 @@ location.add(velocity);</pre>
 
 <p><a data-primary="Euler integration" data-type="indexterm">&nbsp;</a> <a data-primary="Euler" data-secondary="Leonhard" data-type="indexterm">&nbsp;</a> <a data-primary="integration" data-secondary="Euler integration" data-type="indexterm">&nbsp;</a></p>
 
-<p>The above methodology is known as Euler integration (named for the mathematician Leonhard Euler, pronounced &ldquo;Oiler&rdquo;) or the Euler method. It&rsquo;s essentially the simplest form of integration and very easy to implement in our code (see the two lines above!) However, it is not necessarily the most efficient form, nor is it close to being the most accurate. Why is Euler inaccurate? Let&rsquo;s think about it this way. When you drive a car down the road pressing the gas pedal with your foot and accelerating, does the car sit in one location at time equals one second, then disappear and suddenly reappear in a new location at time equals two seconds, and do the same thing for three seconds, and four, and five? No, of course not. The car moves continuously down the road. But what&rsquo;s happening in our Processing sketch? A circle is at one location at frame 0, another at frame 1, another at frame 2. Sure, at thirty frames per second, we&rsquo;re seeing the illusion of motion. But we only calculate a new location every <span class="var">(.*?)</span> units of time, whereas the real world is perfectly continuous. This results in some inaccuracies, as shown in the diagram below:</p>
+<p>The above methodology is known as Euler integration (named for the mathematician Leonhard Euler, pronounced &ldquo;Oiler&rdquo;) or the Euler method. It&rsquo;s essentially the simplest form of integration and very easy to implement in our code (see the two lines above!) However, it is not necessarily the most efficient form, nor is it close to being the most accurate. Why is Euler inaccurate? Let&rsquo;s think about it this way. When you drive a car down the road pressing the gas pedal with your foot and accelerating, does the car sit in one location at time equals one second, then disappear and suddenly reappear in a new location at time equals two seconds, and do the same thing for three seconds, and four, and five? No, of course not. The car moves continuously down the road. But what&rsquo;s happening in our Processing sketch? A circle is at one location at frame 0, another at frame 1, another at frame 2. Sure, at thirty frames per second, we&rsquo;re seeing the illusion of motion. But we only calculate a new location every <strong class="var">N</strong> units of time, whereas the real world is perfectly continuous. This results in some inaccuracies, as shown in the diagram below:</p>
 
 <figure id="chapter05_figure13"><img alt="Figure 5.13" src="../images/chapter05/ch05_13.png" />
 <figcaption>&nbsp;</figcaption>
@@ -2484,7 +2484,7 @@ class Particle extends VerletParticle2D {
   }
 }</pre>
 
-<p>Remember our multi-step process with the Box2D examples? We had to ask the body for its location, then convert that location to pixels, then use that location in a drawing function. Now, because we have inherited everything from the <span class="klass">(.*?)</span> class, our only step is to draw the shape at <span class="var">(.*?)</span> and <span class="var">(.*?)</span>!</p>
+<p>Remember our multi-step process with the Box2D examples? We had to ask the body for its location, then convert that location to pixels, then use that location in a drawing function. Now, because we have inherited everything from the <span class="klass">(.*?)</span> class, our only step is to draw the shape at <strong class="var">x</strong> and <strong class="var">y</strong>!</p>
 
 <p><a data-primary="Vec2D (toxiclibs type)" data-secondary="VerletParticle2D class and" data-type="indexterm">&nbsp;</a></p>
 
@@ -2528,7 +2528,7 @@ class Particle extends VerletParticle2D {
 	</li>
 </ul>
 
-<p>The inheritance and polymorphism technique we employed in the previous section also proves to be useful when creating springs. A spring expects two particles when it is created. And again, because our <span class="klass">(.*?)</span> class <span class="klass">(.*?)</span>, a <span class="klass">(.*?)</span> object will accept our <span class="klass">(.*?)</span> objects passed into the constructor. Let&rsquo;s take a look at some example code that assumes the existence of our two previous particles <span class="var">(.*?)</span> and <span class="var">(.*?)</span> and creates a connection between them with a given rest length and strength.</p>
+<p>The inheritance and polymorphism technique we employed in the previous section also proves to be useful when creating springs. A spring expects two particles when it is created. And again, because our <span class="klass">(.*?)</span> class <span class="klass">(.*?)</span>, a <span class="klass">(.*?)</span> object will accept our <span class="klass">(.*?)</span> objects passed into the constructor. Let&rsquo;s take a look at some example code that assumes the existence of our two previous particles <strong class="var">p1</strong> and <strong class="var">p2</strong> and creates a connection between them with a given rest length and strength.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // What is the rest length of the spring?
@@ -2667,7 +2667,7 @@ ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();</pre>
 float len = 10;
 float numParticles = 20;</pre>
 
-<p>We can loop from <span class="var">(.*?)</span> equals 0 all the way up to 20, with each particle&rsquo;s <em>y</em> location set to <span class="var">(.*?)</span> so that the first particle is at <em>(0,10)</em>, the second at <em>(0,20)</em>, the third at <em>(0,30)</em>, etc.</p>
+<p>We can loop from <strong class="var">i</strong> equals 0 all the way up to 20, with each particle&rsquo;s <em>y</em> location set to <strong class="var">i <code>*</code> 10</strong> so that the first particle is at <em>(0,10)</em>, the second at <em>(0,20)</em>, the third at <em>(0,30)</em>, etc.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for(int i=0; i &lt; numPoints; i++) {
@@ -2687,7 +2687,7 @@ for(int i=0; i &lt; numPoints; i++) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>In other words, particle <span class="var">(.*?)</span> needs to be connected to particle <span class="var">(.*?)</span> (except for when <span class="var">(.*?)</span> equals zero).</p>
+<p>In other words, particle <strong class="var">i</strong> needs to be connected to particle <strong class="var">i-1</strong> (except for when <strong class="var">i</strong> equals zero).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (i != 0) {
@@ -2925,7 +2925,7 @@ float distance = 20;
 float strength = 0.1;
 AttractionBehavior behavior = new AttractionBehavior(p, distance, strength);</pre>
 
-<p>Notice how the behavior is created with two parameters&mdash;<span class="var">(.*?)</span> and <span class="var">(.*?)</span>. The distance specifies the range within which the behavior will be applied. For example, in the above scenario, only other particles within twenty pixels will feel the attraction force. The strength, of course, specifies how strong the force is.</p>
+<p>Notice how the behavior is created with two parameters&mdash;<strong class="var">distance</strong> and <strong class="var">strength</strong>. The distance specifies the range within which the behavior will be applied. For example, in the above scenario, only other particles within twenty pixels will feel the attraction force. The strength, of course, specifies how strong the force is.</p>
 
 <p>Finally, in order for the force to be activated, the behavior needs to be added to the physics world.</p>
 

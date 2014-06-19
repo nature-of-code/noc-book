@@ -116,7 +116,7 @@ void draw() {
 </dl>
 </div>
 
-<p>It&rsquo;s becoming clearer that for every concept in this world (wind, location, acceleration, etc.), we&rsquo;ll need two variables. And this is only a two-dimensional world. In a 3D world, we&rsquo;ll need <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, <span class="var">(.*?)</span>, and so on.</p>
+<p>It&rsquo;s becoming clearer that for every concept in this world (wind, location, acceleration, etc.), we&rsquo;ll need two variables. And this is only a two-dimensional world. In a 3D world, we&rsquo;ll need <strong class="var">x</strong>, <strong class="var">y</strong>, <strong class="var">z</strong>, <strong class="var">xspeed</strong>, <strong class="var">yspeed</strong>, <strong class="var">zspeed</strong>, and so on.</p>
 
 <p>Wouldn&rsquo;t it be nice if we could simplify our code and use fewer variables?</p>
 
@@ -204,7 +204,7 @@ Vector speed;</pre>
 </dl>
 </div>
 
-<p>Notice how we are storing the same data for both&mdash;two floating point numbers, an <span class="var">(.*?)</span> and a <span class="var">(.*?)</span>. If we were to write a vector class ourselves, we&rsquo;d start with something rather basic:</p>
+<p>Notice how we are storing the same data for both&mdash;two floating point numbers, an <strong class="var">x</strong> and a <strong class="var">y</strong>. If we were to write a vector class ourselves, we&rsquo;d start with something rather basic:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class PVector {
@@ -282,7 +282,7 @@ location = location + velocity;</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Each vector has two components, an <span class="var">(.*?)</span> and a <span class="var">(.*?)</span>. To add two vectors together, we simply add both <span class="var">(.*?)</span><code>&rsquo;</code>s and both <span class="var">(.*?)</span><code>&rsquo;</code>s.</p>
+<p>Each vector has two components, an <strong class="var">x</strong> and a <strong class="var">y</strong>. To add two vectors together, we simply add both <strong class="var">x</strong><code>&rsquo;</code>s and both <strong class="var">y</strong><code>&rsquo;</code>s.</p>
 
 <figure id="chapter01_figure6"><img alt="Figure 1.6" src="../images/chapter01/ch01_06.png" />
 <figcaption>&nbsp;</figcaption>
@@ -297,7 +297,7 @@ location = location + velocity;</pre>
 <p>{wxuxplusvx}<br />
 {wyuyplusvy}</p>
 
-<p>Then, replacing <span class="var">(.*?)</span> and <span class="var">(.*?)</span> with their values from Figure 1.6, we get:</p>
+<p>Then, replacing <strong class="var">u</strong> and <strong class="var">v</strong> with their values from Figure 1.6, we get:</p>
 
 <p>{wx53}<br />
 {wy24}</p>
@@ -380,17 +380,17 @@ void draw() {
 
 <p>Now, you might feel somewhat disappointed. After all, this may initially appear to have made the code more complicated than the original version. While this is a perfectly reasonable and valid critique, it&rsquo;s important to understand that we haven&rsquo;t fully realized the power of programming with vectors just yet. Looking at a simple bouncing ball and only implementing vector addition is just the first step. As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (which we&rsquo;ll introduce in Chapter 2), the benefits of <span class="klass">(.*?)</span> will become more apparent.</p>
 
-<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">(.*?)</span> objects to describe two values&mdash;the <span class="var">(.*?)</span> and <span class="var">(.*?)</span> of location and the <span class="var">(.*?)</span> and <span class="var">(.*?)</span> of velocity&mdash;we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">(.*?)</span> individually. When we go to draw an object in Processing, there&rsquo;s no means for us to say:</p>
+<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">(.*?)</span> objects to describe two values&mdash;the <strong class="var">x</strong> and <strong class="var">y</strong> of location and the <strong class="var">x</strong> and <strong class="var">y</strong> of velocity&mdash;we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">(.*?)</span> individually. When we go to draw an object in Processing, there&rsquo;s no means for us to say:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ellipse(location,16,16); //[line-through]</pre>
 
-<p>The <span class="function">(.*?)</span> function does not allow for a <span class="klass">(.*?)</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">(.*?)</span>-coordinate and a <span class="var">(.*?)</span>-coordinate. And so we must dig into the <span class="klass">(.*?)</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
+<p>The <span class="function">(.*?)</span> function does not allow for a <span class="klass">(.*?)</span> as an argument. An ellipse can only be drawn with two scalar values, an <strong class="var">x</strong>-coordinate and a <strong class="var">y</strong>-coordinate. And so we must dig into the <span class="klass">(.*?)</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ellipse(location.x,location.y,16,16);</pre>
 
-<p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: <span class="var">(.*?)</span> and <span class="var">(.*?)</span>.</p>
+<p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: <strong class="var">location</strong> and <strong class="var">velocity</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if ((location.x &gt; width) || (location.x &lt; 0)) {
@@ -400,7 +400,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 <div data-type="exercise" id="chapter01_exercise1">
 <h5>Exercise 1.1</h5>
 
-<p>Find something you&rsquo;ve previously made in Processing using separate <span class="var">(.*?)</span> and <span class="var">(.*?)</span> variables and use <span class="klass">(.*?)</span><code>s</code> instead.</p>
+<p>Find something you&rsquo;ve previously made in Processing using separate <strong class="var">x</strong> and <strong class="var">y</strong> variables and use <span class="klass">(.*?)</span><code>s</code> instead.</p>
 </div>
 
 <div data-type="exercise" id="chapter01_exercise2">
@@ -553,7 +553,7 @@ void draw() {
 
 <p>Moving on to multiplication, we have to think a little bit differently. When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector. If we wanted to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: &ldquo;Multiply the vector by 2&rdquo; or &ldquo;Multiply the vector by 1/3.&rdquo; Note that we are multiplying a vector by a scalar, a single number, not another vector.</p>
 
-<p>To scale a vector, we multiply each component (<span class="var">(.*?)</span> and <span class="var">(.*?)</span>) by a scalar.</p>
+<p>To scale a vector, we multiply each component (<strong class="var">x</strong> and <strong class="var">y</strong>) by a scalar.</p>
 
 <figure class="half-width-right" id="chapter01_figure8"><img alt="Figure 1.8: Scaling a vector" src="../images/chapter01/ch01_08.png" />
 <figcaption>&nbsp;</figcaption>
@@ -659,7 +659,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 
 <p><a data-primary="magnitude (of vectors)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm">&nbsp;</a></p>
 
-<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you&rsquo;re wondering: &ldquo;OK, so how do I know what the length of a vector is? I know the components (<span class="var">(.*?)</span> and <span class="var">(.*?)</span>), but how long (in pixels) is the actual arrow?&rdquo; Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
+<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you&rsquo;re wondering: &ldquo;OK, so how do I know what the length of a vector is? I know the components (<strong class="var">x</strong> and <strong class="var">y</strong>), but how long (in pixels) is the actual arrow?&rdquo; Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
 
 <div class="image-container half-width-right"><img alt="Nature of Code Image" src="../images/chapter01/ch01_10.png" />
 <p class="caption">Figure 1.10: The length or &ldquo;magnitude&rdquo; of a vector <svg:svg height="12.190371pt" viewbox="0 -9.600527 8.520000 12.190371" width="8.520000pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="2.44921875" top="12.1903710937"></svgmath:metrics></svg:metadata><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:svg> is often written as: <svg:svg height="12.503906pt" viewbox="0 -9.914062 29.061672 12.503906" width="29.061672pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="1.37109375" top="12.357421875"></svgmath:metrics></svg:metadata><svg:g transform="translate(0.000000, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g><svg:g transform="translate(10.270836, 0.000000)"><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:g><svg:g transform="translate(22.124172, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g></svg:svg></p>
@@ -667,7 +667,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 
 <p><a data-primary="Pythagoras" data-type="indexterm">&nbsp;</a> <a data-primary="Pythagorean theorem" data-type="indexterm">&nbsp;</a></p>
 
-<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<span class="var">(.*?)</span> and <span class="var">(.*?)</span>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We&rsquo;re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
+<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<strong class="var">x</strong> and <strong class="var">y</strong>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We&rsquo;re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
 
 <figure class="half-width-right" id="chapter01_figure11"><img alt="Figure 1.11: The Pythagorean Theorem" src="../images/chapter01/ch01_11.png" />
 <figcaption>&nbsp;</figcaption>
@@ -828,7 +828,7 @@ ellipse(location.x,location.y,16,16);</pre>
 	</li>
 </ol>
 
-<p>Our Motion 101 algorithm tells us the answers to these questions. A <span class="klass">(.*?)</span> object has two pieces of data: <span class="var">(.*?)</span> and <span class="var">(.*?)</span>, which are both <span class="klass">(.*?)</span> objects.</p>
+<p>Our Motion 101 algorithm tells us the answers to these questions. A <span class="klass">(.*?)</span> object has two pieces of data: <strong class="var">location</strong> and <strong class="var">velocity</strong>, which are both <span class="klass">(.*?)</span> objects.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -980,7 +980,7 @@ class Mover {
 
 <p><a data-primary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="acceleration" data-type="indexterm">&nbsp;</a></p>
 
-<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">(.*?)</span> is and (2) how we use <span class="klass">(.*?)</span><code>s</code> inside of an object to keep track of its location and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring&mdash;the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">(.*?)</span> to our class&mdash;<span class="var">(.*?)</span>.</p>
+<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">(.*?)</span> is and (2) how we use <span class="klass">(.*?)</span><code>s</code> inside of an object to keep track of its location and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring&mdash;the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">(.*?)</span> to our class&mdash;<strong class="var">acceleration</strong>.</p>
 
 <p>The strict definition of <strong><em>acceleration</em></strong> we&rsquo;re using here is: <em>the rate of change of velocity</em>. Let&rsquo;s think about that definition for a moment. Is this a new concept? Not really. Velocity is defined as <em>the rate of change of location</em>. In essence, we are developing a &ldquo;trickle-down&rdquo; effect. Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter, when we see how forces affect acceleration, which affects velocity, which affects location). In code, this reads:</p>
 
@@ -1185,14 +1185,14 @@ float y = 5;
 
 x = x + y;</pre>
 
-<p>Pretty simple, right? <span class="var">(.*?)</span> has the value of 0, we add <span class="var">(.*?)</span> to it, and now <span class="var">(.*?)</span> is equal to 5. We could write the corresponding code pretty easily based on what we&rsquo;ve learned about <span class="klass">(.*?)</span>.</p>
+<p>Pretty simple, right? <strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and now <strong class="var">x</strong> is equal to 5. We could write the corresponding code pretty easily based on what we&rsquo;ve learned about <span class="klass">(.*?)</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector v = new PVector(0,0);
 PVector u = new PVector(4,5);
 v.add(u);</pre>
 
-<p>The vector <span class="var">(.*?)</span> has the value of (0,0), we add <span class="var">(.*?)</span> to it, and now <span class="var">(.*?)</span> is equal to (4,5). Easy, right?</p>
+<p>The vector <strong class="var">v</strong> has the value of (0,0), we add <strong class="var">u</strong> to it, and now <strong class="var">v</strong> is equal to (4,5). Easy, right?</p>
 
 <p>Let&rsquo;s take a look at another example of some simple floating point math:</p>
 
@@ -1202,7 +1202,7 @@ float y = 5;
 
 float z = x + y;</pre>
 
-<p><span class="var">(.*?)</span> has the value of 0, we add <span class="var">(.*?)</span> to it, and store the result in a new variable <span class="var">(.*?)</span>. The value of <span class="var">(.*?)</span> does not change in this example (neither does <span class="var">(.*?)</span>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it&rsquo;s not so obvious with mathematical operations in <span class="klass">(.*?)</span>. Let&rsquo;s try to write the code based on what we know so far.</p>
+<p><strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and store the result in a new variable <strong class="var">z</strong>. The value of <strong class="var">x</strong> does not change in this example (neither does <strong class="var">y</strong>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it&rsquo;s not so obvious with mathematical operations in <span class="klass">(.*?)</span>. Let&rsquo;s try to write the code based on what we know so far.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector v = new PVector(0,0);
@@ -1222,7 +1222,7 @@ void add(PVector v) {
 
 <p><a data-primary="static functions" data-type="indexterm">&nbsp;</a></p>
 
-<p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">(.*?)</span> objects, <span class="var">(.*?)</span> and <span class="var">(.*?)</span>:</p>
+<p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">(.*?)</span> objects, <strong class="var">v</strong> and <strong class="var">u</strong>:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Static: called from the class name.
@@ -1252,7 +1252,7 @@ v.add(u);</pre>
 	<p>The function does not have a <strong><em>void</em></strong> return type, but rather returns a <span class="klass">(.*?)</span>.</p>
 	</li>
 	<li>
-	<p>The function creates a new <span class="klass">(.*?)</span> (<span class="var">(.*?)</span>) and returns the sum of the components of <span class="var">(.*?)</span> and <span class="var">(.*?)</span> in that new <span class="klass">(.*?)</span>.</p>
+	<p>The function creates a new <span class="klass">(.*?)</span> (<strong class="var">v3</strong>) and returns the sum of the components of <strong class="var">v1</strong> and <strong class="var">v2</strong> in that new <span class="klass">(.*?)</span>.</p>
 	</li>
 </ul>
 
@@ -1273,13 +1273,13 @@ PVector w = PVector.add(v,u); //[bold]</pre>
 
 <ul>
 	<li>
-	<p>The <span class="klass">(.*?)</span> <span class="var">(.*?)</span> equals (1,5).</p>
+	<p>The <span class="klass">(.*?)</span> <strong class="var">v</strong> equals (1,5).</p>
 	</li>
 	<li>
-	<p>The <span class="klass">(.*?)</span> <span class="var">(.*?)</span> equals <span class="var">(.*?)</span> multiplied by 2.</p>
+	<p>The <span class="klass">(.*?)</span> <strong class="var">u</strong> equals <strong class="var">v</strong> multiplied by 2.</p>
 	</li>
 	<li>
-	<p>The <span class="klass">(.*?)</span> <span class="var">(.*?)</span> equals <span class="var">(.*?)</span> minus <span class="var">(.*?)</span>.</p>
+	<p>The <span class="klass">(.*?)</span> <strong class="var">w</strong> equals <strong class="var">v</strong> minus <strong class="var">u</strong>.</p>
 	</li>
 	<li>
 	<p>Divide the <span class="klass">(.*?)</span> w by 3.</p>
@@ -1305,13 +1305,13 @@ ___________;</pre>
 
 <p>To finish out this chapter, let&rsquo;s try something a bit more complex and a great deal more useful. We&rsquo;ll dynamically calculate an object&rsquo;s acceleration according to a rule stated in Algorithm #3 &mdash; <em>the object accelerates towards the mouse</em>.</p>
 
-<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let&rsquo;s start with direction. We know the acceleration vector should point from the object&rsquo;s location towards the mouse location. Let&rsquo;s say the object is located at the point (<span class="var">(.*?)</span>,<span class="var">(.*?)</span>) and the mouse at (<span class="var">(.*?)</span>,<span class="var">(.*?)</span>).</p>
+<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let&rsquo;s start with direction. We know the acceleration vector should point from the object&rsquo;s location towards the mouse location. Let&rsquo;s say the object is located at the point (<strong class="var">x</strong>,<strong class="var">y</strong>) and the mouse at (<strong class="var">mouseX</strong>,<strong class="var">mouseY</strong>).</p>
 
 <figure class="half-width-right" id="chapter01_figure15"><img alt="Figure 1.15" src="../images/chapter01/ch01_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>In Figure 1.15, we see that we can get a vector (<span class="var">(.*?)</span>,<span class="var">(.*?)</span>) by subtracting the object&rsquo;s location from the mouse&rsquo;s location.</p>
+<p>In Figure 1.15, we see that we can get a vector (<strong class="var">dx</strong>,<strong class="var">dy</strong>) by subtracting the object&rsquo;s location from the mouse&rsquo;s location.</p>
 
 <ul>
 	<li>
