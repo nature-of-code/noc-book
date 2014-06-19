@@ -124,7 +124,7 @@ println(s);</pre>
 
 <p>In the context of the typing monkey example, we will create a population of phrases. (Note that we are using the term &ldquo;phrase&rdquo; rather loosely, meaning a string of characters.) This begs the question: How do we create this population? Here is where the Darwinian principle of <strong><em>variation</em></strong> applies. Let&rsquo;s say, for simplicity, that we are trying to evolve the phrase &ldquo;cat&rdquo; and that we have a population of three phrases.</p>
 
-<p><strong mono="">hug<br />
+<p><span class="mono">hug</span><br />
 rid<br />
 won</strong></p>
 
@@ -322,7 +322,7 @@ won</strong></p>
 
 <p>The first thing we&rsquo;ll want to do is <strong><em>normalize</em></strong> all the scores. Remember normalizing a vector? That involved taking a vector and standardizing its length, setting it to 1. When we normalize a set of fitness scores, we are standardizing their range to between 0 and 1, as a percentage of total fitness. Let&rsquo;s add up all the fitness scores.</p>
 
-<p><strong fomrula="">total fitness = 3 + 4 + 0.5 + 1.5 + 1 = 10</strong></p>
+<p><span class="formula">total fitness = 3 + 4 + 0.5 + 1.5 + 1 = 10</span></p>
 
 <p>Then let&rsquo;s divide each score by the total fitness, giving us the normalized fitness.</p>
 
@@ -417,7 +417,7 @@ won</strong></p>
 
 <p>Spin the wheel and you&rsquo;ll notice that Element B has the highest chance of being selected, followed by A, then D, then E, and finally C. This probability-based selection according to fitness is an excellent approach. One, it guarantees that the highest-scoring elements will be most likely to reproduce. Two, it does not entirely eliminate any variation from the population. Unlike with the elitist method, even the lowest-scoring element (in this case C) has a chance to pass its information down to the next generation. It&rsquo;s quite possible (and often the case) that even low-scoring elements have a tiny nugget of genetic code that is truly useful and should not entirely be eliminated from the population. For example, in the case of evolving &ldquo;to be or not to be&rdquo;, we might have the following elements.</p>
 
-<p><strong mono="">A: to be or not to go<br />
+<p><span class="mono">A: to be or not to go</span><br />
 B: to be or not to pi<br />
 C: xxxxxxxxxxxxxxxxbe</strong></p>
 
@@ -437,7 +437,7 @@ C: xxxxxxxxxxxxxxxxbe</strong></p>
 
 <p>Crossover involves creating a child out of the genetic code of two parents. In the case of the monkey-typing example, let&rsquo;s assume we&rsquo;ve picked two phrases from the mating pool (as outlined in our selection step).</p>
 
-<p><strong mono="">Parent A: FORK<br />
+<p><span class="mono">Parent A: FORK</span><br />
 Parent B: PLAY</strong></p>
 
 <p>It&rsquo;s now up to us to make a child phrase from these two. Perhaps the most obvious way (let&rsquo;s call this the 50/50 method) would be to take the first two characters from A and the second two from B, leaving us with:</p>
@@ -661,13 +661,13 @@ void draw() {
 
 <p>In some cases, the wheel of fortune algorithm will have an extraordinarily high preference for some elements over others. Take the following probabilities:</p>
 
-<p><strong mono="">A: 98%<br />
+<p><span class="mono">A: 98%</span><br />
 B: 1%<br />
 C: 1%</strong></p>
 
 <p>This is sometimes undesirable given how it will decrease the amount of variety in this system. A solution to this problem is to replace the calculated fitness scores with the ordinals of scoring (meaning their rank).</p>
 
-<p><strong mono="">A: 50% (3/6)<br />
+<p><span class="mono">A: 50% (3/6)</span><br />
 B: 33% (2/6)<br />
 C: 17% (1/6)</strong></p>
 
