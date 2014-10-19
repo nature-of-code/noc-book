@@ -92,17 +92,17 @@
 	</li>
 </ul>
 
-<p><a data-primary="Box2D" data-secondary="PBox2D helper class" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Box2D" data-secondary="Box2D-For-Processing helper class" data-type="indexterm">&nbsp;</a> <a data-primary="Box2D-for-Processing helper class" data-type="indexterm">&nbsp;</a></p>
 
-<p>This is all you need to get started writing Box2D code in Processing. However, as we are going to see in a moment, there are several pieces of functionality we&rsquo;ll repeatedly need in our Processing code, and so it&rsquo;s worth having one additional layer between our sketches and JBox2D. I&rsquo;m calling this PBox2D&mdash;a Processing Box2D &ldquo;helper&rdquo; library included as part of this book&rsquo;s code example downloads.</p>
+<p>This is all you need to get started writing Box2D code in Processing. However, as we are going to see in a moment, there are several pieces of functionality we&rsquo;ll repeatedly need in our Processing code, and so it&rsquo;s worth having one additional layer between our sketches and JBox2D. I&rsquo;m calling this Box2D-for-Processing&mdash;a Processing Box2D &ldquo;helper&rdquo; library included as part of this book&rsquo;s code example downloads.</p>
 
 <ul>
 	<li>
-	<p><a href="http://github.com/shiffman/PBox2D">PBox2D GitHub repository</a></p>
+	<p><a href="http://github.com/shiffman/Box2D-for-Processing">Box2D-for-Processing GitHub repository</a></p>
 	</li>
 </ul>
 
-<p>It&rsquo;s important to realize that PBox2D is not a Processing wrapper for all of Box2D. After all, Box2D is a thoughtfully organized and well-structured API and there&rsquo;s no reason to take it apart and re-implement it. However, it&rsquo;s useful to have a small set of functions that help you get your Box2D world set up, as well as help you figure out where to draw your Box2D shapes. And this is what PBox2D will provide.</p>
+<p>It&rsquo;s important to realize that Box2D-for-Processing is not a Processing wrapper for all of Box2D. After all, Box2D is a thoughtfully organized and well-structured API and there&rsquo;s no reason to take it apart and re-implement it. However, it&rsquo;s useful to have a small set of functions that help you get your Box2D world set up, as well as help you figure out where to draw your Box2D shapes. And this is what Box2D-for-Processing will provide.</p>
 
 <p><a data-primary="Box2D" data-secondary="Fisica" data-type="indexterm">&nbsp;</a> <a data-primary="Fisica" data-type="indexterm">&nbsp;</a> <a data-primary="Marxer" data-secondary="Ricard" data-type="indexterm">&nbsp;</a></p>
 
@@ -351,20 +351,20 @@ a.normalize();
 
 <p>The Box2D <span class="klass">World</span> object is in charge of everything. It manages the coordinate space of the world, all of the stuff that lives in the world, and decides when time moves forward in the world.</p>
 
-<p><a data-primary="PBox2D helper class" data-secondary="createWorld() function" data-type="indexterm">&nbsp;</a> <a data-primary="World class (Box2D)" data-secondary="createWorld() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Box2DProcessing helper class" data-secondary="createWorld() function" data-type="indexterm">&nbsp;</a> <a data-primary="World class (Box2D)" data-secondary="createWorld() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>In order to have Box2D as part of our Processing sketches, the <span class="klass">World</span> is the very first thing that needs to be set up. Here is where PBox2D comes in handy and takes care of making the world for us.</p>
+<p>In order to have Box2D as part of our Processing sketches, the <span class="klass">World</span> is the very first thing that needs to be set up. Here is where Box2D-for-Processing comes in handy and takes care of making the world for us.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-PBox2D box2d;
+Box2DProcessing box2d;
 
 void setup() {
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   // Initializes a Box2D world with default settings
   box2d.createWorld();
 }</pre>
 
-<p>When you call <span class="function">createWorld()</span>, PBox2D will set up a default gravity for you (pointing down); however, you can always alter the gravity of your world by saying:</p>
+<p>When you call <span class="function">createWorld()</span>, Box2D-for-Processing will set up a default gravity for you (pointing down); however, you can always alter the gravity of your world by saying:</p>
 
 <p><a data-primary="setGravity() function (World class)" data-type="indexterm">&nbsp;</a></p>
 
@@ -386,9 +386,9 @@ void setup() {
 <pre data-code-language="java" data-type="programlisting">
 Vec2 gravity = new Vec2(0, -10);</pre>
 
-<p>Luckily for us, if we prefer to think in terms of pixel coordinates (which as Processing programmers, we are likely to do), PBox2D offers a series of helper functions that convert between pixel space and Box2D space. Before we move onto the next section and begin creating Box2D bodies, let&rsquo;s take a look at how these helper functions work.</p>
+<p>Luckily for us, if we prefer to think in terms of pixel coordinates (which as Processing programmers, we are likely to do), Box2D-for-Processing offers a series of helper functions that convert between pixel space and Box2D space. Before we move onto the next section and begin creating Box2D bodies, let&rsquo;s take a look at how these helper functions work.</p>
 
-<p><a data-primary="coordPixelsToWorld() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="coordinate systems" data-tertiary="converting between" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="coordPixelsToWorld() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="Box2DProcessing helper class" data-secondary="coordinate systems" data-tertiary="converting between" data-type="indexterm">&nbsp;</a></p>
 
 <p>Let&rsquo;s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <span class="var">(mouseX,mouseY)</span> in Processing. To convert it, we say we want to convert a &ldquo;coordinate&rdquo; from &ldquo;pixels&rdquo; to &ldquo;world&rdquo;&mdash;<span class="function">coordPixelsToWorld()</span>. Or:</p>
 
@@ -409,9 +409,9 @@ Vec2 worldPos = new Vec2(-10,25);
 Vec2 pixelPos = box2d.coordWorldToPixels(worldPos);
 ellipse(pixelPos.x, pixelPos.y,16,16);</pre>
 
-<p>PBox2D has a set of functions to take care of translating back and forth between the Box2D world and pixels. It&rsquo;s probably easier to learn about all of these functions during the course of actually implementing our examples, but let&rsquo;s quickly look over the list of the possibilities.</p>
+<p>Box2D-for-Processing has a set of functions to take care of translating back and forth between the Box2D world and pixels. It&rsquo;s probably easier to learn about all of these functions during the course of actually implementing our examples, but let&rsquo;s quickly look over the list of the possibilities.</p>
 
-<p><a data-primary="coordWorldToPixels() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="scalarPixelsToWorld() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="scalarWorldToPixels() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="coordWorldToPixels() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="scalarPixelsToWorld() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="scalarWorldToPixels() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
 <table class="code">
 	<tbody>
@@ -546,9 +546,9 @@ bd.bullet = true;</pre>
 <section data-type="sect2" id="_step_3_create_the_body">
 <h2>Step 3: Create the body.</h2>
 
-<p><a data-primary="body (Box2D element)" data-secondary="object" data-tertiary="creating" data-type="indexterm">&nbsp;</a> <a data-primary="createBody() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="body (Box2D element)" data-secondary="object" data-tertiary="creating" data-type="indexterm">&nbsp;</a> <a data-primary="createBody() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Once we&rsquo;re done with the definition (<span class="klass">BodyDef</span>), we can create the <span class="klass">Body</span> object itself. PBox2D provides a helper function for this&mdash;<span class="function">createBody</span>().</p>
+<p>Once we&rsquo;re done with the definition (<span class="klass">BodyDef</span>), we can create the <span class="klass">Body</span> object itself. Box2DProcessing provides a helper function for this&mdash;<span class="function">createBody</span>().</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The Body object is created by passing in the Body
@@ -635,7 +635,7 @@ fd.density = 1.0;</pre>
 <section data-type="sect2" id="_step_3_attach_the_shape_to_the_body_with_the_fixture">
 <h2>Step 3: Attach the shape to the body with the fixture.</h2>
 
-<p><a data-primary="body (Box2D element)" data-secondary="attaching fixture element to" data-type="indexterm">&nbsp;</a> <a data-primary="createFixture() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="fixture (Box2D element)" data-secondary="attaching to body element" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="body (Box2D element)" data-secondary="attaching fixture element to" data-type="indexterm">&nbsp;</a> <a data-primary="createFixture() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="fixture (Box2D element)" data-secondary="attaching to body element" data-type="indexterm">&nbsp;</a></p>
 
 <p>Once the fixture is defined, all we have left to do is attach the shape to the body with the fixture by calling the <span class="function">createFixture()</span> function.</p>
 
@@ -799,21 +799,21 @@ void draw() {
 
 <p><a data-primary="Processing" data-secondary="Box2D objects" data-tertiary="adding to projects" data-type="indexterm">&nbsp;</a></p>
 
-<p>This part is not too tough. We saw this already in our discussion of building a Box2D world. This is taken care of for us by the PBox2D helper class. We can create a PBox2D object and initialize it in <span class="function">setup()</span>.</p>
+<p>This part is not too tough. We saw this already in our discussion of building a Box2D world. This is taken care of for us by the Box2D-for-Processing helper class. We can create a Box2DProcessing object and initialize it in <span class="function">setup()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-PBox2D box2d;
+Box2DProcessing box2d;
 
 void setup() {
   //[full] Initialize and create the Box2D world.
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
   //[end]
 }</pre>
 
 <p><a data-primary="step() function (Box2D)" data-type="indexterm">&nbsp;</a></p>
 
-<p>Then in <span class="function">draw()</span>, we need to make sure we call one very important function: <span class="function">step()</span>. Without this function, nothing would ever happen! <span class="function">step()</span> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <span class="function">step()</span> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the PBox2D source).</p>
+<p>Then in <span class="function">draw()</span>, we need to make sure we call one very important function: <span class="function">step()</span>. Without this function, nothing would ever happen! <span class="function">step()</span> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <span class="function">step()</span> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the Box2D-for-Processing source).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -884,21 +884,21 @@ class Box  {
   }
   //[end]</pre>
 
-<p><a data-primary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="PBox2D helper class" data-secondary="getBodyPixelCoord() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="getBodyPixelCoord() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="Box2D-for-Processing helper class" data-secondary="getBodyPixelCoord() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>But now Box2D manages the object&rsquo;s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <span class="klass">Box</span> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, &ldquo;Pardon me, where are you located?&rdquo; Since this is a task we&rsquo;ll need to do quite often, PBox2D includes a helper function: <span class="function">getBodyPixelCoord()</span>.</p>
+<p>But now Box2D manages the object&rsquo;s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <span class="klass">Box</span> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, &ldquo;Pardon me, where are you located?&rdquo; Since this is a task we&rsquo;ll need to do quite often, Box2D-for-Processing includes a helper function: <span class="function">getBodyPixelCoord()</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Vec2 pos = box2d.getBodyPixelCoord(body);</pre>
 
 <p>Just knowing the location of a body isn&rsquo;t enough; we also need to know its angle of rotation.</p>
 
-<p><a data-primary="getAngle() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="getAngle() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
 <pre data-code-language="java" data-type="programlisting">
 float a = body.getAngle();</pre>
 
-<p><a data-primary="rotate() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="translate() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="rotate() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="translate() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
 <p>Once we have the location and angle, it&rsquo;s easy to display the object using <span class="function">translate()</span> and <span class="function">rotate()</span>. Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
 
@@ -927,7 +927,7 @@ float a = body.getAngle();</pre>
 
 <p>In case we want to have objects that can be removed from the Box2D world, it&rsquo;s also useful to include a function to destroy a body, such as:</p>
 
-<p><a data-primary="destroyBody() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="destroyBody() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
 <pre data-code-language="java" data-type="programlisting">
   // This function removes a body from the Box2D world.
@@ -1141,13 +1141,13 @@ class Surface {
 <p>What we need in <span class="function">setup()</span> and <span class="function">draw()</span> for the <span class="klass">Surface</span> object is quite simple, given that Box2D takes care of all of the physics for us.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-PBox2D box2d;
+Box2DProcessing box2d;
 
 Surface surface;
 
 void setup() {
   size(500,300);
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
 
   // Make a Surface object.
@@ -1735,7 +1735,7 @@ mouseJoint.setTarget(mouseWorld);</pre>
 <div data-type="example"><h5>Example 5.8: MouseJoint demonstration</h5></div>
 
 <pre data-code-language="java" data-type="programlisting">
-PBox2D box2d;
+Box2DProcessing box2d;
 
 // One Box
 Box box;
@@ -1744,7 +1744,7 @@ Spring spring;
 
 void setup() {
   size(400,300);
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
 
   box = new Box(width/2,height/2);
@@ -1828,7 +1828,7 @@ body.setLinearVelocity(v);</pre>
 <p>In Chapter 2, we spent a lot of time thinking about building environments with multiple forces. An object might respond to gravitational attraction, wind, air resistance, etc. Clearly there are forces at work in Box2D as we watch rectangles and circles spin and fly around the screen. But so far, we&rsquo;ve only had the ability to manipulate a single global force&mdash;gravity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
   // Setting the global gravity force
   box2d.setGravity(0, -20);</pre>
@@ -1908,9 +1908,9 @@ Vec2 attract(Mover m) {
 
 <p>Of course, Box2D has thought of this problem before. It&rsquo;s a pretty common one. After all, if you intend to make a bajillion dollars selling some game called Angry Birds, you better well make something happen when an ill-tempered pigeon smashes into a cardboard box. Box2D alerts you to moments of collision with something called an &ldquo;interface.&rdquo; It&rsquo;s worth learning about interfaces, an advanced feature of object-oriented programming. You can take a look at the <a href="http://download.oracle.com/javase/tutorial/java/concepts/interface.html">Java Interface Tutorial</a> as well as the JBox2D <span class="klass">ContactListener</span> class. (I have also included an example on the website that demonstrates using the interface directly.)</p>
 
-<p><a data-primary="beginContact() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="collisions" data-secondary="beginContact() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="beginContact() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="collisions" data-secondary="beginContact() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
-<p>If you are using PBox2D, as we are here, you don&rsquo;t need to implement your own interface. Detecting collision events is done through a callback function. Much like <span class="function">mousePressed()</span> is triggered when the mouse is pressed, <span class="function">beginContact()</span> is triggered when two shapes collide.</p>
+<p>If you are using Box2D-for-Processing, as we are here, you don&rsquo;t need to implement your own interface. Detecting collision events is done through a callback function. Much like <span class="function">mousePressed()</span> is triggered when the mouse is pressed, <span class="function">beginContact()</span> is triggered when two shapes collide.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The mousePressed event with which we are comfortable.
@@ -1923,11 +1923,11 @@ void beginContact(Contact cp) {
   println(&quot;Something collided in the Box2D World!&quot;);
 }</pre>
 
-<p>Before the above will work, you must first let PBox2D know you intend to listen for collisions. (This allows the library to reduce overhead by default; it won&rsquo;t bother listening if it doesn&rsquo;t have to.)</p>
+<p>Before the above will work, you must first let Box2D-for-Processing know you intend to listen for collisions. (This allows the library to reduce overhead by default; it won&rsquo;t bother listening if it doesn&rsquo;t have to.)</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
-  box2d = new PBox2D(this);
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
   // Add this line if you want to listen for collisions.
   box2d.listenForCollisions();
@@ -1935,7 +1935,7 @@ void setup() {
 
 <p>There are four collision event callbacks.</p>
 
-<p><a data-primary="endContact() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="postSolve() function (PBox2D)" data-type="indexterm">&nbsp;</a> <a data-primary="preSolve() function (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="endContact() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="postSolve() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a> <a data-primary="preSolve() function (Box2DProcessing)" data-type="indexterm">&nbsp;</a></p>
 
 <ol>
 	<li>
@@ -1961,7 +1961,7 @@ void beginContact(Contact cp) {
 
 }</pre>
 
-<p><a data-primary="Contact objects (PBox2D)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Contact objects (Box2D-for-Processing)" data-type="indexterm">&nbsp;</a></p>
 
 <p>Notice that the function above includes an argument of type <span class="klass">Contact</span>. A <span class="klass">Contact</span> object includes all the data associated with a collision&mdash;the geometry and the forces. Let&rsquo;s say we have a Processing sketch with <span class="klass">Particle</span> objects that store a reference to a Box2D body. Here is the process we are going to follow.</p>
 
@@ -2129,7 +2129,7 @@ location.add(velocity);</pre>
 
 <p>In other words, we should thank our lucky stars for toxiclibs. We are only going to focus on a few examples related to Verlet physics, but toxiclibs includes a suite of other wonderful packages that help with audio, color, geometry, and more. In particular, if you are looking to work with form and fabrication in Processing, take a look at the geometry package. Demos can be found at <a href="http://www.openprocessing.org/portal/?userID=4530">Open Processing</a>.</p>
 
-<p>We should note that toxiclibs was designed specifically for use with Processing. This is great news. The trouble we had with making Box2D work in Processing (multiple coordinate systems, Box2D vs. JBox2D vs. PBox2D) is not an issue here. toxiclibs is a library that you just download, stick in your libraries folder, and use. And the coordinate system that we&rsquo;ll use for the physics engine is the coordinate system of Processing, so no translating back and forth. In addition, toxiclibs is not limited to a 2D world; all of the physics simulations and functions work in both two and three dimensions. So how do you decide which library you should use? Box2D or toxiclibs? If you fall into one of the following two categories, your decision is a bit easier:</p>
+<p>We should note that toxiclibs was designed specifically for use with Processing. This is great news. The trouble we had with making Box2D work in Processing (multiple coordinate systems, Box2D vs. JBox2D vs. Box2D-for-Processing) is not an issue here. toxiclibs is a library that you just download, stick in your libraries folder, and use. And the coordinate system that we&rsquo;ll use for the physics engine is the coordinate system of Processing, so no translating back and forth. In addition, toxiclibs is not limited to a 2D world; all of the physics simulations and functions work in both two and three dimensions. So how do you decide which library you should use? Box2D or toxiclibs? If you fall into one of the following two categories, your decision is a bit easier:</p>
 
 <p><a data-primary="Box2D" data-secondary="toxiclibs vs." data-type="indexterm">&nbsp;</a> <a data-primary="collisions" data-secondary="toxiclibs and" data-type="indexterm">&nbsp;</a> <a data-primary="toxiclibs" data-secondary="Box2D vs." data-type="indexterm">&nbsp;</a></p>
 
