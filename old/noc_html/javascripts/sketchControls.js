@@ -4,6 +4,10 @@ $(function(){
     var controls = $(this).closest('.sketch-controls');
     var pjsID = $(controls).prev().attr('id');
     var sketch = document.getElementById(pjsID);
+    var pjs = Processing.getInstanceById(pjsID);
+
+    // dispose previously running sketch
+    if (pjs) pjs.exit();
 
     // Adapted from Processingjs lazyloading extension.
     // https://github.com/processing-js/processing-js/blob/master/extensions/processing-lazyload.js
@@ -24,9 +28,11 @@ $(function(){
     if($(this).data()['paused'] === 'true') {
       pjs.loop();
       $(this).data()['paused'] = 'false';
+      $(this).text('PAUSE');
     } else {
       pjs.noLoop();
       $(this).data()['paused'] = 'true';
+      $(this).text('RESUME');
     }
   });
 });
