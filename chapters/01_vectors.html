@@ -4,18 +4,18 @@
 <h1>Chapter 1. Vectors</h1>
 
 <blockquote data-type="epigraph">
-<p>&ldquo;Roger, Roger. What&rsquo;s our vector, Victor?&rdquo;</p>
+<p>“Roger, Roger. What’s our vector, Victor?”</p>
 
-<p data-type="attribution">&mdash; Captain Oveur (Airplane)</p>
+<p data-type="attribution">— Captain Oveur (Airplane)</p>
 </blockquote>
 
 <p><a data-primary="vectors" data-type="indexterm">&nbsp;</a></p>
 
-<p>This book is all about looking at the world around us and coming up with clever ways to simulate that world with code. Divided into three parts, the book will start by looking at basic physics&mdash;how an apple falls from a tree, a pendulum swings in the air, the earth revolves around the sun, etc. Absolutely everything contained within the first five chapters of this book requires the use of the most basic building block for programming motion&mdash;the <strong><em>vector</em></strong>. And so this is where we begin our story.</p>
+<p>This book is all about looking at the world around us and coming up with clever ways to simulate that world with code. Divided into three parts, the book will start by looking at basic physics—how an apple falls from a tree, a pendulum swings in the air, the earth revolves around the sun, etc. Absolutely everything contained within the first five chapters of this book requires the use of the most basic building block for programming motion—the <strong><em>vector</em></strong>. And so this is where we begin our story.</p>
 
 <p><a data-primary="Euclid" data-type="indexterm">&nbsp;</a> <a data-primary="Euclidean vector" data-type="indexterm">&nbsp;</a> <a data-primary="geometric vector" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="defined" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now, the word vector can mean a lot of different things. Vector is the name of a New Wave rock band formed in Sacramento, CA in the early 1980s. It&rsquo;s the name of a breakfast cereal manufactured by Kellogg&rsquo;s Canada. In the field of epidemiology, a vector is used to describe an organism that transmits infection from one host to another. In the C++ programming language, a vector (std::vector) is an implementation of a dynamically resizable array data structure. While all these definitions are interesting, they&rsquo;re not what we&rsquo;re looking for. What we want is called a <strong><em>Euclidean vector</em></strong> (named for the Greek mathematician Euclid and also known as a geometric vector). When you see the term &ldquo;vector&rdquo; in this book, you can assume it refers to a Euclidean vector, defined as <em>an entity that has both magnitude and direction</em>.</p>
+<p>Now, the word vector can mean a lot of different things. Vector is the name of a New Wave rock band formed in Sacramento, CA in the early 1980s. It’s the name of a breakfast cereal manufactured by Kellogg’s Canada. In the field of epidemiology, a vector is used to describe an organism that transmits infection from one host to another. In the C++ programming language, a vector (std::vector) is an implementation of a dynamically resizable array data structure. While all these definitions are interesting, they’re not what we’re looking for. What we want is called a <strong><em>Euclidean vector</em></strong> (named for the Greek mathematician Euclid and also known as a geometric vector). When you see the term “vector” in this book, you can assume it refers to a Euclidean vector, defined as <em>an entity that has both magnitude and direction</em>.</p>
 
 <p><a data-primary="vectors" data-secondary="notation" data-type="indexterm">&nbsp;</a></p>
 
@@ -32,21 +32,23 @@
 
 <p><a data-primary="bouncing ball sketch" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="bouncing ball sketch" data-type="indexterm">&nbsp;</a></p>
 
-<p>Before we dive into more of the details about vectors, let&rsquo;s look at a basic Processing example that demonstrates why we should care about vectors in the first place. If you&rsquo;ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you&rsquo;ve done one of these things to help prepare you for this book), you probably, at one point or another, learned how to write a simple bouncing ball sketch.</p>
+<p>Before we dive into more of the details about vectors, let’s look at a basic Processing example that demonstrates why we should care about vectors in the first place. If you’ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you’ve done one of these things to help prepare you for this book), you probably, at one point or another, learned how to write a simple bouncing ball sketch.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_1_bouncingball_novectors/_1_1_bouncingball_novectors.pde"><img alt="" src="../images/chapter01/ch01_ex01.png" />
-<figcaption>If you are reading this book as a PDF or in print, then you will only see screenshots of the code.  Motion, of course, is a key element of our discussion, so to the extent possible, the static screenshots will include trails to give a sense of the behavior. For more about how to draw trails, see the code examples available for download.</figcaption>
+<figcaption>If you are reading this book as a PDF or in print, then you will only see screenshots of the code. Motion, of course, is a key element of our discussion, so to the extent possible, the static screenshots will include trails to give a sense of the behavior. For more about how to draw trails, see the code examples available for download.</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.1: Bouncing ball with no vectors</h5></div>
+<div data-type="example">
+<h5>Example 1.1: Bouncing ball with no vectors</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
-<span class="comment">float x = 100;<a class="co" id="co_ch01_CO1-1" href="#callout_ch01_CO1-1">&nbsp;</a>
+<span class="comment">float x = 100;<a class="co" href="#callout_ch01_CO1-1" id="co_ch01_CO1-1">&nbsp;</a>
 float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;</span>
 
-<span class="comment">void setup() {<a class="co" id="co_ch01_CO1-2" href="#callout_ch01_CO1-2">&nbsp;</a>
+<span class="comment">void setup() {<a class="co" href="#callout_ch01_CO1-2" id="co_ch01_CO1-2">&nbsp;</a>
   size(640,360);
   background(255);
 }</span>
@@ -54,10 +56,10 @@ float yspeed = 3.3;</span>
 void draw() {
   background(255);
 
-  <span class="comment">x = x + xspeed;<a class="co" id="co_ch01_CO1-3" href="#callout_ch01_CO1-3">&nbsp;</a>
-  y = y + yspeed;</span>
+  x = x + xspeed;<a class="co" href="#callout_ch01_CO1-3" id="co_ch01_CO1-3">&nbsp;</a>
+  y = y + yspeed;
 
-  <span class="comment">if ((x &gt; width) || (x &lt; 0)) {<a class="co" id="co_ch01_CO1-4" href="#callout_ch01_CO1-4">&nbsp;</a>
+  <span class="comment">if ((x &gt; width) || (x &lt; 0)) {<a class="co" href="#callout_ch01_CO1-4" id="co_ch01_CO1-4">&nbsp;</a>
     xspeed = xspeed * -1;
   }
   if ((y &gt; height) || (y &lt; 0)) {
@@ -66,41 +68,31 @@ void draw() {
 
   stroke(0);
   fill(175);
-  <span class="comment">ellipse(x,y,16,16);<a class="co" id="co_ch01_CO1-5" href="#callout_ch01_CO1-5">&nbsp;</a></span>
+  <span class="comment">ellipse(x,y,16,16);<a class="co" href="#callout_ch01_CO1-5" id="co_ch01_CO1-5">&nbsp;</a></span>
 }</pre>
 
 <dl class="calloutlist">
- <dt>
- <a class="co" id="callout_ch01_CO1-1" href="#co_ch01_CO1-1">&nbsp;</a>
- </dt>
- <dd>
- <p>Variables for location and speed of ball.</p>
- </dd>
- <dt>
- <a class="co" id="callout_ch01_CO1-2" href="#co_ch01_CO1-2">&nbsp;</a>
- </dt>
- <dd>Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).</dd>
- <dt>
- <a class="co" id="callout_ch01_CO1-3" href="#co_ch01_CO1-3">&nbsp;</a>
- </dt>
- <dd>
- <p>Move the ball according to its speed.</p>
- </dd>
-  <dt>
- <a class="co" id="callout_ch01_CO1-4" href="#co_ch01_CO1-4">&nbsp;</a>
- </dt>
- <dd>
- <p>Check for bouncing.</p>
- </dd>
-  <dt>
- <a class="co" id="callout_ch01_CO1-5" href="#co_ch01_CO1-5">&nbsp;</a>
- </dt>
- <dd>
- <p>Display the ball at the location (x,y).</p>
- </dd>
+	<dt><a class="co" href="#co_ch01_CO1-1" id="callout_ch01_CO1-1">&nbsp;</a></dt>
+	<dd>
+	<p>Variables for location and speed of ball.</p>
+	</dd>
+	<dt><a class="co" href="#co_ch01_CO1-2" id="callout_ch01_CO1-2">&nbsp;</a></dt>
+	<dd>Remember how Processing works? setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).</dd>
+	<dt><a class="co" href="#co_ch01_CO1-3" id="callout_ch01_CO1-3">&nbsp;</a></dt>
+	<dd>
+	<p>Move the ball according to its speed.</p>
+	</dd>
+	<dt><a class="co" href="#co_ch01_CO1-4" id="callout_ch01_CO1-4">&nbsp;</a></dt>
+	<dd>
+	<p>Check for bouncing.</p>
+	</dd>
+	<dt><a class="co" href="#co_ch01_CO1-5" id="callout_ch01_CO1-5">&nbsp;</a></dt>
+	<dd>
+	<p>Display the ball at the location (x,y).</p>
+	</dd>
 </dl>
 
-<p>In the above example, we have a very simple world&mdash;a blank canvas with a circular shape (a &ldquo;ball&rdquo;) traveling around. This ball has some properties, which are represented in the code as variables.</p>
+<p>In the above example, we have a very simple world—a blank canvas with a circular shape (a “ball”) traveling around. This ball has some properties, which are represented in the code as variables.</p>
 
 <div data-type="note">
 <dl>
@@ -138,9 +130,9 @@ void draw() {
 </dl>
 </div>
 
-<p>It&rsquo;s becoming clearer that for every concept in this world (wind, location, acceleration, etc.), we&rsquo;ll need two variables. And this is only a two-dimensional world. In a 3D world, we&rsquo;ll need <strong class="var">x</strong>, <strong class="var">y</strong>, <strong class="var">z</strong>, <strong class="var">xspeed</strong>, <strong class="var">yspeed</strong>, <strong class="var">zspeed</strong>, and so on.</p>
+<p>It’s becoming clearer that for every concept in this world (wind, location, acceleration, etc.), we’ll need two variables. And this is only a two-dimensional world. In a 3D world, we’ll need <strong class="var">x</strong>, <strong class="var">y</strong>, <strong class="var">z</strong>, <strong class="var">xspeed</strong>, <strong class="var">yspeed</strong>, <strong class="var">zspeed</strong>, and so on.</p>
 
-<p>Wouldn&rsquo;t it be nice if we could simplify our code and use fewer variables?</p>
+<p>Wouldn’t it be nice if we could simplify our code and use fewer variables?</p>
 
 <p>Instead of:</p>
 
@@ -150,15 +142,15 @@ float y;
 float xspeed;
 float yspeed;</pre>
 
-<p>We could simply have&hellip;</p>
+<p>We could simply have…</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Vector location;
 Vector speed;</pre>
 
-<p>Taking this first step in using vectors won&rsquo;t allow us to do anything new. Just adding vectors won&rsquo;t magically make your Processing sketches simulate physics. However, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
+<p>Taking this first step in using vectors won’t allow us to do anything new. Just adding vectors won’t magically make your Processing sketches simulate physics. However, they will simplify your code and provide a set of functions for common mathematical operations that happen over and over and over again while programming motion.</p>
 
-<p>As an introduction to vectors, we&rsquo;re going to live in two dimensions for quite some time (at least until we get through the first several chapters). All of these examples can be fairly easily extended to three dimensions (and the class we will use&mdash;<strong klass="">PVector</strong><code>&mdash;</code>allows for three dimensions.) However, it&rsquo;s easier to start with just two.</p>
+<p>As an introduction to vectors, we’re going to live in two dimensions for quite some time (at least until we get through the first several chapters). All of these examples can be fairly easily extended to three dimensions (and the class we will use—<strong klass="">PVector</strong><code>—</code>allows for three dimensions.) However, it’s easier to start with just two.</p>
 </section>
 
 <section data-type="sect1" id="chapter01_section2">
@@ -191,7 +183,7 @@ Vector speed;</pre>
 </dl>
 </div>
 
-<p>You&rsquo;ve probably done this before when programming motion. For every frame of animation (i.e. a single cycle through Processing&rsquo;s <strong function="">draw()</strong> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
+<p>You’ve probably done this before when programming motion. For every frame of animation (i.e. a single cycle through Processing’s <strong function="">draw()</strong> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
 
 <figure id="chapter01_figure3"><img alt="Figure 1.3" src="../images/chapter01/ch01_03.png" />
 <figcaption>&nbsp;</figcaption>
@@ -203,7 +195,7 @@ Vector speed;</pre>
 
 <p><a data-primary="locations" data-secondary="as vectors" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="locations and" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="as vector" data-type="indexterm">&nbsp;</a></p>
 
-<p>If velocity is a vector (the difference between two points), what is location? Is it a vector too? Technically, one might argue that location is not a vector, since it&rsquo;s not describing how to move from one point to another&mdash;it&rsquo;s simply describing a singular point in space.</p>
+<p>If velocity is a vector (the difference between two points), what is location? Is it a vector too? Technically, one might argue that location is not a vector, since it’s not describing how to move from one point to another—it’s simply describing a singular point in space.</p>
 
 <p>Nevertheless, another way to describe a location is the path taken from the origin to reach that location. Hence, a location can be the vector representing the difference between location and origin.</p>
 
@@ -211,7 +203,7 @@ Vector speed;</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Let&rsquo;s examine the underlying data for both location and velocity. In the bouncing ball example, we had the following:</p>
+<p>Let’s examine the underlying data for both location and velocity. In the bouncing ball example, we had the following:</p>
 
 <div data-type="note">
 <dl>
@@ -226,7 +218,7 @@ Vector speed;</pre>
 </dl>
 </div>
 
-<p>Notice how we are storing the same data for both&mdash;two floating point numbers, an <strong class="var">x</strong> and a <strong class="var">y</strong>. If we were to write a vector class ourselves, we&rsquo;d start with something rather basic:</p>
+<p>Notice how we are storing the same data for both—two floating point numbers, an <strong class="var">x</strong> and a <strong class="var">y</strong>. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class PVector {
@@ -241,9 +233,9 @@ class PVector {
 
 }</pre>
 
-<p>At its core, a <strong klass="">PVector</strong> is just a convenient way to store two values (or three, as we&rsquo;ll see in 3D examples).</p>
+<p>At its core, a <strong klass="">PVector</strong> is just a convenient way to store two values (or three, as we’ll see in 3D examples).</p>
 
-<p>And so this &hellip;</p>
+<p>And so this …</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float x = 100;
@@ -251,7 +243,7 @@ float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;</pre>
 
-<p>becomes &hellip;</p>
+<p>becomes …</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector location = new PVector(100,100);
@@ -259,7 +251,7 @@ PVector velocity = new PVector(1,3.3);</pre>
 
 <p><a data-primary="vectors" data-secondary="motion" data-tertiary="implementing with" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we have two vector objects (location and velocity), we&rsquo;re ready to implement the algorithm for motion&mdash;<strong><em>location = location + velocity</em></strong>. In Example 1.1, without vectors, we had:</p>
+<p>Now that we have two vector objects (location and velocity), we’re ready to implement the algorithm for motion—<strong><em>location = location + velocity</em></strong>. In Example 1.1, without vectors, we had:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 //[full] Add each speed to each location.
@@ -275,7 +267,7 @@ location = location + velocity;</pre>
 
 <p><a data-primary="addition operator" data-type="indexterm">&nbsp;</a></p>
 
-<p>However, in Processing, the addition operator + is reserved for primitive values (integers, floats, etc.) only. Processing doesn&rsquo;t know how to add two <strong klass="">PVector</strong> objects together any more than it knows how to add two <strong klass="">PFont</strong> objects or <strong klass="">PImage</strong> objects. Fortunately for us, the <strong klass="">PVector</strong> class includes functions for common mathematical operations.</p>
+<p>However, in Processing, the addition operator + is reserved for primitive values (integers, floats, etc.) only. Processing doesn’t know how to add two <strong klass="">PVector</strong> objects together any more than it knows how to add two <strong klass="">PFont</strong> objects or <strong klass="">PImage</strong> objects. Fortunately for us, the <strong klass="">PVector</strong> class includes functions for common mathematical operations.</p>
 </section>
 
 <section data-type="sect1" id="chapter01_section3">
@@ -283,11 +275,11 @@ location = location + velocity;</pre>
 
 <p><a data-primary="add() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="adding" data-type="indexterm">&nbsp;</a></p>
 
-<p>Before we continue looking at the <strong klass="">PVector</strong> class and its <strong function="">add()</strong> method (purely for the sake of learning since it&rsquo;s already implemented for us in Processing itself), let&rsquo;s examine vector addition using the notation found in math and physics textbooks.</p>
+<p>Before we continue looking at the <strong klass="">PVector</strong> class and its <strong function="">add()</strong> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks.</p>
 
 <p><a data-primary="scalar notation" data-secondary="vs. vector notation" data-type="indexterm">&nbsp;</a> <a data-primary="vector notation" data-secondary="vs. scalar notation" data-type="indexterm">&nbsp;</a></p>
 
-<p>Vectors are typically written either in boldface type or with an arrow on top. For the purposes of this book, to distinguish a <strong><em>vector</em></strong> from a <strong><em>scalar</em></strong> (<em>scalar</em> refers to a single value, such as an integer or a floating point number), we&rsquo;ll use the arrow notation:</p>
+<p>Vectors are typically written either in boldface type or with an arrow on top. For the purposes of this book, to distinguish a <strong><em>vector</em></strong> from a <strong><em>scalar</em></strong> (<em>scalar</em> refers to a single value, such as an integer or a floating point number), we’ll use the arrow notation:</p>
 
 <ul>
 	<li>
@@ -298,13 +290,13 @@ location = location + velocity;</pre>
 	</li>
 </ul>
 
-<p>Let&rsquo;s say I have the following two vectors:</p>
+<p>Let’s say I have the following two vectors:</p>
 
 <figure id="chapter01_figure5"><img alt="Figure 1.5" src="../images/chapter01/ch01_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Each vector has two components, an <strong class="var">x</strong> and a <strong class="var">y</strong>. To add two vectors together, we simply add both <strong class="var">x</strong><code>&rsquo;</code>s and both <strong class="var">y</strong><code>&rsquo;</code>s.</p>
+<p>Each vector has two components, an <strong class="var">x</strong> and a <strong class="var">y</strong>. To add two vectors together, we simply add both <strong class="var">x</strong><code>’</code>s and both <strong class="var">y</strong><code>’</code>s.</p>
 
 <figure id="chapter01_figure6"><img alt="Figure 1.6" src="../images/chapter01/ch01_06.png" />
 <figcaption>&nbsp;</figcaption>
@@ -334,7 +326,7 @@ location = location + velocity;</pre>
 
 <p><a data-primary="add() function (PVector class)" data-secondary="implementation of" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <strong klass="">PVector</strong> class itself. Let&rsquo;s write a function called <strong function="">add()</strong> that takes another <strong klass="">PVector</strong> object as its argument.</p>
+<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <strong klass="">PVector</strong> class itself. Let’s write a function called <strong function="">add()</strong> that takes another <strong klass="">PVector</strong> object as its argument.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class PVector {
@@ -368,7 +360,9 @@ location.add(velocity);</pre>
 
 <p><a data-primary="dot syntax" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="dot syntax" data-type="indexterm">&nbsp;</a></p>
 
-<div data-type="example"><h5>Example 1.2: Bouncing ball with PVectors!</h5></div>
+<div data-type="example">
+<h5>Example 1.2: Bouncing ball with PVectors!</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 //[full] Instead of a bunch of floats, we now just have two PVector variables.
@@ -400,9 +394,9 @@ void draw() {
   ellipse(location.x,location.y,16,16); //[bold]
 }</pre>
 
-<p>Now, you might feel somewhat disappointed. After all, this may initially appear to have made the code more complicated than the original version. While this is a perfectly reasonable and valid critique, it&rsquo;s important to understand that we haven&rsquo;t fully realized the power of programming with vectors just yet. Looking at a simple bouncing ball and only implementing vector addition is just the first step. As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (which we&rsquo;ll introduce in Chapter 2), the benefits of <strong klass="">PVector</strong> will become more apparent.</p>
+<p>Now, you might feel somewhat disappointed. After all, this may initially appear to have made the code more complicated than the original version. While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet. Looking at a simple bouncing ball and only implementing vector addition is just the first step. As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (which we’ll introduce in Chapter 2), the benefits of <strong klass="">PVector</strong> will become more apparent.</p>
 
-<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <strong klass="">PVector</strong> objects to describe two values&mdash;the <strong class="var">x</strong> and <strong class="var">y</strong> of location and the <strong class="var">x</strong> and <strong class="var">y</strong> of velocity&mdash;we still often need to refer to the <em>x</em> and <em>y</em> components of each <strong klass="">PVector</strong> individually. When we go to draw an object in Processing, there&rsquo;s no means for us to say:</p>
+<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <strong klass="">PVector</strong> objects to describe two values—the <strong class="var">x</strong> and <strong class="var">y</strong> of location and the <strong class="var">x</strong> and <strong class="var">y</strong> of velocity—we still often need to refer to the <em>x</em> and <em>y</em> components of each <strong klass="">PVector</strong> individually. When we go to draw an object in Processing, there’s no means for us to say:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 ellipse(location,16,16); //[line-through]</pre>
@@ -422,7 +416,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 <div data-type="exercise" id="chapter01_exercise1">
 <h5>Exercise 1.1</h5>
 
-<p>Find something you&rsquo;ve previously made in Processing using separate <strong class="var">x</strong> and <strong class="var">y</strong> variables and use <strong klass="">PVector</strong><code>s</code> instead.</p>
+<p>Find something you’ve previously made in Processing using separate <strong class="var">x</strong> and <strong class="var">y</strong> variables and use <strong klass="">PVector</strong><code>s</code> instead.</p>
 </div>
 
 <div data-type="exercise" id="chapter01_exercise2">
@@ -441,55 +435,55 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 <section data-type="sect1" id="chapter01_section4">
 <h1>1.4 More Vector Math</h1>
 
-<p>Addition was really just the first step. There are many mathematical operations that are commonly used with vectors. Below is a comprehensive list of the operations available as functions in the <strong klass="">PVector</strong> class. We&rsquo;ll go through a few of the key ones now. As our examples get more sophisticated in later chapters, we&rsquo;ll continue to reveal the details of more functions.</p>
+<p>Addition was really just the first step. There are many mathematical operations that are commonly used with vectors. Below is a comprehensive list of the operations available as functions in the <strong klass="">PVector</strong> class. We’ll go through a few of the key ones now. As our examples get more sophisticated in later chapters, we’ll continue to reveal the details of more functions.</p>
 
 <p><a data-primary="PVector class (Processing)" data-secondary="mathematical functions for" data-type="indexterm">&nbsp;</a> <a data-primary="angleBetween() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="cross() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="dist() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="dot() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="lerp() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="limit() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="function list for" data-type="indexterm">&nbsp;</a> <a data-primary="random2D() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="random3D() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="rotate() function (PVector class)" data-type="indexterm">&nbsp;</a></p>
 
 <ul>
 	<li>
-	<p><strong function="">add()</strong> &mdash; add vectors</p>
+	<p><strong function="">add()</strong> — add vectors</p>
 	</li>
 	<li>
-	<p><strong function="">sub()</strong> &mdash; subtract vectors</p>
+	<p><strong function="">sub()</strong> — subtract vectors</p>
 	</li>
 	<li>
-	<p><strong function="">mult()</strong> &mdash; scale the vector with multiplication</p>
+	<p><strong function="">mult()</strong> — scale the vector with multiplication</p>
 	</li>
 	<li>
-	<p><strong function="">div()</strong> &mdash; scale the vector with division</p>
+	<p><strong function="">div()</strong> — scale the vector with division</p>
 	</li>
 	<li>
-	<p><strong function="">mag()</strong> &mdash; calculate the magnitude of a vector</p>
+	<p><strong function="">mag()</strong> — calculate the magnitude of a vector</p>
 	</li>
 	<li>
 	<p><strong function="">setMag()</strong> - set the magnitude of a vector</p>
 	</li>
 	<li>
-	<p><strong function="">normalize()</strong> &mdash; normalize the vector to a unit length of 1</p>
+	<p><strong function="">normalize()</strong> — normalize the vector to a unit length of 1</p>
 	</li>
 	<li>
-	<p><strong function="">limit()</strong> &mdash; limit the magnitude of a vector</p>
+	<p><strong function="">limit()</strong> — limit the magnitude of a vector</p>
 	</li>
 	<li>
-	<p><strong function="">heading()</strong> &mdash; the 2D heading of a vector expressed as an angle</p>
+	<p><strong function="">heading()</strong> — the 2D heading of a vector expressed as an angle</p>
 	</li>
 	<li>
-	<p><strong function="">rotate()</strong> &mdash; rotate a 2D vector by an angle</p>
+	<p><strong function="">rotate()</strong> — rotate a 2D vector by an angle</p>
 	</li>
 	<li>
-	<p><strong function="">lerp()</strong> &mdash; linear interpolate to another vector</p>
+	<p><strong function="">lerp()</strong> — linear interpolate to another vector</p>
 	</li>
 	<li>
-	<p><strong function="">dist()</strong> &mdash; the Euclidean distance between two vectors (considered as points)</p>
+	<p><strong function="">dist()</strong> — the Euclidean distance between two vectors (considered as points)</p>
 	</li>
 	<li>
-	<p><strong function="">angleBetween()</strong> &mdash; find the angle between two vectors</p>
+	<p><strong function="">angleBetween()</strong> — find the angle between two vectors</p>
 	</li>
 	<li>
-	<p><strong function="">dot()</strong> &mdash; the dot product of two vectors</p>
+	<p><strong function="">dot()</strong> — the dot product of two vectors</p>
 	</li>
 	<li>
-	<p><strong function="">cross()</strong> &mdash; the cross product of two vectors (only relevant in three dimensions)</p>
+	<p><strong function="">cross()</strong> — the cross product of two vectors (only relevant in three dimensions)</p>
 	</li>
 	<li>
 	<p><strong function="">random2D()</strong> - make a random 2D vector</p>
@@ -499,7 +493,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 	</li>
 </ul>
 
-<p>Having already covered addition, let&rsquo;s start with subtraction. This one&rsquo;s not so bad; just take the plus sign and replace it with a minus!</p>
+<p>Having already covered addition, let’s start with subtraction. This one’s not so bad; just take the plus sign and replace it with a minus!</p>
 
 <section data-type="sect2" id="_vector_subtraction">
 <h2>Vector subtraction</h2>
@@ -525,13 +519,15 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
     y = y - v.y;
   }</pre>
 
-<p>The following example demonstrates vector subtraction by taking the difference between two points&mdash;the mouse location and the center of the window.</p>
+<p>The following example demonstrates vector subtraction by taking the difference between two points—the mouse location and the center of the window.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_3_vector_subtraction/_1_3_vector_subtraction.pde"><img alt="ch01 ex03" src="../images/chapter01/ch01_ex03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.3: Vector subtraction</h5></div>
+<div data-type="example">
+<h5>Example 1.3: Vector subtraction</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -561,7 +557,7 @@ void draw() {
 <p><strong><em>The commutative rule:</em></strong> {uplusvvplusu}<br />
 <strong><em>The associative rule:</em></strong> {uplusvwuvplusw}</p>
 
-<p>Fancy terminology and symbols aside, this is really quite a simple concept. We&rsquo;re just saying that common sense properties of addition apply to vectors as well.</p>
+<p>Fancy terminology and symbols aside, this is really quite a simple concept. We’re just saying that common sense properties of addition apply to vectors as well.</p>
 
 <p>{3plus2}<br />
 {3plus2plus1}</p>
@@ -573,7 +569,7 @@ void draw() {
 
 <p><a data-primary="mult() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="mult() function" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="multiplying" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="scaling" data-type="indexterm">&nbsp;</a></p>
 
-<p>Moving on to multiplication, we have to think a little bit differently. When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector. If we wanted to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: &ldquo;Multiply the vector by 2&rdquo; or &ldquo;Multiply the vector by 1/3.&rdquo; Note that we are multiplying a vector by a scalar, a single number, not another vector.</p>
+<p>Moving on to multiplication, we have to think a little bit differently. When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector. If we wanted to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: “Multiply the vector by 2” or “Multiply the vector by 1/3.” Note that we are multiplying a vector by a scalar, a single number, not another vector.</p>
 
 <p>To scale a vector, we multiply each component (<strong class="var">x</strong> and <strong class="var">y</strong>) by a scalar.</p>
 
@@ -588,7 +584,7 @@ void draw() {
 <p>{wxtimesn}<br />
 {wytimesn}</p>
 
-<p>Let&rsquo;s look at an example with vector notation.</p>
+<p>Let’s look at an example with vector notation.</p>
 
 <p>{uequals}<br />
 {nequals}</p>
@@ -622,7 +618,9 @@ u.mult(3);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.4: Multiplying a vector</h5></div>
+<div data-type="example">
+<h5>Example 1.4: Multiplying a vector</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -650,7 +648,7 @@ void draw() {
 
 <p><a data-primary="div() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="div() function" data-type="indexterm">&nbsp;</a></p>
 
-<p>Division works just like multiplication&mdash;we simply replace the multiplication sign (asterisk) with the division sign (forward slash).</p>
+<p>Division works just like multiplication—we simply replace the multiplication sign (asterisk) with the division sign (forward slash).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void div(float n) {
@@ -681,15 +679,15 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 
 <p><a data-primary="magnitude (of vectors)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm">&nbsp;</a></p>
 
-<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you&rsquo;re wondering: &ldquo;OK, so how do I know what the length of a vector is? I know the components (<strong class="var">x</strong> and <strong class="var">y</strong>), but how long (in pixels) is the actual arrow?&rdquo; Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
+<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you’re wondering: “OK, so how do I know what the length of a vector is? I know the components (<strong class="var">x</strong> and <strong class="var">y</strong>), but how long (in pixels) is the actual arrow?” Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
 
 <div class="image-container half-width-right"><img alt="Nature of Code Image" src="../images/chapter01/ch01_10.png" />
-<p class="caption">Figure 1.10: The length or &ldquo;magnitude&rdquo; of a vector <svg:svg height="12.190371pt" viewbox="0 -9.600527 8.520000 12.190371" width="8.520000pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="2.44921875" top="12.1903710937"></svgmath:metrics></svg:metadata><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:svg> is often written as: <svg:svg height="12.503906pt" viewbox="0 -9.914062 29.061672 12.503906" width="29.061672pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="1.37109375" top="12.357421875"></svgmath:metrics></svg:metadata><svg:g transform="translate(0.000000, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g><svg:g transform="translate(10.270836, 0.000000)"><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:g><svg:g transform="translate(22.124172, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g></svg:svg></p>
+<p class="caption">Figure 1.10: The length or “magnitude” of a vector <svg:svg height="12.190371pt" viewbox="0 -9.600527 8.520000 12.190371" width="8.520000pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="2.44921875" top="12.1903710937"></svgmath:metrics></svg:metadata><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">→</svg:text></svg:g></svg:svg> is often written as: <svg:svg height="12.503906pt" viewbox="0 -9.914062 29.061672 12.503906" width="29.061672pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="1.37109375" top="12.357421875"></svgmath:metrics></svg:metadata><svg:g transform="translate(0.000000, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g><svg:g transform="translate(10.270836, 0.000000)"><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">→</svg:text></svg:g></svg:g><svg:g transform="translate(22.124172, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g></svg:svg></p>
 </div>
 
 <p><a data-primary="Pythagoras" data-type="indexterm">&nbsp;</a> <a data-primary="Pythagorean theorem" data-type="indexterm">&nbsp;</a></p>
 
-<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<strong class="var">x</strong> and <strong class="var">y</strong>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We&rsquo;re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
+<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<strong class="var">x</strong> and <strong class="var">y</strong>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We’re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
 
 <figure class="half-width-right" id="chapter01_figure11"><img alt="Figure 1.11: The Pythagorean Theorem" src="../images/chapter01/ch01_11.png" />
 <figcaption>&nbsp;</figcaption>
@@ -712,7 +710,9 @@ float mag() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.5: Vector magnitude</h5></div>
+<div data-type="example">
+<h5>Example 1.5: Vector magnitude</h5>
+</div>
 
 <p><a data-primary="mag() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="mag() function" data-type="indexterm">&nbsp;</a></p>
 
@@ -746,13 +746,13 @@ void draw() {
 
 <p><a data-primary="normalization" data-type="indexterm">&nbsp;</a> <a data-primary="unit vectors" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="normalization" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="unit vectors" data-type="indexterm">&nbsp;</a></p>
 
-<p>Calculating the magnitude of a vector is only the beginning. The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>. Normalizing refers to the process of making something &ldquo;standard&rdquo; or, well, &ldquo;normal.&rdquo; In the case of vectors, let&rsquo;s assume for the moment that a standard vector has a length of 1. To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to 1, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
+<p>Calculating the magnitude of a vector is only the beginning. The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>. Normalizing refers to the process of making something “standard” or, well, “normal.” In the case of vectors, let’s assume for the moment that a standard vector has a length of 1. To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to 1, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
 
 <figure class="half-width-right" id="chapter01_figure12"><img alt="Figure 1.12" src="../images/chapter01/ch01_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>Since it describes a vector&rsquo;s direction without regard to its length, it&rsquo;s useful to have the unit vector readily accessible. We&rsquo;ll see this come in handy once we start to work with forces in Chapter 2.</p>
+<p>Since it describes a vector’s direction without regard to its length, it’s useful to have the unit vector readily accessible. We’ll see this come in handy once we start to work with forces in Chapter 2.</p>
 
 <p>For any given vector {vectoru}, its unit vector (written as {unitu}) is calculated as follows:</p>
 
@@ -774,7 +774,7 @@ void normalize() {
   div(m);
 }</pre>
 
-<p>Of course, there&rsquo;s one small issue. What if the magnitude of the vector is 0? We can&rsquo;t divide by 0! Some quick error checking will fix that right up:</p>
+<p>Of course, there’s one small issue. What if the magnitude of the vector is 0? We can’t divide by 0! Some quick error checking will fix that right up:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void normalize() {
@@ -788,7 +788,9 @@ void normalize() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.6: Normalizing a vector</h5></div>
+<div data-type="example">
+<h5>Example 1.6: Normalizing a vector</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 void draw() {
@@ -812,9 +814,9 @@ void draw() {
 
 <p><a data-primary="motion" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-type="indexterm">&nbsp;</a></p>
 
-<p>All this vector math stuff sounds like something we should know about, but why? How will it actually help us write code? The truth of the matter is that we need to have some patience. It will take some time before the awesomeness of using the <strong klass="">PVector</strong> class fully comes to light. This is actually a common occurrence when first learning a new data structure. For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things. But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things. The same can be true for <strong klass="">PVector</strong>. What might seem like more work now will pay off later, and pay off quite nicely. And you don&rsquo;t have to wait too long, as your reward will come in the next chapter.</p>
+<p>All this vector math stuff sounds like something we should know about, but why? How will it actually help us write code? The truth of the matter is that we need to have some patience. It will take some time before the awesomeness of using the <strong klass="">PVector</strong> class fully comes to light. This is actually a common occurrence when first learning a new data structure. For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things. But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things. The same can be true for <strong klass="">PVector</strong>. What might seem like more work now will pay off later, and pay off quite nicely. And you don’t have to wait too long, as your reward will come in the next chapter.</p>
 
-<p>For now, however, we want to focus on simplicity. What does it mean to program motion using vectors? We&rsquo;ve seen the beginning of this in <a href="#chapter01_example2">Example 1.2</a><code>:</code> the bouncing ball. An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next). Velocity is added to location:</p>
+<p>For now, however, we want to focus on simplicity. What does it mean to program motion using vectors? We’ve seen the beginning of this in <a href="#chapter01_example2">Example 1.2</a><code>:</code> the bouncing ball. An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next). Velocity is added to location:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 location.add(velocity);</pre>
@@ -837,9 +839,9 @@ ellipse(location.x,location.y,16,16);</pre>
 
 <p><a data-primary="Processing" data-secondary="OOP online tutorial" data-type="indexterm">&nbsp;</a></p>
 
-<p>In the bouncing ball example, all of this code happened in Processing&rsquo;s main tab, within <strong function="">setup()</strong> and <strong function="">draw()</strong>. What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing. In <a href="#intro_section2">section I.2 of the introduction</a>, &ldquo;The Random Walker Class,&rdquo; we briefly reviewed the basics of object-oriented-programming (&ldquo;OOP&rdquo;). Beyond that short introduction, this book assumes experience with objects and classes in Processing. If you need a refresher, I encourage you to check out the <a href="http://processing.org/learning/objects/">Processing objects tutorial</a>.</p>
+<p>In the bouncing ball example, all of this code happened in Processing’s main tab, within <strong function="">setup()</strong> and <strong function="">draw()</strong>. What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing. In <a href="#intro_section2">section I.2 of the introduction</a>, “The Random Walker Class,” we briefly reviewed the basics of object-oriented-programming (“OOP”). Beyond that short introduction, this book assumes experience with objects and classes in Processing. If you need a refresher, I encourage you to check out the <a href="http://processing.org/learning/objects/">Processing objects tutorial</a>.</p>
 
-<p>In this case, we&rsquo;re going to create a generic <strong klass="">Mover</strong> class that will describe a thing moving around the screen. And so we must consider the following two questions:</p>
+<p>In this case, we’re going to create a generic <strong klass="">Mover</strong> class that will describe a thing moving around the screen. And so we must consider the following two questions:</p>
 
 <ol>
 	<li>
@@ -858,7 +860,7 @@ class Mover {
   PVector location;
   PVector velocity;</pre>
 
-<p>Its functionality is just about as simple. The <strong klass="">Mover</strong> needs to move and it needs to be seen. We&rsquo;ll implement these needs as functions named <strong function="">update()</strong> and <strong function="">display()</strong>. We&rsquo;ll put all of our motion logic code in <strong function="">update()</strong> and draw the object in <strong function="">display()</strong>.</p>
+<p>Its functionality is just about as simple. The <strong klass="">Mover</strong> needs to move and it needs to be seen. We’ll implement these needs as functions named <strong function="">update()</strong> and <strong function="">display()</strong>. We’ll put all of our motion logic code in <strong function="">update()</strong> and draw the object in <strong function="">display()</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
@@ -877,12 +879,12 @@ class Mover {
 
 <p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
 
-<p>We&rsquo;ve forgotten one crucial item, however: the object&rsquo;s <strong><em>constructor</em></strong>. The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object. It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator:</p>
+<p>We’ve forgotten one crucial item, however: the object’s <strong><em>constructor</em></strong>. The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object. It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Mover m = new Mover();</pre>
 
-<p>In our case, let&rsquo;s arbitrarily decide to initialize our <strong klass="">Mover</strong> object by giving it a random location and a random velocity.</p>
+<p>In our case, let’s arbitrarily decide to initialize our <strong klass="">Mover</strong> object by giving it a random location and a random velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Mover() {
@@ -890,9 +892,9 @@ class Mover {
     velocity = new PVector(random(-2,2),random(-2,2));
   }</pre>
 
-<p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing. After all, we spent the beginning of this chapter discussing the <strong klass="">PVector</strong> class. The <strong klass="">PVector</strong> class is the template for making the <strong klass="">location</strong> object and the <strong klass="">velocity</strong> object. So what are they doing inside of yet another object, the <strong klass="">Mover</strong> object? In fact, this is just about the most normal thing ever. An object is simply something that holds data (and functionality). That data can be numbers (integers, floats, etc.) or other objects! We&rsquo;ll see this over and over again in this book. For example, in <a href="#chapter04_section1">Chapter 4</a> we&rsquo;ll write a class to describe a system of particles. That <strong klass="">ParticleSystem</strong> object will have as its data a list of <strong klass="">Particle</strong> objects&hellip;and each <strong klass="">Particle</strong> object will have as its data several <strong klass="">PVector</strong> objects!</p>
+<p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing. After all, we spent the beginning of this chapter discussing the <strong klass="">PVector</strong> class. The <strong klass="">PVector</strong> class is the template for making the <strong klass="">location</strong> object and the <strong klass="">velocity</strong> object. So what are they doing inside of yet another object, the <strong klass="">Mover</strong> object? In fact, this is just about the most normal thing ever. An object is simply something that holds data (and functionality). That data can be numbers (integers, floats, etc.) or other objects! We’ll see this over and over again in this book. For example, in <a href="#chapter04_section1">Chapter 4</a> we’ll write a class to describe a system of particles. That <strong klass="">ParticleSystem</strong> object will have as its data a list of <strong klass="">Particle</strong> objects…and each <strong klass="">Particle</strong> object will have as its data several <strong klass="">PVector</strong> objects!</p>
 
-<p>Let&rsquo;s finish off the <strong klass="">Mover</strong> class by incorporating a function to determine what the object should do when it reaches the edge of the window. For now let&rsquo;s do something simple, and just have it wrap around the edges.</p>
+<p>Let’s finish off the <strong klass="">Mover</strong> class by incorporating a function to determine what the object should do when it reaches the edge of the window. For now let’s do something simple, and just have it wrap around the edges.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void checkEdges() {
@@ -936,7 +938,9 @@ mover.display();</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.7: Motion 101 (velocity)</h5></div>
+<div data-type="example">
+<h5>Example 1.7: Motion 101 (velocity)</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 // Declare Mover object.
@@ -1002,15 +1006,15 @@ class Mover {
 
 <p><a data-primary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="acceleration" data-type="indexterm">&nbsp;</a></p>
 
-<p>OK. At this point, we should feel comfortable with two things: (1) what a <strong klass="">PVector</strong> is and (2) how we use <strong klass="">PVector</strong><code>s</code> inside of an object to keep track of its location and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring&mdash;the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <strong klass="">PVector</strong> to our class&mdash;<strong class="var">acceleration</strong>.</p>
+<p>OK. At this point, we should feel comfortable with two things: (1) what a <strong klass="">PVector</strong> is and (2) how we use <strong klass="">PVector</strong><code>s</code> inside of an object to keep track of its location and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <strong klass="">PVector</strong> to our class—<strong class="var">acceleration</strong>.</p>
 
-<p>The strict definition of <strong><em>acceleration</em></strong> we&rsquo;re using here is: <em>the rate of change of velocity</em>. Let&rsquo;s think about that definition for a moment. Is this a new concept? Not really. Velocity is defined as <em>the rate of change of location</em>. In essence, we are developing a &ldquo;trickle-down&rdquo; effect. Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter, when we see how forces affect acceleration, which affects velocity, which affects location). In code, this reads:</p>
+<p>The strict definition of <strong><em>acceleration</em></strong> we’re using here is: <em>the rate of change of velocity</em>. Let’s think about that definition for a moment. Is this a new concept? Not really. Velocity is defined as <em>the rate of change of location</em>. In essence, we are developing a “trickle-down” effect. Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter, when we see how forces affect acceleration, which affects velocity, which affects location). In code, this reads:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 velocity.add(acceleration);
 location.add(velocity);</pre>
 
-<p>As an exercise, from this point forward, let&rsquo;s make a rule for ourselves. Let&rsquo;s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them). In other words, our goal now for programming motion is: Come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic. (In truth, you&rsquo;ll find reasons to break this rule, but it&rsquo;s important to illustrate the principles behind our motion algorithm.) And so we need to come up with some ways to calculate acceleration:</p>
+<p>As an exercise, from this point forward, let’s make a rule for ourselves. Let’s write every example in the rest of this book without ever touching the value of velocity and location (except to initialize them). In other words, our goal now for programming motion is: Come up with an algorithm for how we calculate acceleration and let the trickle-down effect work its magic. (In truth, you’ll find reasons to break this rule, but it’s important to illustrate the principles behind our motion algorithm.) And so we need to come up with some ways to calculate acceleration:</p>
 
 <section data-type="sect2" id="_acceleration_algorithms">
 <h2>Acceleration Algorithms!</h2>
@@ -1051,28 +1055,28 @@ class Mover {
     //[end]
  }</pre>
 
-<p>We&rsquo;re almost done. The only missing piece is initialization in the constructor.</p>
+<p>We’re almost done. The only missing piece is initialization in the constructor.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Mover() {</pre>
 
-<p>Let&rsquo;s start the <strong klass="">Mover</strong> object in the middle of the window&hellip;</p>
+<p>Let’s start the <strong klass="">Mover</strong> object in the middle of the window…</p>
 
 <pre data-code-language="java" data-type="programlisting">
     location = new PVector(width/2,height/2);</pre>
 
-<p>&hellip;with an initial velocity of zero.</p>
+<p>…with an initial velocity of zero.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     velocity = new PVector(0,0);</pre>
 
-<p>This means that when the sketch starts, the object is at rest. We don&rsquo;t have to worry about velocity anymore, as we are controlling the object&rsquo;s motion entirely with acceleration. Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration. So let&rsquo;s pick a value.</p>
+<p>This means that when the sketch starts, the object is at rest. We don’t have to worry about velocity anymore, as we are controlling the object’s motion entirely with acceleration. Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration. So let’s pick a value.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     acceleration = new PVector(-0.001,0.01);
   }</pre>
 
-<p>Maybe you&rsquo;re thinking, &ldquo;Gosh, those values seem awfully small!&rdquo; That&rsquo;s right, they are quite tiny. It&rsquo;s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch&rsquo;s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <strong klass="">PVector</strong> function <strong function="">limit()</strong>.</p>
+<p>Maybe you’re thinking, “Gosh, those values seem awfully small!” That’s right, they are quite tiny. It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <strong klass="">PVector</strong> function <strong function="">limit()</strong>.</p>
 
 <p><a data-primary="limit() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="magnitude (of vectors)" data-secondary="limiting" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="limit() function" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="limiting" data-type="indexterm">&nbsp;</a></p>
 
@@ -1082,7 +1086,7 @@ velocity.limit(10);</pre>
 
 <p>This translates to the following:</p>
 
-<p><em>What is the magnitude of velocity? If it&rsquo;s less than 10, no worries; just leave it as is. If it&rsquo;s more than 10, however, reduce it to 10!</em></p>
+<p><em>What is the magnitude of velocity? If it’s less than 10, no worries; just leave it as is. If it’s more than 10, however, reduce it to 10!</em></p>
 
 <div data-type="exercise" id="chapter01_exercise4">
 <h5>Exercise 1.4</h5>
@@ -1098,13 +1102,15 @@ velocity.limit(10);</pre>
   }</pre>
 </div>
 
-<p>Let&rsquo;s take a look at the changes to the <strong klass="">Mover</strong> class, complete with <strong function="">acceleration</strong> and <strong function="">limit()</strong>.</p>
+<p>Let’s take a look at the changes to the <strong klass="">Mover</strong> class, complete with <strong function="">acceleration</strong> and <strong function="">limit()</strong>.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_8_motion101_acceleration/_1_8_motion101_acceleration.pde processingjs/chapter01/_1_8_motion101_acceleration/Mover.pde"><img alt="ch01 ex08" src="../images/chapter01/ch01_ex08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.8: Motion 101 (velocity and constant acceleration)</h5></div>
+<div data-type="example">
+<h5>Example 1.8: Motion 101 (velocity and constant acceleration)</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -1145,13 +1151,15 @@ class Mover {
 
 <p><a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm">&nbsp;</a></p>
 
-<p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object&rsquo;s constructor, we want to pick a new acceleration each cycle, i.e. each time <strong function="">update()</strong> is called.</p>
+<p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <strong function="">update()</strong> is called.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_9_motion101_acceleration/_1_9_motion101_acceleration.pde processingjs/chapter01/_1_9_motion101_acceleration/Mover.pde"><img alt="ch01 ex09" src="../images/chapter01/ch01_ex09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.9: Motion 101 (velocity and random acceleration)</h5></div>
+<div data-type="example">
+<h5>Example 1.9: Motion 101 (velocity and random acceleration)</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
@@ -1182,7 +1190,7 @@ acceleration = PVector.random2D();
 // Random
 acceleration.mult(random(2)); //[bold]</pre>
 
-<p>While this may seem like an obvious point, it&rsquo;s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction. Acceleration is used to steer an object, and we&rsquo;ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
+<p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction. Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
 
 <div data-type="exercise" id="chapter01_exercise6">
 <h5>Exercise 1.6</h5>
@@ -1207,7 +1215,7 @@ float y = 5;
 
 x = x + y;</pre>
 
-<p>Pretty simple, right? <strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and now <strong class="var">x</strong> is equal to 5. We could write the corresponding code pretty easily based on what we&rsquo;ve learned about <strong klass="">PVector</strong>.</p>
+<p>Pretty simple, right? <strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and now <strong class="var">x</strong> is equal to 5. We could write the corresponding code pretty easily based on what we’ve learned about <strong klass="">PVector</strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector v = new PVector(0,0);
@@ -1216,7 +1224,7 @@ v.add(u);</pre>
 
 <p>The vector <strong class="var">v</strong> has the value of (0,0), we add <strong class="var">u</strong> to it, and now <strong class="var">v</strong> is equal to (4,5). Easy, right?</p>
 
-<p>Let&rsquo;s take a look at another example of some simple floating point math:</p>
+<p>Let’s take a look at another example of some simple floating point math:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float x = 0;
@@ -1224,15 +1232,15 @@ float y = 5;
 
 float z = x + y;</pre>
 
-<p><strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and store the result in a new variable <strong class="var">z</strong>. The value of <strong class="var">x</strong> does not change in this example (neither does <strong class="var">y</strong>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it&rsquo;s not so obvious with mathematical operations in <strong klass="">PVector</strong>. Let&rsquo;s try to write the code based on what we know so far.</p>
+<p><strong class="var">x</strong> has the value of 0, we add <strong class="var">y</strong> to it, and store the result in a new variable <strong class="var">z</strong>. The value of <strong class="var">x</strong> does not change in this example (neither does <strong class="var">y</strong>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it’s not so obvious with mathematical operations in <strong klass="">PVector</strong>. Let’s try to write the code based on what we know so far.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector v = new PVector(0,0);
 PVector u = new PVector(4,5);
-// Don&rsquo;t be fooled; this is incorrect!!!
+// Don’t be fooled; this is incorrect!!!
 PVector w = v.add(u); //[line-through]</pre>
 
-<p>The above might seem like a good guess, but it&rsquo;s just not the way the <strong klass="">PVector</strong> class works. If we look at the definition of <strong function="">add()</strong> . . .</p>
+<p>The above might seem like a good guess, but it’s just not the way the <strong klass="">PVector</strong> class works. If we look at the definition of <strong function="">add()</strong> . . .</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void add(PVector v) {
@@ -1240,7 +1248,7 @@ void add(PVector v) {
     y = y + v.y;
  }</pre>
 
-<p>we see that this code does not accomplish our goal. First, it does not return a new <strong klass="">PVector</strong> (the return type is &ldquo;void&rdquo;) and second, it changes the value of the <strong klass="">PVector</strong> upon which it is called. In order to add two <strong klass="">PVector</strong> objects together and return the result as a new <strong klass="">PVector</strong>, we must use the static <strong function="">add()</strong> function.</p>
+<p>we see that this code does not accomplish our goal. First, it does not return a new <strong klass="">PVector</strong> (the return type is “void”) and second, it changes the value of the <strong klass="">PVector</strong> upon which it is called. In order to add two <strong klass="">PVector</strong> objects together and return the result as a new <strong klass="">PVector</strong>, we must use the static <strong function="">add()</strong> function.</p>
 
 <p><a data-primary="static functions" data-type="indexterm">&nbsp;</a></p>
 
@@ -1252,7 +1260,7 @@ PVector.add(v,u);
 // Not static: called from an object instance.
 v.add(u);</pre>
 
-<p>Since you can&rsquo;t write static functions yourself in Processing, you might not have encountered them before. <strong klass="">PVector</strong>'s static functions allow us to perform generic mathematical operations on <strong klass="">PVector</strong> objects without having to adjust the value of one of the input <strong klass="">PVector</strong><code>s</code>. Let&rsquo;s look at how we might write the static version of <strong function="">add()</strong>:</p>
+<p>Since you can’t write static functions yourself in Processing, you might not have encountered them before. <strong klass="">PVector</strong>'s static functions allow us to perform generic mathematical operations on <strong klass="">PVector</strong> objects without having to adjust the value of one of the input <strong klass="">PVector</strong><code>s</code>. Let’s look at how we might write the static version of <strong function="">add()</strong>:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   //The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
@@ -1325,15 +1333,15 @@ ___________;</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>To finish out this chapter, let&rsquo;s try something a bit more complex and a great deal more useful. We&rsquo;ll dynamically calculate an object&rsquo;s acceleration according to a rule stated in Algorithm #3 &mdash; <em>the object accelerates towards the mouse</em>.</p>
+<p>To finish out this chapter, let’s try something a bit more complex and a great deal more useful. We’ll dynamically calculate an object’s acceleration according to a rule stated in Algorithm #3 — <em>the object accelerates towards the mouse</em>.</p>
 
-<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let&rsquo;s start with direction. We know the acceleration vector should point from the object&rsquo;s location towards the mouse location. Let&rsquo;s say the object is located at the point (<strong class="var">x</strong>,<strong class="var">y</strong>) and the mouse at (<strong class="var">mouseX</strong>,<strong class="var">mouseY</strong>).</p>
+<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let’s start with direction. We know the acceleration vector should point from the object’s location towards the mouse location. Let’s say the object is located at the point (<strong class="var">x</strong>,<strong class="var">y</strong>) and the mouse at (<strong class="var">mouseX</strong>,<strong class="var">mouseY</strong>).</p>
 
 <figure class="half-width-right" id="chapter01_figure15"><img alt="Figure 1.15" src="../images/chapter01/ch01_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p>In Figure 1.15, we see that we can get a vector (<strong class="var">dx</strong>,<strong class="var">dy</strong>) by subtracting the object&rsquo;s location from the mouse&rsquo;s location.</p>
+<p>In Figure 1.15, we see that we can get a vector (<strong class="var">dx</strong>,<strong class="var">dy</strong>) by subtracting the object’s location from the mouse’s location.</p>
 
 <ul>
 	<li>
@@ -1344,16 +1352,16 @@ ___________;</pre>
 	</li>
 </ul>
 
-<p>Let&rsquo;s rewrite the above using <strong klass="">PVector</strong> syntax. Assuming we are in the <strong klass="">Mover</strong> class and thus have access to the object&rsquo;s <strong klass="">PVector location</strong>, we then have:</p>
+<p>Let’s rewrite the above using <strong klass="">PVector</strong> syntax. Assuming we are in the <strong klass="">Mover</strong> class and thus have access to the object’s <strong klass="">PVector location</strong>, we then have:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector mouse = new PVector(mouseX,mouseY);
-// Look! We&rsquo;re using the static reference to sub() because we want a new PVector pointing from one point to another.
+// Look! We’re using the static reference to sub() because we want a new PVector pointing from one point to another.
 PVector dir = PVector.sub(mouse,location);</pre>
 
-<p>We now have a <strong klass="">PVector</strong> that points from the mover&rsquo;s location all the way to the mouse. If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location. This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
+<p>We now have a <strong klass="">PVector</strong> that points from the mover’s location all the way to the mouse. If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location. This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
 
-<p>In order to set the magnitude (whatever it may be) of our acceleration <strong klass="">PVector</strong>, we must first <em>_</em> that direction vector. That&rsquo;s right, you said it. <em>Normalize</em>. If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value. One multiplied by anything equals anything.</p>
+<p>In order to set the magnitude (whatever it may be) of our acceleration <strong klass="">PVector</strong>, we must first <em>_</em> that direction vector. That’s right, you said it. <em>Normalize</em>. If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value. One multiplied by anything equals anything.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float anything = ?????
@@ -1383,7 +1391,9 @@ dir.mult(anything);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.10: Accelerating towards the mouse</h5></div>
+<div data-type="example">
+<h5>Example 1.10: Accelerating towards the mouse</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
@@ -1407,7 +1417,7 @@ dir.mult(anything);</pre>
 
   }</pre>
 
-<p>You may be wondering why the circle doesn&rsquo;t stop when it reaches the target. It&rsquo;s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on and so forth. Stay tuned; in later chapters we&rsquo;ll learn how to program an object to <strong><em>arrive</em></strong> at a location (slow down on approach).</p>
+<p>You may be wondering why the circle doesn’t stop when it reaches the target. It’s important to note that the object moving has no knowledge about trying to stop at a destination; it only knows where the destination is and tries to go there as quickly as possible. Going as quickly as possible means it will inevitably overshoot the location and have to turn around, again going as quickly as possible towards the destination, overshooting it again, and so on and so forth. Stay tuned; in later chapters we’ll learn how to program an object to <strong><em>arrive</em></strong> at a location (slow down on approach).</p>
 
 <p>This example is remarkably close to the concept of gravitational attraction (in which the object is attracted to the mouse location). Gravitational attraction will be covered in more detail in the next chapter. However, one thing missing here is that the strength of gravity (magnitude of acceleration) is inversely proportional to distance. This means that the closer the object is to the mouse, the faster it accelerates.</p>
 
@@ -1417,13 +1427,15 @@ dir.mult(anything);</pre>
 <p>Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</p>
 </div>
 
-<p>Let&rsquo;s see what this example would look like with an array of movers (rather than just one).</p>
+<p>Let’s see what this example would look like with an array of movers (rather than just one).</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_11_motion101_acceleration_array/_1_11_motion101_acceleration_array.pde processingjs/chapter01/_1_11_motion101_acceleration_array/Mover.pde"><img alt="ch01 ex11" src="../images/chapter01/ch01_ex11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<div data-type="example"><h5>Example 1.11: Array of movers accelerating towards the mouse</h5></div>
+<div data-type="example">
+<h5>Example 1.11: Array of movers accelerating towards the mouse</h5>
+</div>
 
 <pre data-code-language="java" data-type="programlisting">
 // An array of objects
@@ -1518,11 +1530,11 @@ class Mover {
 <div data-type="tip">
 <h1>The Ecosystem Project</h1>
 
-<p><em>As mentioned in the preface, one way to use this book is to build a single project over the course of reading it, incorporating elements from each chapter one step at a time. We&rsquo;ll follow the development of an example project throughout this book&mdash;a simulation of an ecosystem. Imagine a population of computational creatures swimming around a digital pond, interacting with each other according to various rules.</em></p>
+<p><em>As mentioned in the preface, one way to use this book is to build a single project over the course of reading it, incorporating elements from each chapter one step at a time. We’ll follow the development of an example project throughout this book—a simulation of an ecosystem. Imagine a population of computational creatures swimming around a digital pond, interacting with each other according to various rules.</em></p>
 
 <p>Step 1 Exercise:</p>
 
-<p>Develop a set of rules for simulating the real-world behavior of a creature, such as a nervous fly, swimming fish, hopping bunny, slithering snake, etc. Can you control the object&rsquo;s motion by only manipulating the acceleration? Try to give the creature a personality through its behavior (rather than through its visual design).</p>
+<p>Develop a set of rules for simulating the real-world behavior of a creature, such as a nervous fly, swimming fish, hopping bunny, slithering snake, etc. Can you control the object’s motion by only manipulating the acceleration? Try to give the creature a personality through its behavior (rather than through its visual design).</p>
 </div>
 </section>
 </section>
