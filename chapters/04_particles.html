@@ -1,36 +1,35 @@
-<section data-type="chapter" xmlns="http://www.w3.org/1999/xhtml" id="_chapter_4_particle_systems">
-<h1>Particle Systems</h1>
-
-<blockquote data-type="epigraph">
-<p>&#x201c;That is wise. Were I to invoke logic, however, logic clearly dictates that the needs of the many outweigh the needs of the few.&#x201d;</p>
-
-<p data-type="attribution">&#x2014; Spock</p>
-</blockquote>
-
-<p><a data-primary="Lucasfilm Ltd." data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-type="indexterm">&#xa0;</a> <a data-primary="Reeves" data-secondary="William T." data-type="indexterm">&#xa0;</a> <a data-primary="Star Trek II: The Wrath of Khan (1982)" data-type="indexterm">&#xa0;</a></p>
-
-<p>In 1982, William T. Reeves, a researcher at Lucasfilm Ltd., was working on the film <em>Star Trek II: The Wrath of Khan</em>. Much of the movie revolves around the Genesis Device, a torpedo that when shot at a barren, lifeless planet has the ability to reorganize matter and create a habitable world for colonization. During the sequence, a wall of fire ripples over the planet while it is being &#x201c;terraformed.&#x201d; The term <strong><em>particle system</em></strong>, an incredibly common and useful technique in computer graphics, was coined in the creation of this particular effect.</p>
-
-<blockquote>&#x201c;A particle system is a collection of many many minute particles that together represent a fuzzy object. Over a period of time, particles are generated into a system, move and change from within the system, and die from the system.&#x201d; <span class="attribution"> &#x2014;William Reeves, &quot;Particle Systems&#x2014;A Technique for Modeling a Class of Fuzzy Objects,&quot; <span style="font-style:normal">ACM Transactions on Graphics</span> 2:2 (April 1983), 92. </span></blockquote>
-
-<p>Since the early 1980s, particle systems have been used in countless video games, animations, digital art pieces, and installations to model various irregular types of natural phenomena, such as fire, smoke, waterfalls, fog, grass, bubbles, and so on.</p>
-
-<p>This chapter will be dedicated to looking at implementation strategies for coding a particle system. How do we organize our code? Where do we store information related to individual particles versus information related to the system as a whole? The examples we&#x2019;ll look at will focus on managing the data associated with a particle system. They&#x2019;ll use simple shapes for the particles and apply only the most basic behaviors (such as gravity). However, by using this framework and building in more interesting ways to render the particles and compute behaviors, you can achieve a variety of effects.</p>
-
-<section data-type="sect1" id="chapter04_section1">
-<h1>4.1 Why We Need Particle Systems</h1>
-
-<p><a data-primary="particle systems" data-secondary="purpose of" data-type="indexterm">&#xa0;</a></p>
-
-<p>We&#x2019;ve defined a particle system to be a collection of independent objects, often represented by a simple shape or dot. Why does this matter? Certainly, the prospect of modeling some of the phenomena we listed (explosions!) is attractive and potentially useful. But really, there&#x2019;s an even better reason for us to concern ourselves with particle systems. If we want to get anywhere in this nature of code life, we&#x2019;re going to need to work with systems of <em>many</em> things. We&#x2019;re going to want to look at balls bouncing, birds flocking, ecosystems evolving, all sorts of things in plural.</p>
-
-<p>Just about every chapter after this one is going to need to deal with a list of objects. Yes, we&#x2019;ve done this with an array in some of our first vector and forces examples. But we need to go where no array has gone before.</p>
-
-<p>First, we&#x2019;re going to want to deal with flexible quantities of elements. Sometimes we&#x2019;ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we&#x2019;re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we&#x2019;re also going to want to write a class that describes the collection of particles&#x2014;the particle system itself. The goal here is to be able to write a main program that looks like the following:</p>
-
-<pre data-code-language="java" data-type="programlisting">
-//[full] Ah, isn&#x2019;t this main program so simple and lovely?
-ParticleSystem ps;
+<section xmlns="http://www.w3.org/1999/xhtml"
+         data-type="chapter"
+         id="_chapter_4_particle_systems">
+   <h1>Particle Systems</h1>
+   <blockquote data-type="epigraph">
+      <p>“That is wise. Were I to invoke logic, however, logic clearly dictates that the needs of the many outweigh the needs of the few.”</p>
+      <p data-type="attribution">— Spock</p>
+   </blockquote>
+   <p>In 1982, William T. Reeves, a researcher at Lucasfilm Ltd., was working on the film <em>Star Trek II: The Wrath of Khan</em>. Much of the movie revolves around the Genesis Device, a torpedo that when shot at a barren, lifeless planet has the ability to reorganize matter and create a habitable world for colonization. During the sequence, a wall of fire ripples over the planet while it is being “terraformed.” The term <strong>
+         <em>particle system</em>
+      </strong>, an incredibly common and useful technique in computer graphics, was coined in the creation of this particular effect.<a data-primary="Lucasfilm Ltd." data-type="indexterm"> </a>
+      <a data-primary="particle systems" data-type="indexterm"> </a>
+      <a data-primary="Reeves"
+         data-secondary="William T."
+         data-type="indexterm"> </a>
+      <a data-primary="Star Trek II: The Wrath of Khan (1982)"
+         data-type="indexterm"> </a>
+   </p>
+   <blockquote>“A particle system is a collection of many many minute particles that together represent a fuzzy object. Over a period of time, particles are generated into a system, move and change from within the system, and die from the system.” <span class="attribution"> —William Reeves, "Particle Systems—A Technique for Modeling a Class of Fuzzy Objects," <span style="font-style:normal">ACM Transactions on Graphics</span> 2:2 (April 1983), 92. </span>
+   </blockquote>
+   <p>Since the early 1980s, particle systems have been used in countless video games, animations, digital art pieces, and installations to model various irregular types of natural phenomena, such as fire, smoke, waterfalls, fog, grass, bubbles, and so on.</p>
+   <p>This chapter will be dedicated to looking at implementation strategies for coding a particle system. How do we organize our code? Where do we store information related to individual particles versus information related to the system as a whole? The examples we’ll look at will focus on managing the data associated with a particle system. They’ll use simple shapes for the particles and apply only the most basic behaviors (such as gravity). However, by using this framework and building in more interesting ways to render the particles and compute behaviors, you can achieve a variety of effects.</p>
+   <section data-type="sect1" id="chapter04_section1">
+      <h1>Why We Need Particle Systems</h1>
+      <p>We’ve defined a particle system to be a collection of independent objects, often represented by a simple shape or dot. Why does this matter? Certainly, the prospect of modeling some of the phenomena we listed (explosions!) is attractive and potentially useful. But really, there’s an even better reason for us to concern ourselves with particle systems. If we want to get anywhere in this nature of code life, we’re going to need to work with systems of <em>many</em> things. We’re going to want to look at balls bouncing, birds flocking, ecosystems evolving, all sorts of things in plural.<a data-primary="particle systems"
+            data-secondary="purpose of"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Just about every chapter after this one is going to need to deal with a list of objects. Yes, we’ve done this with an array in some of our first vector and forces examples. But we need to go where no array has gone before.</p>
+      <p>First, we’re going to want to deal with flexible quantities of elements. Sometimes we’ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we’re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we’re also going to want to write a class that describes the collection of particles—the particle system itself. The goal here is to be able to write a main program that looks like the following:</p>
+      <pre>
+         ParticleSystem ps;<span class="callout-bubble">Ah, isn’t this main program so simple and lovely?</span>
 
 void setup() {
   size(640,360);
@@ -41,33 +40,42 @@ void draw() {
   background(255);
   ps.run();
 }
-//[end]</pre>
 
-<p>No single particle is ever referenced in the above code, yet the result will be full of particles flying all over the screen. Getting used to writing Processing sketches with multiple classes, and classes that keep lists of instances of other classes, will prove very useful as we get to more advanced chapters in this book.</p>
-
-<p><a data-primary="inheritance" data-type="indexterm">&#xa0;</a> <a data-primary="object-oriented programming" data-secondary="inheritance" data-type="indexterm">&#xa0;</a> <a data-primary="object-oriented programming" data-secondary="polymorphism" data-type="indexterm">&#xa0;</a> <a data-primary="polymorphism" data-type="indexterm">&#xa0;</a></p>
-
-<p>Finally, working with particle systems is also a good excuse for us to tackle two other advanced object-oriented programming techniques: inheritance and polymorphism. With the examples we&#x2019;ve seen up until now, we&#x2019;ve always had an array of a single type of object, like &quot;movers&quot; or &#x201c;oscillators.&#x201d; With inheritance (and polymorphism), we&#x2019;ll learn a convenient way to store a single list that contains objects of different types. This way, a particle system need not only be a system of a single type of particle.</p>
-
-<p>Though it may seem obvious to you, I&#x2019;d also like to point out that these are typical implementations of particle systems, and that&#x2019;s where we will begin in this chapter. However, the fact that the particles in this chapter look or behave a certain way should not limit your imagination. Just because particle systems tend to look sparkly, fly forward, and fall with gravity doesn&#x2019;t mean that those are the characteristics yours should have.</p>
-
-<p>The focus here is really just how to keep track of a system of many elements. What those elements do and how those elements look is up to you.</p>
-</section>
-
-<section data-type="sect1" id="chapter04_section2">
-<h1>4.2 A Single Particle</h1>
-
-<p><a data-primary="particle systems" data-secondary="particles in" data-type="indexterm">&#xa0;</a> <a data-primary="particles" data-type="indexterm">&#xa0;</a></p>
-
-<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we&#x2019;ve done this already. Our <strong klass="">Mover</strong> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <strong class="var">location</strong>, <strong class="var">velocity</strong>, and <strong class="var">acceleration</strong>, a constructor to initialize those variables, and functions to <strong function="">display()</strong> itself and <strong function="">update()</strong> its location.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+</pre>
+      <p>No single particle is ever referenced in the above code, yet the result will be full of particles flying all over the screen. Getting used to writing Processing sketches with multiple classes, and classes that keep lists of instances of other classes, will prove very useful as we get to more advanced chapters in this book.<a data-primary="inheritance" data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="inheritance"
+            data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="polymorphism"
+            data-type="indexterm"> </a>
+         <a data-primary="polymorphism" data-type="indexterm"> </a>
+      </p>
+      <p>Finally, working with particle systems is also a good excuse for us to tackle two other advanced object-oriented programming techniques: inheritance and polymorphism. With the examples we’ve seen up until now, we’ve always had an array of a single type of object, like "movers" or “oscillators.” With inheritance (and polymorphism), we’ll learn a convenient way to store a single list that contains objects of different types. This way, a particle system need not only be a system of a single type of particle.<a data-primary="inheritance" data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="inheritance"
+            data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="polymorphism"
+            data-type="indexterm"> </a>
+         <a data-primary="polymorphism" data-type="indexterm"> </a>
+      </p>
+      <p>Though it may seem obvious to you, I’d also like to point out that these are typical implementations of particle systems, and that’s where we will begin in this chapter. However, the fact that the particles in this chapter look or behave a certain way should not limit your imagination. Just because particle systems tend to look sparkly, fly forward, and fall with gravity doesn’t mean that those are the characteristics yours should have.</p>
+      <p>The focus here is really just how to keep track of a system of many elements. What those elements do and how those elements look is up to you.</p>
+   </section>
+   <section data-type="sect1" id="chapter04_section2">
+      <h1>A Single Particle</h1>
+      <p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we’ve done this already. Our <strong klass="">Mover</strong> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <strong class="var">location</strong>, <strong class="var">velocity</strong>, and <strong class="var">acceleration</strong>, a constructor to initialize those variables, and functions to <strong function="">display()</strong> itself and <strong function="">update()</strong> its location.<a data-primary="particle systems"
+            data-secondary="particles in"
+            data-type="indexterm"> </a>
+         <a data-primary="particles" data-type="indexterm"> </a>
+      </p>
+      <pre>
 class Particle {
-  //[full] A &#x201c;Particle&#x201d; object is just another name for our &#x201c;Mover.&#x201d; It has location, velocity, and acceleration.
-  PVector location;
+  PVector location;<span class="callout-bubble">  A “Particle” object is just another name for our “Mover.” It has location, velocity, and acceleration.</span>
   PVector velocity;
   PVector acceleration;
-  //[end]
+
 
   Particle(PVector l) {
     location = l.get();
@@ -85,75 +93,95 @@ class Particle {
     fill(175);
     ellipse(location.x,location.y,8,8);
   }
-}</pre>
-
-<p>This is about as simple as a particle can get. From here, we could take our particle in several directions. We could add an <strong function="">applyForce()</strong> function to affect the particle&#x2019;s behavior (we&#x2019;ll do precisely this in a future example). We could add variables to describe color and shape, or reference a <strong klass="">PImage</strong> to draw the particle. For now, however, let&#x2019;s focus on adding just one additional detail: <strong><em>lifespan</em></strong>.</p>
-
-<p><a data-primary="emitter" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="emitter" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="lifespan of particles" data-type="indexterm">&#xa0;</a> <a data-primary="particles" data-secondary="lifespan of" data-type="indexterm">&#xa0;</a></p>
-
-<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <strong klass="">Particle</strong> class, however, we&#x2019;re simply going to add a <strong class="var">lifespan</strong> variable. The timer will start at 255 and count down to 0, when the particle will be considered &#x201c;dead.&#x201d; And so we expand the <strong klass="">Particle</strong> class as follows:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>This is about as simple as a particle can get. From here, we could take our particle in several directions. We could add an <strong function="">applyForce()</strong> function to affect the particle’s behavior (we’ll do precisely this in a future example). We could add variables to describe color and shape, or reference a <strong klass="">PImage</strong> to draw the particle. For now, however, let’s focus on adding just one additional detail: <strong>
+            <em>lifespan</em>
+         </strong>.<a data-primary="emitter" data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="emitter"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="lifespan of particles"
+            data-type="indexterm"> </a>
+         <a data-primary="particles"
+            data-secondary="lifespan of"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Typical particle systems involve something called an <strong>
+            <em>emitter</em>
+         </strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <strong klass="">Particle</strong> class, however, we’re simply going to add a <strong class="var">lifespan</strong> variable. The timer will start at 255 and count down to 0, when the particle will be considered “dead.” And so we expand the <strong klass="">Particle</strong> class as follows:<a data-primary="emitter" data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="emitter"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="lifespan of particles"
+            data-type="indexterm"> </a>
+         <a data-primary="particles"
+            data-secondary="lifespan of"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 class Particle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  // A new variable to keep track of how long the particle
-  // has been &#x201c;alive&#x201d;
-  float lifespan; //[bold]
-
+<span class="callout-bubble">  A new variable to keep track of how long the particle</span>
+         <span class="callout-bubble">  has been “alive”</span>
+         <em class="strong">  float lifespan; //[bold]</em>
   Particle(PVector l) {
     location = l.get();
     acceleration = new PVector();
     velocity = new PVector();
-    // We start at 255 and count down for convenience
-    lifespan = 255; //[bold]
-  }
+<span class="callout-bubble">    We start at 255 and count down for convenience</span>
+         <em class="strong">    lifespan = 255; //[bold]</em>  }
 
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
-    // Lifespan decreases
-    lifespan -= 2.0; //[bold]
-  }
+<span class="callout-bubble">    Lifespan decreases</span>
+         <em class="strong">    lifespan -= 2.0; //[bold]</em>  }
 
   void display() {
-    //[full] Since our life ranges from 255 to 0 we can use it for alpha
-    stroke(0,lifespan); //[bold]
-    fill(175,lifespan); //[bold]
-    //[end]
+<span class="callout-bubble">    Since our life ranges from 255 to 0 we can use it for alpha</span>
+         <em class="strong">    stroke(0,lifespan); //[bold]</em>
+         <em class="strong">    fill(175,lifespan); //[bold]</em>
     ellipse(location.x,location.y,8,8);
   }
-}</pre>
-
-<p>The reason we chose to start the lifespan at 255 and count down to 0 is for convenience. With those values, we can assign <strong class="var">lifespan</strong> to act as the alpha transparency for the ellipse as well. When the particle is &#x201c;dead&#x201d; it will also have faded away onscreen.</p>
-
-<p><a data-primary="particle systems" data-secondary="dead particles" data-tertiary="checking for" data-type="indexterm">&#xa0;</a> <a data-primary="particles" data-secondary="death" data-tertiary="checking for" data-type="indexterm">&#xa0;</a></p>
-
-<p>With the addition of the <strong class="var">lifespan</strong> variable, we&#x2019;ll also need one additional function&#x2014;a function that can be queried (for a true or false answer) as to whether the particle is alive or dead. This will come in handy when we are writing the <strong klass="">ParticleSystem</strong> class, whose task will be to manage the list of particles themselves. Writing this function is pretty easy; we just need to check and see if the value of <strong class="var">lifespan</strong> is less than 0. If it is we <strong class="var">return true</strong>, if not we <strong class="var">return false</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>The reason we chose to start the lifespan at 255 and count down to 0 is for convenience. With those values, we can assign <strong class="var">lifespan</strong> to act as the alpha transparency for the ellipse as well. When the particle is “dead” it will also have faded away onscreen.<a data-primary="particle systems"
+            data-secondary="dead particles"
+            data-tertiary="checking for"
+            data-type="indexterm"> </a>
+         <a data-primary="particles"
+            data-secondary="death"
+            data-tertiary="checking for"
+            data-type="indexterm"> </a>
+      </p>
+      <p>With the addition of the <strong class="var">lifespan</strong> variable, we’ll also need one additional function—a function that can be queried (for a true or false answer) as to whether the particle is alive or dead. This will come in handy when we are writing the <strong>ParticleSystem</strong> class, whose task will be to manage the list of particles themselves. Writing this function is pretty easy; we just need to check and see if the value of <strong class="var">lifespan</strong> is less than 0. If it is we <strong class="var">return true</strong>, if not we <strong class="var">return false</strong>.</p>
+      <pre>
   boolean isDead() {
-    //[full] Is the particle still alive?
-    if (lifespan &lt; 0.0) {
+    if (lifespan &lt; 0.0) {<span class="callout-bubble">    Is the particle still alive?</span>
       return true;
     } else {
       return false;
     }
-    //[end]
-  }</pre>
 
-<p><a data-primary="particles" data-secondary="testing" data-type="indexterm">&#xa0;</a></p>
-
-<p>Before we get to the next step of making many particles, it&#x2019;s worth taking a moment to make sure our particle works correctly and create a sketch with one single <strong klass="">Particle</strong> object. Here is the full code below, with two small additions. We add a convenience function called <strong function="">run()</strong> that simply calls both <strong function="">update()</strong> and <strong function="">display()</strong> for us. In addition, we give the particle a random initial velocity as well as a downward acceleration (to simulate gravity).</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_01_SingleParticle/_4_01_SingleParticle.pde processingjs/chapter04/_4_01_SingleParticle/Particle.pde"><img alt="ch04 ex01" src="../images/chapter04/ch04_ex01.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<div data-type="example"><h5>Example 4.1: A single particle</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Before we get to the next step of making many particles, it’s worth taking a moment to make sure our particle works correctly and create a sketch with one single <strong klass="">Particle</strong> object. Here is the full code below, with two small additions. We add a convenience function called <strong function="">run()</strong> that simply calls both <strong function="">update()</strong> and <strong function="">display()</strong> for us. In addition, we give the particle a random initial velocity as well as a downward acceleration (to simulate gravity).<a data-primary="particles"
+            data-secondary="testing"
+            data-type="indexterm"> </a>
+      </p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_01_SingleParticle/_4_01_SingleParticle.pde processingjs/chapter04/_4_01_SingleParticle/Particle.pde">
+         <img alt="ch04 ex01" src="../images/chapter04/ch04_ex01.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <div id="example_d1e316" data-type="example">
+         <h5>A single particle</h5>
+         <pre>
 Particle p;
 
 void setup() {
@@ -163,10 +191,9 @@ void setup() {
 
 void draw() {
   background(255);
-  // Operating the single Particle
-  p.run();
+  p.run();<span class="callout-bubble">  Operating the single Particle</span>
   if (p.isDead()) {
-    println(&quot;Particle dead!&quot;);
+    println("Particle dead!");
   }
 }
 
@@ -177,16 +204,14 @@ class Particle {
   float lifespan;
 
   Particle(PVector l) {
-    //[offset-up] For demonstration purposes we assign the Particle an initial velocity and constant acceleration.
-    acceleration = new PVector(0,0.05);
+    acceleration = new PVector(0,0.05);<span class="callout-bubble">    For demonstration purposes we assign the Particle an initial velocity and constant acceleration.</span>
     velocity = new PVector(random(-1,1),random(-2,0));
     location = l.get();
     lifespan = 255.0;
   }
 
-  // Sometimes it&#x2019;s convenient to have a &#x201c;run&#x201d;
-  // function that calls all the other functions we need.
-  void run() {
+<span class="callout-bubble">  Sometimes it’s convenient to have a “run”</span>
+              void run() {<span class="callout-bubble">  function that calls all the other functions we need.</span>
     update();
     display();
   }
@@ -203,52 +228,57 @@ class Particle {
     ellipse(location.x,location.y,8,8);
   }
 
-  // Is the Particle alive or dead?
-  boolean isDead() {
+  boolean isDead() {<span class="callout-bubble">  Is the Particle alive or dead?</span>
     if (lifespan &lt; 0.0) {
       return true;
     } else {
       return false;
     }
   }
-}</pre>
-
-<div data-type="exercise" id="chapter04_exercise1">
-<h5>Exercise 4.1</h5>
-
-<p>Rewrite the example so that the particle can respond to force vectors via an <strong function="">applyForce()</strong> function.</p>
-</div>
-
-<div data-type="exercise" id="chapter04_exercise2">
-<h5>Exercise 4.2</h5>
-
-<p>Add angular velocity (rotation) to the particle. Create your own non-circle particle design.</p>
-</div>
-
-<p>Now that we have a class to describe a single particle, we&#x2019;re ready for the next big step. How do we keep track of many particles, when we can&#x2019;t ensure exactly how many particles we might have at any given time?</p>
-</section>
-
-<section data-type="sect1" id="chapter04_section3">
-<h1>4.3 The ArrayList</h1>
-
-<p><a data-primary="ArrayList class (Java)" data-type="indexterm">&#xa0;</a> <a data-primary="contract() function (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="expand() function (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="ArrayList" data-tertiary="using" data-type="indexterm">&#xa0;</a> <a data-primary="splice() function (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="subset() function (Processing)" data-type="indexterm">&#xa0;</a></p>
-
-<p>In truth, we could use a simple array to manage our <strong klass="">Particle</strong> objects. Some particle systems might have a fixed number of particles, and arrays are magnificently efficient in those instances. Processing also offers <strong function="">expand()</strong>, <strong function="">contract()</strong>, <strong function="">subset()</strong>, <strong function="">splice()</strong>, and other methods for resizing arrays. However, for these examples, we&#x2019;re going to take a more sophisticated approach and use the Java class <strong klass="">ArrayList</strong>, found in the java.util package <a href="http://download.oracle.com/javase/6/docs/api/java/util/ArrayList.html">ArrayList Documentation</a>.</p>
-
-<p>Using an <strong klass="">ArrayList</strong> follows the same idea as using a standard array, but with different syntax. The following two code examples (which assume the existence of a generic <strong klass="">Particle</strong> class) produce the same result: first with an array, and second with an <strong klass="">ArrayList</strong>.</p>
-
-<p>The standard array way:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      </div>
+      
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.1</h5>
+         <p>Rewrite the example so that the particle can respond to force vectors via an <strong function="">applyForce()</strong> function.</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.2</h5>
+         <p>Add angular velocity (rotation) to the particle. Create your own non-circle particle design.</p>
+      </div>
+      <p>Now that we have a class to describe a single particle, we’re ready for the next big step. How do we keep track of many particles, when we can’t ensure exactly how many particles we might have at any given time?</p>
+   </section>
+   <section data-type="sect1" id="chapter04_section3">
+      <h1>The ArrayList</h1>
+      <p>In truth, we could use a simple array to manage our <strong klass="">Particle</strong> objects. Some particle systems might have a fixed number of particles, and arrays are magnificently efficient in those instances. Processing also offers <strong function="">expand()</strong>, <strong function="">contract()</strong>, <strong function="">subset()</strong>, <strong function="">splice()</strong>, and other methods for resizing arrays. However, for these examples, we’re going to take a more sophisticated approach and use the Java class <strong klass="">ArrayList</strong>, found in the java.util package <a href="http://download.oracle.com/javase/6/docs/api/java/util/ArrayList.html">ArrayList Documentation</a>.<a data-primary="ArrayList class (Java)" data-type="indexterm"> </a>
+         <a data-primary="contract() function (Processing)" data-type="indexterm"> </a>
+         <a data-primary="expand() function (Processing)" data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="ArrayList"
+            data-tertiary="using"
+            data-type="indexterm"> </a>
+         <a data-primary="splice() function (Processing)" data-type="indexterm"> </a>
+         <a data-primary="subset() function (Processing)" data-type="indexterm"> </a>
+      </p>
+      <p>Using an <strong>ArrayList</strong> follows the same idea as using a standard array, but with different syntax. The following two code examples (which assume the existence of a generic <strong>Particle</strong> class) produce the same result: first with an array, and second with an <strong>ArrayList</strong>.</p>
+      <p>The standard array way:<a data-primary="ArrayList class (Java)"
+            data-secondary="generics"
+            data-tertiary="using"
+            data-type="indexterm"> </a>
+         <a data-primary="for loops"
+            data-secondary="ArrayList objects and"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 int total = 10;
 Particle[] parray = new Particle[total];
 
 void setup() {
-  //[full] This is what we&#x2019;re used to, accessing elements on the array via an index and brackets&#x2014;&amp;#91; &amp;#93;.
-  for (int i = 0; i &lt; parray.length; i++) {
+  for (int i = 0; i &lt; parray.length; i++) {<span class="callout-bubble">  This is what we’re used to, accessing elements on the array via an index and brackets—&amp;#91; &amp;#93;.</span>
     parray[i] = new Particle();
   }
-  //[end]
+
 }
 
 void draw() {
@@ -256,63 +286,66 @@ void draw() {
     Particle p = parray[i];
     p.run();
   }
-}</pre>
-
-<p><a data-primary="ArrayList class (Java)" data-secondary="generics" data-tertiary="using" data-type="indexterm">&#xa0;</a> <a data-primary="for loops" data-secondary="ArrayList objects and" data-type="indexterm">&#xa0;</a></p>
-
-<p>The new <strong klass="">ArrayList</strong> way:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>The new <strong klass="">ArrayList</strong> way:<a data-primary="ArrayList class (Java)"
+            data-secondary="generics"
+            data-tertiary="using"
+            data-type="indexterm"> </a>
+         <a data-primary="for loops"
+            data-secondary="ArrayList objects and"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 int total = 10;
 
-//[offset-up] Have you ever seen this syntax before? This is a new feature in Java 1.6 (called &quot;generics&quot;) that Processing now supports. It allows us to specify in advance what type of object we intend to put in the ArrayList.
-ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
+ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();<span class="callout-bubble">Have you ever seen this syntax before? This is a new feature in Java 1.6 (called "generics") that Processing now supports. It allows us to specify in advance what type of object we intend to put in the ArrayList.</span>
 void setup() {
   for (int i = 0; i &lt; total; i++) {
-    // An object is added to an ArrayList with add().
-    particles.add(new Particle());
+    particles.add(new Particle());<span class="callout-bubble">    An object is added to an ArrayList with add().</span>
   }
 }
 
 void draw() {
-  // The size of the ArrayList is returned by size().
-  for (int i = 0; i &lt; particles.size(); i++) {
-    // An object is accessed from the ArrayList with get().  Because we are using generics, we do not need to specify a type when we pull objects out of the ArrayList.
-    Particle p = particles.get(i);
+  for (int i = 0; i &lt; particles.size(); i++) {<span class="callout-bubble">  The size of the ArrayList is returned by size().</span>
+    Particle p = particles.get(i);<span class="callout-bubble">    An object is accessed from the ArrayList with get().  Because we are using generics, we do not need to specify a type when we pull objects out of the ArrayList.</span>
     p.run();
   }
-}</pre>
-
-<p>This last <strong function="">for</strong> loop looks pretty similar to our code that looped through a regular array by accessing each index. We initialize a variable called <strong class="var">i</strong> to 0 and count up by 1, accessing each element of the <strong klass="">ArrayList</strong> until we get to the end. However, this is a good time to mention the &#x201c;enhanced <strong function="">for</strong> loop&#x201d; available in Java (and Processing), which is a bit more concise. The enhanced loop works with both <strong klass="">ArrayList</strong><code>s</code> and regular arrays and looks like this:</p>
-
-<p><a data-primary="for loops" data-secondary="enhanced" data-type="indexterm">&#xa0;</a></p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>This last <strong function="">for</strong> loop looks pretty similar to our code that looped through a regular array by accessing each index. We initialize a variable called <strong class="var">i</strong> to 0 and count up by 1, accessing each element of the <strong klass="">ArrayList</strong> until we get to the end. However, this is a good time to mention the “enhanced <strong function="">for</strong> loop” available in Java (and Processing), which is a bit more concise. The enhanced loop works with both <strong klass="">ArrayList</strong>
+         <code>s</code> and regular arrays and looks like this:<a data-primary="for loops"
+            data-secondary="enhanced"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
 
 for (Particle p: particles) {
   p.run();
-}</pre>
-
-<p>Let&#x2019;s translate that. Say &#x201c;for each&#x201d; instead of &#x201c;for&#x201d; and say &#x201c;in&#x201d; instead of &#x201c;:&#x201d;. Now you have:</p>
-
-<p>&#x201c;For each Particle p in particles, run that Particle p!&#x201d;</p>
-
-<p>I know. You cannot contain your excitement. I can&#x2019;t. I know it&#x2019;s not necessary, but I just have to type that again.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-// This enhanced loop also works for regular arrays!
-for (Particle p : particles) {
+}
+</pre>
+      <p>Let’s translate that. Say “for each” instead of “for” and say “in” instead of “:”. Now you have:<a data-primary="for loops"
+            data-secondary="enhanced"
+            data-type="indexterm"> </a>
+      </p>
+      <p>“For each Particle p in particles, run that Particle p!”</p>
+      <p>I know. You cannot contain your excitement. I can’t. I know it’s not necessary, but I just have to type that again.</p>
+      <pre>
+         for (Particle p : particles) {<span class="callout-bubble">This enhanced loop also works for regular arrays!</span>
   p.run();
-}</pre>
-
-<p>Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad news. Yes, we love that enhanced loop and we will get to use it. But not right now. Our particle system examples will require a feature that makes using that loop impossible. Let&#x2019;s continue.</p>
-
-<p><a data-primary="ArrayList class (Java)" data-secondary="resizability of" data-type="indexterm">&#xa0;</a></p>
-
-<p>The code we&#x2019;ve written above doesn&#x2019;t take advantage of the <strong klass="">ArrayList</strong><code>&#x2019;s</code> resizability, and it uses a fixed size of 10. We need to design an example that fits with our particle system scenario, where we emit a continuous stream of <strong klass="">Particle</strong> objects, adding one new particle with each cycle through <strong function="">draw()</strong>. We&#x2019;ll skip rehashing the <strong klass="">Particle</strong> class code here, as it doesn&#x2019;t need to change.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad news. Yes, we love that enhanced loop and we will get to use it. But not right now. Our particle system examples will require a feature that makes using that loop impossible. Let’s continue.<a data-primary="ArrayList class (Java)"
+            data-secondary="resizability of"
+            data-type="indexterm"> </a>
+      </p>
+      <p>The code we’ve written above doesn’t take advantage of the <strong klass="">ArrayList</strong>
+         <code>’s</code> resizability, and it uses a fixed size of 10. We need to design an example that fits with our particle system scenario, where we emit a continuous stream of <strong klass="">Particle</strong> objects, adding one new particle with each cycle through <strong function="">draw()</strong>. We’ll skip rehashing the <strong klass="">Particle</strong> class code here, as it doesn’t need to change.<a data-primary="ArrayList class (Java)"
+            data-secondary="resizability of"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 ArrayList&lt;Particle&gt; particles;
 
 void setup() {
@@ -322,118 +355,120 @@ void setup() {
 
 void draw() {
   background(255);
-  //[offset-down] A new Particle object is added to the ArrayList every cycle through draw().
-  particles.add(new Particle(new PVector(width/2,50)));
+  particles.add(new Particle(new PVector(width/2,50)));<span class="callout-bubble">  A new Particle object is added to the ArrayList every cycle through draw().</span>
 
   for (int i = 0; i &lt; particles.size(); i++) {
     Particle p = particles.get(i);
     p.run();
   }
-}</pre>
-
-<p>Run the above code for a few minutes and you&#x2019;ll start to see the frame rate slow down further and further until the program grinds to a halt (my tests yielded horrific performance after fifteen minutes). The issue of course is that we are creating more and more particles without removing any.</p>
-
-<p><a data-primary="remove() function (ArrayList class)" data-type="indexterm">&#xa0;</a></p>
-
-<p>Fortunately, the <strong klass="">ArrayList</strong> class has a convenient <strong function="">remove()</strong> function that allows us to delete a particle (by referencing its index). This is why we cannot use the new enhanced <strong function="">for</strong> loop we just learned; the enhanced loop provides no means for deleting elements while iterating. Here, we want to call <strong function="">remove()</strong> when the particle&#x2019;s <strong function="">isDead()</strong> function returns true.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Run the above code for a few minutes and you’ll start to see the frame rate slow down further and further until the program grinds to a halt (my tests yielded horrific performance after fifteen minutes). The issue of course is that we are creating more and more particles without removing any.<a data-primary="remove() function (ArrayList class)"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Fortunately, the <strong klass="">ArrayList</strong> class has a convenient <strong function="">remove()</strong> function that allows us to delete a particle (by referencing its index). This is why we cannot use the new enhanced <strong function="">for</strong> loop we just learned; the enhanced loop provides no means for deleting elements while iterating. Here, we want to call <strong function="">remove()</strong> when the particle’s <strong function="">isDead()</strong> function returns true.<a data-primary="remove() function (ArrayList class)"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
   for (int i = 0; i &lt; particles.size(); i++) {
     Particle p = particles.get(i);
     p.run();
-    //[full] If the particle is &#x201c;dead,&#x201d; we can go ahead and delete it from the list.
-    if (p.isDead()) {
+    if (p.isDead()) {<span class="callout-bubble">    If the particle is “dead,” we can go ahead and delete it from the list.</span>
       particles.remove(i);
     }
-    //[end]
-  }</pre>
 
-<p>Although the above code will run just fine (and the program will never grind to a halt), we have opened up a medium-sized can of worms. Whenever we manipulate the contents of a list while iterating through that very list, we can get ourselves into trouble. Take, for example, the following code.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Although the above code will run just fine (and the program will never grind to a halt), we have opened up a medium-sized can of worms. Whenever we manipulate the contents of a list while iterating through that very list, we can get ourselves into trouble. Take, for example, the following code.<a data-primary="size() function (ArrayList class)" data-type="indexterm"> </a>
+      </p>
+      <pre>
   for (int i = 0; i &lt; particles.size(); i++) {
     Particle p = particles.get(i);
     p.run();
-    //[offset-down] Adding a new Particle to the list while iterating?
-    particles.add(new Particle(new PVector(width/2,50)));
-  }</pre>
-
-<p><a data-primary="size() function (ArrayList class)" data-type="indexterm">&#xa0;</a></p>
-
-<p>This is a somewhat extreme example (with flawed logic), but it proves the point. In the above case, for each particle in the list, we add a new particle to the list (manipulating the <strong function="">size()</strong> of the <strong klass="">ArrayList</strong>). This will result in an infinite loop, as <strong class="var">i</strong> can never increment past the size of the <strong klass="">ArrayList</strong>.</p>
-
-<p><a data-primary="iterating" data-secondary="removing elements in for loops" data-type="indexterm">&#xa0;</a></p>
-
-<p>While removing elements from the <strong klass="">ArrayList</strong> during a loop doesn&#x2019;t cause the program to crash (as it does with adding), the problem is almost more insidious in that it leaves no evidence. To discover the problem we must first establish an important fact. When an object is removed from the <strong klass="">ArrayList</strong>, all elements are shifted one spot to the left. Note the diagram below where particle C (index 2) is removed. Particles A and B keep the same index, while particles D and E shift from 3 and 4 to 2 and 3, respectively.</p>
-
-<figure id="chapter04_figure1"><img alt="Figure 4.1" src="../images/chapter04/ch04_01.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>Let&#x2019;s pretend we are <strong class="var">i</strong> looping through the <strong klass="">ArrayList</strong>.</p>
-
-<p><strong formula="">when i = 0 &#x2192; Check particle A &#x2192; Do not delete</strong><br />
-<strong formula="">when i = 1 &#x2192; Check particle B &#x2192; Do not delete</strong><br />
-<strong formula="">when i = 2 &#x2192; Check particle C &#x2192; Delete!</strong><br />
-<strong formula2="">Slide particles D and E back from slots 3 and 4 to 2 and 3</strong><br />
-<strong formula="">when i = 3 &#x2192; Check particle E &#x2192; Do not delete</strong></p>
-
-<p>Notice the problem? We never checked particle D! When C was deleted from slot #2, D moved into slot #2, but i has already moved on to slot # 3. This is not a disaster, since particle D will get checked the next time around. Still, the expectation is that we are writing code to iterate through every single element of the <strong klass="">ArrayList</strong>. Skipping an element is unacceptable.</p>
-
-<p>There are two solutions to this problem. The first solution is to simply iterate through the <strong klass="">ArrayList</strong> backwards. If you are sliding elements from right to left as elements are removed, it&#x2019;s impossible to skip an element by accident. Here&#x2019;s how the code would look:</p>
-
-<pre data-code-language="java" data-type="programlisting">
-  // Looping through the list backwards
-  for (int i = particles.size()-1; i &gt;= 0; i--) { //[bold]
-    Particle p = (Particle) particles.get(i);
+    particles.add(new Particle(new PVector(width/2,50)));<span class="callout-bubble">    Adding a new Particle to the list while iterating?</span>
+  }
+</pre>
+      <p>This is a somewhat extreme example (with flawed logic), but it proves the point. In the above case, for each particle in the list, we add a new particle to the list (manipulating the <strong function="">size()</strong> of the <strong>ArrayList</strong>). This will result in an infinite loop, as <strong class="var">i</strong> can never increment past the size of the <strong>ArrayList</strong>.</p>
+      <p>While removing elements from the <strong klass="">ArrayList</strong> during a loop doesn’t cause the program to crash (as it does with adding), the problem is almost more insidious in that it leaves no evidence. To discover the problem we must first establish an important fact. When an object is removed from the <strong klass="">ArrayList</strong>, all elements are shifted one spot to the left. Note the diagram below where particle C (index 2) is removed. Particles A and B keep the same index, while particles D and E shift from 3 and 4 to 2 and 3, respectively.<a data-primary="iterating"
+            data-secondary="removing elements in for loops"
+            data-type="indexterm"> </a>
+      </p>
+      <figure id="chapter04_figure1">
+         <img alt="Figure 4.1" src="../images/chapter04/ch04_01.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>Let’s pretend we are <strong class="var">i</strong> looping through the <strong>ArrayList</strong>.</p>
+      <p>
+         <strong formula="">when i = 0 → Check particle A → Do not delete</strong>
+         <br/>
+         <strong formula="">when i = 1 → Check particle B → Do not delete</strong>
+         <br/>
+         <strong formula="">when i = 2 → Check particle C → Delete!</strong>
+         <br/>
+         <strong formula2="">Slide particles D and E back from slots 3 and 4 to 2 and 3</strong>
+         <br/>
+         <strong formula="">when i = 3 → Check particle E → Do not delete</strong>
+      </p>
+      <p>Notice the problem? We never checked particle D! When C was deleted from slot #2, D moved into slot #2, but i has already moved on to slot # 3. This is not a disaster, since particle D will get checked the next time around. Still, the expectation is that we are writing code to iterate through every single element of the <strong>ArrayList</strong>. Skipping an element is unacceptable.</p>
+      <p>There are two solutions to this problem. The first solution is to simply iterate through the <strong klass="">ArrayList</strong> backwards. If you are sliding elements from right to left as elements are removed, it’s impossible to skip an element by accident. Here’s how the code would look:<a data-primary="ArrayList class (Java)"
+            data-secondary="Iterator class and"
+            data-type="indexterm"> </a>
+         <a data-primary="iterating"
+            data-secondary="Iterator class (Java)"
+            data-type="indexterm"> </a>
+         <a data-primary="Iterator class (Java)" data-type="indexterm"> </a>
+      </p>
+      <pre>
+         <span class="callout-bubble">  Looping through the list backwards</span>
+         <em class="strong">  for (int i = particles.size()-1; i &gt;= 0; i--) { //[bold]</em>    Particle p = (Particle) particles.get(i);
     p.run();
     if (p.isDead()) {
       particles.remove(i);
     }
-  }</pre>
-
-<p><a data-primary="ArrayList class (Java)" data-secondary="Iterator class and" data-type="indexterm">&#xa0;</a> <a data-primary="iterating" data-secondary="Iterator class (Java)" data-type="indexterm">&#xa0;</a> <a data-primary="Iterator class (Java)" data-type="indexterm">&#xa0;</a></p>
-
-<p>This is a perfectly fine solution in ninety-nine cases out of a hundred. But sometimes, the order in which the elements are drawn could be important and you may not want to iterate backwards. Java provides a special class&#x2014;<strong klass="">Iterator</strong><code>&#x2014;</code>that takes care of all of the details of iteration for you. You get to say:</p>
-
-<p><em>Hey, I&#x2019;d like to iterate through this <strong klass="">ArrayList</strong>. Could you continue to give me the next element in the list one at a time until we get to the end? And if I remove elements or move them around in the list while we&#x2019;re iterating, will you make sure I don&#x2019;t look at any elements twice or skip any by accident?</em></p>
-
-<p>An <strong klass="">ArrayList</strong> can produce an <strong klass="">Iterator</strong> object for you.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-// Note that with the Iterator object, we can also
-// use the new &amp;lt;ClassName&amp;gt; generics syntax and
-// specify the type that the Iterator will
-// reference.
-Iterator&lt;Particle&gt; it = particles.iterator();</pre>
-
-<p>Once you&#x2019;ve got the iterator, the <strong function="">hasNext()</strong> function will tell us whether there is a <strong klass="">Particle</strong> for us to run and the <strong function="">next()</strong> function will grab that <strong klass="">Particle</strong> object itself.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-  //[full] An Iterator object doing the iterating for you
-  while (it.hasNext()) {
+  }
+</pre>
+      <p>This is a perfectly fine solution in ninety-nine cases out of a hundred. But sometimes, the order in which the elements are drawn could be important and you may not want to iterate backwards. Java provides a special class—<strong klass="">Iterator</strong>
+         <code>—</code>that takes care of all of the details of iteration for you. You get to say:<a data-primary="ArrayList class (Java)"
+            data-secondary="Iterator class and"
+            data-type="indexterm"> </a>
+         <a data-primary="iterating"
+            data-secondary="Iterator class (Java)"
+            data-type="indexterm"> </a>
+         <a data-primary="Iterator class (Java)" data-type="indexterm"> </a>
+      </p>
+      <p>
+         <em>Hey, I’d like to iterate through this <strong>ArrayList</strong>. Could you continue to give me the next element in the list one at a time until we get to the end? And if I remove elements or move them around in the list while we’re iterating, will you make sure I don’t look at any elements twice or skip any by accident?</em>
+      </p>
+      <p>An <strong>ArrayList</strong> can produce an <strong>Iterator</strong> object for you.</p>
+      <pre>
+         <span class="callout-bubble">Note that with the Iterator object, we can also</span>
+         <span class="callout-bubble">use the new &amp;lt;ClassName&amp;gt; generics syntax and</span>
+         <span class="callout-bubble">specify the type that the Iterator will</span>
+         Iterator&lt;Particle&gt; it = particles.iterator();<span class="callout-bubble">reference.</span>
+</pre>
+      <p>Once you’ve got the iterator, the <strong function="">hasNext()</strong> function will tell us whether there is a <strong>Particle</strong> for us to run and the <strong function="">next()</strong> function will grab that <strong>Particle</strong> object itself.</p>
+      <pre>
+           while (it.hasNext()) {<span class="callout-bubble">  An Iterator object doing the iterating for you</span>
     Particle p = it.next();
     p.run();
-  //[end]</pre>
 
-<p>And if you call the <strong function="">remove()</strong> function on the <strong klass="">Iterator</strong> object during the loop, it will delete the current <strong klass="">Particle</strong> object (and not skip ahead past the next one, as we saw with counting forward through the <strong klass="">ArrayList</strong>).</p>
-
-<pre data-code-language="java" data-type="programlisting">
+</pre>
+      <p>And if you call the <strong function="">remove()</strong> function on the <strong>Iterator</strong> object during the loop, it will delete the current <strong>Particle</strong> object (and not skip ahead past the next one, as we saw with counting forward through the <strong>ArrayList</strong>).</p>
+      <pre>
     if (p.isDead()) {
-      // An Iterator object doing the deleting for you
-      it.remove();
+      it.remove();<span class="callout-bubble">      An Iterator object doing the deleting for you</span>
     }
-  }</pre>
-
-<p>Putting it all together, we have:</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_02_ArrayListParticles/_4_02_ArrayListParticles.pde processingjs/chapter04/_4_02_ArrayListParticles/Particle.pde"><img alt="ch04 ex02" src="../images/chapter04/ch04_ex02.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<div data-type="example"><h5>Example 4.2: ArrayList of particles with Iterator</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Putting it all together, we have:</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_02_ArrayListParticles/_4_02_ArrayListParticles.pde processingjs/chapter04/_4_02_ArrayListParticles/Particle.pde">
+         <img alt="ch04 ex02" src="../images/chapter04/ch04_ex02.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <div id="example_d1e805" data-type="example">
+         <h5>ArrayList of particles with Iterator</h5>
+         <pre>
 ArrayList&lt;Particle&gt; particles;
 
 void setup() {
@@ -447,32 +482,34 @@ void draw() {
   particles.add(new Particle(new PVector(width/2,50)));
 
   Iterator&lt;Particle&gt; it = particles.iterator();
-  //[full] Using an Iterator object instead of counting with int i
-  while (it.hasNext()) {
+  while (it.hasNext()) {<span class="callout-bubble">  Using an Iterator object instead of counting with int i</span>
     Particle p = it.next();
     p.run();
     if (p.isDead()) {
        it.remove();
     }
   }
-  //[end]
-}</pre>
-</section>
 
-<section data-type="sect1" id="chapter04_section4">
-<h1>4.4 The Particle System Class</h1>
-
-<p><a data-primary="object-oriented programming" data-secondary="classes of user-defined objects" data-tertiary="creating" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="class for" data-tertiary="creating" data-type="indexterm">&#xa0;</a></p>
-
-<p>OK. Now we&#x2019;ve done two things. We&#x2019;ve written a class to describe an individual <strong klass="">Particle</strong> object. We&#x2019;ve conquered the <strong klass="">ArrayList</strong> and used it to manage a list of many <strong klass="">Particle</strong> objects (with the ability to add and delete at will).</p>
-
-<p>We could stop here. However, one additional step we can and should take is to write a class to describe the list of <strong klass="">Particle</strong> objects itself&#x2014;the <strong klass="">ParticleSystem</strong> class. This will allow us to remove the bulky logic of looping through all particles from the main tab, as well as open up the possibility of having more than one particle system.</p>
-
-<p>If you recall the goal we set at the beginning of this chapter, we wanted our main tab to look like this:</p>
-
-<pre data-code-language="java" data-type="programlisting">
-// Just one wee ParticleSystem!
-ParticleSystem ps;
+}
+</pre>
+      </div>
+      
+   </section>
+   <section data-type="sect1" id="chapter04_section4">
+      <h1>The Particle System Class</h1>
+      <p>OK. Now we’ve done two things. We’ve written a class to describe an individual <strong klass="">Particle</strong> object. We’ve conquered the <strong klass="">ArrayList</strong> and used it to manage a list of many <strong klass="">Particle</strong> objects (with the ability to add and delete at will).<a data-primary="object-oriented programming"
+            data-secondary="classes of user-defined objects"
+            data-tertiary="creating"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="class for"
+            data-tertiary="creating"
+            data-type="indexterm"> </a>
+      </p>
+      <p>We could stop here. However, one additional step we can and should take is to write a class to describe the list of <strong>Particle</strong> objects itself—the <strong>ParticleSystem</strong> class. This will allow us to remove the bulky logic of looping through all particles from the main tab, as well as open up the possibility of having more than one particle system.</p>
+      <p>If you recall the goal we set at the beginning of this chapter, we wanted our main tab to look like this:</p>
+      <pre>
+         ParticleSystem ps;<span class="callout-bubble">Just one wee ParticleSystem!</span>
 
 void setup() {
   size(640,360);
@@ -482,34 +519,31 @@ void setup() {
 void draw() {
   background(255);
   ps.run();
-}</pre>
-
-<p>Let&#x2019;s take the code from Example 4.2 and review a bit of object-oriented programming, looking at how each piece from the main tab can fit into the <strong klass="">ParticleSystem</strong> class.</p>
-
-<table class="code">
-	<tbody>
-		<tr>
-			<th>ArrayList in the main tab</th>
-			<th>ArrayList in the ParticleSystem class</th>
-		</tr>
-		<tr>
-			<td>
-			<pre>
-<b>ArrayList&lt;Particle&gt; particles;</b>
+}
+</pre>
+      <p>Let’s take the code from Example 4.2 and review a bit of object-oriented programming, looking at how each piece from the main tab can fit into the <strong klass="">ParticleSystem</strong> class.<a data-primary="particle systems"
+            data-secondary="origin point (of particles)"
+            data-type="indexterm"> </a>
+      </p>
+      <table class="code">
+         <tbody>
+            <tr>
+               <th>ArrayList in the main tab</th>
+               <th>ArrayList in the ParticleSystem class</th>
+            </tr>
+            <tr>
+               <td>
+                  <pre>ArrayList&lt;Particle&gt; particles;
 
 void setup() {
   size(640,360);
-  <b>particles = new ArrayList&lt;Particle&gt;();</b>
+  particles = new ArrayList&lt;Particle&gt;();
 }
 
 void draw() {
   background(255);
 
-  <b>particles.add(new Particle());</b>
-
-
-
-  <b>Iterator&lt;Particle&gt; it =
+  particles.add(new Particle());Iterator&lt;Particle&gt; it =
       particles.iterator();
   while (it.hasNext()) {
     Particle p = it.next();
@@ -517,28 +551,29 @@ void draw() {
     if (p.isDead()) {
       it.remove();
     }
-  }</b>
+  }
 }
+
 </pre>
-			</td>
-			<td>
-			<pre>
+               </td>
+               <td>
+                  <pre>
 class ParticleSystem {
-  <b>ArrayList&lt;Particle&gt; particles;</b>
+  ArrayList&lt;Particle&gt; particles;
 
 
   ParticleSystem() {
-    <b>particles = new ArrayList&lt;Particle&gt;();</b>
+    particles = new ArrayList&lt;Particle&gt;();
   }
 
 
 
   void addParticle() {
-    <b>particles.add(new Particle());</b>
+    particles.add(new Particle());
   }
 
   void run() {
-    <b>Iterator&lt;Particle&gt; it =
+    Iterator&lt;Particle&gt; it =
         particles.iterator();
     while (it.hasNext()) {
       Particle p = it.next();
@@ -546,81 +581,75 @@ class ParticleSystem {
       if (p.isDead()) {
         it.remove();
       }
-    }</b>
+    }
   }
 }
+
 </pre>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<p><a data-primary="particle systems" data-secondary="origin point (of particles)" data-type="indexterm">&#xa0;</a></p>
-
-<p>We could also add some new features to the particle system itself. For example, it might be useful for the <strong klass="">ParticleSystem</strong> class to keep track of an origin point where particles are made. This fits in with the idea of a particle system being an &#x201c;emitter,&#x201d; a place where particles are born and sent out into the world. The origin point should be initialized in the constructor.</p>
-
-<div data-type="example"><h5>Example 4.3: Simple Single Particle System</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <p>We could also add some new features to the particle system itself. For example, it might be useful for the <strong klass="">ParticleSystem</strong> class to keep track of an origin point where particles are made. This fits in with the idea of a particle system being an “emitter,” a place where particles are born and sent out into the world. The origin point should be initialized in the constructor.<a data-primary="particle systems"
+            data-secondary="origin point (of particles)"
+            data-type="indexterm"> </a>
+      </p>
+      <div id="example_d1e908" data-type="example">
+         <h5>Simple Single Particle System</h5>
+         <pre>
 class ParticleSystem {
   ArrayList particles;
-  // This particular ParticleSystem implementation
-  // includes an origin point where each Particle begins.
-  PVector origin; //[bold]
-
+<span class="callout-bubble">  This particular ParticleSystem implementation</span>
+            <span class="callout-bubble">  includes an origin point where each Particle begins.</span>
+            <em class="strong">  PVector origin; //[bold]</em>
   ParticleSystem(PVector location) {
     origin = location.get();
     particles = new ArrayList();
   }
 
   void addParticle() {
-    // The origin is passed to each Particle when it is added.
-    particles.add(new Particle(origin)); //[bold]
-  }</pre>
-
-<div data-type="exercise" id="chapter04_exercise3">
-<h5>Exercise 4.3</h5>
-
-<p>Make the origin point move dynamically. Have the particles emit from the mouse location or use the concepts of velocity and acceleration to make the system move autonomously.</p>
-</div>
-
-<div data-type="exercise" id="chapter04_exercise4">
-<h5>Exercise 4.4</h5>
-
-<p>Building off Chapter 3&#x2019;s &#x201c;Asteroids&#x201d; example, use a particle system to emit particles from the ship&#x2019;s &#x201c;thrusters&#x201d; whenever a thrust force is applied. The particles&#x2019; initial velocity should be related to the ship&#x2019;s current direction.</p>
-</div>
-</section>
-
-<section data-type="sect1" id="chapter04_section5">
-<h1>4.5 A System of Systems</h1>
-
-<p><a data-primary="particle systems" data-secondary="multiple systems" data-tertiary="organizing" data-type="indexterm">&#xa0;</a></p>
-
-<p>Let&#x2019;s review for a moment where we are. We know how to talk about an individual <strong klass="">Particle</strong> object. We also know how to talk about a system of <strong klass="">Particle</strong> objects, and this we call a &#x201c;particle system.&#x201d; And we&#x2019;ve defined a particle system as a collection of independent objects. But isn&#x2019;t a particle system itself an object? If that&#x2019;s the case (which it is), there&#x2019;s no reason why we couldn&#x2019;t also have a collection of many particle systems, i.e. a system of systems.</p>
-
-<p>This line of thinking could of course take us even further, and you might lock yourself in a basement for days sketching out a diagram of a system of systems of systems of systems of systems of systems. Of systems. After all, this is how the world works. An organ is a system of cells, a human body is a system of organs, a neighborhood is a system of human bodies, a city is a system of neighborhoods, and so on and so forth. While this is an interesting road to travel down, it&#x2019;s a bit beyond where we need to be right now. It is, however, quite useful to know how to write a Processing sketch that keeps track of many particle systems, each of which keep track of many particles. Let&#x2019;s take the following scenario.</p>
-
-<p>You start with a blank screen.</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems/_4_04_SystemofSystems.pde processingjs/chapter04/_4_04_SystemofSystems/Particle.pde processingjs/chapter04/_4_04_SystemofSystems/ParticleSystem.pde"><img alt="ch04 ex04a" src="../images/chapter04/ch04_ex04a.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>You click the mouse and generate a particle system at the mouse&#x2019;s location.</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems_b/_4_04_SystemofSystems_b.pde processingjs/chapter04/_4_04_SystemofSystems_b/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_b/ParticleSystem.pde"><img alt="ch04 ex04b" src="../images/chapter04/ch04_ex04b.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>Each time you click the mouse, a new particle system is created at the mouse&#x2019;s location.</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_04_SystemofSystems_c/_4_04_SystemofSystems_c.pde processingjs/chapter04/_4_04_SystemofSystems_c/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_c/ParticleSystem.pde"><img alt="ch04 ex04c" src="../images/chapter04/ch04_ex04c.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>In Example <a href="#chapter04_example3">4.3</a>, we stored a single reference to a <strong klass="">ParticleSystem</strong> object in the variable <strong class="var">ps</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+<span class="callout-bubble">    The origin is passed to each Particle when it is added.</span>
+            <em class="strong">    particles.add(new Particle(origin)); //[bold]</em>  }
+</pre>
+      </div>
+      
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.3</h5>
+         <p>Make the origin point move dynamically. Have the particles emit from the mouse location or use the concepts of velocity and acceleration to make the system move autonomously.</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.4</h5>
+         <p>Building off Chapter 3’s “Asteroids” example, use a particle system to emit particles from the ship’s “thrusters” whenever a thrust force is applied. The particles’ initial velocity should be related to the ship’s current direction.</p>
+      </div>
+   </section>
+   <section data-type="sect1" id="chapter04_section5">
+      <h1>A System of Systems</h1>
+      <p>Let’s review for a moment where we are. We know how to talk about an individual <strong klass="">Particle</strong> object. We also know how to talk about a system of <strong klass="">Particle</strong> objects, and this we call a “particle system.” And we’ve defined a particle system as a collection of independent objects. But isn’t a particle system itself an object? If that’s the case (which it is), there’s no reason why we couldn’t also have a collection of many particle systems, i.e. a system of systems.<a data-primary="particle systems"
+            data-secondary="multiple systems"
+            data-tertiary="organizing"
+            data-type="indexterm"> </a>
+      </p>
+      <p>This line of thinking could of course take us even further, and you might lock yourself in a basement for days sketching out a diagram of a system of systems of systems of systems of systems of systems. Of systems. After all, this is how the world works. An organ is a system of cells, a human body is a system of organs, a neighborhood is a system of human bodies, a city is a system of neighborhoods, and so on and so forth. While this is an interesting road to travel down, it’s a bit beyond where we need to be right now. It is, however, quite useful to know how to write a Processing sketch that keeps track of many particle systems, each of which keep track of many particles. Let’s take the following scenario.</p>
+      <p>You start with a blank screen.</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_04_SystemofSystems/_4_04_SystemofSystems.pde processingjs/chapter04/_4_04_SystemofSystems/Particle.pde processingjs/chapter04/_4_04_SystemofSystems/ParticleSystem.pde">
+         <img alt="ch04 ex04a" src="../images/chapter04/ch04_ex04a.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>You click the mouse and generate a particle system at the mouse’s location.</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_04_SystemofSystems_b/_4_04_SystemofSystems_b.pde processingjs/chapter04/_4_04_SystemofSystems_b/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_b/ParticleSystem.pde">
+         <img alt="ch04 ex04b" src="../images/chapter04/ch04_ex04b.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>Each time you click the mouse, a new particle system is created at the mouse’s location.</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_04_SystemofSystems_c/_4_04_SystemofSystems_c.pde processingjs/chapter04/_4_04_SystemofSystems_c/Particle.pde processingjs/chapter04/_4_04_SystemofSystems_c/ParticleSystem.pde">
+         <img alt="ch04 ex04c" src="../images/chapter04/ch04_ex04c.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>In Example <a href="#chapter04_example3">4.3</a>, we stored a single reference to a <strong>ParticleSystem</strong> object in the variable <strong class="var">ps</strong>.</p>
+      <pre>
 ParticleSystem ps;
 
 void setup() {
@@ -632,68 +661,65 @@ void draw() {
   background(255);
   ps.run();
   ps.addParticle();
-}</pre>
-
-<p>For this new example, what we want to do instead is create an <strong klass="">ArrayList</strong> to keep track of multiple instances of particle systems. When the program starts, i.e. in <strong function="">setup()</strong>, the <strong klass="">ArrayList</strong> is empty.</p>
-
-<div data-type="example"><h5>Example 4.4: System of systems</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
-// This time, the type of thing we are putting
-// in the ArrayList is a ParticleSystem itself!
-ArrayList&lt;ParticleSystem&gt; systems;
+}
+</pre>
+      <p>For this new example, what we want to do instead is create an <strong>ArrayList</strong> to keep track of multiple instances of particle systems. When the program starts, i.e. in <strong function="">setup()</strong>, the <strong>ArrayList</strong> is empty.</p>
+      <div id="example_d1e1034" data-type="example">
+         <h5>System of systems</h5>
+         <pre>
+            <span class="callout-bubble">This time, the type of thing we are putting</span>
+            ArrayList&lt;ParticleSystem&gt; systems;<span class="callout-bubble">in the ArrayList is a ParticleSystem itself!</span>
 void setup() {
   size(600,200);
   systems = new ArrayList&lt;ParticleSystem&gt;();
-}</pre>
-
-<p>Whenever the mouse is pressed, a new <strong klass="">ParticleSystem</strong> object is created and placed into the <strong klass="">ArrayList</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      </div>
+      
+      <p>Whenever the mouse is pressed, a new <strong>ParticleSystem</strong> object is created and placed into the <strong>ArrayList</strong>.</p>
+      <pre>
 void mousePressed() {
   systems.add(new ParticleSystem(new PVector(mouseX,mouseY)));
-}</pre>
-
-<p>And in <strong function="">draw()</strong>, instead of referencing a single <strong klass="">ParticleSystem</strong> object, we now look through all the systems in the <strong klass="">ArrayList</strong> and call <strong function="">run()</strong> on each of them.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>And in <strong function="">draw()</strong>, instead of referencing a single <strong>ParticleSystem</strong> object, we now look through all the systems in the <strong>ArrayList</strong> and call <strong function="">run()</strong> on each of them.</p>
+      <pre>
 void draw() {
   background(255);
-  // Since we aren&#x2019;t deleting elements, we
-  // can use our enhanced loop!
-  for (ParticleSystem ps: systems) {
+<span class="callout-bubble">  Since we aren’t deleting elements, we</span>
+           for (ParticleSystem ps: systems) {<span class="callout-bubble">  can use our enhanced loop!</span>
     ps.run();
     ps.addParticle();
   }
-}</pre>
-
-<div data-type="exercise" id="chapter04_exercise5">
-<h5>Exercise 4.5</h5>
-
-<p>Rewrite Example 4.4 so that each particle system doesn&#x2019;t live forever. When a particle system is empty (i.e. has no particles left in its <strong klass="">ArrayList</strong>), remove it from the <strong klass="">ArrayList</strong> <strong class="var">systems</strong>.</p>
-</div>
-
-<div data-type="exercise" id="chapter04_exercise6">
-<h5>Exercise 4.6</h5>
-
-<p>Create a simulation of an object shattering into many pieces. How can you turn one large shape into many small particles? What if there are several large shapes on the screen and they shatter when you click on them?</p>
-</div>
-</section>
-
-<section data-type="sect1" id="chapter04_section6">
-<h1>4.6 Inheritance and Polymorphism: An Introduction</h1>
-
-<p><a data-primary="&lt;em&gt;Learning Processing&lt;/em&gt; (Shiffman)" data-type="indexterm">&#xa0;</a> <a data-primary="inheritance" data-type="indexterm">&#xa0;</a> <a data-primary="object-oriented programming" data-secondary="inheritance" data-type="indexterm">&#xa0;</a> <a data-primary="object-oriented programming" data-secondary="polymorphism" data-type="indexterm">&#xa0;</a> <a data-primary="polymorphism" data-type="indexterm">&#xa0;</a></p>
-
-<p>You may have encountered the terms <em>inheritance</em> and <em>polymorphism</em> in your programming life before this book. After all, they are two of the three fundamental principles behind the theory of object-oriented programming (the other being <em>encapsulation</em>). If you&#x2019;ve read other Processing or Java programming books, chances are it&#x2019;s been covered. My beginner text, <em>Learning Processing</em>, has close to an entire chapter (#22) dedicated to these two topics.</p>
-
-<p>Still, perhaps you&#x2019;ve only learned about it in the abstract sense and never had a reason to really use inheritance and polymorphism. If this is true, you&#x2019;ve come to the right place. Without these two topics, your ability to program a variety of particles and particle systems is extremely limited. (In the next chapter, we&#x2019;ll also see how understanding these topics will help us to use physics libraries.)</p>
-
-<p>Imagine the following. It&#x2019;s a Saturday morning, you&#x2019;ve just gone out for a lovely jog, had a delicious bowl of cereal, and are sitting quietly at your computer with a cup of warm chamomile tea. It&#x2019;s your old friend So and So&#x2019;s birthday and you&#x2019;ve decided you&#x2019;d like to make a greeting card in Processing. How about some confetti for a birthday? Purple confetti, pink confetti, star-shaped confetti, square confetti, fast confetti, fluttery confetti, etc. All of these pieces of confetti with different appearances and different behaviors explode onto the screen at once.</p>
-
-<p>What we&#x2019;ve got here is clearly a particle system&#x2014;a collection of individual pieces of confetti (i.e. particles). We might be able to cleverly design our <strong klass="">Particle</strong> class to have variables that store its color, shape, behavior, etc. And perhaps we initialize the values of these variables randomly. But what if your particles are drastically different? This could become very messy, having all sorts of code for different ways of being a particle in the same class. Well, you might consider doing the following:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.5</h5>
+         <p>Rewrite Example 4.4 so that each particle system doesn’t live forever. When a particle system is empty (i.e. has no particles left in its <strong>ArrayList</strong>), remove it from the <strong>ArrayList</strong>
+            <strong class="var">systems</strong>.</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.6</h5>
+         <p>Create a simulation of an object shattering into many pieces. How can you turn one large shape into many small particles? What if there are several large shapes on the screen and they shatter when you click on them?</p>
+      </div>
+   </section>
+   <section data-type="sect1" id="chapter04_section6">
+      <h1>Inheritance and Polymorphism: An Introduction</h1>
+      <p>You may have encountered the terms <em>inheritance</em> and <em>polymorphism</em> in your programming life before this book. After all, they are two of the three fundamental principles behind the theory of object-oriented programming (the other being <em>encapsulation</em>). If you’ve read other Processing or Java programming books, chances are it’s been covered. My beginner text, <em>Learning Processing</em>, has close to an entire chapter (#22) dedicated to these two topics.<a data-primary="&lt;em&gt;Learning Processing&lt;/em&gt; (Shiffman)"
+            data-type="indexterm"> </a>
+         <a data-primary="inheritance" data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="inheritance"
+            data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="polymorphism"
+            data-type="indexterm"> </a>
+         <a data-primary="polymorphism" data-type="indexterm"> </a>
+      </p>
+      <p>Still, perhaps you’ve only learned about it in the abstract sense and never had a reason to really use inheritance and polymorphism. If this is true, you’ve come to the right place. Without these two topics, your ability to program a variety of particles and particle systems is extremely limited. (In the next chapter, we’ll also see how understanding these topics will help us to use physics libraries.)</p>
+      <p>Imagine the following. It’s a Saturday morning, you’ve just gone out for a lovely jog, had a delicious bowl of cereal, and are sitting quietly at your computer with a cup of warm chamomile tea. It’s your old friend So and So’s birthday and you’ve decided you’d like to make a greeting card in Processing. How about some confetti for a birthday? Purple confetti, pink confetti, star-shaped confetti, square confetti, fast confetti, fluttery confetti, etc. All of these pieces of confetti with different appearances and different behaviors explode onto the screen at once.</p>
+      <p>What we’ve got here is clearly a particle system—a collection of individual pieces of confetti (i.e. particles). We might be able to cleverly design our <strong>Particle</strong> class to have variables that store its color, shape, behavior, etc. And perhaps we initialize the values of these variables randomly. But what if your particles are drastically different? This could become very messy, having all sorts of code for different ways of being a particle in the same class. Well, you might consider doing the following:</p>
+      <pre>
 class HappyConfetti {
 
 }
@@ -704,82 +730,76 @@ class FunConfetti {
 
 class WackyConfetti {
 
-}</pre>
-
-<p>This is a nice solution: we have three different classes to describe the different kinds of pieces of confetti that could be part of our particle system. The <strong klass="">ParticleSystem</strong> constructor could then have some code to pick randomly from the three classes when filling the <strong klass="">ArrayList</strong>. Note that this probabilistic method is the same one we employed in our random walk examples in the <a href="#intro_section2">Introduction</a>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>This is a nice solution: we have three different classes to describe the different kinds of pieces of confetti that could be part of our particle system. The <strong>ParticleSystem</strong> constructor could then have some code to pick randomly from the three classes when filling the <strong>ArrayList</strong>. Note that this probabilistic method is the same one we employed in our random walk examples in the <a href="#intro_section2">Introduction</a>.</p>
+      <pre>
 class ParticleSystem {
   ParticleSystem(int num) {
     particles = new ArrayList();
     for (int i = 0; i &lt; num; i++) {
       float r = random(1);
-      //[full]
-      // Randomly picking a &quot;kind&quot; of particle
-
+<span class="callout-bubble">      //[full]</span>
+         <span class="callout-bubble">      Randomly picking a "kind" of particle</span>
       if      (r &lt; 0.33) { particles.add(new HappyConfetti()); }
       else if (r &lt; 0.67) { particles.add(new FunConfetti());   }
       else               { particles.add(new WackyConfetti()); }
-      //[end]
+
     }
-  }</pre>
-
-<p>OK, we now need to pause for a moment. We&#x2019;ve done nothing wrong. All we wanted to do was wish our friend a happy birthday and enjoy writing some code. But while the reasoning behind the above approach is quite sound, we&#x2019;ve opened up two major problems.</p>
-
-<p><strong highlight="">Problem #1: Aren&#x2019;t we going to be copying/pasting a lot of code between the different &#x201c;confetti&#x201d; classes?</strong></p>
-
-<p><a data-primary="code duplication" data-secondary="inheritance and" data-type="indexterm">&#xa0;</a></p>
-
-<p>Yes. Even though our kinds of particles are different enough to merit our breaking them out into separate classes, there is still a ton of code that they will likely share. They&#x2019;ll all have <strong klass="">PVector</strong><code>s</code> to keep track of location, velocity, and acceleration; an <strong function="">update()</strong> function that implements our motion algorithm; etc.</p>
-
-<p>This is where <strong><em>inheritance</em></strong> comes in. Inheritance allows us to write a class that <em>inherits</em> variables and functions from another class, all the while implementing its own custom features.</p>
-
-<p><strong highlight="">Problem #2: How will the ArrayList know which objects are which type?</strong></p>
-
-<p>This is a pretty serious problem. Remember, we were using generics to tell the <strong klass="">ArrayList</strong> what type of objects we&#x2019;re going to put inside it. Are we suddenly going to need three different <strong klass="">ArrayList</strong><code>s</code>?</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>OK, we now need to pause for a moment. We’ve done nothing wrong. All we wanted to do was wish our friend a happy birthday and enjoy writing some code. But while the reasoning behind the above approach is quite sound, we’ve opened up two major problems.</p>
+      <p>
+         <strong highlight="">Problem #1: Aren’t we going to be copying/pasting a lot of code between the different “confetti” classes?</strong>
+      </p>
+      <p>Yes. Even though our kinds of particles are different enough to merit our breaking them out into separate classes, there is still a ton of code that they will likely share. They’ll all have <strong klass="">PVector</strong>
+         <code>s</code> to keep track of location, velocity, and acceleration; an <strong function="">update()</strong> function that implements our motion algorithm; etc.<a data-primary="code duplication"
+            data-secondary="inheritance and"
+            data-type="indexterm"> </a>
+      </p>
+      <p>This is where <strong>
+            <em>inheritance</em>
+         </strong> comes in. Inheritance allows us to write a class that <em>inherits</em> variables and functions from another class, all the while implementing its own custom features.</p>
+      <p>
+         <strong highlight="">Problem #2: How will the ArrayList know which objects are which type?</strong>
+      </p>
+      <p>This is a pretty serious problem. Remember, we were using generics to tell the <strong>ArrayList</strong> what type of objects we’re going to put inside it. Are we suddenly going to need three different <strong>ArrayList</strong>
+         <code>s</code>?</p>
+      <pre>
 ArrayList&lt;HappyConfetti&gt; a1 = new ArrayList&lt;HappyConfetti&gt;();
 ArrayList&lt;FunConfetti&gt;   a2 = new ArrayList&lt;FunConfetti&gt;();
-ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();</pre>
-
-<p>This seems awfully inconvenient, given that we really just want one list to keep track of all the stuff in the particle system. That can be made possible with polymorphism. Polymorphism will allow us to consider objects of different types as the same type and store them in a single <strong klass="">ArrayList</strong>.</p>
-
-<p>Now that we understand the problem, let&#x2019;s look at these two concepts in a bit more detail and then create a particle system example that implements both inheritance and polymorphism.</p>
-</section>
-
-<section data-type="sect1" id="chapter04_section7">
-<h1>4.7 Inheritance Basics</h1>
-
-<p>Let&#x2019;s take a different example, the world of animals: dogs, cats, monkeys, pandas, wombats, and sea nettles. We&#x2019;ll start by programming a <strong klass="">Dog</strong> class. A <strong klass="">Dog</strong> object will have an age variable (an integer), as well as <strong function="">eat()</strong>, <strong function="">sleep()</strong>, and <strong function="">bark()</strong> functions.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();
+</pre>
+      <p>This seems awfully inconvenient, given that we really just want one list to keep track of all the stuff in the particle system. That can be made possible with polymorphism. Polymorphism will allow us to consider objects of different types as the same type and store them in a single <strong>ArrayList</strong>.</p>
+      <p>Now that we understand the problem, let’s look at these two concepts in a bit more detail and then create a particle system example that implements both inheritance and polymorphism.</p>
+   </section>
+   <section data-type="sect1" id="chapter04_section7">
+      <h1>Inheritance Basics</h1>
+      <p>Let’s take a different example, the world of animals: dogs, cats, monkeys, pandas, wombats, and sea nettles. We’ll start by programming a <strong>Dog</strong> class. A <strong>Dog</strong> object will have an age variable (an integer), as well as <strong function="">eat()</strong>, <strong function="">sleep()</strong>, and <strong function="">bark()</strong> functions.</p>
+      <pre>
 class Dog {
   int age;
-  //[full] Dogs and cats have the same variables (age) and functions (eat, sleep).
-  Dog() {
+  Dog() {<span class="callout-bubble">  Dogs and cats have the same variables (age) and functions (eat, sleep).</span>
     age = 0;
   }
 
   void eat() {
-    println(&quot;Yum!&quot;);
+    println("Yum!");
   }
 
   void sleep() {
-    println(&quot;Zzzzzz&quot;);
+    println("Zzzzzz");
   }
-  //[end]
 
-  //[full] A unique function for barking.
-  void bark() {
-    println(&quot;WOOF!&quot;);
+
+  void bark() {<span class="callout-bubble">  A unique function for barking.</span>
+    println("WOOF!");
   }
-  //[end]
-}</pre>
 
-<p>Now, let&#x2019;s move on to cats.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Now, let’s move on to cats.</p>
+      <pre>
 class Cat {
   int age;
 
@@ -788,71 +808,76 @@ class Cat {
   }
 
   void eat() {
-    println(&quot;Yum!&quot;);
+    println("Yum!");
   }
 
   void sleep() {
-    println(&quot;Zzzzzz&quot;);
+    println("Zzzzzz");
   }
 
   void meow() {
-    println(&quot;MEOW!&quot;);
+    println("MEOW!");
   }
-}</pre>
-
-<p>As we rewrite the same code for fish, horses, koalas, and lemurs, this process will become rather tedious. Instead, let&#x2019;s develop a generic <strong klass="">Animal</strong> class that can describe any type of animal. All animals eat and sleep, after all. We could then say:</p>
-
-<ul>
-	<li>
-	<p>A dog is an animal and has all the properties of animals and can do all the things animals do. Also, a dog can bark.</p>
-	</li>
-	<li>
-	<p>A cat is an animal and has all the properties of animals and can do all the things animals do. Also, a cat can meow.</p>
-	</li>
-</ul>
-
-<p><a data-primary="inheritance" data-secondary="subclass" data-type="indexterm">&#xa0;</a> <a data-primary="inheritance" data-secondary="superclasses" data-type="indexterm">&#xa0;</a> <a data-primary="subclass" data-type="indexterm">&#xa0;</a> <a data-primary="superclasses" data-type="indexterm">&#xa0;</a></p>
-
-<p>Inheritance makes this all possible. With inheritance, classes can inherit properties (variables) and functionality (methods) from other classes. A <strong klass="">Dog</strong> class is a child (<strong><em>subclass</em></strong>) of an <strong klass="">Animal</strong> class. Children will automatically inherit all variables and functions from the parent (<strong><em>superclass</em></strong>), but can also include functions and variables not found in the parent. Like a phylogenetic &quot;tree of life,&quot; inheritance follows a tree structure. Dogs inherit from canines, which inherit from mammals, which inherit from animals, etc.</p>
-
-<figure id="chapter04_figure2"><img alt="Figure 4.2" src="../images/chapter04/ch04_02.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p><a data-primary="inheritance" data-secondary="syntax for" data-type="indexterm">&#xa0;</a> <a data-primary="Processing" data-secondary="class inheritance" data-tertiary="syntax for" data-type="indexterm">&#xa0;</a></p>
-
-<p>Here is how the syntax works with inheritance.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-// The Animal class is the parent (or super) class.
-class Animal {
-  // Dog and Cat inherit the variable age.
-  int age;
+}
+</pre>
+      <p>As we rewrite the same code for fish, horses, koalas, and lemurs, this process will become rather tedious. Instead, let’s develop a generic <strong klass="">Animal</strong> class that can describe any type of animal. All animals eat and sleep, after all. We could then say:<a data-primary="inheritance"
+            data-secondary="subclass"
+            data-type="indexterm"> </a>
+         <a data-primary="inheritance"
+            data-secondary="superclasses"
+            data-type="indexterm"> </a>
+         <a data-primary="subclass" data-type="indexterm"> </a>
+         <a data-primary="superclasses" data-type="indexterm"> </a>
+      </p>
+      <ul>
+         <li>
+            <p>A dog is an animal and has all the properties of animals and can do all the things animals do. Also, a dog can bark.</p>
+         </li>
+         <li>
+            <p>A cat is an animal and has all the properties of animals and can do all the things animals do. Also, a cat can meow.</p>
+         </li>
+      </ul>
+      <p>Inheritance makes this all possible. With inheritance, classes can inherit properties (variables) and functionality (methods) from other classes. A <strong>Dog</strong> class is a child (<strong>
+            <em>subclass</em>
+         </strong>) of an <strong>Animal</strong> class. Children will automatically inherit all variables and functions from the parent (<strong>
+            <em>superclass</em>
+         </strong>), but can also include functions and variables not found in the parent. Like a phylogenetic "tree of life," inheritance follows a tree structure. Dogs inherit from canines, which inherit from mammals, which inherit from animals, etc.</p>
+      <figure id="chapter04_figure2">
+         <img alt="Figure 4.2" src="../images/chapter04/ch04_02.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>Here is how the syntax works with inheritance.<a data-primary="inheritance"
+            data-secondary="syntax for"
+            data-type="indexterm"> </a>
+         <a data-primary="Processing"
+            data-secondary="class inheritance"
+            data-tertiary="syntax for"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
+         class Animal {<span class="callout-bubble">The Animal class is the parent (or super) class.</span>
+  int age;<span class="callout-bubble">  Dog and Cat inherit the variable age.</span>
 
   Animal() {
     age = 0;
   }
 
-  //[full] Dog and Cat inherit the functions eat() and sleep().
-  void eat() {
-    println(&quot;Yum!&quot;);
+  void eat() {<span class="callout-bubble">  Dog and Cat inherit the functions eat() and sleep().</span>
+    println("Yum!");
   }
 
   void sleep() {
-    println(&quot;Zzzzzz&quot;);
+    println("Zzzzzz");
   }
-  //[end]
+
 }
 
-// The Dog class is the child (or sub) class, indicated by the code &quot;extends Animal&quot;.
-class Dog extends Animal { //[bold]
-  Dog() {
-    // super() executes code found in the parent class.
-    super(); //[bold]
-  }
-  // We define bark() in the child class, since it isn't part of the parent class.
-  void bark() {
-    println(&quot;WOOF!&quot;);
+<span class="callout-bubble">The Dog class is the child (or sub) class, indicated by the code "extends Animal".</span>
+         <em class="strong">class Dog extends Animal { //[bold]</em>  Dog() {
+<span class="callout-bubble">    super() executes code found in the parent class.</span>
+         <em class="strong">    super(); //[bold]</em>  }
+  void bark() {<span class="callout-bubble">  We define bark() in the child class, since it isn't part of the parent class.</span>
+    println("WOOF!");
   }
 }
 
@@ -861,45 +886,50 @@ class Cat extends Animal {
     super();
   }
   void meow() {
-    println(&quot;MEOW!&quot;);
+    println("MEOW!");
   }
-}</pre>
-
-<p>This brings up two new terms:</p>
-
-<p><a data-primary="extends keyword (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="inheritance" data-secondary="extends keyword (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="inheritance" data-secondary="super() function (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="super() function(Processing)" data-type="indexterm">&#xa0;</a></p>
-
-<ul>
-	<li>
-	<p><strong><em>extends</em></strong> &#x2013; This keyword is used to indicate a parent for the class being defined. Note that classes can only extend <em>one</em> class. However, classes can extend classes that extend other classes, i.e. <strong klass="">Dog extends Animal</strong>, <strong klass="">Terrier extends Dog</strong>. Everything is inherited all the way down the line.</p>
-	</li>
-	<li>
-	<p><strong><em>super()</em></strong> &#x2013; This calls the constructor in the parent class. In other words, whatever you do in the parent constructor, do so in the child constructor as well. Other code can be written into the constructor in addition to <strong function="">super()</strong>. <strong function="">super()</strong> can also receive arguments if there is a parent constructor defined with matching arguments.</p>
-	</li>
-</ul>
-
-<p>A subclass can be expanded to include additional functions and properties beyond what is contained in the superclass. For example, let&#x2019;s assume that a <strong klass="">Dog</strong> object has a haircolor variable in addition to age, which is set randomly in the constructor. The class would now look like this:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>This brings up two new terms:<a data-primary="extends keyword (Processing)" data-type="indexterm"> </a>
+         <a data-primary="inheritance"
+            data-secondary="extends keyword (Processing)"
+            data-type="indexterm"> </a>
+         <a data-primary="inheritance"
+            data-secondary="super() function (Processing)"
+            data-type="indexterm"> </a>
+         <a data-primary="super() function(Processing)" data-type="indexterm"> </a>
+      </p>
+      <ul>
+         <li>
+            <p>
+               <strong>
+                  <em>extends</em>
+               </strong> – This keyword is used to indicate a parent for the class being defined. Note that classes can only extend <em>one</em> class. However, classes can extend classes that extend other classes, i.e. <strong>Dog extends Animal</strong>, <strong>Terrier extends Dog</strong>. Everything is inherited all the way down the line.</p>
+         </li>
+         <li>
+            <p>
+               <strong>
+                  <em>super()</em>
+               </strong> – This calls the constructor in the parent class. In other words, whatever you do in the parent constructor, do so in the child constructor as well. Other code can be written into the constructor in addition to <strong function="">super()</strong>. <strong function="">super()</strong> can also receive arguments if there is a parent constructor defined with matching arguments.</p>
+         </li>
+      </ul>
+      <p>A subclass can be expanded to include additional functions and properties beyond what is contained in the superclass. For example, let’s assume that a <strong>Dog</strong> object has a haircolor variable in addition to age, which is set randomly in the constructor. The class would now look like this:</p>
+      <pre>
 class Dog extends Animal {
-  // A child class can introduce new variables not
-  // included in the parent.
-  color haircolor;
+<span class="callout-bubble">  A child class can introduce new variables not</span>
+           color haircolor;<span class="callout-bubble">  included in the parent.</span>
   Dog() {
     super();
     haircolor = color(random(255));
   }
 
   void bark() {
-    println(&quot;WOOF!&quot;);
+    println("WOOF!");
   }
-}</pre>
-
-<p><a data-primary="inheritance" data-secondary="overriding superclass functions" data-type="indexterm">&#xa0;</a> <a data-primary="superclasses" data-secondary="overriding functions from" data-type="indexterm">&#xa0;</a></p>
-
-<p>Note how the parent constructor is called via <strong function="">super()</strong>, which sets the age to 0, but the haircolor is set inside the <strong klass="">Dog</strong> constructor itself. If a <strong klass="">Dog</strong> object eats differently than a generic <strong klass="">Animal</strong> object, parent functions can be <em>overridden</em> by rewriting the function inside the subclass.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Note how the parent constructor is called via <strong function="">super()</strong>, which sets the age to 0, but the haircolor is set inside the <strong>Dog</strong> constructor itself. If a <strong>Dog</strong> object eats differently than a generic <strong>Animal</strong> object, parent functions can be <em>overridden</em> by rewriting the function inside the subclass.</p>
+      <pre>
 class Dog extends Animal {
   color haircolor;
 
@@ -908,22 +938,26 @@ class Dog extends Animal {
      haircolor = color(random(255));
   }
 
-  // A child can override a parent function if necessary.
-  void eat() {
-    // A Dog's specific eating characteristics
-    println(&quot;Woof! Woof! Slurp.&quot;)
+  void eat() {<span class="callout-bubble">  A child can override a parent function if necessary.</span>
+    println("Woof! Woof! Slurp.")<span class="callout-bubble">    A Dog's specific eating characteristics</span>
   }
 
   void bark() {
-    println(&quot;WOOF!&quot;);
+    println("WOOF!");
   }
-}</pre>
-
-<p><a data-primary="inheritance" data-secondary="adding functionality to superclass objects" data-type="indexterm">&#xa0;</a> <a data-primary="subclass" data-secondary="adding functionality to superclass objects" data-type="indexterm">&#xa0;</a> <a data-primary="superclasses" data-secondary="adding functionality within subclasses" data-type="indexterm">&#xa0;</a></p>
-
-<p>But what if a dog eats the same way as a generic animal, just with some extra functionality? A subclass can both run the code from a parent class and incorporate custom code.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>But what if a dog eats the same way as a generic animal, just with some extra functionality? A subclass can both run the code from a parent class and incorporate custom code.<a data-primary="inheritance"
+            data-secondary="adding functionality to superclass objects"
+            data-type="indexterm"> </a>
+         <a data-primary="subclass"
+            data-secondary="adding functionality to superclass objects"
+            data-type="indexterm"> </a>
+         <a data-primary="superclasses"
+            data-secondary="adding functionality within subclasses"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 class Dog extends Animal {
    color haircolor;
 
@@ -933,31 +967,28 @@ class Dog extends Animal {
    }
 
    void eat() {
-     // Call eat() from Animal.
-     // A child can execute a function from the parent
-     // while adding its own code.
-     super.eat(); //[bold]
-     // Add some additional code
-     // for a Dog's specific eating characteristics.
-     println(&quot;Woof!!!&quot;);
+<span class="callout-bubble">     Call eat() from Animal.</span>
+         <span class="callout-bubble">     A child can execute a function from the parent</span>
+         <span class="callout-bubble">     while adding its own code.</span>
+         <em class="strong">     super.eat(); //[bold]</em>
+         <span class="callout-bubble">     Add some additional code</span>
+              println("Woof!!!");<span class="callout-bubble">     for a Dog's specific eating characteristics.</span>
    }
 
    void bark() {
-    println(&quot;WOOF!&quot;);
+    println("WOOF!");
   }
-}</pre>
-</section>
-
-<section data-type="sect1" id="chapter04_section8">
-<h1>4.8 Particles with Inheritance</h1>
-
-<p><a data-primary="inheritance" data-secondary="implementing" data-type="indexterm">&#xa0;</a></p>
-
-<p>Now that we&#x2019;ve had an introduction to the theory of inheritance and its syntax, we can develop a working example in Processing based on our <strong klass="">Particle</strong> class.</p>
-
-<p>Let&#x2019;s review a simple <strong klass="">Particle</strong> implementation, further simplified from <a href="#chapter04_example1">Example 4.1</a>:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+   </section>
+   <section data-type="sect1" id="chapter04_section8">
+      <h1>Particles with Inheritance</h1>
+      <p>Now that we’ve had an introduction to the theory of inheritance and its syntax, we can develop a working example in Processing based on our <strong klass="">Particle</strong> class.<a data-primary="inheritance"
+            data-secondary="implementing"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Let’s review a simple <strong>Particle</strong> implementation, further simplified from <a href="#chapter04_example1">Example 4.1</a>:</p>
+      <pre>
 class Particle {
   PVector location;
   PVector velocity;
@@ -983,80 +1014,73 @@ class Particle {
     fill(0);
     ellipse(location.x,location.y,8,8);
   }
-}</pre>
-
-<p>Next, we create a subclass from <strong klass="">Particle</strong> (let&#x2019;s call it <strong klass="">Confetti</strong>). It will inherit all the instance variables and methods from <strong klass="">Particle</strong>. We write a new constructor with the name <strong klass="">Confetti</strong> and execute the code from the parent class by calling <strong function="">super()</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Next, we create a subclass from <strong>Particle</strong> (let’s call it <strong>Confetti</strong>). It will inherit all the instance variables and methods from <strong>Particle</strong>. We write a new constructor with the name <strong>Confetti</strong> and execute the code from the parent class by calling <strong function="">super()</strong>.</p>
+      <pre>
 class Confetti extends Particle {
 
-  // We could add variables for only Confetti here.
-
+<span class="callout-bubble">  We could add variables for only Confetti here.</span>
   Confetti(PVector l) {
     super(l);
   }
 
-  // There is no code here because we inherit update() from parent.
+<span class="callout-bubble">  There is no code here because we inherit update() from parent.</span>
 
-
-  //[full] Override the display method.
-  void display() {
+           void display() {<span class="callout-bubble">  Override the display method.</span>
     rectMode(CENTER);
     fill(175);
     stroke(0);
     rect(location.x,location.y,8,8);
   }
-  //[end]
-}</pre>
 
-<p>Let&#x2019;s make this a bit more sophisticated. Let&#x2019;s say we want to have the <strong klass="">Confetti</strong> particle rotate as it flies through the air. We could, of course, model angular velocity and acceleration as we did in Chapter 3. Instead, we&#x2019;ll try a quick and dirty solution.</p>
-
-<p>We know a particle has an <em>x</em> location somewhere between 0 and the width of the window. What if we said: when the particle&#x2019;s <em>x</em> location is 0, its rotation should be 0; when its <em>x</em> location is equal to the width, its rotation should be equal to <strong class="var">TWO_PI</strong>? Does this ring a bell? Whenever we have a value with one range that we want to map to another range, we can use Processing&#x2019;s <strong function="">map()</strong> function, which we learned about in the <a href="#intro_section6">Introduction</a>!</p>
-
-<pre data-code-language="java" data-type="programlisting">
-float angle = map(location.x,0,width,0,TWO_PI);</pre>
-
-<p>And just to give it a bit more spin, we can actually map the angle&#x2019;s range from 0 to <strong class="var">TWO_PI</strong>*2. Let&#x2019;s look at how this code fits into the <strong function="">display()</strong> function.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Let’s make this a bit more sophisticated. Let’s say we want to have the <strong>Confetti</strong> particle rotate as it flies through the air. We could, of course, model angular velocity and acceleration as we did in Chapter 3. Instead, we’ll try a quick and dirty solution.</p>
+      <p>We know a particle has an <em>x</em> location somewhere between 0 and the width of the window. What if we said: when the particle’s <em>x</em> location is 0, its rotation should be 0; when its <em>x</em> location is equal to the width, its rotation should be equal to <strong class="var">TWO_PI</strong>? Does this ring a bell? Whenever we have a value with one range that we want to map to another range, we can use Processing’s <strong function="">map()</strong> function, which we learned about in the <a href="#intro_section6">Introduction</a>!</p>
+      <pre>
+float angle = map(location.x,0,width,0,TWO_PI);
+</pre>
+      <p>And just to give it a bit more spin, we can actually map the angle’s range from 0 to <strong class="var">TWO_PI</strong>*2. Let’s look at how this code fits into the <strong function="">display()</strong> function.</p>
+      <pre>
   void display() {
     float theta = map(location.x,0,width,0,TWO_PI*2);
 
     rectMode(CENTER);
     fill(0,lifespan);
     stroke(0,lifespan);
-    //[full] If we rotate() a shape in Processing, we need to familiarize ourselves with transformations. For more, visit: http://processing.org/learning/transform2d/
-    pushMatrix();
+    pushMatrix();<span class="callout-bubble">    If we rotate() a shape in Processing, we need to familiarize ourselves with transformations. For more, visit: http://processing.org/learning/transform2d/</span>
     translate(location.x,location.y);
     rotate(theta);
     rect(0,0,8,8);
     popMatrix();
-    //[end]
-  }</pre>
 
-<div data-type="exercise" id="chapter04_exercise7">
-<h5>Exercise 4.7</h5>
-
-<p>Instead of using <strong function="">map()</strong> to calculate theta, how would you model angular velocity and acceleration?</p>
-</div>
-
-<p>Now that we have a <strong klass="">Confetti</strong> class that extends our base <strong klass="">Particle</strong> class, we need to figure out how our <strong klass="">ParticleSystem</strong> class can manage particles of different types within the same system. To accomplish this goal, let&#x2019;s return to the animal kingdom inheritance example and see how the concept extends into the world of polymorphism.</p>
-</section>
-
-<section data-type="sect1" id="chapter04_section9">
-<h1>4.9 Polymorphism Basics</h1>
-
-<p><a data-primary="object-oriented programming" data-secondary="instances of subclasses" data-tertiary="creating" data-type="indexterm">&#xa0;</a> <a data-primary="object-oriented programming" data-secondary="polymorphism" data-type="indexterm">&#xa0;</a> <a data-primary="polymorphism" data-type="indexterm">&#xa0;</a></p>
-
-<p>With the concept of inheritance under our belts, we can imagine how we would program a diverse animal kingdom using <strong klass="">ArrayList</strong><code>s</code>&#x2014;an array of dogs, an array of cats, of turtles, of kiwis, etc. frolicking about.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-//[full] Separate ArrayLists for each animal
-ArrayList&lt;Dog&gt; dogs = new ArrayList&lt;Dog&gt;();
+  }
+</pre>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.7</h5>
+         <p>Instead of using <strong function="">map()</strong> to calculate theta, how would you model angular velocity and acceleration?</p>
+      </div>
+      <p>Now that we have a <strong>Confetti</strong> class that extends our base <strong>Particle</strong> class, we need to figure out how our <strong>ParticleSystem</strong> class can manage particles of different types within the same system. To accomplish this goal, let’s return to the animal kingdom inheritance example and see how the concept extends into the world of polymorphism.</p>
+   </section>
+   <section data-type="sect1" id="chapter04_section9">
+      <h1>Polymorphism Basics</h1>
+      <p>With the concept of inheritance under our belts, we can imagine how we would program a diverse animal kingdom using <strong klass="">ArrayList</strong>
+         <code>s</code>—an array of dogs, an array of cats, of turtles, of kiwis, etc. frolicking about.<a data-primary="object-oriented programming"
+            data-secondary="instances of subclasses"
+            data-tertiary="creating"
+            data-type="indexterm"> </a>
+         <a data-primary="object-oriented programming"
+            data-secondary="polymorphism"
+            data-type="indexterm"> </a>
+         <a data-primary="polymorphism" data-type="indexterm"> </a>
+      </p>
+      <pre>
+         ArrayList&lt;Dog&gt; dogs = new ArrayList&lt;Dog&gt;();<span class="callout-bubble">Separate ArrayLists for each animal</span>
 ArrayList&lt;Cat&gt; cats = new ArrayList&lt;Cat&gt;();
 ArrayList&lt;Turtle&gt; turtles = new ArrayList&lt;Turtle&gt;();
 ArrayList&lt;Kiwi&gt; kiwis = new ArrayList&lt;Kiwi&gt;();
-//[end]
+
 
 for (int i = 0; i &lt; 10; i++) {
   dogs.add(new Dog());
@@ -1069,13 +1093,14 @@ for (int i = 0; i &lt; 6; i++) {
 }
 for (int i = 0; i &lt; 98; i++) {
   kiwis.add(new Kiwi());
-}</pre>
-
-<p>As the day begins, the animals are all pretty hungry and are looking to eat. So it&#x2019;s off to looping time (enhanced looping time!)&#x2026;</p>
-
-<pre data-code-language="java" data-type="programlisting">
-//[full] Separate loops for each animal
-for (Dog d: dogs) {
+}
+</pre>
+      <p>As the day begins, the animals are all pretty hungry and are looking to eat. So it’s off to looping time (enhanced looping time!)…<a data-primary="superclasses"
+            data-secondary="polymorphism and"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
+         for (Dog d: dogs) {<span class="callout-bubble">Separate loops for each animal</span>
   d.eat();
 }
 for (Cat c: cats) {
@@ -1087,15 +1112,14 @@ for (Turtle t: turtles) {
 for (Kiwi k: kiwis) {
   k.eat();
 }
-//[end]</pre>
 
-<p><a data-primary="superclasses" data-secondary="polymorphism and" data-type="indexterm">&#xa0;</a></p>
-
-<p>This works well, but as our world expands to include many more animal species, we&#x2019;re going to get stuck writing a lot of individual loops. Is this really necessary? After all, the creatures are all animals, and they all like to eat. Why not just have one <strong klass="">ArrayList</strong> of <strong klass="">Animal</strong> objects and fill it with all different <em>kinds</em> of animals?</p>
-
-<pre data-code-language="java" data-type="programlisting">
-//[offset-down] Just one ArrayList for all the animals!
-ArrayList&lt;Animal&gt; kingdom = new ArrayList&lt;Animal&gt;();
+</pre>
+      <p>This works well, but as our world expands to include many more animal species, we’re going to get stuck writing a lot of individual loops. Is this really necessary? After all, the creatures are all animals, and they all like to eat. Why not just have one <strong klass="">ArrayList</strong> of <strong klass="">Animal</strong> objects and fill it with all different <em>kinds</em> of animals?<a data-primary="superclasses"
+            data-secondary="polymorphism and"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
+         ArrayList&lt;Animal&gt; kingdom = new ArrayList&lt;Animal&gt;();<span class="callout-bubble">Just one ArrayList for all the animals!</span>
 
 for (int i = 0; i &lt; 1000; i++) {
   if (i &lt; 100) kingdom.add(new Dog());
@@ -1106,91 +1130,85 @@ for (int i = 0; i &lt; 1000; i++) {
 
 for (Animal a: kingdom) {
   a.eat();
-}</pre>
-
-<p>The ability to treat a <strong klass="">Dog</strong> object as either a member of the <strong klass="">Dog</strong> class or the <strong klass="">Animal</strong> class (its parent) is an example of polymorphism. <strong><em>Polymorphism</em></strong> (from the Greek <em>polymorphos</em>, meaning many forms) refers to the treatment of a single instance of an object in multiple forms. A dog is certainly a dog, but since <strong klass="">Dog extends Animal</strong>, it can also be considered an animal. In code, we can refer to it both ways.</p>
-
-<p><a data-primary="polymorphism" data-secondary="creating object instances with" data-type="indexterm">&#xa0;</a></p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>The ability to treat a <strong klass="">Dog</strong> object as either a member of the <strong klass="">Dog</strong> class or the <strong klass="">Animal</strong> class (its parent) is an example of polymorphism. <strong>
+            <em>Polymorphism</em>
+         </strong> (from the Greek <em>polymorphos</em>, meaning many forms) refers to the treatment of a single instance of an object in multiple forms. A dog is certainly a dog, but since <strong klass="">Dog extends Animal</strong>, it can also be considered an animal. In code, we can refer to it both ways.<a data-primary="polymorphism"
+            data-secondary="creating object instances with"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 Dog rover = new Dog();
-Animal spot = new Dog();</pre>
-
-<p>Although the second line of code might initially seem to violate syntax rules, both ways of declaring a <strong klass="">Dog</strong> object are legal. Even though we declare <strong class="var">spot</strong> as an <strong klass="">Animal</strong> object, we&#x2019;re really making a <strong klass="">Dog</strong> object and storing it in the <strong class="var">spot</strong> variable. And we can safely call all of the <strong klass="">Animal</strong> class methods on spot because the rules of inheritance dictate that a dog can do anything an animal can.</p>
-
-<p><a data-primary="superclasses" data-secondary="overriding functions from" data-type="indexterm">&#xa0;</a></p>
-
-<p>What if the <strong klass="">Dog</strong> class, however, overrides the <strong function="">eat()</strong> function in the <strong klass="">Animal</strong> class? Even if spot is declared as an <strong klass="">Animal</strong>, Java will determine that its true identity is that of a <strong klass="">Dog</strong> and run the appropriate version of the <strong function="">eat()</strong> function.</p>
-
-<p>This is particularly useful when we have an array or <strong klass="">ArrayList</strong>.</p>
-</section>
-
-<section data-type="sect1" id="chapter04_section10">
-<h1>4.10 Particle Systems with Polymorphism</h1>
-
-<p><a data-primary="particle systems" data-secondary="polymorphism" data-tertiary="using" data-type="indexterm">&#xa0;</a></p>
-
-<p>Let&#x2019;s pretend for a moment that polymorphism doesn&#x2019;t exist and rewrite a <strong klass="">ParticleSystem</strong> class to include many <strong klass="">Particle</strong> objects and many <strong klass="">Confetti</strong> objects.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+Animal spot = new Dog();
+</pre>
+      <p>Although the second line of code might initially seem to violate syntax rules, both ways of declaring a <strong>Dog</strong> object are legal. Even though we declare <strong class="var">spot</strong> as an <strong>Animal</strong> object, we’re really making a <strong>Dog</strong> object and storing it in the <strong class="var">spot</strong> variable. And we can safely call all of the <strong>Animal</strong> class methods on spot because the rules of inheritance dictate that a dog can do anything an animal can.</p>
+      <p>What if the <strong klass="">Dog</strong> class, however, overrides the <strong function="">eat()</strong> function in the <strong klass="">Animal</strong> class? Even if spot is declared as an <strong klass="">Animal</strong>, Java will determine that its true identity is that of a <strong klass="">Dog</strong> and run the appropriate version of the <strong function="">eat()</strong> function.<a data-primary="superclasses"
+            data-secondary="overriding functions from"
+            data-type="indexterm"> </a>
+      </p>
+      <p>This is particularly useful when we have an array or <strong>ArrayList</strong>.</p>
+   </section>
+   <section data-type="sect1" id="chapter04_section10">
+      <h1>Particle Systems with Polymorphism</h1>
+      <p>Let’s pretend for a moment that polymorphism doesn’t exist and rewrite a <strong klass="">ParticleSystem</strong> class to include many <strong klass="">Particle</strong> objects and many <strong klass="">Confetti</strong> objects.<a data-primary="particle systems"
+            data-secondary="polymorphism"
+            data-tertiary="using"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 class ParticleSystem {
-  //[full] We&#x2019;re stuck doing everything twice with two lists!
-  ArrayList&lt;Particle&gt; particles; //[bold]
-  ArrayList&lt;Confetti&gt; confetti; //[bold]
-  //[end]
+<span class="callout-bubble">  We’re stuck doing everything twice with two lists!</span>
+         <em class="strong">  ArrayList&lt;Particle&gt; particles; //[bold]</em>
+         <em class="strong">  ArrayList&lt;Confetti&gt; confetti; //[bold]</em>
   PVector origin;
 
   ParticleSystem(PVector location) {
     origin = location.get();
-    //[full] We&#x2019;re stuck doing everything twice with two lists!
-    particles = new ArrayList&lt;Particle&gt;(); //[bold]
-    confetti = new ArrayList&lt;Confetti&gt;(); //[bold]
-    //[end]
+<span class="callout-bubble">    We’re stuck doing everything twice with two lists!</span>
+         <em class="strong">    particles = new ArrayList&lt;Particle&gt;(); //[bold]</em>
+         <em class="strong">    confetti = new ArrayList&lt;Confetti&gt;(); //[bold]</em>
   }
 
   void addParticle() {
-    //[full] We&#x2019;re stuck doing everything twice with two lists!
-    particles.add(new Particle(origin)); //[bold]
-    particles.add(new Confetti(origin)); //[bold]
-    //[end]
+<span class="callout-bubble">    We’re stuck doing everything twice with two lists!</span>
+         <em class="strong">    particles.add(new Particle(origin)); //[bold]</em>
+         <em class="strong">    particles.add(new Confetti(origin)); //[bold]</em>
   }
 
   void run() {
-    //[full] We&#x2019;re stuck doing everything twice with two lists!
-    Iterator&lt;Particle&gt; it = particles.iterator(); //[bold]
-    while (it.hasNext()) {
+<span class="callout-bubble">    We’re stuck doing everything twice with two lists!</span>
+         <em class="strong">    Iterator&lt;Particle&gt; it = particles.iterator(); //[bold]</em>    while (it.hasNext()) {
       Particle p = it.next();
       p.run();
       if (p.isDead()) {
         it.remove();
       }
     }
-    it = confetti.iterator(); //[bold]
-    while (it.hasNext()) {
+<em class="strong">    it = confetti.iterator(); //[bold]</em>    while (it.hasNext()) {
       Confetti c = it.next();
       c.run();
       if (c.isDead()) {
         it.remove();
       }
     }
-    //[end]
+
   }
-}</pre>
-
-<p>Notice how we have two separate lists, one for particles and one for confetti. Every action we want to perform we have to do twice! Polymorphism allows us to simplify the above by just making one <strong klass="">ArrayList</strong> of particles that contains both standard <strong klass="">Particle</strong> objects as well as <strong klass="">Confetti</strong> objects. We don&#x2019;t have to worry about which are which; this will all be taken care of for us! (Also, note that the code for the main program and the classes has not changed, so we aren&#x2019;t including it here. See the website for the full example.)</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/_4_05_ParticleSystemInheritancePolymorphism.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Confetti.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Particle.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/ParticleSystem.pde"><img alt="ch04 ex05" src="../images/chapter04/ch04_ex05.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<div data-type="example"><h5>Example 4.5: Particle system inheritance and polymorphism</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Notice how we have two separate lists, one for particles and one for confetti. Every action we want to perform we have to do twice! Polymorphism allows us to simplify the above by just making one <strong>ArrayList</strong> of particles that contains both standard <strong>Particle</strong> objects as well as <strong>Confetti</strong> objects. We don’t have to worry about which are which; this will all be taken care of for us! (Also, note that the code for the main program and the classes has not changed, so we aren’t including it here. See the website for the full example.)</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/_4_05_ParticleSystemInheritancePolymorphism.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Confetti.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/Particle.pde processingjs/chapter04/_4_05_ParticleSystemInheritancePolymorphism/ParticleSystem.pde">
+         <img alt="ch04 ex05" src="../images/chapter04/ch04_ex05.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <div id="example_d1e1890" data-type="example">
+         <h5>Particle system inheritance and polymorphism</h5>
+         <pre>
 class ParticleSystem {
-  // One list, for anything that is a Particle
-  // or extends Particle
-  ArrayList&lt;Particle&gt; particles;  //[bold]
-  PVector origin;
+<span class="callout-bubble">  One list, for anything that is a Particle</span>
+            <span class="callout-bubble">  or extends Particle</span>
+            <em class="strong">  ArrayList&lt;Particle&gt; particles;  //[bold]</em>  PVector origin;
 
   ParticleSystem(PVector location) {
     origin = location.get();
@@ -1199,101 +1217,89 @@ class ParticleSystem {
 
   void addParticle() {
     float r = random(1);
-    // We have a 50% chance of adding each kind of Particle.
-    if (r &lt; 0.5) {
-      particles.add(new Particle(origin));  //[bold]
-    } else {
-      particles.add(new Confetti(origin));  //[bold]
-    }
+    if (r &lt; 0.5) {<span class="callout-bubble">    We have a 50% chance of adding each kind of Particle.</span>
+<em class="strong">      particles.add(new Particle(origin));  //[bold]</em>    } else {
+<em class="strong">      particles.add(new Confetti(origin));  //[bold]</em>    }
   }
 
   void run() {
     Iterator&lt;Particle&gt; it = particles.iterator();
     while (it.hasNext()) {
-      // Polymorphism allows us to treat everything as a
-      // Particle, whether it is a Particle or a Confetti.
-      Particle p = it.next(); //[bold]
-      p.run();
+<span class="callout-bubble">      Polymorphism allows us to treat everything as a</span>
+            <span class="callout-bubble">      Particle, whether it is a Particle or a Confetti.</span>
+            <em class="strong">      Particle p = it.next(); //[bold]</em>      p.run();
       if (p.isDead()) {
         it.remove();
       }
     }
   }
-}</pre>
-
-<div data-type="exercise" id="chapter04_exercise8">
-<h5>Exercise 4.8</h5>
-
-<p>Create a particle system with different &#x201c;kinds&#x201d; of particles in the same system. Try varying more than just the look of the particles. How do you deal with different behaviors using inheritance?</p>
-</div>
-</section>
-
-<section data-type="sect1" id="chapter04_section11">
-<h1>4.11 Particle Systems with Forces</h1>
-
-<p><a data-primary="forces" data-secondary="particle systems with" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="forces and" data-type="indexterm">&#xa0;</a></p>
-
-<p>So far in this chapter, we&#x2019;ve been focusing on structuring our code in an object-oriented way to manage a collection of particles. Maybe you noticed, or maybe you didn&#x2019;t, but during this process we unwittingly took a couple steps backward from where we were in previous chapters. Let&#x2019;s examine the constructor of our simple <strong klass="">Particle</strong> class.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      </div>
+      
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.8</h5>
+         <p>Create a particle system with different “kinds” of particles in the same system. Try varying more than just the look of the particles. How do you deal with different behaviors using inheritance?</p>
+      </div>
+   </section>
+   <section data-type="sect1" id="chapter04_section11">
+      <h1>Particle Systems with Forces</h1>
+      <p>So far in this chapter, we’ve been focusing on structuring our code in an object-oriented way to manage a collection of particles. Maybe you noticed, or maybe you didn’t, but during this process we unwittingly took a couple steps backward from where we were in previous chapters. Let’s examine the constructor of our simple <strong klass="">Particle</strong> class.<a data-primary="forces"
+            data-secondary="particle systems with"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="forces and"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
   Particle(PVector l) {
-    // We&#x2019;re setting acceleration to a constant value!
-    acceleration = new PVector(0,0.05); //[bold]
-
+<span class="callout-bubble">    We’re setting acceleration to a constant value!</span>
+         <em class="strong">    acceleration = new PVector(0,0.05); //[bold]</em>
     velocity = new PVector(random(-1,1),random(-2,0));
     location = l.get();
     lifespan = 255.0;
-  }</pre>
-
-<p>And now let&#x2019;s look at the <strong function="">update()</strong> function.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>And now let’s look at the <strong function="">update()</strong> function.</p>
+      <pre>
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
 
-    [inline]// Where is the line of code to clear acceleration?
-
+<span class="callout-bubble">    [inline]Where is the line of code to clear acceleration?</span>
     lifespan -= 2.0;
-  }</pre>
-
-<p>Our <strong klass="">Particle</strong> class is structured to have a constant acceleration, one that never changes. A much better framework would be to follow Newton&#x2019;s second law (F = M* A) and incorporate the force accumulation algorithm we worked so hard on in <a href="#chapter02_section3">Chapter 2</a>.</p>
-
-<p>Step 1 would be to add in the <strong function="">applyForce()</strong> function. (Remember, we need to make a copy of the <strong klass="">PVector</strong> before we divide it by mass.)</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Our <strong>Particle</strong> class is structured to have a constant acceleration, one that never changes. A much better framework would be to follow Newton’s second law (F = M* A) and incorporate the force accumulation algorithm we worked so hard on in <a href="#chapter02_section3">Chapter 2</a>.</p>
+      <p>Step 1 would be to add in the <strong function="">applyForce()</strong> function. (Remember, we need to make a copy of the <strong>PVector</strong> before we divide it by mass.)</p>
+      <pre>
   void applyForce(PVector force) {
     PVector f = force.get();
     f.div(mass);
     acceleration.add(f);
-  }</pre>
-
-<p>Once we have this, we can add in one more line of code to clear the acceleration at the end of <strong function="">update()</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Once we have this, we can add in one more line of code to clear the acceleration at the end of <strong function="">update()</strong>.</p>
+      <pre>
  void update() {
    velocity.add(acceleration);
    location.add(velocity);
-   // There it is!
-   acceleration.mult(0);
+   acceleration.mult(0);<span class="callout-bubble">   There it is!</span>
    lifespan -= 2.0;
-  }</pre>
-
-<p>And our <strong klass="">Particle</strong> class is complete!</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>And our <strong>Particle</strong> class is complete!</p>
+      <pre>
 class Particle {
   PVector location;
   PVector velocity;
   PVector acceleration;
   float lifespan;
 
-  // We could vary mass for more interesting results.
-  float mass = 1;
+  float mass = 1;<span class="callout-bubble">  We could vary mass for more interesting results.</span>
 
   Particle(PVector l) {
-    // We now start with acceleration of 0.
-    acceleration = new PVector(0,0);
+    acceleration = new PVector(0,0);<span class="callout-bubble">    We now start with acceleration of 0.</span>
     velocity = new PVector(random(-1,1),random(-2,0));
     location = l.get();
     lifespan = 255.0;
@@ -1304,97 +1310,88 @@ class Particle {
     display();
   }
 
-  //[full] Newton&#x2019;s second law &amp; force accumulation
-  void applyForce(PVector force) {
+  void applyForce(PVector force) {<span class="callout-bubble">  Newton’s second law &amp; force accumulation</span>
     PVector f = force.get();
     f.div(mass);
     acceleration.add(f);
   }
-  //[end]
 
-  //[full] Standard update
-  void update() {
+
+  void update() {<span class="callout-bubble">  Standard update</span>
     velocity.add(acceleration);
     location.add(velocity);
     acceleration.mult(0);
     lifespan -= 2.0;
   }
-  //[end]
 
-  //[full] Our Particle is a circle.
-  void display() {
+
+  void display() {<span class="callout-bubble">  Our Particle is a circle.</span>
     stroke(255,lifespan);
     fill(255,lifespan);
     ellipse(location.x,location.y,8,8);
   }
-  //[end]
 
-  //[full] Should the Particle be deleted?
-  boolean isDead() {
+
+  boolean isDead() {<span class="callout-bubble">  Should the Particle be deleted?</span>
     if (lifespan &lt; 0.0) {
       return true;
     } else {
       return false;
     }
   }
-  //[end]
-}</pre>
 
-<p>Now that the <strong klass="">Particle</strong> class is completed, we have a very important question to ask. Where do we call the <strong function="">applyForce()</strong> function? Where in the code is it appropriate to apply a force to a particle? The truth of the matter is that there&#x2019;s no right or wrong answer; it really depends on the exact functionality and goals of a particular Processing sketch. Still, we can create a generic situation that would likely apply to most cases and craft a model for applying forces to individual particles in a system.</p>
-
-<p>Let&#x2019;s consider the following goal: Apply a force globally every time through <strong function="">draw()</strong> to all particles. We&#x2019;ll pick an easy one for now: a force pointing down, like gravity.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-PVector gravity = new PVector(0,0.1);</pre>
-
-<p>We said it should always be applied, i.e. in <strong function="">draw()</strong>, so let&#x2019;s take a look at our <strong function="">draw()</strong> function as it stands.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Now that the <strong>Particle</strong> class is completed, we have a very important question to ask. Where do we call the <strong function="">applyForce()</strong> function? Where in the code is it appropriate to apply a force to a particle? The truth of the matter is that there’s no right or wrong answer; it really depends on the exact functionality and goals of a particular Processing sketch. Still, we can create a generic situation that would likely apply to most cases and craft a model for applying forces to individual particles in a system.</p>
+      <p>Let’s consider the following goal: Apply a force globally every time through <strong function="">draw()</strong> to all particles. We’ll pick an easy one for now: a force pointing down, like gravity.</p>
+      <pre>
+PVector gravity = new PVector(0,0.1);
+</pre>
+      <p>We said it should always be applied, i.e. in <strong function="">draw()</strong>, so let’s take a look at our <strong function="">draw()</strong> function as it stands.</p>
+      <pre>
 void draw() {
   background(100);
   ps.addParticle();
   ps.run();
-}</pre>
-
-<p>Well, it seems that we have a small problem. <strong function="">applyForce()</strong> is a method written inside the <strong klass="">Particle</strong> class, but we don&#x2019;t have any reference to the individual particles themselves, only the <strong klass="">ParticleSystem</strong> object: the variable <strong class="var">ps</strong>.</p>
-
-<p>Since we want all particles to receive the force, however, we can decide to apply the force to the particle system and let it manage applying the force to all the individual particles:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Well, it seems that we have a small problem. <strong function="">applyForce()</strong> is a method written inside the <strong>Particle</strong> class, but we don’t have any reference to the individual particles themselves, only the <strong>ParticleSystem</strong> object: the variable <strong class="var">ps</strong>.</p>
+      <p>Since we want all particles to receive the force, however, we can decide to apply the force to the particle system and let it manage applying the force to all the individual particles:<a data-primary="object-oriented programming"
+            data-secondary="maintaining encapsulation"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 void draw() {
   background(100);
 
   PVector gravity = new PVector(0,0.1);
-  // Applying a force to the system as a whole
-  ps.applyForce(gravity);
+  ps.applyForce(gravity);<span class="callout-bubble">  Applying a force to the system as a whole</span>
   ps.addParticle();
   ps.run();
-}</pre>
-
-<p><a data-primary="object-oriented programming" data-secondary="maintaining encapsulation" data-type="indexterm">&#xa0;</a></p>
-
-<p>Of course, if we call a new function on the <strong klass="">ParticleSystem</strong> object in <strong function="">draw()</strong>, well, we have to write that function in the <strong klass="">ParticleSystem</strong> class. Let&#x2019;s describe the job that function needs to perform: receive a force as a <strong klass="">PVector</strong> and apply that force to all the particles.</p>
-
-<p>Now in code:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <p>Of course, if we call a new function on the <strong klass="">ParticleSystem</strong> object in <strong function="">draw()</strong>, well, we have to write that function in the <strong klass="">ParticleSystem</strong> class. Let’s describe the job that function needs to perform: receive a force as a <strong klass="">PVector</strong> and apply that force to all the particles.<a data-primary="object-oriented programming"
+            data-secondary="maintaining encapsulation"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Now in code:</p>
+      <pre>
   void applyForce(PVector f) {
     for (Particle p: particles) {
       p.applyForce(f);
     }
-  }</pre>
-
-<p>It almost seems silly to write this function. What we&#x2019;re saying is &#x201c;apply a force to a particle system so that the system can apply that force to all of the individual particles.&#x201d; Nevertheless, it&#x2019;s really quite reasonable. After all, the <strong klass="">ParticleSystem</strong> object is in charge of managing the particles, so if we want to talk to the particles, we&#x2019;ve got to talk to them through their manager. (Also, here&#x2019;s a chance for the enhanced loop since we aren&#x2019;t deleting particles!)</p>
-
-<p>Here is the full example (assuming the existence of the <strong klass="">Particle</strong> class written above; no need to include it again since nothing has changed):</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_06_ParticleSystemForces/_4_06_ParticleSystemForces.pde processingjs/chapter04/_4_06_ParticleSystemForces/Particle.pde processingjs/chapter04/_4_06_ParticleSystemForces/ParticleSystem.pde"><img alt="ch04 ex06" src="../images/chapter04/ch04_ex06.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<div data-type="example"><h5>Example 4.6: Particle system with forces</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>It almost seems silly to write this function. What we’re saying is “apply a force to a particle system so that the system can apply that force to all of the individual particles.” Nevertheless, it’s really quite reasonable. After all, the <strong>ParticleSystem</strong> object is in charge of managing the particles, so if we want to talk to the particles, we’ve got to talk to them through their manager. (Also, here’s a chance for the enhanced loop since we aren’t deleting particles!)</p>
+      <p>Here is the full example (assuming the existence of the <strong>Particle</strong> class written above; no need to include it again since nothing has changed):</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_06_ParticleSystemForces/_4_06_ParticleSystemForces.pde processingjs/chapter04/_4_06_ParticleSystemForces/Particle.pde processingjs/chapter04/_4_06_ParticleSystemForces/ParticleSystem.pde">
+         <img alt="ch04 ex06" src="../images/chapter04/ch04_ex06.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <div id="example_d1e2141" data-type="example">
+         <h5>Particle system with forces</h5>
+         <pre>
 ParticleSystem ps;
 
 void setup() {
@@ -1405,10 +1402,9 @@ void setup() {
 void draw() {
   background(100);
 
-  // Apply a force to all particles.
-  PVector gravity = new PVector(0,0.1); //[bold]
-  ps.applyForce(gravity); //[bold]
-
+<span class="callout-bubble">  Apply a force to all particles.</span>
+            <em class="strong">  PVector gravity = new PVector(0,0.1); //[bold]</em>
+            <em class="strong">  ps.applyForce(gravity); //[bold]</em>
   ps.addParticle();
   ps.run();
 }
@@ -1428,16 +1424,14 @@ class ParticleSystem {
   }
 
   void applyForce(PVector f) {
-    //[full] Using an enhanced loop to apply the force to all particles
-    for (Particle p: particles) {
+    for (Particle p: particles) {<span class="callout-bubble">    Using an enhanced loop to apply the force to all particles</span>
       p.applyForce(f);
     }
-    //[end]
+
   }
 
   void run() {
-    //[full] Can&#x2019;t use the enhanced loop because we want to check for particles to delete.
-    Iterator&lt;Particle&gt; it = particles.iterator();
+    Iterator&lt;Particle&gt; it = particles.iterator();<span class="callout-bubble">    Can’t use the enhanced loop because we want to check for particles to delete.</span>
     while (it.hasNext()) {
       Particle p = (Particle) it.next();
       p.run();
@@ -1445,48 +1439,53 @@ class ParticleSystem {
         it.remove();
       }
     }
-    //[end]
+
   }
-}</pre>
-</section>
-
-<section data-type="sect1" id="chapter04_section12">
-<h1>4.12 Particle Systems with Repellers</h1>
-
-<p><a data-primary="forces" data-secondary="applying to single objects in a system" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="applying force to single particles in" data-type="indexterm">&#xa0;</a> <a data-primary="particles" data-secondary="applying force to single particles in" data-type="indexterm">&#xa0;</a></p>
-
-<p>What if we wanted to take this example one step further and add a <strong klass="">Repeller</strong> object&#x2014;the inverse of the <strong klass="">Attractor</strong> object we covered in <a href="#chapter02_section9">Chapter 2</a> that pushes any particles away that get close? This requires a bit more sophistication because, unlike the gravity force, each force an attractor or repeller exerts on a particle must be calculated for each particle.</p>
-
-<figure class="two-col-borderless" id="chapter04_figure3"><img alt="Figure 4.3: Gravity force—vectors are all identical" src="../images/chapter04/ch04_03.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<figure class="two-col-borderless" id="chapter04_figure4"><img alt="Figure 4.4: Attractor force—vectors are all different" src="../images/chapter04/ch04_04.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>Let&#x2019;s start solving this problem by examining how we would incorporate a new <strong klass="">Repeller</strong> object into our simple particle system plus forces example. We&#x2019;re going to need two major additions to our code:</p>
-
-<ol>
-	<li>
-	<p>A <strong klass="">Repeller</strong> object (declared, initialized, and displayed).</p>
-	</li>
-	<li>
-	<p>A function that passes the <strong klass="">Repeller</strong> object into the <strong klass="">ParticleSystem</strong> so that it can apply a force to each particle object.</p>
-	</li>
-</ol>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      </div>
+      
+   </section>
+   <section data-type="sect1" id="chapter04_section12">
+      <h1>Particle Systems with Repellers</h1>
+      <p>What if we wanted to take this example one step further and add a <strong klass="">Repeller</strong> object—the inverse of the <strong klass="">Attractor</strong> object we covered in <a href="#chapter02_section9">Chapter 2</a> that pushes any particles away that get close? This requires a bit more sophistication because, unlike the gravity force, each force an attractor or repeller exerts on a particle must be calculated for each particle.<a data-primary="forces"
+            data-secondary="applying to single objects in a system"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="applying force to single particles in"
+            data-type="indexterm"> </a>
+         <a data-primary="particles"
+            data-secondary="applying force to single particles in"
+            data-type="indexterm"> </a>
+      </p>
+      <figure>
+         <img alt="Figure 4.3: Gravity force—vectors are all identical"
+              src="../images/chapter04/ch04_03.png"/>
+         <figcaption>Gravity force—vectors are all identical</figcaption>
+      </figure>
+      <figure>
+         <img alt="Figure 4.4: Attractor force—vectors are all different"
+              src="../images/chapter04/ch04_04.png"/>
+         <figcaption>Attractor force—vectors are all different</figcaption>
+      </figure>
+      <p>Let’s start solving this problem by examining how we would incorporate a new <strong>Repeller</strong> object into our simple particle system plus forces example. We’re going to need two major additions to our code:</p>
+      <ol>
+         <li>
+            <p>A <strong>Repeller</strong> object (declared, initialized, and displayed).</p>
+         </li>
+         <li>
+            <p>A function that passes the <strong>Repeller</strong> object into the <strong>ParticleSystem</strong> so that it can apply a force to each particle object.</p>
+         </li>
+      </ol>
+      <pre>
 ParticleSystem ps;
-// New thing: we declare a Repeller object.
-Repeller repeller; //[bold]
-
+<span class="callout-bubble">New thing: we declare a Repeller object.</span>
+         <em class="strong">Repeller repeller; //[bold]</em>
 void setup() {
   size(640,360);
   ps = new ParticleSystem(new PVector(width/2,50));
-  // New thing: we initialize a Repeller object.
-  repeller = new Repeller(width/2-20,height/2); //[bold]
-}
+<span class="callout-bubble">  New thing: we initialize a Repeller object.</span>
+         <em class="strong">  repeller = new Repeller(width/2-20,height/2); //[bold]</em>}
 
 void draw() {
   background(100);
@@ -1495,20 +1494,16 @@ void draw() {
   PVector gravity = new PVector(0,0.1);
   ps.applyForce(gravity);
 
-  // New thing: we need a function to apply a force from a repeller.
-  ps.applyRepeller(repeller); //[bold]
-
+<span class="callout-bubble">  New thing: we need a function to apply a force from a repeller.</span>
+         <em class="strong">  ps.applyRepeller(repeller); //[bold]</em>
   ps.run();
-  // New thing: we display the Repeller object.
-  repeller.display(); //[bold]
-}</pre>
-
-<p>Making a <strong klass="">Repeller</strong> object is quite easy; it&#x2019;s a duplicate of the <strong klass="">Attractor</strong> class from Chapter 2, Example 2.6 .</p>
-
-<pre data-code-language="java" data-type="programlisting">
+<span class="callout-bubble">  New thing: we display the Repeller object.</span>
+         <em class="strong">  repeller.display(); //[bold]</em>}
+</pre>
+      <p>Making a <strong>Repeller</strong> object is quite easy; it’s a duplicate of the <strong>Attractor</strong> class from Chapter 2, Example 2.6 .</p>
+      <pre>
 class Repeller {
-  // A Repeller doesn&#x2019;t move, so you just need location.
-  PVector location;
+  PVector location;<span class="callout-bubble">  A Repeller doesn’t move, so you just need location.</span>
   float r = 10;
 
   Repeller(float x, float y)  {
@@ -1520,76 +1515,67 @@ class Repeller {
     fill(255);
     ellipse(location.x,location.y,r*2,r*2);
   }
-}</pre>
-
-<p>The more difficult question is, how do we write the <strong function="">applyRepeller()</strong> function? Instead of passing a <strong klass="">PVector</strong> into a function like we do with <strong function="">applyForce()</strong>, we&#x2019;re going to instead pass a <strong klass="">Repeller</strong> object into <strong function="">applyRepeller()</strong> and ask that function to do the work of calculating the force between the repeller and all particles. Let&#x2019;s look at both of these functions side by side.</p>
-
-<table class="code">
-	<tbody>
-		<tr>
-			<th>applyForce()</th>
-			<th>applyRepeller</th>
-		</tr>
-		<tr>
-			<td>
-			<pre>
+}
+</pre>
+      <p>The more difficult question is, how do we write the <strong function="">applyRepeller()</strong> function? Instead of passing a <strong>PVector</strong> into a function like we do with <strong function="">applyForce()</strong>, we’re going to instead pass a <strong>Repeller</strong> object into <strong function="">applyRepeller()</strong> and ask that function to do the work of calculating the force between the repeller and all particles. Let’s look at both of these functions side by side.</p>
+      <table class="code">
+         <tbody>
+            <tr>
+               <th>applyForce()</th>
+               <th>applyRepeller</th>
+            </tr>
+            <tr>
+               <td>
+                  <pre>
 void applyForce(PVector f) {
   for (Particle p: particles) {
     p.applyForce(f);
   }
 }
+
 </pre>
-			</td>
-			<td>
-			<pre>
+               </td>
+               <td>
+                  <pre>
 void applyRepeller(Repeller r) {
   for (Particle p: particles) {
     PVector force = r.repel(p);
     p.applyForce(force);
   }
 }
+
 </pre>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<p>The functions are almost identical. There are only two differences. One we mentioned before&#x2014;a <strong klass="">Repeller</strong> object is the argument, not a <strong klass="">PVector</strong>. The second difference is the important one. We must calculate a custom <strong klass="">PVector</strong> force for each and every particle and apply that force. How is that force calculated? In a function called <strong function="">repel()</strong>, which is the inverse of the <strong function="">attract()</strong> function we wrote for the <strong klass="">Attractor</strong> class.</p>
-
-<pre data-code-language="java" data-type="programlisting">
-   // All the same steps we had to calculate an attractive force, only pointing in the opposite direction.
-  PVector repel(Particle p) {
-    //[full] 1) Get force direction.
-    PVector dir =
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <p>The functions are almost identical. There are only two differences. One we mentioned before—a <strong>Repeller</strong> object is the argument, not a <strong>PVector</strong>. The second difference is the important one. We must calculate a custom <strong>PVector</strong> force for each and every particle and apply that force. How is that force calculated? In a function called <strong function="">repel()</strong>, which is the inverse of the <strong function="">attract()</strong> function we wrote for the <strong>Attractor</strong> class.</p>
+      <pre>
+           PVector repel(Particle p) {<span class="callout-bubble">   All the same steps we had to calculate an attractive force, only pointing in the opposite direction.</span>
+    PVector dir =<span class="callout-bubble">    1) Get force direction.</span>
       PVector.sub(location,p.location);
-    //[end]
-    //[full] 2) Get distance (constrain distance).
-    float d = dir.mag();
+
+    float d = dir.mag();<span class="callout-bubble">    2) Get distance (constrain distance).</span>
     d = constrain(d,5,100);
-    //[end]
+
     dir.normalize();
-    // 3) Calculate magnitude.
-    float force = -1 * G / (d * d);
-    // 4) Make a vector out of direction and magnitude.
-    dir.mult(force);
+    float force = -1 * G / (d * d);<span class="callout-bubble">    3) Calculate magnitude.</span>
+    dir.mult(force);<span class="callout-bubble">    4) Make a vector out of direction and magnitude.</span>
     return dir;
-  }</pre>
-
-<p>Notice how throughout this entire process of adding a repeller to the environment, we&#x2019;ve never once considered editing the <strong klass="">Particle</strong> class itself. A particle doesn&#x2019;t actually have to know anything about the details of its environment; it simply needs to manage its location, velocity, and acceleration, as well as have the ability to receive an external force and act on it.</p>
-
-<p>So we can now look at this example in its entirety, again leaving out the <strong klass="">Particle</strong> class, which hasn&#x2019;t changed.</p>
-
-<figure class="screenshot" data-pde="processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/_4_07_ParticleSystemForcesRepeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Repeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Particle.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/ParticleSystem.pde"><img alt="ch04 ex07" src="../images/chapter04/ch04_ex07.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<div data-type="example"><h5>Example 4.7: ParticleSystem with repeller</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
-// One ParticleSystem
-ParticleSystem ps;
-// One repeller
-Repeller repeller;
+  }
+</pre>
+      <p>Notice how throughout this entire process of adding a repeller to the environment, we’ve never once considered editing the <strong>Particle</strong> class itself. A particle doesn’t actually have to know anything about the details of its environment; it simply needs to manage its location, velocity, and acceleration, as well as have the ability to receive an external force and act on it.</p>
+      <p>So we can now look at this example in its entirety, again leaving out the <strong>Particle</strong> class, which hasn’t changed.</p>
+      <figure class="screenshot"
+              data-pde="processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/_4_07_ParticleSystemForcesRepeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Repeller.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/Particle.pde processingjs/chapter04/_4_07_ParticleSystemForcesRepeller/ParticleSystem.pde">
+         <img alt="ch04 ex07" src="../images/chapter04/ch04_ex07.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <div id="example_d1e2393" data-type="example">
+         <h5>ParticleSystem with repeller</h5>
+         <pre>
+            ParticleSystem ps;<span class="callout-bubble">One ParticleSystem</span>
+Repeller repeller;<span class="callout-bubble">One repeller</span>
 
 void setup() {
   size(640,360);
@@ -1600,19 +1586,16 @@ void setup() {
 void draw() {
   background(100);
   ps.addParticle();
-  // We&#x2019;re applying a universal gravity.
-  PVector gravity = new PVector(0,0.1);
+  PVector gravity = new PVector(0,0.1);<span class="callout-bubble">  We’re applying a universal gravity.</span>
   ps.applyForce(gravity);
-  // Applying the repeller
-  ps.applyRepeller(repeller);
+  ps.applyRepeller(repeller);<span class="callout-bubble">  Applying the repeller</span>
 
   ps.run();
   repeller.display();
 }
 
 
-// The ParticleSystem manages all the Particles.
-class ParticleSystem {
+class ParticleSystem {<span class="callout-bubble">The ParticleSystem manages all the Particles.</span>
   ArrayList&lt;Particle&gt; particles;
   PVector origin;
 
@@ -1625,20 +1608,18 @@ class ParticleSystem {
     particles.add(new Particle(origin));
   }
 
-  // Applying a force as a PVector
-  void applyForce(PVector f) {
+  void applyForce(PVector f) {<span class="callout-bubble">  Applying a force as a PVector</span>
     for (Particle p: particles) {
       p.applyForce(f);
     }
   }
 
   void applyRepeller(Repeller r) {
-    //[full] Calculating a force for each Particle based on a Repeller
-    for (Particle p: particles) {
+    for (Particle p: particles) {<span class="callout-bubble">    Calculating a force for each Particle based on a Repeller</span>
       PVector force = r.repel(p);
       p.applyForce(force);
     }
-    //[end]
+
   }
 
   void run() {
@@ -1655,8 +1636,7 @@ class ParticleSystem {
 
 class Repeller {
 
-  // How strong is the repeller?
-  float strength = 100;
+  float strength = 100;<span class="callout-bubble">  How strong is the repeller?</span>
   PVector location;
   float r = 10;
 
@@ -1671,190 +1651,188 @@ class Repeller {
   }
 
   PVector repel(Particle p) {
-    //[full] This is the same repel algorithm we used in Chapter 2: forces based on gravitational attraction.
-    PVector dir = PVector.sub(location,p.location);
+    PVector dir = PVector.sub(location,p.location);<span class="callout-bubble">    This is the same repel algorithm we used in Chapter 2: forces based on gravitational attraction.</span>
     float d = dir.mag();
     dir.normalize();
     d = constrain(d,5,100);
     float force = -1 * strength / (d * d);
     dir.mult(force);
     return dir;
-    //[end]
+
   }
-}</pre>
-
-<div data-type="exercise" id="chapter04_exercise9">
-<h5>Exercise 4.9</h5>
-
-<p>Expand the above example to include many repellers (using an array or <strong klass="">ArrayList</strong>).</p>
-</div>
-
-<div data-type="exercise" id="chapter04_exercise10">
-<h5>Exercise 4.10</h5>
-
-<p>Create a particle system in which each particle responds to every other particle. (Note that we&#x2019;ll be going through this in detail in Chapter 6.)</p>
-</div>
-</section>
-
-<section data-type="sect1" id="chapter04_section13">
-<h1>4.13 Image Textures and Additive Blending</h1>
-
-<p><a data-primary="image textures" data-type="indexterm">&#xa0;</a> <a data-primary="Processing" data-secondary="incorporating images into projects" data-type="indexterm">&#xa0;</a></p>
-
-<p>Even though this book is really about behaviors and algorithms rather than computer graphics and design, I don&#x2019;t think we would be able to live with ourselves if we went through a discussion of particle systems and never once looked at an example that involves texturing each particle with an image. The way you choose to draw a particle is a big part of the puzzle in terms of designing certain types of visual effects.</p>
-
-<p>Let&#x2019;s try to create a smoke simulation in Processing. Take a look at the following two images:</p>
-
-<figure class="two-col-borderless" data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke_b/_4_08_ParticleSystemSmoke_b.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/ParticleSystem.pde"><img alt="White circles" src="../images/chapter04/ch04_ex08b.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<figure class="two-col-borderless" data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke/_4_08_ParticleSystemSmoke.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/ParticleSystem.pde"><img alt="Fuzzy images with transparency" src="../images/chapter04/ch04_ex08a.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>Both of these images were generated from identical algorithms. The only difference is that a white circle is drawn in image A for each particle and a &#x201c;fuzzy&#x201d; blob is drawn for each in B.</p>
-
-<figure id="chapter04_figure5"><img alt="Figure 4.5" src="../images/chapter04/ch04_05.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p><a data-primary="image textures" data-secondary="PNG format and" data-type="indexterm">&#xa0;</a> <a data-primary="PNG graphic file format" data-type="indexterm">&#xa0;</a></p>
-
-<p>The good news here is that you get a lot of bang for very little buck. Before you write any code, however, you&#x2019;ve got to make your image texture! I recommend using PNG format, as Processing will retain the alpha channel (i.e. transparency) when drawing the image, which is needed for blending the texture as particles layer on top of each other. Once you&#x2019;ve made your PNG and deposited it in your sketch&#x2019;s &#x201c;data&#x201d; folder, you are on your way with just a few lines of code.</p>
-
-<p><a data-primary="image textures" data-secondary="PImage objects (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="PImage objects (Processing)" data-type="indexterm">&#xa0;</a> <a data-primary="Processing" data-secondary="PImage objects" data-type="indexterm">&#xa0;</a></p>
-
-<p>First, we&#x2019;ll need to declare a <strong klass="">PImage</strong> object.</p>
-
-<div data-type="example"><h5>Example 4.8: Image texture particle system</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
-PImage img;</pre>
-
-<p>Load the image in <strong function="">setup()</strong>.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      </div>
+      
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.9</h5>
+         <p>Expand the above example to include many repellers (using an array or <strong>ArrayList</strong>).</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.10</h5>
+         <p>Create a particle system in which each particle responds to every other particle. (Note that we’ll be going through this in detail in Chapter 6.)</p>
+      </div>
+   </section>
+   <section data-type="sect1" id="chapter04_section13">
+      <h1>Image Textures and Additive Blending</h1>
+      <p>Even though this book is really about behaviors and algorithms rather than computer graphics and design, I don’t think we would be able to live with ourselves if we went through a discussion of particle systems and never once looked at an example that involves texturing each particle with an image. The way you choose to draw a particle is a big part of the puzzle in terms of designing certain types of visual effects.<a data-primary="image textures" data-type="indexterm"> </a>
+         <a data-primary="Processing"
+            data-secondary="incorporating images into projects"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Let’s try to create a smoke simulation in Processing. Take a look at the following two images:</p>
+      <figure class="two-col-borderless"
+              data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke_b/_4_08_ParticleSystemSmoke_b.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke_b/ParticleSystem.pde">
+         <img alt="White circles" src="../images/chapter04/ch04_ex08b.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <figure class="two-col-borderless"
+              data-pde="processingjs/chapter04/_4_08_ParticleSystemSmoke/_4_08_ParticleSystemSmoke.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/Particle.pde processingjs/chapter04/_4_08_ParticleSystemSmoke/ParticleSystem.pde">
+         <img alt="Fuzzy images with transparency"
+              src="../images/chapter04/ch04_ex08a.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>Both of these images were generated from identical algorithms. The only difference is that a white circle is drawn in image A for each particle and a “fuzzy” blob is drawn for each in B.<a data-primary="image textures"
+            data-secondary="PNG format and"
+            data-type="indexterm"> </a>
+         <a data-primary="PNG graphic file format" data-type="indexterm"> </a>
+      </p>
+      <figure id="chapter04_figure5">
+         <img alt="Figure 4.5" src="../images/chapter04/ch04_05.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>The good news here is that you get a lot of bang for very little buck. Before you write any code, however, you’ve got to make your image texture! I recommend using PNG format, as Processing will retain the alpha channel (i.e. transparency) when drawing the image, which is needed for blending the texture as particles layer on top of each other. Once you’ve made your PNG and deposited it in your sketch’s “data” folder, you are on your way with just a few lines of code.</p>
+      <p>First, we’ll need to declare a <strong klass="">PImage</strong> object.<a data-primary="image textures"
+            data-secondary="PImage objects (Processing)"
+            data-type="indexterm"> </a>
+         <a data-primary="PImage objects (Processing)" data-type="indexterm"> </a>
+         <a data-primary="Processing"
+            data-secondary="PImage objects"
+            data-type="indexterm"> </a>
+      </p>
+      <div id="example_d1e2522" data-type="example">
+         <h5>Image texture particle system</h5>
+         <pre>
+PImage img;
+</pre>
+      </div>
+      
+      <p>Load the image in <strong function="">setup()</strong>.</p>
+      <pre>
 void setup() {
-  // Loading the PNG
-  img = loadImage(&quot;texture.png&quot;);
-}</pre>
-
-<p>And when it comes time to draw the particle, we&#x2019;ll use the image reference instead of drawing an ellipse or rectangle.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  img = loadImage("texture.png");<span class="callout-bubble">  Loading the PNG</span>
+}
+</pre>
+      <p>And when it comes time to draw the particle, we’ll use the image reference instead of drawing an ellipse or rectangle.<a data-primary="natural phenomena"
+            data-secondary="smoke"
+            data-tertiary="modeling with particle systems"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="smoke"
+            data-tertiary="modeling"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
   void render() {
     imageMode(CENTER);
-    // Note how tint() is the image equivalent of shape&#x2019;s fill().
-    tint(255,lifespan);
+    tint(255,lifespan);<span class="callout-bubble">    Note how tint() is the image equivalent of shape’s fill().</span>
     image(img,loc.x,loc.y);
-  }</pre>
-
-<p><a data-primary="natural phenomena" data-secondary="smoke" data-tertiary="modeling with particle systems" data-type="indexterm">&#xa0;</a> <a data-primary="particle systems" data-secondary="smoke" data-tertiary="modeling" data-type="indexterm">&#xa0;</a></p>
-
-<p>Incidentally, this smoke example is a nice excuse to revisit the Gaussian number distributions from the <a href="#intro_section4">Introduction</a>. To make the smoke appear a bit more realistic, we don&#x2019;t want to launch all the particles in a purely random direction. Instead, by creating initial velocity vectors mostly around a mean value (with a lower probability of outliers), we&#x2019;ll get an effect that appears less fountain-like and more like smoke (or fire).</p>
-
-<p>Assuming a <strong klass="">Random</strong> object called &#x201c;generator&#x201d;, we could create initial velocities as follows:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  }
+</pre>
+      <p>Incidentally, this smoke example is a nice excuse to revisit the Gaussian number distributions from the <a href="#intro_section4">Introduction</a>. To make the smoke appear a bit more realistic, we don’t want to launch all the particles in a purely random direction. Instead, by creating initial velocity vectors mostly around a mean value (with a lower probability of outliers), we’ll get an effect that appears less fountain-like and more like smoke (or fire).<a data-primary="natural phenomena"
+            data-secondary="smoke"
+            data-tertiary="modeling with particle systems"
+            data-type="indexterm"> </a>
+         <a data-primary="particle systems"
+            data-secondary="smoke"
+            data-tertiary="modeling"
+            data-type="indexterm"> </a>
+      </p>
+      <p>Assuming a <strong>Random</strong> object called “generator”, we could create initial velocities as follows:</p>
+      <pre>
     float vx = (float) generator.nextGaussian()*0.3;
     float vy = (float) generator.nextGaussian()*0.3 - 1.0;
-    vel = new PVector(vx,vy);</pre>
-
-<p>Finally, in this example, a wind force is applied to the smoke mapped from the mouse&#x2019;s horizontal location.</p>
-
-<pre data-code-language="java" data-type="programlisting">
+    vel = new PVector(vx,vy);
+</pre>
+      <p>Finally, in this example, a wind force is applied to the smoke mapped from the mouse’s horizontal location.<a data-primary="blend modes" data-type="indexterm"> </a>
+         <a data-primary="image textures"
+            data-secondary="blend modes"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 void draw() {
   background(0);
 
   float dx = map(mouseX,0,width,-0.2,0.2);
-  // Wind force points towards mouseX.
-  PVector wind = new PVector(dx,0);
+  PVector wind = new PVector(dx,0);<span class="callout-bubble">  Wind force points towards mouseX.</span>
   ps.applyForce(wind);
   ps.run();
-  //[full] Two particles are added each cycle through draw().
-  for (int i = 0; i &lt; 2; i++) {
+  for (int i = 0; i &lt; 2; i++) {<span class="callout-bubble">  Two particles are added each cycle through draw().</span>
     ps.addParticle();
   }
-  //[end]
-}</pre>
 
-<div data-type="exercise" id="chapter04_exercise11">
-<h5>Exercise 4.11</h5>
-
-<p>Try creating your own textures for different types of effects. Can you make it look like fire, instead of smoke?</p>
-</div>
-
-<div data-type="exercise" id="chapter04_exercise12">
-<h5>Exercise 4.12</h5>
-
-<p>Use an array of images and assign each <strong klass="">Particle</strong> object a different image. Even though single images are drawn by multiple particles, make sure you don&#x2019;t call <strong function="">loadImage()</strong> any more than you need to, i.e. once for each image file.</p>
-</div>
-
-<p><a data-primary="blend modes" data-type="indexterm">&#xa0;</a> <a data-primary="image textures" data-secondary="blend modes" data-type="indexterm">&#xa0;</a></p>
-
-<p>Finally, it&#x2019;s worth noting that there are many different algorithms for blending colors in computer graphics. These are often referred to as &#x201c;blend modes.&#x201d; By default, when we draw something on top of something else in Processing, we only see the top layer&#x2014;this is commonly referred to as a &#x201c;normal&#x201d; blend mode. When the pixels have alpha transparency (as they do in the smoke example), Processing uses an alpha compositing algorithm that combines a percentage of the background pixels with the new foreground pixels based on the alpha values.</p>
-
-<p><a data-primary="additive blend mode" data-type="indexterm">&#xa0;</a> <a data-primary="blend modes" data-secondary="additive" data-type="indexterm">&#xa0;</a> <a data-primary="Hodgin" data-secondary="Robert" data-type="indexterm">&#xa0;</a> <a data-primary="iTunes visualizer" data-type="indexterm">&#xa0;</a> <a data-primary="Magnetosphere" data-type="indexterm">&#xa0;</a></p>
-
-<p>However, it&#x2019;s possible to draw using other blend modes, and a much loved blend mode for particle systems is &#x201c;additive.&#x201d; Additive blending in Processing was pioneered by <a href="http://roberthodgin.com/">Robert Hodgin</a> in his famous particle system and forces exploration, Magnetosphere, which later became the iTunes visualizer. For more see: <a href="http://roberthodgin.com/magnetosphere-part-2/">Magnetosphere</a>.</p>
-
-<p>Additive blending is in fact one of the simplest blend algorithms and involves adding the pixel values of one layer to another (capping all values at 255 of course). This results in a space-age glow effect due to the colors getting brighter and brighter with more layers.</p>
-
-<figure><img alt="ch04 ex09" src="../images/chapter04/ch04_ex09.png" />
-<figcaption>&#xa0;</figcaption>
-</figure>
-
-<p>To achieve additive blending in Processing, you&#x2019;ll need to use the <strong class="var">P2D</strong> or <strong class="var">P3D</strong> renderer.</p>
-
-<div data-type="example"><h5>Example 4.9: Additive blending</h5></div>
-
-<pre data-code-language="java" data-type="programlisting">
+}
+</pre>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.11</h5>
+         <p>Try creating your own textures for different types of effects. Can you make it look like fire, instead of smoke?</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.12</h5>
+         <p>Use an array of images and assign each <strong>Particle</strong> object a different image. Even though single images are drawn by multiple particles, make sure you don’t call <strong function="">loadImage()</strong> any more than you need to, i.e. once for each image file.</p>
+      </div>
+      <p>Finally, it’s worth noting that there are many different algorithms for blending colors in computer graphics. These are often referred to as “blend modes.” By default, when we draw something on top of something else in Processing, we only see the top layer—this is commonly referred to as a “normal” blend mode. When the pixels have alpha transparency (as they do in the smoke example), Processing uses an alpha compositing algorithm that combines a percentage of the background pixels with the new foreground pixels based on the alpha values.</p>
+      <p>However, it’s possible to draw using other blend modes, and a much loved blend mode for particle systems is “additive.” Additive blending in Processing was pioneered by <a href="http://roberthodgin.com/">Robert Hodgin</a> in his famous particle system and forces exploration, Magnetosphere, which later became the iTunes visualizer. For more see: <a href="http://roberthodgin.com/magnetosphere-part-2/">Magnetosphere</a>.<a data-primary="additive blend mode" data-type="indexterm"> </a>
+         <a data-primary="blend modes"
+            data-secondary="additive"
+            data-type="indexterm"> </a>
+         <a data-primary="Hodgin" data-secondary="Robert" data-type="indexterm"> </a>
+         <a data-primary="iTunes visualizer" data-type="indexterm"> </a>
+         <a data-primary="Magnetosphere" data-type="indexterm"> </a>
+      </p>
+      <p>Additive blending is in fact one of the simplest blend algorithms and involves adding the pixel values of one layer to another (capping all values at 255 of course). This results in a space-age glow effect due to the colors getting brighter and brighter with more layers.</p>
+      <figure>
+         <img alt="ch04 ex09" src="../images/chapter04/ch04_ex09.png"/>
+         <figcaption> </figcaption>
+      </figure>
+      <p>To achieve additive blending in Processing, you’ll need to use the <strong class="var">P2D</strong> or <strong class="var">P3D</strong> renderer.</p>
+      <div id="example_d1e2672" data-type="example">
+         <h5>Additive blending</h5>
+         <pre>
 void setup() {
-  // Using the P2D  renderer
-  size(640,360,P2D);
-}</pre>
-
-<p>Then, before you go to draw anything, you set the blend mode using <strong function="">blendMode()</strong>:</p>
-
-<pre data-code-language="java" data-type="programlisting">
+  size(640,360,P2D);<span class="callout-bubble">  Using the P2D  renderer</span>
+}
+</pre>
+      </div>
+      
+      <p>Then, before you go to draw anything, you set the blend mode using <strong function="">blendMode()</strong>:<a data-primary="blend modes"
+            data-secondary="list of"
+            data-type="indexterm"> </a>
+      </p>
+      <pre>
 void draw() {
-  // Additive blending
-  blendMode(ADD);
+  blendMode(ADD);<span class="callout-bubble">  Additive blending</span>
 
-  // Note that the &#x201c;glowing&#x201d; effect of additive
-  // blending will not work with a white
-  // (or very bright) background.
-  background(0);
+<span class="callout-bubble">  Note that the “glowing” effect of additive</span>
+         <span class="callout-bubble">  blending will not work with a white</span>
+           background(0);<span class="callout-bubble">  (or very bright) background.</span>
 
-  // All your other particle stuff would go here.
-
-}</pre>
-
-<div data-type="exercise" id="chapter04_exercise13">
-<h5>Exercise 4.13</h5>
-
-<p>Use <strong function="">tint()</strong> in combination with additive blending to create a rainbow effect.</p>
-</div>
-
-<p><a data-primary="blend modes" data-secondary="list of" data-type="indexterm">&#xa0;</a></p>
-
-<div data-type="exercise" id="chapter04_exercise14">
-<h5>Exercise 4.14</h5>
-
-<p>Try blending with other modes, such as <strong class="var">SUBTRACT</strong>, <strong class="var">LIGHTEST</strong>, <strong class="var">DARKEST</strong>, <strong class="var">DIFFERENCE</strong>, <strong class="var">EXCLUSION</strong>,or <strong class="var">MULTIPLY</strong>.</p>
-</div>
-
-
-
-<div data-type="tip">
-<h1>The Ecosystem Project</h1>
-
-<p>Step 4 Exercise:</p>
-
-<p>Take your creature from Step 3 and build a system of creatures. How can they interact with each other? Can you use inheritance and polymorphism to create a variety of creatures, derived from the same code base? Develop a methodology for how they compete for resources (for example, food). Can you track a creature&#x2019;s &#x201c;health&#x201d; much like we tracked a particle&#x2019;s lifespan, removing creatures when appropriate? What rules can you incorporate to control how creatures are born?</p>
-
-<p>(Also, you might consider using a particle system itself in the design of a creature. What happens if your emitter is tied to the creature&#x2019;s location?)</p>
-</div>
-</section>
+<span class="callout-bubble">  All your other particle stuff would go here.</span>
+}
+</pre>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.13</h5>
+         <p>Use <strong function="">tint()</strong> in combination with additive blending to create a rainbow effect.</p>
+      </div>
+      <div data-type="example" class="exercise">
+         <h5>Exercise 4.14</h5>
+         <p>Try blending with other modes, such as <strong class="var">SUBTRACT</strong>, <strong class="var">LIGHTEST</strong>, <strong class="var">DARKEST</strong>, <strong class="var">DIFFERENCE</strong>, <strong class="var">EXCLUSION</strong>,or <strong class="var">MULTIPLY</strong>.</p>
+      </div>
+      <div data-type="tip">
+         <h1>The Ecosystem Project</h1>
+         <p>Step 4 Exercise:</p>
+         <p>Take your creature from Step 3 and build a system of creatures. How can they interact with each other? Can you use inheritance and polymorphism to create a variety of creatures, derived from the same code base? Develop a methodology for how they compete for resources (for example, food). Can you track a creature’s “health” much like we tracked a particle’s lifespan, removing creatures when appropriate? What rules can you incorporate to control how creatures are born?</p>
+         <p>(Also, you might consider using a particle system itself in the design of a creature. What happens if your emitter is tied to the creature’s location?)</p>
+      </div>
+   </section>
 </section>
