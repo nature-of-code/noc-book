@@ -1,39 +1,37 @@
-<div style="page-break-after:always;">&nbsp;</div>
-
-<section data-type="chapter" id="_chapter_2_forces">
-<h1>Chapter 2. Forces</h1>
+<section data-type="chapter" xmlns="http://www.w3.org/1999/xhtml" id="_chapter_2_forces">
+<h1>Forces</h1>
 
 <blockquote data-type="epigraph">
-<p>&ldquo;Don&rsquo;t underestimate the Force.&rdquo;</p>
+<p>&#x201c;Don&#x2019;t underestimate the Force.&#x201d;</p>
 
-<p data-type="attribution">&mdash; Darth Vader</p>
+<p data-type="attribution">&#x2014; Darth Vader</p>
 </blockquote>
 
-<p><a data-primary="forces" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-type="indexterm">&#xa0;</a></p>
 
 <p>In the final example of Chapter 1, we saw how we could calculate a dynamic acceleration based on a vector pointing from a circle on the screen to the mouse location. The resulting motion resembled a magnetic attraction between circle and mouse, as if some <em>force</em> were pulling the circle in towards the mouse. In this chapter we will formalize our understanding of the concept of a force and its relationship to acceleration. Our goal, by the end of this chapter, is to understand how to make multiple objects move around the screen and respond to a variety of environmental forces.</p>
 
 <section data-type="sect1" id="chapter02_section1">
-<h1>2.1 Forces and Newton&rsquo;s Laws of Motion</h1>
+<h1>2.1 Forces and Newton&#x2019;s Laws of Motion</h1>
 
-<p><a data-primary="forces" data-secondary="Newton's laws of motion" data-type="indexterm">&nbsp;</a> <a data-primary="Newton" data-secondary="Isaac" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="Newton's laws of motion" data-type="indexterm">&#xa0;</a> <a data-primary="Newton" data-secondary="Isaac" data-type="indexterm">&#xa0;</a></p>
 
-<p>Before we begin examining the practical realities of simulating forces in code, let&rsquo;s take a conceptual look at what it means to be a force in the real world. Just like the word &ldquo;vector,&rdquo; &ldquo;force&rdquo; is often used to mean a variety of things. It can indicate a powerful intensity, as in &ldquo;She pushed the boulder with great force&rdquo; or &ldquo;He spoke forcefully.&rdquo; The definition of <strong><em>force</em></strong> that we care about is much more formal and comes from Isaac Newton&rsquo;s laws of motion:</p>
+<p>Before we begin examining the practical realities of simulating forces in code, let&#x2019;s take a conceptual look at what it means to be a force in the real world. Just like the word &#x201c;vector,&#x201d; &#x201c;force&#x201d; is often used to mean a variety of things. It can indicate a powerful intensity, as in &#x201c;She pushed the boulder with great force&#x201d; or &#x201c;He spoke forcefully.&#x201d; The definition of <strong><em>force</em></strong> that we care about is much more formal and comes from Isaac Newton&#x2019;s laws of motion:</p>
 
-<p><a data-primary="forces" data-secondary="defined" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="defined" data-type="indexterm">&#xa0;</a></p>
 
 <p><strong highlight="">A force is a vector that causes an object with mass to accelerate.</strong></p>
 
 <p>The good news here is that we recognize the first part of the definition: <em>a force is a vector</em>. Thank goodness we just spent a whole chapter learning what a vector is and how to program with <strong klass="">PVector</strong><code>s</code>!</p>
 
-<p>Let&rsquo;s look at Newton&rsquo;s three laws of motion in relation to the concept of a force.</p>
+<p>Let&#x2019;s look at Newton&#x2019;s three laws of motion in relation to the concept of a force.</p>
 
 <section data-type="sect2" id="_newton_s_first_law">
-<h2>Newton&rsquo;s First Law</h2>
+<h2>Newton&#x2019;s First Law</h2>
 
-<p><a data-primary="Newton's first law" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Newton's first law" data-type="indexterm">&#xa0;</a></p>
 
-<p>Newton&rsquo;s first law is commonly stated as:</p>
+<p>Newton&#x2019;s first law is commonly stated as:</p>
 
 <p><strong highlight="">An object at rest stays at rest and an object in motion stays in motion.</strong></p>
 
@@ -41,77 +39,77 @@
 
 <p><strong highlight="">An object at rest stays at rest and an object in motion stays in motion at a constant speed and direction unless acted upon by an unbalanced force.</strong></p>
 
-<p><a data-primary="Aristotle" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Aristotle" data-type="indexterm">&#xa0;</a></p>
 
-<p>By the time Newton came along, the prevailing theory of motion&mdash;formulated by Aristotle&mdash;was nearly two thousand years old. It stated that if an object is moving, some sort of force is required to keep it moving. Unless that moving thing is being pushed or pulled, it will simply slow down or stop. Right?</p>
+<p>By the time Newton came along, the prevailing theory of motion&#x2014;formulated by Aristotle&#x2014;was nearly two thousand years old. It stated that if an object is moving, some sort of force is required to keep it moving. Unless that moving thing is being pushed or pulled, it will simply slow down or stop. Right?</p>
 
-<p><a data-primary="equilibrium" data-type="indexterm">&nbsp;</a> <a data-primary="forces" data-secondary="equilibrium" data-type="indexterm">&nbsp;</a> <a data-primary="forces" data-secondary="terminal velocity" data-type="indexterm">&nbsp;</a> <a data-primary="terminal velocity" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="equilibrium" data-type="indexterm">&#xa0;</a> <a data-primary="forces" data-secondary="equilibrium" data-type="indexterm">&#xa0;</a> <a data-primary="forces" data-secondary="terminal velocity" data-type="indexterm">&#xa0;</a> <a data-primary="terminal velocity" data-type="indexterm">&#xa0;</a></p>
 
-<p>This, of course, is not true. In the absence of any forces, no force is required to keep an object moving. An object (such as a ball) tossed in the earth&rsquo;s atmosphere slows down because of air resistance (a force). An object&rsquo;s velocity will only remain constant in the absence of any forces or if the forces that act on it cancel each other out, i.e. the net force adds up to zero. This is often referred to as <strong><em>equilibrium</em></strong>. The falling ball will reach a terminal velocity (that stays constant) once the force of air resistance equals the force of gravity.</p>
+<p>This, of course, is not true. In the absence of any forces, no force is required to keep an object moving. An object (such as a ball) tossed in the earth&#x2019;s atmosphere slows down because of air resistance (a force). An object&#x2019;s velocity will only remain constant in the absence of any forces or if the forces that act on it cancel each other out, i.e. the net force adds up to zero. This is often referred to as <strong><em>equilibrium</em></strong>. The falling ball will reach a terminal velocity (that stays constant) once the force of air resistance equals the force of gravity.</p>
 
 <figure id="chapter02_figure1"><img alt="Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net force of zero)." src="../images/chapter02/ch02_01.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
-<p>In our Processing world, we could restate Newton&rsquo;s first law as follows:</p>
+<p>In our Processing world, we could restate Newton&#x2019;s first law as follows:</p>
 
-<p><a data-primary="Newton's first law" data-secondary="PVector class and" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="Newton's first law and" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Newton's first law" data-secondary="PVector class and" data-type="indexterm">&#xa0;</a> <a data-primary="PVector class (Processing)" data-secondary="Newton's first law and" data-type="indexterm">&#xa0;</a></p>
 
-<p><strong highlight="">An object&rsquo;s PVector velocity will remain constant if it is in a state of equilibrium.</strong></p>
+<p><strong highlight="">An object&#x2019;s PVector velocity will remain constant if it is in a state of equilibrium.</strong></p>
 
-<p>Skipping Newton&rsquo;s second law (arguably the most important law for our purposes) for a moment, let&rsquo;s move on to the third law.</p>
+<p>Skipping Newton&#x2019;s second law (arguably the most important law for our purposes) for a moment, let&#x2019;s move on to the third law.</p>
 
-<p><a data-primary="Newton's third law" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Newton's third law" data-type="indexterm">&#xa0;</a></p>
 </section>
 
 <section data-type="sect2" id="_newton_s_third_law">
-<h2>Newton&rsquo;s Third Law</h2>
+<h2>Newton&#x2019;s Third Law</h2>
 
 <p>This law is often stated as:</p>
 
 <p><strong highlight="">For every action there is an equal and opposite reaction.</strong></p>
 
-<p>This law frequently causes some confusion in the way that it is stated. For one, it sounds like one force causes another. Yes, if you push someone, that someone may <em>actively</em> decide to push you back. But this is not the action and reaction we are talking about with Newton&rsquo;s third law.</p>
+<p>This law frequently causes some confusion in the way that it is stated. For one, it sounds like one force causes another. Yes, if you push someone, that someone may <em>actively</em> decide to push you back. But this is not the action and reaction we are talking about with Newton&#x2019;s third law.</p>
 
-<p>Let&rsquo;s say you push against a wall. The wall doesn&rsquo;t actively decide to push back on you. There is no &ldquo;origin&rdquo; force. Your push simply includes both forces, referred to as an &ldquo;action/reaction pair.&rdquo;</p>
+<p>Let&#x2019;s say you push against a wall. The wall doesn&#x2019;t actively decide to push back on you. There is no &#x201c;origin&#x201d; force. Your push simply includes both forces, referred to as an &#x201c;action/reaction pair.&#x201d;</p>
 
 <p>A better way of stating the law might be:</p>
 
 <p><strong highlight="">Forces always occur in pairs. The two forces are of equal strength, but in opposite directions.</strong></p>
 
-<p>Now, this still causes confusion because it sounds like these forces would always cancel each other out. This is not the case. Remember, the forces act on different objects. And just because the two forces are equal, it doesn&rsquo;t mean that the movements are equal (or that the objects will stop moving).</p>
+<p>Now, this still causes confusion because it sounds like these forces would always cancel each other out. This is not the case. Remember, the forces act on different objects. And just because the two forces are equal, it doesn&#x2019;t mean that the movements are equal (or that the objects will stop moving).</p>
 
-<p>Try pushing on a stationary truck. Although the truck is far more powerful than you, unlike a moving one, a stationary truck will never overpower you and send you flying backwards. The force you exert on it is equal and opposite to the force exerted on your hands. The outcome depends on a variety of other factors. If the truck is a small truck on an icy downhill, you&rsquo;ll probably be able to get it to move. On the other hand, if it&rsquo;s a very large truck on a dirt road and you push hard enough (maybe even take a running start), you could injure your hand.</p>
+<p>Try pushing on a stationary truck. Although the truck is far more powerful than you, unlike a moving one, a stationary truck will never overpower you and send you flying backwards. The force you exert on it is equal and opposite to the force exerted on your hands. The outcome depends on a variety of other factors. If the truck is a small truck on an icy downhill, you&#x2019;ll probably be able to get it to move. On the other hand, if it&#x2019;s a very large truck on a dirt road and you push hard enough (maybe even take a running start), you could injure your hand.</p>
 
 <p>And if you are wearing roller skates when you push on that truck?</p>
 
 <figure id="chapter02_figure2"><img alt="Figure 2.2" src="../images/chapter02/ch02_02.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
-<p>You&rsquo;ll accelerate away from the truck, sliding along the road while the truck stays put. Why do you slide but not the truck? For one, the truck has a much larger mass (which we&rsquo;ll get into with Newton&rsquo;s second law). There are other forces at work too, namely the friction of the truck&rsquo;s tires and your roller skates against the road.</p>
+<p>You&#x2019;ll accelerate away from the truck, sliding along the road while the truck stays put. Why do you slide but not the truck? For one, the truck has a much larger mass (which we&#x2019;ll get into with Newton&#x2019;s second law). There are other forces at work too, namely the friction of the truck&#x2019;s tires and your roller skates against the road.</p>
 </section>
 
 <section data-type="sect2" id="_newton_s_third_law_as_seen_through_the_eyes_of_processing">
-<h2>Newton&rsquo;s Third Law (as seen through the eyes of Processing)</h2>
+<h2>Newton&#x2019;s Third Law (as seen through the eyes of Processing)</h2>
 
-<p><a data-primary="Newton's third law" data-secondary="PVector class and" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="Newton's third law and" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="Newton's third law" data-secondary="PVector class and" data-type="indexterm">&#xa0;</a> <a data-primary="PVector class (Processing)" data-secondary="Newton's third law and" data-type="indexterm">&#xa0;</a></p>
 
-<p><strong highlight="">If we calculate a PVector f that is a force of object A on object B, we must also apply the force&mdash;PVector.mult(f,-1);&mdash;that B exerts on object A.</strong></p>
+<p><strong highlight="">If we calculate a PVector f that is a force of object A on object B, we must also apply the force&#x2014;PVector.mult(f,-1);&#x2014;that B exerts on object A.</strong></p>
 
-<p>We&rsquo;ll see that in the world of Processing programming, we don&rsquo;t always have to stay true to the above. Sometimes, such as in the case of see <a href="#chapter02_example6">gravitational attraction between bodies</a>, we&rsquo;ll want to model equal and opposite forces. Other times, such as when we&rsquo;re simply saying, &ldquo;Hey, there&rsquo;s some wind in the environment,&rdquo; we&rsquo;re not going to bother to model the force that a body exerts back on the air. In fact, we&rsquo;re not modeling the air at all! Remember, we are simply taking inspiration from the physics of the natural world, not simulating everything with perfect precision.</p>
+<p>We&#x2019;ll see that in the world of Processing programming, we don&#x2019;t always have to stay true to the above. Sometimes, such as in the case of see <a href="#chapter02_example6">gravitational attraction between bodies</a>, we&#x2019;ll want to model equal and opposite forces. Other times, such as when we&#x2019;re simply saying, &#x201c;Hey, there&#x2019;s some wind in the environment,&#x201d; we&#x2019;re not going to bother to model the force that a body exerts back on the air. In fact, we&#x2019;re not modeling the air at all! Remember, we are simply taking inspiration from the physics of the natural world, not simulating everything with perfect precision.</p>
 </section>
 </section>
 
 <section data-type="sect1" id="chapter02_section2">
-<h1>2.2 Forces and Processing&mdash;Newton&rsquo;s Second Law as a Function</h1>
+<h1>2.2 Forces and Processing&#x2014;Newton&#x2019;s Second Law as a Function</h1>
 
-<p><a data-primary="acceleration" data-secondary="Newton's second law" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="Newton's second law" data-tertiary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="Newton's second law" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="acceleration" data-secondary="Newton's second law" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="Newton's second law" data-tertiary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="Newton's second law" data-type="indexterm">&#xa0;</a></p>
 
 <p>And here we are at the most important law for the Processing programmer.</p>
 
 <section data-type="sect2" id="_newton_s_second_law">
-<h2>Newton&rsquo;s Second Law</h2>
+<h2>Newton&#x2019;s Second Law</h2>
 
 <p>This law is stated as:</p>
 
@@ -121,13 +119,13 @@
 
 <p>{newton2ablock}</p>
 
-<p>Why is this the most important law for us? Well, let&rsquo;s write it a different way.</p>
+<p>Why is this the most important law for us? Well, let&#x2019;s write it a different way.</p>
 
 <p>{newton2bblock}</p>
 
-<p>Acceleration is directly proportional to force and inversely proportional to mass. This means that if you get pushed, the harder you are pushed, the faster you&rsquo;ll move (accelerate). The bigger you are, the slower you&rsquo;ll move.</p>
+<p>Acceleration is directly proportional to force and inversely proportional to mass. This means that if you get pushed, the harder you are pushed, the faster you&#x2019;ll move (accelerate). The bigger you are, the slower you&#x2019;ll move.</p>
 
-<p><a data-primary="density" data-type="indexterm">&nbsp;</a> <a data-primary="mass" data-secondary="weight vs." data-type="indexterm">&nbsp;</a> <a data-primary="weight" data-secondary="mass vs." data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="density" data-type="indexterm">&#xa0;</a> <a data-primary="mass" data-secondary="weight vs." data-type="indexterm">&#xa0;</a> <a data-primary="weight" data-secondary="mass vs." data-type="indexterm">&#xa0;</a></p>
 
 <div data-type="note">
 <h1>Weight vs. Mass</h1>
@@ -137,7 +135,7 @@
 	<p>The <strong><em>mass</em></strong> of an object is a measure of the amount of matter in the object (measured in kilograms).</p>
 	</li>
 	<li>
-	<p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton&rsquo;s second law, we can calculate it as mass times the acceleration of gravity (<strong class="var">w</strong> = <strong class="var">m</strong> * <strong class="var">g</strong>). Weight is measured in newtons.</p>
+	<p><strong><em>Weight</em></strong>, though often mistaken for mass, is technically the force of gravity on an object. From Newton&#x2019;s second law, we can calculate it as mass times the acceleration of gravity (<strong class="var">w</strong> = <strong class="var">m</strong> * <strong class="var">g</strong>). Weight is measured in newtons.</p>
 	</li>
 	<li>
 	<p><strong><em>Density</em></strong> is defined as the amount of mass per unit of volume (grams per cubic centimeter, for example).</p>
@@ -147,13 +145,13 @@
 <p>Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the moon. However, it would weigh only one-sixth as much.</p>
 </div>
 
-<p>Now, in the world of Processing, what is mass anyway? Aren&rsquo;t we dealing with pixels? To start in a simpler place, let&rsquo;s say that in our pretend pixel world, all of our objects have a mass equal to 1. <strong class="var">F</strong>/ 1 = <strong class="var">F</strong>. And so:</p>
+<p>Now, in the world of Processing, what is mass anyway? Aren&#x2019;t we dealing with pixels? To start in a simpler place, let&#x2019;s say that in our pretend pixel world, all of our objects have a mass equal to 1. <strong class="var">F</strong>/ 1 = <strong class="var">F</strong>. And so:</p>
 
-<p>{aequalsf}</p>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> A </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mover><mrow><mi> F </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover></mstyle></math></p>
 
 <p>The acceleration of an object is equal to force. This is great news. After all, we saw in Chapter 1 that acceleration was the key to controlling the movement of our objects on screen. Location is adjusted by velocity, and velocity by acceleration. Acceleration was where it all began. Now we learn that <em>force</em> is truly where it all begins.</p>
 
-<p>Let&rsquo;s take our <strong klass="">Mover</strong> class, with location, velocity, and acceleration.</p>
+<p>Let&#x2019;s take our <strong klass="">Mover</strong> class, with location, velocity, and acceleration.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -172,11 +170,11 @@ mover.applyForce(wind);</pre>
 <pre data-code-language="java" data-type="programlisting">
 mover.applyForce(gravity);</pre>
 
-<p>where wind and gravity are <strong klass="">PVector</strong><code>s</code>. According to Newton&rsquo;s second law, we could implement this function as follows.</p>
+<p>where wind and gravity are <strong klass="">PVector</strong><code>s</code>. According to Newton&#x2019;s second law, we could implement this function as follows.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyForce(PVector force) {
-  // Newton&rsquo;s second law at its simplest.
+  // Newton&#x2019;s second law at its simplest.
   acceleration = force;
 }</pre>
 </section>
@@ -185,9 +183,9 @@ void applyForce(PVector force) {
 <section data-type="sect1" id="chapter02_section3">
 <h1>2.3 Force Accumulation</h1>
 
-<p><a data-primary="forces" data-secondary="accumulation of" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="accumulation of" data-type="indexterm">&#xa0;</a></p>
 
-<p>This looks pretty good. After all, <em>acceleration = force</em> is a literal translation of Newton&rsquo;s second law (without mass). Nevertheless, there&rsquo;s a pretty big problem here. Let&rsquo;s return to what we are trying to accomplish: creating a moving object on the screen that responds to wind and gravity.</p>
+<p>This looks pretty good. After all, <em>acceleration = force</em> is a literal translation of Newton&#x2019;s second law (without mass). Nevertheless, there&#x2019;s a pretty big problem here. Let&#x2019;s return to what we are trying to accomplish: creating a moving object on the screen that responds to wind and gravity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 mover.applyForce(wind);
@@ -195,29 +193,29 @@ mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
 
-<p>Ok, let&rsquo;s <em>be</em> the computer for a moment. First, we call <strong function="">applyForce()</strong> with wind. And so the <strong klass="">Mover</strong> object&rsquo;s acceleration is now assigned the <strong klass="">PVector</strong> <strong class="var">wind</strong>. Second, we call <strong function="">applyForce()</strong> with gravity. Now the <strong klass="">Mover</strong> object&rsquo;s acceleration is set to the gravity <strong klass="">PVector</strong>. Third, we call <strong function="">update()</strong>. What happens in <strong function="">update()</strong>? Acceleration is added to velocity.</p>
+<p>Ok, let&#x2019;s <em>be</em> the computer for a moment. First, we call <strong function="">applyForce()</strong> with wind. And so the <strong klass="">Mover</strong> object&#x2019;s acceleration is now assigned the <strong klass="">PVector</strong> <strong class="var">wind</strong>. Second, we call <strong function="">applyForce()</strong> with gravity. Now the <strong klass="">Mover</strong> object&#x2019;s acceleration is set to the gravity <strong klass="">PVector</strong>. Third, we call <strong function="">update()</strong>. What happens in <strong function="">update()</strong>? Acceleration is added to velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 velocity.add(acceleration);</pre>
 
-<p>We&rsquo;re not going to see any error in Processing, but zoinks! We&rsquo;ve got a major problem. What is the value of acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If we call <strong function="">applyForce()</strong> more than once, it overrides each previous call. How are we going to handle more than one force?</p>
+<p>We&#x2019;re not going to see any error in Processing, but zoinks! We&#x2019;ve got a major problem. What is the value of acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If we call <strong function="">applyForce()</strong> more than once, it overrides each previous call. How are we going to handle more than one force?</p>
 
-<p><a data-primary="force accumulation" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="force accumulation" data-type="indexterm">&#xa0;</a></p>
 
-<p>The truth of the matter here is that we started with a simplified statement of Newton&rsquo;s second law. Here&rsquo;s a more accurate way to put it:</p>
+<p>The truth of the matter here is that we started with a simplified statement of Newton&#x2019;s second law. Here&#x2019;s a more accurate way to put it:</p>
 
 <p><strong highlight="">Net Force equals mass times acceleration.</strong></p>
 
-<p>Or, acceleration is equal to the <em>sum of all forces</em> divided by mass. This makes perfect sense. After all, as we saw in Newton&rsquo;s first law, if all the forces add up to zero, an object experiences an equilibrium state (i.e. no acceleration). Our implementation of this is through a process known as <strong><em>force accumulation</em></strong>. It&rsquo;s actually very simple; all we need to do is add all of the forces together. At any given moment, there might be 1, 2, 6, 12, or 303 forces. As long as our object knows how to accumulate them, it doesn&rsquo;t matter how many forces act on it.</p>
+<p>Or, acceleration is equal to the <em>sum of all forces</em> divided by mass. This makes perfect sense. After all, as we saw in Newton&#x2019;s first law, if all the forces add up to zero, an object experiences an equilibrium state (i.e. no acceleration). Our implementation of this is through a process known as <strong><em>force accumulation</em></strong>. It&#x2019;s actually very simple; all we need to do is add all of the forces together. At any given moment, there might be 1, 2, 6, 12, or 303 forces. As long as our object knows how to accumulate them, it doesn&#x2019;t matter how many forces act on it.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void applyForce(PVector force) {
-  // Newton&rsquo;s second law, but with force accumulation.
+  // Newton&#x2019;s second law, but with force accumulation.
   // We now add each force to acceleration, one at a time.
     acceleration.add(force);
  }</pre>
 
-<p>Now, we&rsquo;re not finished just yet. Force accumulation has one more piece. Since we&rsquo;re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <strong function="">update()</strong> is called. Let&rsquo;s think about wind for a moment. Sometimes the wind is very strong, sometimes it&rsquo;s weak, and sometimes there&rsquo;s no wind at all. At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
+<p>Now, we&#x2019;re not finished just yet. Force accumulation has one more piece. Since we&#x2019;re adding all the forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to zero) before each time <strong function="">update()</strong> is called. Let&#x2019;s think about wind for a moment. Sometimes the wind is very strong, sometimes it&#x2019;s weak, and sometimes there&#x2019;s no wind at all. At any given moment, there might be a huge gust of wind, say, when the user holds down the mouse.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (mousePressed) {
@@ -225,9 +223,9 @@ if (mousePressed) {
   mover.applyForce(wind);
 }</pre>
 
-<p><a data-primary="acceleration" data-secondary="force accumulation and" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="acceleration" data-secondary="force accumulation and" data-type="indexterm">&#xa0;</a></p>
 
-<p>When the user releases the mouse, the wind will stop, and according to Newton&rsquo;s first law, the object will continue to move at a constant velocity. However, if we had forgotten to reset acceleration to zero, the gust of wind would still be in effect. Even worse, it would add onto itself from the previous frame, since we are accumulating forces! Acceleration, in our simulation, has no memory; it is simply calculated based on the environmental forces present at a moment in time. This is different than, say, location, which must remember where the object was in the previous frame in order to move properly to the next.</p>
+<p>When the user releases the mouse, the wind will stop, and according to Newton&#x2019;s first law, the object will continue to move at a constant velocity. However, if we had forgotten to reset acceleration to zero, the gust of wind would still be in effect. Even worse, it would add onto itself from the previous frame, since we are accumulating forces! Acceleration, in our simulation, has no memory; it is simply calculated based on the environmental forces present at a moment in time. This is different than, say, location, which must remember where the object was in the previous frame in order to move properly to the next.</p>
 
 <p>The easiest way to implement clearing the acceleration for each frame is to multiply the <strong klass="">PVector</strong> by 0 at the end of <strong function="">update()</strong>.</p>
 
@@ -248,9 +246,9 @@ if (mousePressed) {
 <section data-type="sect1" id="chapter02_section4">
 <h1>2.4 Dealing with Mass</h1>
 
-<p><a data-primary="mass" data-secondary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="mass" data-tertiary="modeling" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="mass" data-secondary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="mass" data-tertiary="modeling" data-type="indexterm">&#xa0;</a></p>
 
-<p>OK. We&rsquo;ve got one tiny little addition to make before we are done with integrating forces into our <strong klass="">Mover</strong> class and are ready to look at examples. After all, Newton&rsquo;s second law is really {newton2a}, not {fequalsa}. Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
+<p>OK. We&#x2019;ve got one tiny little addition to make before we are done with integrating forces into our <strong klass="">Mover</strong> class and are ready to look at examples. After all, Newton&#x2019;s second law is really <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> F </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mi> M </mi><mo> &#x00D7; </mo><mover><mrow><mi> A </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover></mstyle></math>, not <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> A </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mover><mrow><mi> F </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover></mstyle></math>. Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
 
 <p>First we just need to add mass.</p>
 
@@ -262,15 +260,15 @@ class Mover {
   // Adding mass as a float
   float mass;</pre>
 
-<p><a data-primary="mass" data-secondary="units of measurement" data-tertiary="defining" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="mass" data-secondary="units of measurement" data-tertiary="defining" data-type="indexterm">&#xa0;</a></p>
 
 <div data-type="note">
 <h1>Units of Measurement</h1>
 
-<p>Now that we are introducing mass, it&rsquo;s important to make a quick note about units of measurement. In the real world, things are measured in specific units. We say that two objects are 3 meters apart, the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6 kilograms. As we&rsquo;ll see later in this book, sometimes we will want to take real-world units into consideration. However, in this chapter, we&rsquo;re going to ignore them for the most part. Our units of measurement are in pixels (&ldquo;These two circles are 100 pixels apart&rdquo;) and frames of animation (&ldquo;This circle is moving at a rate of 2 pixels per frame&rdquo;). In the case of mass, there isn&rsquo;t any unit of measurement for us to use. We&rsquo;re just going to make something up. In this example, we&rsquo;re arbitrarily picking the number 10. There is no unit of measurement, though you might enjoy inventing a unit of your own, like &ldquo;1 moog&rdquo; or &ldquo;1 yurkle.&rdquo; It should also be noted that, for demonstration purposes, we&rsquo;ll tie mass to pixels (drawing, say, a circle with a radius of 10). This will allow us to visualize the mass of an object. In the real world, however, size does not definitely indicate mass. A small metal ball could have a much higher mass than a large balloon due to its higher density.</p>
+<p>Now that we are introducing mass, it&#x2019;s important to make a quick note about units of measurement. In the real world, things are measured in specific units. We say that two objects are 3 meters apart, the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6 kilograms. As we&#x2019;ll see later in this book, sometimes we will want to take real-world units into consideration. However, in this chapter, we&#x2019;re going to ignore them for the most part. Our units of measurement are in pixels (&#x201c;These two circles are 100 pixels apart&#x201d;) and frames of animation (&#x201c;This circle is moving at a rate of 2 pixels per frame&#x201d;). In the case of mass, there isn&#x2019;t any unit of measurement for us to use. We&#x2019;re just going to make something up. In this example, we&#x2019;re arbitrarily picking the number 10. There is no unit of measurement, though you might enjoy inventing a unit of your own, like &#x201c;1 moog&#x201d; or &#x201c;1 yurkle.&#x201d; It should also be noted that, for demonstration purposes, we&#x2019;ll tie mass to pixels (drawing, say, a circle with a radius of 10). This will allow us to visualize the mass of an object. In the real world, however, size does not definitely indicate mass. A small metal ball could have a much higher mass than a large balloon due to its higher density.</p>
 </div>
 
-<p>Mass is a scalar (float), not a vector, as it&rsquo;s just one number describing the amount of matter in an object. We could be fancy about things and compute the area of a shape as its mass, but it&rsquo;s simpler to begin by saying, &ldquo;Hey, the mass of this object is&hellip;um, I dunno&hellip;how about 10?&rdquo;</p>
+<p>Mass is a scalar (float), not a vector, as it&#x2019;s just one number describing the amount of matter in an object. We could be fancy about things and compute the area of a shape as its mass, but it&#x2019;s simpler to begin by saying, &#x201c;Hey, the mass of this object is&#x2026;um, I dunno&#x2026;how about 10?&#x201d;</p>
 
 <pre data-code-language="java" data-type="programlisting">
  Mover() {
@@ -280,13 +278,13 @@ class Mover {
     mass = 10.0;
   }</pre>
 
-<p><a data-primary="forces" data-secondary="applying to objects" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="applying to objects" data-type="indexterm">&#xa0;</a></p>
 
-<p>This isn&rsquo;t so great since things only become interesting once we have objects with varying mass, but it&rsquo;ll get us started. Where does mass come in? We use it while applying Newton&rsquo;s second law to our object.</p>
+<p>This isn&#x2019;t so great since things only become interesting once we have objects with varying mass, but it&#x2019;ll get us started. Where does mass come in? We use it while applying Newton&#x2019;s second law to our object.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void applyForce(PVector force) {
-   //[full] Newton&rsquo;s second law (with force accumulation and mass)
+   //[full] Newton&#x2019;s second law (with force accumulation and mass)
    force.div(mass);
    acceleration.add(force);
    //[end]
@@ -303,14 +301,14 @@ PVector wind = new PVector(1,0);
 m1.applyForce(wind);
 m2.applyForce(wind);</pre>
 
-<p>Again, let&rsquo;s <em>be</em> the computer. Object <strong class="var">m1</strong> receives the wind force&mdash;(1,0)&mdash;divides it by mass (10), and adds it to acceleration.</p>
+<p>Again, let&#x2019;s <em>be</em> the computer. Object <strong class="var">m1</strong> receives the wind force&#x2014;(1,0)&#x2014;divides it by mass (10), and adds it to acceleration.</p>
 
-<p><strong formula="">m1 equals wind force: &nbsp;&nbsp;&nbsp; (1,0)</strong><br />
-<strong formula="">Divided by mass of 10: &nbsp;&nbsp; (0.1,0)</strong></p>
+<p><strong formula="">m1 equals wind force: &#xa0;&#xa0;&#xa0; (1,0)</strong><br />
+<strong formula="">Divided by mass of 10: &#xa0;&#xa0; (0.1,0)</strong></p>
 
-<p><a data-primary="object-oriented programming" data-secondary="references to vs. copies of objects" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="object-oriented programming" data-secondary="references to vs. copies of objects" data-type="indexterm">&#xa0;</a></p>
 
-<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&mdash;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&mdash;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <strong klass="">PVector</strong>) into a function, you are passing a reference to that object. It&rsquo;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&rsquo;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&mdash;(1,0). And so we must protect ourselves and make a copy of the <strong klass="">PVector</strong> f before dividing it by mass. Fortunately, the <strong klass="">PVector</strong> class has a convenient method for making a copy&mdash;<strong function="">get()</strong>. <strong function="">get()</strong> returns a new <strong klass="">PVector</strong> object with the same data. And so we can revise <strong function="">applyForce()</strong> as follows:</p>
+<p>OK. Moving on to object <strong class="var">m2</strong>. It also receives the wind force&#x2014;(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now&#x2014;(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <strong klass="">PVector</strong>) into a function, you are passing a reference to that object. It&#x2019;s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don&#x2019;t want <strong class="var">m2</strong> to receive a force divided by the mass of object <strong class="var">m1</strong>. We want it to receive that force in its original state&#x2014;(1,0). And so we must protect ourselves and make a copy of the <strong klass="">PVector</strong> f before dividing it by mass. Fortunately, the <strong klass="">PVector</strong> class has a convenient method for making a copy&#x2014;<strong function="">get()</strong>. <strong function="">get()</strong> returns a new <strong klass="">PVector</strong> object with the same data. And so we can revise <strong function="">applyForce()</strong> as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void applyForce(PVector force) {
@@ -320,7 +318,7 @@ void applyForce(PVector force) {
   acceleration.add(f);
 }</pre>
 
-<p>There&rsquo;s another way we could write the above function, using the static method <strong function="">div()</strong>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
+<p>There&#x2019;s another way we could write the above function, using the static method <strong function="">div()</strong>. For help with this exercise, review static methods in <a href="#chapter01_section9">Chapter 1</a>.</p>
 
 <div data-type="exercise" id="chapter02_exercise2">
 <h5>Exercise 2.2</h5>
@@ -338,33 +336,33 @@ void applyForce(PVector force) {
 <section data-type="sect1" id="chapter02_section5">
 <h1>2.5 Creating Forces</h1>
 
-<p><a data-primary="forces" data-secondary="creating" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="creating" data-type="indexterm">&#xa0;</a></p>
 
-<p>Let&rsquo;s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how to apply a force to an object (divide it by mass and add it to the object&rsquo;s acceleration vector). What are we missing? Well, we have yet to figure out how we get a force in the first place. Where do forces come from?</p>
+<p>Let&#x2019;s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how to apply a force to an object (divide it by mass and add it to the object&#x2019;s acceleration vector). What are we missing? Well, we have yet to figure out how we get a force in the first place. Where do forces come from?</p>
 
-<p>In this chapter, we&rsquo;ll look at two methods for creating forces in our Processing world.</p>
+<p>In this chapter, we&#x2019;ll look at two methods for creating forces in our Processing world.</p>
 
-<p><a data-primary="natural phenomena" data-secondary="forces" data-tertiary="modeling" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="natural phenomena" data-secondary="forces" data-tertiary="modeling" data-type="indexterm">&#xa0;</a></p>
 
 <ol>
 	<li>
-	<p><strong>Make up a force!</strong> After all, you are the programmer, the creator of your world. There&rsquo;s no reason why you can&rsquo;t just make up a force and apply it.</p>
+	<p><strong>Make up a force!</strong> After all, you are the programmer, the creator of your world. There&#x2019;s no reason why you can&#x2019;t just make up a force and apply it.</p>
 	</li>
 	<li>
 	<p><strong>Model a force!</strong> Yes, forces exist in the real world. And physics textbooks often contain formulas for these forces. We can take these formulas, translate them into source code, and model real-world forces in Processing.</p>
 	</li>
 </ol>
 
-<p>The easiest way to make up a force is to just pick a number. Let&rsquo;s start with the idea of simulating wind. How about a wind force that points to the right and is fairly weak? Assuming a <strong klass="">Mover</strong> object m, our code would look like:</p>
+<p>The easiest way to make up a force is to just pick a number. Let&#x2019;s start with the idea of simulating wind. How about a wind force that points to the right and is fairly weak? Assuming a <strong klass="">Mover</strong> object m, our code would look like:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector wind = new PVector(0.01,0);
   m.applyForce(wind);</pre>
 
-<p>The result isn&rsquo;t terribly interesting, but it is a good place to start. We create a <strong klass="">PVector</strong> object, initialize it, and pass it into an object (which in turn will apply it to its own acceleration). If we wanted to have two forces, perhaps wind and gravity (a bit stronger, pointing down), we might write the following:</p>
+<p>The result isn&#x2019;t terribly interesting, but it is a good place to start. We create a <strong klass="">PVector</strong> object, initialize it, and pass it into an object (which in turn will apply it to its own acceleration). If we wanted to have two forces, perhaps wind and gravity (a bit stronger, pointing down), we might write the following:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_1_forces/_2_1_forces.pde processingjs/chapter02/_2_1_forces/Mover.pde"><img alt="ch02 ex01" src="../images/chapter02/ch02_ex01.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -377,11 +375,11 @@ void applyForce(PVector force) {
   m.applyForce(wind);
   m.applyForce(gravity);</pre>
 
-<p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <strong class="var">m</strong>. We&rsquo;re beginning to get somewhere. We&rsquo;ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
+<p>Now we have two forces, pointing in different directions with different magnitudes, both applied to object <strong class="var">m</strong>. We&#x2019;re beginning to get somewhere. We&#x2019;ve now built a world for our objects in Processing, an environment to which they can actually respond.</p>
 
-<p>Let&rsquo;s look at how we could make this example a bit more exciting with many objects of varying mass. To do this, we&rsquo;ll need a quick review of object-oriented programming. Again, we&rsquo;re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction). However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it&rsquo;s worth taking a moment to walk through the steps of going from one object to many.</p>
+<p>Let&#x2019;s look at how we could make this example a bit more exciting with many objects of varying mass. To do this, we&#x2019;ll need a quick review of object-oriented programming. Again, we&#x2019;re not covering all the basics of programming here (for that you can check out any of the intro Processing books listed in the introduction). However, since the idea of creating a world filled with objects is pretty fundamental to all the examples in this book, it&#x2019;s worth taking a moment to walk through the steps of going from one object to many.</p>
 
-<p>This is where we are with the <strong klass="">Mover</strong> class as a whole. Notice how it is identical to the <strong klass="">Mover</strong> class created in Chapter 1, with two additions&mdash;<strong class="var">mass</strong> and a new <strong function="">applyForce()</strong> function.</p>
+<p>This is where we are with the <strong klass="">Mover</strong> class as a whole. Notice how it is identical to the <strong klass="">Mover</strong> class created in Chapter 1, with two additions&#x2014;<strong class="var">mass</strong> and a new <strong function="">applyForce()</strong> function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Mover {
@@ -393,14 +391,14 @@ class Mover {
   float mass;
 
   Mover() {
-    // And for now, we&rsquo;ll just set the mass equal to 1 for simplicity.
+    // And for now, we&#x2019;ll just set the mass equal to 1 for simplicity.
     mass = 1;
     location = new PVector(30,30);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
   }
 
-  // Newton&rsquo;s second law.
+  // Newton&#x2019;s second law.
   void applyForce(PVector force) {
     //[full] Receive a force, divide by mass, and add to acceleration.
     PVector f = PVector.div(force,mass);
@@ -457,7 +455,7 @@ void setup() {
   }
 }</pre>
 
-<p>But now we have a small issue. If we refer back to the <strong klass="">Mover</strong> object&rsquo;s constructor&hellip;</p>
+<p>But now we have a small issue. If we refer back to the <strong klass="">Mover</strong> object&#x2019;s constructor&#x2026;</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Mover() {
@@ -469,9 +467,9 @@ void setup() {
     acceleration = new PVector(0,0);
   }</pre>
 
-<p><a data-primary="constructor" data-secondary="arguments" data-tertiary="adding to" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="constructor" data-secondary="arguments" data-tertiary="adding to" data-type="indexterm">&#xa0;</a></p>
 
-<p>&hellip;we discover that every <strong klass="">Mover</strong> object is made exactly the same way. What we want are <strong klass="">Mover</strong> objects of varying mass that start at varying locations. Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
+<p>&#x2026;we discover that every <strong klass="">Mover</strong> object is made exactly the same way. What we want are <strong klass="">Mover</strong> objects of varying mass that start at varying locations. Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Mover(float m, float x , float y) {
@@ -506,7 +504,7 @@ void setup() {
 <p>Once the array of objects is declared, created, and initialized, the rest of the code is simple. We run through every object, hand them each the forces in the environment, and enjoy the show.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_2_forces_many/_2_2_forces_many.pde processingjs/chapter02/_2_2_forces_many/Mover.pde"><img alt="ch02 ex02" src="../images/chapter02/ch02_ex02.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -537,19 +535,19 @@ void draw() {
 <div data-type="exercise" id="chapter02_exercise3">
 <h5>Exercise 2.3</h5>
 
-<p>Instead of objects bouncing off the edge of the wall, create an example in which an invisible force pushes back on the objects to keep them in the window. Can you weight the force according to how far the object is from an edge&mdash;i.e., the closer it is, the stronger the force?</p>
+<p>Instead of objects bouncing off the edge of the wall, create an example in which an invisible force pushes back on the objects to keep them in the window. Can you weight the force according to how far the object is from an edge&#x2014;i.e., the closer it is, the stronger the force?</p>
 </div>
 </section>
 
 <section data-type="sect1" id="chapter02_section6">
 <h1>2.6 Gravity on Earth and Modeling a Force</h1>
 
-<p><a data-primary="forces" data-secondary="gravity" data-tertiary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="Galileo" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="gravity" data-tertiary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="Galileo" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&#xa0;</a></p>
 
-<p>You may have noticed something woefully inaccurate about this last example. The smaller the circle, the faster it falls. There is a logic to this; after all, we just stated (according to Newton&rsquo;s second law) that the smaller the mass, the higher the acceleration. But this is not what happens in the real world. If you were to climb to the top of the Leaning Tower of Pisa and drop two balls of different masses, which one will hit the ground first? According to legend, Galileo performed this exact test in 1589, discovering that they fell with the same acceleration, hitting the ground at the same time. Why is this? As we will see later in this chapter, the force of gravity is calculated relative to an object&rsquo;s mass. The bigger the object, the stronger the force. So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass. We can implement this in our sketch rather easily by multiplying our made-up gravity force by mass.</p>
+<p>You may have noticed something woefully inaccurate about this last example. The smaller the circle, the faster it falls. There is a logic to this; after all, we just stated (according to Newton&#x2019;s second law) that the smaller the mass, the higher the acceleration. But this is not what happens in the real world. If you were to climb to the top of the Leaning Tower of Pisa and drop two balls of different masses, which one will hit the ground first? According to legend, Galileo performed this exact test in 1589, discovering that they fell with the same acceleration, hitting the ground at the same time. Why is this? As we will see later in this chapter, the force of gravity is calculated relative to an object&#x2019;s mass. The bigger the object, the stronger the force. So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass. We can implement this in our sketch rather easily by multiplying our made-up gravity force by mass.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_3_forces_many_realgravity/_2_3_forces_many_realgravity.pde processingjs/chapter02/_2_3_forces_many_realgravity/Mover.pde"><img alt="ch02 ex03" src="../images/chapter02/ch02_ex03.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -573,25 +571,25 @@ for (int i = 0; i &lt; movers.length; i++) {
 
 <p>While the objects now fall at the same rate, because the strength of the wind force is independent of mass, the smaller objects still accelerate to the right more quickly.</p>
 
-<p>Making up forces will actually get us quite far. The world of Processing is a pretend world of pixels and you are its master. So whatever you deem appropriate to be a force, well by golly, that&rsquo;s the force it should be. Nevertheless, there may come a time where you find yourself wondering: &ldquo;But how does it really all work?&rdquo;</p>
+<p>Making up forces will actually get us quite far. The world of Processing is a pretend world of pixels and you are its master. So whatever you deem appropriate to be a force, well by golly, that&#x2019;s the force it should be. Nevertheless, there may come a time where you find yourself wondering: &#x201c;But how does it really all work?&#x201d;</p>
 
-<p><a data-primary="forces" data-secondary="models of" data-tertiary="building" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="physics (real world)" data-tertiary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="physics" data-secondary="modeling" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="models of" data-tertiary="building" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="physics (real world)" data-tertiary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="physics" data-secondary="modeling" data-type="indexterm">&#xa0;</a></p>
 
-<p>Open up any high school physics textbook and you will find some diagrams and formulas describing many different forces&mdash;gravity, electromagnetism, friction, tension, elasticity, and more. In this chapter we&rsquo;re going to look at two forces&mdash;friction and gravity. The point we&rsquo;re making here is not that friction and gravity are fundamental forces that you always need to have in your Processing sketches. Rather, we want to evaluate these two forces as case studies for the following process:</p>
+<p>Open up any high school physics textbook and you will find some diagrams and formulas describing many different forces&#x2014;gravity, electromagnetism, friction, tension, elasticity, and more. In this chapter we&#x2019;re going to look at two forces&#x2014;friction and gravity. The point we&#x2019;re making here is not that friction and gravity are fundamental forces that you always need to have in your Processing sketches. Rather, we want to evaluate these two forces as case studies for the following process:</p>
 
 <ul>
 	<li>
 	<p>Understanding the concept behind a force</p>
 	</li>
 	<li>
-	<p>Deconstructing the force&rsquo;s formula into two parts:</p>
+	<p>Deconstructing the force&#x2019;s formula into two parts:</p>
 
 	<ul>
 		<li>
-		<p>How do we compute the force&rsquo;s direction?</p>
+		<p>How do we compute the force&#x2019;s direction?</p>
 		</li>
 		<li>
-		<p>How do we compute the force&rsquo;s magnitude?</p>
+		<p>How do we compute the force&#x2019;s magnitude?</p>
 		</li>
 	</ul>
 	</li>
@@ -600,34 +598,35 @@ for (int i = 0; i &lt; movers.length; i++) {
 	</li>
 </ul>
 
-<p>If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling &ldquo;atomic nuclei weak nuclear force&rdquo; at 3 a.m., you will have the skills to take what you find and adapt it for Processing.</p>
+<p>If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling &#x201c;atomic nuclei weak nuclear force&#x201d; at 3 a.m., you will have the skills to take what you find and adapt it for Processing.</p>
 
-<p><a data-primary="formulae" data-secondary="evaluating in code" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="formulae" data-secondary="evaluating in code" data-type="indexterm">&#xa0;</a></p>
 
 <div data-type="note">
 <h1>Dealing with formulae</h1>
 
-<p>OK, in a moment we&rsquo;re going to write out the formula for friction. This isn&rsquo;t the first time we&rsquo;ve seen a formula in this book; we just finished up our discussion of Newton&rsquo;s second law, {newton2a} (or force = mass * acceleration). We didn&rsquo;t spend a lot of time worrying about this formula because it&rsquo;s a nice and simple one. Nevertheless, it&rsquo;s a scary world out there. Just take a look at the equation for a &ldquo;normal&rdquo; distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
+<p>OK, in a moment we&#x2019;re going to write out the formula for friction. This isn&#x2019;t the first time we&#x2019;ve seen a formula in this book; we just finished up our discussion of Newton&#x2019;s second law, <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> F </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mi> M </mi><mo> &#x00D7; </mo><mover><mrow><mi> A </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover></mstyle></math> (or force = mass * acceleration). We didn&#x2019;t spend a lot of time worrying about this formula because it&#x2019;s a nice and simple one. Nevertheless, it&#x2019;s a scary world out there. Just take a look at the equation for a &#x201c;normal&#x201d; distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
 
-<p>{normal}</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> f </mi><mfenced><mrow><mi> x </mi><mo> ; </mo><mi> &#x00B5; </mi><mo> , </mo><msup><mrow><mi> &#x03C3; </mi></mrow><mrow><mn> 2 </mn></mrow></msup></mrow></mfenced><mo> = </mo><mfrac><mrow><mn> 1 </mn></mrow><mrow><mi> &#x03C3; </mi><msqrt><mn> 2 </mn><mi> &#x03C0; </mi></msqrt></mrow></mfrac><mi> e </mi><msup><mo> - </mo><mfrac><mrow><msup><mrow><mfenced><mrow><mi> x </mi><mo> - </mo><mi> &#x00B5; </mi></mrow></mfenced></mrow><mrow><mn> 2 </mn></mrow></msup></mrow><mrow><mn> 2 </mn><msup><mrow><mi> &#x03C3; </mi></mrow><mrow><mn> 2 </mn></mrow></msup></mrow></mfrac></msup></mstyle></math>
 
-<p><a data-primary="friction" data-secondary="formula for" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="friction" data-secondary="formula for" data-type="indexterm">&#xa0;</a></p>
 
-<p>What we&rsquo;re seeing here is that formulas like to use a lot of symbols (quite often letters from the Greek alphabet). Let&rsquo;s take a look at the formula for friction.</p>
+<p>What we&#x2019;re seeing here is that formulas like to use a lot of symbols (quite often letters from the Greek alphabet). Let&#x2019;s take a look at the formula for friction.</p>
 
-<p>{friction1}</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> F </mi><mi> r </mi><mi> i </mi><mi> c </mi><mi> t </mi><mi> i </mi><mi> o </mi><mi> n </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mo> - </mo><mi> &#x00B5; </mi><mi> N </mi><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>
 
-<p>If it&rsquo;s been a while since you&rsquo;ve looked at a formula from a math or physics textbook, there are three key points that are important to cover before we move on.</p>
+<p>If it&#x2019;s been a while since you&#x2019;ve looked at a formula from a math or physics textbook, there are three key points that are important to cover before we move on.</p>
 
 <ul>
 	<li>
-	<p><strong><em>Evaluate the right side, assign to the left side.</em></strong> This is just like in code! What we&rsquo;re doing here is evaluating the right side of the equation and assigning it to the left. In the case above, we want to calculate the force of friction&mdash;the left side tells us what we want to calculate and the right side tells us how to do it.</p>
+	<p><strong><em>Evaluate the right side, assign to the left side.</em></strong> This is just like in code! What we&#x2019;re doing here is evaluating the right side of the equation and assigning it to the left. In the case above, we want to calculate the force of friction&#x2014;the left side tells us what we want to calculate and the right side tells us how to do it.</p>
 	</li>
 	<li>
-	<p><strong><em>Are we talking about a vector or a scalar?</em></strong> It&rsquo;s important for us to realize that in some cases, we&rsquo;ll be looking at a vector; in others, a scalar. For example, in this case the force of friction is a vector. We can see that by the arrow above the word &ldquo;friction.&rdquo; It has a magnitude and direction. The right side of the equation also has a vector, as indicated by the symbol {unitv}, which in this case stands for the velocity unit vector.</p>
+	<p><strong><em>Are we talking about a vector or a scalar?</em></strong> It&#x2019;s important for us to realize that in some cases, we&#x2019;ll be looking at a vector; in others, a scalar. For example, in this case the force of friction is a vector. We can see that by the arrow above the word &#x201c;friction.&#x201d; It has a magnitude and direction. The right side of the equation also has a vector, as indicated by the symbol <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>, which in this case stands for the velocity unit vector.</p>
 	</li>
 	<li>
-	<p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong> The formula above actually has four elements: -1, <em>&mu;</em>, <em>N</em>, and {unitv}. We want to multiply them together and read the formula as: {friction2}</p>
+	<p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong> The formula above actually has four elements: -1, <em>&#956;</em>, <em>N</em>, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>. We want to multiply them together and read the formula as: </p>
+	<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> F </mi><mi> r </mi><mi> i </mi><mi> c </mi><mi> t </mi><mi> i </mi><mi> o </mi><mi> n </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo> <mo> - </mo><mn> 1 </mn><mo> * </mo><mi> &#x00B5; </mi><mo> * </mo><mi> N </mi><mo> * </mo><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>
 	</li>
 </ul>
 </div>
@@ -636,55 +635,55 @@ for (int i = 0; i &lt; movers.length; i++) {
 <section data-type="sect1" id="chapter02_section7">
 <h1>2.7 Friction</h1>
 
-<p><a data-primary="forces" data-secondary="friction" data-tertiary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="modeling with formulae" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="friction" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="friction" data-tertiary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="friction" data-secondary="modeling with formulae" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="friction" data-type="indexterm">&#xa0;</a></p>
 
-<p>Let&rsquo;s begin with friction and follow our steps.</p>
+<p>Let&#x2019;s begin with friction and follow our steps.</p>
 
-<p><a data-primary="dissipative force" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="dissipative force" data-type="indexterm">&#xa0;</a></p>
 
-<p>Friction is a <strong><em>dissipative force</em></strong>. A dissipative force is one in which the total energy of a system decreases when an object is in motion. Let&rsquo;s say you are driving a car. When you press your foot down on the brake pedal, the car&rsquo;s brakes use friction to slow down the motion of the tires. Kinetic energy (motion) is converted into thermal energy (heat). Whenever two surfaces come into contact, they experience friction. A complete model of friction would include separate cases for static friction (a body at rest against a surface) and kinetic friction (a body in motion against a surface), but for our purposes, we are only going to look at the kinetic case.</p>
+<p>Friction is a <strong><em>dissipative force</em></strong>. A dissipative force is one in which the total energy of a system decreases when an object is in motion. Let&#x2019;s say you are driving a car. When you press your foot down on the brake pedal, the car&#x2019;s brakes use friction to slow down the motion of the tires. Kinetic energy (motion) is converted into thermal energy (heat). Whenever two surfaces come into contact, they experience friction. A complete model of friction would include separate cases for static friction (a body at rest against a surface) and kinetic friction (a body in motion against a surface), but for our purposes, we are only going to look at the kinetic case.</p>
 
-<p>Here&rsquo;s the formula for friction:</p>
+<p>Here&#x2019;s the formula for friction:</p>
 
 <figure id="chapter02_figure3"><img alt="Figure 2.3" src="../images/chapter02/ch02_03.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
-<p><a data-primary="friction" data-secondary="determining direction/magnitude of" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="friction" data-secondary="determining direction/magnitude of" data-type="indexterm">&#xa0;</a></p>
 
-<p>It&rsquo;s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that&rsquo;s the part of the formula that says -1 * {unitv}, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
+<p>It&#x2019;s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that&#x2019;s the part of the formula that says -1 * <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector friction = velocity.get();
 friction.normalize();
-// Let&rsquo;s figure out the direction of the friction force
+// Let&#x2019;s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
 friction.mult(-1);</pre>
 
-<p>Notice two additional steps here. First, it&rsquo;s important to make a copy of the velocity vector, as we don&rsquo;t want to reverse the object&rsquo;s direction by accident. Second, we normalize the vector. This is because the magnitude of friction is not associated with how fast it is moving, and we want to start with a friction vector of magnitude 1 so that it can easily be scaled.</p>
+<p>Notice two additional steps here. First, it&#x2019;s important to make a copy of the velocity vector, as we don&#x2019;t want to reverse the object&#x2019;s direction by accident. Second, we normalize the vector. This is because the magnitude of friction is not associated with how fast it is moving, and we want to start with a friction vector of magnitude 1 so that it can easily be scaled.</p>
 
-<p><a data-primary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="coefficient of friction" data-type="indexterm">&nbsp;</a> <a data-primary="coefficient of friction" data-secondary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="coefficient of friction" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="mu (μ)" data-type="indexterm">&#xa0;</a> <a data-primary="coefficient of friction" data-type="indexterm">&#xa0;</a> <a data-primary="coefficient of friction" data-secondary="mu (μ)" data-type="indexterm">&#xa0;</a> <a data-primary="friction" data-secondary="mu (μ)" data-type="indexterm">&#xa0;</a> <a data-primary="friction" data-secondary="coefficient of friction" data-type="indexterm">&#xa0;</a></p>
 
-<p>According to the formula, the magnitude is <strong class="var">&mu;</strong> * <strong class="var">N</strong>. <strong class="var">&mu;</strong>, the Greek letter <em>mu</em> (pronounced &ldquo;mew&rdquo;), is used here to describe the <strong><em>coefficient of friction</em></strong>. The coefficient of friction establishes the strength of a friction force for a particular surface. The higher it is, the stronger the friction; the lower, the weaker. A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper. Since we&rsquo;re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
+<p>According to the formula, the magnitude is <strong class="var">&#956;</strong> * <strong class="var">N</strong>. <strong class="var">&#956;</strong>, the Greek letter <em>mu</em> (pronounced &#x201c;mew&#x201d;), is used here to describe the <strong><em>coefficient of friction</em></strong>. The coefficient of friction establishes the strength of a friction force for a particular surface. The higher it is, the stronger the friction; the lower, the weaker. A block of ice, for example, will have a much lower coefficient of friction than, say, sandpaper. Since we&#x2019;re in a pretend Processing world, we can arbitrarily set the coefficient based on how much friction we want to simulate.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float c = 0.01;</pre>
 
-<p><a data-primary="friction" data-secondary="normal force" data-type="indexterm">&nbsp;</a> <a data-primary="normal force" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="friction" data-secondary="normal force" data-type="indexterm">&#xa0;</a> <a data-primary="normal force" data-type="indexterm">&#xa0;</a></p>
 
-<p>Now for the second part: <strong class="var">N</strong>. <strong class="var">N</strong> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object&rsquo;s motion along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with gravity, and Newton&rsquo;s third law tells us that the road in turn pushes back against the vehicle. That&rsquo;s the normal force. The greater the gravitational force, the greater the normal force. As we&rsquo;ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck. With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn&rsquo;t point in the same direction as gravity. We&rsquo;ll need to know something about angles and trigonometry.</p>
+<p>Now for the second part: <strong class="var">N</strong>. <strong class="var">N</strong> refers to the <strong><em>normal force</em></strong>, the force perpendicular to the object&#x2019;s motion along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with gravity, and Newton&#x2019;s third law tells us that the road in turn pushes back against the vehicle. That&#x2019;s the normal force. The greater the gravitational force, the greater the normal force. As we&#x2019;ll see in the next section, gravity is associated with mass, and so a lightweight sports car would experience less friction than a massive tractor trailer truck. With the diagram above, however, where the object is moving along a surface at an angle, computing the normal force is a bit more complicated because it doesn&#x2019;t point in the same direction as gravity. We&#x2019;ll need to know something about angles and trigonometry.</p>
 
-<p>All of these specifics are important; however, in Processing, a &ldquo;good enough&rdquo; simulation can be achieved without them. We can, for example, make friction work with the assumption that the normal force will always have a magnitude of 1. When we get into trigonometry in the next chapter, we&rsquo;ll remember to return to this question and make our friction example a bit more sophisticated. Therefore:</p>
+<p>All of these specifics are important; however, in Processing, a &#x201c;good enough&#x201d; simulation can be achieved without them. We can, for example, make friction work with the assumption that the normal force will always have a magnitude of 1. When we get into trigonometry in the next chapter, we&#x2019;ll remember to return to this question and make our friction example a bit more sophisticated. Therefore:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float normal = 1;</pre>
 
-<p>Now that we have both the magnitude and direction for friction, we can put it all together&hellip;</p>
+<p>Now that we have both the magnitude and direction for friction, we can put it all together&#x2026;</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float c = 0.01;
 float normal = 1;
-// Let&rsquo;s figure out the magnitude of friction
+// Let&#x2019;s figure out the magnitude of friction
 // (really just an arbitrary constant).
 float frictionMag = c*normal;
 
@@ -696,14 +695,14 @@ friction.normalize();
 // and we have our force vector!
 friction.mult(frictionMag);</pre>
 
-<p>&hellip;and add it to our &ldquo;forces&rdquo; example, where many objects experience wind, gravity, and now friction:</p>
+<p>&#x2026;and add it to our &#x201c;forces&#x201d; example, where many objects experience wind, gravity, and now friction:</p>
 
 <figure class="two-col" data-pde="processingjs/chapter02/_2_4_forces_nofriction/_2_4_forces_nofriction.pde processingjs/chapter02/_2_4_forces_nofriction/Mover.pde"><img alt="No friction" src="../images/chapter02/ch02_ex04a.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <figure class="two-col" data-pde="processingjs/chapter02/_2_4_forces_friction/_2_4_forces_friction.pde processingjs/chapter02/_2_4_forces_friction/Mover.pde"><img alt="With friction" src="../images/chapter02/ch02_ex04b.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -738,12 +737,12 @@ void draw() {
 
 }</pre>
 
-<p>Running this example, you&rsquo;ll notice that the circles don&rsquo;t even make it to the right side of the window. Since friction continuously pushes against the object in the opposite direction of its movement, the object continuously slows down. This can be a useful technique or a problem depending on the goals of your visualization.</p>
+<p>Running this example, you&#x2019;ll notice that the circles don&#x2019;t even make it to the right side of the window. Since friction continuously pushes against the object in the opposite direction of its movement, the object continuously slows down. This can be a useful technique or a problem depending on the goals of your visualization.</p>
 
 <div data-type="exercise" id="chapter02_exercise4">
 <h5>Exercise 2.4</h5>
 
-<p>Create pockets of friction in a Processing sketch so that objects only experience friction when crossing over those pockets. What if you vary the strength (friction coefficient) of each area? What if you make some pockets feature the opposite of friction&mdash;i.e., when you enter a given pocket you actually speed up instead of slowing down?</p>
+<p>Create pockets of friction in a Processing sketch so that objects only experience friction when crossing over those pockets. What if you vary the strength (friction coefficient) of each area? What if you make some pockets feature the opposite of friction&#x2014;i.e., when you enter a given pocket you actually speed up instead of slowing down?</p>
 </div>
 </section>
 
@@ -751,16 +750,16 @@ void draw() {
 <h1>2.8 Air and Fluid Resistance</h1>
 
 <figure id="chapter02_figure4"><img alt="Figure 2.4" src="../images/chapter02/ch02_04.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
-<p><a data-primary="drag force" data-type="indexterm">&nbsp;</a> <a data-primary="fluid resistance" data-secondary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="forces" data-secondary="fluid resistance" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="fluid resistance" data-tertiary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="viscous force" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="drag force" data-type="indexterm">&#xa0;</a> <a data-primary="fluid resistance" data-secondary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="forces" data-secondary="fluid resistance" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="fluid resistance" data-tertiary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="viscous force" data-type="indexterm">&#xa0;</a></p>
 
-<p>Friction also occurs when a body passes through a liquid or gas. This force has many different names, all really meaning the same thing: <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>. While the result is ultimately the same as our previous friction examples (the object slows down), the way in which we calculate a drag force will be slightly different. Let&rsquo;s look at the formula:</p>
+<p>Friction also occurs when a body passes through a liquid or gas. This force has many different names, all really meaning the same thing: <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>. While the result is ultimately the same as our previous friction examples (the object slows down), the way in which we calculate a drag force will be slightly different. Let&#x2019;s look at the formula:</p>
 
-<p>{drag1}</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><msub><mrow><mi> F </mi></mrow><mrow><mi> d </mi></mrow></msub><mo> = </mo><mo> - </mo><mfrac><mrow><mn> 1 </mn></mrow><mrow><mn> 2 </mn></mrow></mfrac><mi> &#x03C1; </mi><msup><mrow><mi> v </mi></mrow><mrow><mn> 2 </mn></mrow></msup><mi> A </mi><msub><mrow><mi> C </mi></mrow><mrow><mi> d </mi></mrow></msub><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math>
 
-<p>Now let&rsquo;s break this down and see what we really need for an effective simulation in Processing, making ourselves a much simpler formula in the process.</p>
+<p>Now let&#x2019;s break this down and see what we really need for an effective simulation in Processing, making ourselves a much simpler formula in the process.</p>
 
 <ul>
 	<li>
@@ -771,30 +770,30 @@ void draw() {
 	</li>
 </ul>
 
-<p><a data-primary="rho (ρ)" data-type="indexterm">&nbsp;</a> <a data-primary="friction" data-secondary="rho (ρ)" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="rho (ρ)" data-type="indexterm">&#xa0;</a> <a data-primary="friction" data-secondary="rho (ρ)" data-type="indexterm">&#xa0;</a></p>
 
 <ul>
 	<li>
-	<p>{rho} is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don&rsquo;t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
+	<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> &#x03C1; </mi></mstyle></math> is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don&#x2019;t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
 	</li>
 	<li>
-	<p>{v} refers to the speed of the object moving. OK, we&rsquo;ve got this one! The object&rsquo;s speed is the magnitude of the velocity vector: <strong function="">velocity.magnitude()</strong>. And {v2} just means {v} squared or {v} * {v}.</p>
+	<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> v </mi></mstyle></math> refers to the speed of the object moving. OK, we&#x2019;ve got this one! The object&#x2019;s speed is the magnitude of the velocity vector: <strong function="">velocity.magnitude()</strong>. And <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><msup><mrow><mi> v </mi></mrow><mrow><mn> 2 </mn></mrow></msup></mstyle></math> just means <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> v </mi></mstyle></math> squared or <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> v </mi></mstyle></math> * <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi> v </mi></mstyle></math>.</p>
 	</li>
 	<li>
 	<p>{a} refers to the frontal area of the object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p>
 	</li>
 	<li>
-	<p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction (μ). This is a constant we&rsquo;ll determine based on whether we want the drag force to be strong or weak.</p>
+	<p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction (μ). This is a constant we&#x2019;ll determine based on whether we want the drag force to be strong or weak.</p>
 	</li>
 	<li>
-	<p>{unitv} Look familiar? It should. This refers to the velocity unit vector, i.e. <strong function="">velocity.normalize()</strong>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
+	<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> v </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math> Look familiar? It should. This refers to the velocity unit vector, i.e. <strong function="">velocity.normalize()</strong>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
 	</li>
 </ul>
 
-<p>Now that we&rsquo;ve analyzed each of these components and determined what we need for a simple simulation, we can reduce our formula to:</p>
+<p>Now that we&#x2019;ve analyzed each of these components and determined what we need for a simple simulation, we can reduce our formula to:</p>
 
 <figure id="chapter02_figure5"><img alt="Figure 2.5: Our simplified drag force formula" src="../images/chapter02/ch02_05.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <p>or:</p>
@@ -812,9 +811,9 @@ drag.normalize();
 // Magnitude and direction together!
 drag.mult(dragMagnitude);</pre>
 
-<p><a data-primary="friction" data-secondary="applying to an object" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="friction" data-secondary="applying to an object" data-type="indexterm">&#xa0;</a></p>
 
-<p>Let&rsquo;s implement this force in our <strong klass="">Mover</strong> class example with one addition. When we wrote our friction example, the force of friction was always present. Whenever an object was moving, friction would slow it down. Here, let&rsquo;s introduce an element to the environment&mdash;a &ldquo;liquid&rdquo; that the <strong klass="">Mover</strong> objects pass through. The <strong klass="">Liquid</strong> object will be a rectangle and will know about its location, width, height, and &ldquo;coefficient of drag&rdquo;&mdash;i.e., is it easy for objects to move through it (like air) or difficult (like molasses)? In addition, it should include a function to draw itself on the screen (and two more functions, which we&rsquo;ll see in a moment).</p>
+<p>Let&#x2019;s implement this force in our <strong klass="">Mover</strong> class example with one addition. When we wrote our friction example, the force of friction was always present. Whenever an object was moving, friction would slow it down. Here, let&#x2019;s introduce an element to the environment&#x2014;a &#x201c;liquid&#x201d; that the <strong klass="">Mover</strong> objects pass through. The <strong klass="">Liquid</strong> object will be a rectangle and will know about its location, width, height, and &#x201c;coefficient of drag&#x201d;&#x2014;i.e., is it easy for objects to move through it (like air) or difficult (like molasses)? In addition, it should include a function to draw itself on the screen (and two more functions, which we&#x2019;ll see in a moment).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Liquid {
@@ -853,7 +852,7 @@ void setup() {
 
 <p><em>When a mover passes through a liquid it experiences a drag force.</em></p>
 
-<p>&hellip;or in object-oriented speak (assuming we are looping through an array of <strong klass="">Mover</strong> objects with index i):</p>
+<p>&#x2026;or in object-oriented speak (assuming we are looping through an array of <strong klass="">Mover</strong> objects with index i):</p>
 
 <pre data-code-language="java" data-type="programlisting">
 if (liquid.contains(movers[i])) {
@@ -863,21 +862,21 @@ if (liquid.contains(movers[i])) {
 
 <p>The above code tells us that we need to add two functions to the <strong klass="">Liquid</strong> class: (1) a function that determines if a <strong klass="">Mover</strong> object is inside the <strong klass="">Liquid</strong> object, and (2) a function that computes and applies a drag force on the <strong klass="">Mover</strong> object.</p>
 
-<p>The first is easy; we can simply use a boolean expression&nbsp;to determine if the location vector rests inside the rectangle defined by the liquid.</p>
+<p>The first is easy; we can simply use a boolean expression&#xa0;to determine if the location vector rests inside the rectangle defined by the liquid.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 boolean contains(Mover m) {
-&nbsp; PVector loc = m.location;
-  //[offset-down] This boolean expression determines if the PVector location is inside the rectangle defined by the Liquid class. &nbsp; 
+&#xa0; PVector loc = m.location;
+  //[offset-down] This boolean expression determines if the PVector location is inside the rectangle defined by the Liquid class. &#xa0; 
   return loc.x &gt; x &amp;&amp; loc.x &lt; x + w &amp;&amp; loc.y &gt; y &amp;&amp; loc.y &lt; y + h;
 }</pre>
 
-<p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&rsquo;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
+<p>The <strong function="">drag()</strong> function is a bit more complicated; however, we&#x2019;ve written the code for it already. This is simply an implementation of our formula. The drag force is equal to <em>the coefficient of drag multiplied by the speed of the <strong klass="">Mover</strong> squared in the opposite direction of velocity!</em></p>
 
 <pre data-code-language="java" data-type="programlisting">
  void drag(Mover m) {
   float speed = m.velocity.mag();
-  // The force&rsquo;s magnitude: Cd * v~2~
+  // The force&#x2019;s magnitude: Cd * v~2~
   float dragMagnitude = c * speed * speed;
 
   // The force's direction: -1 * velocity 
@@ -888,10 +887,10 @@ boolean contains(Mover m) {
   m.applyForce(drag);
 }</pre>
 
-<p>And with these two functions added to the <strong klass="">Liquid</strong> class, we&rsquo;re ready to put it all together in the main tab:</p>
+<p>And with these two functions added to the <strong klass="">Liquid</strong> class, we&#x2019;re ready to put it all together in the main tab:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_5_fluidresistance/_2_5_fluidresistance.pde processingjs/chapter02/_2_5_fluidresistance/Liquid.pde processingjs/chapter02/_2_5_fluidresistance/Mover.pde"><img alt="ch02 ex05" src="../images/chapter02/ch02_ex05.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -918,7 +917,7 @@ void draw() {
 
   for (int i = 0; i &lt; movers.length; i++) {
 
-&nbsp; &nbsp; if (liquid.contains(movers[i])) {
+&#xa0; &#xa0; if (liquid.contains(movers[i])) {
       liquid.drag(movers[i]);
     }
 
@@ -933,7 +932,7 @@ void draw() {
   }
 }</pre>
 
-<p>Running the example, you should notice that we are simulating balls falling into water. The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid). You&rsquo;ll also notice that the smaller objects slow down a great deal more than the larger objects. Remember Newton&rsquo;s second law? <strong class="var">A</strong> = <strong class="var">F</strong> / <strong class="var">M</strong>. Acceleration equals force <em>divided</em> by mass. A massive object will accelerate less. A smaller object will accelerate more. In this case, the acceleration we&rsquo;re talking about is the &ldquo;slowing down&rdquo; due to drag. The smaller objects will slow down at a greater rate than the larger ones.</p>
+<p>Running the example, you should notice that we are simulating balls falling into water. The objects only slow down when crossing through the gray area at the bottom of the window (representing the liquid). You&#x2019;ll also notice that the smaller objects slow down a great deal more than the larger objects. Remember Newton&#x2019;s second law? <strong class="var">A</strong> = <strong class="var">F</strong> / <strong class="var">M</strong>. Acceleration equals force <em>divided</em> by mass. A massive object will accelerate less. A smaller object will accelerate more. In this case, the acceleration we&#x2019;re talking about is the &#x201c;slowing down&#x201d; due to drag. The smaller objects will slow down at a greater rate than the larger ones.</p>
 
 <div data-type="exercise" id="chapter02_exercise5">
 <h5>Exercise 2.5</h5>
@@ -950,48 +949,48 @@ void draw() {
 <div data-type="exercise" id="chapter02_exercise7">
 <h5>Exercise 2.7</h5>
 
-<p>Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it. This is known as &ldquo;lift-induced drag&rdquo; and will cause an airplane with an angled wing to rise in altitude. Try creating a simulation of lift.</p>
+<p>Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it. This is known as &#x201c;lift-induced drag&#x201d; and will cause an airplane with an angled wing to rise in altitude. Try creating a simulation of lift.</p>
 </div>
 </section>
 
 <section data-type="sect1" id="chapter02_section9">
 <h1>2.9 Gravitational Attraction</h1>
 
-<p><a data-primary="gravity" data-secondary="modeling" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="gravity" data-secondary="modeling" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&#xa0;</a></p>
 
 <figure class="half-width-right" id="chapter02_figure6"><img alt="Figure 2.6" src="../images/chapter02/ch02_06.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <p>Probably the most famous force of all is gravity. We humans on earth think of gravity as an apple hitting Isaac Newton on the head. Gravity means that stuff falls down. But this is only <em>our</em> experience of gravity. In truth, just as the earth pulls the apple towards it due to a gravitational force, the apple pulls the earth as well. The thing is, the earth is just so freaking big that it overwhelms all the other gravity interactions. Every object with mass exerts a gravitational force on every other object. And there is a formula for calculating the strengths of these forces, as depicted in Figure 2.6.</p>
 
-<p>Let&rsquo;s examine this formula a bit more closely.</p>
+<p>Let&#x2019;s examine this formula a bit more closely.</p>
 
-<p><a data-primary="forces" data-secondary="universal gravitational constant" data-type="indexterm">&nbsp;</a> <a data-primary="gravity" data-secondary="universal gravitational constant" data-type="indexterm">&nbsp;</a> <a data-primary="universal gravitational constant" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="forces" data-secondary="universal gravitational constant" data-type="indexterm">&#xa0;</a> <a data-primary="gravity" data-secondary="universal gravitational constant" data-type="indexterm">&#xa0;</a> <a data-primary="universal gravitational constant" data-type="indexterm">&#xa0;</a></p>
 
 <ul>
 	<li>
 	<p><strong class="var">F</strong> refers to the gravitational force, the vector we ultimately want to compute and pass into our <strong function="">applyForce()</strong> function.</p>
 	</li>
 	<li>
-	<p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&rsquo;s not an important number if you are a Processing programmer. Again, it&rsquo;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&rsquo;t such a terrible choice either.</p>
+	<p><strong class="var">G</strong> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It&#x2019;s not an important number if you are a Processing programmer. Again, it&#x2019;s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn&#x2019;t such a terrible choice either.</p>
 	</li>
 	<li>
-	<p><strong class="var">m<sub>1</sub></strong> and <strong class="var">m<sub>2</sub></strong> are the masses of objects 1 and 2. As we saw with Newton&rsquo;s second law ({newton2a}), mass is also something we could choose to ignore. After all, shapes drawn on the screen don&rsquo;t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which &ldquo;bigger&rdquo; objects exert a stronger gravitational force than smaller ones.</p>
+	<p><strong class="var">m<sub>1</sub></strong> and <strong class="var">m<sub>2</sub></strong> are the masses of objects 1 and 2. As we saw with Newton&#x2019;s second law (<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> F </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover><mo> = </mo><mi> M </mi><mo> &#x00D7; </mo><mover><mrow><mi> A </mi></mrow><mrow><mo> &#x2192; </mo></mrow></mover></mstyle></math>), mass is also something we could choose to ignore. After all, shapes drawn on the screen don&#x2019;t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which &#x201c;bigger&#x201d; objects exert a stronger gravitational force than smaller ones.</p>
 	</li>
 	<li>
-	<p>{unitr} refers to the unit vector pointing from object 1 to object 2. As we&rsquo;ll see in a moment, we can compute this direction vector by subtracting the location of one object from the other.</p>
+	<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> r </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math> refers to the unit vector pointing from object 1 to object 2. As we&#x2019;ll see in a moment, we can compute this direction vector by subtracting the location of one object from the other.</p>
 	</li>
 	<li>
-	<p><strong class="var">r</strong><sup>2</sup> refers to the distance between the two objects squared. Let&rsquo;s take a moment to think about this a bit more. With everything on the top of the formula&mdash;<strong class="var">G</strong>, <strong class="var">m<sub>1</sub></strong>, <strong class="var">m<sub>2</sub></strong>&mdash;the bigger its value, the stronger the force. Big mass, big force. Big <strong class="var">G</strong>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
+	<p><strong class="var">r</strong><sup>2</sup> refers to the distance between the two objects squared. Let&#x2019;s take a moment to think about this a bit more. With everything on the top of the formula&#x2014;<strong class="var">G</strong>, <strong class="var">m<sub>1</sub></strong>, <strong class="var">m<sub>2</sub></strong>&#x2014;the bigger its value, the stronger the force. Big mass, big force. Big <strong class="var">G</strong>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
 	</li>
 </ul>
 
-<p>Hopefully by now the formula makes some sense to us. We&rsquo;ve looked at a diagram and dissected the individual components of the formula. Now it&rsquo;s time to figure out how we translate the math into Processing code. Let&rsquo;s make the following assumptions.</p>
+<p>Hopefully by now the formula makes some sense to us. We&#x2019;ve looked at a diagram and dissected the individual components of the formula. Now it&#x2019;s time to figure out how we translate the math into Processing code. Let&#x2019;s make the following assumptions.</p>
 
 <p>We have two objects, and:</p>
 
-<p><a data-primary="gravity" data-secondary="implementing model of" data-type="indexterm">&nbsp;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="gravity" data-secondary="implementing model of" data-type="indexterm">&#xa0;</a> <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm">&#xa0;</a></p>
 
 <ol>
 	<li>
@@ -1005,10 +1004,10 @@ void draw() {
 	</li>
 </ol>
 
-<p>Given these assumptions, we want to compute <strong class="var">PVector force</strong>, the force of gravity. We&rsquo;ll do it in two parts. First, we&rsquo;ll compute the direction of the force {unitr} in the formula above. Second, we&rsquo;ll calculate the strength of the force according to the masses and distance.</p>
+<p>Given these assumptions, we want to compute <strong class="var">PVector force</strong>, the force of gravity. We&#x2019;ll do it in two parts. First, we&#x2019;ll compute the direction of the force <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mover><mrow><mi> r </mi></mrow><mrow><mo> &#x2227; </mo></mrow></mover></mstyle></math> in the formula above. Second, we&#x2019;ll calculate the strength of the force according to the masses and distance.</p>
 
 <figure class="half-width-right" id="chapter02_figure7"><img alt="Figure 2.7" src="../images/chapter02/ch02_07.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <p>Remember in <a href="#chapter01_section10">Chapter 1</a>, when we figured out how to have an object accelerate towards the mouse? (See Figure 2.7.)</p>
@@ -1024,21 +1023,21 @@ PVector dir = PVector.sub(mouse,location);</pre>
 PVector dir = PVector.sub(location1,location2);
 dir.normalize();</pre>
 
-<p>Don&rsquo;t forget that since we want a unit vector, a vector that tells us about direction only, we&rsquo;ll need to <em>normalize</em> the vector after subtracting the locations.</p>
+<p>Don&#x2019;t forget that since we want a unit vector, a vector that tells us about direction only, we&#x2019;ll need to <em>normalize</em> the vector after subtracting the locations.</p>
 
-<p>OK, we&rsquo;ve got the direction of the force. Now we just need to compute the magnitude and scale the vector accordingly.</p>
+<p>OK, we&#x2019;ve got the direction of the force. Now we just need to compute the magnitude and scale the vector accordingly.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float m = (G * mass1 * mass2) / (distance * distance);
 dir.mult(m);</pre>
 
 <figure class="half-width-right" id="chapter02_figure8"><img alt="Figure 2.8" src="../images/chapter02/ch02_08.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
-<p>The only problem is that we don&rsquo;t know the distance. <strong class="var">G</strong>, <strong class="var">mass1</strong>, and <strong class="var">mass2</strong> were all givens, but we&rsquo;ll need to actually compute distance before the above code will work. Didn&rsquo;t we just make a vector that points all the way from one location to another? Wouldn&rsquo;t the length of that vector be the distance between two objects?</p>
+<p>The only problem is that we don&#x2019;t know the distance. <strong class="var">G</strong>, <strong class="var">mass1</strong>, and <strong class="var">mass2</strong> were all givens, but we&#x2019;ll need to actually compute distance before the above code will work. Didn&#x2019;t we just make a vector that points all the way from one location to another? Wouldn&#x2019;t the length of that vector be the distance between two objects?</p>
 
-<p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then we&rsquo;ll have the distance.</p>
+<p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then we&#x2019;ll have the distance.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The vector that points from one object to another
@@ -1055,12 +1054,12 @@ float m = (G * mass1 * mass2) / (distance * distance);
 force.normalize();
 force.mult(m);</pre>
 
-<p>Note that I also renamed the <strong klass="">PVector</strong> &ldquo;dir&rdquo; as &ldquo;force.&rdquo; After all, when we&rsquo;re finished with the calculations, the <strong klass="">PVector</strong> we started with ends up being the actual force vector we wanted all along.</p>
+<p>Note that I also renamed the <strong klass="">PVector</strong> &#x201c;dir&#x201d; as &#x201c;force.&#x201d; After all, when we&#x2019;re finished with the calculations, the <strong klass="">PVector</strong> we started with ends up being the actual force vector we wanted all along.</p>
 
-<p>Now that we&rsquo;ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch. In Example 2.1, you may recall how we created a simple <strong klass="">Mover</strong> object&mdash;a class with <strong klass="">PVector</strong><code>&rsquo;s</code> location, velocity, and acceleration as well as an <strong function="">applyForce()</strong>. Let&rsquo;s take this exact class and put it in a sketch with:</p>
+<p>Now that we&#x2019;ve worked out the math and the code for calculating an attractive force (emulating gravity), we need to turn our attention to applying this technique in the context of an actual Processing sketch. In Example 2.1, you may recall how we created a simple <strong klass="">Mover</strong> object&#x2014;a class with <strong klass="">PVector</strong><code>&#x2019;s</code> location, velocity, and acceleration as well as an <strong function="">applyForce()</strong>. Let&#x2019;s take this exact class and put it in a sketch with:</p>
 
 <figure class="half-width-right" id="chapter02_figure9"><img alt="Figure 2.9" src="../images/chapter02/ch02_09.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <ul>
@@ -1074,11 +1073,11 @@ force.mult(m);</pre>
 
 <p>The <strong klass="">Mover</strong> object will experience a gravitational pull towards the <strong klass="">Attractor</strong> object, as illustrated in Figure 2.9.</p>
 
-<p>We can start by making the new <strong klass="">Attractor</strong> class very simple&mdash;giving it a location and a mass, along with a function to display itself (tying mass to size).</p>
+<p>We can start by making the new <strong klass="">Attractor</strong> class very simple&#x2014;giving it a location and a mass, along with a function to display itself (tying mass to size).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Attractor {
-  // Our Attractor is a simple object that doesn&rsquo;t move.
+  // Our Attractor is a simple object that doesn&#x2019;t move.
   // We just need a mass and a location.
   float mass;
   PVector location;
@@ -1118,7 +1117,7 @@ void draw() {
   m.display();
 }</pre>
 
-<p><a data-primary="object" data-secondary="interaction between" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="object" data-secondary="interaction between" data-type="indexterm">&#xa0;</a></p>
 
 <p>This is a good structure: a main program with a <strong klass="">Mover</strong> and an <strong klass="">Attractor</strong> object, and a class to handle the variables and behaviors of movers and attractors. The last piece of the puzzle is how to get one object to attract the other. How do we get these two objects to talk to each other?</p>
 
@@ -1165,7 +1164,7 @@ m.applyForce(f);
 
 <p>and so on. . .</p>
 
-<p>It&rsquo;s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities. I&rsquo;d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass="">Mover</strong> or <strong klass="">Attractor</strong> class. Whether you pick option 2 or option 3 is the difference between saying &ldquo;The attractor attracts the mover&rdquo; or &ldquo;The mover is attracted to the attractor.&rdquo; Number 4 is really my favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out the <strong function="">applyForce()</strong> function, and I think our examples will be clearer if we continue with the same methodology.</p>
+<p>It&#x2019;s good to look at a range of options for making objects talk to each other, and you could probably make arguments for each of the above possibilities. I&#x2019;d like to at least discard the first one, since an object-oriented approach is really a much better choice over an arbitrary function not tied to either the <strong klass="">Mover</strong> or <strong klass="">Attractor</strong> class. Whether you pick option 2 or option 3 is the difference between saying &#x201c;The attractor attracts the mover&#x201d; or &#x201c;The mover is attracted to the attractor.&#x201d; Number 4 is really my favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out the <strong function="">applyForce()</strong> function, and I think our examples will be clearer if we continue with the same methodology.</p>
 
 <p>In other words, where we once had:</p>
 
@@ -1199,7 +1198,7 @@ void draw() {
 
 }</pre>
 
-<p>We&rsquo;re almost there. Since we decided to put the <strong function="">attract()</strong> function inside of the <strong klass="">Attractor</strong> class, we&rsquo;ll need to actually write that function. The function needs to receive a <strong klass="">Mover</strong> object and return a <strong klass="">PVector</strong>, i.e.:</p>
+<p>We&#x2019;re almost there. Since we decided to put the <strong function="">attract()</strong> function inside of the <strong klass="">Attractor</strong> class, we&#x2019;ll need to actually write that function. The function needs to receive a <strong klass="">Mover</strong> object and return a <strong klass="">PVector</strong>, i.e.:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector attract(Mover m) {
@@ -1211,11 +1210,11 @@ PVector attract(Mover m) {
 <pre data-code-language="java" data-type="programlisting">
 PVector attract(Mover m) {
 
-  // What&rsquo;s the force&rsquo;s direction?
+  // What&#x2019;s the force&#x2019;s direction?
   PVector force = PVector.sub(location,m.location);
   float distance = force.mag();
   force.normalize();
-  //[offset-down] What&rsquo;s the force&rsquo;s magnitude?
+  //[offset-down] What&#x2019;s the force&#x2019;s magnitude?
   float strength = (G * mass * m.mass) / (distance * distance);
   force.mult(strength);
 
@@ -1223,21 +1222,21 @@ PVector attract(Mover m) {
   return force;
 }</pre>
 
-<p><a data-primary="gravity" data-secondary="placing limits on model of" data-type="indexterm">&nbsp;</a></p>
+<p><a data-primary="gravity" data-secondary="placing limits on model of" data-type="indexterm">&#xa0;</a></p>
 
-<p>And we&rsquo;re done. Sort of. Almost. There&rsquo;s one small kink we need to work out. Let&rsquo;s look at the above code again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves the question: What would happen if the distance happened to be a really, really small number or (even worse!) zero??! Well, we know we can&rsquo;t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000! Yes, this is the real-world formula for the strength of gravity, but we don&rsquo;t live in the real world. We live in the <em>Processing</em> world. And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen. And so with this formula, it&rsquo;s good for us to be practical and constrain the range of what <strong class="var">distance</strong> can actually be. Maybe, no matter where the <strong klass="">Mover</strong> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
+<p>And we&#x2019;re done. Sort of. Almost. There&#x2019;s one small kink we need to work out. Let&#x2019;s look at the above code again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves the question: What would happen if the distance happened to be a really, really small number or (even worse!) zero??! Well, we know we can&#x2019;t divide a number by 0, and if we were to divide a number by something like 0.0001, that is the equivalent of multiplying that number by 10,000! Yes, this is the real-world formula for the strength of gravity, but we don&#x2019;t live in the real world. We live in the <em>Processing</em> world. And in the Processing world, the mover could end up being very, very close to the attractor and the force could become so strong the mover would just fly way off the screen. And so with this formula, it&#x2019;s good for us to be practical and constrain the range of what <strong class="var">distance</strong> can actually be. Maybe, no matter where the <strong klass="">Mover</strong> actually is, we should never consider it less than 5 pixels or more than 25 pixels away from the attractor.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   distance = constrain(distance,5,25);</pre>
 
-<p>For the same reason that we need to constrain the minimum distance, it&rsquo;s useful for us to do the same with the maximum. After all, if the mover were to be, say, 500 pixels from the attractor (not unreasonable), we&rsquo;d be dividing the force by 250,000. That force might end up being so weak that it&rsquo;s almost as if we&rsquo;re not applying it at all.</p>
+<p>For the same reason that we need to constrain the minimum distance, it&#x2019;s useful for us to do the same with the maximum. After all, if the mover were to be, say, 500 pixels from the attractor (not unreasonable), we&#x2019;d be dividing the force by 250,000. That force might end up being so weak that it&#x2019;s almost as if we&#x2019;re not applying it at all.</p>
 
-<p>Now, it&rsquo;s really up to you to decide what behaviors you want. But in the case of, &ldquo;I want reasonable-looking attraction that is never absurdly weak or strong,&rdquo; then constraining the distance is a good technique.</p>
+<p>Now, it&#x2019;s really up to you to decide what behaviors you want. But in the case of, &#x201c;I want reasonable-looking attraction that is never absurdly weak or strong,&#x201d; then constraining the distance is a good technique.</p>
 
-<p>Our <strong klass="">Mover</strong> class hasn&rsquo;t changed at all, so let&rsquo;s just look at the main program and the <strong klass="">Attractor</strong> class as a whole, adding a variable <strong class="var">G</strong> for the universal gravitational constant. (On the website, you&rsquo;ll find that this example also has code that allows you to move the <strong klass="">Attractor</strong> object with the mouse.)</p>
+<p>Our <strong klass="">Mover</strong> class hasn&#x2019;t changed at all, so let&#x2019;s just look at the main program and the <strong klass="">Attractor</strong> class as a whole, adding a variable <strong class="var">G</strong> for the universal gravitational constant. (On the website, you&#x2019;ll find that this example also has code that allows you to move the <strong klass="">Attractor</strong> object with the mouse.)</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_6_attraction/_2_6_attraction.pde processingjs/chapter02/_2_6_attraction/Attractor.pde processingjs/chapter02/_2_6_attraction/Mover.pde"><img alt="ch02 ex06" src="../images/chapter02/ch02_ex06.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -1282,7 +1281,7 @@ class Attractor {
     PVector force = PVector.sub(location,m.location);
     float distance = force.mag();
     // Remember, we need to constrain the distance
-    // so that our circle doesn&rsquo;t spin out of control.
+    // so that our circle doesn&#x2019;t spin out of control.
     distance = constrain(distance,5.0,25.0);
 
 
@@ -1302,7 +1301,7 @@ class Attractor {
 <p>And we could, of course, expand this example using an array to include many <strong klass="">Mover</strong> objects, just as we did with friction and drag:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_7_attraction_many/_2_7_attraction_many.pde processingjs/chapter02/_2_7_attraction_many/Attractor.pde processingjs/chapter02/_2_7_attraction_many/Mover.pde"><img alt="ch02 ex07" src="../images/chapter02/ch02_ex07.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -1349,16 +1348,16 @@ void draw() {
 <div data-type="exercise" id="chapter02_exercise9">
 <h5>Exercise 2.9</h5>
 
-<p>It&rsquo;s worth noting that gravitational attraction is a model we can follow to develop our own forces. This chapter isn&rsquo;t suggesting that you should exclusively create sketches that use gravitational attraction. Rather, you should be thinking creatively about how to design your own rules to drive the behavior of objects. For example, what happens if you design a force that is weaker the closer it gets and stronger the farther it gets? Or what if you design your attractor to attract faraway objects, but repel close ones?</p>
+<p>It&#x2019;s worth noting that gravitational attraction is a model we can follow to develop our own forces. This chapter isn&#x2019;t suggesting that you should exclusively create sketches that use gravitational attraction. Rather, you should be thinking creatively about how to design your own rules to drive the behavior of objects. For example, what happens if you design a force that is weaker the closer it gets and stronger the farther it gets? Or what if you design your attractor to attract faraway objects, but repel close ones?</p>
 </div>
 </section>
 
 <section data-type="sect1" id="chapter02_section10">
 <h1>2.10 Everything Attracts (or Repels) Everything</h1>
 
-<p>Hopefully, you found it helpful that we started with a simple scenario&mdash;<em>one object attracts another object</em><code>&mdash;</code>and moved on to <em>one object attracts many objects</em>. However, it&rsquo;s likely that you are going to find yourself in a slightly more complex situation: <em>many objects attract each other</em>. In other words, every object in a given system attracts every other object in that system (except for itself).</p>
+<p>Hopefully, you found it helpful that we started with a simple scenario&#x2014;<em>one object attracts another object</em><code>&#x2014;</code>and moved on to <em>one object attracts many objects</em>. However, it&#x2019;s likely that you are going to find yourself in a slightly more complex situation: <em>many objects attract each other</em>. In other words, every object in a given system attracts every other object in that system (except for itself).</p>
 
-<p>We&rsquo;ve really done almost all of the work for this already. Let&rsquo;s consider a Processing sketch with an array of <strong klass="">Mover</strong> objects:</p>
+<p>We&#x2019;ve really done almost all of the work for this already. Let&#x2019;s consider a Processing sketch with an array of <strong klass="">Mover</strong> objects:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 Mover[] movers = new Mover[10];
@@ -1378,7 +1377,7 @@ void draw() {
   }
 }</pre>
 
-<p>The <strong function="">draw()</strong> function is where we need to work some magic. Currently, we&rsquo;re saying: &ldquo;for every mover <strong class="var">i</strong>, update and display yourself.&rdquo; Now what we need to say is: &ldquo;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&rdquo;</p>
+<p>The <strong function="">draw()</strong> function is where we need to work some magic. Currently, we&#x2019;re saying: &#x201c;for every mover <strong class="var">i</strong>, update and display yourself.&#x201d; Now what we need to say is: &#x201c;for every mover <strong class="var">i</strong>, be attracted to every other mover <strong class="var">j</strong>, and update and display yourself.&#x201d;</p>
 
 <p>To do this, we need to nest a second loop.</p>
 
@@ -1414,10 +1413,10 @@ class Mover {
   }
 }</pre>
 
-<p>Of course, there&rsquo;s one small problem. When we are looking at every mover <strong class="var">i</strong> and every mover <strong class="var">j</strong>, are we OK with the times that <strong class="var">i</strong> equals <strong class="var">j</strong>? For example, should mover #3 attract mover #3? The answer, of course, is no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
+<p>Of course, there&#x2019;s one small problem. When we are looking at every mover <strong class="var">i</strong> and every mover <strong class="var">j</strong>, are we OK with the times that <strong class="var">i</strong> equals <strong class="var">j</strong>? For example, should mover #3 attract mover #3? The answer, of course, is no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so, we finish this example by adding a simple conditional statement to skip applying the force when i equals j.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter02/_2_8_mutual_attraction/_2_8_mutual_attraction.pde processingjs/chapter02/_2_8_mutual_attraction/Mover.pde"><img alt="ch02 ex08" src="../images/chapter02/ch02_ex08.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>&#xa0;</figcaption>
 </figure>
 
 <div data-type="example">
@@ -1441,7 +1440,7 @@ void draw() {
 
   for (int i = 0; i &lt; movers.length; i++) {
     for (int j = 0; j &lt; movers.length; j++) {
-      // Don&rsquo;t attract yourself!
+      // Don&#x2019;t attract yourself!
       if (i != j) {
         PVector force = movers[j].attract(movers[i]);
         movers[i].applyForce(force);
@@ -1463,7 +1462,7 @@ void draw() {
 
 <p>Step 2 Exercise:</p>
 
-<p>Incorporate the concept of forces into your ecosystem. Try introducing other elements into the environment (food, a predator) for the creature to interact with. Does the creature experience attraction or repulsion to things in its world? Can you think more abstractly and design forces based on the creature&rsquo;s desires or goals?</p>
+<p>Incorporate the concept of forces into your ecosystem. Try introducing other elements into the environment (food, a predator) for the creature to interact with. Does the creature experience attraction or repulsion to things in its world? Can you think more abstractly and design forces based on the creature&#x2019;s desires or goals?</p>
 </div>
 </section>
 </section>
