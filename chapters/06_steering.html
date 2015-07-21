@@ -248,9 +248,18 @@ class Vehicle {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Implement a “fleeing” steering behavior (desired vector is inverse of “seek”).</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Implement seeking a moving target, often referred to as “pursuit.” In this case, your desired vector won’t point towards the object’s current location, but rather its “future” location as extrapolated from its current velocity. We’ll see this ability for a vehicle to “predict the future” in later examples.</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Create a sketch where a vehicle’s maximum force and maximum speed do not remain constant, but rather vary according to environmental factors.</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Implement a “fleeing” steering behavior (desired vector is inverse of “seek”).</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Implement seeking a moving target, often referred to as “pursuit.” In this case, your desired vector won’t point towards the object’s current location, but rather its “future” location as extrapolated from its current velocity. We’ll see this ability for a vehicle to “predict the future” in later examples.</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a sketch where a vehicle’s maximum force and maximum speed do not remain constant, but rather vary according to environmental factors.</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section4">
       <h1>Arriving Behavior</h1>
@@ -375,10 +384,14 @@ Frame 6: I’m there. I want to stop!</p>
       <p>Figure 6.12 illustrates how the vehicle predicts its future location as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <strong class="var">r</strong> at that location, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
       <p>Sounds a bit absurd, right? Or, at the very least, rather arbitrary. In fact, this is a very clever and thoughtful solution—it uses randomness to drive a vehicle’s steering, but constrains that randomness along the path of a circle to keep the vehicle’s movement from appearing jittery, and, well, random.</p>
       <p>But the seemingly random and arbitrary nature of this solution should drive home the point I’m trying to make—these are made-up behaviors inspired by real-life motion. You can just as easily concoct some elaborate scenario to compute a desired velocity yourself. And you should.</p>
-      <aside data-type="sidebar" class="exercise"><h5>Write the code for Reynolds’s wandering behavior. Use polar coordinates to calculate the vehicle’s target along a circular path.</h5><figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_04_Wander/Ex_6_04_Wander.pde processingjs/chapter06/Ex_6_04_Wander/Vehicle.pde">
+      <aside data-type="example" class="exercise">
+         
+         <p>Write the code for Reynolds’s wandering behavior. Use polar coordinates to calculate the vehicle’s target along a circular path.</p>
+         <figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_04_Wander/Ex_6_04_Wander.pde processingjs/chapter06/Ex_6_04_Wander/Vehicle.pde">
             <img alt="ch06 exc4" src="../images/chapter06/ch06_exc4.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
       <p>Let’s say we want to create a steering behavior called “stay within walls.” We’ll define the desired velocity as:</p>
       <p>
          <strong>
@@ -410,7 +423,10 @@ if (location. x &gt; 25) {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Come up with your own arbitrary scheme for calculating a desired velocity.</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Come up with your own arbitrary scheme for calculating a desired velocity.</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section6">
       <h1>Flow Fields</h1>
@@ -493,14 +509,19 @@ for (int i = 0; i &lt; cols; i++) {
 </pre>
       <p>Now we’re getting somewhere. Flow fields can be used for simulating various effects, such as an irregular gust of wind or the meandering path of a river. Calculating the direction of your vectors using Perlin noise is one way to achieve such an effect. Of course, there’s no “correct” way to calculate the vectors of a flow field; it’s really up to you to decide what you’re looking to simulate.<a data-primary="Perlin noise" data-secondary="flow field following and" data-type="indexterm"> </a>
       </p>
-      <aside data-type="sidebar" class="exercise"><h5>Write the code to calculate a <strong>PVector</strong> at every location in the flow field that points towards the center of a window.</h5><figure>
+      <aside data-type="example" class="exercise">
+         
+         <p>Write the code to calculate a <strong>PVector</strong> at every location in the flow field that points towards the center of a window.</p>
+         <figure>
             <img alt="ch06 exc6" src="../images/chapter06/ch06_exc6.png"/>
             <figcaption> </figcaption>
-         </figure><pre>
+         </figure>
+         <pre>
 PVector v = new PVector(____________,____________);
 v.______________();
 field[i][j] = v;
-</pre></aside>
+</pre>
+      </aside>
       <p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let’s say we have a vehicle that lives at a <strong klass="">PVector</strong>: its location. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.<a data-primary="constrain() function (Processing)" data-type="indexterm"> </a>
       </p>
       <pre>
@@ -580,10 +601,16 @@ class Vehicle {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Adapt the flow field example so that the <strong>PVector</strong>
-            <code>s</code> change over time. (Hint: try using the third dimension of Perlin noise!)</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Can you seed a flow field from a <strong>PImage</strong>? For example, try having the <strong>PVector</strong>
-            <code>s</code> point from dark to light colors (or vice versa).</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Adapt the flow field example so that the <strong>PVector</strong>
+            <code>s</code> change over time. (Hint: try using the third dimension of Perlin noise!)</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Can you seed a flow field from a <strong>PImage</strong>? For example, try having the <strong>PVector</strong>
+            <code>s</code> point from dark to light colors (or vice versa).</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section7">
       <h1>The Dot Product</h1>
@@ -1796,13 +1823,18 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));
     return theta;
   }
 </pre>
-      <aside data-type="sidebar" class="exercise"><h5>Create a sketch that displays the angle between two <strong>PVector</strong> objects.</h5><figure class="half-width-right">
+      <aside data-type="example" class="exercise">
+         
+         <figure class="half-width-right">
             <img alt="ch06 exc9" src="../images/chapter06/ch06_exc9.png"/>
             <figcaption> </figcaption>
-         </figure><figure>
+         </figure>
+         <p>Create a sketch that displays the angle between two <strong>PVector</strong> objects.</p>
+         <figure>
             <img alt="blank" src="../images/blank.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
       <p>A couple things to note here:</p>
       <ol>
          <li>
@@ -2578,12 +2610,19 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Update the path-following example so that the path can go in any direction. (Hint: you’ll need to use the <strong function="">min()</strong> and <strong function="">max()</strong> function when determining if the normal point is inside the line segment.)</h5><pre>
+      <aside data-type="example" class="exercise">
+         
+         <p>Update the path-following example so that the path can go in any direction. (Hint: you’ll need to use the <strong function="">min()</strong> and <strong function="">max()</strong> function when determining if the normal point is inside the line segment.)</p>
+         <pre>
 if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
   normalPoint = b.get();
 }
-</pre></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Create a path that changes over time. Can the points that define the path itself have their own steering behaviors?</h5></aside>
+</pre>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a path that changes over time. Can the points that define the path itself have their own steering behaviors?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section10">
       <h1>Complex Systems</h1>
@@ -2829,11 +2868,18 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Rewrite <strong function="">separate()</strong> to work in the opposite fashion (“cohesion”). If a vehicle is beyond a certain distance, steer towards that vehicle. This will keep the group together. (Note that in a moment, we’re going to look at what happens when we have both cohesion and separation in the same simulation.)</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Add the separation force to path following to create a simulation of Reynolds’s “Crowd Path Following.”</h5><figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Ex_6_13_CrowdPathFollowing.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Path.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Vehicle.pde">
+      <aside data-type="example" class="exercise">
+         
+         <p>Rewrite <strong function="">separate()</strong> to work in the opposite fashion (“cohesion”). If a vehicle is beyond a certain distance, steer towards that vehicle. This will keep the group together. (Note that in a moment, we’re going to look at what happens when we have both cohesion and separation in the same simulation.)</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Add the separation force to path following to create a simulation of Reynolds’s “Crowd Path Following.”</p>
+         <figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Ex_6_13_CrowdPathFollowing.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Path.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Vehicle.pde">
             <img alt="ch06 exc13" src="../images/chapter06/ch06_exc13.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section12">
       <h1>Combinations</h1>
@@ -2921,7 +2967,10 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Redo Example 6.8 so that the behavior weights are not constants. What happens if they change over time (according to a sine wave or Perlin noise)? Or if some vehicles are more concerned with seeking and others more concerned with separating? Can you introduce other steering behaviors as well?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Redo Example 6.8 so that the behavior weights are not constants. What happens if they change over time (according to a sine wave or Perlin noise)? Or if some vehicles are more concerned with seeking and others more concerned with separating? Can you introduce other steering behaviors as well?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section13">
       <h1>Flocking</h1>
@@ -3066,13 +3115,18 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
   }
 </pre>
-      <aside data-type="sidebar" class="exercise"><h5>Can you write the above code so that boids can only see other boids that are actually within their “peripheral” vision (as if they had eyes)?</h5><figure class="half-width-right">
+      <aside data-type="example" class="exercise">
+         
+         <figure class="half-width-right">
             <img alt="ch06 exc15" src="../images/chapter06/ch06_exc15.png"/>
             <figcaption> </figcaption>
-         </figure><figure>
+         </figure>
+         <p>Can you write the above code so that boids can only see other boids that are actually within their “peripheral” vision (as if they had eyes)?</p>
+         <figure>
             <img alt="blank" src="../images/blank.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
       <p>Finally, we are ready for cohesion. Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average location of the boid’s neighbors (and use that as a target to seek).<a data-primary="cohesion (flocking)" data-secondary="implementing" data-type="indexterm"> </a>
       </p>
       <pre>
@@ -3145,18 +3199,32 @@ void draw() {
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Combine flocking with some other steering behaviors.</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>In his book The <em>Computational Beauty of Nature</em> (MIT Press, 2000), Gary Flake describes a fourth rule for flocking: “View: move laterally away from any boid that blocks the view.” Have your boids follow this rule.<a data-primary="&lt;em&gt;Computational Beauty of Nature&lt;/em&gt; (Flake)" data-type="indexterm"> </a>
-            <a data-primary="Flake" data-secondary="Gary" data-type="indexterm"> </a>
-         </h5><figure class="half-width-right">
+      <aside data-type="example" class="exercise">
+         
+         <p>Combine flocking with some other steering behaviors.</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <figure class="half-width-right">
             <img alt="ch06 exc17" src="../images/chapter06/ch06_exc17.png"/>
             <figcaption> </figcaption>
-         </figure><figure>
+         </figure>
+         <p>In his book The <em>Computational Beauty of Nature</em> (MIT Press, 2000), Gary Flake describes a fourth rule for flocking: “View: move laterally away from any boid that blocks the view.” Have your boids follow this rule.<a data-primary="&lt;em&gt;Computational Beauty of Nature&lt;/em&gt; (Flake)" data-type="indexterm"> </a>
+            <a data-primary="Flake" data-secondary="Gary" data-type="indexterm"> </a>
+         </p>
+         <figure>
             <img alt="blank" src="../images/blank.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Create a flocking simulation where all of the parameters (<em>separation weight</em>, <em>cohesion weight</em>, <em>alignment weight</em>, <em>maximum force</em>, <em>maximum speed</em>) change over time. They could be controlled by Perlin noise or by user interaction. (For example, you could use a library such as <a href="http://www.sojamo.de/libraries/controlP5/">controlp5</a> to tie the values to slider positions.)</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Visualize the flock in an entirely different way.</h5></aside>
+         </figure>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a flocking simulation where all of the parameters (<em>separation weight</em>, <em>cohesion weight</em>, <em>alignment weight</em>, <em>maximum force</em>, <em>maximum speed</em>) change over time. They could be controlled by Perlin noise or by user interaction. (For example, you could use a library such as <a href="http://www.sojamo.de/libraries/controlP5/">controlp5</a> to tie the values to slider positions.)</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Visualize the flock in an entirely different way.</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter06_section14">
       <h1>Algorithmic Efficiency (or: Why does my $@(*%! run so slowly?)</h1>
@@ -3354,8 +3422,14 @@ void draw() {
     return desired;
 </pre>
          <p>We don’t actually need a second <strong>PVector</strong> called <strong class="var">steer</strong>. We could just use the desired <strong>PVector</strong> object and turn it into the steering force by subtracting velocity. I didn’t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
-         <aside data-type="sidebar" class="exercise"><h5>Eliminate as many temporary <strong>PVector</strong> objects from the flocking example as possible. Also use <strong function="">magSq()</strong> where possible.</h5></aside>
-         <aside data-type="sidebar" class="exercise"><h5>Use steering behaviors with Box2D or toxiclibs.</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Eliminate as many temporary <strong>PVector</strong> objects from the flocking example as possible. Also use <strong function="">magSq()</strong> where possible.</p>
+         </aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Use steering behaviors with Box2D or toxiclibs.</p>
+         </aside>
          <div data-type="tip">
             <h1>The Ecosystem Project</h1>
             <p>Step 6 Exercise:</p>

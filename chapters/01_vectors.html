@@ -556,11 +556,20 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
   velocity.x = velocity.x * -1;
 }
 </pre>
-      <aside data-type="sidebar" class="exercise"><h5>Find something you’ve previously made in Processing using separate <strong class="var">x</strong> and <strong class="var">y</strong> variables and use <strong>PVector</strong>
-            <code>s</code> instead.</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Take one of the walker examples from the introduction and convert it to use <strong>PVector</strong>
-            <code>s</code>.</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Extend the bouncing ball with vectors example into 3D. Can you get a sphere to bounce around a box?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Find something you’ve previously made in Processing using separate <strong class="var">x</strong> and <strong class="var">y</strong> variables and use <strong>PVector</strong>
+            <code>s</code> instead.</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Take one of the walker examples from the introduction and convert it to use <strong>PVector</strong>
+            <code>s</code>.</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Extend the bouncing ball with vectors example into 3D. Can you get a sphere to bounce around a box?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter01_section4">
       <h1>More Vector Math</h1>
@@ -1905,14 +1914,18 @@ class Mover {
          <p>
             <em>What is the magnitude of velocity? If it’s less than 10, no worries; just leave it as is. If it’s more than 10, however, reduce it to 10!</em>
          </p>
-         <aside data-type="sidebar" class="exercise"><h5>Write the <strong function="">limit()</strong> function for the <strong>PVector</strong> class.</h5><pre>
+         <aside data-type="example" class="exercise">
+            
+            <p>Write the <strong function="">limit()</strong> function for the <strong>PVector</strong> class.</p>
+            <pre>
   void limit(float max) {
     if (_______ &gt; _______) {
       _________();
       ____(max);
     }
   }
-</pre></aside>
+</pre>
+         </aside>
          <p>Let’s take a look at the changes to the <strong klass="">Mover</strong> class, complete with <strong function="">acceleration</strong> and <strong function="">limit()</strong>.<a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm"> </a>
          </p>
          <figure class="screenshot" data-pde="processingjs/chapter01/_1_8_motion101_acceleration/_1_8_motion101_acceleration.pde processingjs/chapter01/_1_8_motion101_acceleration/Mover.pde">
@@ -1949,7 +1962,10 @@ class Mover {
 </pre>
          </div>
          
-         <aside data-type="sidebar" class="exercise"><h5>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
+         </aside>
          <p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <strong function="">update()</strong> is called.<a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm"> </a>
          </p>
          <figure class="screenshot" data-pde="processingjs/chapter01/_1_9_motion101_acceleration/_1_9_motion101_acceleration.pde processingjs/chapter01/_1_9_motion101_acceleration/Mover.pde">
@@ -1988,7 +2004,10 @@ acceleration = PVector.random2D();
             <em class="strong">acceleration.mult(random(2)); //[bold]</em>
          </pre>
          <p>While this may seem like an obvious point, it’s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction. Acceleration is used to steer an object, and we’ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
-         <aside data-type="sidebar" class="exercise"><h5>Referring back to the <a href="#intro_section6">Introduction</a>, implement acceleration according to Perlin noise.</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Referring back to the <a href="#intro_section6">Introduction</a>, implement acceleration according to Perlin noise.</p>
+         </aside>
       </section>
    </section>
    <section data-type="sect1" id="chapter01_section9">
@@ -2082,7 +2101,10 @@ PVector u = new PVector(4,5);
          <em class="strong">PVector w = PVector.add(v,u); //[bold]</em>
       </pre>
       <p>The <strong>PVector</strong> class has static versions of <strong function="">add()</strong>, <strong function="">sub()</strong>, <strong function="">mult()</strong>, and <strong function="">div()</strong>.</p>
-      <aside data-type="sidebar" class="exercise"><h5>Translate the following pseudocode to code using static or non-static functions where appropriate.</h5><ul>
+      <aside data-type="example" class="exercise">
+         
+         <p>Translate the following pseudocode to code using static or non-static functions where appropriate.</p>
+         <ul>
             <li>
                <p>The <strong>PVector</strong>
                   <strong class="var">v</strong> equals (1,5).</p>
@@ -2098,12 +2120,14 @@ PVector u = new PVector(4,5);
             <li>
                <p>Divide the <strong>PVector</strong> w by 3.</p>
             </li>
-         </ul><pre>
+         </ul>
+         <pre>
 PVector v = new PVector(1,5);
 PVector u = ________._____(__,__);
 PVector w = ________._____(__,__);
 ___________;
-</pre></aside>
+</pre>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter01_section10">
       <h1>Interactivity with Acceleration</h1>
@@ -2193,7 +2217,10 @@ dir.mult(anything);
             <em>arrive</em>
          </strong> at a location (slow down on approach).</p>
       <p>This example is remarkably close to the concept of gravitational attraction (in which the object is attracted to the mouse location). Gravitational attraction will be covered in more detail in the next chapter. However, one thing missing here is that the strength of gravity (magnitude of acceleration) is inversely proportional to distance. This means that the closer the object is to the mouse, the faster it accelerates.</p>
-      <aside data-type="sidebar" class="exercise"><h5>Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Try implementing the above example with a variable magnitude of acceleration, stronger when it is either closer or farther away.</p>
+      </aside>
       <p>Let’s see what this example would look like with an array of movers (rather than just one).</p>
       <figure class="screenshot" data-pde="processingjs/chapter01/_1_11_motion101_acceleration_array/_1_11_motion101_acceleration_array.pde processingjs/chapter01/_1_11_motion101_acceleration_array/Mover.pde">
          <img alt="ch01 ex11" src="../images/chapter01/ch01_ex11.png"/>

@@ -71,7 +71,10 @@ String s = "to be or not to be that is the question";
 println(s);
 </pre>
       <p>Nevertheless, the point here is that solving a problem with a known answer allows us to easily test our code. Once we’ve successfully solved the problem, we can feel more confident in using genetic algorithms to do some actual useful work: solving problems with unknown answers. So this first example serves no real purpose other than to demonstrate how genetic algorithms work. If we test the GA results against the known answer and get “to be or not to be”, then we’ve succeeded in writing our genetic algorithm.</p>
-      <aside data-type="sidebar" class="exercise"><h5>Create a sketch that generates random strings. We’ll need to know how to do this in order to implement the genetic algorithm example that will shortly follow. How long does it take for Processing to randomly generate the string “cat”? How could you adapt this to generate a random design using Processing’s shape-drawing functions?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a sketch that generates random strings. We’ll need to know how to do this in order to implement the genetic algorithm example that will shortly follow. How long does it take for Processing to randomly generate the string “cat”? How could you adapt this to generate a random design using Processing’s shape-drawing functions?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter09_section3">
       <h1>Darwinian Natural Selection</h1>
@@ -603,8 +606,26 @@ void draw() {
     }
   }
 </pre>
-         <aside data-type="sidebar" class="exercise"><h5>One of the other methods we used to generate a custom distribution of random numbers is called the Monte Carlo method. This technique involved picking two random numbers, with the second number acting as a qualifying number and determining if the first random number should be kept or thrown away. Rewrite the above mating pool algorithm to use the Monte Carlo method instead.</h5></aside>
-         <aside data-type="sidebar" class="exercise"><h5>In some cases, the wheel of fortune algorithm will have an extraordinarily high preference for some elements over others. Take the following probabilities:</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>One of the other methods we used to generate a custom distribution of random numbers is called the Monte Carlo method. This technique involved picking two random numbers, with the second number acting as a qualifying number and determining if the first random number should be kept or thrown away. Rewrite the above mating pool algorithm to use the Monte Carlo method instead.</p>
+         </aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>In some cases, the wheel of fortune algorithm will have an extraordinarily high preference for some elements over others. Take the following probabilities:</p>
+            <p>
+               <strong mono="">A: 98%<br/>
+B: 1%<br/>
+C: 1%</strong>
+            </p>
+            <p>This is sometimes undesirable given how it will decrease the amount of variety in this system. A solution to this problem is to replace the calculated fitness scores with the ordinals of scoring (meaning their rank).</p>
+            <p>
+               <strong mono="">A: 50% (3/6)<br/>
+B: 33% (2/6)<br/>
+C: 17% (1/6)</strong>
+            </p>
+            <p>Rewrite the mating pool algorithm to use this method instead.</p>
+         </aside>
       </section>
       <section data-type="sect2" id="_step_3_reproduction">
          <h2>Step 3: Reproduction</h2>
@@ -622,7 +643,10 @@ void draw() {
 </pre>
          <p>Because we have multiple instances of the same <strong klass="">DNA</strong> objects in the mating pool (not to mention that we could pick the same random number twice), it’s possible that <strong class="var">parentA</strong> and <strong class="var">parentB</strong> could be the same <strong klass="">DNA</strong> object. If we wanted to be strict, we could write some code to ensure that we haven’t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it‘s worth trying this as an exercise.<a data-primary="crossover (natural selection algorithms)" data-secondary="implementing" data-type="indexterm"> </a>
          </p>
-         <aside data-type="sidebar" class="exercise"><h5>Add code to the above to guarantee that you have picked two unique “parents.”</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Add code to the above to guarantee that you have picked two unique “parents.”</p>
+         </aside>
          <p>Once we have the two parents, we can perform <strong>
                <em>crossover</em>
             </strong> to generate the child DNA, followed by <strong>
@@ -654,7 +678,10 @@ void draw() {
 </pre>
          <p>The above crossover function uses the “random midpoint” method of crossover, in which the first section of genes is taken from parent A and the second section from parent B.<a data-primary="mutation (natural selection algorithms)" data-secondary="implementing" data-type="indexterm"> </a>
          </p>
-         <aside data-type="sidebar" class="exercise"><h5>Rewrite the crossover function to use the “coin flipping” method instead, in which each gene has a 50% chance of coming from parent A and a 50% chance of coming from parent B.</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Rewrite the crossover function to use the “coin flipping” method instead, in which each gene has a 50% chance of coming from parent A and a 50% chance of coming from parent B.</p>
+         </aside>
          <p>The mutate() function is even simpler to write than crossover(). All we need to do is loop through the array of genes and for each randomly pick a new character according to the mutation rate. With a mutation rate of 1%, for example, we would pick a new character one time out of a hundred.<a data-primary="mutation (natural selection algorithms)" data-secondary="implementing" data-type="indexterm"> </a>
          </p>
          <pre>
@@ -794,10 +821,14 @@ class DNA {
 
 }
 </pre>
-      <aside data-type="sidebar" class="exercise"><h5>Add features to the above example to report more information about the progress of the genetic algorithm itself. For example, show the phrase closest to the target each generation, as well as report on the number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase. Consider writing a <strong>Population</strong> class to manage the GA, instead of including all the code in draw().</h5><figure class="screenshot">
+      <aside data-type="example" class="exercise">
+         
+         <p>Add features to the above example to report more information about the progress of the genetic algorithm itself. For example, show the phrase closest to the target each generation, as well as report on the number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase. Consider writing a <strong>Population</strong> class to manage the GA, instead of including all the code in draw().</p>
+         <figure class="screenshot">
             <img alt="ch09 exc01" src="../images/chapter09/ch09_exc01.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter09_section9">
       <h1>Genetic Algorithms: Make Them Your Own</h1>
@@ -1079,7 +1110,10 @@ int totalPopulation = 150;
          </table>
          <p>Here, the fitness scores increase at a faster rate, doubling with each additional correct character.<a data-primary="fitness functions (natural selection algorithms)" data-secondary="design your own" data-type="indexterm"> </a>
          </p>
-         <aside data-type="sidebar" class="exercise"><h5>Rewrite the fitness function to increase exponentially according to the number of correct characters. Note that you will also have to normalize the fitness values to a range between 0 and 1 so they can be added to the mating pool a reasonable number of times.</h5></aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Rewrite the fitness function to increase exponentially according to the number of correct characters. Note that you will also have to normalize the fitness values to a range between 0 and 1 so they can be added to the mating pool a reasonable number of times.</p>
+         </aside>
          <p>While this rather specific discussion of exponential vs. linear fitness functions is an important detail in the design of a good fitness function, I don’t want us to miss the more important point here: <em>Design your own fitness function!</em> I seriously doubt that any project you undertake in Processing with genetic algorithms will actually involve counting the correct number of characters in a string. In the context of this book, it’s more likely you will be looking to evolve a creature that is part of a physics system. Perhaps you are looking to optimize the weights of steering behaviors so a creature can best escape a predator or avoid an obstacle or make it through a maze. You have to ask yourself what you’re hoping to evaluate.<a data-primary="fitness functions (natural selection algorithms)" data-secondary="design your own" data-type="indexterm"> </a>
          </p>
          <p>Let’s consider a racing simulation in which a vehicle is evolving a design optimized for speed.</p>
@@ -1638,23 +1672,40 @@ class Obstacle {
       <p>These improvements are both incorporated into the code for Example 9.3: Smart Rockets.<a data-primary="Evolved Virtual Creatures (Sims)" data-type="indexterm"> </a>
          <a data-primary="Sims" data-secondary="Karl" data-type="indexterm"> </a>
       </p>
-      <aside data-type="sidebar" class="exercise"><h5>Create a more complex obstacle course. As you make it more difficult for the rockets to reach the target, do you need to improve other aspects of the GA—for example, the fitness function?</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Implement the rocket firing pattern of Jer Thorp’s Smart Rockets. Each rocket only gets five thrusters (of any direction and strength) that follow a firing sequence (of arbitrary length). <a href="http://www.blprnt.com/smartrockets/">Jer’s simulation</a> also gives the rockets a finite amount of fuel.</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Visualize the rockets differently. Can you draw a line for the shortest path to the target? Can you add particle systems that act as smoke in the direction of the rocket thrusters?</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>Another way to achieve a similar result is to evolve a flow field. Can you make the genotype of a rocket a flow field of <strong>PVector</strong>
-            <code>s</code>?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a more complex obstacle course. As you make it more difficult for the rockets to reach the target, do you need to improve other aspects of the GA—for example, the fitness function?</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Implement the rocket firing pattern of Jer Thorp’s Smart Rockets. Each rocket only gets five thrusters (of any direction and strength) that follow a firing sequence (of arbitrary length). <a href="http://www.blprnt.com/smartrockets/">Jer’s simulation</a> also gives the rockets a finite amount of fuel.</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Visualize the rockets differently. Can you draw a line for the shortest path to the target? Can you add particle systems that act as smoke in the direction of the rocket thrusters?</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Another way to achieve a similar result is to evolve a flow field. Can you make the genotype of a rocket a flow field of <strong>PVector</strong>
+            <code>s</code>?</p>
+      </aside>
       <p>One of the more famous implementations of genetic algorithms in computer graphics is Karl Sims’s “Evolved Virtual Creatures.” In Sims’s work, a population of digital creatures (in a simulated physics environment) is evaluated for the creatures' ability to perform tasks, such as swimming, running, jumping, following, and competing for a green cube.<a data-primary="Evolved Virtual Creatures (Sims)" data-type="indexterm"> </a>
          <a data-primary="Sims" data-secondary="Karl" data-type="indexterm"> </a>
       </p>
       <p>One of the innovations in Sims’s work is a node-based genotype. In other words, the creature’s DNA is not a linear list of <strong>PVector</strong>
          <code>s</code> or numbers, but a map of nodes. (For an example of this, take a look at <a href="#chapter05_exercise15">Exercise 5.15</a>, toxiclibs' Force Directed Graph.) The phenotype is the creature’s design itself, a network of limbs connected with muscles.</p>
-      <aside data-type="sidebar" class="exercise"><h5>Using toxiclibs or Box2D as the physics model, can you create a simplified 2D version of Sims’s creatures? For a lengthier description of Sims’s techniques, I suggest you watch the video and read Sims’s paper <a href="http://www.karlsims.com/evolved-virtual-creatures.html"> Virtual Creatures</a>. In addition, you can find a similar example that uses Box2D to evolve a “car”: <a href="http://boxcar2d.com/">BoxCar2D</a>.</h5><figure class="half-width-right">
+      <aside data-type="example" class="exercise">
+         
+         <figure class="half-width-right">
             <img alt="ch09 exc12" src="../images/chapter09/ch09_exc12.png"/>
             <figcaption> </figcaption>
-         </figure><figure>
+         </figure>
+         <p>Using toxiclibs or Box2D as the physics model, can you create a simplified 2D version of Sims’s creatures? For a lengthier description of Sims’s techniques, I suggest you watch the video and read Sims’s paper <a href="http://www.karlsims.com/evolved-virtual-creatures.html"> Virtual Creatures</a>. In addition, you can find a similar example that uses Box2D to evolve a “car”: <a href="http://boxcar2d.com/">BoxCar2D</a>.</p>
+         <figure>
             <img alt="blank" src="../images/blank.png"/>
             <figcaption> </figcaption>
-         </figure></aside>
+         </figure>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter09_section12">
       <h1>Interactive Selection</h1>
@@ -1753,7 +1804,10 @@ void mousePressed() {
       </p>
       <p>There are certainly clever solutions around this. Sims’s Galapagos exhibit concealed the rating process from the users, as it occurred through the normal behavior of looking at artwork in a museum setting. Building a Web application that would allow many users to rate a population in a distributed fashion is also a good strategy for achieving many ratings for large populations quickly.</p>
       <p>In the end, the key to a successful interactive selection system boils down to the same keys we previously established. What is the genotype and phenotype? And how do you calculate fitness, which in this case we can revise to say: “What is your strategy for assigning fitness according to user interaction?”</p>
-      <aside data-type="sidebar" class="exercise"><h5>Build your own interactive selection project. In addition to a visual design, consider evolving sounds—for example, a short sequence of tones. Can you devise a strategy, such as a Web application or physical sensor system, to acquire ratings from many users over time?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Build your own interactive selection project. In addition to a visual design, consider evolving sounds—for example, a short sequence of tones. Can you devise a strategy, such as a Web application or physical sensor system, to acquire ratings from many users over time?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter09_section13">
       <h1>Ecosystem Simulation</h1>

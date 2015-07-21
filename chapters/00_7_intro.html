@@ -248,7 +248,10 @@ void draw() {
          <h1>Pseudo-Random Numbers</h1>
          <p>The random numbers we get from the <strong function="">random()</strong> function are not truly random; therefore they are known as “pseudo-random.” They are the result of a mathematical function that simulates randomness. This function would yield a pattern over time, but that time period is so long that for us, it’s just as good as pure randomness!</p>
       </div>
-      <aside data-type="sidebar" class="exercise"><h5>Create a random walker that has a tendency to move down and to the right. (We’ll see the solution to this in the next section.)</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a random walker that has a tendency to move down and to the right. (We’ll see the solution to this in the next section.)</p>
+      </aside>
    </section>
    <section data-type="sect1" id="intro_section3">
       <h1>I.3 Probability and Non-Uniform Distributions</h1>
@@ -275,7 +278,10 @@ void draw() {
          <a data-primary="non-uniform distributions" data-secondary="creating with arrays" data-type="indexterm"> </a>
          <a data-primary="random() function" data-secondary="non-uniform distributions" data-tertiary="creating with" data-type="indexterm"> </a>
       </p>
-      <aside data-type="sidebar" class="exercise"><h5>What is the probability of drawing two aces in a row from a deck of fifty-two cards?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>What is the probability of drawing two aces in a row from a deck of fifty-two cards?</p>
+      </aside>
       <p>There are a couple of ways in which we can use the <strong function="">random()</strong> function with probability in code. One technique is to fill an array with a selection of numbers—some of which are repeated—then choose random numbers from that array and generate events based on those choices.<a data-primary="arrays" data-secondary="custom distributions" data-tertiary="creating with" data-type="indexterm"> </a>
          <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="creating with arrays" data-type="indexterm"> </a>
          <a data-primary="non-uniform distributions" data-secondary="creating with arrays" data-type="indexterm"> </a>
@@ -377,7 +383,10 @@ if (num &lt; 0.6) {<span class="callout-bubble">If random number is less than 0.
 </pre>
       </div>
       
-      <aside data-type="sidebar" class="exercise"><h5>Create a random walker with dynamic probabilities. For example, can you give it a 50% chance of moving in the direction of the mouse?</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Create a random walker with dynamic probabilities. For example, can you give it a 50% chance of moving in the direction of the mouse?</p>
+      </aside>
    </section>
    <section data-type="sect1" id="intro_section4">
       <h1>I.4 A Normal Distribution of Random Numbers</h1>
@@ -544,8 +553,14 @@ void draw() {
       
       <p>By drawing the ellipses on top of each other with some transparency, we can actually see the distribution. The darkest spot is near the center, where most of the values cluster, but every so often circles are drawn farther to the right or left of the center.<a data-primary="random walks" data-secondary="Gaussian" data-type="indexterm"> </a>
       </p>
-      <aside data-type="sidebar" class="exercise"><h5>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central location, but some dots do splatter out towards the edges. Can you use a normal distribution of random numbers to generate the locations of the dots? Can you also use a normal distribution of random numbers to generate a color palette?</h5></aside>
-      <aside data-type="sidebar" class="exercise"><h5>A Gaussian random walk is defined as one in which the step size (how far the object moves in a given direction) is generated with a normal distribution. Implement this variation of our random walk.</h5></aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central location, but some dots do splatter out towards the edges. Can you use a normal distribution of random numbers to generate the locations of the dots? Can you also use a normal distribution of random numbers to generate a color palette?</p>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
+         <p>A Gaussian random walk is defined as one in which the step size (how far the object moves in a given direction) is generated with a normal distribution. Implement this variation of our random walk.</p>
+      </aside>
    </section>
    <section data-type="sect1" id="intro_section5">
       <h1>I.5 A Custom Distribution of Random Numbers</h1>
@@ -627,7 +642,10 @@ float acceptreject() {
   }
 }
 </pre>
-      <aside data-type="sidebar" class="exercise"><h5>Use a custom probability distribution to vary the size of a step taken by the random walker. The step size can be determined by influencing the range of values picked. Can you map the probability exponentially—i.e. making the likelihood that a value is picked equal to the value squared?</h5><pre>
+      <aside data-type="example" class="exercise">
+         
+         <p>Use a custom probability distribution to vary the size of a step taken by the random walker. The step size can be determined by influencing the range of values picked. Can you map the probability exponentially—i.e. making the likelihood that a value is picked equal to the value squared?</p>
+         <pre>
               float stepsize = random(0,10);<span class="callout-bubble">  A uniform distribution of step sizes. Change this!</span>
 
   float stepx = random(-stepsize,stepsize);
@@ -635,7 +653,9 @@ float acceptreject() {
 
   x += stepx;
   y += stepy;
-</pre></aside>
+</pre>
+         <p>(Later we’ll see how to do this more efficiently using vectors.)</p>
+      </aside>
    </section>
    <section data-type="sect1" id="intro_section6">
       <h1>I.6 Perlin Noise (A Smoother Approach)</h1>
@@ -810,9 +830,12 @@ class Walker {
             <figcaption> </figcaption>
          </figure>
          <p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-location whenever we want. In examples, you will often see a variable named <strong class="var">xoff</strong> to indicate the x-offset along the noise graph, rather than <strong class="var">t</strong> for time (as noted in the diagram).</p>
-         <aside data-type="sidebar" class="exercise"><h5>In the above random walker, the result of the noise function is mapped directly to the <strong>Walker</strong>
+         <aside data-type="example" class="exercise">
+            
+            <p>In the above random walker, the result of the noise function is mapped directly to the <strong>Walker</strong>
                <code>’</code>s location. Create a random walker where you instead map the result of the <strong function="">noise()</strong> function to a <strong>Walker</strong>
-               <code>’</code>s step size.</h5></aside>
+               <code>’</code>s step size.</p>
+         </aside>
       </section>
       <section data-type="sect2" id="_two_dimensional_noise">
          <h2>Two-Dimensional Noise</h2>
@@ -869,12 +892,22 @@ for (int x = 0; x &lt; width; x++) {
 </pre>
          </div>
          
-         <aside data-type="sidebar" class="exercise"><h5>Play with color, <strong function="">noiseDetail()</strong>, and the rate at which <strong class="var">xoff</strong> and <strong class="var">yoff</strong> are incremented to achieve different visual effects.</h5></aside>
-         <aside data-type="sidebar" class="exercise"><h5>Add a third argument to noise that increments once per cycle through <strong function="">draw()</strong> to animate the two-dimensional noise.</h5></aside>
-         <aside data-type="sidebar" class="exercise"><h5>Use the noise values as the elevations of a landscape. See the screenshot below as a reference.</h5><figure>
+         <aside data-type="example" class="exercise">
+            
+            <p>Play with color, <strong function="">noiseDetail()</strong>, and the rate at which <strong class="var">xoff</strong> and <strong class="var">yoff</strong> are incremented to achieve different visual effects.</p>
+         </aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Add a third argument to noise that increments once per cycle through <strong function="">draw()</strong> to animate the two-dimensional noise.</p>
+         </aside>
+         <aside data-type="example" class="exercise">
+            
+            <p>Use the noise values as the elevations of a landscape. See the screenshot below as a reference.</p>
+            <figure>
                <img alt="intro exc10" src="../images/intro/intro_exc10.png"/>
                <figcaption> </figcaption>
-            </figure></aside>
+            </figure>
+         </aside>
          <p>We’ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise, we used smooth values to assign the location of an object to give the appearance of wandering. With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It’s important to remember, however, that Perlin noise values are just that—values. They aren’t inherently tied to pixel locations or color. Any example in this book that has a variable could be controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and direction of objects moving along a grid in a flow field simulation.</p>
          <figure>
             <img alt="Figure I.12: Tree with Perlin noise" src="../images/intro/intro_12.png"/>
