@@ -1,6 +1,4 @@
-<section xmlns="http://www.w3.org/1999/xhtml"
-         data-type="chapter"
-         id="_chapter_8_fractals">
+<section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="_chapter_8_fractals">
    <h1>Fractals</h1>
    <blockquote class="long-quote">“Pathological monsters! cried the terrified mathematician<br/>
 Every one of them a splinter in my eye<br/>
@@ -23,19 +21,12 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
       <h1>What Is a Fractal?</h1>
       <p>The term <strong>
             <em>fractal</em>
-         </strong> (from the Latin <em>fractus</em>, meaning “broken”) was coined by the mathematician Benoit Mandelbrot in 1975. In his seminal work “The Fractal Geometry of Nature,” he defines a fractal as “a rough or fragmented geometric shape that can be split into parts, each of which is (at least approximately) a reduced-size copy of the whole.”<a data-primary="fractals"
-            data-secondary="defined"
-            data-type="indexterm"> </a>
-         <a data-primary="Mandelbrot"
-            data-secondary="Benoit"
-            data-type="indexterm"> </a>
-         <a data-primary="&lt;em&gt;Fractal Geometry of Nature"
-            data-secondary="The&lt;/em&gt; (Mandelbrot)"
-            data-type="indexterm"> </a>
+         </strong> (from the Latin <em>fractus</em>, meaning “broken”) was coined by the mathematician Benoit Mandelbrot in 1975. In his seminal work “The Fractal Geometry of Nature,” he defines a fractal as “a rough or fragmented geometric shape that can be split into parts, each of which is (at least approximately) a reduced-size copy of the whole.”<a data-primary="fractals" data-secondary="defined" data-type="indexterm"> </a>
+         <a data-primary="Mandelbrot" data-secondary="Benoit" data-type="indexterm"> </a>
+         <a data-primary="&lt;em&gt;Fractal Geometry of Nature" data-secondary="The&lt;/em&gt; (Mandelbrot)" data-type="indexterm"> </a>
       </p>
       <figure>
-         <img alt="Figure 8.2: One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself.   Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function.  Do they tend to infinity?  Do they stay bounded?  While a fascinating mathematical discussion, this “escape-time” algorithm is a less practical method for generating fractals than the recursive techniques we’ll examine in this chapter.  However, an example for generating the Mandelbrot set is included in the code examples."
-              src="../images/chapter08/ch08_02.png"/>
+         <img alt="Figure 8.2: One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself.   Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function.  Do they tend to infinity?  Do they stay bounded?  While a fascinating mathematical discussion, this “escape-time” algorithm is a less practical method for generating fractals than the recursive techniques we’ll examine in this chapter.  However, an example for generating the Mandelbrot set is included in the code examples." src="../images/chapter08/ch08_02.png"/>
          <figcaption>One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself.   Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function.  Do they tend to infinity?  Do they stay bounded?  While a fascinating mathematical discussion, this “escape-time” algorithm is a less practical method for generating fractals than the recursive techniques we’ll examine in this chapter.  However, an example for generating the Mandelbrot set is included in the code examples.</figcaption>
       </figure>
       <p>Let’s illustrate this definition with two simple examples. First, let’s think about a tree branching structure (for which we’ll write the code later):</p>
@@ -43,9 +34,7 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
          <img alt="Figure 8.3" src="../images/chapter08/ch08_03.png"/>
          <figcaption> </figcaption>
       </figure>
-      <p>Notice how the tree in Figure 8.3 has a single root with two branches connected at its end. Each one of those branches has two branches at its end and those branches have two branches and so on and so forth. What if we were to pluck one branch from the tree and examine it on its own?<a data-primary="fractals"
-            data-secondary="self-replicating behavior of"
-            data-type="indexterm"> </a>
+      <p>Notice how the tree in Figure 8.3 has a single root with two branches connected at its end. Each one of those branches has two branches at its end and those branches have two branches and so on and so forth. What if we were to pluck one branch from the tree and examine it on its own?<a data-primary="fractals" data-secondary="self-replicating behavior of" data-type="indexterm"> </a>
          <a data-primary="self-similarity of fractals" data-type="indexterm"> </a>
       </p>
       <figure id="chapter08_figure4">
@@ -54,9 +43,7 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
       </figure>
       <p>Looking closely at a given section of the tree, we find that the shape of this branch resembles the tree itself. This is known as <strong>
             <em>self-similarity</em>
-         </strong>; as Mandelbrot stated, each part is a “reduced-size copy of the whole.”<a data-primary="fractals"
-            data-secondary="self-replicating behavior of"
-            data-type="indexterm"> </a>
+         </strong>; as Mandelbrot stated, each part is a “reduced-size copy of the whole.”<a data-primary="fractals" data-secondary="self-replicating behavior of" data-type="indexterm"> </a>
          <a data-primary="self-similarity of fractals" data-type="indexterm"> </a>
       </p>
       <p>The above tree is perfectly symmetrical and the parts are, in fact, exact replicas of the whole. However, fractals do not have to be perfectly self-similar. Let’s take a look at a graph of the stock market (adapted from actual Apple stock data).</p>
@@ -64,18 +51,14 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
          <img alt="Figure 8.5: Graph A" src="../images/chapter08/ch08_05.png"/>
          <figcaption>Graph A</figcaption>
       </figure>
-      <p>And one more.<a data-primary="fractals"
-            data-secondary="stochastic"
-            data-type="indexterm"> </a>
+      <p>And one more.<a data-primary="fractals" data-secondary="stochastic" data-type="indexterm"> </a>
          <a data-primary="stochastic fractals" data-type="indexterm"> </a>
       </p>
       <figure>
          <img alt="Figure 8.6: Graph B" src="../images/chapter08/ch08_06.png"/>
          <figcaption>Graph B</figcaption>
       </figure>
-      <p>In these graphs, the x-axis is time and the y-axis is the stock’s value. It’s not an accident that I omitted the labels, however. Graphs of stock market data are examples of fractals because they look the same at any scale. Are these graphs of the stock over one year? One day? One hour? There’s no way for you to know without a label. (Incidentally, graph A shows six months’ worth of data and graph B zooms into a tiny part of graph A, showing six hours.)<a data-primary="fractals"
-            data-secondary="stochastic"
-            data-type="indexterm"> </a>
+      <p>In these graphs, the x-axis is time and the y-axis is the stock’s value. It’s not an accident that I omitted the labels, however. Graphs of stock market data are examples of fractals because they look the same at any scale. Are these graphs of the stock over one year? One day? One hour? There’s no way for you to know without a label. (Incidentally, graph A shows six months’ worth of data and graph B zooms into a tiny part of graph A, showing six hours.)<a data-primary="fractals" data-secondary="stochastic" data-type="indexterm"> </a>
          <a data-primary="stochastic fractals" data-type="indexterm"> </a>
       </p>
       <figure id="chapter08_figure7">
@@ -84,17 +67,11 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
       </figure>
       <p>This is an example of a <strong>
             <em>stochastic</em>
-         </strong> fractal, meaning that it is built out of probabilities and randomness. Unlike the deterministic tree-branching structure, it is statistically self-similar. As we go through the examples in this chapter, we will look at both deterministic and stochastic techniques for generating fractal patterns.<a data-primary="Euclidean geometry"
-            data-secondary="fractals and"
-            data-type="indexterm"> </a>
-         <a data-primary="fractals"
-            data-secondary="fine structure of"
-            data-type="indexterm"> </a>
+         </strong> fractal, meaning that it is built out of probabilities and randomness. Unlike the deterministic tree-branching structure, it is statistically self-similar. As we go through the examples in this chapter, we will look at both deterministic and stochastic techniques for generating fractal patterns.<a data-primary="Euclidean geometry" data-secondary="fractals and" data-type="indexterm"> </a>
+         <a data-primary="fractals" data-secondary="fine structure of" data-type="indexterm"> </a>
       </p>
       <p>While self-similarity is a key trait of fractals, it’s important to realize that self-similarity alone does not make a fractal. After all, a line is self-similar. A line looks the same at any scale, and can be thought of as comprising lots of little lines. But it’s not a fractal. Fractals are characterized by having a fine structure at small scales (keep zooming into the stock market graph and you’ll continue to find fluctuations) and cannot be described with Euclidean geometry. If you can say “It’s a line!” then it’s not a fractal.</p>
-      <p>Another fundamental component of fractal geometry is recursion. Fractals all have a recursive definition. We’ll start with recursion before developing techniques and code examples for building fractal patterns in Processing.<a data-primary="fractals"
-            data-secondary="recursion"
-            data-type="indexterm"> </a>
+      <p>Another fundamental component of fractal geometry is recursion. Fractals all have a recursive definition. We’ll start with recursion before developing techniques and code examples for building fractal patterns in Processing.<a data-primary="fractals" data-secondary="recursion" data-type="indexterm"> </a>
          <a data-primary="recursion" data-type="indexterm"> </a>
       </p>
    </section>
@@ -109,13 +86,9 @@ On a cold November day a man named Benoit Mandelbrot was born”<br/>
       </figure>
       <p>There is a feedback loop at work here. Take a single line and break it into two. Then return to those two lines and apply the same rule, breaking each line into two, and now we’re left with four. Then return to those four lines and apply the rule. Now you’ve got eight. This process is known as <strong>
             <em>recursion</em>
-         </strong>: the repeated application of a rule to successive results. Cantor was interested in what happens when you apply these rules an infinite number of times. We, however, are working in a finite pixel space and can mostly ignore the questions and paradoxes that arise from infinite recursion. We will instead construct our code in such a way that we do not apply the rules forever (which would cause our program to freeze).<a data-primary="recursion"
-            data-secondary="implementing"
-            data-type="indexterm"> </a>
+         </strong>: the repeated application of a rule to successive results. Cantor was interested in what happens when you apply these rules an infinite number of times. We, however, are working in a finite pixel space and can mostly ignore the questions and paradoxes that arise from infinite recursion. We will instead construct our code in such a way that we do not apply the rules forever (which would cause our program to freeze).<a data-primary="recursion" data-secondary="implementing" data-type="indexterm"> </a>
       </p>
-      <p>Before we implement the Cantor set, let’s take a look at what it means to have recursion in code. Here’s something we’re used to doing all the time—calling a function inside another function.<a data-primary="recursion"
-            data-secondary="implementing"
-            data-type="indexterm"> </a>
+      <p>Before we implement the Cantor set, let’s take a look at what it means to have recursion in code. Here’s something we’re used to doing all the time—calling a function inside another function.<a data-primary="recursion" data-secondary="implementing" data-type="indexterm"> </a>
       </p>
       <pre>
 void someFunction() {
@@ -124,9 +97,7 @@ void someFunction() {
 }
 </pre>
       <p>What would happen if we called the function we are defining within the function itself? Can <strong function="">someFunction()</strong> call <strong function="">someFunction()</strong>?<a data-primary="factorial" data-type="indexterm"> </a>
-         <a data-primary="recursion"
-            data-secondary="factorial"
-            data-type="indexterm"> </a>
+         <a data-primary="recursion" data-secondary="factorial" data-type="indexterm"> </a>
       </p>
       <pre>
 void someFunction() {
@@ -134,9 +105,7 @@ void someFunction() {
 }
 </pre>
       <p>In fact, this is not only allowed, but it’s quite common (and essential to how we will implement the Cantor set). Functions that call themselves are <em>recursive</em> and good for solving certain problems. For example, certain mathematical calculations are implemented recursively; the most common example is <em>factorial</em>.<a data-primary="factorial" data-type="indexterm"> </a>
-         <a data-primary="recursion"
-            data-secondary="factorial"
-            data-type="indexterm"> </a>
+         <a data-primary="recursion" data-secondary="factorial" data-type="indexterm"> </a>
       </p>
       <p>The factorial of any number n, usually written as n!, is defined as:</p>
       <p>
@@ -197,8 +166,7 @@ int factorial(int n) {
          <figcaption> </figcaption>
       </figure>
       <p>We can apply the same principle to graphics with interesting results, as we will see in many examples throughout this chapter. Take a look at this recursive function.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_01_Recursion/_8_01_Recursion.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_01_Recursion/_8_01_Recursion.pde">
          <img alt="ch08 ex01" src="../images/chapter08/ch08_ex01.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -218,19 +186,14 @@ void drawCircle(int x, int y, float radius) {
       
       <p>
          <strong function="">drawCircle()</strong> draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.<a data-primary="exit conditions for recursion" data-type="indexterm"> </a>
-         <a data-primary="recursion"
-            data-secondary="exit conditions"
-            data-type="indexterm"> </a>
+         <a data-primary="recursion" data-secondary="exit conditions" data-type="indexterm"> </a>
       </p>
       <p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a crucial point. As with iteration, <em>all recursive functions must have an exit condition!</em> You likely are already aware that all <strong function="">for</strong> and <strong function="">while</strong> loops must include a boolean expression that eventually evaluates to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite loop. The same can be said about recursion. If a recursive function calls itself forever and ever, you’ll be most likely be treated to a nice frozen screen.<a data-primary="exit conditions for recursion" data-type="indexterm"> </a>
-         <a data-primary="recursion"
-            data-secondary="exit conditions"
-            data-type="indexterm"> </a>
+         <a data-primary="recursion" data-secondary="exit conditions" data-type="indexterm"> </a>
       </p>
       <p>This circles example is rather trivial; it could easily be achieved through simple iteration. However, for scenarios in which a function calls itself more than once, recursion becomes wonderfully elegant.</p>
       <p>Let’s make <strong function="">drawCircle()</strong> a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_02_Recursion/_8_02_Recursion.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_02_Recursion/_8_02_Recursion.pde">
          <img alt="ch08 ex02" src="../images/chapter08/ch08_ex02.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -263,8 +226,7 @@ void drawCircle(float x, float y, float radius) {
       </div>
       
       <p>With just a little more code, we could also add a circle above and below each circle.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_03_Recursion/_8_03_Recursion.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_03_Recursion/_8_03_Recursion.pde">
          <img alt="ch08 ex03" src="../images/chapter08/ch08_ex03.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -287,9 +249,7 @@ void drawCircle(float x, float y, float radius) {
    </section>
    <section data-type="sect1" id="chapter08_section3">
       <h1>The Cantor Set with a Recursive Function</h1>
-      <p>Now we’re ready to visualize the Cantor set in Processing using a recursive function. Where do we begin? Well, we know that the Cantor set begins with a line. So let’s start there and write a function that draws a line.<a data-primary="Cantor set"
-            data-secondary="recursion and"
-            data-type="indexterm"> </a>
+      <p>Now we’re ready to visualize the Cantor set in Processing using a recursive function. Where do we begin? Well, we know that the Cantor set begins with a line. So let’s start there and write a function that draws a line.<a data-primary="Cantor set" data-secondary="recursion and" data-type="indexterm"> </a>
       </p>
       <pre>
 void cantor(float x, float y, float len) {
@@ -350,8 +310,7 @@ void cantor(float x, float y, float len) {
 }
 </pre>
       <p>And since the <strong function="">cantor()</strong> function is called recursively, the same rule will be applied to the next lines and to the next and to the next as <strong function="">cantor()</strong> calls itself again and again! Now, don’t go and run this code yet. We’re missing that crucial element: an exit condition. We’ll want to make sure we stop at some point—for example, if the length of the line ever is less than 1 pixel.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_04_CantorSet/_8_04_CantorSet.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_04_CantorSet/_8_04_CantorSet.pde">
          <img alt="ch08 ex04" src="../images/chapter08/ch08_ex04.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -369,27 +328,21 @@ void cantor(float x, float y, float len) {
 </pre>
       </div>
       
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.1</h5>
+      <aside data-type="example" class="exercise">
+         
          <p>Using <strong function="">drawCircle()</strong> and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</p>
          <figure class="screenshot">
             <img alt="ch08 exc01" src="../images/chapter08/ch08_exc01.png"/>
             <figcaption> </figcaption>
          </figure>
-      </div>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter08_section4">
       <h1>The Koch Curve and the ArrayList Technique</h1>
-      <p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects that could be moved independently? The recursive function is simple and elegant, but it does not allow you to do much besides simply generating the pattern itself. However, there is another way we can apply recursion in combination with an <strong klass="">ArrayList</strong> that will allow us to not only generate a fractal pattern, but keep track of all its individual parts as objects.<a data-primary="ArrayList class (Java)"
-            data-secondary="fractals and"
-            data-type="indexterm"> </a>
-         <a data-primary="fractals"
-            data-secondary="Koch curve"
-            data-type="indexterm"> </a>
+      <p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects that could be moved independently? The recursive function is simple and elegant, but it does not allow you to do much besides simply generating the pattern itself. However, there is another way we can apply recursion in combination with an <strong klass="">ArrayList</strong> that will allow us to not only generate a fractal pattern, but keep track of all its individual parts as objects.<a data-primary="ArrayList class (Java)" data-secondary="fractals and" data-type="indexterm"> </a>
+         <a data-primary="fractals" data-secondary="Koch curve" data-type="indexterm"> </a>
          <a data-primary="Koch curve" data-type="indexterm"> </a>
-         <a data-primary="recursion"
-            data-secondary="ArrayList objects and"
-            data-type="indexterm"> </a>
+         <a data-primary="recursion" data-secondary="ArrayList objects and" data-type="indexterm"> </a>
       </p>
       <p>To demonstrate this technique, let’s look at another famous fractal pattern, discovered in 1904 by Swedish mathematician Helge von Koch. Here are the rules. (Note that it starts the same way as the Cantor set, with a single line.)</p>
       <figure id="chapter08_figure13">
@@ -470,13 +423,9 @@ void draw() {
                </strong> A list of all <strong>KochLine</strong> objects.</p>
          </li>
       </ul>
-      <p>With the above elements, how and where do we apply Koch rules and principles of recursion?<a data-primary="Koch curve"
-            data-secondary="implementing"
-            data-type="indexterm"> </a>
+      <p>With the above elements, how and where do we apply Koch rules and principles of recursion?<a data-primary="Koch curve" data-secondary="implementing" data-type="indexterm"> </a>
       </p>
-      <p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation. &#x2028;We are going to apply a similar technique here. We have an <strong klass="">ArrayList</strong> that keeps track of the current set of <strong klass="">KochLine</strong> objects (at the start of the program, there is only one). We will need a second <strong klass="">ArrayList</strong> (let’s call it “next”) where we will place all the new <strong klass="">KochLine</strong> objects that are generated from applying the Koch rules. For every <strong klass="">KochLine</strong> object in the current <strong klass="">ArrayList</strong>, four new <strong klass="">KochLine</strong> objects are added to the next <strong klass="">ArrayList</strong>. When we’re done, the next <strong klass="">ArrayList</strong> becomes the current one.<a data-primary="Koch curve"
-            data-secondary="implementing"
-            data-type="indexterm"> </a>
+      <p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation.  We are going to apply a similar technique here. We have an <strong klass="">ArrayList</strong> that keeps track of the current set of <strong klass="">KochLine</strong> objects (at the start of the program, there is only one). We will need a second <strong klass="">ArrayList</strong> (let’s call it “next”) where we will place all the new <strong klass="">KochLine</strong> objects that are generated from applying the Koch rules. For every <strong klass="">KochLine</strong> object in the current <strong klass="">ArrayList</strong>, four new <strong klass="">KochLine</strong> objects are added to the next <strong klass="">ArrayList</strong>. When we’re done, the next <strong klass="">ArrayList</strong> becomes the current one.<a data-primary="Koch curve" data-secondary="implementing" data-type="indexterm"> </a>
       </p>
       <figure id="chapter08_figure15">
          <img alt="Figure 8.15" src="../images/chapter08/ch08_15.png"/>
@@ -500,7 +449,7 @@ void generate() {
            lines = next;<span class="callout-bubble">  one we care about!</span>
 }
 </pre>
-      <p>By calling <strong function="">generate()</strong> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong>KochLine</strong> objects. &#x2028;Of course, the above omits the real “work” here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong>KochLine</strong> object uses <strong>PVector</strong>, this is a nice opportunity for us to practice our vector math. Let’s establish how many points we need to compute for each <strong>KochLine</strong> object.</p>
+      <p>By calling <strong function="">generate()</strong> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <strong>KochLine</strong> objects.  Of course, the above omits the real “work” here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <strong>KochLine</strong> object uses <strong>PVector</strong>, this is a nice opportunity for us to practice our vector math. Let’s establish how many points we need to compute for each <strong>KochLine</strong> object.</p>
       <figure id="chapter08_figure16">
          <img alt="Figure 8.16" src="../images/chapter08/ch08_16.png"/>
          <figcaption> </figcaption>
@@ -592,8 +541,7 @@ void generate() {
   }
 </pre>
       <p>Putting it all together, if we call <strong function="">generate()</strong> five times in <strong function="">setup()</strong>, we’ll see the following result.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_05_Koch/_8_05_Koch.pde processingjs/chapter08/_8_05_Koch/KochFractal.pde processingjs/chapter08/_8_05_Koch/KochLine.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_05_Koch/_8_05_Koch.pde processingjs/chapter08/_8_05_Koch/KochFractal.pde processingjs/chapter08/_8_05_Koch/KochLine.pde">
          <img alt="ch08 ex05" src="../images/chapter08/ch08_ex05.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -617,8 +565,8 @@ void setup() {
 </pre>
       </div>
       
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.2</h5>
+      <aside data-type="example" class="exercise">
+         
          <figure class="half-width-right">
             <img alt="ch08 exc02" src="../images/chapter08/ch08_exc02.png"/>
             <figcaption> </figcaption>
@@ -628,63 +576,50 @@ void setup() {
             <img alt="blank" src="../images/blank.png"/>
             <figcaption> </figcaption>
          </figure>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.3</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>Try animating the Koch curve. For example, can you draw it from left to right? Can you vary the visual design of the line segments? Can you move the line segments using techniques from earlier chapters? What if each line segment were made into a spring (toxiclibs) or joint (Box2D)?</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.4</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>Rewrite the Cantor set example using objects and an <strong>ArrayList</strong>.</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.5</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion.</p>
          <figure>
             <img alt="ch08 exc05" src="../images/chapter08/ch08_exc05.png"/>
             <figcaption> </figcaption>
          </figure>
-      </div>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter08_section5">
       <h1>Trees</h1>
-      <p>The fractals we have examined in this chapter so far are deterministic, meaning they have no randomness and will always produce the identical outcome each time they are run. They are excellent demonstrations of classic fractals and the programming techniques behind drawing them, but are too precise to feel <em>natural</em>. In this next part of the chapter, I want to examine some techniques behind generating a stochastic (or non-deterministic) fractal. The example we’ll use is a branching tree. Let’s first walk through the steps to create a deterministic version. Here are our production rules:<a data-primary="fractals"
-            data-secondary="trees and"
-            data-type="indexterm"> </a>
+      <p>The fractals we have examined in this chapter so far are deterministic, meaning they have no randomness and will always produce the identical outcome each time they are run. They are excellent demonstrations of classic fractals and the programming techniques behind drawing them, but are too precise to feel <em>natural</em>. In this next part of the chapter, I want to examine some techniques behind generating a stochastic (or non-deterministic) fractal. The example we’ll use is a branching tree. Let’s first walk through the steps to create a deterministic version. Here are our production rules:<a data-primary="fractals" data-secondary="trees and" data-type="indexterm"> </a>
          <a data-primary="natural fractals" data-type="indexterm"> </a>
-         <a data-primary="natural phenomena"
-            data-secondary="trees and"
-            data-type="indexterm"> </a>
-         <a data-primary="stochastic fractals"
-            data-secondary="trees as"
-            data-type="indexterm"> </a>
+         <a data-primary="natural phenomena" data-secondary="trees and" data-type="indexterm"> </a>
+         <a data-primary="stochastic fractals" data-secondary="trees as" data-type="indexterm"> </a>
          <a data-primary="trees" data-type="indexterm"> </a>
       </p>
       <figure id="chapter08_figure19">
          <img alt="Figure 8.19" src="../images/chapter08/ch08_19.png"/>
          <figcaption> </figcaption>
       </figure>
-      <p>Again, we have a nice fractal with a recursive definition: A branch is a line with two branches connected to it.<a data-primary="Transformations tutorial (Processing)"
-            data-type="indexterm"> </a>
-         <a data-primary="fractals"
-            data-secondary="transformation matrix (Processing)"
-            data-type="indexterm"> </a>
+      <p>Again, we have a nice fractal with a recursive definition: A branch is a line with two branches connected to it.<a data-primary="Transformations tutorial (Processing)" data-type="indexterm"> </a>
+         <a data-primary="fractals" data-secondary="transformation matrix (Processing)" data-type="indexterm"> </a>
          <a data-primary="popMatrix() function (Processing)" data-type="indexterm"> </a>
          <a data-primary="pushMatrix() function (Processing)" data-type="indexterm"> </a>
          <a data-primary="transformation matrix (Processing)" data-type="indexterm"> </a>
       </p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_06_Tree_static/_8_06_Tree_static.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_06_Tree_static/_8_06_Tree_static.pde">
          <img alt="ch08 ex06" src="../images/chapter08/ch08_ex06.png"/>
          <figcaption> </figcaption>
       </figure>
       <p>The part that is a bit more difficult than our previous fractals lies in the use of the word <em>rotate</em> in the fractal’s rules. Each new branch must rotate relative to the previous branch, which is rotated relative to all its previous branches. Luckily for us, Processing has a mechanism to keep track of rotations for us—the <strong>
             <em>transformation matrix</em>
-         </strong>. If you aren’t familiar with the functions <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong>, I suggest you read the online Processing tutorial <a href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover the concepts you’ll need for this particular example.<a data-primary="Transformations tutorial (Processing)"
-            data-type="indexterm"> </a>
-         <a data-primary="fractals"
-            data-secondary="transformation matrix (Processing)"
-            data-type="indexterm"> </a>
+         </strong>. If you aren’t familiar with the functions <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong>, I suggest you read the online Processing tutorial <a href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover the concepts you’ll need for this particular example.<a data-primary="Transformations tutorial (Processing)" data-type="indexterm"> </a>
+         <a data-primary="fractals" data-secondary="transformation matrix (Processing)" data-type="indexterm"> </a>
          <a data-primary="popMatrix() function (Processing)" data-type="indexterm"> </a>
          <a data-primary="pushMatrix() function (Processing)" data-type="indexterm"> </a>
          <a data-primary="transformation matrix (Processing)" data-type="indexterm"> </a>
@@ -756,14 +691,14 @@ void branch() {
       </div>
       
       <p>Notice how in the above code we use <strong function="">pushMatrix()</strong> and <strong function="">popMatrix()</strong> around each subsequent call to <strong function="">branch()</strong>. This is one of those elegant code solutions that feels almost like magic. Each call to <strong function="">branch()</strong> takes a moment to remember the location of that particular branch. If you turn yourself into Processing for a moment and try to follow the recursive function with pencil and paper, you’ll notice that it draws all of the branches to the right first. When it gets to the end, <strong function="">popMatrix()</strong> will pop us back along all of the branches we’ve drawn and start sending branches out to the left.</p>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.6</h5>
+      <aside data-type="example" class="exercise">
+         
          <figure>
             <img alt="ch08 exc06" src="../images/chapter08/ch08_exc06.png"/>
             <figcaption> </figcaption>
          </figure>
          <p>Emulate the Processing code in <a href="#chapter08_example6">Example 8.6</a> and number the branches in the above diagram in the order that Processing would actually draw each one.</p>
-      </div>
+      </aside>
       <p>You may have noticed that the recursive function we just wrote would not actually draw the above tree. After all, it has no exit condition and would get stuck in infinite recursive calls to itself. You’ll also probably notice that the branches of the tree get shorter at each level. Let’s look at how we can shrink the length of the lines as the tree is drawn, and stop branching once the lines have become too short.</p>
       <pre>
          <span class="callout-bubble">Each branch now receives</span>
@@ -824,25 +759,24 @@ void draw() {
 </pre>
       </div>
       
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.7</h5>
+      <aside data-type="example" class="exercise">
+         
          <p>Vary the <strong function="">strokeWeight()</strong> for each branch. Make the root thick and each subsequent branch thinner.</p>
          <figure class="screenshot">
             <img alt="ch08 exc07" src="../images/chapter08/ch08_exc07.png"/>
             <figcaption> </figcaption>
          </figure>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.8</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>The tree structure can also be generated using the <strong>ArrayList</strong> technique demonstrated with the Koch curve. Recreate the tree using a <strong class="var">Branch</strong> object and an <strong>ArrayList</strong> to keep track of the branches. Hint: you’ll want to keep track of the branch directions and lengths using vector math instead of Processing transformations.</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.9</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>Once you have the tree built with an <strong>ArrayList</strong> of <strong class="var">Branch</strong> objects, animate the tree’s growth. Can you draw leaves at the end of the branches?</p>
-      </div>
+      </aside>
       <p>The recursive tree fractal is a nice example of a scenario in which adding a little bit of randomness can make the tree look more natural. Take a look outside and you’ll notice that branch lengths and angles vary from branch to branch, not to mention the fact that branches don’t all have exactly the same number of smaller branches. First, let’s see what happens when we simply vary the angle and length. This is a pretty easy one, given that we can just ask Processing for a random number each time we draw the tree.</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_07_TreeStochastic_angleonly/_8_07_TreeStochastic_angleonly.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_07_TreeStochastic_angleonly/_8_07_TreeStochastic_angleonly.pde">
          <img alt="ch08 ex07a" src="../images/chapter08/ch08_ex07a.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -867,8 +801,7 @@ void branch(float len) {
 }
 </pre>
       <p>In the above function, we always call <strong function="">branch()</strong> twice. But why not pick a random number of branches and call <strong function="">branch()</strong> that number of times?</p>
-      <figure class="screenshot"
-              data-pde="processingjs/chapter08/_8_07_TreeStochastic/_8_07_TreeStochastic.pde">
+      <figure class="screenshot" data-pde="processingjs/chapter08/_8_07_TreeStochastic/_8_07_TreeStochastic.pde">
          <img alt="ch08 ex07b" src="../images/chapter08/ch08_ex07b.png"/>
          <figcaption> </figcaption>
       </figure>
@@ -896,41 +829,28 @@ void branch(float len) {
 </pre>
       </div>
       
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.10</h5>
+      <aside data-type="example" class="exercise">
+         
          <p>Set the angles of the branches of the tree according to Perlin noise values. Adjust the noise values over time to animate the tree. See if you can get it to appear as if it is blowing in the wind.</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.11</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>Use toxiclibs to simulate tree physics. Each branch of the tree should be two particles connected with a spring. How can you get the tree to stand up and not fall down?</p>
-      </div>
+      </aside>
    </section>
    <section data-type="sect1" id="chapter08_section6">
       <h1>L-systems</h1>
-      <p>In 1968, Hungarian botanist Aristid Lindenmayer developed a grammar-based system to model the growth patterns of plants. L-systems (short for Lindenmayer systems) can be used to generate all of the recursive fractal patterns we’ve seen so far in this chapter. We don’t need L-systems to do the kind of work we’re doing here; however, they are incredibly useful because they provide a mechanism for keeping track of fractal structures that require complex and multi-faceted production rules.<a data-primary="fractals"
-            data-secondary="L-systems and"
-            data-type="indexterm"> </a>
+      <p>In 1968, Hungarian botanist Aristid Lindenmayer developed a grammar-based system to model the growth patterns of plants. L-systems (short for Lindenmayer systems) can be used to generate all of the recursive fractal patterns we’ve seen so far in this chapter. We don’t need L-systems to do the kind of work we’re doing here; however, they are incredibly useful because they provide a mechanism for keeping track of fractal structures that require complex and multi-faceted production rules.<a data-primary="fractals" data-secondary="L-systems and" data-type="indexterm"> </a>
          <a data-primary="L-systems" data-type="indexterm"> </a>
          <a data-primary="Lindenmayer systems" data-type="indexterm"> </a>
-         <a data-primary="Lindenmayer"
-            data-secondary="Aristid"
-            data-type="indexterm"> </a>
-         <a data-primary="natural phenomena"
-            data-secondary="L-systems and"
-            data-type="indexterm"> </a>
+         <a data-primary="Lindenmayer" data-secondary="Aristid" data-type="indexterm"> </a>
+         <a data-primary="natural phenomena" data-secondary="L-systems and" data-type="indexterm"> </a>
       </p>
       <p>In order to create an example that implements L-systems in Processing, we are going to have to be comfortable with working with (a) recursion, (b) transformation matrices, and (c) strings. So far we’ve worked with recursion and transformations, but strings are new here. We will assume the basics, but if that is not comfortable for you, I would suggest taking a look at the Processing tutorial <a href="http://www.processing.org/learning/text/">Strings and Drawing Text</a>.</p>
       <p>An L-system involves three main components:<a data-primary="alphabet (L-system component)" data-type="indexterm"> </a>
-         <a data-primary="L-systems"
-            data-secondary="components of"
-            data-type="indexterm"> </a>
-         <a data-primary="natural phenomena"
-            data-secondary="plant growth"
-            data-tertiary="modeling"
-            data-type="indexterm"> </a>
-         <a data-primary="plant growth"
-            data-secondary="modeling"
-            data-type="indexterm"> </a>
+         <a data-primary="L-systems" data-secondary="components of" data-type="indexterm"> </a>
+         <a data-primary="natural phenomena" data-secondary="plant growth" data-tertiary="modeling" data-type="indexterm"> </a>
+         <a data-primary="plant growth" data-secondary="modeling" data-type="indexterm"> </a>
       </p>
       <ul>
          <li>
@@ -959,8 +879,7 @@ void branch(float len) {
       <p>Let’s begin with a very simple L-system. (This is, in fact, Lindenmayer’s original L-system for modeling the growth of algae.)<a data-primary="rules (L-system component)" data-type="indexterm"> </a>
       </p>
       <figure>
-         <img alt="Figure 8.24: And so on and so forth..."
-              src="../images/chapter08/ch08_24.png"/>
+         <img alt="Figure 8.24: And so on and so forth..." src="../images/chapter08/ch08_24.png"/>
          <figcaption>And so on and so forth...</figcaption>
       </figure>
       <p>
@@ -1030,18 +949,14 @@ void mousePressed() {
       </div>
       
       <p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <strong klass="">String</strong> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <strong klass="">String</strong> object is “immutable,” which means once the object is created it can never be changed. Whenever you add on to the end of a <strong klass="">String</strong> object, Java has to make a brand new <strong klass="">String</strong> object (even if you are using the same variable name).<a data-primary="StringBuffer class" data-type="indexterm"> </a>
-         <a data-primary="strings"
-            data-secondary="StringBuffer class vs."
-            data-type="indexterm"> </a>
+         <a data-primary="strings" data-secondary="StringBuffer class vs." data-type="indexterm"> </a>
       </p>
       <pre>
 String s = "blah";
 s += "add some more stuff";
 </pre>
       <p>In most cases, this is fine, but why duplicate a 46,000-character string if you don’t have to? For better efficiency in our L-system examples, we’ll use the <strong klass="">StringBuffer</strong> class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.<a data-primary="StringBuffer class" data-type="indexterm"> </a>
-         <a data-primary="strings"
-            data-secondary="StringBuffer class vs."
-            data-type="indexterm"> </a>
+         <a data-primary="strings" data-secondary="StringBuffer class vs." data-type="indexterm"> </a>
       </p>
       <pre>
            StringBuffer next = new StringBuffer();<span class="callout-bubble">  A StringBuffer for the “next” sentence</span>
@@ -1081,9 +996,7 @@ s += "add some more stuff";
          <br/>
          <strong formula="">Generation 3: ABABBBABABBBBBBBBBABABBBABA</strong>
       </p>
-      <p>Look familiar? This is the Cantor set generated with an L-system.<a data-primary="Cantor set"
-            data-secondary="L-systems and"
-            data-type="indexterm"> </a>
+      <p>Look familiar? This is the Cantor set generated with an L-system.<a data-primary="Cantor set" data-secondary="L-systems and" data-type="indexterm"> </a>
       </p>
       <figure id="chapter08_figure25">
          <img alt="Figure 8.25" src="../images/chapter08/ch08_25.png"/>
@@ -1104,9 +1017,7 @@ s += "add some more stuff";
          <strong formula="">]: Restore previous location</strong>
       </p>
       <p>This type of drawing framework is often referred to as “Turtle graphics” (from the old days of LOGO programming). Imagine a turtle sitting on your computer screen to which you could issue a small set of commands: turn left, turn right, draw a line, etc. Processing isn’t set up to operate this way by default, but by using <strong function="">translate()</strong>, <strong function="">rotate()</strong>, and <strong function="">line()</strong>, we can emulate a Turtle graphics engine fairly easily.</p>
-      <p>Here’s how we would translate the above L-system alphabet into Processing code.<a data-primary="L-systems"
-            data-secondary="translating into code"
-            data-type="indexterm"> </a>
+      <p>Here’s how we would translate the above L-system alphabet into Processing code.<a data-primary="L-systems" data-secondary="translating into code" data-type="indexterm"> </a>
       </p>
       <p>
          <strong formula="">F: line(0,0,0,len); translate(0,len);</strong>
@@ -1170,15 +1081,9 @@ for (int i = 0; i &lt; sentence.length(); i++) {
                <strong mono="">Turtle</strong>: A class to manage reading the L-system sentence and following its instructions to draw on the screen.</p>
          </li>
       </ul>
-      <p>We won’t write out these classes here since they simply duplicate the code we’ve already worked out in this chapter. However, let’s see how they are put together in the main tab.<a data-primary="&lt;em&gt;Algorithmic Beauty of Plants"
-            data-secondary="The&lt;/em&gt; (Prusinkiewicz/Lindenmayer)"
-            data-type="indexterm"> </a>
-         <a data-primary="Lindenmayer"
-            data-secondary="Aristid"
-            data-type="indexterm"> </a>
-         <a data-primary="Prusinkiewicz"
-            data-secondary="Przemysław"
-            data-type="indexterm"> </a>
+      <p>We won’t write out these classes here since they simply duplicate the code we’ve already worked out in this chapter. However, let’s see how they are put together in the main tab.<a data-primary="&lt;em&gt;Algorithmic Beauty of Plants" data-secondary="The&lt;/em&gt; (Prusinkiewicz/Lindenmayer)" data-type="indexterm"> </a>
+         <a data-primary="Lindenmayer" data-secondary="Aristid" data-type="indexterm"> </a>
+         <a data-primary="Prusinkiewicz" data-secondary="Przemysław" data-type="indexterm"> </a>
       </p>
       <figure class="screenshot">
          <img alt="ch08 ex09" src="../images/chapter08/ch08_ex09.png"/>
@@ -1217,18 +1122,18 @@ void mousePressed() {
 </pre>
       </div>
       
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.12</h5>
+      <aside data-type="example" class="exercise">
+         
          <p>Use an L-system as a set of instructions for creating objects stored in an <strong>ArrayList</strong>. Use trigonometry and vector math to perform the rotations instead of matrix transformations (much like we did in the Koch curve example).</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.13</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>The seminal work in L-systems and plant structures, <em>The Algorithmic Beauty of Plants</em> by Przemysław Prusinkiewicz and Aristid Lindenmayer, was published in 1990. It is available for free in its entirety <a href="http://algorithmicbotany.org/papers/#abop">online</a>. Chapter 1 describes many sophisticated L-systems with additional drawing rules and available alphabet characters. In addition, it describes several methods for generating stochastic L-systems. Expand the L-system example to include one or more additional features described by Prusinkiewicz and Lindenmayer.</p>
-      </div>
-      <div data-type="example" class="exercise">
-         <h5>Exercise 8.14</h5>
+      </aside>
+      <aside data-type="example" class="exercise">
+         
          <p>In this chapter, we emphasized using fractal algorithms for generating visual patterns. However, fractals can be found in other creative mediums. For example, fractal patterns are evident in Johann Sebastian Bach’s Cello Suite no. 3. The structure of David Foster Wallace’s novel <em>Infinite Jest</em> was inspired by fractals. Consider using the examples in this chapter to generate audio or text.</p>
-      </div>
+      </aside>
       <div data-type="tip">
          <h1>The Ecosystem Project</h1>
          <p>Step 8 Exercise:</p>
