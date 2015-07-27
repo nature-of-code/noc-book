@@ -1104,3 +1104,100 @@ pre img {
  margin: 0 0 0 4pt;
 }
 
+div[data-type="equation"] { }
+
+@namespace mml "http://www.w3.org/1998/Math/MathML";
+
+mml|math { }
+
+div[data-type="equation"] h5 { }
+
+div[data-type="equation"] h5:before { }
+
+/* --------------------------------------------------------------------- */
+/* -------------------------- Callout Bubbles -------------------------- */
+/* --------------------------------------------------------------------- */
+
+/* -------------------------- Bubble Settings -------------------------- */
+
+/* Default narrow bubble (auto width, pos-4) */
+span.callout-bubble {
+	font-family: "AkzidenzGroteskBE-Cn", ArialUnicode;
+	font-size: 9.5pt;
+	letter-spacing: 0.5pt;
+	line-height: 10pt;
+	padding: 5pt 8pt 3.5pt;
+	background-color: cmyk(0%,0%,0%,5%);
+	border: 0.5pt solid cmyk(0%,0%,0%,30%);
+	border-radius: 2.5pt;
+	position: absolute;
+	margin-top: -4pt;
+	box-shadow: 2pt 2pt 4pt cmyk(0%,0%,0%,15%);
+	width: auto;
+	max-width: 4.5in;
+	left: 2.25in;
+}
+/* Variable bubble widths */
+span.callout-bubble.width-1 { width: 0.9in }
+span.callout-bubble.width-2 { width: 1.25in }
+span.callout-bubble.width-3 { width: 1.5in }
+span.callout-bubble.width-4 { width: 1.75in }
+span.callout-bubble.width-5 { width: 2in }
+span.callout-bubble.width-6 { width: 2.25in }
+span.callout-bubble.width-7 { width: 2.5in }
+span.callout-bubble.width-8 { width: 2.75in }
+span.callout-bubble.width-9 { width: 3in }
+span.callout-bubble.width-10 { width: 3.25in }
+span.callout-bubble.width-11 { width: 3.5in }
+span.callout-bubble.width-12 { width: 3.75in }
+span.callout-bubble.width-13 { width: 4in }
+span.callout-bubble.width-14 { width: 4.25in }
+span.callout-bubble.width-15 { width: 4.5in }
+
+/* Variable bubble H positions */
+span.callout-bubble.pos-1 { left: 1.5in }
+span.callout-bubble.pos-2 { left: 1.75in }
+span.callout-bubble.pos-3 { left: 2in }
+span.callout-bubble.pos-4 { left: 2.25in }
+span.callout-bubble.pos-5 { left: 2.5in }
+span.callout-bubble.pos-6 { left: 2.75in }
+span.callout-bubble.pos-7 { left: 3in }
+span.callout-bubble.pos-8 { left: 3.25in }
+span.callout-bubble.pos-9 { left: 3.5in }
+span.callout-bubble.pos-10 { left: 3.75in }
+span.callout-bubble.pos-11 { left: 4in }
+span.callout-bubble.pos-12 { left: 4.25in }
+span.callout-bubble.pos-13 { left: 4.5in }
+span.callout-bubble.pos-14 { left: 4.75in } /* width-1 right-align to right edge */
+
+/* Bubble that sits below reference line */
+span.callout-bubble.below {	margin-top: 15pt }
+
+/* ------------------------- Pointer Settings -------------------------- */
+
+/* Default bubble pointer "West" */
+span.callout-bubble:before {
+	content: url("assets/bubble-point.pdf");
+	position: absolute;
+	top: 5pt;
+	left: -12.625pt;
+}
+
+/* Bubble pointer "North-West" */
+span.callout-bubble.below:before {
+	content: url("assets/bubble-point-nw.pdf");
+	position: absolute;
+	top: -4.99pt;
+	left: -12.4pt;
+}
+
+/* Bubble with no pointer. Use class="no-point" */
+span.callout-bubble.no-point:before { display: none }
+
+
+/* ----------------------- Bubble Text Settings ------------------------ */
+
+span.callout-bubble em { font-style: italic }
+span.callout-bubble strong { font-family: "AkzidenzGroteskBE-MdCn" }
+span.callout-bubble strong em { font-family: "AkzidenzGroteskBE-MdCnIt" }
+
