@@ -171,7 +171,7 @@ section[data-type="sect1"] > h1 {
    to begin numbering correctly. */
 
 body[data-type="book"] {
-  counter-reset: page 1 PartNumber ChapterNumber AppendixNumber FigureNumber TableNumber ExampleNumber EquationNumber footnote ExerciseNumber;
+  counter-reset: page 1 PartNumber ChapterNumber AppendixNumber FigureNumber TableNumber ExampleNumber EquationNumber ExerciseNumber footnote;
 }
 
 /* frontmatter */
@@ -578,12 +578,12 @@ section[data-type="preface"] > h1 {
 section[data-type="preface"] {
   page: preface;
   page-break-before: right; /* forces the preface to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote ExerciseNumber; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber ExerciseNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
 }
 
 /* introduction */
 
-section[data-type="introduction"] > h1 {
+section[data-type="introduc"] > h1 {
   font-size: 16pt;
   font-weight: normal;
 }
@@ -633,7 +633,7 @@ section[data-type="introduction"] > h1 {
 section[data-type="introduction"] {
   page: introduction;
   page-break-before: right; /* forces the introduction to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote ExerciseNumber; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber ExerciseNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
 }
 
 /* forewords */
@@ -688,7 +688,7 @@ section[data-type="foreword"] > h1 {
 section[data-type="foreword"] {
   page: foreword;
   page-break-before: right; /* forces the foreword to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber ExerciseNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
 }
 
 /* parts */
@@ -769,7 +769,7 @@ section.pagenumrestart {
 section[data-type="chapter"] {
   page: chapter;
   page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: TableNumber FigureNumber ExampleNumber EquationNumber footnote;
+  counter-reset: TableNumber FigureNumber ExampleNumber EquationNumber ExerciseNumber footnote;
 }
 
 /* appendixes */
@@ -801,7 +801,7 @@ section[data-type="chapter"] {
 section[data-type="appendix"] {
   page: appendix;
   page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote;
+  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber ExerciseNumber footnote;
 }
 
 /* lists */
@@ -938,19 +938,19 @@ figcaption:before {
 }
 
 section[data-type="preface"] figcaption:before {
-  content: "Figure P-"counter(FigureNumber)". ";
+  content: "FIGURE P-"counter(FigureNumber)". ";
 }
 
 section[data-type="introduction"] figcaption:before {
-  content: "Figure I-"counter(FigureNumber)". ";
+  content: "FIGURE I-"counter(FigureNumber)". ";
 }
 
 section[data-type="foreword"] figcaption:before {
-  content: "Figure F-"counter(FigureNumber)". ";
+  content: "FIGURE F-"counter(FigureNumber)". ";
 }
 
 section[data-type="appendix"] figcaption:before {
-  content: "Figure " counter(AppendixNumber)"-"counter(FigureNumber)". ";
+  content: "FIGURE " counter(AppendixNumber)"-"counter(FigureNumber)". ";
 }
 
 img {
@@ -969,6 +969,35 @@ dt img {
 }
 
 figure div.border-box { display: inline }
+
+/* exericses */
+
+aside[data-type="sidebar"].exercise > h5 {
+  string-set: ExerciseNumber self;
+  font-family: SourceSansPro-Black, sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+}
+
+aside[data-type="sidebar"].exercise > h5:before {
+  counter-increment: ExerciseNumber;
+  content: "EXERCISE "counter(ChapterNumber)"-"counter(ExerciseNumber)": ";
+  font-family: SourceSansPro-Black, sans-serif;
+  font-style: normal;
+  font-size: 8.5pt;
+}
+
+section[data-type="introduction"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "EXERCISE I-"counter(ExerciseNumber)": " }
+
+section[data-type="preface"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "EXERCISE P-"counter(ExerciseNumber)": " }
+
+section[data-type="foreword"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "EXERCISE F-"counter(ExerciseNumber)": " }
+
+section[data-type="appendix"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "EXERCISE " counter(AppendixNumber)"-"counter(ExerciseNumber)": " }
 
 /* sidebars */
 
@@ -1088,6 +1117,23 @@ div[data-type="example"] h5:before {
 div[data-type="example"] pre {
   margin-left: 0;
 }
+
+section[data-type="preface"] div[data-type="example"] h5:before {
+  content: "EXAMPLE P-"counter(ExampleNumber)". ";
+}
+
+section[data-type="introduction"] div[data-type="example"] h5:before {
+  content: "EXAMPLE I-"counter(ExampleNumber)". ";
+}
+
+section[data-type="foreword"] div[data-type="example"] h5:before {
+  content: "EXAMPLE F-"counter(ExampleNumber)". ";
+}
+
+section[data-type="appendix"] div[data-type="example"] h5:before {
+  content: "EXAMPLE " counter(AppendixNumber)"-"counter(ExampleNumber)". ";
+}
+
 /* blockquote */
 
 blockquote {
