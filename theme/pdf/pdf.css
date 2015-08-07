@@ -1,874 +1,629 @@
-@charset "UTF-8";
+/* Page Style
+_____________________________________________________________________________ */
 
-@import url("/usr/local/app/orm-pdfrenderer/ah-default.css");
-
-@page { /* defining overall trim size and page layout */
-  size: 7in 9.1875in; /* width, height */
-  margin-top: 0.75in; /* white space around the page */
+@page {
+  size: 7.5in 9.25in;
+  margin-top: 0.75in;
   margin-bottom: 0.75in;
-  @sidenote {
-    float: outside;
-    width: 1.1in;
-    clear: both;
-  }
 }
 
-head title { display: none; }
-
-figure[data-type="cover"] {
-  page: cover;
+@page :left {
+  margin-right: 1.125in;
+  margin-left: 0.875in;
 }
 
-figure[data-type="cover"] img {
-  max-width: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
+@page :right {
+  margin-right: 0.875in;
+  margin-left: 1.25in;
 }
 
-@page cover {
+body {
+  font-size: 9pt;
+  font-family: "ProximaNova-Regular";
   margin: 0;
   padding: 0;
 }
 
-@page :left {
-  margin-left: 1.625in;
-  margin-right: 1in;
-  @bottom-left-corner {
-    font-family: SourceSansPro, sans-serif;
-    font-size: 9pt;
-    text-align: left;
-    margin-left: 0.375in;
-    margin-top: 5pt;
-  }
-  @top-left {
-    font-family: SourceSansPro, sans-serif;
-    font-size: 8pt;
-    text-align: left;
-    margin-left: -0.65in;
-    margin-top: 6pt;
-  }
-  @sidenote { margin-left: -1.25in; } 
+/* Page Breaks
+_____________________________________________________________________________ */
+
+img, .note, .example, .tip, .breakout_box, .half-width, .half-width-right, table, .code-comment-pair, .image-container {
+  page-break-inside: avoid;
 }
 
-@page :right {
-  margin-right: 1.625in;
-  margin-left: 1in;
-  @bottom-right-corner {
-    font-family: SourceSansPro, sans-serif;
-    font-size: 9pt;
-    text-align: right;
-    margin-top: 5pt;
-    margin-right: 0.375in;
-  }
-  @top-right {
-    font-family: SourceSansPro, sans-serif;
-    font-size: 8pt;
-    text-align: right;
-    margin-right: -0.65in;
-    margin-top: 6pt;
-  }
-  @sidenote { margin-right: -1.25in; } 
-}
-
-@page :blank { /* defining a truly blank master page */
-  @bottom-left-corner { content: none; }
-  @bottom-right-corner { content: none; }
-  @top-right { content: none; }
-  @top-left { content: none; }
-}
-
-/* general blocks */
-
-li > p, dd p,
-section[data-type="titlepage"] p,
-section[data-type="copyright-page"] p,
-p[data-type="author"], p.author,
-section[data-type="preface"] > h1 + p, 
-section[data-type="foreword"] > h1 + p,
-div[data-type="part"] > h1 + p, 
-section[data-type="chapter"] > h1 + p, 
-section[data-type="chapter"] > h1 + div.author p, 
-section[data-type="sect1"] > h1 + p, 
-section[data-type="sect2"] > h2 + p,
-section[data-type="sect3"] > h3 + p,
-h1 + p, h2 + p, h3 + P { 
-  text-indent: 0; /* first paragraph following a heading has no indent */
-}
-
-p, dd { /* general text styles */
-  font-family: 'SourceSansPro', sans-serif;
-  text-indent: 0.167in;
-  font-size: 9.5pt;
-  line-height: 13pt;
-  margin: 0;
-  text-align: justify;
-}
-
-/* global styles */
-
-body {
-  -ah-kerning-mode: pair;
-  -ah-hyphenate-hyphenated-word: false;
-  hyphens: auto;
-}
-
-/* general inlines */
-
-a {
-  color: cmyk(0%,0%,0%,80%);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-/* PDF bookmarks */
-
-nav[data-type="toc"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-div[data-type="part"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-section[data-type="preface"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-section[data-type="foreword"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-section[data-type="chapter"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-section[data-type="appendix"] > h1 {
-  bookmark-level: 1;
-  bookmark-state: closed;
-}
-
-section[data-type="sect1"] > h1 {
-  bookmark-level: 2;
-  bookmark-state: closed;
-}
-
-/* reset counters */
-
-/* counters add auto-numbering to elements in the book. 
-   This reset initiates the counters, enabling them 
-   to begin numbering correctly. */
-
-body[data-type="book"] {
-  counter-reset: page 1 PartNumber ChapterNumber AppendixNumber FigureNumber TableNumber ExampleNumber EquationNumber footnote;
-}
-
-/* frontmatter */
-
-section[data-type="halftitlepage"], 
-section[data-type="titlepage"] {
-  page: blank;
-  text-align: right;
-  page-break-before: right; /* titlepages always start on a right-hand page */
-  page-break-after: always;
-}
-
-section[data-type="halftitlepage"] h1, 
-section[data-type="titlepage"] h1 {
-  font-family: Merriweather, serif;
-  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
-  margin-top: 126pt;
-  padding-bottom: 7pt;
-  text-align: left;
-}
-
-section[data-type="halftitlepage"] h2, 
-section[data-type="titlepage"] h2 {
-  font-family: SourceSansPro-Semibold; 
-  font-size: 13pt;
-  text-align: left;
-}
-
-section[data-type="halftitlepage"] h1 {
-  font-size: 16pt;
-  line-height: 18pt;
-}
-
-section[data-type="titlepage"] h1 {
-  font-size: 20pt;
-  line-height: 24pt;
-  font-weight: normal;
-}
-
-/* titlepage text font */
-
-/* styling and positioning for author names */
-
-section[data-type="titlepage"] p[data-type="author"] {
-  font-family: Merriweather, serif;
-  font-size: 11pt;
-  margin-top: 66pt;
-}
-
-/* copyright page */
-
-section[data-type="copyright-page"] {
-  page: blank;
-  page-break-after: always;
-}
-
-section[data-type="copyright-page"] h1 {
-  font-family: 'SourceSansPro', sans-serif;
-  font-weight: bold;
-  font-size: 8pt;
-  margin: 0;
-}
-
-section[data-type="copyright-page"] p.author {
-  font-size: 8pt;
-}
-
-section[data-type="copyright-page"] p {
-}
-
-section[data-type="copyright-page"] p.isbn {
-}
-
-/* dedication */
-
-section[data-type="dedication"] {
-  font-family: 'Crimson-Italic', serif;
-  font-style: italic;
-  page: blank;
-  page-break-after: always;
-  text-align: center;
-  padding-top: 96pt;
-}
-
-/* table of contents */
-
-/* paged media */
-@page toc:first {
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
-  @top-right {
-    content: none;
-  }
-}
-
-@page toc:left {
-  @bottom-left-corner {
-    content: counter(page, lower-roman);
-  }
-  @top-left {
-    content: "Table of Contents";
-  }
-}
-
-@page toc:right {
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
-  @top-right {
-    content: "Table of Contents";
-  }
-}
-
-@page toc:blank { 
-  @bottom-left-corner {
-    content: none;
-  }
-  @bottom-right-corner {
-    content: none;
-  }
-  @top-right {
-    content: none;
-  }
-  @top-left {
-    content: none;
-  }
-}
-
-nav[data-type="toc"] > h1 { /* table of contents heading */
-  font-family: Merriweather, serif;
-  font-size: 16pt;
-  line-height: 22pt;
-  margin-top: 87pt;
-  margin-bottom: 77pt;
-  text-align: right;
-}
-
-nav[data-type="toc"] { /* table of contents is a series of nested lists in a nav element */
-  page: toc;
-  page-break-before: right;
-  font-variant: tabular-nums;
-  hyphens: none;
-  counter-reset: ChapterNumberTOC PartNumberTOC AppendixNumberTOC;
-}
-
-nav[data-type="toc"] a {
-  font-weight: normal;
-  color: cmyk(0%,0%,0%,100%);
-  font-style: normal;
-}
-
-nav[data-type="toc"] li { /* no list marker on table of contents entries */
-  list-style-type: none;
-  margin-left: 0;
-  text-align: left;
-}
-
-nav[data-type="toc"] ol { margin-left: 0; }
-
-/* global styles for the table of contents */
-nav[data-type="toc"] li[data-type="chapter"],
-nav[data-type="toc"] li[data-type="appendix"],
-nav[data-type="toc"] li[data-type="glossary"],
-nav[data-type="toc"] li[data-type="index"]
-/*nav[data-type="toc"] ul li.preface.afterword*/ {
-  font-family: SourceSansPro-Semibold, sans-serif;
-  font-size: 9.5pt;
-  font-weight: 600;
-  margin-top: 14.4pt;
-  display: list-item;
+span.example {
   page-break-after: avoid;
 }
 
-nav[data-type="toc"] li[data-type="preface"],
-nav[data-type="toc"] li[data-type="foreword"] {
-  font-family: SourceSansPro-Semibold, sans-serif;
-  font-style: italic;
-  font-size: 9.5pt;
-  font-weight: 600;
-  display: list-item;
-}
+/* Fonts
+_____________________________________________________________________________ */
 
-nav[data-type="toc"] li[data-type="chapter"] > a:after,
-nav[data-type="toc"] li[data-type="appendix"] > a:after,
-nav[data-type="toc"] li[data-type="index"] > a:after,
-nav[data-type="toc"] li[data-type="glossary"] > a:after
-/* nav[data-type="toc"] ul li.preface.afterword a:after*/ {
-  content: leader(space) " " target-counter(attr(href, url), page);
-  font-weight: 600;
-}
-
-nav[data-type="toc"] li[data-type="sect1"] a:after,
-nav[data-type="toc"] li[data-type="sect2"] a:after {
-  content: leader(space) target-counter(attr(href, url), page);
-  margin-right: -0.25in; /* for long lines */
-}
-
-nav[data-type="toc"] li[data-type="preface"] > a:after,
-nav[data-type="toc"] li[data-type="foreword"] > a:after {
-  content: leader(space) " " target-counter(attr(href, url), page, lower-roman);
-}
-
-nav[data-type="toc"] li[data-type="preface"] li[data-type="sect1"],
-nav[data-type="toc"] li[data-type="preface"] li[data-type="sect2"], /* show no heads in preface */
-nav[data-type="toc"] li[data-type="foreword"] li[data-type="sect1"],
-nav[data-type="toc"] li[data-type="foreword"] li[data-type="sect2"], /* show no heads in foreword */
-nav[data-type="toc"] li[data-type="appendix"] li[data-type="sect1"],
-nav[data-type="toc"] li[data-type="appendix"] li[data-type="sect2"] { /* and appendix */
-  display: none;
-}
-
-nav[data-type="toc"] li[data-type="part"]:before {
-  content: "Part " counter(PartNumberTOC, upper-roman) ".\2003";
-  counter-increment: PartNumberTOC;
-}
-
-nav[data-type="toc"] li[data-type="chapter"]:before {
-  content: "CHAPTER " counter(ChapterNumberTOC, decimal) ": ";
-  counter-increment: ChapterNumberTOC;
-}
-
-li[data-type="sect1"], li[data-type="sect2"] {
-  font-family: SourceSansPro, sans-serif;
-  font-size: 9.5pt;
+/* Moved all of this to fonts.css */
+/*@font-face {
+  font-family: 'Proxima-Nova-Regular';
+  src: url('../fonts/ProximaNova-Regular.eot');
+  src: local('☺'), url('../fonts/ProximaNova-Regular.ttf') format('truetype'), url('../fonts/ProximaNova-Regular.svg') format('svg');
   font-weight: normal;
-  page-break-after: auto;
-  margin-bottom: 5pt;
-  margin-top: 5pt; /* otherwise, cascades from above */ 
+  font-style: normal;
 }
-
-li[data-type="sect1"] {
-  padding-left: 24pt;
-  text-indent: -12pt;
-  padding-right: 0.25in; /* for long lines; cascades to sect2s */
-}
-
-li[data-type="sect2"] {
-  padding-left: 0.12in;
-  margin-left: 0;
-}
-
-/* appendixes */
-nav[data-type="toc"] li[data-type="appendix"] {
-  padding-left: 0;
-  margin-left: 0;
-  list-style-position: inside;
-}
-
-nav[data-type="toc"] li[data-type="appendix"]::marker {
-  content: counter(AppendixNumberTOC, upper-alpha) ".";
-  counter-increment: AppendixNumberTOC;
-  margin-right: 5pt;
-}
-
-/* preface, chapter, and appendix headings */
-
-/* shared styles for all chapter-level headings */
-section[data-type="preface"] > h1,
-section[data-type="foreword"] > h1, 
-section[data-type="chapter"] > h1, 
-section[data-type="appendix"] > h1 {
-  font-family: 'Merriweather', serif;
-  line-height: 22pt;
-  margin-bottom: 0.9in;
-  margin-top: 0.5in;
-  text-align: right;
-}
-
-section[data-type="preface"] > h1 {
-  string-set: ChapterTitle self;
-}
-
-section[data-type="foreword"] > h1 {
-  string-set: ChapterTitle self;
-}
-
-section[data-type="chapter"] > h1 {
-  string-set: ChapterTitle self, SectionTitle self;
-  counter-increment: ChapterNumber;
-}
-
-section[data-type="appendix"] > h1 {
-  string-set: ChapterTitle self;
-  counter-increment: AppendixNumber;
-}
-
-/* chapter and appendix headings include auto-numbering */
-section[data-type="chapter"] > h1:after, 
-section[data-type="appendix"] > h1:after {
-  font-size: 65pt;
-  font-family: 'SourceSansPro-ExtraLight', sans-serif;
-  letter-spacing: -3pt;
-  display: block;
-  position: relative;
-  bottom: 0.445in;
-  left: 4.5in;
-  text-align: center;
-  width: 0.75in;
-}
-
-section[data-type="chapter"] > h1:after {
-  content: counter(ChapterNumber);
-}
-
-section[data-type="appendix"] > h1:after {
-  content: counter(AppendixNumber, upper-alpha);
-}
-
-/* section headings */
-
-h1, h2, h3, h4, h5, h6 {
-  hyphens: none;
-  text-align: left;
+@font-face {
+  font-family: 'Proxima-Nova-Semibold';
+  src: url('../fonts/ProximaNova-Semibold.eot');
+  src: local('☺'), url('../fonts/ProximaNova-Semibold.ttf') format('truetype'), url('../fonts/ProximaNova-Semibold.svg') format('svg');
   font-weight: normal;
-}
+  font-style: normal;
+}*/
 
-section[data-type="sect1"] > h1 { /* A-level headings */
-  font-family: 'Merriweather', serif;
-  font-weight: bold;
-  font-size: 12pt;
-  line-height: 16pt;
-  margin-top: 18pt;
-  margin-bottom: 14pt;
-  string-set: SectionTitle self; /* A-heads are also displayed in chapter footers */
-}
-
-section[data-type="sect2"] > h2 { /* B-level headings */
-  font-family: SourceSansPro, sans-serif;
-  font-weight: bold;
-  font-size: 11pt;
-  line-height: 12pt;
-  margin-top: 18pt;
-  margin-bottom: 13pt;
-}
-
-section[data-type="sect3"] > h3 { /* C-level headings */
-  font-family: SourceSansPro-Semibold, sans-serif;
-  font-size: 9.5pt;
-  margin-top: 14pt;
-  margin-bottom: 10pt;
-  line-height: 14pt;
-  text-transform: uppercase;
-}
-
-/* prefaces */
-
-section[data-type="preface"] > h1 {
-  font-size: 16pt;
+/*@font-face {
+  font-family: 'Vijaya';
+  src: url('../fonts/Vijaya.eot');
+  src: local('☺'), url('../fonts/Vijaya.woff') format('woff'), url('../fonts/Vijaya.ttf') format('truetype'), url('../fonts/Vijaya.svg') format('svg');
   font-weight: normal;
+  font-style: normal;
+}*/
+
+/* Font Styles
+_____________________________________________________________________________ */
+
+em {
+  font-style: normal;
+  font-family: "ProximaNova-RegularIt";
 }
 
-@page preface:first {
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
-  @top-right {
-    content: none;
-  }
+strong {
+  font-style: normal;
+  font-family: "ProximaNova-Bold";
 }
 
-@page preface:left {
-  @top-left {
-    content: string(ChapterTitle);
-  }
-  @bottom-left-corner {
-    content: counter(page, lower-roman);
-  }
+em strong,
+strong em {
+  font-style: normal;
+  font-family: "ProximaNova-BoldIt";
 }
 
-@page preface:right {
-  @top-right {
-    content: string(ChapterTitle);
-  }
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
+
+
+/* Page Numbering
+_____________________________________________________________________________ */
+
+div#frontmatter {
+  page: frontmatter;
 }
 
-@page preface:blank { 
-  @bottom-left-corner {
-    content: none;
-  }
-  @bottom-right-corner {
-    content: none;
-  }
-  @top-right {
-    content: none;
-  }
-  @top-left {
-    content: none;
-  }
-}
-
-section[data-type="preface"] {
-  page: preface;
-  page-break-before: right; /* forces the preface to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
-}
-
-/* forewords */
-
-section[data-type="foreword"] > h1 {
-  font-size: 16pt;
-  font-weight: normal;
-}
-
-@page foreword:first {
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
-  @top-right {
-    content: none;
-  }
-}
-
-@page foreword:left {
-  @top-left {
-    content: string(ChapterTitle);
-  }
-  @bottom-left-corner {
-    content: counter(page, lower-roman);
-  }
-}
-
-@page foreword:right {
-  @top-right {
-    content: string(ChapterTitle);
-  }
-  @bottom-right-corner {
-    content: counter(page, lower-roman);
-  }
-}
-
-@page foreword:blank { 
-  @bottom-left-corner {
-    content: none;
-  }
-  @bottom-right-corner {
-    content: none;
-  }
-  @top-right {
-    content: none;
-  }
-  @top-left {
-    content: none;
-  }
-}
-
-section[data-type="foreword"] {
-  page: foreword;
-  page-break-before: right; /* forces the foreword to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
-}
-
-/* parts */
-
-div[data-type="part"] {
-  page: blank;
-  page-break-before: right;
-}
-
-div[data-type="part"] > h1 {
-  font-family: 'OpenSans-CondBold', sans-serif;
-  font-size: 18pt;
-  line-height: 22pt;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 28pt;
-  counter-increment: PartNumber;
-}
-
-div[data-type="part"] > h1:before {
-  font-family: 'OpenSans-Semibold', sans-serif;
-  font-size: 11pt;
-  text-transform: uppercase;
-  content: "Part " counter(PartNumber);
-  display: block;
-  text-align: center;
-  margin-top: 72pt;
-  margin-bottom: 34pt;
-}
-
-/* chapters */
-
-@page chapter:first {
-  @top-right {
-    content: none;
-  }
-}
-
-@page chapter:left {
-  @bottom-left-corner {
-    content: counter(page);
-  }
-  @top-left {
-    content: "CHAPTER "counter(ChapterNumber)": "string(ChapterTitle);
-  }
-}
-
-@page chapter:right {
-  @bottom-right-corner {
-    content: counter(page);
-  }
-  @top-right {
-    content: string(SectionTitle);
-  }
-}
-
-@page chapter:blank { 
-  @bottom-left-corner {
-    content: none;
-  }
-  @bottom-right-corner {
-    content: none;
-  }
-  @top-right {
-    content: none;
-  }
-  @top-left {
-    content: none;
-  }
-}
-
-/* page number resets to 1 on the first chapter */
-
-section.pagenumrestart {
+div#contents {
   counter-reset: page 1;
 }
 
-section[data-type="chapter"] {
-  page: chapter;
-  page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: TableNumber FigureNumber ExampleNumber EquationNumber footnote;
-}
+/* Define Left Headers and Footers
+_____________________________________________________________________________ */
 
-/* appendixes */
-
-@page appendix:first {
-  @bottom-left {
-    content: normal;
+@page :left {
+  @top-left {
+    font: 8pt "ProximaNova-Regular", serif;
+    content: "The Nature of Code (v1.0)";
+    vertical-align: bottom;
+    padding-bottom: 2em;
+  color: #000000;/*#808080;*/
   }
-}
 
-@page appendix:left {
   @bottom-left {
+    font: 9pt "ProximaNova-Regular", serif;
     content: counter(page);
-  }
-  @bottom-right {
-    content: "Appendix "counter(AppendixNumber, upper-alpha)", "string(ChapterTitle);
+    padding-top: 2em;
+    vertical-align: top;
+  color: #000000;/*#404040*/;
   }
 }
 
-@page appendix:right {
+
+/* Define Right Headers and Footers
+_____________________________________________________________________________ */
+
+@page :right {
+  @top-right {
+    font: 8pt "ProximaNova-Regular", serif;
+    content: string(doctitle);
+    vertical-align: bottom;
+    padding-bottom: 2em;
+    color: #000000;/*#606060*/;
+  }
+
   @bottom-right {
+    font: 9pt "ProximaNova-Regular", serif;
     content: counter(page);
+    text-align: right;
+    vertical-align: top;
+    padding-top: 2em;
+    color: #000000;/*#404040*/;
   }
-  @bottom-left {
-    content: string(SectionTitle);
+}
+
+/* Dealing with front matter 
+_____________________________________________________________________________ */
+
+@page frontmatter :left {
+   @bottom-left {
+    content: counter(page,lower-roman);
   }
 }
 
-section[data-type="appendix"] {
-  page: appendix;
-  page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote;
+@page frontmatter :right {
+   @bottom-right {
+    content: counter(page,lower-roman);
+  }
 }
 
-/* lists */
-
-ul, ol { /* bulleted and numbered lists */
-  margin: 7pt 0 7pt .33in;
+@page  :first {
+  @bottom-right {
+    content: counter(page,lower-roman);
+  }
 }
 
-ul li, ol li {
-  font-family: SourceSansPro, sans-serif;
-  font-size: 9.5pt;
-  margin-top: 3pt;
+h2 { string-set: doctitle content() }
+
+/* Insert page number after all links
+_____________________________________________________________________________ */
+
+a[href]::after {
+  content: " (see page " target-counter(attr(href), page) ")";
 }
 
-dl { /* definition lists */
-  margin-bottom: 7pt;
+a[href^="http:"]::after {
+  content: " ("attr(href)")";
 }
 
-dt { /* definition list terms */
-  font-family: SourceSansPro-Semibold, sans-serif;
-  font-size: 9.5pt;
-  line-height: 14pt;
-  margin-top: 7pt;
+a {
+  text-decoration: none;
+  color: #000000;/*#404040*/;
 }
 
-dd { /* definition list descriptions */
-  text-indent: 0;
-  margin-left: 0.1667in;
+/* Index
+_____________________________________________________________________________ */
+
+a[href].index-term-link::after {
+  content: target-counter(attr(href), page);
 }
 
-/* tables */
+a.index-term-link {
+  font-family: "ProximaNova-Semibold";
+}
+
+span.index-term-name {
+  display: inline-block;
+  margin-right: 0.6em;
+}
+
+#index ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  font-size: 8pt;
+}
+
+#index ul li {
+  margin-bottom: 0.4em;
+}
+
+#index ul li.big-letter {
+  font-size: 18pt;
+  font-family: "ProximaNova-Bold";
+  margin-top: 1.2em;
+}
+
+#index ul ul {
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  margin-left: 1.5em;
+  columns: 1;
+}
+
+/* Font sizes and placements
+_____________________________________________________________________________ */
+
+
+/* Prince/pdf aren't accepting ProximaNova-Regular */
+
+h1 {
+  font-family: "ProximaNova-Bold";
+  font-size: 320%;
+}
+
+h2 {
+  font-family: "ProximaNova-Bold";
+  /*page-break-before:always;*/
+  font-size: 38pt;
+  margin-top: 3.5em;
+  margin-bottom: 0.3em;
+  color: #000000;
+}
+
+/* To squash extra h2 element on title page */
+body>h2:nth-child(2) {
+  display: none;
+}
+
+h3 {
+  font-family: "ProximaNova-Semibold";
+  page-break-after: avoid;
+  color: #000000;/*#404040;*/
+  font-size: 17pt;
+  margin-top: 2em;
+}
+
+h3 + p {
+  page-break-after: avoid;
+}
+
+h3 + p + a {
+  page-break-after: avoid;
+}
+
+h4 + p {
+  page-break-after: avoid;
+}
+
+h4 + p + a {
+  page-break-after: avoid;
+}
+
+
+h4,h5 {
+  font-family: "ProximaNova-Semibold";
+  page-break-after: avoid;
+  font-size: 12pt;
+  color: #000000;/*#191919;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+}
+
+h3, h4, h5, h6 {
+  line-height: 1.317em;
+  margin: 1.6em 0 0.5em;
+}
+
+p {
+  font-size: 9pt;
+  color: #000000;/*#404040;*/
+  line-height: 12pt;
+  letter-spacing:0.03em;
+}
+
+/* Tables
+_____________________________________________________________________________ */
 
 table {
-  margin: 12pt 0;
+  font-size: 8pt;
+  font-family: "ProximaNova-Regular";
+  color: #000000;/*#606060;*/
   border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  margin: 3em 0;
+  table-layout: fixed;
+  border: 1px solid #D1D1D1;
 }
 
-thead+tbody {
-  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+table td, table th {
+  padding: 0.5em;
 }
 
-table caption {
-  margin-bottom: 5pt;
-  page-break-after: avoid;
-  text-align: left;
-  font-family: Merriweather, serif;
-  font-style: italic;
-  font-size: 7.5pt;
-  line-height: 10pt;
-  hyphens: none;
-}
-
-table caption:before {
-  font-family: SourceSansPro-Black, sans-serif;
+/* weird fix. setting font size 1pt up in header to make it look the same size */
+table th {
+  color: #000000;/*#404040;*/
+  font-size: 9pt;
+  border: 1px solid #D1D1D1;
+  background-color: rgb(92%,92%,92%);
+  font-family: "ProximaNova-Bold";
   font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: TableNumber;
-  content: "TABLE " counter(ChapterNumber) "-" counter(TableNumber)". ";
-  margin-bottom: 7.2pt;
-  margin-top: 0;
 }
 
-tr {
-  border-width: 0;
+table td {
+  border: 1px solid #D1D1D1;
 }
 
-th { /* table heading rows */
-  font-family: SourceSansPro, sans-serif;
-  font-weight: bold;
-  font-size: 9pt;
-  text-align: left;
-  margin-top: 0;
-  border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
-  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
-}
-
-th, td {
-  padding: 4.5pt 0.0625in 4.5pt 0.0625in;
-}
-
-td, table p { /* table body text */
-  font-family: SourceSansPro, sans-serif;
-  font-size: 9pt;
-  line-height: 10pt;
-}
-
-table p { /* table body text */
-  text-indent: 0;
+table td p {
   margin: 0;
 }
 
-td pre.programlisting, td pre.screen, td pre.literallayout, td code { /* allow code in tables to wrap */
-  white-space: pre-wrap;
-  word-wrap: break-word;
+table.codewide {
+  width: 109%;
 }
 
-/* figures */
-
-figure {
-  display: block;
-  border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
-  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
-  margin: 20pt -1.625in;
-  padding: 8.64pt 1.625in;
-  width: 4.375in;
-  clear: both;
-  text-align: center; /* in AH Land, this is how you center an img in a block */
-  overflow: auto;
+table.code {
+  width: 100%;
 }
 
-figure figcaption {
-  display: block;
-  -ah-float: outside page; 
-  clear: both;
-  margin-left: -1.25in;
-  margin-right: -1.25in;
-  width: 1in;
+table.code pre,
+table.codewide pre {
+  font-size: 0.9em;
+}
+
+table.code td,
+table.codewide td {
   text-align: left;
-  font-family: Merriweather, serif;
-  font-style: italic;
-  font-size: 7.5pt;
-  line-height: 10pt;
-  hyphens: none;
 }
 
-figcaption:before {
-  font-family: SourceSansPro-Black, sans-serif;
-  font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: FigureNumber;
-  content: "FIGURE " counter(ChapterNumber) "-" counter(FigureNumber);
+/* Styles
+_____________________________________________________________________________ */
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+/* This is to make heading margins in next section work */
+section {
+  overflow-y: auto;
+  position: relative;
+  clear: both;
+}
+
+/* Quote
+_____________________________________________________________________________ */
+
+h2 + blockquote {
+  font-family: "Georgia";
+  font-style: italic;
+  margin: 0 0 3em 0;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: #000000;/*#808080;*/
+}
+
+h2 + blockquote span.attribution {
   display: block;
-  margin-bottom: 7.2pt;
+  font-style: normal;
+  font-size: 12pt;
+  margin-left: 24px;
+  margin-top: 4px;
+}
+
+blockquote {
+  font-family: "Georgia";
+  font-style: italic;
+  margin: 0 40px 0 40px;
+  font-size: 8pt;
+  line-height: 12pt;
+  color: #000000;/*#808080;*/
+}
+
+blockquote span.attribution {
+  display: block;
+  font-style: italic;
+  font-size: 8pt;
+  margin-left: 24px;
+  margin-bottom: 0;
+}
+
+/* TOC
+_____________________________________________________________________________ */
+
+/* Level 1 */
+
+.toc ul {
+  position: relative;
+  list-style: none;
+  margin:0;
+  padding: 0;
+  margin-top: 3em;
+  margin-right: 4em; /* this pushes the page numbers left */
+}
+
+.toc ul li {
+
+}
+
+.toc ul li a {
+  color: #000000;/*#333;*/
+  font-family: "ProximaNova-Semibold";
+  font-size: 18pt;
+  text-decoration: none;
+}
+
+/* Level 2 */
+
+.toc ul li ul {
+  margin: 1em 0em 2em 4em;
+  position: static;
+}
+
+.toc ul li ul li {
+  margin-bottom: 0.7em;
+}
+
+.toc ul li ul li a {
+  color: #000000;/*#191919;*/
+  font-family: "ProximaNova-Regular";
+  font-size: 10pt;
+  text-decoration: none;
+}
+
+/* Links */
+
+.toc ul li a[href]::after {
+  content: target-counter(attr(href), page);
+  position: absolute;
+  right: 0em;
+}
+
+/* Don't show dedication in TOC */
+
+.toc ul li:nth-child(1) {
+  display: none;
+}
+
+.toc ul li li:nth-child(1) {
+  display: block;
+}
+
+/* Correct page number styles*/
+
+.toc ul li:nth-child(-n+3) a[href]::after {
+  content: target-counter(attr(href), page,lower-roman);
+}
+
+.toc ul li:nth-child(-n+3) li a[href]::after {
+  content: target-counter(attr(href), page,lower-roman);
+}
+
+.toc ul li:nth-child(4) li a[href]::after,
+.toc ul li:nth-child(5) li a[href]::after,
+.toc ul li:nth-child(6) li a[href]::after,
+.toc ul li:nth-child(7) li a[href]::after,
+.toc ul li:nth-child(8) li a[href]::after,
+.toc ul li:nth-child(9) li a[href]::after,
+.toc ul li:nth-child(10) li a[href]::after,
+.toc ul li:nth-child(11) li a[href]::after,
+.toc ul li:nth-child(12) li a[href]::after,
+.toc ul li:nth-child(13) li a[href]::after,
+.toc ul li:nth-child(14) li a[href]::after,
+.toc ul li:nth-child(15) li a[href]::after,
+.toc ul li:nth-child(16) li a[href]::after {
+  content: target-counter(attr(href), page,decimal);
+}
+
+/* Span Classes Styling
+_____________________________________________________________________________ */
+
+span.highlight {
+  background-color: #E9E9E9;
+  font-size: 10pt;
+  display: block;
+  margin: 2em 1em;
+  padding: 0.8em;
+  text-align: center;
+}
+
+/* Boxes Styling
+_____________________________________________________________________________ */
+
+/* .example = exercises
+   .tip = projects
+   .note = breakout boxes
+*/
+
+.note h2, .tip, .example h2,
+.note h3, .tip h3, .example h3,
+.note h4, .tip h4, .example h4,
+.note h5, .tip h5, .example h5 {
+  font-size: 12pt;
+  color: #000000;/*#191919;*/
+  margin-bottom: 0.3em;
+  font-style: normal;
+  font-family: "ProximaNova-Semibold";
+}
+
+/* == BREAKOUT BOXES */
+.note {
+  font-size: 10pt;
+  color: #000000;/*#191919;*/
+  padding: 1.4em 1.5em;
+  margin: 1.15em 0;
+  background-color: #E9E9E9;
+}
+
+/* == EXERCISES */
+aside[data-type="sidebar"].exercise {
+  background-color: rgb(112, 115, 115);
+  color: #ffffff;
+  padding: 3em 1.5em 1em;
+  position: relative;
+  margin: 1.15em 0;
+  overflow-y:auto;
+}
+
+aside[data-type="sidebar"].exercise h3[id],
+aside[data-type="sidebar"].exercise h4[id],
+aside[data-type="sidebar"].exercise h5[id],
+aside[data-type="sidebar"].exercise h6[id] {
+  text-align: right;
+  margin: 1em 0.9em;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+aside[data-type="sidebar"].exercise * {
+  color: #ffffff;
+}
+
+/* counters */
+section[data-type="preface"], section[data-type="introduction"], section[data-type="chapter"], section[data-type="appendix"], section[data-type="acknowledgments"] {
+  counter-reset: FigureNumber ExampleNumber ExerciseNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+}
+
+/* labels */
+/* Exercises */
+aside[data-type="sidebar"].exercise > h5 {
+  string-set: ExerciseNumber self;
+}
+
+aside[data-type="sidebar"].exercise > h5:before {
+  counter-increment: ExerciseNumber;
+  content: "Exercise "counter(ChapterNumber)"-"counter(ExerciseNumber);
+}
+
+section[data-type="introduction"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "Exercise I-"counter(ExerciseNumber)}
+
+section[data-type="preface"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "Exercise P-"counter(ExerciseNumber)}
+
+section[data-type="foreword"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "Exercise F-"counter(ExerciseNumber)}
+
+section[data-type="appendix"] aside[data-type="sidebar"].exercise > h5:before
+{ content: "Exercise " counter(AppendixNumber)"-"counter(ExerciseNumber)}
+
+
+/* Examples */
+div[data-type="example"] h5 {
+  string-set: ExampleNumber self;
+}
+
+div[data-type="example"] h5:before {
+  counter-increment: ExampleNumber;
+  content: "Example " counter(ChapterNumber) "-" counter(ExampleNumber)". ";
+}
+
+section[data-type="preface"] div[data-type="example"] h5:before {
+  content: "Example P-"counter(ExampleNumber)". ";
+}
+
+section[data-type="introduction"] div[data-type="example"] h5:before {
+  content: "Example I-"counter(ExampleNumber)". ";
+}
+
+section[data-type="foreword"] div[data-type="example"] h5:before {
+  content: "Example F-"counter(ExampleNumber)". ";
+}
+
+section[data-type="appendix"] div[data-type="example"] h5:before {
+  content: "Example " counter(AppendixNumber)"-"counter(ExampleNumber)". ";
+}
+
+/* Figures */
+figcaption:before {
+  counter-increment: FigureNumber;
+  content: "Figure " counter(ChapterNumber) "-" counter(FigureNumber);
+}
+
+section[data-type="dedication"] figcaption {
+  display: none;
 }
 
 section[data-type="preface"] figcaption:before {
   content: "Figure P-"counter(FigureNumber)". ";
+}
+
+section[data-type="introduction"] figcaption:before {
+  content: "Figure I-"counter(FigureNumber)". ";
 }
 
 section[data-type="foreword"] figcaption:before {
@@ -879,200 +634,781 @@ section[data-type="appendix"] figcaption:before {
   content: "Figure " counter(AppendixNumber)"-"counter(FigureNumber)". ";
 }
 
+/* == PROJECTS */
+.tip {
+  padding: 0.7em 1.5em;
+  margin: 1.15em 0;
+  background-color: #E9E9E9;
+}
+
+.note h2:first-child, .tip h2:first-child, .example h2:first-child,
+.note h3:first-child, .tip h3:first-child, .example h3:first-child,
+.note h4:first-child, .tip h4:first-child, .example h4:first-child,
+.note h5:first-child, .tip h5:first-child, .example h5:first-child,
+.note p:first-child, .tip p:first-child, .example p:first-child {
+  margin-top: 0;
+}
+
+.note p:last-child, .tip p:last-child, .example p:last-child {
+  margin-bottom: 0;
+}
+
+/* Style functions */
+.function, .klass, .var, .mono, .formula, .formula2 {
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    /*a little bit smaller than body?*/
+    font-size: 8pt;
+  color: #00000;
+}
+.mono, .formula, .formula2{
+    font-weight: bold;
+}
+
+.formula{
+    margin-left: 16pt;
+}
+
+.formula2{
+    margin-left: 83pt;
+}
+/* Style note to self */
+.notetoself {
+  color: #FF0000;
+  font-weight: bold;
+}
+
+/* Style example heading */
+span.example {
+  background-color: #CACCCB;
+  clear: both;
+  display: block;
+  font-family: "ProximaNova-Bold";
+  font-size:1em;
+  padding: 0.7em 1em;
+}
+
+/* Image Full Width
+_____________________________________________________________________________ */
+
 img {
-  max-width: 100%;
-  margin: 15pt auto;
-}
-
-figure img { 
-  max-width: 4.375in;
-  margin: 0 auto;
-}
-
-dt img {
-  display: inline-block;
+  width: 100%;
   margin: 0;
 }
 
-figure div.border-box { display: inline }
-
-/* sidebars */
-
-aside[data-type="sidebar"] { /* sidebar containers */
-  background-color: cmyk(0%,0%,0%,15%);
-  margin: 0.25in -1.625in;
-  padding: 0.25in 1.625in;
-  width: 4.375in;
-  clear: both;
+.image-container {
+  position: relative;
+  margin: 1.7em 0;
 }
 
-aside h5 { /* sidebar titles */
-  font-family: SourceSansPro-Bold, sans-serif;
-  font-size: 11pt;
-  line-height: 13pt;
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 0.2in;
-  margin-top: 0;
+.image-container img {
+  max-width: 100%;
 }
 
-aside h6 { /* sidebar subtitles */
+.bella img {
+  width: 25%;
 }
 
-aside p, aside dd { /* sidebar text */
-  font-size: 7.5pt;
-  font-family: Merriweather, serif;
-  line-height: 11.5pt;
-  text-indent: 0;
-  margin-bottom: 6pt;
+img.mathinline {
+  width: auto;
+  height: 13px;
+  vertical-align: text-bottom;
 }
 
-aside dt {
-  font-size: 7.5pt;
-  font-family: Merriweather, serif;
-  font-weight: bold;
-}
-  
-/* admonitions */
-
-div[data-type="note"], div[data-type="warning"] { /* admonition containers */
-  margin: 10pt 20pt;
-  padding-top: 5pt;
-  border-top: solid 0.5pt cmyk(0%,0%,0%,100%);
-  border-bottom: solid 0.5pt cmyk(0%,0%,0%,100%);
-  page-break-inside: avoid;
+img.mathblock {
+  width: auto;
+  height: auto;
+  vertical-align: text-bottom;
 }
 
-div[data-type="note"] p, div[data-type="warning"] p { /* admon text */
-  font-family: Merriweather, serif;
-  text-align: left;
-  text-indent: 0;
-  font-size: 7.5pt;
-  line-height: 11pt;
-  margin-bottom: 6pt;
+.screenshot img {
+  width: 100%;
+  margin: 0px;
+  /*-webkit-box-shadow: 1px 1px 2px gray;*/
+    border:1px solid gray;
+  /*Need a magic solution for border side borders to be partial, not extend all the way to top*/
 }
 
-div[data-type="note"] li, div[data-type="warning"] li {
-  font-family: Merriweather, serif;
-  font-size: 7.5pt;
+figcaption {
+  font-family: 'Georgia';
+  font-style: italic;
+  font-size: 8pt;
+  color: #000000;/*#606060;*/
+  border: 0;
+  margin-top:2px;
+  line-height: 12pt;
 }
 
-div[data-type="note"] h1, 
-div[data-type="warning"] h1 { /* admonition titles */
-  font-family: 'SourceSansPro-Black', sans-serif;
-  font-size: 8.5pt;
-  text-transform: uppercase;
-  letter-spacing: 0.75pt;
-  margin-bottom: 7pt;
-  margin-top: 0;
+/* Image Half Width
+_____________________________________________________________________________ */
+
+.half-width,
+.half-width-right,
+.half-width-right-border {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  position: relative;
+  width: 48%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-div[data-type="note"] pre, div[data-type="warning"] pre {
-  font-size: 7.5pt;
-  margin: 0 0 6pt 4pt;
-} 
-
-/* code */
-
-pre, code { /* monospace font for both code blocks and inline code */
-  font-family: 'UbuntuMono', monospace;
+.half-width {
+  float: left;
+  margin-right: 2em;
 }
 
-pre { /* code blocks */
+.half-width-right,
+.half-width-right-border {
+  float: right;
+  margin-left: 2em;
+}
+
+.half-width-right-border img {
+  border:1px solid gray;
+}
+
+/* Image Two Columns
+_____________________________________________________________________________ */
+
+.two-col,
+.two-col-borderless,
+.three-col
+{
+  width: 50%;
+  box-sizing: border-box;
+  padding-right: 1em;
+  /*margin-right: 1em;*/
+  float: left;
+}
+
+.two-col img,
+.two-col canvas,
+.two-col-borderless canvas,
+.three-col img,
+.three-col canvas
+{
+  width: 100%;
+  max-width: 100%;
+  border:1px solid gray;
+  /*-webkit-box-shadow: 1px 1px 2px gray;*/
+}
+
+.two-col-borderless img {
+  border:0px solid gray;
+}
+
+/* Image Three Columns
+_____________________________________________________________________________ */
+
+.three-col {
+  width: 33%;
+}
+
+.mini200 img {
+  width: 25%;
+  border:1px solid gray;
+}
+
+/* Image Screenshot
+_____________________________________________________________________________ */
+
+.screenshot img {
+  width: 100%;
+  margin: 0;
+  border: 1px solid gray;
+  /* Need a magic solution for border side borders to be partial, not extend all the way to top */
+}
+
+/* Lists
+_____________________________________________________________________________ */
+
+.list h4, .table h4 {
+  clear: none;
+}
+
+dl {
+  width:105%;
+  overflow:hidden;
+  margin: 0;
+  padding: 0;
+}
+
+dt, dd {
+  float: left;
   font-size: 9pt;
-  line-height: 11pt;
-  margin: 12pt 0 12pt 0.167in;
-  white-space: pre-wrap;
-  -ah-ignore-leading-newline: true;
+  line-height: 1em;
+  margin: 0 0 0.5em 0;
 }
 
-code { font-size: 107%; }
-
-pre code { font-size: inherit; }
-
-div[data-type="example"] h5 {
-  margin-bottom: 5pt;
-  page-break-after: avoid;
-  text-align: left;
-  font-family: Merriweather, serif;
-  font-style: italic;
-  font-size: 7.5pt;
-  line-height: 10pt;
-  hyphens: none;
+dt {
+  width:35%;
 }
 
-div[data-type="example"] h5:before {
-  font-family: 'SourceSansPro-Black', sans-serif;
-  font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: ExampleNumber;
-  content: "EXAMPLE " counter(ChapterNumber) "-" counter(ExampleNumber)". ";
-  margin-bottom: 7.2pt;
-  margin-top: 0;
+
+
+dd {
+  width:65%;
 }
 
-div[data-type="example"] pre {
-  margin-left: 0;
-}
-/* blockquote */
-
-blockquote {
-  margin: 15pt 0.1667in;
+dd p {
+  font-size: 9pt;
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
 }
 
-blockquote p {
-  text-indent: 0;
-  font-family: 'SourceSansPro', sans-serif;
-  font-size: 7.5pt;
+/*Different DL for Preface*/
+
+dl.preface {
+  width:100%;
 }
 
-p[data-type="attribution"] {
-  text-align: right;
-  margin-top: 6pt;
+dl.preface dt {
+  width:15%;
 }
 
-/* math */
-
-div[data-type="equation"] {
-  margin: 12pt 0 12pt 0.167in;
+dl.preface dd {
+  width:85%;
 }
 
-@namespace mml "http://www.w3.org/1998/Math/MathML";
+/* Code Formatting
+_____________________________________________________________________________ */
 
-mml|math {
-  font-size: 12pt;
+pre {
+  width: 100%;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-div[data-type="equation"] h5 {
-  -ah-float: outside page;
+.source-code {
+  /*border: 0.4em solid #272727;
+  margin-bottom: 2em;
+  padding: 0.7em 1.5em;
+  background-color: #f9f9f9;*/
+  position: relative;
   clear: both;
-  margin: 0 -1.25in;
-  padding-top: 5pt;
-  border-top: solid 0.5pt cmyk(0%,0%,0%,100%);
-  width: 1in;
-  page-break-inside: avoid;
-  text-align: left;
-  font-family: Merriweather, serif;
-  font-style: italic;
-  font-size: 7.5pt;
-  line-height: 10pt;
-  hyphens: none;
 }
 
-div[data-type="equation"] h5:before {
-  font-family: SourceSansPro-Black, sans-serif;
+.note .source-code,
+.example .source-code,
+.tip .source-code {
+  border-left: none;
+}
+
+.source-code textarea {
+  background-color: #f0f0f0;
+  display: none;
+  width: 100%;
+}
+
+
+
+/* Math (from math.css) */
+
+math, math[mode="inline"] {
+  display: inline;
+  font-family: CMSY10, CMEX10, Symbol, Times;
   font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: EquationNumber;
-  content: "EQUATION " counter(ChapterNumber) "-" counter(EquationNumber);
-  display: block;
-  margin-bottom: 7.2pt;
 }
 
-/* ------------------- PAGEBREAK HANDLING ------------------- */
+math[mode="display"] {
+  display: block;
+  text-align: center;
+  font-family: CMSY10, CMEX10, Symbol, Times;
+  font-style: normal;
+}
 
-/* force a page break */
+@media screen {  /* hide from old browsers */
 
-div.hard-pagebreak {
-  page-break-after: always;
+
+/* Rules dealing with the various values of the "mathvariant" attribute: */
+
+math *.[mathvariant="normal"] {
+  font-family: "Times New Roman", Courier, Garamond, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+math *.[mathvariant="bold"] {
+  font-family: "Times New Roman", Courier, Garamond, serif;
+  font-weight: bold;
+  font-style: normal;
+}
+
+math *.[mathvariant="italic"] {
+  font-family: "Times New Roman", Courier, Garamond, serif;
+  font-weight: normal;
+  font-style: italic;
+}
+
+math *.[mathvariant="bold-italic"] {
+  font-family: "Times New Roman", Courier, Garamond, serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+math *.[mathvariant="double-struck"] {
+  font-family: msbm;
+  font-weight: normal;
+  font-style: normal;
+}
+
+math *.[mathvariant="script"] {
+  font-family: eusb;
+  font-weight: normal;
+  font-style: normal;
+}
+
+math *.[mathvariant="bold-script"] {
+  font-family: eusb;
+  font-weight: bold;
+  font-style: normal;
+}
+
+math *.[mathvariant="fraktur"] {
+  font-family: eufm;
+  font-weight: normal;
+  font-style: normal;
+}
+
+math *.[mathvariant="bold-fraktur"] {
+  font-family: eufm;
+  font-weight: bold;
+  font-style: italic;
+}
+
+math *.[mathvariant="sans-serif"] {
+  font-family: Arial, "Lucida Sans Unicode", Verdana, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+math *.[mathvariant="bold-sans-serif"] {
+  font-family: Arial, "Lucida Sans Unicode", Verdana, sans-serif;
+  font-weight: bold;
+  font-style: normal;
+}
+
+math *.[mathvariant="sans-serif-italic"] {
+  font-family: Arial, "Lucida Sans Unicode", Verdana, sans-serif;
+  font-weight: normal;
+  font-style: italic;
+}
+
+math *.[mathvariant="sans-serif-bold-italic"] {
+  font-family: Arial, "Lucida Sans Unicode", Verdana, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+math *.[mathvariant="monospace"] {
+  font-family: monospace
+}
+
+
+/* Rules dealing with "mathsize" attribute */
+
+math *.[mathsize="small"] {
+  font-size: 80%
+}
+
+math *.[mathsize="normal"] {
+/*  font-size: 100%  - which is unnecessary */
+}
+
+math *.[mathsize="big"] {
+  font-size:  125%
+}
+
+/*Set size values for the "base" children of script and limit schema to
+  distinguish them from the script or limit children:
+*/
+
+msub>*:first-child[mathsize="big"],
+msup>*:first-child[mathsize="big"],
+msubsup>*:first-child[mathsize="big"],
+munder>*:first-child[mathsize="big"],
+mover>*:first-child[mathsize="big"],
+munderover>*:first-child[mathsize="big"],
+mmultiscripts>*:first-child[mathsize="big"],
+mroot>*:first-child[mathsize="big"] {
+  font-size: 125%
+}
+
+msub>*:first-child[mathsize="small"],
+msup>*:first-child[mathsize="small"],
+msubsup>*:first-child[mathsize="small"],
+munder>*:first-child[mathsize="small"],
+mover>*:first-child[mathsize="small"],
+munderover>*:first-child[mathsize="small"],
+mmultiscripts>*:first-child[mathsize="small"],
+mroot>*:first-child[mathsize="small"] {
+  font-size: 80%
+}
+
+msub>*:first-child,
+msup>*:first-child,
+msubsup>*:first-child,
+munder>*:first-child,
+mover>*:first-child,
+munderover>*:first-child,
+mmultiscripts>*:first-child,
+mroot>*:first-child {
+  font-size: 100%
+}
+
+/*Set size values for the other children of script and limit schema (the
+  script and limit children) - include scriptlevel increment attribute?
+*/
+
+msub>*[mathsize="big"],
+msup>*[mathsize="big"],
+msubsup>*[mathsize="big"],
+munder>*[mathsize="big"],
+mover>*[mathsize="big"],
+munderover>*[mathsize="big"],
+mmultiscripts>*[mathsize="big"],
+math[display="inline"] mfrac>*[mathsize="big"],
+math *[scriptlevel="+1"][mathsize="big"] {
+  font-size: 89%  /* (.71 times 1.25) */
+}
+
+msub>* [mathsize="small"],
+msup>*[mathsize="small"],
+msubsup>*[mathsize="small"],
+munder>*[mathsize="small"],
+mover>*[mathsize="small"],
+munderover>*[mathsize="small"],
+mmultiscripts>*[mathsize="small"],
+math[display="inline"] mfrac>*[mathsize="small"],
+math *[scriptlevel="+1"][mathsize="small"] {
+  font-size: 57% /* (.71 times .80) */
+}
+
+msub>*,
+msup>*,
+msubsup>*,
+munder>*,
+mover>*,
+munderover>*,
+mmultiscripts>*,
+math[display="inline"] mfrac>*,
+math *[scriptlevel="+1"] {
+  font-size: 71%
+}
+
+mroot>*[mathsize="big"] {
+  font-size: 62%  /* (.50 times 1.25) */
+}
+
+mroot>*[mathsize="small"] {
+  font-size: 40% /* (.50 times .80) */
+}
+
+mroot>* {
+  font-size: 50%
+}
+
+/* Set size values for other scriptlevel increment attributes  */
+
+math *[scriptlevel="+2"][mathsize="big"] {
+  font-size: 63%  /* (.71 times .71 times 1.25) */
+}
+
+math *[scriptlevel="+2"][mathsize="small"] {
+  font-size: 36% /* (.71 times .71 times .71) */
+}
+
+math *[scriptlevel="+2"] {
+  font-size: 50%   /* .71 times .71 */
+}
+
+math *.[mathcolor="green"] {
+  color: green
+}
+
+math *.[mathcolor="black"] {
+  color: black
+}
+
+math *.[mathcolor="red"] {
+  color: red
+}
+
+math *.[mathcolor="blue"] {
+  color: blue
+}
+
+math *.[mathcolor="olive"] {
+   color: olive
+}
+
+math *.[mathcolor="purple"] {
+   color: purple
+}
+
+math *.[mathcolor="teal"] {
+   color: teal
+}
+
+math *.[mathcolor="aqua"] {
+   color: aqua
+}
+
+math *.[mathcolor="gray"] {
+   color: gray
+}
+
+math *.[mathbackground="blue"] {
+   background-color: blue
+}
+
+math *.[mathbackground="green"] {
+   background-color: green
+}
+
+math *.[mathbackground="white"] {
+   background-color: white
+}
+
+math *.[mathbackground="yellow"] {
+   background-color: yellow
+}
+
+math *.[mathbackground="aqua"] {
+   background-color: aqua
+}
+
+} /* Close "@media screen" scope */
+
+@media aural {
+}
+
+/* from code-print.css */
+
+/*--------------------- Layout and Typography ----------------------------*/
+pre, tt, code {
+  font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+  margin: 0; padding: 0;
+}
+
+pre em,
+pre strong,
+pre em strong,
+pre strong em {
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+}
+
+body code pre span[class] {
+  color: #000000;
+}   /* Set all span elements to black in code elements.*/
+
+
+/* The code goes in here. */
+.code-block code {
+  clear: left;
+  display: block;
+  position: relative;
+}
+
+/* Stretch class for comments that point to multiple lines of code */
+.stretch {
+  background-color: #eee;
+  padding: 4px;
+}
+
+.stretch .code-comment,
+.stretch .one-line:first-child,
+.stretch span.one-line {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.stretch span.one-line {
+  padding-right: 4px;
+  padding-left: 0;
+}
+
+.stretch .code-comment {
+  padding-left: 1.0em;
+}
+
+div.example code pre span[class],
+div.example .code-comment,
+div.example .toggle {
+  color: #ffffff;
+}
+
+div.example .source-code {
+  background: transparent;
+}
+
+div.example .one-line:first-child,
+div.example .code-comment,
+div.example .stretch {
+  background-color: rgb(136,138,138);
+}
+
+div.example .no-comment .one-line:first-child {
+  background: transparent;
+}
+
+
+/* Div wrapper for code blocks */
+.code-block {
+  font-size: 80%;
+  line-height: 1.4em;
+  margin: 1.4em 1em 0.8em;
+}
+
+.code-comment-pair code pre {
+  width: 100%;
+}
+
+/* Matches padding for code commented lines */
+.one-line {
+ padding-left: 4px;
+}
+
+.one-line:first-child,
+.code-comment {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.one-line:first-child {
+  margin-bottom: 3px;
+  width: 60%;
+}
+
+.no-comment .one-line:first-child {
+  background-color: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding: 0;
+  width: auto;
+  margin-bottom: 0;
+  padding-left: 4px;
+}
+
+.code-comment {
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.offset-up span.one-line,
+.offset-down span.one-line {
+  width: 100%;
+}
+
+.offset-up .code-comment {
+  margin-bottom: 0;
+  position: absolute;
+  right: 0;
+  margin-top: 0.2em;
+}
+
+.offset-down .one-line:first-child {
+  width: 100%;
+}
+
+.offset-down code {
+  position: relative;
+}
+
+.offset-down .code-comment {
+  float: right;
+  position: absolute;
+  margin-top: 2.1em;
+  right: 0;
+  top: 0;
+}
+
+/* Wrapper for every pairing of code and comment.
+Used to catch the .code-comment-line inside of
+a relatively positioned parent. */
+.code-comment-pair {
+  display: block;
+  position: relative;
+  clear: both;
+  margin: 0 0 2px 0;
+  padding: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Div wrapper for code comments */
+.code-comment {
+  clear: right;
+  color: #000;/*#444;*/
+  display: block;
+  float: right;
+  font-family: sans-serif;
+  font-style: bold;
+  margin-top: 0.0em;
+  position: relative;
+  width: 40%;
+  padding-left: 1.0em;
+
+  /* hack to remove 1px white space in Safari on Lion */
+  /*left: -1px;*/
+}
+
+.source-code {
+  overflow-y: auto;
+  clear: both;
+  position: relative;
+}
+
+.stretch {
+  background-color: #eee;
+  padding: 4px;
+}
+
+/* == CODE IN EXERCISES */
+aside[data-type="sidebar"].exercise code pre span[class] {
+  color: #ffffff;
+}
+
+aside[data-type="sidebar"].exercise .one-line:first-child,
+aside[data-type="sidebar"].exercise .code-comment,
+aside[data-type="sidebar"].exercise .stretch {
+  background-color: rgb(136,138,138);
+}
+
+aside[data-type="sidebar"].exercise .no-comment .one-line:first-child {
+  background: transparent;
+}
+
+.offset-up {
+  overflow-y: visible;
+  overflow-x: visible;
+}
+
+/* callouts */
+span.callout-bubble {
+  float: right;
+  clear: right;
+  color: #000;/*#444;*/
+  background-color: #eee;
+  padding: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-style: bold;
+  margin-top: 0.0em;
+  position: relative;
+  width: 40%;
+  padding-left: 1.0em;
 }
