@@ -8,6 +8,6 @@ All of the book's code examples are licensed under the [MIT License](http://open
 
 By using GitHub to host all the raw material for the book, it's my hope that I will be able to more easily manage corrections and revisions.  Please use the GitHub issues for bug reports, typos, suggestions, etc.  You are also welcome to fork the repo, make corrections on your own and submit a pull request.
 
-This repository is in progress.  It's for a new edition of the book that I will be generating with [O'Reilly's Atlas](https://atlas.oreilly.com/).  For the previous version of the book, you can check out the [Nature of Code archived repo](https://github.com/shiffman/The-Nature-of-Code-archive).
+This repository is in progress.  It's for a new edition of the book that I will be generating with [The Magic Book](https://github.com/magicbookproject/magicbook).  For the previous version of the book, you can check out the [Nature of Code archived repo](https://github.com/shiffman/The-Nature-of-Code-archive).
 
 Stay tuned for more!
