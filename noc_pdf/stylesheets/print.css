@@ -225,12 +225,12 @@ _____________________________________________________________________________ */
 
 /* Prince/pdf aren't accepting ProximaNova-Regular */
 
-h1 {
+h2 {
 	font-family: "ProximaNova-Bold";
 	font-size: 320%;
 }
 
-h2 {
+h1 {
 	font-family: "ProximaNova-Bold";
 	/*page-break-before:always;*/
 	font-size: 38pt;
@@ -368,21 +368,25 @@ section {
 /* Quote
 _____________________________________________________________________________ */
 
-h2 + blockquote {
-	font-family: "Georgia";
-	font-style: italic;
-	margin: 0 0 3em 0;
-	font-size: 12pt;
-	line-height: 16pt;
-	color: #000000;/*#808080;*/
+blockquote[data-type="epigraph"] {
+  margin: 0 0 3em 0;
 }
 
-h2 + blockquote span.attribution {
-	display: block;
-	font-style: normal;
-	font-size: 12pt;
-	margin-left: 24px;
-	margin-top: 4px;
+blockquote[data-type="epigraph"] p {
+  font-style: italic;
+  margin: 0;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: #000000;
+}
+
+/*This is for epigraph only but not sure how to handle this*/
+blockquote[data-type="epigraph"] p[data-type="attribution"] {
+  display: block;
+  font-style: normal;
+  font-size: 12pt;
+  margin-left: 24px;
+  margin-top: 4px;
 }
 
 blockquote {
@@ -521,7 +525,7 @@ _____________________________________________________________________________ */
 }
 
 /* == BREAKOUT BOXES */
-.note {
+div[data-type="note"] {
 	font-size: 10pt;
 	color: #000000;/*#191919;*/
 	padding: 1.4em 1.5em;
