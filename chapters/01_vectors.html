@@ -9,15 +9,15 @@
 <p data-type="attribution">&mdash; Captain Oveur (Airplane)</p>
 </blockquote>
 
-<p><a data-primary="vectors" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="vectors" data-type="indexterm"></a>
 
 <p>This book is all about looking at the world around us and coming up with clever ways to simulate that world with code. Divided into three parts, the book will start by looking at basic physics&mdash;how an apple falls from a tree, a pendulum swings in the air, the earth revolves around the sun, etc. Absolutely everything contained within the first five chapters of this book requires the use of the most basic building block for programming motion&mdash;the <strong><em>vector</em></strong>. And so this is where we begin our story.</p>
 
-<p><a data-primary="Euclid" data-type="indexterm">&nbsp;</a> <a data-primary="Euclidean vector" data-type="indexterm">&nbsp;</a> <a data-primary="geometric vector" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="defined" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Euclid" data-type="indexterm"></a> <a data-primary="Euclidean vector" data-type="indexterm"></a> <a data-primary="geometric vector" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="defined" data-type="indexterm"></a>
 
 <p>Now, the word vector can mean a lot of different things. Vector is the name of a New Wave rock band formed in Sacramento, CA in the early 1980s. It&rsquo;s the name of a breakfast cereal manufactured by Kellogg&rsquo;s Canada. In the field of epidemiology, a vector is used to describe an organism that transmits infection from one host to another. In the C++ programming language, a vector (std::vector) is an implementation of a dynamically resizable array data structure. While all these definitions are interesting, they&rsquo;re not what we&rsquo;re looking for. What we want is called a <strong><em>Euclidean vector</em></strong> (named for the Greek mathematician Euclid and also known as a geometric vector). When you see the term &ldquo;vector&rdquo; in this book, you can assume it refers to a Euclidean vector, defined as <em>an entity that has both magnitude and direction</em>.</p>
 
-<p><a data-primary="vectors" data-secondary="notation" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="vectors" data-secondary="notation" data-type="indexterm"></a>
 
 <p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
 
@@ -30,7 +30,7 @@
 <section data-type="sect1" id="chapter01_section1">
 <h1>1.1 Vectors, You Complete Me</h1>
 
-<p><a data-primary="bouncing ball sketch" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="bouncing ball sketch" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="bouncing ball sketch" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="bouncing ball sketch" data-type="indexterm"></a>
 
 <p>Before we dive into more of the details about vectors, let&rsquo;s look at a basic Processing example that demonstrates why we should care about vectors in the first place. If you&rsquo;ve read any of the introductory Processing textbooks or taken a class on programming with Processing (and hopefully you&rsquo;ve done one of these things to help prepare you for this book), you probably, at one point or another, learned how to write a simple bouncing ball sketch.</p>
 
@@ -142,7 +142,7 @@ Vector speed;</pre>
 <section data-type="sect1" id="chapter01_section2">
 <h1>1.2 Vectors for Processing Programmers</h1>
 
-<p><a data-primary="Processing" data-secondary="vectors and" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="Processing and" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Processing" data-secondary="vectors and" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="Processing and" data-type="indexterm"></a>
 
 <p>One way to think of a vector is the difference between two points. Consider how you might go about providing instructions to walk from one point to another.</p>
 
@@ -179,7 +179,7 @@ Vector speed;</pre>
 
 <p><strong><em>new location = velocity applied to current location</em></strong></p>
 
-<p><a data-primary="locations" data-secondary="as vectors" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="locations and" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="as vector" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="locations" data-secondary="as vectors" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="locations and" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="as vector" data-type="indexterm"></a>
 
 <p>If velocity is a vector (the difference between two points), what is location? Is it a vector too? Technically, one might argue that location is not a vector, since it&rsquo;s not describing how to move from one point to another&mdash;it&rsquo;s simply describing a singular point in space.</p>
 
@@ -235,7 +235,7 @@ float yspeed = 3.3;</pre>
 PVector location = new PVector(100,100);
 PVector velocity = new PVector(1,3.3);</pre>
 
-<p><a data-primary="vectors" data-secondary="motion" data-tertiary="implementing with" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="vectors" data-secondary="motion" data-tertiary="implementing with" data-type="indexterm"></a>
 
 <p>Now that we have two vector objects (location and velocity), we&rsquo;re ready to implement the algorithm for motion&mdash;<strong><em>location = location + velocity</em></strong>. In Example 1.1, without vectors, we had:</p>
 
@@ -251,7 +251,7 @@ y = y + yspeed;
 // Add the velocity vector to the location vector.
 location = location + velocity;</pre>
 
-<p><a data-primary="addition operator" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="addition operator" data-type="indexterm"></a>
 
 <p>However, in Processing, the addition operator + is reserved for primitive values (integers, floats, etc.) only. Processing doesn&rsquo;t know how to add two <span class="klass">PVector</span> objects together any more than it knows how to add two <span class="klass">PFont</span> objects or <span class="klass">PImage</span> objects. Fortunately for us, the <span class="klass">PVector</span> class includes functions for common mathematical operations.</p>
 </section>
@@ -259,11 +259,11 @@ location = location + velocity;</pre>
 <section data-type="sect1" id="chapter01_section3">
 <h1>1.3 Vector Addition</h1>
 
-<p><a data-primary="add() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="adding" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="add() function (PVector class)" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="adding" data-type="indexterm"></a>
 
 <p>Before we continue looking at the <span class="klass">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it&rsquo;s already implemented for us in Processing itself), let&rsquo;s examine vector addition using the notation found in math and physics textbooks.</p>
 
-<p><a data-primary="scalar notation" data-secondary="vs. vector notation" data-type="indexterm">&nbsp;</a> <a data-primary="vector notation" data-secondary="vs. scalar notation" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="scalar notation" data-secondary="vs. vector notation" data-type="indexterm"></a> <a data-primary="vector notation" data-secondary="vs. scalar notation" data-type="indexterm"></a>
 
 <p>Vectors are typically written either in boldface type or with an arrow on top. For the purposes of this book, to distinguish a <strong><em>vector</em></strong> from a <strong><em>scalar</em></strong> (<em>scalar</em> refers to a single value, such as an integer or a floating point number), we&rsquo;ll use the arrow notation:</p>
 
@@ -310,7 +310,7 @@ location = location + velocity;</pre>
 
 <p>{w86}</p>
 
-<p><a data-primary="add() function (PVector class)" data-secondary="implementation of" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="add() function (PVector class)" data-secondary="implementation of" data-type="indexterm"></a>
 
 <p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="klass">PVector</span> class itself. Let&rsquo;s write a function called <span class="function">add()</span> that takes another <span class="klass">PVector</span> object as its argument.</p>
 
@@ -333,7 +333,7 @@ class PVector {
   //[end]
 }</pre>
 
-<p><a data-primary="bouncing ball sketch" data-secondary="implementing with vectors" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="bouncing ball sketch" data-secondary="implementing with vectors" data-type="indexterm"></a>
 
 <p>Now that we see how <span class="function">add()</span> is written inside of <span class="klass">PVector</span>, we can return to our bouncing ball example with its <strong><em>location + velocity</em></strong> algorithm and implement vector addition:</p>
 
@@ -344,7 +344,7 @@ location.add(velocity);</pre>
 
 <p>And here we are, ready to rewrite the bouncing ball example using <span class="klass">PVector</span>.</p>
 
-<p><a data-primary="dot syntax" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="dot syntax" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="dot syntax" data-type="indexterm"></a> <a data-primary="object-oriented programming" data-secondary="dot syntax" data-type="indexterm"></a>
 
 <div data-type="example"><h5>Example 1.2: Bouncing ball with PVectors!</h5></div>
 
@@ -421,7 +421,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 
 <p>Addition was really just the first step. There are many mathematical operations that are commonly used with vectors. Below is a comprehensive list of the operations available as functions in the <span class="klass">PVector</span> class. We&rsquo;ll go through a few of the key ones now. As our examples get more sophisticated in later chapters, we&rsquo;ll continue to reveal the details of more functions.</p>
 
-<p><a data-primary="PVector class (Processing)" data-secondary="mathematical functions for" data-type="indexterm">&nbsp;</a> <a data-primary="angleBetween() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="cross() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="dist() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="dot() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="heading() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="lerp() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="limit() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="function list for" data-type="indexterm">&nbsp;</a> <a data-primary="random2D() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="random3D() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="rotate() function (PVector class)" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="PVector class (Processing)" data-secondary="mathematical functions for" data-type="indexterm"></a> <a data-primary="angleBetween() function (PVector class)" data-type="indexterm"></a> <a data-primary="cross() function (PVector class)" data-type="indexterm"></a> <a data-primary="dist() function (PVector class)" data-type="indexterm"></a> <a data-primary="dot() function (PVector class)" data-type="indexterm"></a> <a data-primary="heading() function (PVector class)" data-type="indexterm"></a> <a data-primary="lerp() function (PVector class)" data-type="indexterm"></a> <a data-primary="limit() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="function list for" data-type="indexterm"></a> <a data-primary="random2D() function (PVector class)" data-type="indexterm"></a> <a data-primary="random3D() function (PVector class)" data-type="indexterm"></a> <a data-primary="rotate() function (PVector class)" data-type="indexterm"></a>
 
 <ul>
 	<li>
@@ -482,7 +482,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 <section data-type="sect2" id="_vector_subtraction">
 <h2>Vector subtraction</h2>
 
-<p><a data-primary="PVector class (Processing)" data-secondary="sub() function" data-type="indexterm">&nbsp;</a> <a data-primary="sub() function (PVector class)" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="PVector class (Processing)" data-secondary="sub() function" data-type="indexterm"></a> <a data-primary="sub() function (PVector class)" data-type="indexterm"></a>
 
 <p>{wuminusv}</p>
 
@@ -529,7 +529,7 @@ void draw() {
   line(0,0,mouse.x,mouse.y);
 }</pre>
 
-<p><a data-primary="vectors" data-secondary="commutative/associative rules of addition/subtraction with" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="vectors" data-secondary="commutative/associative rules of addition/subtraction with" data-type="indexterm"></a>
 
 <div data-type="note">
 <h1>Basic Number Properties with Vectors</h1>
@@ -549,7 +549,7 @@ void draw() {
 <section data-type="sect2" id="_vector_multiplication">
 <h2>Vector multiplication</h2>
 
-<p><a data-primary="mult() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="mult() function" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="multiplying" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="scaling" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="mult() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="mult() function" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="multiplying" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="scaling" data-type="indexterm"></a>
 
 <p>Moving on to multiplication, we have to think a little bit differently. When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector. If we wanted to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: &ldquo;Multiply the vector by 2&rdquo; or &ldquo;Multiply the vector by 1/3.&rdquo; Note that we are multiplying a vector by a scalar, a single number, not another vector.</p>
 
@@ -589,7 +589,7 @@ void mult(float n) {
 
 <p>And implementing multiplication in code is as simple as:</p>
 
-<p><a data-primary="mult() function (PVector class)" data-secondary="implementation" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="mult() function (PVector class)" data-secondary="implementation" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting">
 PVector u = new PVector(-3,7);
@@ -626,7 +626,7 @@ void draw() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p><a data-primary="div() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="div() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="div() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="div() function" data-type="indexterm"></a>
 
 <p>Division works just like multiplication&mdash;we simply replace the multiplication sign (asterisk) with the division sign (forward slash).</p>
 
@@ -640,7 +640,7 @@ PVector u = new PVector(8,-4);
 // Dividing a vector!  The vector is now half its original size (divided by 2).
 u.div(2);</pre>
 
-<p><a data-primary="vectors" data-secondary="associative/distributive rules for multiplication/division of" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="vectors" data-secondary="associative/distributive rules for multiplication/division of" data-type="indexterm"></a>
 
 <div data-type="note">
 <h1>More Number Properties with Vectors</h1>
@@ -657,7 +657,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 <section data-type="sect1" id="chapter01_section5">
 <h1>1.5 Vector Magnitude</h1>
 
-<p><a data-primary="magnitude (of vectors)" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="magnitude (of vectors)" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm"></a>
 
 <p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you&rsquo;re wondering: &ldquo;OK, so how do I know what the length of a vector is? I know the components (<span class="var">x</span> and <span class="var">y</span>), but how long (in pixels) is the actual arrow?&rdquo; Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
 
@@ -665,7 +665,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 <p class="caption">Figure 1.10: The length or &ldquo;magnitude&rdquo; of a vector <svg:svg height="12.190371pt" viewbox="0 -9.600527 8.520000 12.190371" width="8.520000pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="2.44921875" top="12.1903710937"></svgmath:metrics></svg:metadata><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:svg> is often written as: <svg:svg height="12.503906pt" viewbox="0 -9.914062 29.061672 12.503906" width="29.061672pt" xmlns="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" xmlns:svgmath="http://www.grigoriev.ru/svgmath"><svg:metadata><svgmath:metrics axis="6.57421875" baseline="2.58984375" bottom="1.37109375" top="12.357421875"></svgmath:metrics></svg:metadata><svg:g transform="translate(0.000000, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g><svg:g transform="translate(10.270836, 0.000000)"><svg:g transform="translate(1.596914, 0.000000)"><svg:text fill="black" font-family="Times New Roman" font-size="12.000000" font-style="italic" text-anchor="middle" x="2.663086" y="0.000000">v</svg:text></svg:g><svg:g transform="translate(0.000000, -8.785137)"><svg:text fill="black" font-family="Times New Roman" font-size="8.520000" text-anchor="middle" x="4.260000" y="2.828906">&rarr;</svg:text></svg:g></svg:g><svg:g transform="translate(22.124172, -3.984375)"><svg:text fill="black" font-family="Lucida Sans Unicode" font-size="12.000000" text-anchor="middle" x="3.468750" y="3.468750">∥</svg:text></svg:g></svg:svg></p>
 </div>
 
-<p><a data-primary="Pythagoras" data-type="indexterm">&nbsp;</a> <a data-primary="Pythagorean theorem" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Pythagoras" data-type="indexterm"></a> <a data-primary="Pythagorean theorem" data-type="indexterm"></a>
 
 <p>Notice in the above diagram how the vector, drawn as an arrow and two components (<span class="var">x</span> and <span class="var">y</span>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We&rsquo;re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras developed a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
 
@@ -692,7 +692,7 @@ float mag() {
 
 <div data-type="example"><h5>Example 1.5: Vector magnitude</h5></div>
 
-<p><a data-primary="mag() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="mag() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="mag() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="mag() function" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -722,7 +722,7 @@ void draw() {
 <section data-type="sect1" id="chapter01_section6">
 <h1>1.6 Normalizing Vectors</h1>
 
-<p><a data-primary="normalization" data-type="indexterm">&nbsp;</a> <a data-primary="unit vectors" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="normalization" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="unit vectors" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="normalization" data-type="indexterm"></a> <a data-primary="unit vectors" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="normalization" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="unit vectors" data-type="indexterm"></a>
 
 <p>Calculating the magnitude of a vector is only the beginning. The magnitude function opens the door to many possibilities, the first of which is <strong><em>normalization</em></strong>. Normalizing refers to the process of making something &ldquo;standard&rdquo; or, well, &ldquo;normal.&rdquo; In the case of vectors, let&rsquo;s assume for the moment that a standard vector has a length of 1. To normalize a vector, therefore, is to take a vector of any length and, keeping it pointing in the same direction, change its length to 1, turning it into what is called a <strong><em>unit vector</em></strong>.</p>
 
@@ -738,7 +738,7 @@ void draw() {
 
 <p>In other words, to normalize a vector, simply divide each component by its magnitude. This is pretty intuitive. Say a vector is of length 5. Well, 5 divided by 5 is 1. So, looking at our right triangle, we then need to scale the hypotenuse down by dividing by 5. In that process the sides shrink, divided by 5 as well.</p>
 
-<p><a data-primary="normalize() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="normalize() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="normalize() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="normalize() function" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter01_figure13"><img alt="Figure 1.13" src="../images/chapter01/ch01_13.png" />
 <figcaption>&nbsp;</figcaption>
@@ -788,7 +788,7 @@ void draw() {
 <section data-type="sect1" id="chapter01_section7">
 <h1>1.7 Vector Motion: Velocity</h1>
 
-<p><a data-primary="motion" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="motion" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="velocity and" data-type="indexterm"></a> <a data-primary="velocity" data-type="indexterm"></a>
 
 <p>All this vector math stuff sounds like something we should know about, but why? How will it actually help us write code? The truth of the matter is that we need to have some patience. It will take some time before the awesomeness of using the <span class="klass">PVector</span> class fully comes to light. This is actually a common occurrence when first learning a new data structure. For example, when you first learn about an array, it might seem like much more work to use an array than to just have several variables stand for multiple things. But that plan quickly breaks down when you need a hundred, or a thousand, or ten thousand things. The same can be true for <span class="klass">PVector</span>. What might seem like more work now will pay off later, and pay off quite nicely. And you don&rsquo;t have to wait too long, as your reward will come in the next chapter.</p>
 
@@ -813,7 +813,7 @@ ellipse(location.x,location.y,16,16);</pre>
 	</li>
 </ol>
 
-<p><a data-primary="Processing" data-secondary="OOP online tutorial" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Processing" data-secondary="OOP online tutorial" data-type="indexterm"></a>
 
 <p>In the bouncing ball example, all of this code happened in Processing&rsquo;s main tab, within <span class="function">setup()</span> and <span class="function">draw()</span>. What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing. In <a href="#intro_section2">section I.2 of the introduction</a>, &ldquo;The Random Walker Class,&rdquo; we briefly reviewed the basics of object-oriented-programming (&ldquo;OOP&rdquo;). Beyond that short introduction, this book assumes experience with objects and classes in Processing. If you need a refresher, I encourage you to check out the <a href="http://processing.org/learning/objects/">Processing objects tutorial</a>.</p>
 
@@ -853,7 +853,7 @@ class Mover {
 
 }</pre>
 
-<p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm"></a> <a data-primary="constructor" data-type="indexterm"></a>
 
 <p>We&rsquo;ve forgotten one crucial item, however: the object&rsquo;s <strong><em>constructor</em></strong>. The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object. It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator:</p>
 
@@ -978,7 +978,7 @@ class Mover {
 <section data-type="sect1" id="chapter01_section8">
 <h1>1.8 Vector Motion: Acceleration</h1>
 
-<p><a data-primary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="vectors" data-secondary="acceleration" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="acceleration" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="acceleration" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="acceleration" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="acceleration" data-type="indexterm"></a>
 
 <p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">PVector</span> is and (2) how we use <span class="klass">PVector</span><code>s</code> inside of an object to keep track of its location and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring&mdash;the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">PVector</span> to our class&mdash;<span class="var">acceleration</span>.</p>
 
@@ -993,7 +993,7 @@ location.add(velocity);</pre>
 <section data-type="sect2" id="_acceleration_algorithms">
 <h2>Acceleration Algorithms!</h2>
 
-<p><a data-primary="acceleration" data-secondary="algorithms for" data-type="indexterm">&nbsp;</a> <a data-primary="acceleration algorithms" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="acceleration" data-secondary="algorithms for" data-type="indexterm"></a> <a data-primary="acceleration algorithms" data-type="indexterm"></a>
 
 <ol>
 	<li>
@@ -1007,7 +1007,7 @@ location.add(velocity);</pre>
 	</li>
 </ol>
 
-<p><a data-primary="acceleration algorithms" data-secondary="constant" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="acceleration algorithms" data-secondary="constant" data-type="indexterm"></a>
 
 <p>Algorithm #1, <em>a constant acceleration</em>, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code. The first thing we need to do is add another <span class="klass">PVector</span> to the <span class="klass">Mover</span> class:</p>
 
@@ -1052,7 +1052,7 @@ class Mover {
 
 <p>Maybe you&rsquo;re thinking, &ldquo;Gosh, those values seem awfully small!&rdquo; That&rsquo;s right, they are quite tiny. It&rsquo;s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch&rsquo;s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <span class="klass">PVector</span> function <span class="function">limit()</span>.</p>
 
-<p><a data-primary="limit() function (PVector class)" data-type="indexterm">&nbsp;</a> <a data-primary="magnitude (of vectors)" data-secondary="limiting" data-type="indexterm">&nbsp;</a> <a data-primary="PVector class (Processing)" data-secondary="limit() function" data-type="indexterm">&nbsp;</a> <a data-primary="velocity" data-secondary="limiting" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="limit() function (PVector class)" data-type="indexterm"></a> <a data-primary="magnitude (of vectors)" data-secondary="limiting" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="limit() function" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="limiting" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting">
 // The limit() function constrains the magnitude of a vector.
@@ -1121,7 +1121,7 @@ class Mover {
 <p>Create a simulation of a car (or runner) that accelerates when you press the up key and brakes when you press the down key.</p>
 </div>
 
-<p><a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm"></a>
 
 <p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object&rsquo;s constructor, we want to pick a new acceleration each cycle, i.e. each time <span class="function">update()</span> is called.</p>
 
@@ -1173,7 +1173,7 @@ acceleration.mult(random(2)); //[bold]</pre>
 <section data-type="sect1" id="chapter01_section9">
 <h1>1.9 Static vs. Non-Static Functions</h1>
 
-<p><a data-primary="functions" data-secondary="static vs. non-static" data-type="indexterm">&nbsp;</a> <a data-primary="methods" data-secondary="static vs. non-static" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="static vs. non-static methods" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="functions" data-secondary="static vs. non-static" data-type="indexterm"></a> <a data-primary="methods" data-secondary="static vs. non-static" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="static vs. non-static methods" data-type="indexterm"></a>
 
 <p>Before we get to Algorithm #3 (<em>accelerate towards the mouse</em>), we need to cover one more rather important aspect of working with vectors and the <span class="klass">PVector</span> class: the difference between using <strong><em>static</em></strong> methods and <strong><em>non-static</em></strong> methods.</p>
 
@@ -1220,7 +1220,7 @@ void add(PVector v) {
 
 <p>we see that this code does not accomplish our goal. First, it does not return a new <span class="klass">PVector</span> (the return type is &ldquo;void&rdquo;) and second, it changes the value of the <span class="klass">PVector</span> upon which it is called. In order to add two <span class="klass">PVector</span> objects together and return the result as a new <span class="klass">PVector</span>, we must use the static <span class="function">add()</span> function.</p>
 
-<p><a data-primary="static functions" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="static functions" data-type="indexterm"></a>
 
 <p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">PVector</span> objects, <span class="var">v</span> and <span class="var">u</span>:</p>
 
@@ -1297,7 +1297,7 @@ ___________;</pre>
 <section data-type="sect1" id="chapter01_section10">
 <h1>1.10 Interactivity with Acceleration</h1>
 
-<p><a data-primary="acceleration algorithms" data-secondary="interactive" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="acceleration algorithms" data-secondary="interactive" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter01_figure14"><img alt="Figure 1.14" src="../images/chapter01/ch01_14.png" />
 <figcaption>&nbsp;</figcaption>
