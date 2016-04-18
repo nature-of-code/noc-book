@@ -12,9 +12,9 @@
 <p>In Chapter 1, we&rsquo;re going to talk about the concept of a vector and how it will serve as the building block for simulating motion throughout this book. But before we take that step, let&rsquo;s think about what it means for something to simply move around the screen. Let&rsquo;s begin with one of the best-known and simplest simulations of motion&mdash;the random walk.</p>
 
 <section data-type="sect1" id="intro_section1">
-<h3>I.1 Random Walks</h3>
+<h2>I.1 Random Walks</h2>
 
-<p><a data-primary="random walks" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="random walks" data-type="indexterm"></a>
 
 <p>Imagine you are standing in the middle of a balance beam. Every ten seconds, you flip a coin. Heads, take a step forward. Tails, take a step backward. This is a random walk&mdash;a path defined as a series of random steps. Stepping off that balance beam and onto the floor, you could perform a random walk in two dimensions by flipping that same coin twice with the following results:</p>
 
@@ -76,7 +76,7 @@
 
 <p>Yes, this may seem like a particularly unsophisticated algorithm. Nevertheless, random walks can be used to model phenomena that occur in the real world, from the movements of molecules in a gas to the behavior of a gambler spending a day at the casino. As for us, we begin this book studying a random walk with three goals in mind.</p>
 
-<p><a data-primary="natural phenomena" data-secondary="modeling with random walks" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="natural phenomena" data-secondary="modeling with random walks" data-type="indexterm"></a>
 
 <ol>
 	<li>
@@ -92,17 +92,17 @@
 </section>
 
 <section data-type="sect1" id="intro_section2">
-<h1>I.2 The Random Walker Class</h1>
+<h2>I.2 The Random Walker Class</h2>
 
-<p><a data-primary="object-oriented programming" data-secondary="review of" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="review of object-oriented programming with" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="object-oriented programming" data-secondary="review of" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="review of object-oriented programming with" data-type="indexterm"></a>
 
 <p>Let&rsquo;s review a bit of object-oriented programming (OOP) first by building a <span class="klass">Walker</span> object. This will be only a cursory review. If you have never worked with OOP before, you may want something more comprehensive; I&rsquo;d suggest stopping here and reviewing the <a href="http://processing.org/learning/objects/">basics on the Processing website</a> before continuing.</p>
 
-<p><a data-primary="object" data-secondary="defined" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="object" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="object" data-secondary="defined" data-type="indexterm"></a> <a data-primary="object-oriented programming" data-secondary="object" data-type="indexterm"></a>
 
 <p>An <strong><em>object</em></strong> in Processing is an entity that has both data and functionality. We are looking to design a <span class="klass">Walker</span> object that both keeps track of its data (where it exists on the screen) and has the capability to perform certain actions (such as draw itself or take a step).</p>
 
-<p><a data-primary="class (Processing)" data-secondary="defined" data-type="indexterm">&nbsp;</a> <a data-primary="object-oriented programming" data-secondary="class" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="class (Processing)" data-secondary="defined" data-type="indexterm"></a> <a data-primary="object-oriented programming" data-secondary="class" data-type="indexterm"></a>
 
 <p>A <strong><em>class</em></strong> is the template for building actual instances of objects. Think of a class as the cookie cutter; the objects are the cookies themselves.</p>
 
@@ -115,7 +115,7 @@ class Walker {
   int y;
   //[end]</pre>
 
-<p><a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm">&nbsp;</a> <a data-primary="constructor" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm"></a> <a data-primary="constructor" data-type="indexterm"></a>
 
 <p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <span class="function">setup()</span>. There, we&rsquo;ll initialize the <span class="klass">Walker</span><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
 
@@ -127,7 +127,7 @@ class Walker {
   }
   //[end]</pre>
 
-<p><a data-primary="class (Processing)" data-secondary="functionality" data-type="indexterm">&nbsp;</a> <a data-primary="functionality" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="class (Processing)" data-secondary="functionality" data-type="indexterm"></a> <a data-primary="functionality" data-type="indexterm"></a>
 
 <p>Finally, in addition to data, classes can be defined with functionality. In this example, a <span class="klass">Walker</span> has two functions. We first write a function that allows the object to display itself (as a black dot).</p>
 
@@ -141,7 +141,7 @@ class Walker {
 
 <p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <span class="var">x</span> (<span class="var">x</span><code>++</code>); to the left by decrementing <span class="var">x</span> (<span class="var">x--</span>); forward by going down a pixel (<span class="var">y++</span>); and backward by going up a pixel (<span class="var">y--</span>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <span class="function">random()</span>.</p>
 
-<p><a data-primary="random number generators" data-secondary="random() function" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="random number generators" data-secondary="random() function" data-type="indexterm"></a> <a data-primary="random() function" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting">
   void step() {
@@ -171,7 +171,7 @@ class Walker {
 // A Walker object
 Walker w;</pre>
 
-<p><a data-primary="new operator (objects)" data-type="indexterm">&nbsp;</a> <a data-primary="object" data-secondary="new operator" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="new operator (objects)" data-type="indexterm"></a> <a data-primary="object" data-secondary="new operator" data-type="indexterm"></a>
 
 <p>Then we create the object in <span class="function">setup()</span> by calling the constructor with the <span class="function">new</span> operator.</p>
 
@@ -237,7 +237,7 @@ void draw() {
 
 <p>All of these variations on the &ldquo;traditional&rdquo; random walk have one thing in common: at any moment in time, the probability that the <span class="klass">Walker</span> will take a step in a given direction is equal to the probability that the <span class="klass">Walker</span> will take a step in any direction. In other words, if there are four possible steps, there is a 1 in 4 (or 25%) chance the <span class="klass">Walker</span> will take any given step. With nine possible steps, it&rsquo;s a 1 in 9 (or 11.1%) chance.</p>
 
-<p><a data-primary="random number generators" data-secondary="uniform number distributions and" data-type="indexterm">&nbsp;</a> <a data-primary="uniform number distributions" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="random number generators" data-secondary="uniform number distributions and" data-type="indexterm"></a> <a data-primary="uniform number distributions" data-type="indexterm"></a>
 
 <p>Conveniently, this is how the <span class="function">random()</span> function works. Processing&rsquo;s random number generator (which operates behind the scenes) produces what is known as a &ldquo;uniform&rdquo; distribution of numbers. We can test this distribution with a Processing sketch that counts each time a random number is picked and graphs it as the height of a rectangle.</p>
 
@@ -277,10 +277,10 @@ void draw() {
 
 <p>The above screenshot shows the result of the sketch running for a few minutes. Notice how each bar of the graph differs in height. Our sample size (i.e. the number of random numbers we&rsquo;ve picked) is rather small and there are some occasional discrepancies, where certain numbers are picked more often. Over time, with a good random number generator, this would even out.</p>
 
-<p><a data-primary="pseudo-random numbers" data-type="indexterm">&nbsp;</a> <a data-primary="random number generators" data-secondary="pseudo-random numbers" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="pseudo-random numbers" data-type="indexterm"></a> <a data-primary="random number generators" data-secondary="pseudo-random numbers" data-type="indexterm"></a>
 
 <div data-type="note">
-<h1>Pseudo-Random Numbers</h1>
+<h2>Pseudo-Random Numbers</h2>
 
 <p>The random numbers we get from the <span class="function">random()</span> function are not truly random; therefore they are known as &ldquo;pseudo-random.&rdquo; They are the result of a mathematical function that simulates randomness. This function would yield a pattern over time, but that time period is so long that for us, it&rsquo;s just as good as pure randomness!</p>
 </div>
@@ -293,17 +293,17 @@ void draw() {
 </section>
 
 <section data-type="sect1" id="intro_section3">
-<h1>I.3 Probability and Non-Uniform Distributions</h1>
+<h2>I.3 Probability and Non-Uniform Distributions</h2>
 
-<p><a data-primary="natural phenomena" data-secondary="modeling with the random() function" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="probability and" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="probability and" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="non-uniform distributions and" data-type="indexterm">&nbsp;</a> <a data-primary="random number generators" data-secondary="non-uniform distributions" data-tertiary="creating" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-secondary="natural phenomena" data-tertiary="modeling with" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="natural phenomena" data-secondary="modeling with the random() function" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="probability and" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="probability and" data-type="indexterm"></a> <a data-primary="probability" data-secondary="non-uniform distributions and" data-type="indexterm"></a> <a data-primary="random number generators" data-secondary="non-uniform distributions" data-tertiary="creating" data-type="indexterm"></a> <a data-primary="random() function" data-secondary="natural phenomena" data-tertiary="modeling with" data-type="indexterm"></a>
 
 <p>Remember when you first started programming in Processing? Perhaps you wanted to draw a lot of circles on the screen. So you said to yourself: &ldquo;Oh, I know. I&rsquo;ll draw all these circles at random locations, with random sizes and random colors.&rdquo; In a computer graphics system, it&rsquo;s often easiest to seed a system with randomness. In this book, however, we&rsquo;re looking to build systems modeled on what we see in nature. Defaulting to randomness is not a particularly thoughtful solution to a design problem&mdash;in particular, the kind of problem that involves creating an organic or natural-looking simulation.</p>
 
-<p><a data-primary="probability of the fittest" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="probability of the fittest" data-type="indexterm"></a>
 
 <p>With a few tricks, we can change the way we use <span class="function">random()</span> to produce &ldquo;non-uniform&rdquo; distributions of random numbers. This will come in handy throughout the book as we look at a number of different scenarios. When we examine genetic algorithms, for example, we&rsquo;ll need a methodology for performing &ldquo;selection&rdquo;&mdash;which members of our population should be selected to pass their DNA to the next generation? Remember the concept of survival of the fittest? Let&rsquo;s say we have a population of monkeys evolving. Not every monkey will have a equal chance of reproducing. To simulate Darwinian evolution, we can&rsquo;t simply pick two random monkeys to be parents. We need the more &ldquo;fit&rdquo; ones to be more likely to be chosen. We need to define the &ldquo;probability of the fittest.&rdquo; For example, a particularly fast and strong monkey might have a 90% chance of procreating, while a weaker one has only a 10% chance.</p>
 
-<p><a data-primary="probability" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="probability" data-type="indexterm"></a>
 
 <p>Let&rsquo;s pause here and take a look at probability&rsquo;s basic principles. First we&rsquo;ll examine single event probability, i.e. the likelihood that a given event will occur.</p>
 
@@ -331,7 +331,7 @@ void draw() {
 <p>What is the probability of drawing two aces in a row from a deck of fifty-two cards?</p>
 </div>
 
-<p><a data-primary="arrays" data-secondary="custom distributions" data-tertiary="creating with" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="creating with arrays" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="creating with arrays" data-type="indexterm">&nbsp;</a> <a data-primary="random() function" data-secondary="non-uniform distributions" data-tertiary="creating with" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="arrays" data-secondary="custom distributions" data-tertiary="creating with" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="creating with arrays" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="creating with arrays" data-type="indexterm"></a> <a data-primary="random() function" data-secondary="non-uniform distributions" data-tertiary="creating with" data-type="indexterm"></a>
 
 <p>There are a couple of ways in which we can use the <span class="function">random()</span> function with probability in code. One technique is to fill an array with a selection of numbers&mdash;some of which are repeated&mdash;then choose random numbers from that array and generate events based on those choices.</p>
 
@@ -441,18 +441,18 @@ if (num &lt; 0.6) {
 </section>
 
 <section data-type="sect1" id="intro_section4">
-<h1>I.4 A Normal Distribution of Random Numbers</h1>
+<h2>I.4 A Normal Distribution of Random Numbers</h2>
 
 <p>Let&rsquo;s go back to that population of simulated Processing monkeys. Your program generates a thousand Monkey objects, each with a height value between 200 and 300 (as this is a world of monkeys that have heights between 200 and 300 pixels).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float h = random(200,300);</pre>
 
-<p><a data-primary="distributions" data-secondary="normal" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="normal distributions" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="distributions" data-secondary="normal" data-type="indexterm"></a> <a data-primary="probability" data-secondary="normal distributions" data-type="indexterm"></a>
 
 <p>Does this accurately depict the heights of real-world beings? Think of a crowded sidewalk in New York City. Pick any person off the street and it may appear that their height is random. Nevertheless, it&rsquo;s not the kind of random that <span class="function">random()</span> produces. People&rsquo;s heights are not uniformly distributed; there are a great deal more people of average height than there are very tall or very short ones. To simulate nature, we may want it to be more likely that our monkeys are of average height (250 pixels), yet still allow them to be, on occasion, very short or very tall.</p>
 
-<p><a data-primary="bell curve" data-type="indexterm">&nbsp;</a> <a data-primary="bell curve" data-secondary="mean and" data-type="indexterm">&nbsp;</a> <a data-primary="Gauss" data-secondary="Carl Friedrich" data-type="indexterm">&nbsp;</a> <a data-primary="Gaussian distribution" data-type="indexterm">&nbsp;</a> <a data-primary="Laplace" data-secondary="Pierre-Simon" data-type="indexterm">&nbsp;</a> <a data-primary="Laplacian distribution" data-type="indexterm">&nbsp;</a> <a data-primary="mean" data-type="indexterm">&nbsp;</a> <a data-primary="normal distribution" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="mean" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="bell curve" data-type="indexterm"></a> <a data-primary="bell curve" data-secondary="mean and" data-type="indexterm"></a> <a data-primary="Gauss" data-secondary="Carl Friedrich" data-type="indexterm"></a> <a data-primary="Gaussian distribution" data-type="indexterm"></a> <a data-primary="Laplace" data-secondary="Pierre-Simon" data-type="indexterm"></a> <a data-primary="Laplacian distribution" data-type="indexterm"></a> <a data-primary="mean" data-type="indexterm"></a> <a data-primary="normal distribution" data-type="indexterm"></a> <a data-primary="probability" data-secondary="mean" data-type="indexterm"></a>
 
 <p>A distribution of values that cluster around an average (referred to as the &ldquo;mean&rdquo;) is known as a &ldquo;normal&rdquo; distribution. It is also called the Gaussian distribution (named for mathematician Carl Friedrich Gauss).</p>
 
@@ -466,7 +466,7 @@ float h = random(200,300);</pre>
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p><a data-primary="mu (μ)" data-type="indexterm">&nbsp;</a> <a data-primary="sigma (σ)" data-type="indexterm">&nbsp;</a> <a data-primary="probability" data-secondary="standard deviation" data-type="indexterm">&nbsp;</a> <a data-primary="standard deviation" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="mu (μ)" data-type="indexterm"></a> <a data-primary="sigma (σ)" data-type="indexterm"></a> <a data-primary="probability" data-secondary="standard deviation" data-type="indexterm"></a> <a data-primary="standard deviation" data-type="indexterm"></a>
 
 <p>The curve is generated by a mathematical function that defines the probability of any given value occurring as a function of the mean (often written as &mu;, the Greek letter <em>mu</em>) and standard deviation (&sigma;, the Greek letter <em>sigma</em>).</p>
 
@@ -475,7 +475,7 @@ float h = random(200,300);</pre>
 <p>The numbers work out as follows: Given a population, 68% of the members of that population will have values in the range of one standard deviation from the mean, 98% within two standard deviations, and 99.7% within three standard deviations. Given a standard deviation of 5 pixels, only 0.3% of the monkey heights will be less than 235 pixels (three standard deviations below the mean of 250) or greater than 265 pixels (three standard deviations above the mean of 250).</p>
 
 <div data-type="note">
-<h1>Calculating Mean and Standard Deviation</h1>
+<h2>Calculating Mean and Standard Deviation</h2>
 
 <p>Consider a class of ten students who receive the following scores (out of 100) on a test:</p>
 
@@ -483,7 +483,7 @@ float h = random(200,300);</pre>
 
 <p><strong><em>The mean is the average: 81.3</em></strong></p>
 
-<p><a data-primary="standard deviation" data-secondary="calculating" data-type="indexterm">&nbsp;</a> <a data-primary="standard deviation" data-secondary="variance" data-type="indexterm">&nbsp;</a> <a data-primary="variance" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="standard deviation" data-secondary="calculating" data-type="indexterm"></a> <a data-primary="standard deviation" data-secondary="variance" data-type="indexterm"></a> <a data-primary="variance" data-type="indexterm"></a>
 
 <p>The standard deviation is calculated as the square root of the average of the squares of deviations around the mean. In other words, take the difference from the mean for each person and square it (variance). Calculate the average of all these values and take the square root as the standard deviation.</p>
 
@@ -542,7 +542,7 @@ float h = random(200,300);</pre>
 <p><strong><em>The standard deviation is the square root of the average variance: 15.94</em></strong></p>
 </div>
 
-<p><a data-primary="Processing" data-secondary="Random class" data-type="indexterm">&nbsp;</a> <a data-primary="Random class (Processing)" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Processing" data-secondary="Random class" data-type="indexterm"></a> <a data-primary="Random class (Processing)" data-type="indexterm"></a>
 
 <p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don&rsquo;t have to do any of these calculations ourselves. Instead, we can make use of a class known as <span class="klass">Random</span>, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">the JavaDocs</a> for more information).</p>
 
@@ -558,7 +558,7 @@ void setup() {
   generator = new Random();
 }</pre>
 
-<p><a data-primary="nextGaussian() function (Random class)" data-type="indexterm">&nbsp;</a> <a data-primary="Random class (Processing)" data-secondary="nextGaussian() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="nextGaussian() function (Random class)" data-type="indexterm"></a> <a data-primary="Random class (Processing)" data-secondary="nextGaussian() function" data-type="indexterm"></a>
 
 <p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through <span class="function">draw()</span>, it&rsquo;s as easy as calling the function <span class="function">nextGaussian()</span>.</p>
 
@@ -570,7 +570,7 @@ void draw() {
 
 <p>Here&rsquo;s the thing. What are we supposed to do with this value? What if we wanted to use it, for example, to assign the x-position of a shape we draw on screen?</p>
 
-<p><a data-primary="nextGaussian() function (Random class)" data-secondary="default mean/standard deviation settings of" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="nextGaussian() function (Random class)" data-secondary="default mean/standard deviation settings of" data-type="indexterm"></a>
 
 <p>The <span class="function">nextGaussian()</span> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let&rsquo;s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
 
@@ -605,7 +605,7 @@ void draw() {
 <p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central location, but some dots do splatter out towards the edges. Can you use a normal distribution of random numbers to generate the locations of the dots? Can you also use a normal distribution of random numbers to generate a color palette?</p>
 </div>
 
-<p><a data-primary="random walks" data-secondary="Gaussian" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="random walks" data-secondary="Gaussian" data-type="indexterm"></a>
 
 <div data-type="exercise" id="intro_exercise5">
 <h5>Exercise I.5</h5>
@@ -615,15 +615,15 @@ void draw() {
 </section>
 
 <section data-type="sect1" id="intro_section5">
-<h1>I.5 A Custom Distribution of Random Numbers</h1>
+<h2>I.5 A Custom Distribution of Random Numbers</h2>
 
-<p><a data-primary="distributions" data-secondary="custom" data-type="indexterm">&nbsp;</a> <a data-primary="Lévy flight" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="custom" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="custom" data-type="indexterm">&nbsp;</a> <a data-primary="oversampling" data-type="indexterm">&nbsp;</a> <a data-primary="random number generators" data-secondary="custom distributions" data-tertiary="creating" data-type="indexterm">&nbsp;</a> <a data-primary="random walks" data-secondary="Lévy flight" data-type="indexterm">&nbsp;</a> <a data-primary="random walks" data-secondary="oversampling" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="distributions" data-secondary="custom" data-type="indexterm"></a> <a data-primary="Lévy flight" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="custom" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="custom" data-type="indexterm"></a> <a data-primary="oversampling" data-type="indexterm"></a> <a data-primary="random number generators" data-secondary="custom distributions" data-tertiary="creating" data-type="indexterm"></a> <a data-primary="random walks" data-secondary="Lévy flight" data-type="indexterm"></a> <a data-primary="random walks" data-secondary="oversampling" data-type="indexterm"></a>
 
 <p>There will come a time in your life when you do not want a uniform distribution of random values, or a Gaussian one. Let&rsquo;s imagine for a moment that you are a random walker in search of food. Moving randomly around a space seems like a reasonable strategy for finding something to eat. After all, you don&rsquo;t know where the food is, so you might as well search randomly until you find it. The problem, as you may have noticed, is that random walkers return to previously visited locations many times (this is known as &ldquo;oversampling&rdquo;). One strategy to avoid such a problem is to, every so often, take a very large step. This allows the walker to forage randomly around a specific location while periodically jumping very far away to reduce the amount of oversampling. This variation on the random walk (known as a L&eacute;vy flight) requires a custom set of probabilities. Though not an exact implementation of a L&eacute;vy flight, we could state the probability distribution as follows: the longer the step, the less likely it is to be picked; the shorter the step, the more likely.</p>
 
 <p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an array with values (some duplicated so that they would be picked more frequently) or by testing the result of <span class="function">random()</span>. We could implement a L&eacute;vy flight by saying that there is a 1% chance of the walker taking a large step.</p>
 
-<p><a data-primary="arrays" data-secondary="Lévy flights" data-tertiary="implementing with" data-type="indexterm">&nbsp;</a> <a data-primary="Lévy flight" data-secondary="implementing with arrays" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="arrays" data-secondary="Lévy flights" data-tertiary="implementing with" data-type="indexterm"></a> <a data-primary="Lévy flight" data-secondary="implementing with arrays" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting">
 float r = random(1);
@@ -637,7 +637,7 @@ if (r &lt; 0.01) {
   ystep = random(-1,1);
 }</pre>
 
-<p><a data-primary="Lévy flight" data-secondary="implementing with qualifying random values" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Lévy flight" data-secondary="implementing with qualifying random values" data-type="indexterm"></a>
 
 <p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more general rule&mdash;the higher a number, the more likely it is to be picked? 3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if <span class="var">x</span> is the random number, we could map the likelihood on the y-axis with <span class="var">y</span> = <span class="var">x</span>.</p>
 
@@ -647,7 +647,7 @@ if (r &lt; 0.01) {
 
 <p>If we can figure out how to generate a distribution of random numbers according to the above graph, then we will be able to apply the same methodology to any curve for which we have a formula.</p>
 
-<p><a data-primary="non-uniform distributions" data-secondary="qualifying random values" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="qualifying random values" data-type="indexterm">&nbsp;</a> <a data-primary="qualifying random values" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="non-uniform distributions" data-secondary="qualifying random values" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="qualifying random values" data-type="indexterm"></a> <a data-primary="qualifying random values" data-type="indexterm"></a>
 
 <p>One solution is to pick two random numbers instead of one. The first random number is just that, a random number. The second one, however, is what we&rsquo;ll call a &ldquo;qualifying random value.&rdquo; It will tell us whether to use the first one or throw it away and pick another one. Numbers that have an easier time qualifying will be picked more often, and numbers that rarely qualify will be picked infrequently. Here are the steps (for now, let&rsquo;s consider only random values between 0 and 1):</p>
 
@@ -673,9 +673,9 @@ if (r &lt; 0.01) {
 
 <p>Here we are saying that the likelihood that a random value will qualify is equal to the random number itself. Let&rsquo;s say we pick 0.1 for R1. This means that R1 will have a 10% chance of qualifying. If we pick 0.83 for R1 then it will have a 83% chance of qualifying. The higher the number, the greater the likelihood that we will actually use it.</p>
 
-<p><a data-primary="Monte Carlo method" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="Monte Carlo method" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="Monte Carlo method" data-type="indexterm">&nbsp;</a> <a data-primary="qualifying random values" data-secondary="Monte Carlo method" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Monte Carlo method" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="Monte Carlo method" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="Monte Carlo method" data-type="indexterm"></a> <a data-primary="qualifying random values" data-secondary="Monte Carlo method" data-type="indexterm"></a>
 
-<p>Here is a function (named for the accept-reject algorithm, a type of&nbsp;Monte Carlo method, which was named for the Monte Carlo casino) that implements the above algorithm, returning a random value between 0 and 1.</p>
+Here is a function (named for the accept-reject algorithm, a type ofMonte Carlo method, which was named for the Monte Carlo casino) that implements the above algorithm, returning a random value between 0 and 1.
 
 <pre data-code-language="java" data-type="programlisting">
 float acceptreject() {
@@ -716,13 +716,13 @@ float acceptreject() {
 </section>
 
 <section data-type="sect1" id="intro_section6">
-<h1>I.6 Perlin Noise (A Smoother Approach)</h1>
+<h2>I.6 Perlin Noise (A Smoother Approach)</h2>
 
-<p><a data-primary="natural phenomena" data-secondary="Perlin noise and" data-type="indexterm">&nbsp;</a> <a data-primary="non-uniform distributions" data-secondary="Perlin noise" data-type="indexterm">&nbsp;</a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="Perlin noise" data-type="indexterm">&nbsp;</a> <a data-primary="Perlin noise" data-secondary="natural phenomena" data-tertiary="modeling with" data-type="indexterm">&nbsp;</a> <a data-primary="&lt;em&gt;Tron&lt;/em&gt; (1982)" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="natural phenomena" data-secondary="Perlin noise and" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="Perlin noise" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="Perlin noise" data-type="indexterm"></a> <a data-primary="Perlin noise" data-secondary="natural phenomena" data-tertiary="modeling with" data-type="indexterm"></a> <a data-primary="&lt;em&gt;Tron&lt;/em&gt; (1982)" data-type="indexterm"></a>
 
 <p>A good random number generator produces numbers that have no relationship and show no discernible pattern. As we are beginning to see, a little bit of randomness can be a good thing when programming organic, lifelike behaviors. However, randomness as the single guiding principle is not necessarily natural. An algorithm known as &ldquo;Perlin noise,&rdquo; named for its inventor Ken Perlin, takes this concept into account. Perlin developed the noise function while working on the original <em>Tron</em> movie in the early 1980s; it was designed to create procedural textures for computer-generated effects. In 1997 Perlin won an Academy Award in technical achievement for this work. Perlin noise can be used to generate various effects with natural qualities, such as clouds, landscapes, and patterned textures like marble.</p>
 
-<p><a data-primary="naturally ordered sequence of numbers" data-type="indexterm">&nbsp;</a> <a data-primary="pseudo-random numbers" data-secondary="Perlin noise and" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="naturally ordered sequence of numbers" data-type="indexterm"></a> <a data-primary="pseudo-random numbers" data-secondary="Perlin noise and" data-type="indexterm"></a>
 
 <p>Perlin noise has a more organic appearance because it produces a naturally ordered (&ldquo;smooth&rdquo;) sequence of pseudo-random numbers. The graph on the left below shows Perlin noise over time, with the x-axis representing time; note the smoothness of the curve. The graph on the right shows pure random numbers over time. (The code for generating these graphs is available in the accompanying book downloads.)</p>
 
@@ -734,11 +734,11 @@ float acceptreject() {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<p><a data-primary="noise() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Perlin noise" data-secondary="noise() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="noise() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="noise() function (Processing)" data-type="indexterm"></a> <a data-primary="Perlin noise" data-secondary="noise() function (Processing)" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="noise() function" data-type="indexterm"></a>
 
 <p>Processing has a built-in implementation of the Perlin noise algorithm: the function <span class="function">noise()</span>. The <span class="function">noise()</span> function takes one, two, or three arguments, as noise is computed in one, two, or three dimensions. Let&rsquo;s start by looking at one-dimensional noise.</p>
 
-<p><a data-primary="noiseDetail() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Processing" data-secondary="noiseDetail() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="noiseDetail() function (Processing)" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="noiseDetail() function" data-type="indexterm"></a>
 
 <div class="note">
 <h3 id="noise-detail">Noise Detail</h3>
@@ -761,7 +761,7 @@ ellipse(x,180,16,16);</pre>
 // A noise x-location?
 float x = noise(0,width); //[line-through]</pre>
 
-<p><a data-primary="noise() function (Processing)" data-secondary="arguments for" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="noise() function (Processing)" data-secondary="arguments for" data-type="indexterm"></a>
 
 <p>While conceptually this is exactly what we want to do&mdash;calculate an x-value that ranges between 0 and the width according to Perlin noise&mdash;this is not the correct implementation. While the arguments to the <span class="function">random()</span> function specify a range of values between a minimum and a maximum, <span class="function">noise()</span> does not work this way. Instead, the output range is fixed&mdash;it always returns a value between 0 and 1. We&rsquo;ll see in a moment that we can get around this easily with Processing&rsquo;s <span class="function">map()</span> function, but first we must examine what exactly <span class="function">noise()</span> expects us to pass in as an argument.</p>
 
@@ -858,7 +858,7 @@ void draw() {
 <section data-type="sect2" id="_mapping_noise">
 <h2>Mapping Noise</h2>
 
-<p><a data-primary="map() function (Processing)" data-type="indexterm">&nbsp;</a> <a data-primary="Perlin noise" data-secondary="map() function" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="map() function (Processing)" data-type="indexterm"></a> <a data-primary="Perlin noise" data-secondary="map() function" data-type="indexterm"></a>
 
 <p>Now we&rsquo;re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it&rsquo;s up to us to map that range to what we want. The easiest way to do this is with Processing&rsquo;s <span class="function">map()</span> function. The <span class="function">map()</span> function takes five arguments. First up is the value we want to map, in this case <span class="var">n</span>. Then we have to give it the value&rsquo;s current range (minimum and maximum), followed by our desired range.</p>
 
@@ -932,7 +932,7 @@ class Walker {
 <section data-type="sect2" id="_two_dimensional_noise">
 <h2>Two-Dimensional Noise</h2>
 
-<p><a data-primary="Perlin noise" data-secondary="two-dimensional" data-type="indexterm">&nbsp;</a></p>
+<a data-primary="Perlin noise" data-secondary="two-dimensional" data-type="indexterm"></a>
 
 <p>This idea of noise values living in a one-dimensional space is important because it leads us right into a discussion of two-dimensional space. Let&rsquo;s think about this for a moment. With one-dimensional noise, we have a sequence of values in which any given value is similar to its neighbor. Because the value is in one dimension, it only has two neighbors: a value that comes before it (to the left on the graph) and one that comes after it (to the right).</p>
 
@@ -1034,7 +1034,7 @@ for (int x = 0; x &lt; width; x++) {
 </section>
 
 <section data-type="sect1" id="intro_section7">
-<h1>I.7 Onward</h1>
+<h2>I.7 Onward</h2>
 
 <p>We began this chapter by talking about how randomness can be a crutch. In many ways, it&rsquo;s the most obvious answer to the kinds of questions we ask continuously&mdash;how should this object move? What color should it be? This obvious answer, however, can also be a lazy one.</p>
 
