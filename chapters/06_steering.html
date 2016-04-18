@@ -97,7 +97,7 @@ class Vehicle {
 
 <p>We can entertain ourselves by discussing the theoretical principles behind autonomous agents and steering as much as we like, but we can&rsquo;t get anywhere without first understanding the concept of a steering force. Consider the following scenario. A vehicle moving with velocity desires to seek a target.</p>
 
-<figure class="half-width-right" id="chapter06_figure1"><img alt="Figure 6.1" src="../images/chapter06/ch06_01.png" />
+<figure class="half-width-right" id="chapter06_figure1"><img alt="Figure 6.1" src="chapter06/ch06_01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -114,7 +114,7 @@ PVector steer = PVector.sub(desired,velocity);</pre>
 
 <p>In the above formula, velocity is no problem. After all, we&rsquo;ve got a variable for that. However, we don&rsquo;t have the <em>desired velocity</em>; this is something we have to calculate. Let&rsquo;s take a look at Figure 6.2. If we&rsquo;ve defined the vehicle&rsquo;s goal as &ldquo;seeking the target,&rdquo; then its desired velocity is a vector that points from its current location to the target location.</p>
 
-<figure id="chapter06_figure2"><img alt="Figure 6.2" src="../images/chapter06/ch06_02.png" />
+<figure id="chapter06_figure2"><img alt="Figure 6.2" src="chapter06/ch06_02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -144,7 +144,7 @@ PVector desired = PVector.sub(target,location);
 desired.normalize();
 desired.mult(maxspeed);</pre>
 
-<figure id="chapter06_figure3"><img alt="Figure 6.3" src="../images/chapter06/ch06_03.png" />
+<figure id="chapter06_figure3"><img alt="Figure 6.3" src="chapter06/ch06_03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -169,7 +169,7 @@ desired.mult(maxspeed);</pre>
 
 <p>So why does this all work so well? Let&rsquo;s see what the steering force looks like relative to the vehicle and target locations.</p>
 
-<figure id="chapter06_figure4"><img alt="Figure 6.4" src="../images/chapter06/ch06_04.png" />
+<figure id="chapter06_figure4"><img alt="Figure 6.4" src="chapter06/ch06_04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -206,13 +206,13 @@ class Vehicle {
 
 <p>Limiting the steering force brings up an important point. We must always remember that it&rsquo;s not actually our goal to get the vehicle to the target as fast as possible. If that were the case, we would just say &ldquo;location equals target&rdquo; and there the vehicle would be. Our goal, as Reynolds puts it, is to move the vehicle in a &ldquo;lifelike and improvisational manner.&rdquo; We&rsquo;re trying to make it appear as if the vehicle is steering its way to the target, and so it&rsquo;s up to us to play with the forces and variables of the system to simulate a given behavior. For example, a large maximum steering force would result in a very different path than a small one. One is not inherently better or worse than the other; it depends on your desired effect. (And of course, these values need not be fixed and could change based on other conditions. Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
 
-<figure id="chapter06_figure5"><img alt="Figure 6.5" src="../images/chapter06/ch06_05.png" />
+<figure id="chapter06_figure5"><img alt="Figure 6.5" src="chapter06/ch06_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Here is the full <span class="klass">Vehicle</span> class, incorporating the rest of the elements from the Chapter 2 <span class="klass">Mover</span> object.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_01_Seek/_6_01_Seek.pde processingjs/chapter06/_6_01_Seek/Vehicle.pde"><img alt="ch06 ex1" src="../images/chapter06/ch06_ex1.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_01_Seek/_6_01_Seek.pde processingjs/chapter06/_6_01_Seek/Vehicle.pde"><img alt="ch06 ex1" src="chapter06/ch06_ex1.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -317,7 +317,7 @@ etc.</p>
 
 <p>The vehicle is so gosh darn excited about getting to the target that it doesn&rsquo;t bother to make any intelligent decisions about its speed relative to the target&rsquo;s proximity. Whether it&rsquo;s far away or very close, it always wants to go as fast as possible.</p>
 
-<figure id="chapter06_figure6"><img alt="Figure 6.6" src="../images/chapter06/ch06_06.png" />
+<figure id="chapter06_figure6"><img alt="Figure 6.6" src="chapter06/ch06_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -330,7 +330,7 @@ Frame 4: I&rsquo;m getting close. I want to go more slowly towards the target!<b
 Frame 5: I&rsquo;m almost there. I want to go very slowly towards the target!<br />
 Frame 6: I&rsquo;m there. I want to stop!</p>
 
-<figure id="chapter06_figure7"><img alt="Figure 6.7" src="../images/chapter06/ch06_07.png" />
+<figure id="chapter06_figure7"><img alt="Figure 6.7" src="chapter06/ch06_07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -343,13 +343,13 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p>In Example 6.1, the magnitude of the desired vector is always &ldquo;maximum&rdquo; speed.</p>
 
-<figure id="chapter06_figure8"><img alt="Figure 6.8" src="../images/chapter06/ch06_08.png" />
+<figure id="chapter06_figure8"><img alt="Figure 6.8" src="chapter06/ch06_08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>What if we instead said the desired velocity is equal to half the distance?</p>
 
-<figure id="chapter06_figure9"><img alt="Figure 6.9" src="../images/chapter06/ch06_09.png" />
+<figure id="chapter06_figure9"><img alt="Figure 6.9" src="chapter06/ch06_09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -365,13 +365,13 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p>Reynolds describes a more sophisticated approach. Let&rsquo;s imagine a circle around the target with a given radius. If the vehicle is within that circle, it slows down&mdash;at the edge of the circle, its desired speed is maximum speed, and at the target itself, its desired speed is 0.</p>
 
-<figure id="chapter06_figure10"><img alt="Figure 6.10" src="../images/chapter06/ch06_10.png" />
+<figure id="chapter06_figure10"><img alt="Figure 6.10" src="chapter06/ch06_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>In other words, if the distance from the target is less than r, the desired speed is between 0 and maximum speed mapped according to that distance.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_02_Arrive/_6_02_Arrive.pde processingjs/chapter06/_6_02_Arrive/Vehicle.pde"><img alt="ch06 ex2" src="../images/chapter06/ch06_ex2.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_02_Arrive/_6_02_Arrive.pde processingjs/chapter06/_6_02_Arrive/Vehicle.pde"><img alt="ch06 ex2" src="chapter06/ch06_ex2.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -412,7 +412,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p>The steering force, therefore, is essentially a manifestation of the current velocity&rsquo;s <strong><em>error</em></strong>: &quot;I&rsquo;m supposed to be going this fast in this direction, but I&rsquo;m actually going this fast in another direction. My error is the difference between where I want to go and where I am currently going.&quot; Taking that error and applying it as a steering force results in more dynamic, lifelike simulations. With gravitational attraction, you would never have a force pointing away from the target, no matter how close. But with arriving via steering, if you are moving too fast towards the target, the error would actually tell you to slow down!</p>
 
-<figure id="chapter06_figure11"><img alt="Figure 6.11" src="../images/chapter06/ch06_11.png" />
+<figure id="chapter06_figure11"><img alt="Figure 6.11" src="chapter06/ch06_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </section>
@@ -430,7 +430,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <blockquote>&ldquo;Wandering is a type of random steering which has some long term order: the steering direction on one frame is related to the steering direction on the next frame. This produces more interesting motion than, for example, simply generating a random steering direction each frame.&rdquo; <span class="attribution"> <a href="http://www.red3d.com/cwr/steer/Wander.html">&mdash;Craig Reynolds</a> </span></blockquote>
 
-<figure class="half-width-right" id="chapter06_figure12"><img alt="Figure 6.12" src="../images/chapter06/ch06_12.png" />
+<figure class="half-width-right" id="chapter06_figure12"><img alt="Figure 6.12" src="chapter06/ch06_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -449,7 +449,7 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p>Write the code for Reynolds&rsquo;s wandering behavior. Use polar coordinates to calculate the vehicle&rsquo;s target along a circular path.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_04_Wander/Ex_6_04_Wander.pde processingjs/chapter06/Ex_6_04_Wander/Vehicle.pde"><img alt="ch06 exc4" src="../images/chapter06/ch06_exc4.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_04_Wander/Ex_6_04_Wander.pde processingjs/chapter06/Ex_6_04_Wander/Vehicle.pde"><img alt="ch06 exc4" src="chapter06/ch06_exc4.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -458,13 +458,13 @@ Frame 6: I&rsquo;m there. I want to stop!</p>
 
 <p><strong><em>If a vehicle comes within a distance</em></strong> d <strong><em>of a wall, it desires to move at maximum speed in the opposite direction of the wall.</em></strong></p>
 
-<figure id="chapter06_figure13"><img alt="Figure 6.13" src="../images/chapter06/ch06_13.png" />
+<figure id="chapter06_figure13"><img alt="Figure 6.13" src="chapter06/ch06_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>If we define the walls of the space as the edges of a Processing window and the distance <span class="var">d</span> as 25, the code is rather simple.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_03_StayWithinWalls/_6_03_StayWithinWalls.pde processingjs/chapter06/_6_03_StayWithinWalls/Vehicle.pde"><img alt="ch06 ex3" src="../images/chapter06/ch06_ex3.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_03_StayWithinWalls/_6_03_StayWithinWalls.pde processingjs/chapter06/_6_03_StayWithinWalls/Vehicle.pde"><img alt="ch06 ex3" src="chapter06/ch06_ex3.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -495,7 +495,7 @@ if (location. x &gt; 25) {
 
 <p>Now back to the task at hand. Let&rsquo;s examine a couple more of Reynolds&rsquo;s steering behaviors. First, <strong><em>flow field following</em></strong>. What is a flow field? Think of your Processing window as a grid. In each cell of the grid lives an arrow pointing in some direction&mdash;you know, a vector. As a vehicle moves around the screen, it asks, &ldquo;Hey, what arrow is beneath me? That&rsquo;s my desired velocity!&rdquo;</p>
 
-<figure id="chapter06_figure14"><img alt="Figure 6.14" src="../images/chapter06/ch06_14.png" />
+<figure id="chapter06_figure14"><img alt="Figure 6.14" src="chapter06/ch06_14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -534,7 +534,7 @@ class FlowField {
 
 <p>Now that we&rsquo;ve set up the flow field&rsquo;s data structures, it&rsquo;s time to compute the vectors in the flow field itself. How do we do that? However we feel like it! Perhaps we want to have every vector in the flow field pointing to the right.</p>
 
-<figure id="chapter06_figure15"><img alt="Figure 6.15" src="../images/chapter06/ch06_15.png" />
+<figure id="chapter06_figure15"><img alt="Figure 6.15" src="chapter06/ch06_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -551,7 +551,7 @@ for (int i = 0; i &lt; cols; i++) {
 
 <p>Or perhaps we want the vectors to point in random directions.</p>
 
-<figure id="chapter06_figure16"><img alt="Figure 6.16" src="../images/chapter06/ch06_16.png" />
+<figure id="chapter06_figure16"><img alt="Figure 6.16" src="chapter06/ch06_16.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -568,7 +568,7 @@ for (int i = 0; i &lt; cols; i++) {
 
 <a data-primary="Perlin noise" data-secondary="flow field following and" data-type="indexterm"></a>
 
-<figure id="chapter06_figure17"><img alt="Figure 6.17" src="../images/chapter06/ch06_17.png" />
+<figure id="chapter06_figure17"><img alt="Figure 6.17" src="chapter06/ch06_17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -592,7 +592,7 @@ for (int i = 0; i &lt; cols; i++) {
 
 <p>Write the code to calculate a <span class="klass">PVector</span> at every location in the flow field that points towards the center of a window.</p>
 
-<figure><img alt="ch06 exc6" src="../images/chapter06/ch06_exc6.png" />
+<figure><img alt="ch06 exc6" src="chapter06/ch06_exc6.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -672,7 +672,7 @@ class FlowField {
 
 <p>So let&rsquo;s assume we have a <span class="klass">FlowField</span> object called &ldquo;flow&rdquo;. Using the <span class="function">lookup()</span> function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds&rsquo;s rules (steering = desired - velocity) to calculate a steering force.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_04_FlowField/_6_04_FlowField.pde processingjs/chapter06/_6_04_FlowField/FlowField.pde processingjs/chapter06/_6_04_FlowField/Vehicle.pde"><img alt="ch06 ex4" src="../images/chapter06/ch06_ex4.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_04_FlowField/_6_04_FlowField.pde processingjs/chapter06/_6_04_FlowField/FlowField.pde processingjs/chapter06/_6_04_FlowField/Vehicle.pde"><img alt="ch06 ex4" src="chapter06/ch06_ex4.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -714,7 +714,7 @@ class Vehicle {
 
 <p>Remember all the basic vector math we covered in Chapter 1? Add, subtract, multiply, and divide?</p>
 
-<figure id="chapter06_figure18"><img alt="Figure 6.18" src="../images/chapter06/ch06_18.png" />
+<figure id="chapter06_figure18"><img alt="Figure 6.18" src="chapter06/ch06_18.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -774,7 +774,7 @@ public float dot(PVector v) {
 
 <p>{dotform} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
 
-<figure class="half-width-right" id="chapter06_figure19"><img alt="Figure 6.19" src="../images/chapter06/ch06_19.png" />
+<figure class="half-width-right" id="chapter06_figure19"><img alt="Figure 6.19" src="chapter06/ch06_19.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -821,13 +821,13 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 <div data-type="exercise" id="chapter06_exercise9">
 <h5>Exercise 6.9</h5>
 
-<figure class="half-width-right"><img alt="ch06 exc9" src="../images/chapter06/ch06_exc9.png" />
+<figure class="half-width-right"><img alt="ch06 exc9" src="chapter06/ch06_exc9.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Create a sketch that displays the angle between two <span class="klass">PVector</span> objects.</p>
 
-<figure><img alt="blank" src="../images/blank.png" />
+<figure><img alt="blank" src="blank.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -853,7 +853,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <p>Before we work out the individual pieces, let&rsquo;s take a look at the overall algorithm for path following, as defined by Reynolds.</p>
 
-<figure id="chapter06_figure20"><img alt="Figure 6.20" src="../images/chapter06/ch06_20.png" />
+<figure id="chapter06_figure20"><img alt="Figure 6.20" src="chapter06/ch06_20.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -861,13 +861,13 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <p>We&rsquo;ll first define what we mean by a path. There are many ways we could implement a path, but for us, a simple way will be to define a path as a series of connected points:</p>
 
-<figure id="chapter06_figure21"><img alt="Figure 6.21: Path" src="../images/chapter06/ch06_21.png" />
+<figure id="chapter06_figure21"><img alt="Figure 6.21: Path" src="chapter06/ch06_21.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>An even simpler path would be a line between two points.</p>
 
-<figure id="chapter06_figure22"><img alt="Figure 6.22: Simple path" src="../images/chapter06/ch06_22.png" />
+<figure id="chapter06_figure22"><img alt="Figure 6.22: Simple path" src="chapter06/ch06_22.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -875,7 +875,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <p>Putting this into a class, we have:</p>
 
-<figure class="screenshot"><img alt="ch06 ex5 a" src="../images/chapter06/ch06_ex5_a.png" />
+<figure class="screenshot"><img alt="ch06 ex5 a" src="chapter06/ch06_ex5_a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -909,7 +909,7 @@ class Path {
 
 <p>Now, let&rsquo;s assume we have a vehicle (as depicted below) outside of the path&rsquo;s radius, moving with a velocity.</p>
 
-<figure id="chapter06_figure23"><img alt="Figure 6.23" src="../images/chapter06/ch06_23.png" />
+<figure id="chapter06_figure23"><img alt="Figure 6.23" src="chapter06/ch06_23.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -935,7 +935,7 @@ PVector predictLoc = PVector.add(loc, predict);</pre>
 
 <p>So, how do we find the distance between a point and a line? This concept is key. The distance between a point and a line is defined as the length of the normal between that point and line. The normal is a vector that extends from that point and is perpendicular to the line.</p>
 
-<figure id="chapter06_figure24"><img alt="Figure 6.24" src="../images/chapter06/ch06_24.png" />
+<figure id="chapter06_figure24"><img alt="Figure 6.24" src="chapter06/ch06_24.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -951,7 +951,7 @@ PVector b = PVector.sub(path.end,path.start);</pre>
 
 <p>Now, with basic trigonometry, we know that the distance from the path&rsquo;s start to the normal point is: <span class="formula">|A| * cos(theta)</span>.</p>
 
-<figure id="chapter06_figure25"><img alt="Figure 6.25" src="../images/chapter06/ch06_25.png" />
+<figure id="chapter06_figure25"><img alt="Figure 6.25" src="chapter06/ch06_25.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1017,7 +1017,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p>This process is commonly known as &ldquo;scalar projection.&rdquo; <strong><em>|A| cos(&theta;) is the scalar projection of A onto B.</em></strong></p>
 
-<figure id="chapter06_figure26"><img alt="Figure 6.26" src="../images/chapter06/ch06_26.png" />
+<figure id="chapter06_figure26"><img alt="Figure 6.26" src="chapter06/ch06_26.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1025,7 +1025,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p>Once we have the normal point along the path, we have to decide whether the vehicle should steer towards the path and how. Reynolds&rsquo;s algorithm states that the vehicle should only steer towards the path if it strays beyond the path (i.e., if the distance between the normal point and the predicted future location is greater than the path radius).</p>
 
-<figure id="chapter06_figure27"><img alt="Figure 6.27" src="../images/chapter06/ch06_27.png" />
+<figure id="chapter06_figure27"><img alt="Figure 6.27" src="chapter06/ch06_27.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1056,7 +1056,7 @@ if (distance &gt; path.radius) {
 
 <p>Since we know the vector that defines the path (we&rsquo;re calling it &ldquo;B&rdquo;), we can implement Reynolds&rsquo;s &ldquo;point ahead on the path&rdquo; without too much trouble.</p>
 
-<figure id="chapter06_figure28"><img alt="Figure 6.28" src="../images/chapter06/ch06_28.png" />
+<figure id="chapter06_figure28"><img alt="Figure 6.28" src="chapter06/ch06_28.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1076,7 +1076,7 @@ if (distance &gt; path.radius) {
 
 <p>Putting it all together, we have the following steering function in our <span class="klass">Vehicle</span> class.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_05_PathFollowingSimple/_6_05_PathFollowingSimple.pde processingjs/chapter06/_6_05_PathFollowingSimple/Path.pde processingjs/chapter06/_6_05_PathFollowingSimple/Vehicle.pde"><img alt="ch06 ex5" src="../images/chapter06/ch06_ex5.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_05_PathFollowingSimple/_6_05_PathFollowingSimple.pde processingjs/chapter06/_6_05_PathFollowingSimple/Path.pde processingjs/chapter06/_6_05_PathFollowingSimple/Vehicle.pde"><img alt="ch06 ex5" src="chapter06/ch06_ex5.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1116,7 +1116,7 @@ if (distance &gt; path.radius) {
 
 <p>Now, you may notice above that instead of using all that dot product/scalar projection code to find the normal point, we instead call a function: <span class="function">getNormalPoint()</span>. In cases like this, it&rsquo;s useful to break out the code that performs a specific task (finding a normal point) into a function that it can be used generically in any case where it is required. The function takes three <span class="klass">PVector</span><code>s</code>: the first defines a point in Cartesian space and the second and third arguments define a line segment.</p>
 
-<figure id="chapter06_figure29"><img alt="Figure 6.29" src="../images/chapter06/ch06_29.png" />
+<figure id="chapter06_figure29"><img alt="Figure 6.29" src="chapter06/ch06_29.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1147,13 +1147,13 @@ if (distance &gt; path.radius) {
 
 <a data-primary="path following" data-secondary="multiple segments" data-type="indexterm"></a>
 
-<figure class="A Curvy Path" id="chapter06_figure30"><img alt="Figure 6.30" src="../images/chapter06/ch06_30.png" />
+<figure class="A Curvy Path" id="chapter06_figure30"><img alt="Figure 6.30" src="chapter06/ch06_30.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>We&rsquo;ve built a great example so far, yes, but it&rsquo;s pretty darn limiting. After all, what if we want our path to be something that looks more like:</p>
 
-<figure class="Path defined as line segments" id="chapter06_figure31"><img alt="Figure 6.31" src="../images/chapter06/ch06_31.png" />
+<figure class="Path defined as line segments" id="chapter06_figure31"><img alt="Figure 6.31" src="chapter06/ch06_31.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1167,7 +1167,7 @@ if (distance &gt; path.radius) {
 
 <p>To find the target, we need to find the normal to the line segment. But now that we have a series of line segments, we have a series of normal points (see above)! Which one do we choose? The solution we&rsquo;ll employ is to pick the normal point that is (a) closest and (b) on the path itself.</p>
 
-<figure id="chapter06_figure32"><img alt="Figure 6.32" src="../images/chapter06/ch06_32.png" />
+<figure id="chapter06_figure32"><img alt="Figure 6.32" src="chapter06/ch06_32.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1175,7 +1175,7 @@ if (distance &gt; path.radius) {
 
 <p>In order to write the code for this, we&rsquo;ll have to expand our <span class="klass">Path</span> class to have an <span class="klass">ArrayList</span> of points (rather than just two, a start and an end).</p>
 
-<figure class="screenshot"><img alt="ch06 ex6 a" src="../images/chapter06/ch06_ex6_a.png" />
+<figure class="screenshot"><img alt="ch06 ex6 a" src="chapter06/ch06_ex6_a.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1234,7 +1234,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>Finally, we&rsquo;ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high &ldquo;world record&rdquo; distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <span class="var">target</span>. At the end of the loop, we&rsquo;ll have the closest normal point in that variable.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_06_PathFollowing/_6_06_PathFollowing.pde processingjs/chapter06/_6_06_PathFollowing/Path.pde processingjs/chapter06/_6_06_PathFollowing/Vehicle.pde"><img alt="ch06 ex6" src="../images/chapter06/ch06_ex6.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_06_PathFollowing/_6_06_PathFollowing.pde processingjs/chapter06/_6_06_PathFollowing/Path.pde processingjs/chapter06/_6_06_PathFollowing/Vehicle.pde"><img alt="ch06 ex6" src="chapter06/ch06_ex6.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1416,7 +1416,7 @@ void draw() {
   }
 }</pre>
 
-<figure class="half-width-right" id="chapter06_figure33"><img alt="Figure 6.33" src="../images/chapter06/ch06_33.png" />
+<figure class="half-width-right" id="chapter06_figure33"><img alt="Figure 6.33" src="chapter06/ch06_33.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1424,7 +1424,7 @@ void draw() {
 
 <p>Of course, this is just the beginning. The real work happens inside the <span class="function">separate()</span> function itself. Let&rsquo;s figure out how we want to define separation. Reynolds states: &ldquo;Steer to avoid crowding.&rdquo; In other words, if a given vehicle is too close to you, steer away from that vehicle. Sound familiar? Remember the seek behavior where a vehicle steers towards a target? Reverse that force and we have the flee behavior.</p>
 
-<figure class="half-width-right" id="chapter06_figure34"><img alt="Figure 6.34" src="../images/chapter06/ch06_34.png" />
+<figure class="half-width-right" id="chapter06_figure34"><img alt="Figure 6.34" src="chapter06/ch06_34.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1512,7 +1512,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Let&rsquo;s see the function in its entirety. There are two additional improvements, noted in the code comments.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_07_Separation/_6_07_Separation.pde processingjs/chapter06/_6_07_Separation/Vehicle.pde"><img alt="ch06 ex7" src="../images/chapter06/ch06_ex7.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_07_Separation/_6_07_Separation.pde processingjs/chapter06/_6_07_Separation/Vehicle.pde"><img alt="ch06 ex7" src="chapter06/ch06_ex7.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1561,7 +1561,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Add the separation force to path following to create a simulation of Reynolds&rsquo;s &ldquo;Crowd Path Following.&rdquo;</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Ex_6_13_CrowdPathFollowing.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Path.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Vehicle.pde"><img alt="ch06 exc13" src="../images/chapter06/ch06_exc13.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Ex_6_13_CrowdPathFollowing.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Path.pde processingjs/chapter06/Ex_6_13_CrowdPathFollowing/Vehicle.pde"><img alt="ch06 exc13" src="chapter06/ch06_exc13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1631,7 +1631,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>This is a subtle change, but incredibly important for us: it allows us to alter the strength of these forces in one place.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_08_SeparationAndSeek/_6_08_SeparationAndSeek.pde processingjs/chapter06/_6_08_SeparationAndSeek/Vehicle.pde"><img alt="ch06 ex8" src="../images/chapter06/ch06_ex8.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_08_SeparationAndSeek/_6_08_SeparationAndSeek.pde processingjs/chapter06/_6_08_SeparationAndSeek/Vehicle.pde"><img alt="ch06 ex8" src="chapter06/ch06_ex8.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1703,7 +1703,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 	</li>
 </ol>
 
-<figure id="chapter06_figure35"><img alt="Figure 6.35" src="../images/chapter06/ch06_35.png" />
+<figure id="chapter06_figure35"><img alt="Figure 6.35" src="chapter06/ch06_35.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1766,7 +1766,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>In our alignment function, we&rsquo;re taking the average velocity of all the boids, whereas we should really only be looking at the boids within a certain distance. That distance threshold is up to you, of course. You could design boids that can see only twenty pixels away or boids that can see a hundred pixels away.</p>
 
-<figure id="chapter06_figure36"><img alt="Figure 6.36" src="../images/chapter06/ch06_36.png" />
+<figure id="chapter06_figure36"><img alt="Figure 6.36" src="chapter06/ch06_36.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1806,13 +1806,13 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 <div data-type="exercise" id="chapter06_exercise15">
 <h5>Exercise 6.15</h5>
 
-<figure class="half-width-right"><img alt="ch06 exc15" src="../images/chapter06/ch06_exc15.png" />
+<figure class="half-width-right"><img alt="ch06 exc15" src="chapter06/ch06_exc15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Can you write the above code so that boids can only see other boids that are actually within their &ldquo;peripheral&rdquo; vision (as if they had eyes)?</p>
 
-<figure><img alt="blank" src="../images/blank.png" />
+<figure><img alt="blank" src="blank.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1871,7 +1871,7 @@ class Flock {
 
 <p>And our main program will look like:</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter06/_6_09_Flocking/_6_09_Flocking.pde processingjs/chapter06/_6_09_Flocking/Flock.pde processingjs/chapter06/_6_09_Flocking/Boid.pde"><img alt="ch06 ex9" src="../images/chapter06/ch06_ex9.png" />
+<figure class="screenshot" data-pde="processingjs/chapter06/_6_09_Flocking/_6_09_Flocking.pde processingjs/chapter06/_6_09_Flocking/Flock.pde processingjs/chapter06/_6_09_Flocking/Boid.pde"><img alt="ch06 ex9" src="chapter06/ch06_ex9.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1905,7 +1905,7 @@ void draw() {
 <div data-type="exercise" id="chapter06_exercise17">
 <h5>Exercise 6.17</h5>
 
-<figure class="half-width-right"><img alt="ch06 exc17" src="../images/chapter06/ch06_exc17.png" />
+<figure class="half-width-right"><img alt="ch06 exc17" src="chapter06/ch06_exc17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -1913,7 +1913,7 @@ void draw() {
 
 <p>In his book The <em>Computational Beauty of Nature</em> (MIT Press, 2000), Gary Flake describes a fourth rule for flocking: &ldquo;View: move laterally away from any boid that blocks the view.&rdquo; Have your boids follow this rule.</p>
 
-<figure><img alt="blank" src="../images/blank.png" />
+<figure><img alt="blank" src="blank.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
@@ -1966,7 +1966,7 @@ void draw() {
 
 <p>What if we could divide the screen into a grid? We would take all 2,000 boids and assign each boid to a cell within that grid. We would then be able to look at each boid and compare it to its neighbors within that cell at any given moment. Imagine a 10 x 10 grid. In a system of 2,000 elements, on average, approximately 20 elements would be found in each cell (20 x 10 x 10 = 2,000). Each cell would then require 20 x 20 = 400 cycles. With 100 cells, we&rsquo;d have 100 x 400 = 40,000 cycles, a massive savings over 4,000,000.</p>
 
-<figure id="chapter06_figure37"><img alt="Figure 6.37" src="../images/chapter06/ch06_37.png" />
+<figure id="chapter06_figure37"><img alt="Figure 6.37" src="chapter06/ch06_37.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 

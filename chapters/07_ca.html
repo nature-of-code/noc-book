@@ -34,7 +34,7 @@
 	</li>
 </ul>
 
-<figure id="chapter07_figure1"><img alt="Figure 7.1" src="../images/chapter07/ch07_01.png" />
+<figure id="chapter07_figure1"><img alt="Figure 7.1" src="chapter07/ch07_01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -58,13 +58,13 @@
 
 <p>1) <strong><em>Grid</em></strong>. The simplest grid would be one-dimensional: a line of cells.</p>
 
-<figure id="chapter07_figure2"><img alt="Figure 7.2" src="../images/chapter07/ch07_02.png" />
+<figure id="chapter07_figure2"><img alt="Figure 7.2" src="chapter07/ch07_02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>2) <strong><em>States</em></strong>. The simplest set of states (beyond having only one state) would be two states: 0 or 1.</p>
 
-<figure id="chapter07_figure3"><img alt="Figure 7.3" src="../images/chapter07/ch07_03.png" />
+<figure id="chapter07_figure3"><img alt="Figure 7.3" src="chapter07/ch07_03.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -72,13 +72,13 @@
 
 <p>3) <strong><em>Neighborhood</em></strong>. The simplest neighborhood in one dimension for any given cell would be the cell itself and its two adjacent neighbors: one to the left and one to the right.</p>
 
-<figure id="chapter07_figure4"><img alt="Figure 7.4: A neighborhood is three cells." src="../images/chapter07/ch07_04.png" />
+<figure id="chapter07_figure4"><img alt="Figure 7.4: A neighborhood is three cells." src="chapter07/ch07_04.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>So we begin with a line of cells, each with an initial state (let&rsquo;s say it is random), and each with two neighbors. We&rsquo;ll have to figure out what we want to do with the cells on the edges (since those have only one neighbor each), but this is something we can sort out later.</p>
 
-<figure id="chapter07_figure5"><img alt="Figure 7.5: The edge cell only has a neighborhood of two." src="../images/chapter07/ch07_05.png" />
+<figure id="chapter07_figure5"><img alt="Figure 7.5: The edge cell only has a neighborhood of two." src="chapter07/ch07_05.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -86,7 +86,7 @@
 
 <p>We haven&rsquo;t yet discussed, however, what is perhaps the most important detail of how cellular automata work&mdash;<em>time</em>. We&rsquo;re not really talking about real-world time here, but about the CA living over a period of <em>time</em>, which could also be called a <strong><em>generation</em></strong> and, in our case, will likely refer to the <strong><em>frame count</em></strong> of an animation. The figures above show us the CA at time equals 0 or generation 0. The questions we have to ask ourselves are: <em>How do we compute the states for all cells at generation 1? And generation 2?</em> And so on and so forth.</p>
 
-<figure id="chapter07_figure6"><img alt="Figure 7.6" src="../images/chapter07/ch07_06.png" />
+<figure id="chapter07_figure6"><img alt="Figure 7.6" src="chapter07/ch07_06.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -96,7 +96,7 @@
 
 <p>In other words, a cell&rsquo;s new state is a function of all the states in the cell&rsquo;s neighborhood at the previous moment in time (or during the previous generation). We calculate a new state value by looking at all the previous neighbor states.</p>
 
-<figure id="chapter07_figure7"><img alt="Figure 7.7" src="../images/chapter07/ch07_07.png" />
+<figure id="chapter07_figure7"><img alt="Figure 7.7" src="chapter07/ch07_07.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -104,25 +104,25 @@
 
 <p>We have three cells, each with a state of 0 or 1. How many possible ways can we configure the states? If you love binary, you&rsquo;ll notice that three cells define a 3-bit number, and how high can you count with 3 bits? Up to 8. Let&rsquo;s have a look.</p>
 
-<figure id="chapter07_figure8"><img alt="Figure 7.8" src="../images/chapter07/ch07_08.png" />
+<figure id="chapter07_figure8"><img alt="Figure 7.8" src="chapter07/ch07_08.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Once we have defined all the possible neighborhoods, we need to define an outcome (new state value: 0 or 1) for each neighborhood configuration.</p>
 
-<figure id="chapter07_figure9"><img alt="Figure 7.9" src="../images/chapter07/ch07_09.png" />
+<figure id="chapter07_figure9"><img alt="Figure 7.9" src="chapter07/ch07_09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>The standard Wolfram model is to start generation 0 with all cells having a state of 0 except for the middle cell, which should have a state of 1.</p>
 
-<figure id="chapter07_figure10"><img alt="Figure 7.10" src="../images/chapter07/ch07_10.png" />
+<figure id="chapter07_figure10"><img alt="Figure 7.10" src="chapter07/ch07_10.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>Referring to the ruleset above, let&rsquo;s see how a given cell (we&rsquo;ll pick the center one) would change from generation 0 to generation 1.</p>
 
-<figure id="chapter07_figure11"><img alt="Figure 7.11" src="../images/chapter07/ch07_11.png" />
+<figure id="chapter07_figure11"><img alt="Figure 7.11" src="chapter07/ch07_11.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -130,7 +130,7 @@
 
 <p>Now, let&rsquo;s go past just one generation and color the cells &mdash;0 means white, 1 means black&mdash;and stack the generations, with each new generation appearing below the previous one.</p>
 
-<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12: Rule 90" src="../images/chapter07/ch07_12.png" />
+<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12: Rule 90" src="chapter07/ch07_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -138,7 +138,7 @@
 
 <p>The low-resolution shape we&rsquo;re seeing above is the &ldquo;Sierpiński triangle.&rdquo; Named after the Polish mathematician Wacław Sierpiński, it&rsquo;s a fractal pattern that we&rsquo;ll examine in the next chapter. That&rsquo;s right: this incredibly simple system of 0s and 1s, with little neighborhoods of three cells, can generate a shape as sophisticated and detailed as the Sierpiński triangle. Let&rsquo;s look at it again, only with each cell a single pixel wide so that the resolution is much higher.</p>
 
-<figure class="screenshot" id="chapter07_figure13"><img alt="Figure 7.13: Rule 90" src="../images/chapter07/ch07_13.png" />
+<figure class="screenshot" id="chapter07_figure13"><img alt="Figure 7.13: Rule 90" src="chapter07/ch07_13.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -146,7 +146,7 @@
 
 <p>So this particular rule can be illustrated as follows:</p>
 
-<figure id="chapter07_figure14"><img alt="Figure 7.14: Rule 90" src="../images/chapter07/ch07_14.png" />
+<figure id="chapter07_figure14"><img alt="Figure 7.14: Rule 90" src="chapter07/ch07_14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -154,11 +154,11 @@
 
 <p>In terms of a Wolfram elementary CA, we have now discovered that there are 256 possible rulesets. The above ruleset is commonly referred to as &ldquo;Rule 90&rdquo; because if you convert the binary sequence&mdash;01011010&mdash;to a decimal number, you&rsquo;ll get the integer 90. Let&rsquo;s try looking at the results of another ruleset.</p>
 
-<figure class="screenshot" id="chapter07_figure15"><img alt="Figure 7.15: Rule 222" src="../images/chapter07/ch07_15.png" />
+<figure class="screenshot" id="chapter07_figure15"><img alt="Figure 7.15: Rule 222" src="chapter07/ch07_15.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<figure class="half-width-right" id="chapter07_figure16"><img alt="Figure 7.16: A Textile Cone Snail (Conus textile), Cod Hole, Great Barrier Reef, Australia, 7 August 2005. Photographer: Richard Ling richard@research.canon.com.au" src="../images/chapter07/ch07_16.jpeg" />
+<figure class="half-width-right" id="chapter07_figure16"><img alt="Figure 7.16: A Textile Cone Snail (Conus textile), Cod Hole, Great Barrier Reef, Australia, 7 August 2005. Photographer: Richard Ling richard@research.canon.com.au" src="chapter07/ch07_16.jpeg" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -181,7 +181,7 @@ class Cell {
 
 <p>This line of thinking, however, is not the road we will first travel. Later in this chapter, we will discuss why an object-oriented approach could prove valuable in developing a CA simulation, but to begin, we can work with a more elementary data structure. After all, what is an elementary CA but a list of 0s and 1s? Certainly, we could describe the following CA generation using an array:</p>
 
-<figure id="chapter07_figure17"><img alt="Figure 7.17" src="../images/chapter07/ch07_17.png" />
+<figure id="chapter07_figure17"><img alt="Figure 7.17" src="chapter07/ch07_17.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -324,7 +324,7 @@ cells = newcells; //[bold]</pre>
 
 <p>Let&rsquo;s first establish how we are storing the ruleset. The ruleset, if you remember from the previous section, is a series of 8 bits (0 or 1) that defines that outcome for every possible neighborhood configuration.</p>
 
-<figure id="chapter07_figure14"><img alt="Figure 7.14 (repeated)" src="../images/chapter07/ch07_14.png" />
+<figure id="chapter07_figure14"><img alt="Figure 7.14 (repeated)" src="chapter07/ch07_14.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -442,7 +442,7 @@ class CA {
 
 <p>What&rsquo;s missing? Presumably, it&rsquo;s our intention to display cells and their states in visual form. As we saw earlier, the standard technique for doing this is to stack the generations one on top of each other and draw a rectangle that is black (for state 1) or white (for state 0).</p>
 
-<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12 (repeated)" src="../images/chapter07/ch07_12.png" />
+<figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12 (repeated)" src="chapter07/ch07_12.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -476,7 +476,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <p>In the above code, you&rsquo;ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we&rsquo;ll also need to compute a y-location based on how many iterations of the CA we&rsquo;ve executed. We could accomplish this by adding a &ldquo;generation&rdquo; variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="../images/chapter07/ch07_ex01.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -564,7 +564,7 @@ class CA {
 
 <p>Before we move on to looking at CA in two dimensions, it&rsquo;s worth taking a brief look at Wolfram&rsquo;s classification for cellular automata. As we noted earlier, the vast majority of elementary CA rulesets produce uninspiring results, while some result in wondrously complex patterns like those found in nature. Wolfram has divided up the range of outcomes into four classes:</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/Ex_7_04_WolframCA_scrolling_222.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/CA.pde" id="chapter07_figure18"><img alt="Figure 7.18: Rule 222" src="../images/chapter07/ch07_18.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/Ex_7_04_WolframCA_scrolling_222.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/CA.pde" id="chapter07_figure18"><img alt="Figure 7.18: Rule 222" src="chapter07/ch07_18.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -572,7 +572,7 @@ class CA {
 
 <p><strong><em>Class 1: Uniformity.</em></strong> Class 1 CAs end up, after some number of generations, with every cell constant. This is not terribly exciting to watch. Rule 222 (above) is a class 1 CA; if you run it for enough generations, every cell will eventually become and remain black.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/Ex_7_04_WolframCA_scrolling_190.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/CA.pde" id="chapter07_figure19"><img alt="Figure 7.19: Rule 190" src="../images/chapter07/ch07_19.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/Ex_7_04_WolframCA_scrolling_190.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_190/CA.pde" id="chapter07_figure19"><img alt="Figure 7.19: Rule 190" src="chapter07/ch07_19.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -580,7 +580,7 @@ class CA {
 
 <p><strong><em>Class 2: Repetition.</em></strong> Like class 1 CAs, class 2 CAs remain stable, but the cell states are not constant. Rather, they oscillate in some regular pattern back and forth from 0 to 1 to 0 to 1 and so on. In rule 190 (above), each cell follows the sequence 11101110111011101110.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/Ex_7_04_WolframCA_scrolling_30.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/CA.pde" id="chapter07_figure20"><img alt="Figure 7.20: Rule 30" src="../images/chapter07/ch07_20.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/Ex_7_04_WolframCA_scrolling_30.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_30/CA.pde" id="chapter07_figure20"><img alt="Figure 7.20: Rule 30" src="chapter07/ch07_20.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -588,7 +588,7 @@ class CA {
 
 <p><strong><em>Class 3: Random.</em></strong> Class 3 CAs appear random and have no easily discernible pattern. In fact, rule 30 (above) is used as a random number generator in Wolfram&rsquo;s Mathematica software. Again, this is a moment where we can feel amazed that such a simple system with simple rules can descend into a chaotic and random pattern.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/Ex_7_04_WolframCA_scrolling_110.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/CA.pde" id="chapter07_figure21"><img alt="Figure 7.21: Rule 110" src="../images/chapter07/ch07_21.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/Ex_7_04_WolframCA_scrolling_110.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/CA.pde" id="chapter07_figure21"><img alt="Figure 7.21: Rule 110" src="chapter07/ch07_21.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -622,7 +622,7 @@ class CA {
 
 <p>Let&rsquo;s look at how the Game of Life works. It won&rsquo;t take up too much time or space, since we&rsquo;ve covered the basics of CA already.</p>
 
-<figure class="half-width-right" id="chapter07_figure22"><img alt="Figure 7.22" src="../images/chapter07/ch07_22.png" />
+<figure class="half-width-right" id="chapter07_figure22"><img alt="Figure 7.22" src="chapter07/ch07_22.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -666,7 +666,7 @@ class CA {
 
 <p>Let&rsquo;s look at a few examples.</p>
 
-<figure id="chapter07_figure23"><img alt="Figure 7.23" src="../images/chapter07/ch07_23.png" />
+<figure id="chapter07_figure23"><img alt="Figure 7.23" src="chapter07/ch07_23.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -676,19 +676,19 @@ class CA {
 
 <p>One of the exciting aspects of the Game of Life is that there are initial patterns that yield intriguing results. For example, some remain static and never change.</p>
 
-<figure id="chapter07_figure24"><img alt="Figure 7.24" src="../images/chapter07/ch07_24.png" />
+<figure id="chapter07_figure24"><img alt="Figure 7.24" src="chapter07/ch07_24.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>There are patterns that oscillate back and forth between two states.</p>
 
-<figure id="chapter07_figure25"><img alt="Figure 7.25" src="../images/chapter07/ch07_25.png" />
+<figure id="chapter07_figure25"><img alt="Figure 7.25" src="chapter07/ch07_25.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>And there are also patterns that from generation to generation move about the grid. (It&rsquo;s important to note that the cells themselves aren&rsquo;t actually moving, although we see the appearance of motion in the result as the cells turn on and off.)</p>
 
-<figure id="chapter07_figure26"><img alt="Figure 7.26" src="../images/chapter07/ch07_26.png" />
+<figure id="chapter07_figure26"><img alt="Figure 7.26" src="chapter07/ch07_26.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -742,7 +742,7 @@ for (int x = 0; x &lt; columns; x++) {
   }
 }</pre>
 
-<figure class="half-width-right" id="chapter07_figure27"><img alt="Figure 7.27" src="../images/chapter07/ch07_27.png" />
+<figure class="half-width-right" id="chapter07_figure27"><img alt="Figure 7.27" src="chapter07/ch07_27.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -853,7 +853,7 @@ board = next;</pre>
 
 <p>Finally, once the next generation is calculated, we can employ the same method we used to draw the Wolfram CA&mdash;a square for each spot, white for off, black for on.</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/_7_02_GameOfLifeSimple/_7_02_GameOfLifeSimple.pde processingjs/chapter07/_7_02_GameOfLifeSimple/GOL.pde"><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/_7_02_GameOfLifeSimple/_7_02_GameOfLifeSimple.pde processingjs/chapter07/_7_02_GameOfLifeSimple/GOL.pde"><img alt="ch07 ex02" src="chapter07/ch07_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -930,7 +930,7 @@ class Cell {
 
 <p>This allows us to visualize more information about what the state is doing. For example, we could choose to color a cell differently if its state has changed. For example:</p>
 
-<figure class="screenshot" data-pde="processingjs/chapter07/_7_03_GameOfLifeOOP/_7_03_GameOfLifeOOP.pde processingjs/chapter07/_7_03_GameOfLifeOOP/GOL.pde processingjs/chapter07/_7_03_GameOfLifeOOP/Cell.pde"><img alt="ch07 ex02" src="../images/chapter07/ch07_ex02.png" />
+<figure class="screenshot" data-pde="processingjs/chapter07/_7_03_GameOfLifeOOP/_7_03_GameOfLifeOOP.pde processingjs/chapter07/_7_03_GameOfLifeOOP/GOL.pde processingjs/chapter07/_7_03_GameOfLifeOOP/Cell.pde"><img alt="ch07 ex02" src="chapter07/ch07_ex02.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 
@@ -993,7 +993,7 @@ for (int x = 1; x &lt; columns-1; x++) {
 
 <p>Create a CA using a grid of hexagons (as below), each with six neighbors.</p>
 
-<figure><img alt="ch07 exc09" src="../images/chapter07/ch07_exc09.png" />
+<figure><img alt="ch07 exc09" src="chapter07/ch07_exc09.png" />
 <figcaption>&nbsp;</figcaption>
 </figure>
 </div>
