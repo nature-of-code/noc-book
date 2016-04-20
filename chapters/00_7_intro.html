@@ -202,13 +202,13 @@ void draw() {
 <p>Since we only draw the background once in <span class="function">setup()</span>, rather than clearing it continually each time through <span class="function">draw()</span>, we see the trail of the random walk in our Processing window.</p>
 
 <figure class="screenshot" data-pde="processingjs/intro/_I_1_RandomWalkTraditional/_I_1_RandomWalkTraditional.pde processingjs/intro/_I_1_RandomWalkTraditional/Walker.pde"><img alt="intro ex01" src="intro/intro_ex01.png" />
-<figcaption>intro ex01&nbsp;</figcaption>
+<figcaption>&nbsp;</figcaption>
 </figure>
 
 <p>There are a couple improvements we could make to the random walker. For one, this <span class="klass">Walker</span><code>&rsquo;</code>s step choices are limited to four options&mdash;up, down, left, and right. But any given pixel in the window has eight possible neighbors, and a ninth possibility is to stay in the same place.</p>
 
 <figure id="intro_figure1"><img alt="Figure I.1" src="intro/intro_01.png" />
-<figcaption>Figure I.1&nbsp;</figcaption>
+<figcaption>Figure I.1</figcaption>
 </figure>
 
 <p>To implement a <span class="klass">Walker</span> object that can step to any neighboring pixel (or stay put), we could pick a number between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the y-axis.</p>
@@ -459,11 +459,11 @@ float h = random(200,300);</pre>
 <p>When you graph the distribution, you get something that looks like the following, informally known as a bell curve:</p>
 
 <figure class="two-col" id="intro_figure2"><img alt="Figure I.2" src="intro/intro_02.png" />
-<figcaption>Figure I.2&nbsp;</figcaption>
+<figcaption>Figure I.2</figcaption>
 </figure>
 
 <figure class="two-col" id="intro_figure3"><img alt="Figure I.3" src="intro/intro_03.png" />
-<figcaption>Figure I.3&nbsp;</figcaption>
+<figcaption>Figure I.3</figcaption>
 </figure>
 
 <a data-primary="mu (μ)" data-type="indexterm"></a> <a data-primary="sigma (σ)" data-type="indexterm"></a> <a data-primary="probability" data-secondary="standard deviation" data-type="indexterm"></a> <a data-primary="standard deviation" data-type="indexterm"></a>
@@ -642,7 +642,7 @@ if (r &lt; 0.01) {
 <p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more general rule&mdash;the higher a number, the more likely it is to be picked? 3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if <span class="var">x</span> is the random number, we could map the likelihood on the y-axis with <span class="var">y</span> = <span class="var">x</span>.</p>
 
 <figure id="intro_figure4"><img alt="Figure I.4" src="intro/intro_04.png" />
-<figcaption>Figure I.4&nbsp;</figcaption>
+<figcaption>Figure I.4</figcaption>
 </figure>
 
 <p>If we can figure out how to generate a distribution of random numbers according to the above graph, then we will be able to apply the same methodology to any curve for which we have a formula.</p>
@@ -848,7 +848,7 @@ void draw() {
 <p>How quickly we increment <span class="var">t</span> also affects the smoothness of the noise. If we make large jumps in time, then we are skipping ahead and the values will be more random.</p>
 
 <figure id="intro_figure7"><img alt="Figure I.7" src="intro/intro_07.png" />
-<figcaption>Figure I.7&nbsp;</figcaption>
+<figcaption>Figure I.7</figcaption>
 </figure>
 
 <p>Try running the code several times, incrementing <span class="var">t</span> by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see different results.</p>
@@ -861,7 +861,7 @@ void draw() {
 <p>Now we&rsquo;re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it&rsquo;s up to us to map that range to what we want. The easiest way to do this is with Processing&rsquo;s <span class="function">map()</span> function. The <span class="function">map()</span> function takes five arguments. First up is the value we want to map, in this case <span class="var">n</span>. Then we have to give it the value&rsquo;s current range (minimum and maximum), followed by our desired range.</p>
 
 <figure id="intro_figure8"><img alt="Figure I.8" src="intro/intro_08.png" />
-<figcaption>Figure I.8&nbsp;</figcaption>
+<figcaption>Figure I.8</figcaption>
 </figure>
 
 <p>In this case, we know that noise has a range between 0 and 1, but we&rsquo;d like to draw our circle with a range between 0 and the window&rsquo;s width.</p>
@@ -915,7 +915,7 @@ class Walker {
 <p>Notice how the above example requires an additional pair of variables: <span class="var">tx</span> and <span class="var">ty</span>. This is because we need to keep track of two time variables, one for the x-location of the <span class="klass">Walker</span> object and one for the y-location. But there is something a bit odd about these variables. Why does <span class="var">tx</span> start at 0 and <span class="var">ty</span> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <span class="var">t</span> each and every time. If we asked for the noise value at the same time <span class="var">t</span> for both <span class="var">x</span> and <span class="var">y</span>, then <span class="var">x</span> and <span class="var">y</span> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <span class="var">x</span> and 10,000 for <span class="var">y</span> so that <span class="var">x</span> and <span class="var">y</span> can appear to act independently of each other.</p>
 
 <figure id="intro_figure9"><img alt="Figure I.9" src="intro/intro_09.png" />
-<figcaption>Figure I.9&nbsp;</figcaption>
+<figcaption>Figure I.9</figcaption>
 </figure>
 
 <p>In truth, there is no actual concept of time at play here. It&rsquo;s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-location whenever we want. In examples, you will often see a variable named <span class="var">xoff</span> to indicate the x-offset along the noise graph, rather than <span class="var">t</span> for time (as noted in the diagram).</p>
