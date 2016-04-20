@@ -35,7 +35,7 @@
 </ul>
 
 <figure id="chapter07_figure1"><img alt="Figure 7.1" src="chapter07/ch07_01.png" />
-<figcaption>Figure 7.1&nbsp;</figcaption>
+<figcaption>Figure 7.1</figcaption>
 </figure>
 
 <a data-primary="cellular automaton (automata)" data-secondary="self-replicating cells" data-type="indexterm"></a> <a data-primary="Game of Life" data-type="indexterm"></a> <a data-primary="Los Alamos National Laboratory" data-type="indexterm"></a> <a data-primary="self-replicating cells" data-type="indexterm"></a> <a data-primary="Ulam" data-secondary="Stanisław" data-type="indexterm"></a> <a data-primary="von Neumann" data-secondary="John" data-type="indexterm"></a>
@@ -59,13 +59,13 @@
 <p>1) <strong><em>Grid</em></strong>. The simplest grid would be one-dimensional: a line of cells.</p>
 
 <figure id="chapter07_figure2"><img alt="Figure 7.2" src="chapter07/ch07_02.png" />
-<figcaption>Figure 7.2&nbsp;</figcaption>
+<figcaption>Figure 7.2</figcaption>
 </figure>
 
 <p>2) <strong><em>States</em></strong>. The simplest set of states (beyond having only one state) would be two states: 0 or 1.</p>
 
 <figure id="chapter07_figure3"><img alt="Figure 7.3" src="chapter07/ch07_03.png" />
-<figcaption>Figure 7.3&nbsp;</figcaption>
+<figcaption>Figure 7.3</figcaption>
 </figure>
 
 <a data-primary="neighborhood (cellular automata)" data-type="indexterm"></a>
@@ -87,7 +87,7 @@
 <p>We haven&rsquo;t yet discussed, however, what is perhaps the most important detail of how cellular automata work&mdash;<em>time</em>. We&rsquo;re not really talking about real-world time here, but about the CA living over a period of <em>time</em>, which could also be called a <strong><em>generation</em></strong> and, in our case, will likely refer to the <strong><em>frame count</em></strong> of an animation. The figures above show us the CA at time equals 0 or generation 0. The questions we have to ask ourselves are: <em>How do we compute the states for all cells at generation 1? And generation 2?</em> And so on and so forth.</p>
 
 <figure id="chapter07_figure6"><img alt="Figure 7.6" src="chapter07/ch07_06.png" />
-<figcaption>Figure 7.6&nbsp;</figcaption>
+<figcaption>Figure 7.6</figcaption>
 </figure>
 
 <p>Let&rsquo;s say we have an individual cell in the CA, and let&rsquo;s call it CELL. The formula for calculating CELL&rsquo;s state at any given time <span class="var">t</span> is as follows:</p>
@@ -97,7 +97,7 @@
 <p>In other words, a cell&rsquo;s new state is a function of all the states in the cell&rsquo;s neighborhood at the previous moment in time (or during the previous generation). We calculate a new state value by looking at all the previous neighbor states.</p>
 
 <figure id="chapter07_figure7"><img alt="Figure 7.7" src="chapter07/ch07_07.png" />
-<figcaption>Figure 7.7&nbsp;</figcaption>
+<figcaption>Figure 7.7</figcaption>
 </figure>
 
 <p>Now, in the world of cellular automata, there are many ways we could compute a cell&rsquo;s state from a group of cells. Consider blurring an image. (Guess what? Image processing works with CA-like rules.) A pixel&rsquo;s new state (i.e. its color) is the average of all of its neighbors&rsquo; colors. We could also say that a cell&rsquo;s new state is the sum of all of its neighbors&rsquo; states. With Wolfram&rsquo;s elementary CA, however, we can actually do something a bit simpler and seemingly absurd: We can look at all the possible configurations of a cell and its neighbor and define the state outcome for every possible configuration. It seems ridiculous&mdash;wouldn&rsquo;t there be way too many possibilities for this to be practical? Let&rsquo;s give it a try.</p>
@@ -105,25 +105,25 @@
 <p>We have three cells, each with a state of 0 or 1. How many possible ways can we configure the states? If you love binary, you&rsquo;ll notice that three cells define a 3-bit number, and how high can you count with 3 bits? Up to 8. Let&rsquo;s have a look.</p>
 
 <figure id="chapter07_figure8"><img alt="Figure 7.8" src="chapter07/ch07_08.png" />
-<figcaption>Figure 7.8&nbsp;</figcaption>
+<figcaption>Figure 7.8</figcaption>
 </figure>
 
 <p>Once we have defined all the possible neighborhoods, we need to define an outcome (new state value: 0 or 1) for each neighborhood configuration.</p>
 
 <figure id="chapter07_figure9"><img alt="Figure 7.9" src="chapter07/ch07_09.png" />
-<figcaption>Figure 7.9&nbsp;</figcaption>
+<figcaption>Figure 7.9</figcaption>
 </figure>
 
 <p>The standard Wolfram model is to start generation 0 with all cells having a state of 0 except for the middle cell, which should have a state of 1.</p>
 
 <figure id="chapter07_figure10"><img alt="Figure 7.10" src="chapter07/ch07_10.png" />
-<figcaption>Figure 7.10&nbsp;</figcaption>
+<figcaption>Figure 7.10</figcaption>
 </figure>
 
 <p>Referring to the ruleset above, let&rsquo;s see how a given cell (we&rsquo;ll pick the center one) would change from generation 0 to generation 1.</p>
 
 <figure id="chapter07_figure11"><img alt="Figure 7.11" src="chapter07/ch07_11.png" />
-<figcaption>Figure 7.11&nbsp;</figcaption>
+<figcaption>Figure 7.11</figcaption>
 </figure>
 
 <p>Try applying the same logic to all of the cells above and fill in the empty cells.</p>
@@ -182,7 +182,7 @@ class Cell {
 <p>This line of thinking, however, is not the road we will first travel. Later in this chapter, we will discuss why an object-oriented approach could prove valuable in developing a CA simulation, but to begin, we can work with a more elementary data structure. After all, what is an elementary CA but a list of 0s and 1s? Certainly, we could describe the following CA generation using an array:</p>
 
 <figure id="chapter07_figure17"><img alt="Figure 7.17" src="chapter07/ch07_17.png" />
-<figcaption>Figure 7.17&nbsp;</figcaption>
+<figcaption>Figure 7.17</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -623,7 +623,7 @@ class CA {
 <p>Let&rsquo;s look at how the Game of Life works. It won&rsquo;t take up too much time or space, since we&rsquo;ve covered the basics of CA already.</p>
 
 <figure class="half-width-right" id="chapter07_figure22"><img alt="Figure 7.22" src="chapter07/ch07_22.png" />
-<figcaption>Figure 7.22&nbsp;</figcaption>
+<figcaption>Figure 7.22</figcaption>
 </figure>
 
 <p>First, instead of a line of cells, we now have a two-dimensional matrix of cells. As with the elementary CA, the possible states are 0 or 1. Only in this case, since we&rsquo;re talking about &ldquo;life,&quot; 0 means dead and 1 means alive.</p>
@@ -667,7 +667,7 @@ class CA {
 <p>Let&rsquo;s look at a few examples.</p>
 
 <figure id="chapter07_figure23"><img alt="Figure 7.23" src="chapter07/ch07_23.png" />
-<figcaption>Figure 7.23&nbsp;</figcaption>
+<figcaption>Figure 7.23</figcaption>
 </figure>
 
 <a data-primary="Game of Life" data-secondary="drawing" data-type="indexterm"></a>
@@ -677,19 +677,19 @@ class CA {
 <p>One of the exciting aspects of the Game of Life is that there are initial patterns that yield intriguing results. For example, some remain static and never change.</p>
 
 <figure id="chapter07_figure24"><img alt="Figure 7.24" src="chapter07/ch07_24.png" />
-<figcaption>Figure 7.24&nbsp;</figcaption>
+<figcaption>Figure 7.24</figcaption>
 </figure>
 
 <p>There are patterns that oscillate back and forth between two states.</p>
 
 <figure id="chapter07_figure25"><img alt="Figure 7.25" src="chapter07/ch07_25.png" />
-<figcaption>Figure 7.25&nbsp;</figcaption>
+<figcaption>Figure 7.25</figcaption>
 </figure>
 
 <p>And there are also patterns that from generation to generation move about the grid. (It&rsquo;s important to note that the cells themselves aren&rsquo;t actually moving, although we see the appearance of motion in the result as the cells turn on and off.)</p>
 
 <figure id="chapter07_figure26"><img alt="Figure 7.26" src="chapter07/ch07_26.png" />
-<figcaption>Figure 7.26&nbsp;</figcaption>
+<figcaption>Figure 7.26</figcaption>
 </figure>
 
 <p>If you are interested in these patterns, there are several good &ldquo;out of the box&rdquo; Game of Life demonstrations online that allow you to configure the CA&rsquo;s initial state and watch it run at varying speeds. Two examples you might want to examine are:</p>
@@ -743,7 +743,7 @@ for (int x = 0; x &lt; columns; x++) {
 }</pre>
 
 <figure class="half-width-right" id="chapter07_figure27"><img alt="Figure 7.27" src="chapter07/ch07_27.png" />
-<figcaption>Figure 7.27&nbsp;</figcaption>
+<figcaption>Figure 7.27</figcaption>
 </figure>
 
 <p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell&rsquo;s neighbor. In the case of the 1D CA, this was simple: if a cell index was <span class="var">i</span>, its neighbors were i-1 and i+1. Here each cell doesn&rsquo;t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>

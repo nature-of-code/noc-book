@@ -17,7 +17,7 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;<br />
 <p>Once upon a time, I took a course in high school called &ldquo;Geometry.&rdquo; Perhaps you did too. You learned about shapes in one dimension, two dimensions, and maybe even three. What is the circumference of a circle? The area of a rectangle? The distance between a point and a line? Come to think of it, we&rsquo;ve been studying geometry all along in this book, using vectors to describe the motion of bodies in Cartesian space. This sort of geometry is generally referred to as Euclidean geometry, after the Greek mathematician Euclid.</p>
 
 <figure id="chapter08_figure1"><img alt="Figure 8.1" src="chapter08/ch08_01.png" />
-<figcaption>Figure 8.1&nbsp;</figcaption>
+<figcaption>Figure 8.1</figcaption>
 </figure>
 
 <p>For us nature coders, we have to ask the question: Can we describe our world with Euclidean geometry? The LCD screen I&rsquo;m staring at right now sure looks like a rectangle. And the plum I ate this morning is circular. But what if I were to look further, and consider the trees that line the street, the leaves that hang off those trees, the lightning from last night&rsquo;s thunderstorm, the cauliflower I ate for dinner, the blood vessels in my body, and the mountains and coastlines that cover land beyond New York City? Most of the stuff you find in nature cannot be described by the idealized geometrical forms of Euclidean geometry. So if we want to start building computational designs with patterns beyond the simple shapes <span class="function">ellipse()</span>, <span class="function">rect()</span>, and <span class="function">line()</span>, it&rsquo;s time for us to learn about the concepts behind and techniques for simulating the geometry of nature: fractals.</p>
@@ -36,13 +36,13 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;<br />
 <p>Let&rsquo;s illustrate this definition with two simple examples. First, let&rsquo;s think about a tree branching structure (for which we&rsquo;ll write the code later):</p>
 
 <figure id="chapter08_figure3"><img alt="Figure 8.3" src="chapter08/ch08_03.png" />
-<figcaption>Figure 8.3&nbsp;</figcaption>
+<figcaption>Figure 8.3</figcaption>
 </figure>
 
 <p>Notice how the tree in Figure 8.3 has a single root with two branches connected at its end. Each one of those branches has two branches at its end and those branches have two branches and so on and so forth. What if we were to pluck one branch from the tree and examine it on its own?</p>
 
 <figure id="chapter08_figure4"><img alt="Figure 8.4" src="chapter08/ch08_04.png" />
-<figcaption>Figure 8.4&nbsp;</figcaption>
+<figcaption>Figure 8.4</figcaption>
 </figure>
 
 <a data-primary="fractals" data-secondary="self-replicating behavior of" data-type="indexterm"></a> <a data-primary="self-similarity of fractals" data-type="indexterm"></a>
@@ -66,7 +66,7 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;<br />
 <p>In these graphs, the x-axis is time and the y-axis is the stock&rsquo;s value. It&rsquo;s not an accident that I omitted the labels, however. Graphs of stock market data are examples of fractals because they look the same at any scale. Are these graphs of the stock over one year? One day? One hour? There&rsquo;s no way for you to know without a label. (Incidentally, graph A shows six months&rsquo; worth of data and graph B zooms into a tiny part of graph A, showing six hours.)</p>
 
 <figure id="chapter08_figure7"><img alt="Figure 8.7" src="chapter08/ch08_07.png" />
-<figcaption>Figure 8.7&nbsp;</figcaption>
+<figcaption>Figure 8.7</figcaption>
 </figure>
 
 <p>This is an example of a <strong><em>stochastic</em></strong> fractal, meaning that it is built out of probabilities and randomness. Unlike the deterministic tree-branching structure, it is statistically self-similar. As we go through the examples in this chapter, we will look at both deterministic and stochastic techniques for generating fractal patterns.</p>
@@ -165,7 +165,7 @@ int factorial(int n) {
 <p>It may look crazy, but it works. Here are the steps that happen when <span class="function">factorial(4)</span> is called.</p>
 
 <figure id="chapter08_figure9"><img alt="Figure 8.9" src="chapter08/ch08_09.png" />
-<figcaption>Figure 8.9&nbsp;</figcaption>
+<figcaption>Figure 8.9</figcaption>
 </figure>
 
 <p>We can apply the same principle to graphics with interesting results, as we will see in many examples throughout this chapter. Take a look at this recursive function.</p>
@@ -270,11 +270,11 @@ cantor(10, 20, width-20);</pre>
 <p>we&rsquo;d get the following:</p>
 
 <figure id="chapter08_figure10"><img alt="Figure 8.10" src="chapter08/ch08_10.png" />
-<figcaption>Figure 8.10&nbsp;</figcaption>
+<figcaption>Figure 8.10</figcaption>
 </figure>
 
 <figure class="half-width-right" id="chapter08_figure11"><img alt="Figure 8.11" src="chapter08/ch08_11.png" />
-<figcaption>Figure 8.11&nbsp;</figcaption>
+<figcaption>Figure 8.11</figcaption>
 </figure>
 
 <p>Now, the Cantor rule tells us to erase the middle third of that line, which leaves us with two lines, one from the beginning of the line to the one-third mark, and one from the two-thirds mark to the end of the line.</p>
@@ -293,7 +293,7 @@ void cantor(float x, float y, float len) {
 }</pre>
 
 <figure id="chapter08_figure12"><img alt="Figure 8.12" src="chapter08/ch08_12.png" />
-<figcaption>Figure 8.12&nbsp;</figcaption>
+<figcaption>Figure 8.12</figcaption>
 </figure>
 
 <p>While this is a fine start, such a manual approach of calling <span class="function">line()</span> for each line is not what we want. It will get unwieldy very quickly, as we&rsquo;d need four, then eight, then sixteen calls to <span class="function">line()</span>. Yes, a <span class="function">for</span> loop is our usual way around such a problem, but give that a try and you&rsquo;ll see that working out the math for each iteration quickly proves inordinately complicated. Here is where recursion comes and rescues us.</p>
@@ -365,13 +365,13 @@ void cantor(float x, float y, float len) {
 <p>To demonstrate this technique, let&rsquo;s look at another famous fractal pattern, discovered in 1904 by Swedish mathematician Helge von Koch. Here are the rules. (Note that it starts the same way as the Cantor set, with a single line.)</p>
 
 <figure id="chapter08_figure13"><img alt="Figure 8.13" src="chapter08/ch08_13.png" />
-<figcaption>Figure 8.13&nbsp;</figcaption>
+<figcaption>Figure 8.13</figcaption>
 </figure>
 
 <p>The result looks like:</p>
 
 <figure id="chapter08_figure14"><img alt="Figure 8.14" src="chapter08/ch08_14.png" />
-<figcaption>Figure 8.14&nbsp;</figcaption>
+<figcaption>Figure 8.14</figcaption>
 </figure>
 
 <a data-primary="Monster curve" data-type="indexterm"></a>
@@ -460,7 +460,7 @@ void draw() {
 <p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation.  We are going to apply a similar technique here. We have an <span class="klass">ArrayList</span> that keeps track of the current set of <span class="klass">KochLine</span> objects (at the start of the program, there is only one). We will need a second <span class="klass">ArrayList</span> (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new <span class="klass">KochLine</span> objects that are generated from applying the Koch rules. For every <span class="klass">KochLine</span> object in the current <span class="klass">ArrayList</span>, four new <span class="klass">KochLine</span> objects are added to the next <span class="klass">ArrayList</span>. When we&rsquo;re done, the next <span class="klass">ArrayList</span> becomes the current one.</p>
 
 <figure id="chapter08_figure15"><img alt="Figure 8.15" src="chapter08/ch08_15.png" />
-<figcaption>Figure 8.15&nbsp;</figcaption>
+<figcaption>Figure 8.15</figcaption>
 </figure>
 
 <p>Here&rsquo;s how the code will look:</p>
@@ -489,7 +489,7 @@ void generate() {
 <p>By calling <span class="function">generate()</span> over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of <span class="klass">KochLine</span> objects.  Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our <span class="klass">KochLine</span> object uses <span class="klass">PVector</span>, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each <span class="klass">KochLine</span> object.</p>
 
 <figure id="chapter08_figure16"><img alt="Figure 8.16" src="chapter08/ch08_16.png" />
-<figcaption>Figure 8.16&nbsp;</figcaption>
+<figcaption>Figure 8.16</figcaption>
 </figure>
 
 <p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new <span class="klass">KochLine</span> objects and make the new line segments (ab, cb, cd, and de).</p>
@@ -545,7 +545,7 @@ void generate() {
 <p>Now let&rsquo;s move on to points B and D. B is one-third of the way along the line segment and D is two-thirds. Here we can make a <span class="klass">PVector</span> that points from start to end and shrink it to one-third the length for B and two-thirds the length for D to find these points.</p>
 
 <figure id="chapter08_figure17"><img alt="Figure 8.17" src="chapter08/ch08_17.png" />
-<figcaption>Figure 8.17&nbsp;</figcaption>
+<figcaption>Figure 8.17</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -572,7 +572,7 @@ void generate() {
 <p>The last point, C, is the most difficult one to find. However, if you recall that the angles of an equilateral triangle are all sixty degrees, this makes it a little bit easier. If we know how to find point B with a <span class="klass">PVector</span> one-third the length of the line, what if we were to rotate that same <span class="klass">PVector</span> sixty degrees and move along that vector from point B? We&rsquo;d be at point C!</p>
 
 <figure id="chapter08_figure18"><img alt="Figure 8.18" src="chapter08/ch08_18.png" />
-<figcaption>Figure 8.18&nbsp;</figcaption>
+<figcaption>Figure 8.18</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -663,7 +663,7 @@ void setup() {
 <p>The fractals we have examined in this chapter so far are deterministic, meaning they have no randomness and will always produce the identical outcome each time they are run. They are excellent demonstrations of classic fractals and the programming techniques behind drawing them, but are too precise to feel <em>natural</em>. In this next part of the chapter, I want to examine some techniques behind generating a stochastic (or non-deterministic) fractal. The example we&rsquo;ll use is a branching tree. Let&rsquo;s first walk through the steps to create a deterministic version. Here are our production rules:</p>
 
 <figure id="chapter08_figure19"><img alt="Figure 8.19" src="chapter08/ch08_19.png" />
-<figcaption>Figure 8.19&nbsp;</figcaption>
+<figcaption>Figure 8.19</figcaption>
 </figure>
 
 <p>Again, we have a nice fractal with a recursive definition: A branch is a line with two branches connected to it.</p>
@@ -682,7 +682,7 @@ void setup() {
 translate(width/2,height);</pre>
 
 <figure class="half-width-right-border" id="chapter08_figure20"><img alt="Figure 8.20" src="chapter08/ch08_20.png" />
-<figcaption>Figure 8.20&nbsp;</figcaption>
+<figcaption>Figure 8.20</figcaption>
 </figure>
 
 <p>&hellip;followed by drawing a line upwards (Figure 8.20):</p>
@@ -693,7 +693,7 @@ line(0,0,0,-100);</pre>
 <p>Once we&rsquo;ve finished the root, we just need to translate to the end and rotate in order to draw the next branch. (Eventually, we&rsquo;re going to need to package up what we&rsquo;re doing right now into a recursive function, but let&rsquo;s sort out the steps first.)</p>
 
 <figure id="chapter08_figure21"><img alt="Figure 8.21" src="chapter08/ch08_21.png" />
-<figcaption>Figure 8.21&nbsp;</figcaption>
+<figcaption>Figure 8.21</figcaption>
 </figure>
 
 <p>Remember, when we rotate in Processing, we are always rotating around the point of origin, so here the point of origin must always be translated to the end of our current branch.</p>
@@ -706,11 +706,11 @@ line(0,0,0,-100);</pre>
 <p>Now that we have a branch going to the right, we need one going to the left. We can use <span class="function">pushMatrix()</span> to save the transformation state before we rotate, letting us call <span class="function">popMatrix()</span> to restore that state and draw the branch to the left. Let&rsquo;s look at all the code together.</p>
 
 <figure class="two-col" id="chapter08_figure22"><img alt="Figure 8.22" src="chapter08/ch08_22.png" />
-<figcaption>Figure 8.22&nbsp;</figcaption>
+<figcaption>Figure 8.22</figcaption>
 </figure>
 
 <figure class="two-col" id="chapter08_figure23"><img alt="Figure 8.23" src="chapter08/ch08_23.png" />
-<figcaption>Figure 8.23&nbsp;</figcaption>
+<figcaption>Figure 8.23</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -1086,7 +1086,7 @@ s += &quot;add some more stuff&quot;;</pre>
 <p>Look familiar? This is the Cantor set generated with an L-system.</p>
 
 <figure id="chapter08_figure25"><img alt="Figure 8.25" src="chapter08/ch08_25.png" />
-<figcaption>Figure 8.25&nbsp;</figcaption>
+<figcaption>Figure 8.25</figcaption>
 </figure>
 
 <p>The following alphabet is often used with L-systems: &ldquo;FG+-[]&rdquo;, meaning:</p>

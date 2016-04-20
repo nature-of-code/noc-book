@@ -58,7 +58,7 @@
 <p>If we&rsquo;re thinking about shapes like rectangles or circles, question #1 isn&rsquo;t too tough. You&rsquo;ve likely encountered this before. For example, we know two circles are intersecting if the distance between them is less than the sum of their radii.</p>
 
 <figure id="chapter05_figure1"><img alt="Figure 5.1" src="chapter05/ch05_01.png" />
-<figcaption>Figure 5.1&nbsp;</figcaption>
+<figcaption>Figure 5.1</figcaption>
 </figure>
 
 <p>OK. Now that we know how to determine if two circles are colliding, how do we calculate their velocities after the collision? This is where we&rsquo;re going to stop our discussion. Why, you ask? It&rsquo;s not that understanding the math behind collisions isn&rsquo;t important or valuable. (In fact, I&rsquo;m including additional examples on the website related to collisions without a physics library.) The reason for stopping is that life is short (let this also be a reason for you to consider going outside and frolicking instead of programming altogether). We can&rsquo;t expect to master every detail of physics simulation. And while we could continue this discussion for circles, it&rsquo;s only going to lead us to wanting to work with rectangles. And strangely shaped polygons. And curved surfaces. And swinging pendulums colliding with springy springs. And and and and and.</p>
@@ -376,7 +376,7 @@ void setup() {
 <a data-primary="Box2D" data-secondary="coordinate system vs. Processing" data-type="indexterm"></a> <a data-primary="coordinate systems" data-secondary="Box2D vs. Processing" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="coordinate systems vs. Box2D" data-type="indexterm"></a>
 
 <figure id="chapter05_figure2"><img alt="Figure 5.2" src="chapter05/ch05_02.png" />
-<figcaption>Figure 5.2&nbsp;</figcaption>
+<figcaption>Figure 5.2</figcaption>
 </figure>
 
 <p>Notice how in Box2D <em>(0,0)</em> is in the center and <em>up</em> is the positive direction along the y-axis! Box2D&rsquo;s coordinate system is just like that lovely old-fashioned Cartesian one with <em>(0,0)</em> in the center and <em>up</em> pointing in a positive direction. Processing, on the other hand, uses a traditional computer graphics coordinate system where <em>(0,0)</em> is in the top left corner and <em>down</em> is the positive direction along the y-axis. This is why if we want objects to fall down with gravity, we need to give Box2D a gravity force with a negative y-value.</p>
@@ -723,7 +723,7 @@ body.createFixture(fd);</pre>
 <p>Now, Box2D will keep a list of all the bodies that exist in the world. This can be accessed by calling the World object&rsquo;s <span class="function">getBodyList()</span> function. Nevertheless, what I&rsquo;m going to demonstrate here is a technique for keeping your own body lists. Yes, this may be a bit redundant and we perhaps sacrifice a bit of efficiency. But we more than make up for that with ease of use. This methodology will allow us to program like we&rsquo;re used to in Processing, and we can easily keep track of which bodies are which and render them appropriately. Let&rsquo;s consider the structure of the following Processing sketch:</p>
 
 <figure id="chapter05_figure3"><img alt="Figure 5.3" src="chapter05/ch05_03.png" />
-<figcaption>Figure 5.3&nbsp;</figcaption>
+<figcaption>Figure 5.3</figcaption>
 </figure>
 
 <p>This looks like any ol&rsquo; Processing sketch. We have a main tab called &ldquo;Boxes&rdquo; and a &ldquo;Boundary&rdquo; and a &ldquo;Box&rdquo; tab. Let&rsquo;s think about the Box tab for a moment. The Box tab is where we will write a simple class to describe a <span class="klass">Box</span> object, a rectangular body in our world.</p>
@@ -901,7 +901,7 @@ float a = body.getAngle();</pre>
 <p>Once we have the location and angle, it&rsquo;s easy to display the object using <span class="function">translate()</span> and <span class="function">rotate()</span>. Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
 
 <figure id="chapter05_figure4"><img alt="Figure 5.4" src="chapter05/ch05_04.png" />
-<figcaption>Figure 5.4&nbsp;</figcaption>
+<figcaption>Figure 5.4</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -1186,7 +1186,7 @@ void draw() {
 <a data-primary="Box2D" data-secondary="complex forms in" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter05_figure5"><img alt="Figure 5.5" src="chapter05/ch05_05.png" />
-<figcaption>Figure 5.5&nbsp;</figcaption>
+<figcaption>Figure 5.5</figcaption>
 </figure>
 
 <p>Now that we&rsquo;ve seen how easy it is to make simple geometric forms in Box2D, let&rsquo;s imagine that you want to have a more complex form, such as a little alien stick figure.</p>
@@ -1222,7 +1222,7 @@ ps.set(vertices, vertices.length);
 <p>When building your own polygon in Box2D, you must remember two important details.</p>
 
 <figure class="half-width-left" id="chapter05_figure6"><img alt="Figure 5.6" src="chapter05/ch05_06.png" />
-<figcaption>Figure 5.6&nbsp;</figcaption>
+<figcaption>Figure 5.6</figcaption>
 </figure>
 
 <a data-primary="Box2D" data-secondary="order of vertices" data-type="indexterm"></a>
@@ -1332,13 +1332,13 @@ body.createFixture(cs, 1.0);
 <p>The above looks pretty good, but sadly, if we run it, we&rsquo;ll get the following result:</p>
 
 <figure id="chapter05_figure8"><img alt="Figure 5.8" src="chapter05/ch05_08.png" />
-<figcaption>Figure 5.8&nbsp;</figcaption>
+<figcaption>Figure 5.8</figcaption>
 </figure>
 
 <p>When you attach a shape to a body, by default, the center of the shape will be located at the center of the body. But in our case, if we take the center of the rectangle to be the center of the body, we want the center of the circle to be offset along the y-axis from the body&rsquo;s center.</p>
 
 <figure id="chapter05_figure9"><img alt="Figure 5.9" src="chapter05/ch05_09.png" />
-<figcaption>Figure 5.9&nbsp;</figcaption>
+<figcaption>Figure 5.9</figcaption>
 </figure>
 
 <a data-primary="m_p variable (Vec2 class)" data-type="indexterm"></a> <a data-primary="Shape (Box2D element)" data-secondary="local position for" data-type="indexterm"></a>
@@ -1410,7 +1410,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 <a data-primary="joint (Box2D element)" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter05_figure10"><img alt="Figure 5.10" src="chapter05/ch05_10.png" />
-<figcaption>Figure 5.10&nbsp;</figcaption>
+<figcaption>Figure 5.10</figcaption>
 </figure>
 
 <p>Box2D joints allow you to connect one body to another, enabling more advanced simulations of swinging pendulums, elastic bridges, squishy characters, wheels spinning on an axle, etc. There are many different kinds of Box2D joints. In this chapter we&rsquo;re going to look at three: distance joints, revolute joints, and &ldquo;mouse&rdquo; joints.</p>
@@ -1529,7 +1529,7 @@ class Pair {
 </div>
 
 <figure class="half-width-right" id="chapter05_figure11"><img alt="Figure 5.11" src="chapter05/ch05_11.png" />
-<figcaption>Figure 5.11&nbsp;</figcaption>
+<figcaption>Figure 5.11</figcaption>
 </figure>
 
 <a data-primary="joint (Box2D element)" data-secondary="revolute type" data-type="indexterm"></a> <a data-primary="revolute joint type (Box2D)" data-type="indexterm"></a>
@@ -1791,7 +1791,7 @@ BodyDef bd = new BodyDef();
 bd.type = BodyType.KINEMATIC;</pre>
 
 <figure class="half-width-right" id="chapter05_figure12"><img alt="Figure 5.12" src="chapter05/ch05_12.png" />
-<figcaption>Figure 5.12&nbsp;</figcaption>
+<figcaption>Figure 5.12</figcaption>
 </figure>
 
 <p>Kinematic bodies can be controlled by the user by setting their velocity directly. For example, let&rsquo;s say you want an object to follow a target (like your mouse). You could create a vector that points from a body&rsquo;s location to a target.</p>
@@ -2096,7 +2096,7 @@ location.add(velocity);</pre>
 <p>The above methodology is known as Euler integration (named for the mathematician Leonhard Euler, pronounced &ldquo;Oiler&rdquo;) or the Euler method. It&rsquo;s essentially the simplest form of integration and very easy to implement in our code (see the two lines above!) However, it is not necessarily the most efficient form, nor is it close to being the most accurate. Why is Euler inaccurate? Let&rsquo;s think about it this way. When you drive a car down the road pressing the gas pedal with your foot and accelerating, does the car sit in one location at time equals one second, then disappear and suddenly reappear in a new location at time equals two seconds, and do the same thing for three seconds, and four, and five? No, of course not. The car moves continuously down the road. But what&rsquo;s happening in our Processing sketch? A circle is at one location at frame 0, another at frame 1, another at frame 2. Sure, at thirty frames per second, we&rsquo;re seeing the illusion of motion. But we only calculate a new location every <span class="var">N</span> units of time, whereas the real world is perfectly continuous. This results in some inaccuracies, as shown in the diagram below:</p>
 
 <figure id="chapter05_figure13"><img alt="Figure 5.13" src="chapter05/ch05_13.png" />
-<figcaption>Figure 5.13&nbsp;</figcaption>
+<figcaption>Figure 5.13</figcaption>
 </figure>
 
 <p>The &ldquo;real world&rdquo; is the curve; Euler simulation is the series of line segments.</p>
@@ -2645,7 +2645,7 @@ class Particle extends VerletParticle2D {
 <p>The above example, two particles connected with a single spring, is the core building block for what toxiclibs&rsquo; physics is particularly well suited for: soft body simulations. For example, a string can be simulated by connecting a line of particles with springs. A blanket can be simulated by connecting a grid of particles with springs. And a cute, cuddly, squishy cartoon character can be simulated by a custom layout of particles connected with springs.</p>
 
 <figure id="chapter05_figure14"><img alt="Figure 5.14" src="chapter05/ch05_14.png" />
-<figcaption>Figure 5.14&nbsp;</figcaption>
+<figcaption>Figure 5.14</figcaption>
 </figure>
 
 <p>Let&rsquo;s begin by simulating a &ldquo;soft pendulum&rdquo;&mdash;a bob hanging from a string, instead of a rigid arm like we had in <a href="#chapter03_example10">Chapter 3, Example 10</a>. Let&rsquo;s use the &quot;string&quot; in Figure 5.14 above as our model.</p>
@@ -2658,7 +2658,7 @@ ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();</pre>
 <p>Now, let&rsquo;s say we want to have 20 particles, all spaced 10 pixels apart.</p>
 
 <figure id="chapter05_figure15"><img alt="Figure 5.15" src="chapter05/ch05_15.png" />
-<figcaption>Figure 5.15&nbsp;</figcaption>
+<figcaption>Figure 5.15</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -2682,7 +2682,7 @@ for(int i=0; i &lt; numPoints; i++) {
 <p>Now for the fun part: It&rsquo;s time to connect all the particles. Particle 1 will be connected to particle 0, particle 2 to particle 1, 3 to 2, 4 to 3, etc.</p>
 
 <figure id="chapter05_figure16"><img alt="Figure 5.16" src="chapter05/ch05_16.png" />
-<figcaption>Figure 5.16&nbsp;</figcaption>
+<figcaption>Figure 5.16</figcaption>
 </figure>
 
 <p>In other words, particle <span class="var">i</span> needs to be connected to particle <span class="var">i-1</span> (except for when <span class="var">i</span> equals zero).</p>
