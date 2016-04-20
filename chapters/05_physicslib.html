@@ -58,7 +58,7 @@
 <p>If we&rsquo;re thinking about shapes like rectangles or circles, question #1 isn&rsquo;t too tough. You&rsquo;ve likely encountered this before. For example, we know two circles are intersecting if the distance between them is less than the sum of their radii.</p>
 
 <figure id="chapter05_figure1"><img alt="Figure 5.1" src="chapter05/ch05_01.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.1&nbsp;</figcaption>
 </figure>
 
 <p>OK. Now that we know how to determine if two circles are colliding, how do we calculate their velocities after the collision? This is where we&rsquo;re going to stop our discussion. Why, you ask? It&rsquo;s not that understanding the math behind collisions isn&rsquo;t important or valuable. (In fact, I&rsquo;m including additional examples on the website related to collisions without a physics library.) The reason for stopping is that life is short (let this also be a reason for you to consider going outside and frolicking instead of programming altogether). We can&rsquo;t expect to master every detail of physics simulation. And while we could continue this discussion for circles, it&rsquo;s only going to lead us to wanting to work with rectangles. And strangely shaped polygons. And curved surfaces. And swinging pendulums colliding with springy springs. And and and and and.</p>
@@ -376,7 +376,7 @@ void setup() {
 <a data-primary="Box2D" data-secondary="coordinate system vs. Processing" data-type="indexterm"></a> <a data-primary="coordinate systems" data-secondary="Box2D vs. Processing" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="coordinate systems vs. Box2D" data-type="indexterm"></a>
 
 <figure id="chapter05_figure2"><img alt="Figure 5.2" src="chapter05/ch05_02.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.2&nbsp;</figcaption>
 </figure>
 
 <p>Notice how in Box2D <em>(0,0)</em> is in the center and <em>up</em> is the positive direction along the y-axis! Box2D&rsquo;s coordinate system is just like that lovely old-fashioned Cartesian one with <em>(0,0)</em> in the center and <em>up</em> pointing in a positive direction. Processing, on the other hand, uses a traditional computer graphics coordinate system where <em>(0,0)</em> is in the top left corner and <em>down</em> is the positive direction along the y-axis. This is why if we want objects to fall down with gravity, we need to give Box2D a gravity force with a negative y-value.</p>
@@ -723,7 +723,7 @@ body.createFixture(fd);</pre>
 <p>Now, Box2D will keep a list of all the bodies that exist in the world. This can be accessed by calling the World object&rsquo;s <span class="function">getBodyList()</span> function. Nevertheless, what I&rsquo;m going to demonstrate here is a technique for keeping your own body lists. Yes, this may be a bit redundant and we perhaps sacrifice a bit of efficiency. But we more than make up for that with ease of use. This methodology will allow us to program like we&rsquo;re used to in Processing, and we can easily keep track of which bodies are which and render them appropriately. Let&rsquo;s consider the structure of the following Processing sketch:</p>
 
 <figure id="chapter05_figure3"><img alt="Figure 5.3" src="chapter05/ch05_03.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.3&nbsp;</figcaption>
 </figure>
 
 <p>This looks like any ol&rsquo; Processing sketch. We have a main tab called &ldquo;Boxes&rdquo; and a &ldquo;Boundary&rdquo; and a &ldquo;Box&rdquo; tab. Let&rsquo;s think about the Box tab for a moment. The Box tab is where we will write a simple class to describe a <span class="klass">Box</span> object, a rectangular body in our world.</p>
@@ -757,7 +757,7 @@ class Box  {
 <p>Let&rsquo;s write a main tab that creates a new <span class="klass">Box</span> whenever the mouse is pressed and stores all the <span class="klass">Box</span> objects in an <span class="klass">ArrayList</span>. (This is very similar to our approach in the particle system examples from Chapter 4.)</p>
 
 <figure class="screenshot"><img alt="ch05 ex01" src="chapter05/ch05_ex01.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex01&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.1: A comfortable and cozy Processing sketch that needs a little Box2D</h5></div>
@@ -901,7 +901,7 @@ float a = body.getAngle();</pre>
 <p>Once we have the location and angle, it&rsquo;s easy to display the object using <span class="function">translate()</span> and <span class="function">rotate()</span>. Note, however, that the Box2D coordinate system considers rotation in the opposite direction from Processing, so we need to multiply the angle by -1.</p>
 
 <figure id="chapter05_figure4"><img alt="Figure 5.4" src="chapter05/ch05_04.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.4&nbsp;</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -937,7 +937,7 @@ float a = body.getAngle();</pre>
 <h5>Exercise 5.2</h5>
 
 <figure class="screenshot"><img alt="ch05 exc02" src="chapter05/ch05_exc02.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc02&nbsp;</figcaption>
 </figure>
 
 <p>In this chapter&rsquo;s code downloads, find the sketch named &ldquo;box2d_exercise.&rdquo; Using the methodology outlined in this chapter, add the necessary code to the main and Box tabs to implement Box2D physics. The result should appear as in the screenshot above. Be more creative in how you render the boxes.</p>
@@ -963,7 +963,7 @@ float a = body.getAngle();</pre>
 <p>We can add this feature to our Boxes example by writing a <span class="klass">Boundary</span> class and having each boundary create a fixed Box2D body.</p>
 
 <figure class="screenshot"><img alt="ch05 ex02" src="chapter05/ch05_ex02.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex02&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.2: Falling boxes hitting boundaries</h5></div>
@@ -1080,7 +1080,7 @@ body.createFixture(fd);</pre>
 <p>Now, if we want to include a <span class="klass">ChainShape</span> object in our sketch, we can follow the same strategy as we did with a fixed boundary. Let&rsquo;s write a class called <span class="klass">Surface</span>:</p>
 
 <figure class="screenshot"><img alt="ch05 ex04" src="chapter05/ch05_ex04.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex04&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.3: ChainShape with three hard-coded vertices</h5></div>
@@ -1166,15 +1166,15 @@ void draw() {
 <p>Review how we learned to draw a wave pattern in Chapter 3. Create a <span class="klass">ChainShape</span> object out of a sine wave. Try using <a href="#intro_section6">Perlin noise</a> as well.</p>
 
 <figure class="two-col"><img alt="sine wave" src="chapter05/ch05_exc03a.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>sine wave&nbsp;</figcaption>
 </figure>
 
 <figure class="two-col"><img alt="Perlin noise" src="chapter05/ch05_exc03b.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Perlin noise&nbsp;</figcaption>
 </figure>
 
 <figure><img alt="blank" src="blank.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>blank&nbsp;</figcaption>
 </figure>
 </div>
 </section>
@@ -1186,7 +1186,7 @@ void draw() {
 <a data-primary="Box2D" data-secondary="complex forms in" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter05_figure5"><img alt="Figure 5.5" src="chapter05/ch05_05.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.5&nbsp;</figcaption>
 </figure>
 
 <p>Now that we&rsquo;ve seen how easy it is to make simple geometric forms in Box2D, let&rsquo;s imagine that you want to have a more complex form, such as a little alien stick figure.</p>
@@ -1202,7 +1202,7 @@ void draw() {
 <p>This was a good way to start because of the inherent simplicity of working with rectangles. However, a <span class="klass">PolygonShape</span> object can also be generated from an array of vectors, which allows you to build a completely custom shape as a series of connected vertices. This works very similarly to the <span class="klass">ChainShape</span> class.</p>
 
 <figure class="screenshot"><img alt="ch05 ex05" src="chapter05/ch05_ex05.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex05&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.4: Polygon shapes</h5></div>
@@ -1222,7 +1222,7 @@ ps.set(vertices, vertices.length);
 <p>When building your own polygon in Box2D, you must remember two important details.</p>
 
 <figure class="half-width-left" id="chapter05_figure6"><img alt="Figure 5.6" src="chapter05/ch05_06.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.6&nbsp;</figcaption>
 </figure>
 
 <a data-primary="Box2D" data-secondary="order of vertices" data-type="indexterm"></a>
@@ -1239,7 +1239,7 @@ ps.set(vertices, vertices.length);
 <a data-primary="Box2D" data-secondary="concave shapes and" data-type="indexterm"></a>
 
 <figure id="chapter05_figure7"><img alt="Figure 5.7: A concave shape can be drawn with multiple convex shapes." src="chapter05/ch05_07.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.7: A concave shape can be drawn with multiple convex shapes.&nbsp;</figcaption>
 </figure>
 
 <a data-primary="beginShape() function (Processing)" data-type="indexterm"></a> <a data-primary="endShape() function (Processing)" data-type="indexterm"></a>
@@ -1278,7 +1278,7 @@ ps.set(vertices, vertices.length);
 <p>Using the <span class="klass">PolygonShape</span> class, create your own polygon design (remember, it must be convex). Some possibilities below.</p>
 
 <figure><img alt="ch05 exc04" src="chapter05/ch05_exc04.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc04&nbsp;</figcaption>
 </figure>
 </div>
 
@@ -1332,13 +1332,13 @@ body.createFixture(cs, 1.0);
 <p>The above looks pretty good, but sadly, if we run it, we&rsquo;ll get the following result:</p>
 
 <figure id="chapter05_figure8"><img alt="Figure 5.8" src="chapter05/ch05_08.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.8&nbsp;</figcaption>
 </figure>
 
 <p>When you attach a shape to a body, by default, the center of the shape will be located at the center of the body. But in our case, if we take the center of the rectangle to be the center of the body, we want the center of the circle to be offset along the y-axis from the body&rsquo;s center.</p>
 
 <figure id="chapter05_figure9"><img alt="Figure 5.9" src="chapter05/ch05_09.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.9&nbsp;</figcaption>
 </figure>
 
 <a data-primary="m_p variable (Vec2 class)" data-type="indexterm"></a> <a data-primary="Shape (Box2D element)" data-secondary="local position for" data-type="indexterm"></a>
@@ -1356,7 +1356,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
 <p>Then, when we go to draw the body, we use both <span class="function">rect()</span> and <span class="function">ellipse()</span> with the circle offset the same way.</p>
 
 <figure class="screenshot"><img alt="ch05 ex06" src="chapter05/ch05_ex06.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex06&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.5: Multiple shapes on one body</h5></div>
@@ -1392,7 +1392,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 <p>when it came time to display the shape?</p>
 
 <figure class="screenshot"><img alt="ch05 ex07" src="chapter05/ch05_ex07.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex07&nbsp;</figcaption>
 </figure>
 
 <p>The results would look like the image above, where clearly, the collisions are not functioning as expected. This is not because the physics is broken; it&rsquo;s because we did not communicate properly with Box2D, either when we put stuff in the magic world or queried the world for locations.</p>
@@ -1410,7 +1410,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 <a data-primary="joint (Box2D element)" data-type="indexterm"></a>
 
 <figure class="half-width-right" id="chapter05_figure10"><img alt="Figure 5.10" src="chapter05/ch05_10.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.10&nbsp;</figcaption>
 </figure>
 
 <p>Box2D joints allow you to connect one body to another, enabling more advanced simulations of swinging pendulums, elastic bridges, squishy characters, wheels spinning on an axle, etc. There are many different kinds of Box2D joints. In this chapter we&rsquo;re going to look at three: distance joints, revolute joints, and &ldquo;mouse&rdquo; joints.</p>
@@ -1471,7 +1471,7 @@ DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);</pre>
 <p>We can create Box2D joints anywhere in our Processing sketch. Here&rsquo;s an example of how we might write a class to describe two Box2D bodies connected with a single joint.</p>
 
 <figure class="screenshot"><img alt="ch05 ex08" src="chapter05/ch05_ex08.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex08&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.6: DistanceJoint</h5></div>
@@ -1524,12 +1524,12 @@ class Pair {
 <p>Create a simulation of a bridge by using distance joints to connect a sequence of circles (or rectangles) as illustrated to the right. Assign a density of zero to lock the endpoints in place. Experiment with different values to make the bridge more or less &ldquo;springy.&rdquo; It should also be noted that the joints themselves have no physical geometry, so in order for your bridge not to have holes, spacing between the nodes will be important.</p>
 
 <figure class="screenshot"><img alt="ch05 exc06" src="chapter05/ch05_exc06.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc06&nbsp;</figcaption>
 </figure>
 </div>
 
 <figure class="half-width-right" id="chapter05_figure11"><img alt="Figure 5.11" src="chapter05/ch05_11.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.11&nbsp;</figcaption>
 </figure>
 
 <a data-primary="joint (Box2D element)" data-secondary="revolute type" data-type="indexterm"></a> <a data-primary="revolute joint type (Box2D)" data-type="indexterm"></a>
@@ -1598,7 +1598,7 @@ RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 <p>Let&rsquo;s take a look at all of these steps together in a class called <span class="klass">Windmill</span>, which connects two boxes with a revolute joint. In this case, <span class="var">box1</span> has a density of zero, so only <span class="var">box2</span> spins around a fixed point.</p>
 
 <figure class="screenshot"><img alt="ch05 ex09" src="chapter05/ch05_ex09.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex09&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.7: Spinning Windmill</h5></div>
@@ -1652,13 +1652,13 @@ class Windmill {
 <h5>Exercise 5.7</h5>
 
 <figure class="half-width-right"><img alt="ch05 exc07" src="chapter05/ch05_exc07.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc07&nbsp;</figcaption>
 </figure>
 
 <p>Use a revolute joint for the wheels of a car. Use motors so that the car drives autonomously. Try using a chain shape for the road&rsquo;s surface.</p>
 
 <figure><img alt="blank" src="blank.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>blank&nbsp;</figcaption>
 </figure>
 </div>
 
@@ -1727,7 +1727,7 @@ mouseJoint.setTarget(mouseWorld);</pre>
 <p>Let&rsquo;s take a look at the main tab. You can find the rest of the code for the <span class="klass">Box</span> and <span class="klass">Spring</span> classes via the book website.</p>
 
 <figure class="screenshot"><img alt="ch05 ex10" src="chapter05/ch05_ex10.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex10&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.8: MouseJoint demonstration</h5></div>
@@ -1791,7 +1791,7 @@ BodyDef bd = new BodyDef();
 bd.type = BodyType.KINEMATIC;</pre>
 
 <figure class="half-width-right" id="chapter05_figure12"><img alt="Figure 5.12" src="chapter05/ch05_12.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.12&nbsp;</figcaption>
 </figure>
 
 <p>Kinematic bodies can be controlled by the user by setting their velocity directly. For example, let&rsquo;s say you want an object to follow a target (like your mouse). You could create a vector that points from a body&rsquo;s location to a target.</p>
@@ -1884,7 +1884,7 @@ Vec2 attract(Mover m) {
 <p>Take any example you made previously using a force calculation and bring that force calculation into Box2D.</p>
 
 <figure class="screenshot"><img alt="ch05 exc10" src="chapter05/ch05_exc10.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc10&nbsp;</figcaption>
 </figure>
 </div>
 </section>
@@ -2015,7 +2015,7 @@ class Particle {
 <p>Later, in our <span class="function">addContact()</span> function, once we know the body, we can access the <span class="klass">Particle</span> object with <span class="function">getUserData()</span>.</p>
 
 <figure class="screenshot"><img alt="ch05 ex11" src="chapter05/ch05_ex11.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex11&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.9: CollisionListening</h5></div>
@@ -2096,7 +2096,7 @@ location.add(velocity);</pre>
 <p>The above methodology is known as Euler integration (named for the mathematician Leonhard Euler, pronounced &ldquo;Oiler&rdquo;) or the Euler method. It&rsquo;s essentially the simplest form of integration and very easy to implement in our code (see the two lines above!) However, it is not necessarily the most efficient form, nor is it close to being the most accurate. Why is Euler inaccurate? Let&rsquo;s think about it this way. When you drive a car down the road pressing the gas pedal with your foot and accelerating, does the car sit in one location at time equals one second, then disappear and suddenly reappear in a new location at time equals two seconds, and do the same thing for three seconds, and four, and five? No, of course not. The car moves continuously down the road. But what&rsquo;s happening in our Processing sketch? A circle is at one location at frame 0, another at frame 1, another at frame 2. Sure, at thirty frames per second, we&rsquo;re seeing the illusion of motion. But we only calculate a new location every <span class="var">N</span> units of time, whereas the real world is perfectly continuous. This results in some inaccuracies, as shown in the diagram below:</p>
 
 <figure id="chapter05_figure13"><img alt="Figure 5.13" src="chapter05/ch05_13.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.13&nbsp;</figcaption>
 </figure>
 
 <p>The &ldquo;real world&rdquo; is the curve; Euler simulation is the series of line segments.</p>
@@ -2563,7 +2563,7 @@ physics.addSpring(spring);</pre>
 <p>And now we&rsquo;re ready to put all of these elements together in a simple example that connects two particles with a spring. One particle is locked in place, and the other can be moved by dragging the mouse. Note that this example is virtually identical to <a href="#chapter03_example11">Example 3.11</a>.</p>
 
 <figure class="screenshot"><img alt="ch05 ex12" src="chapter05/ch05_ex12.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex12&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.10: Simple Spring with toxiclibs</h5></div>
@@ -2645,7 +2645,7 @@ class Particle extends VerletParticle2D {
 <p>The above example, two particles connected with a single spring, is the core building block for what toxiclibs&rsquo; physics is particularly well suited for: soft body simulations. For example, a string can be simulated by connecting a line of particles with springs. A blanket can be simulated by connecting a grid of particles with springs. And a cute, cuddly, squishy cartoon character can be simulated by a custom layout of particles connected with springs.</p>
 
 <figure id="chapter05_figure14"><img alt="Figure 5.14" src="chapter05/ch05_14.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.14&nbsp;</figcaption>
 </figure>
 
 <p>Let&rsquo;s begin by simulating a &ldquo;soft pendulum&rdquo;&mdash;a bob hanging from a string, instead of a rigid arm like we had in <a href="#chapter03_example10">Chapter 3, Example 10</a>. Let&rsquo;s use the &quot;string&quot; in Figure 5.14 above as our model.</p>
@@ -2658,7 +2658,7 @@ ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();</pre>
 <p>Now, let&rsquo;s say we want to have 20 particles, all spaced 10 pixels apart.</p>
 
 <figure id="chapter05_figure15"><img alt="Figure 5.15" src="chapter05/ch05_15.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.15&nbsp;</figcaption>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting">
@@ -2682,7 +2682,7 @@ for(int i=0; i &lt; numPoints; i++) {
 <p>Now for the fun part: It&rsquo;s time to connect all the particles. Particle 1 will be connected to particle 0, particle 2 to particle 1, 3 to 2, 4 to 3, etc.</p>
 
 <figure id="chapter05_figure16"><img alt="Figure 5.16" src="chapter05/ch05_16.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>Figure 5.16&nbsp;</figcaption>
 </figure>
 
 <p>In other words, particle <span class="var">i</span> needs to be connected to particle <span class="var">i-1</span> (except for when <span class="var">i</span> equals zero).</p>
@@ -2713,7 +2713,7 @@ head.lock();</pre>
 <p>And if we want to draw all the particles as being connected with a line, along with a circle for the last particle, we can use <span class="function">beginShape()</span>, <span class="function">endShape()</span>, and <span class="function">vertex()</span>, accessing the particle locations from our <span class="klass">ArrayList</span>.</p>
 
 <figure class="screenshot"><img alt="ch05 ex13" src="chapter05/ch05_ex13.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex13&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.11: Soft swinging pendulum</h5></div>
@@ -2739,7 +2739,7 @@ tail.display();</pre>
 <p>Create a hanging cloth simulation using the technique above, but connect all the particles with a grid as demonstrated in the screenshot below.</p>
 
 <figure class="screenshot"><img alt="ch05 exc13" src="chapter05/ch05_exc13.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc13&nbsp;</figcaption>
 </figure>
 </div>
 </section>
@@ -2756,15 +2756,15 @@ tail.display();</pre>
 <p>This is not an uncommon problem in computational design. One solution is typically referred to as a &ldquo;force-directed graph.&rdquo; A force-directed graph is a visualization of elements&mdash;let&rsquo;s call them &ldquo;nodes&rdquo;&mdash;in which the positions of those nodes are not manually assigned. Rather, the nodes arrange themselves according to a set of forces. While any forces can be used, a typical example involves spring forces. And so toxiclibs is perfect for this scenario.</p>
 
 <figure class="three-col"><img alt="ch05 ex14" src="chapter05/ch05_ex14.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex14&nbsp;</figcaption>
 </figure>
 
 <figure class="three-col"><img alt="ch05 ex15" src="chapter05/ch05_ex15.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex15&nbsp;</figcaption>
 </figure>
 
 <figure class="three-col"><img alt="ch05 ex16" src="chapter05/ch05_ex16.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex16&nbsp;</figcaption>
 </figure>
 
 <p>How do we implement the above?</p>
@@ -2857,7 +2857,7 @@ class Cluster {
 <p>Assuming those connections are made in the <span class="klass">Cluster</span> constructor, we can now create a cluster in our main tab and see the results!</p>
 
 <figure class="screenshot"><img alt="ch05 ex17" src="chapter05/ch05_ex17.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex17&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.12: Cluster</h5></div>
@@ -2895,7 +2895,7 @@ void draw() {
 <p>Expand the force-directed graph to have more than one <span class="klass">Cluster</span> object. Use a <span class="klass">VerletMinDistanceSpring2D</span> object to connect cluster to cluster.</p>
 
 <figure class="screenshot"><img alt="ch05 exc15" src="chapter05/ch05_exc15.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 exc15&nbsp;</figcaption>
 </figure>
 </div>
 </section>
@@ -2960,7 +2960,7 @@ class Particle extends VerletParticle2D {
 <p>We could now recreate our attraction example by having a single <span class="klass">Attractor</span> object that exerts an attraction behavior over the entire window.</p>
 
 <figure class="screenshot"><img alt="ch05 ex18" src="chapter05/ch05_ex18.png" />
-<figcaption>&nbsp;</figcaption>
+<figcaption>ch05 ex18&nbsp;</figcaption>
 </figure>
 
 <div data-type="example"><h5>Example 5.13: Attraction/Repulsion</h5></div>
