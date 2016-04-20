@@ -1,0 +1,10 @@
+{% for item in children %}
+<li>
+  <a href="{{ item.href }}">{{ item.label }}</a>
+  {% if item.children.length > 0 %}
+  <ol>
+    {% include toc_item.html children=item.children %}
+  </ol>
+  {% endif %}
+</li>
+{% endfor %}
