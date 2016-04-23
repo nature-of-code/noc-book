@@ -38,37 +38,33 @@
 
 <div data-type="example"><h5>Example 1.1: Bouncing ball with no vectors</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
-//[full] Variables for location and speed of ball.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// Variables for location and speed of ball.
 float x = 100;
 float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;
-//[end]
 
-//[full] Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
+// {!4} Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
 void setup() {
   size(640,360);
   background(255);
 }
-//[end]
 
 void draw() {
   background(255);
 
-  //[full] Move the ball according to its speed.
+  // Move the ball according to its speed.
   x = x + xspeed;
   y = y + yspeed;
-  //[end]
 
-  //[full] Check for bouncing.
+  // {!6} Check for bouncing.
   if ((x &gt; width) || (x &lt; 0)) {
     xspeed = xspeed * -1;
   }
   if ((y &gt; height) || (y &lt; 0)) {
     yspeed = yspeed * -1;
   }
-  //[end]
 
   stroke(0);
   fill(175);

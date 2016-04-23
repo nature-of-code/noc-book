@@ -1,0 +1,859 @@
+/* Page Style
+_____________________________________________________________________________ */
+
+@page {
+  size: 7.5in 9.25in;
+  margin-top: 0.75in;
+  margin-bottom: 0.75in;
+}
+
+@page :left {
+  margin-right: 1.125in;
+  margin-left: 0.875in;
+}
+
+@page :right {
+  margin-right: 0.875in;
+  margin-left: 1.25in;
+}
+
+body {
+  font-size: 9pt;
+  font-family: "ProximaNova-Regular";
+  margin: 0;
+  padding: 0;
+}
+
+/* Page Breaks
+_____________________________________________________________________________ */
+
+div[data-type="note"],
+div[data-type="tip"],
+div[data-type="exercise"]
+{
+  page-break-inside: avoid;
+}
+
+
+img, .note, .example, .tip, .breakout_box, .half-width, .half-width-right, table, .code-comment-pair, .image-container {
+  page-break-inside: avoid;
+}
+
+span.example {
+  page-break-after: avoid;
+}
+
+section[data-type="chapter"], section[data-type="acknowledgments"],
+                              section[data-type="dedication"],
+                              section[data-type="credits"],
+                              section[data-type="introduction"],
+                              section[data-type="preface"],
+                              section[data-type="toc"] {
+  page-break-before:always;
+}
+
+/* Some new custom styling stuff 2016
+_____________________________________________________________________________ */
+
+
+#preamble h1 {
+  margin: 0;
+  font-size: 320%;
+}
+
+
+/* Font Styles
+_____________________________________________________________________________ */
+
+em {
+  font-style: normal;
+  font-family: "ProximaNova-RegularIt";
+}
+
+strong {
+  font-style: normal;
+  font-family: "ProximaNova-Bold";
+}
+
+em strong,
+strong em {
+  font-style: normal;
+  font-family: "ProximaNova-BoldIt";
+}
+
+
+
+/* Page Numbering
+_____________________________________________________________________________ */
+
+div#frontmatter {
+  page: frontmatter;
+}
+
+div#contents {
+  counter-reset: page 1;
+}
+
+/* Define Left Headers and Footers
+_____________________________________________________________________________ */
+
+@page :left {
+  @top-left {
+    font: 8pt "ProximaNova-Regular", serif;
+    content: "The Nature of Code (v1.0)";
+    vertical-align: bottom;
+    padding-bottom: 2em;
+    color: #000000;/*#808080;*/
+  }
+
+  @bottom-left {
+    font: 9pt "ProximaNova-Regular", serif;
+    content: counter(page);
+    padding-top: 2em;
+    vertical-align: top;
+    color: #000000;/*#404040*/;
+  }
+}
+
+
+/* Define Right Headers and Footers
+_____________________________________________________________________________ */
+
+@page :right {
+  @top-right {
+    font: 8pt "ProximaNova-Regular", serif;
+    content: string(doctitle);
+    vertical-align: bottom;
+    padding-bottom: 2em;
+    color: #000000;/*#606060*/;
+  }
+
+  @bottom-right {
+    font: 9pt "ProximaNova-Regular", serif;
+    content: counter(page);
+    text-align: right;
+    vertical-align: top;
+    padding-top: 2em;
+    color: #000000;/*#404040*/;
+  }
+}
+
+/* Dealing with front matter
+_____________________________________________________________________________ */
+
+@page frontmatter :left {
+   @bottom-left {
+    content: counter(page,lower-roman);
+  }
+}
+
+@page frontmatter :right {
+   @bottom-right {
+    content: counter(page,lower-roman);
+  }
+}
+
+@page  :first {
+  @bottom-right {
+    content: counter(page,lower-roman);
+  }
+}
+
+h2 { string-set: doctitle content() }
+
+/* Insert page number after all links
+_____________________________________________________________________________ */
+
+a[href]::after {
+  content: " (see page " target-counter(attr(href), page) ")";
+}
+
+a[href^="http:"]::after {
+  content: " ("attr(href)")";
+}
+
+a {
+  text-decoration: none;
+  color: #000000;/*#404040*/;
+}
+
+/* Index
+_____________________________________________________________________________ */
+
+a[href].index-term-link::after {
+  content: target-counter(attr(href), page);
+}
+
+a.index-term-link {
+  font-family: "ProximaNova-Semibold";
+}
+
+span.index-term-name {
+  display: inline-block;
+  margin-right: 0.6em;
+}
+
+#index ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  font-size: 8pt;
+}
+
+#index ul li {
+  margin-bottom: 0.4em;
+}
+
+#index ul li.big-letter {
+  font-size: 18pt;
+  font-family: "ProximaNova-Bold";
+  margin-top: 1.2em;
+}
+
+#index ul ul {
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  margin-left: 1.5em;
+  columns: 1;
+}
+
+/* Font sizes and placements
+_____________________________________________________________________________ */
+
+
+/* Prince/pdf aren't accepting ProximaNova-Regular */
+
+/*h2 {
+  font-family: "ProximaNova-Bold";
+  font-size: 320%;
+}*/
+
+h1 {
+  font-family: "ProximaNova-Bold";
+  /*page-break-before:always;*/
+  font-size: 38pt;
+  margin-top: 3.5em;
+  margin-bottom: 0.3em;
+  color: #000000;
+}
+
+/* To squash extra h2 element on title page */
+body>h2:nth-child(2) {
+  display: none;
+}
+
+h2 {
+  font-family: "ProximaNova-Semibold";
+  page-break-after: avoid;
+  color: #000000;/*#404040;*/
+  font-size: 17pt;
+  margin-top: 2em;
+}
+
+h2 + p {
+  page-break-after: avoid;
+}
+
+h2 + p + a {
+  page-break-after: avoid;
+}
+
+h4 + p {
+  page-break-after: avoid;
+}
+
+h4 + p + a {
+  page-break-after: avoid;
+}
+
+
+h3,h4,h5 {
+  font-family: "ProximaNova-Semibold";
+  page-break-after: avoid;
+  font-size: 12pt;
+  color: #000000;/*#191919;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+}
+
+h3, h4, h5, h6 {
+  line-height: 1.317em;
+  margin: 1.6em 0 0.5em;
+}
+
+p {
+  font-size: 9pt;
+  color: #000000;/*#404040;*/
+  line-height: 12pt;
+  letter-spacing:0.03em;
+}
+
+/* Tables
+_____________________________________________________________________________ */
+
+table {
+  font-size: 8pt;
+  font-family: "ProximaNova-Regular";
+  color: #000000;/*#606060;*/
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  margin: 3em 0;
+  table-layout: fixed;
+  border: 1px solid #D1D1D1;
+}
+
+table td, table th {
+  padding: 0.5em;
+}
+
+/* weird fix. setting font size 1pt up in header to make it look the same size */
+table th {
+  color: #000000;/*#404040;*/
+  font-size: 9pt;
+  border: 1px solid #D1D1D1;
+  background-color: rgb(92%,92%,92%);
+  font-family: "ProximaNova-Bold";
+  font-style: normal;
+}
+
+table td {
+  border: 1px solid #D1D1D1;
+}
+
+table td p {
+  margin: 0;
+}
+
+table.codewide {
+  width: 109%;
+}
+
+table.code {
+  width: 100%;
+}
+
+table.code pre,
+table.codewide pre {
+  font-size: 0.9em;
+}
+
+table.code td,
+table.codewide td {
+  text-align: left;
+}
+
+/* Styles
+_____________________________________________________________________________ */
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+/* This is to make heading margins in next section work */
+section {
+  overflow-y: auto;
+  position: relative;
+  clear: both;
+}
+
+/* Quote
+_____________________________________________________________________________ */
+
+blockquote[data-type="epigraph"] {
+  margin: 0 0 3em 0;
+}
+
+blockquote[data-type="epigraph"] p {
+  font-style: italic;
+  margin: 0;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: #000000;
+  letter-spacing: 0;
+}
+
+/*This is for epigraph only but not sure how to handle this*/
+blockquote[data-type="epigraph"] p[data-type="attribution"] {
+  display: block;
+  font-style: normal;
+  font-size: 12pt;
+  margin-left: 24px;
+  margin-top: 4px;
+}
+
+blockquote {
+  font-family: "Georgia";
+  font-style: italic;
+  margin: 0 40px 0 40px;
+  font-size: 8pt;
+  line-height: 12pt;
+  color: #000000;/*#808080;*/
+}
+
+/*For the acknowledgements?*/
+blockquote.long-quote {
+  margin: 0 0 3em 0;
+  font-size: 12pt;
+  line-height: 16pt;
+}
+
+blockquote span.attribution {
+  display: block;
+  font-style: normal;
+  margin-left: 24px;
+  margin-top: 4px;
+}
+
+/* TOC
+_____________________________________________________________________________ */
+
+/* Level 1 */
+
+.toc ul {
+  position: relative;
+  list-style: none;
+  margin:0;
+  padding: 0;
+  margin-top: 3em;
+  margin-right: 4em; /* this pushes the page numbers left */
+}
+
+.toc ul li {
+
+}
+
+.toc ul li a {
+  color: #000000;/*#333;*/
+  font-family: "ProximaNova-Semibold";
+  font-size: 18pt;
+  text-decoration: none;
+}
+
+/* Level 2 */
+
+.toc ul li ul {
+  margin: 1em 0em 2em 4em;
+  position: static;
+}
+
+.toc ul li ul li {
+  margin-bottom: 0.7em;
+}
+
+.toc ul li ul li a {
+  color: #000000;/*#191919;*/
+  font-family: "ProximaNova-Regular";
+  font-size: 10pt;
+  text-decoration: none;
+}
+
+/* Links */
+
+.toc ul li a[href]::after {
+  content: target-counter(attr(href), page);
+  position: absolute;
+  right: 0em;
+}
+
+/* Don't show dedication in TOC */
+
+.toc ul li:nth-child(1) {
+  display: none;
+}
+
+.toc ul li li:nth-child(1) {
+  display: block;
+}
+
+/* Correct page number styles*/
+
+.toc ul li:nth-child(-n+3) a[href]::after {
+  content: target-counter(attr(href), page,lower-roman);
+}
+
+.toc ul li:nth-child(-n+3) li a[href]::after {
+  content: target-counter(attr(href), page,lower-roman);
+}
+
+.toc ul li:nth-child(4) li a[href]::after,
+.toc ul li:nth-child(5) li a[href]::after,
+.toc ul li:nth-child(6) li a[href]::after,
+.toc ul li:nth-child(7) li a[href]::after,
+.toc ul li:nth-child(8) li a[href]::after,
+.toc ul li:nth-child(9) li a[href]::after,
+.toc ul li:nth-child(10) li a[href]::after,
+.toc ul li:nth-child(11) li a[href]::after,
+.toc ul li:nth-child(12) li a[href]::after,
+.toc ul li:nth-child(13) li a[href]::after,
+.toc ul li:nth-child(14) li a[href]::after,
+.toc ul li:nth-child(15) li a[href]::after,
+.toc ul li:nth-child(16) li a[href]::after {
+  content: target-counter(attr(href), page,decimal);
+}
+
+/* Span Classes Styling
+_____________________________________________________________________________ */
+
+span.highlight {
+  background-color: #E9E9E9;
+  font-size: 10pt;
+  display: block;
+  margin: 2em 1em;
+  padding: 0.8em;
+  text-align: center;
+}
+
+/* Boxes Styling
+_____________________________________________________________________________ */
+
+/* .example = exercises
+   .tip = projects
+   .note = breakout boxes
+*/
+
+.note h2, .tip, .example h2,
+.note h3, .tip h3, .example h3,
+.note h4, .tip h4, .example h4,
+.note h5, .tip h5, .example h5, div[data-type="tip"] {
+  font-size: 12pt;
+  color: #000000;/*#191919;*/
+  margin-bottom: 0.3em;
+  font-style: normal;
+  font-family: "ProximaNova-Semibold";
+}
+
+div[data-type="note"] h2, div[data-type="tip"] h2 {
+  font-size: 12pt;
+  color: #000000;/*#191919;*/
+  margin: 0 0 0.3em 0;
+  font-style: normal;
+  font-family: "ProximaNova-Semibold";
+}
+
+/* == BREAKOUT BOXES */
+div[data-type="note"] {
+  font-size: 10pt;
+  color: #000000;/*#191919;*/
+  padding: 1.4em 1.5em;
+  margin: 1.15em 0;
+  background-color: #E9E9E9;
+}
+
+/* == EXERCISES */
+div.example, div[data-type="exercise"] {
+  background-color: rgb(112, 115, 115);
+  color: #ffffff;
+  padding: 3em 1.5em 1em;
+  position: relative;
+  margin: 1.15em 0;
+  overflow-y:auto;
+}
+
+
+div.example h3[id],
+div.example h4[id],
+div.example h5[id],
+div.example h6[id], div[data-type="exercise"] h5 {
+  text-align: right;
+  margin: 1em 0.9em;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+div.example *, div[data-type="exercise"] * {
+  color: #ffffff;
+}
+
+/* == PROJECTS */
+.tip, div[data-type="tip"] {
+  padding: 0.7em 1.5em;
+  margin: 1.15em 0;
+  background-color: #E9E9E9;
+}
+
+.note h2:first-child, .tip h2:first-child, .example h2:first-child,
+.note h3:first-child, .tip h3:first-child, .example h3:first-child,
+.note h4:first-child, .tip h4:first-child, .example h4:first-child,
+.note h5:first-child, .tip h5:first-child, .example h5:first-child,
+.note p:first-child, .tip p:first-child, .example p:first-child {
+  margin-top: 0;
+}
+
+.note p:last-child, .tip p:last-child, .example p:last-child {
+  margin-bottom: 0;
+}
+
+/* Style functions */
+.function, .klass, .var, .mono, .formula, .formula2 {
+  font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+  /*a little bit smaller than body?*/
+  font-size: 8pt;
+  color: #000000;
+}
+
+.mono, .formula, .formula2{
+    font-weight: bold;
+}
+
+.formula{
+    margin-left: 16pt;
+}
+
+.formula2{
+    margin-left: 83pt;
+}
+/* Style note to self */
+.notetoself {
+  color: #FF0000;
+  font-weight: bold;
+}
+
+/* Samir's edit */
+/* Style example heading */
+span.example, div[data-type="example"] h5 {
+  background-color: #CACCCB;
+  clear: both;
+  display: block;
+  font-family: "ProximaNova-Bold";
+  font-size:1em;
+  padding: 0.7em 1em;
+}
+
+/* Image Full Width
+_____________________________________________________________________________ */
+
+img {
+  width: 100%;
+  margin: 0;
+}
+
+.image-container {
+  position: relative;
+  margin: 1.7em 0;
+}
+
+.image-container img {
+  max-width: 100%;
+}
+
+.bella img {
+  width: 25%;
+}
+
+img.mathinline {
+  width: auto;
+  height: 13px;
+  vertical-align: text-bottom;
+}
+
+img.mathblock {
+  width: auto;
+  height: auto;
+  vertical-align: text-bottom;
+}
+
+.screenshot img {
+  width: 100%;
+  margin: 0px;
+  /*-webkit-box-shadow: 1px 1px 2px gray;*/
+    border:1px solid gray;
+  /*Need a magic solution for border side borders to be partial, not extend all the way to top*/
+}
+
+figcaption {
+  font-family: 'Georgia';
+  font-style: italic;
+  font-size: 8pt;
+  color: #000000;/*#606060;*/
+  border: 0;
+  margin-top:2px;
+  line-height: 12pt;
+}
+
+/* Image Half Width
+_____________________________________________________________________________ */
+
+.half-width,
+.half-width-right,
+.half-width-right-border {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  position: relative;
+  width: 48%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.half-width {
+  float: left;
+  margin-right: 2em;
+}
+
+.half-width-right,
+.half-width-right-border {
+  float: right;
+  margin-left: 2em;
+}
+
+.half-width-right-border img {
+  border:1px solid gray;
+}
+
+/* Image Two Columns
+_____________________________________________________________________________ */
+
+figure.two-col,
+figure.two-col-borderless,
+figure.three-col
+{
+  width: 50%;
+  box-sizing: border-box;
+  padding-right: 1em;
+  /*margin-right: 1em;*/
+  float: left;
+}
+
+figure.two-col,
+figure.two-col-borderless,
+figure.three-col
+{
+  position: relative;
+  margin: 1.7em 0;
+}
+
+figure.two-col img,
+figure.two-col canvas,
+figure.two-col-borderless canvas,
+figure.three-col img,
+figure.three-col canvas
+{
+  width: 100%;
+  max-width: 100%;
+  border:1px solid gray;
+  /*-webkit-box-shadow: 1px 1px 2px gray;*/
+}
+
+figure.two-col-borderless img {
+  border:0px solid gray;
+}
+
+/* Image Three Columns
+_____________________________________________________________________________ */
+
+figure.three-col {
+  margin:1.7em 0;
+}
+
+figure.three-col {
+  width: 33%;
+}
+
+.mini200 img {
+  width: 25%;
+  border:1px solid gray;
+}
+
+/* Image Screenshot
+_____________________________________________________________________________ */
+
+.screenshot img {
+  width: 100%;
+  margin: 0;
+  border: 1px solid gray;
+  /* Need a magic solution for border side borders to be partial, not extend all the way to top */
+}
+
+/* Lists
+_____________________________________________________________________________ */
+
+.list h4, .table h4 {
+  clear: none;
+}
+
+dl {
+  width:105%;
+  overflow:hidden;
+  margin: 0;
+  padding: 0;
+}
+
+dt, dd {
+  float: left;
+  font-size: 9pt;
+  line-height: 1em;
+  margin: 0 0 0.5em 0;
+}
+
+dt {
+  width:35%;
+}
+
+
+
+dd {
+  width:65%;
+}
+
+dd p {
+  font-size: 9pt;
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+/*Different DL for Preface*/
+
+dl.preface {
+  width:100%;
+}
+
+dl.preface dt {
+  width:15%;
+}
+
+dl.preface dd {
+  width:85%;
+}
+
+/* Code Formatting
+_____________________________________________________________________________ */
+
+pre {
+  width: 100%;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.source-code {
+  /*border: 0.4em solid #272727;
+  margin-bottom: 2em;
+  padding: 0.7em 1.5em;
+  background-color: #f9f9f9;*/
+  position: relative;
+  clear: both;
+}
+
+.note .source-code,
+.example .source-code,
+.tip .source-code {
+  border-left: none;
+}
+
+.source-code textarea {
+  background-color: #f0f0f0;
+  display: none;
+  width: 100%;
+}
