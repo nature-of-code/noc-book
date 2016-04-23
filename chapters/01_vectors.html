@@ -68,7 +68,7 @@ void draw() {
 
   stroke(0);
   fill(175);
-  // Display the ball at the location (x,y).
+  // {!1} Display the ball at the location (x,y).
   ellipse(x,y,16,16);
 }</pre>
 
@@ -233,11 +233,10 @@ PVector velocity = new PVector(1,3.3);</pre>
 
 <p>Now that we have two vector objects (location and velocity), we&rsquo;re ready to implement the algorithm for motion&mdash;<strong><em>location = location + velocity</em></strong>. In Example 1.1, without vectors, we had:</p>
 
-<pre data-code-language="java" data-type="programlisting">
-//[full] Add each speed to each location.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// Add each speed to each location.
 x = x + xspeed;
-y = y + yspeed;
-//[end]</pre>
+y = y + yspeed;</pre>
 
 <p>In an ideal world, we would be able to rewrite the above as:</p>
 
@@ -308,7 +307,7 @@ location = location + velocity;</pre>
 
 <p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="klass">PVector</span> class itself. Let&rsquo;s write a function called <span class="function">add()</span> that takes another <span class="klass">PVector</span> object as its argument.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class PVector {
 
   float x;
@@ -319,12 +318,11 @@ class PVector {
     y = y_;
   }
 
-  //[full] New! A function to add another PVector to this PVector.  Simply add the &lt;em&gt;x&lt;/em&gt; components and the &lt;em&gt;y&lt;/em&gt; components together.
-  void add(PVector v) { //[bold]
-    y = y + v.y; //[bold]
-    x = x + v.x; //[bold]
-  } //[bold]
-  //[end]
+  // {!4 .bold} New! A function to add another PVector to this PVector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
+  void add(PVector v) {
+    y = y + v.y;
+    x = x + v.x;
+  }
 }</pre>
 
 <a data-primary="bouncing ball sketch" data-secondary="implementing with vectors" data-type="indexterm"></a>
