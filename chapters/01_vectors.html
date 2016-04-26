@@ -116,7 +116,7 @@ void draw() {
 
 <p>Instead of:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x;
 float y;
 float xspeed;
@@ -124,7 +124,7 @@ float yspeed;</pre>
 
 <p>We could simply have&hellip;</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vector location;
 Vector speed;</pre>
 
@@ -200,7 +200,7 @@ Vector speed;</pre>
 
 <p>Notice how we are storing the same data for both&mdash;two floating point numbers, an <span class="var">x</span> and a <span class="var">y</span>. If we were to write a vector class ourselves, we&rsquo;d start with something rather basic:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class PVector {
 
   float x;
@@ -217,7 +217,7 @@ class PVector {
 
 <p>And so this &hellip;</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = 100;
 float y = 100;
 float xspeed = 1;
@@ -225,7 +225,7 @@ float yspeed = 3.3;</pre>
 
 <p>becomes &hellip;</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector location = new PVector(100,100);
 PVector velocity = new PVector(1,3.3);</pre>
 
@@ -240,7 +240,7 @@ y = y + yspeed;</pre>
 
 <p>In an ideal world, we would be able to rewrite the above as:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Add the velocity vector to the location vector.
 location = location + velocity;</pre>
 
@@ -329,9 +329,9 @@ class PVector {
 
 <p>Now that we see how <span class="function">add()</span> is written inside of <span class="klass">PVector</span>, we can return to our bouncing ball example with its <strong><em>location + velocity</em></strong> algorithm and implement vector addition:</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// Add the current velocity to the location.
-location = location + velocity; //[line-through]
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// {!1 .line-through}Add the current velocity to the location.
+location = location + velocity;
 location.add(velocity);</pre>
 
 <p>And here we are, ready to rewrite the bouncing ball example using <span class="klass">PVector</span>.</p>
@@ -340,51 +340,52 @@ location.add(velocity);</pre>
 
 <div data-type="example"><h5>Example 1.2: Bouncing ball with PVectors!</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
-//[full] Instead of a bunch of floats, we now just have two PVector variables.
-PVector location; //[bold]
-PVector velocity; //[bold]
-//[end]
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!2 .bold} Instead of a bunch of floats, we now just have two PVector variables.
+PVector location;
+PVector velocity;
 
 void setup() {
   size(640,360);
-  location = new PVector(100,100); //[bold]
-  velocity = new PVector(2.5,5); //[bold]
+  //{!2 .bold .no-comment}
+  location = new PVector(100, 100);
+  velocity = new PVector(2.5, 5);
 }
 
 void draw() {
   background(255);
+  //{!1 .bold .no-comment}
+  location.add(velocity);
 
-  location.add(velocity); //[bold]
-  //[full] We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
-  if ((location.x &gt; width) || (location.x &lt; 0)) { //[bold]
-    velocity.x = velocity.x * -1; //[bold]
-  } //[bold]
-  if ((location.y &gt; height) || (location.y &lt; 0)) { //[bold]
-    velocity.y = velocity.y * -1; //[bold]
-  } //[bold]
-  //[end]
+  //{!6 .bold} We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: location.x, velocity.y, etc.
+  if ((location.x &gt; width) || (location.x &lt; 0)) {
+    velocity.x = velocity.x * -1;
+  }
+  if ((location.y &gt; height) || (location.y &lt; 0)) {
+    velocity.y = velocity.y * -1;
+  }
 
   stroke(0);
   fill(175);
-  ellipse(location.x,location.y,16,16); //[bold]
+  ellipse(location.x, location.y, 16, 16);
 }</pre>
 
 <p>Now, you might feel somewhat disappointed. After all, this may initially appear to have made the code more complicated than the original version. While this is a perfectly reasonable and valid critique, it&rsquo;s important to understand that we haven&rsquo;t fully realized the power of programming with vectors just yet. Looking at a simple bouncing ball and only implementing vector addition is just the first step. As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (which we&rsquo;ll introduce in Chapter 2), the benefits of <span class="klass">PVector</span> will become more apparent.</p>
 
 <p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">PVector</span> objects to describe two values&mdash;the <span class="var">x</span> and <span class="var">y</span> of location and the <span class="var">x</span> and <span class="var">y</span> of velocity&mdash;we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">PVector</span> individually. When we go to draw an object in Processing, there&rsquo;s no means for us to say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
-ellipse(location,16,16); //[line-through]</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// {.line-through .no-comment}
+ellipse(location, 16, 16);</pre>
 
 <p>The <span class="function">ellipse()</span> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">x</span>-coordinate and a <span class="var">y</span>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-ellipse(location.x,location.y,16,16);</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+ellipse(location.x, location.y, 16, 16);</pre>
 
 <p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: <span class="var">location</span> and <span class="var">velocity</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if ((location.x &gt; width) || (location.x &lt; 0)) {
   velocity.x = velocity.x * -1;
 }</pre>
@@ -489,7 +490,7 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 
 <p>and so the function inside <span class="klass">PVector</span> looks like:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void sub(PVector v) {
     x = x - v.x;
     y = y - v.y;
@@ -503,22 +504,23 @@ if ((location.x &gt; width) || (location.x &lt; 0)) {
 
 <div data-type="example"><h5>Example 1.3: Vector subtraction</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
   background(255);
-  //[full] Two PVectors, one for the mouse location and one for the center of the window
-  PVector mouse  = new PVector(mouseX,mouseY);
-  PVector center = new PVector(width/2,height/2);
-  //[end]
+  //Two PVectors, one for the mouse location and one for the center of the window
+  PVector mouse  = new PVector(mouseX, mouseY);
+  PVector center = new PVector(width/2, height/2);
+
   // PVector subtraction!
   mouse.sub(center);
-    // Draw a line to represent the vector.
-  translate(width/2,height/2);
-  line(0,0,mouse.x,mouse.y);
+
+  //{!2} Draw a line to represent the vector.
+  translate(width/2, height/2);
+  line(0, 0, mouse.x, mouse.y);
 }</pre>
 
 <a data-primary="vectors" data-secondary="commutative/associative rules of addition/subtraction with" data-type="indexterm"></a>
@@ -571,20 +573,19 @@ void draw() {
 
 <p>Therefore, the function inside the <span class="klass">PVector</span> class is written as:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void mult(float n) {
-   //[full] With multiplication, the components of the vector are multiplied by a number.
+   //{!2} With multiplication, the components of the vector are multiplied by a number.
    x = x * n;
    y = y * n;
-   //[end]
  }</pre>
 
 <p>And implementing multiplication in code is as simple as:</p>
 
 <a data-primary="mult() function (PVector class)" data-secondary="implementation" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
-PVector u = new PVector(-3,7);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+PVector u = new PVector(-3, 7);
 // This PVector is now three times the size and is equal to (-9,21).
 u.mult(3);</pre>
 
@@ -594,23 +595,21 @@ u.mult(3);</pre>
 
 <div data-type="example"><h5>Example 1.4: Multiplying a vector</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX,mouseY);
-  PVector center = new PVector(width/2,height/2);
+  PVector mouse = new PVector(mouseX, mouseY);
+  PVector center = new PVector(width/2, height/2);
   mouse.sub(center);
-
-  // Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
+  //{!1} Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
   mouse.mult(0.5);
-
-  translate(width/2,height/2);
-  line(0,0,mouse.x,mouse.y);
+  translate(width/2, height/2);
+  line(0, 0, mouse.x, mouse.y);
 
 }</pre>
 
@@ -622,13 +621,13 @@ void draw() {
 
 <p>Division works just like multiplication&mdash;we simply replace the multiplication sign (asterisk) with the division sign (forward slash).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void div(float n) {
   x = x / n;
   y = y / n;
 }
 
-PVector u = new PVector(8,-4);
+PVector u = new PVector(8, -4);
 // Dividing a vector!  The vector is now half its original size (divided by 2).
 u.div(2);</pre>
 
@@ -673,7 +672,7 @@ The distributive rule with 2 vectors, 1 scalar: {uvtimesn}</p>
 
 <p>or in <span class="klass">PVector</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float mag() {
   return sqrt(x*x + y*y);
 }</pre>
@@ -686,27 +685,25 @@ float mag() {
 
 <a data-primary="mag() function (PVector class)" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="mag() function" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX,mouseY);
-  PVector center = new PVector(width/2,height/2);
+  PVector mouse = new PVector(mouseX, mouseY);
+  PVector center = new PVector(width/2, height/2);
   mouse.sub(center);
 
-  //[full] The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
+  //{!3} The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
   float m = mouse.mag();
   fill(0);
-  rect(0,0,m,10);
+  rect(0, 0, m, 10);
 
-  //[end]
-
-  translate(width/2,height/2);
-  line(0,0,mouse.x,mouse.y);
+  translate(width/2, height/2);
+  line(0, 0, mouse.x, mouse.y);
 
 }</pre>
 </section>
@@ -738,7 +735,7 @@ void draw() {
 
 <p>In the <span class="klass">PVector</span> class, we therefore write our normalization function as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void normalize() {
   float m = mag();
   div(m);
@@ -746,7 +743,7 @@ void normalize() {
 
 <p>Of course, there&rsquo;s one small issue. What if the magnitude of the vector is 0? We can&rsquo;t divide by 0! Some quick error checking will fix that right up:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void normalize() {
  float m = mag();
  if (m != 0) {
@@ -760,19 +757,19 @@ void normalize() {
 
 <div data-type="example"><h5>Example 1.6: Normalizing a vector</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX,mouseY);
-  PVector center = new PVector(width/2,height/2);
+  PVector mouse = new PVector(mouseX, mouseY);
+  PVector center = new PVector(width/2, height/2);
   mouse.sub(center);
 
-  // In this example, after the vector is normalized, it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
+  //{!2} In this example, after the vector is normalized, it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
   mouse.normalize();
   mouse.mult(50);
-  translate(width/2,height/2);
-  line(0,0,mouse.x,mouse.y);
+  translate(width/2, height/2);
+  line(0, 0, mouse.x, mouse.y);
 
 }</pre>
 </section>
@@ -786,12 +783,12 @@ void draw() {
 
 <p>For now, however, we want to focus on simplicity. What does it mean to program motion using vectors? We&rsquo;ve seen the beginning of this in <a href="#chapter01_example2">Example 1.2</a><code>:</code> the bouncing ball. An object on screen has a location (where it is at any given moment) as well as a velocity (instructions for how it should move from one moment to the next). Velocity is added to location:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 location.add(velocity);</pre>
 
 <p>And then we draw the object at that location:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ellipse(location.x,location.y,16,16);</pre>
 
 <p>This is Motion 101.</p>
@@ -822,7 +819,7 @@ ellipse(location.x,location.y,16,16);</pre>
 
 <p>Our Motion 101 algorithm tells us the answers to these questions. A <span class="klass">Mover</span> object has two pieces of data: <span class="var">location</span> and <span class="var">velocity</span>, which are both <span class="klass">PVector</span> objects.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
 
   PVector location;
@@ -830,17 +827,17 @@ class Mover {
 
 <p>Its functionality is just about as simple. The <span class="klass">Mover</span> needs to move and it needs to be seen. We&rsquo;ll implement these needs as functions named <span class="function">update()</span> and <span class="function">display()</span>. We&rsquo;ll put all of our motion logic code in <span class="function">update()</span> and draw the object in <span class="function">display()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
-    // The Mover moves.
+    //{!1} The Mover moves.
     location.add(velocity);
   }
 
   void display() {
     stroke(0);
     fill(175);
-    // The Mover is displayed.
-    ellipse(location.x,location.y,16,16);
+    //{!1} The Mover is displayed.
+    ellipse(location.x, location.y, 16, 16);
   }
 
 }</pre>
@@ -849,25 +846,24 @@ class Mover {
 
 <p>We&rsquo;ve forgotten one crucial item, however: the object&rsquo;s <strong><em>constructor</em></strong>. The constructor is a special function inside of a class that creates the instance of the object itself. It is where you give instructions on how to set up the object. It always has the same name as the class and is called by invoking the <strong><em>new</em></strong> operator:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Mover m = new Mover();</pre>
 
 <p>In our case, let&rsquo;s arbitrarily decide to initialize our <span class="klass">Mover</span> object by giving it a random location and a random velocity.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Mover() {
-    location = new PVector(random(width),random(height));
-    velocity = new PVector(random(-2,2),random(-2,2));
+    location = new PVector(random(width), random(height));
+    velocity = new PVector(random(-2,2), random(-2,2));
   }</pre>
 
 <p>If object-oriented programming is at all new to you, one aspect here may seem a bit confusing. After all, we spent the beginning of this chapter discussing the <span class="klass">PVector</span> class. The <span class="klass">PVector</span> class is the template for making the <span class="klass">location</span> object and the <span class="klass">velocity</span> object. So what are they doing inside of yet another object, the <span class="klass">Mover</span> object? In fact, this is just about the most normal thing ever. An object is simply something that holds data (and functionality). That data can be numbers (integers, floats, etc.) or other objects! We&rsquo;ll see this over and over again in this book. For example, in <a href="#chapter04_section1">Chapter 4</a> we&rsquo;ll write a class to describe a system of particles. That <span class="klass">ParticleSystem</span> object will have as its data a list of <span class="klass">Particle</span> objects&hellip;and each <span class="klass">Particle</span> object will have as its data several <span class="klass">PVector</span> objects!</p>
 
 <p>Let&rsquo;s finish off the <span class="klass">Mover</span> class by incorporating a function to determine what the object should do when it reaches the edge of the window. For now let&rsquo;s do something simple, and just have it wrap around the edges.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void checkEdges() {
-
-    //[full] When it reaches one edge, set location to the other.
+    //{!11} When it reaches one edge, set location to the other.
     if (location.x &gt; width) {
       location.x = 0;
     } else if (location.x &lt; 0) {
@@ -879,23 +875,21 @@ class Mover {
     } else if (location.y &lt; 0) {
       location.y = height;
     }
-    //[end]
-
   }</pre>
 
 <p>Now that the <span class="klass">Mover</span> class is finished, we can look at what we need to do in our main program. We first declare a <span class="klass">Mover</span> object:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Mover mover;</pre>
 
 <p>Then initialize the mover in <span class="function">setup()</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 mover = new Mover();</pre>
 
 <p>and call the appropriate functions in <span class="function">draw()</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 mover.update();
 mover.checkEdges();
 mover.display();</pre>
@@ -908,47 +902,45 @@ mover.display();</pre>
 
 <div data-type="example"><h5>Example 1.7: Motion 101 (velocity)</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
-// Declare Mover object.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1} Declare Mover object.
 Mover mover;
 
 void setup() {
-  size(640,360);
-  // Create Mover object.
+  size(640, 360);
+  //{!1} Create Mover object.
   mover = new Mover();
 }
 
 void draw() {
   background(255);
 
-  //[full] Call functions on Mover object.
+  //{!3} Call functions on Mover object.
   mover.update();
   mover.checkEdges();
   mover.display();
-  //[end]
 }
 
 class Mover {
 
-  //[full] Our object has two PVectors: location and velocity.
+  //{!2} Our object has two PVectors: location and velocity.
   PVector location;
   PVector velocity;
-  //[end]
 
   Mover() {
-    location = new PVector(random(width),random(height));
-    velocity = new PVector(random(-2,2),random(-2,2));
+    location = new PVector(random(width), random(height));
+    velocity = new PVector(random(-2, 2), random(-2, 2));
   }
 
   void update() {
-    // Motion 101: Location changes by velocity.
+    //{!1} Motion 101: Location changes by velocity.
     location.add(velocity);
   }
 
   void display() {
     stroke(0);
     fill(175);
-    ellipse(location.x,location.y,16,16);
+    ellipse(location.x, location.y, 16, 16);
   }
 
   void checkEdges() {
@@ -976,7 +968,7 @@ class Mover {
 
 <p>The strict definition of <strong><em>acceleration</em></strong> we&rsquo;re using here is: <em>the rate of change of velocity</em>. Let&rsquo;s think about that definition for a moment. Is this a new concept? Not really. Velocity is defined as <em>the rate of change of location</em>. In essence, we are developing a &ldquo;trickle-down&rdquo; effect. Acceleration affects velocity, which in turn affects location (for some brief foreshadowing, this point will become even more crucial in the next chapter, when we see how forces affect acceleration, which affects velocity, which affects location). In code, this reads:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 velocity.add(acceleration);
 location.add(velocity);</pre>
 
@@ -1003,50 +995,49 @@ location.add(velocity);</pre>
 
 <p>Algorithm #1, <em>a constant acceleration</em>, is not particularly interesting, but it is the simplest and will help us begin incorporating acceleration into our code. The first thing we need to do is add another <span class="klass">PVector</span> to the <span class="klass">Mover</span> class:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
 
   PVector location;
   PVector velocity;
-  // A new PVector for acceleration
-  PVector acceleration;  //[bold]</pre>
+  //{.bold} A new PVector for acceleration
+  PVector acceleration;</pre>
 
 <p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
-    //[full] Our motion algorithm is now two lines of code!
-    velocity.add(acceleration); //[bold]
+    //{!2 .bold} Our motion algorithm is now two lines of code!
+    velocity.add(acceleration);
     location.add(velocity);
-    //[end]
  }</pre>
 
 <p>We&rsquo;re almost done. The only missing piece is initialization in the constructor.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Mover() {</pre>
 
 <p>Let&rsquo;s start the <span class="klass">Mover</span> object in the middle of the window&hellip;</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     location = new PVector(width/2,height/2);</pre>
 
 <p>&hellip;with an initial velocity of zero.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     velocity = new PVector(0,0);</pre>
 
 <p>This means that when the sketch starts, the object is at rest. We don&rsquo;t have to worry about velocity anymore, as we are controlling the object&rsquo;s motion entirely with acceleration. Speaking of which, according to Algorithm #1, our first sketch involves constant acceleration. So let&rsquo;s pick a value.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-    acceleration = new PVector(-0.001,0.01);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+    acceleration = new PVector(-0.001, 0.01);
   }</pre>
 
 <p>Maybe you&rsquo;re thinking, &ldquo;Gosh, those values seem awfully small!&rdquo; That&rsquo;s right, they are quite tiny. It&rsquo;s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch&rsquo;s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <span class="klass">PVector</span> function <span class="function">limit()</span>.</p>
 
 <a data-primary="limit() function (PVector class)" data-type="indexterm"></a> <a data-primary="magnitude (of vectors)" data-secondary="limiting" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="limit() function" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="limiting" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The limit() function constrains the magnitude of a vector.
 velocity.limit(10);</pre>
 
@@ -1059,7 +1050,7 @@ velocity.limit(10);</pre>
 
 <p>Write the <span class="function">limit()</span> function for the <span class="klass">PVector</span> class.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void limit(float max) {
     if (_______ &gt; _______) {
       _________();
@@ -1076,34 +1067,35 @@ velocity.limit(10);</pre>
 
 <div data-type="example"><h5>Example 1.8: Motion 101 (velocity and constant acceleration)</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
 
   PVector location;
   PVector velocity;
   // Acceleration is the key!
   PVector acceleration;
-  // The variable topspeed will limit the magnitude of velocity.
+
+  //{!1} The variable topspeed will limit the magnitude of velocity.
   float topspeed;
 
   Mover() {
-    location = new PVector(width/2,height/2);
-    velocity = new PVector(0,0);
-    acceleration = new PVector(-0.001,0.01);
+    location = new PVector(width/2, height/2);
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(-0.001, 0.01);
     topspeed = 10;
   }
 
   void update() {
-    //[full] Velocity changes by acceleration and is limited by topspeed.
+    //{!2} Velocity changes by acceleration and is limited by topspeed.
     velocity.add(acceleration);
     velocity.limit(topspeed);
-    //[end]
     location.add(velocity);
   }
 
   // display() is the same.
   void display() {}
-  // checkEdges() is the same.
+
+  //{!1} checkEdges() is the same.
   void checkEdges() {}
 }</pre>
 
@@ -1123,10 +1115,10 @@ class Mover {
 
 <div data-type="example"><h5>Example 1.9: Motion 101 (velocity and random acceleration)</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
 
-    // The random2D() function will give us a PVector of length 1 pointing in a random direction.
+    //{!1} The random2D() function will give us a PVector of length 1 pointing in a random direction.
     acceleration = PVector.random2D();
 
     velocity.add(acceleration);
@@ -1136,21 +1128,19 @@ class Mover {
 
 <p>Because the random vector is a normalized one, we can try scaling it:</p>
 
-<pre>
-(a) scaling the acceleration to a constant value</pre>
+<p>(a) scaling the acceleration to a constant value</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 acceleration = PVector.random2D();
-// Constant
-acceleration.mult(0.5); //[bold]</pre>
+//{.bold} Constant
+acceleration.mult(0.5);</pre>
 
-<pre>
-(b) scaling the acceleration to a random value</pre>
+<p>(b) scaling the acceleration to a random value</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 acceleration = PVector.random2D();
-// Random
-acceleration.mult(random(2)); //[bold]</pre>
+//{.bold} Random
+acceleration.mult(random(2));</pre>
 
 <p>While this may seem like an obvious point, it&rsquo;s crucial to understand that acceleration does not merely refer to the <em>speeding up</em> or <em>slowing down</em> of a moving object, but rather <em>any change</em> in velocity in either magnitude or direction. Acceleration is used to steer an object, and we&rsquo;ll see this again and again in future chapters as we begin to program objects that make decisions about how to move about the screen.</p>
 
@@ -1171,7 +1161,7 @@ acceleration.mult(random(2)); //[bold]</pre>
 
 <p>Forgetting about vectors for a moment, take a look at the following code:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = 0;
 float y = 5;
 
@@ -1179,16 +1169,16 @@ x = x + y;</pre>
 
 <p>Pretty simple, right? <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5. We could write the corresponding code pretty easily based on what we&rsquo;ve learned about <span class="klass">PVector</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-PVector v = new PVector(0,0);
-PVector u = new PVector(4,5);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+PVector v = new PVector(0, 0);
+PVector u = new PVector(4, 5);
 v.add(u);</pre>
 
 <p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5). Easy, right?</p>
 
 <p>Let&rsquo;s take a look at another example of some simple floating point math:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = 0;
 float y = 5;
 
@@ -1196,15 +1186,15 @@ float z = x + y;</pre>
 
 <p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>. The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it&rsquo;s not so obvious with mathematical operations in <span class="klass">PVector</span>. Let&rsquo;s try to write the code based on what we know so far.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(0,0);
 PVector u = new PVector(4,5);
-// Don&rsquo;t be fooled; this is incorrect!!!
-PVector w = v.add(u); //[line-through]</pre>
+//{.line-through} Don&rsquo;t be fooled; this is incorrect!!!
+PVector w = v.add(u);</pre>
 
 <p>The above might seem like a good guess, but it&rsquo;s just not the way the <span class="klass">PVector</span> class works. If we look at the definition of <span class="function">add()</span> . . .</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void add(PVector v) {
     x = x + v.x;
     y = y + v.y;
@@ -1216,20 +1206,18 @@ void add(PVector v) {
 
 <p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">PVector</span> objects, <span class="var">v</span> and <span class="var">u</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Static: called from the class name.
-PVector.add(v,u);
+PVector.add(v, u);
+
 // Not static: called from an object instance.
 v.add(u);</pre>
 
 <p>Since you can&rsquo;t write static functions yourself in Processing, you might not have encountered them before. <span class="klass">PVector</span>'s static functions allow us to perform generic mathematical operations on <span class="klass">PVector</span> objects without having to adjust the value of one of the input <span class="klass">PVector</span><code>s</code>. Let&rsquo;s look at how we might write the static version of <span class="function">add()</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  //The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+  //{!1} The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
   static PVector add(PVector v1, PVector v2) {
-
-
-
     PVector v3 = new PVector(v1.x + v2.x, v1.y + v2.y);
     return v3;
   }</pre>
@@ -1250,11 +1238,13 @@ v.add(u);</pre>
 
 <p>When you call a static function, instead of referencing an actual object instance, you simply reference the name of the class itself.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-PVector v = new PVector(0,0);
-PVector u = new PVector(4,5);
-PVector w = v.add(u); //[line-through]
-PVector w = PVector.add(v,u); //[bold]</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+PVector v = new PVector(0, 0);
+PVector u = new PVector(4, 5);
+//{.line-through .no-comment}
+PVector w = v.add(u);
+//{.bold .no-comment}
+PVector w = PVector.add(v, u);</pre>
 
 <p>The <span class="klass">PVector</span> class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
 
@@ -1278,8 +1268,8 @@ PVector w = PVector.add(v,u); //[bold]</pre>
 	</li>
 </ul>
 
-<pre data-code-language="java" data-type="programlisting">
-PVector v = new PVector(1,5);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+PVector v = new PVector(1, 5);
 PVector u = ________._____(__,__);
 PVector w = ________._____(__,__);
 ___________;</pre>
@@ -1316,16 +1306,16 @@ ___________;</pre>
 
 <p>Let&rsquo;s rewrite the above using <span class="klass">PVector</span> syntax. Assuming we are in the <span class="klass">Mover</span> class and thus have access to the object&rsquo;s <span class="klass">PVector location</span>, we then have:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector mouse = new PVector(mouseX,mouseY);
 // Look! We&rsquo;re using the static reference to sub() because we want a new PVector pointing from one point to another.
-PVector dir = PVector.sub(mouse,location);</pre>
+PVector dir = PVector.sub(mouse, location);</pre>
 
 <p>We now have a <span class="klass">PVector</span> that points from the mover&rsquo;s location all the way to the mouse. If the object were to actually accelerate using that vector, it would appear instantaneously at the mouse location. This does not make for good animation, of course, and what we want to do now is decide how quickly that object should accelerate toward the mouse.</p>
 
 <p>In order to set the magnitude (whatever it may be) of our acceleration <span class="klass">PVector</span>, we must first <em>_</em> that direction vector. That&rsquo;s right, you said it. <em>Normalize</em>. If we can shrink the vector down to its unit vector (of length one) then we have a vector that tells us the direction and can easily be scaled to any value. One multiplied by anything equals anything.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float anything = ?????
 dir.normalize();
 dir.mult(anything);</pre>
@@ -1355,12 +1345,12 @@ dir.mult(anything);</pre>
 
 <div data-type="example"><h5>Example 1.10: Accelerating towards the mouse</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
 
     PVector mouse = new PVector(mouseX,mouseY);
     // Step 1: Compute direction
-    PVector dir = PVector.sub(mouse,location);
+    PVector dir = PVector.sub(mouse, location);
 
     // Step 2: Normalize
     dir.normalize();
@@ -1368,7 +1358,7 @@ dir.mult(anything);</pre>
     // Step 3: Scale
     dir.mult(0.5);
 
-    // Step 4: Accelerate
+    //{!1} Step 4: Accelerate
     acceleration = dir;
 
     velocity.add(acceleration);
@@ -1395,15 +1385,15 @@ dir.mult(anything);</pre>
 
 <div data-type="example"><h5>Example 1.11: Array of movers accelerating towards the mouse</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
-// An array of objects
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1} An array of objects
 Mover[] movers = new Mover[20];
 
 void setup() {
-  size(640,360);
+  size(640, 360);
   background(255);
   for (int i = 0; i &lt; movers.length; i++) {
-    // Initialize each object in the array.
+    //{!1} Initialize each object in the array.
     movers[i] = new Mover();
   }
 }
@@ -1412,11 +1402,10 @@ void draw() {
   background(255);
 
   for (int i = 0; i &lt; movers.length; i++) {
-    //[full] Calling functions on all the objects in the array
+    //{!3} Calling functions on all the objects in the array
     movers[i].update();
     movers[i].checkEdges();
     movers[i].display();
-    //[end]
   }
 }
 
@@ -1428,19 +1417,19 @@ class Mover {
   float topspeed;
 
   Mover() {
-    location = new PVector(random(width),random(height));
-    velocity = new PVector(0,0);
+    location = new PVector(random(width), random(height));
+    velocity = new PVector(0, 0);
     topspeed = 4;
   }
 
   void update() {
 
-    // &lt;b&gt;&lt;u&gt;Our algorithm for calculating acceleration&lt;/b&gt;&lt;/u&gt;:
+    // <b>Our algorithm for calculating acceleration</b>:
 
-    //[full] Find the vector pointing towards the mouse.
+    //{$2} Find the vector pointing towards the mouse.
     PVector mouse = new PVector(mouseX,mouseY);
     PVector dir = PVector.sub(mouse,location);
-    //[end]
+
     // Normalize.
     dir.normalize();
     // Scale.
@@ -1448,12 +1437,11 @@ class Mover {
     // Set to acceleration.
     acceleration = dir;
 
-    //[full] Motion 101! Velocity changes by acceleration.  Location changes by velocity.
+    //{!3} Motion 101! Velocity changes by acceleration.  Location changes by velocity.
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
-    //[end]
-  }
+    }
 
   // Display the Mover
   void display() {
@@ -1462,9 +1450,8 @@ class Mover {
     ellipse(location.x,location.y,16,16);
   }
 
-  // What to do at the edges
+  //{!13} What to do at the edges
   void checkEdges() {
-
     if (location.x &gt; width) {
       location.x = 0;
     } else if (location.x &lt; 0) {
