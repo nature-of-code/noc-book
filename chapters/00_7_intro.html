@@ -108,50 +108,47 @@
 
 <p>Let&rsquo;s begin by defining the <span class="klass">Walker</span> class&mdash;what it means to be a <span class="klass">Walker</span> object. The <span class="klass">Walker</span> only needs two pieces of data&mdash;a number for its x-location and one for its y-location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Walker {
-  //[full] Objects have data.
+  // Objects have data.
   int x;
-  int y;
-  //[end]</pre>
+  int y;</pre>
 
 <a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm"></a> <a data-primary="constructor" data-type="indexterm"></a>
 
 <p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object&rsquo;s <span class="function">setup()</span>. There, we&rsquo;ll initialize the <span class="klass">Walker</span><code>&rsquo;</code>s starting location (in this case, the center of the window).</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  //[full] Objects have a constructor where they are initialized.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+  //Objects have a constructor where they are initialized.
   Walker() {
     x = width/2;
     y = height/2;
-  }
-  //[end]</pre>
+  }</pre>
 
 <a data-primary="class (Processing)" data-secondary="functionality" data-type="indexterm"></a> <a data-primary="functionality" data-type="indexterm"></a>
 
 <p>Finally, in addition to data, classes can be defined with functionality. In this example, a <span class="klass">Walker</span> has two functions. We first write a function that allows the object to display itself (as a black dot).</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  //[full] Objects have functions.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+  // Objects have functions.
   void display() {
     stroke(0);
     point(x,y);
-  }
-  //[end]</pre>
+  }</pre>
 
 <p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <span class="var">x</span> (<span class="var">x</span><code>++</code>); to the left by decrementing <span class="var">x</span> (<span class="var">x--</span>); forward by going down a pixel (<span class="var">y++</span>); and backward by going up a pixel (<span class="var">y--</span>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <span class="function">random()</span>.</p>
 
 <a data-primary="random number generators" data-secondary="random() function" data-type="indexterm"></a> <a data-primary="random() function" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void step() {
     // 0, 1, 2, or 3
     int choice = int(random(4));</pre>
 
 <p>The above line of code picks a random floating point number between 0 and 4 and converts it to an integer, with a result of 0, 1, 2, or 3. Technically speaking, the highest number will never be 4.0, but rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an integer lops off the decimal place, the highest <span class="var">int</span> we can get is 3. Next, we take the appropriate step (left, right, up, or down) depending on which random number was picked.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-    //[full] The random &ldquo;choice&rdquo; determines our step.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+    //{!9} The random &ldquo;choice&rdquo; determines our step.
     if (choice == 0) {
       x++;
     } else if (choice == 1) {
@@ -161,13 +158,12 @@ class Walker {
     } else {
       y--;
     }
-    //[end]
   }
 }</pre>
 
 <p>Now that we&rsquo;ve written the class, it&rsquo;s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch&mdash;<span class="function">setup()</span> and <span class="function">draw()</span>. Assuming we are looking to model a single random walk, we declare one global variable of type <span class="var">Walker</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A Walker object
 Walker w;</pre>
 
@@ -181,22 +177,21 @@ Walker w;</pre>
 
 <p><em>Each time you see the above Example heading in this book, it means there is a corresponding code example available on <a href="http://github.com/shiffman/The-Nature-of-Code-Examples">GitHub</a>.</em></p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   size(640,360);
-  // Create the Walker.
-  w = new Walker();  //[bold]
+  // {!1 .bold} Create the Walker.
+  w = new Walker();
   background(255);
 }</pre>
 
 <p>Finally, during each cycle through <span class="function">draw()</span>, we ask the <span class="klass">Walker</span> to take a step and draw a dot.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
-  //[full] Call functions on the Walker.
-  w.step(); //[bold]
-  w.display(); //[bold]
-  //[end]
+  //{!2 .bold} Call functions on the Walker.
+  w.step();
+  w.display();
 }</pre>
 
 <p>Since we only draw the background once in <span class="function">setup()</span>, rather than clearing it continually each time through <span class="function">draw()</span>, we see the trail of the random walk in our Processing window.</p>
@@ -213,24 +208,22 @@ void draw() {
 
 <p>To implement a <span class="klass">Walker</span> object that can step to any neighboring pixel (or stay put), we could pick a number between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the y-axis.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void step() {
-    //[full] Yields -1, 0, or 1
+    //{!2} Yields -1, 0, or 1
     int xstep = int(random(3))-1;
     int ystep = int(random(3))-1;
-    //[end]
     x += xstep;
     y += ystep;
   }</pre>
 
 <p>Taking this further, we could use floating point numbers (i.e. decimal numbers) for <span class="var">x</span> and <span class="var">y</span> instead and move according to an arbitrary random value between -1 and 1.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void step() {
-    //[full] Yields any floating point number between -1.0 and 1.0
+    //{!2} Yields any floating point number between -1.0 and 1.0
     float xstep = random(-1, 1);
     float ystep = random(-1, 1);
-    //[end]
     x += xstep;
     y += ystep;
   }</pre>
@@ -249,30 +242,30 @@ void draw() {
 <h5>Example I.2: Random number distribution</h5>
 </div>
 
-<pre data-code-language="java" data-type="programlisting">
-// An array to keep track of how often random numbers are picked
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1} An array to keep track of how often random numbers are picked
 int[] randomCounts;
 
 void setup() {
-  size(640,240);
+  size(640, 240);
   randomCounts = new int[20];
 }
 
 void draw() {
   background(255);
 
-  // Pick a random number and increase the count.
+  //{!2} Pick a random number and increase the count.
   int index = int(random(randomCounts.length));
   randomCounts[index]++;
 
   stroke(0);
   fill(175);
   int w = width/randomCounts.length;
-  //[full] Graphing the results
+  //{!3} Graphing the results
   for (int x = 0; x &lt; randomCounts.length; x++) {
-    rect(x*w,height-randomCounts[x],w-1,randomCounts[x]);
+    rect(x*w, height-randomCounts[x],
+		     w-1, randomCounts[x]);
   }
-  //[end]
 }</pre>
 
 <p>The above screenshot shows the result of the sketch running for a few minutes. Notice how each bar of the graph differs in height. Our sample size (i.e. the number of random numbers we&rsquo;ve picked) is rather small and there are some occasional discrepancies, where certain numbers are picked more often. Over time, with a good random number generator, this would even out.</p>
@@ -335,12 +328,12 @@ void draw() {
 
 <p>There are a couple of ways in which we can use the <span class="function">random()</span> function with probability in code. One technique is to fill an array with a selection of numbers&mdash;some of which are repeated&mdash;then choose random numbers from that array and generate events based on those choices.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int[] stuff = new int[5];
-//[full] 1 is stored in the array twice, making it more likely to be picked.
+//{!2} 1 is stored in the array twice, making it more likely to be picked.
 stuff[0] = 1;
 stuff[1] = 1;
-//[end]
+
 stuff[2] = 2;
 stuff[3] = 3;
 stuff[4] = 3;
@@ -351,17 +344,15 @@ int index = int(random(stuff.length));</pre>
 
 <p>We can also ask for a random number (let&rsquo;s make it simple and just consider random floating point values between 0 and 1) and allow an event to occur only if our random number is within a certain range. For example:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A probability of 10%
 float prob = 0.10;
-// A random floating point value between 0 and 1
+// A random floating point between 0 and 1
 float r = random(1);
-
-//[full] If our random number is less than 0.1, try again!
+// If the random number is less than 0.1, try again!
 if (r &lt; prob) {
-   [inline]// try again!
-}
-//[end]</pre>
+  println("Try again!");
+}</pre>
 
 <p>This method can also be applied to multiple outcomes. Let&rsquo;s say that Outcome A has a 60% chance of happening, Outcome B, a 10% chance, and Outcome C, a 30% chance. We implement this in code by picking a random float and seeing into what range it falls.</p>
 
@@ -377,7 +368,7 @@ if (r &lt; prob) {
 	</li>
 </ul>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float num = random(1);
 
 // If random number is less than 0.6
@@ -416,14 +407,13 @@ if (num &lt; 0.6) {
 <h5>Example I.3: Walker that tends to move to the right</h5>
 </div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void step() {
 
     float r = random(1);
-    //[full] A 40% chance of moving to the right!
+    //{!2} A 40% chance of moving to the right!
     if (r &lt; 0.4) {
       x++;
-    //[end]
     } else if (r &lt; 0.6) {
       x--;
     } else if (r &lt; 0.8) {
@@ -445,7 +435,7 @@ if (num &lt; 0.6) {
 
 <p>Let&rsquo;s go back to that population of simulated Processing monkeys. Your program generates a thousand Monkey objects, each with a height value between 200 and 300 (as this is a world of monkeys that have heights between 200 and 300 pixels).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float h = random(200,300);</pre>
 
 <a data-primary="distributions" data-secondary="normal" data-type="indexterm"></a> <a data-primary="probability" data-secondary="normal distributions" data-type="indexterm"></a>
@@ -548,13 +538,12 @@ float h = random(200,300);</pre>
 
 <p>To use the <span class="klass">Random</span> class, we must first declare a variable of type <span class="klass">Random</span> and create the <span class="klass">Random</span> object in <span class="function">setup()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// We use the variable name &ldquo;generator&rdquo; because what we
-// have here can be thought of as a random number generator.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// We use the variable name &ldquo;generator&rdquo; because what we have here can be thought of as a random number generator.
 Random generator;
 
 void setup() {
-  size(640,360);
+  size(640, 360);
   generator = new Random();
 }</pre>
 
@@ -562,9 +551,9 @@ void setup() {
 
 <p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through <span class="function">draw()</span>, it&rsquo;s as easy as calling the function <span class="function">nextGaussian()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
-  // Asking for a Gaussian random number. (Note nextGaussian() returns a double and must be converted to float.)
+  //{!1} Asking for a Gaussian random number. (Note nextGaussian() returns a double and must be converted to float.)
   float num = (float) generator.nextGaussian();
 }</pre>
 
@@ -582,14 +571,14 @@ void draw() {
 <h5>Example I.4: Gaussian distribution</h5>
 </div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
-  // Note that nextGaussian() returns a double.
+  //{!1} Note that nextGaussian() returns a double.
   float num = (float) generator.nextGaussian();
   float sd = 60;
   float mean = 320;
 
-  // Multiply by the standard deviation and add the mean.
+  //{!1} Multiply by the standard deviation and add the mean.
   float x = sd * num + mean;
 
   noStroke();
@@ -625,16 +614,15 @@ void draw() {
 
 <a data-primary="arrays" data-secondary="Lévy flights" data-tertiary="implementing with" data-type="indexterm"></a> <a data-primary="Lévy flight" data-secondary="implementing with arrays" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float r = random(1);
-//[full] A 1% chance of taking a large step
+//{$3} A 1% chance of taking a large step
 if (r &lt; 0.01) {
-  xstep = random(-100,100);
-  ystep = random(-100,100);
-//[end]
+  xstep = random(-100, 100);
+  ystep = random(-100, 100);
 } else {
-  xstep = random(-1,1);
-  ystep = random(-1,1);
+  xstep = random(-1, 1);
+  ystep = random(-1, 1);
 }</pre>
 
 <a data-primary="Lévy flight" data-secondary="implementing with qualifying random values" data-type="indexterm"></a>
@@ -675,7 +663,7 @@ if (r &lt; 0.01) {
 
 Here is a function (named for the accept-reject algorithm, a type ofMonte Carlo method, which was named for the Monte Carlo casino) that implements the above algorithm, returning a random value between 0 and 1.
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float acceptreject() {
   // We do this &ldquo;forever&rdquo; until we find a qualifying random value.
   while (true) {
@@ -686,11 +674,10 @@ float acceptreject() {
     // Pick a second random value.
     float r2 = random(1);
 
-    //[full] Does it qualify?  If so, we&rsquo;re done!
+    //{!3} Does it qualify?  If so, we&rsquo;re done!
     if (r2 &lt; probability) {
       return r1;
     }
-    //[end]
   }
 }</pre>
 
@@ -699,12 +686,12 @@ float acceptreject() {
 
 <p>Use a custom probability distribution to vary the size of a step taken by the random walker. The step size can be determined by influencing the range of values picked. Can you map the probability exponentially&mdash;i.e. making the likelihood that a value is picked equal to the value squared?</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  // A uniform distribution of step sizes. Change this!
-  float stepsize = random(0,10);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+  //{!1} A uniform distribution of step sizes. Change this!
+  float stepsize = random(0, 10);
 
-  float stepx = random(-stepsize,stepsize);
-  float stepy = random(-stepsize,stepsize);
+  float stepx = random(-stepsize, stepsize);
+  float stepy = random(-stepsize, stepsize);
 
   x += stepx;
   y += stepy;</pre>
@@ -748,16 +735,16 @@ float acceptreject() {
 
 <p>Consider drawing a circle in our Processing window at a random x-location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A random x-location
-float x = random(0,width);
-ellipse(x,180,16,16);</pre>
+float x = random(0, width);
+ellipse(x, 180, 16, 16);</pre>
 
 <p>Now, instead of a random x-location, we want a Perlin noise x-location that is &ldquo;smoother.&rdquo; You might think that all you need to do is replace <span class="function">random()</span> with <span class="function">noise()</span>, i.e.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// A noise x-location?
-float x = noise(0,width); //[line-through]</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{.line-through} A noise x-location?
+float x = noise(0, width);</pre>
 
 <a data-primary="noise() function (Processing)" data-secondary="arguments for" data-type="indexterm"></a>
 
@@ -818,30 +805,30 @@ float x = noise(0,width); //[line-through]</pre>
 
 <p>Now, in order to access a particular noise value in Processing, we have to pass a specific &quot;moment in time&quot; to the <span class="function">noise()</span> function. For example:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float n = noise(3);</pre>
 
 <p>According to the above table, <span class="function">noise(3)</span> will return 0.364 at time equals 3. We could improve this by using a variable for time and asking for a noise value continuously in <span class="function">draw()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float t = 3;
 
 void draw() {
-  // We need the noise value for a specific moment in time.
+  //{!1} We need the noise value for a specific moment in time.
   float n = noise(t);
   println(n);
 }</pre>
 
 <p>The above code results in the same value printed over and over. This happens because we are asking for the result of the <span class="function">noise()</span> function at the same point in time&mdash;3&mdash;over and over. If we increment the time variable <span class="var">t</span>, however, we&rsquo;ll get a different result.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// Typically we would start at time = 0, though this is arbitrary.
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1} Typically we would start at time = 0, though this is arbitrary.
 float t = 0;
 
 void draw() {
   float n = noise(t);
   println(n);
-  // Now, we move forward in time!
+  //{!1} Now, we move forward in time!
   t += 0.01;
 }</pre>
 
@@ -866,14 +853,14 @@ void draw() {
 
 <p>In this case, we know that noise has a range between 0 and 1, but we&rsquo;d like to draw our circle with a range between 0 and the window&rsquo;s width.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float t = 0;
 
 void draw() {
   float n = noise(t);
-  // Using map() to customize the range of Perlin noise
-  float x = map(n,0,1,0,width);
-  ellipse(x,180,16,16);
+  //{!1} Using map() to customize the range of Perlin noise
+  float x = map(n, 0, 1, 0, width);
+  ellipse(x, 180, 16, 16);
 
   t += 0.01;
 }</pre>
@@ -888,11 +875,10 @@ void draw() {
 <h5>Example I.5: Perlin noise walker</h5>
 </div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Walker {
-  float x,y;
-
-  float tx,ty;
+  float x, y;
+  float tx, ty;
 
   Walker() {
     tx = 0;
@@ -900,15 +886,13 @@ class Walker {
   }
 
   void step() {
-    //[full] x- and y-location mapped from noise
+    //{!2} x- and y-location mapped from noise
     x = map(noise(tx), 0, 1, 0, width);
     y = map(noise(ty), 0, 1, 0, height);
-    //[end]
 
-    //[full] Move forward through &ldquo;time.&rdquo;
+    //{!2} Move forward through &ldquo;time.&rdquo;
     tx += 0.01;
     ty += 0.01;
-    //[end]
   }
 }</pre>
 
@@ -954,22 +938,22 @@ class Walker {
 
 <p>Let&rsquo;s take a quick look at how to implement two-dimensional noise in Processing. If you wanted to color every pixel of a window randomly, you would need a nested loop, one that accessed each pixel and picked a random brightness.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 loadPixels();
 for (int x = 0; x &lt; width; x++) {
   for (int y = 0; y &lt; height; y++) {
-    // A random brightness!
+    //{!1} A random brightness!
     float bright = random(255);
-    pixels[x+y*width] = color(bright);
+    pixels[x + y * width] = color(bright);
   }
 }
 updatePixels();</pre>
 
 <p>To color each pixel according to the <span class="function">noise()</span> function, we&rsquo;ll do exactly the same thing, only instead of calling <span class="function">random()</span> we&rsquo;ll call <span class="function">noise()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-   // A Perlin noise brightness!
-   float bright = map(noise(x,y),0,1,0,255); //[bold]</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+   //{.bold} A Perlin noise brightness!
+   float bright = map(noise(x,y),0,1,0,255);</pre>
 
 <p>This is a nice start conceptually&mdash;it gives you a noise value for every (<span class="var">x</span>,<span class="var">y</span>) location in our two-dimensional space. The problem is that this won&rsquo;t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <span class="var">xoff</span> each time we move horizontally, and a <span class="var">yoff</span> variable each time we move vertically through the nested loops.</p>
 
@@ -977,24 +961,25 @@ updatePixels();</pre>
 <h5>Example I.6: 2D Perlin noise</h5>
 </div>
 
-<pre data-code-language="java" data-type="programlisting">
-// Start xoff at 0.
-float xoff = 0.0; //[bold]
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1 .bold} Start xoff at 0.
+float xoff = 0.0;
 
 for (int x = 0; x &lt; width; x++) {
-  // For every xoff, start yoff at 0.
-  float yoff = 0.0; //[bold]
+  //{!1 .bold} For every xoff, start yoff at 0.
+  float yoff = 0.0;
 
   for (int y = 0; y &lt; height; y++) {
-    // Use xoff and yoff for noise().
-    float bright = map(noise(xoff,yoff),0,1,0,255); //[bold]
+    //{!2 .bold} Use xoff and yoff for noise().
+    float bright =
+		  map(noise(xoff,yoff),0,1,0,255);
     // Use x and y for pixel location.
-    pixels[x+y*width] = color(bright);
-    // Increment yoff.
-    yoff += 0.01; //[bold]
+    pixels[x + y * width] = color(bright);
+    //{!1 .bold} Increment yoff.
+    yoff += 0.01;
   }
-  // Increment xoff.
-  xoff += 0.01;  //[bold]
+  //{!1 .bold} Increment xoff.
+  xoff += 0.01;
 }</pre>
 
 <div data-type="exercise" id="intro_exercise8">
