@@ -709,14 +709,12 @@ void draw() {
   PVector gravity = new PVector(0, 0.1);
 
   for (int i = 0; i &lt; movers.length; i++) {
-
 		//{!5 .bold}
 		float c = 0.01;
     PVector friction = movers[i].velocity.get();
     friction.mult(-1);
     friction.normalize();
     friction.mult(c);
-
     //{!1 .bold} Apply the friction force vector to the object.
     movers[i].applyForce(friction);
     movers[i].applyForce(wind);
@@ -726,7 +724,6 @@ void draw() {
     movers[i].display();
     movers[i].checkEdges();
   }
-
 }</pre>
 
 <p>Running this example, you&rsquo;ll notice that the circles don&rsquo;t even make it to the right side of the window. Since friction continuously pushes against the object in the opposite direction of its movement, the object continuously slows down. This can be a useful technique or a problem depending on the goals of your visualization.</p>

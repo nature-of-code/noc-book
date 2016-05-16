@@ -52,7 +52,7 @@
 
 <p>Thankfully, if we prefer to think in degrees but code with radians, Processing makes this easy. The <span class="function">radians()</span> function will automatically convert values from degrees to radians, and the constants <span class="var">PI</span> and <span class="var">TWO_PI</span> provide convenient access to these commonly used numbers (equivalent to 180 and 360 degrees, respectively). The following code, for example, will rotate shapes by 60 degrees.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float angle = radians(60);
 rotate(angle);</pre>
 
@@ -98,12 +98,12 @@ rotate(angle);</pre>
 
 <p>Using the answer from Exercise 3.1 above, let&rsquo;s say we wanted to rotate a baton in Processing by some angle. We would have code like:</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  translate(width/2,height/2);
-  rotate(angle);
-  line(-50,0,50,0);
-  ellipse(50,0,8,8);
-  ellipse(-50,0,8,8);</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+translate(width/2, height/2);
+rotate(angle);
+line(-50, 0, 50, 0);
+ellipse(50, 0, 8, 8);
+ellipse(-50, 0, 8, 8);</pre>
 
 <p>Adding in our principles of motion brings us to the following example.</p>
 
@@ -113,16 +113,16 @@ rotate(angle);</pre>
 
 <div data-type="example"><h5>Example 3.1: Angular motion using rotate()</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Location
 float angle = 0;
 // Velocity
 float aVelocity = 0;
-// Acceleration
+//{!1} Acceleration
 float aAcceleration = 0.001;
 
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
@@ -131,15 +131,15 @@ void draw() {
   fill(175);
   stroke(0);
   rectMode(CENTER);
-  translate(width/2,height/2);
+  translate(width/2, height/2);
   rotate(angle);
-  line(-50,0,50,0);
-  ellipse(50,0,8,8);
-  ellipse(-50,0,8,8);
+  line(-50, 0, 50, 0);
+  ellipse(50, 0, 8, 8);
+  ellipse(-50, 0, 8, 8);
 
   // Angular equivalent of velocity.add(acceleration);
   aVelocity += aAcceleration;
-  // Angular equivalent of location.add(velocity);
+  //{!1} Angular equivalent of location.add(velocity);
   angle += aVelocity;
 }</pre>
 
@@ -147,9 +147,8 @@ void draw() {
 
 <p>This idea can be incorporated into our <span class="klass">Mover</span> object. For example, we can add the variables related to angular motion to our <span class="klass">Mover</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
-
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -162,52 +161,47 @@ class Mover {
 
 <p>And then in <span class="function">update()</span>, we update both location and angle according to the same algorithm!</p>
 
-<pre data-code-language="java" data-type="programlisting">
- void update() {
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+void update() {
+  //{!2} Regular old-fashioned motion
+  velocity.add(acceleration);
+  location.add(velocity);
 
-    //[full] Regular old-fashioned motion
-    velocity.add(acceleration);
-    location.add(velocity);
-    //[end]
+  //{!2} Newfangled angular motion
+  aVelocity += aAcceleration;
+  angle += aVelocity;
 
-    //[full] Newfangled angular motion
-    aVelocity += aAcceleration;
-    angle += aVelocity;
-    //[end]
-
-    acceleration.mult(0);
-  }</pre>
+  acceleration.mult(0);
+}</pre>
 
 <p>Of course, for any of this to matter, we also would need to rotate the object when displaying it.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-  void display() {
-    stroke(0);
-    fill(175,200);
-    rectMode(CENTER);
-    // pushMatrix() and popMatrix() are necessary
-    // so that the rotation of this shape doesn&rsquo;t
-    // affect the rest of our world.
-    pushMatrix();
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+void display() {
+  stroke(0);
+  fill(175,200);
+  rectMode(CENTER);
+  //{!1} pushMatrix() and popMatrix() are necessary so that the rotation of this shape doesn&rsquo;t affect the rest of our world.
+  pushMatrix();
 
-    // Set the origin at the shape&rsquo;s location.
-    translate(location.x,location.y);
-    // Rotate by the angle.
-    rotate(angle);
-    rect(0,0,mass*16,mass*16);
-    popMatrix();
-  }</pre>
+  // Set the origin at the shape&rsquo;s location.
+  translate(location.x, location.y);
+  //{!1} Rotate by the angle.
+  rotate(angle);
+  rect(0, 0, mass * 16, mass * 16);
+  popMatrix();
+}</pre>
 
 <p>Now, if we were to actually go ahead and run the above code, we wouldn&rsquo;t see anything new. This is because the angular acceleration (<span class="function">float aAcceleration = 0;</span>) is initialized to zero. For the object to rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float aAcceleration = 0.01;</pre>
 
 <p>However, we can produce a more interesting result by dynamically assigning an angular acceleration according to forces in the environment. Now, we could head far down this road, trying to model the physics of angular acceleration using the concepts of <a href="http://en.wikipedia.org/wiki/Torque">torque</a> and <a href="http://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a>. Nevertheless, this level of simulation is beyond the scope of this book. (We will see more about modeling angular acceleration with a pendulum later in this chapter, as well as look at how Box2D realistically models rotational motion in Chapter 5.)</p>
 
 <p>For now, a quick and dirty solution will do. We can produce reasonable results by simply calculating angular acceleration as a function of the object&rsquo;s acceleration vector. Here&rsquo;s one such example:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     aAcceleration = acceleration.x;</pre>
 
 <p>Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right, its angular rotation accelerates in a clockwise direction; acceleration to the left results in a counterclockwise rotation. Of course, it&rsquo;s important to think about scale in this case. The <em>x</em> component of the acceleration vector might be a quantity that&rsquo;s too large, causing the object to spin in a way that looks ridiculous or unrealistic. So dividing the <em>x</em> component by some value, or perhaps constraining the angular velocity to a reasonable range, could really help. Here&rsquo;s the entire <span class="function">update()</span> function with these tweaks added.</p>
@@ -218,20 +212,17 @@ float aAcceleration = 0.01;</pre>
 
 <div data-type="example"><h5>Example 3.2: Forces with (arbitrary) angular motion</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
 
     velocity.add(acceleration);
     location.add(velocity);
 
-    // Calculate angular acceleration according to
-    // acceleration&rsquo;s horizontal direction and
-    // magnitude.
+    //{!1} Calculate angular acceleration according to acceleration&rsquo;s horizontal direction and magnitude.
     aAcceleration = acceleration.x / 10.0;
     aVelocity += aAcceleration;
-    // Use constrain() to ensure that angular
-    // velocity doesn&rsquo;t spin out of control.
-    aVelocity = constrain(aVelocity,-0.1,0.1);
+    //{!1} Use constrain() to ensure that angular velocity doesn&rsquo;t spin out of control.
+    aVelocity = constrain(aVelocity, -0.1, 0.1);
     angle += aVelocity;
 
     acceleration.mult(0);
@@ -337,19 +328,19 @@ float aAcceleration = 0.01;</pre>
 
 <p>Now that we have the formula, let&rsquo;s see where it should go in our mover&rsquo;s <span class="function">display()</span> function. Notice that in Processing, the function for arctangent is called <span class="function">atan()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
-    // Solve for angle by using atan().
-    float angle = atan(velocity.y/velocity.x);
+    //{!1} Solve for angle by using atan().
+    float angle = atan(velocity.y / velocity.x);
 
     stroke(0);
     fill(175);
     pushMatrix();
     rectMode(CENTER);
-    translate(location.x,location.y);
-    // Rotate according to that angle.
+    translate(location.x, location.y);
+    //{!1} Rotate according to that angle.
     rotate(angle);
-    rect(0,0,30,10);
+    rect(0, 0, 30, 10);
     popMatrix();
   }</pre>
 
@@ -374,19 +365,19 @@ float aAcceleration = 0.01;</pre>
 
 <div data-type="example"><h5>Example 3.3: Pointing in the direction of motion</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
-    // Using atan2() to account for all possible directions
-    float angle = atan2(velocity.y,velocity.x);
+    //{!1} Using atan2() to account for all possible directions
+    float angle = atan2(velocity.y, velocity.x);
 
     stroke(0);
     fill(175);
     pushMatrix();
     rectMode(CENTER);
-    translate(location.x,location.y);
-    // Rotate according to that angle.
+    translate(location.x, location.y);
+    //{!1} Rotate according to that angle.
     rotate(angle);
-    rect(0,0,30,10);
+    rect(0, 0, 30, 10);
     popMatrix();
   }</pre>
 
@@ -394,7 +385,7 @@ float aAcceleration = 0.01;</pre>
 
 <p>To simplify this even further, the <span class="klass">PVector</span> class itself provides a function called <span class="klass">heading()</span>, which takes care of calling <span class="function">atan2()</span> for you so you can get the 2D direction angle, in radians, for any Processing <span class="klass">PVector</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
     float angle = velocity.heading();</pre>
 
@@ -436,13 +427,12 @@ Polar coordinate&mdash;the magnitude (length) and direction (angle) of a vector<
 
 <p>For example, if <span class="var">r</span> is 75 and <span class="var">theta</span> is 45 degrees (or PI/4 radians), we can calculate <span class="var">x</span> and <span class="var">y</span> as below. The functions for sine and cosine in Processing are <span class="function">sin()</span> and <span class="function">cos()</span>, respectively. They each take one argument, an angle measured in radians.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float r = 75;
 float theta = PI / 4;
-//[full] Converting from polar (r,theta) to Cartesian (x,y)
+// Converting from polar (r,theta) to Cartesian (x,y)
 float x = r * cos(theta);
-float y = r * sin(theta);
-//[end]</pre>
+float y = r * sin(theta);</pre>
 
 <a data-primary="shapes" data-secondary="moving with polar coordinates" data-type="indexterm"></a>
 
@@ -456,25 +446,24 @@ float y = r * sin(theta);
 
 <div data-type="example"><h5>Example 3.4: Polar to Cartesian</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float r = 75;
 float theta = 0;
 
 void setup() {
-  size(640,360);
+  size(640, 360);
   background(255);
 }
 
 void draw() {
 
-  //[full] Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
+  //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
   float x = r * cos(theta);
   float y = r * sin(theta);
-  //[end]
 
   noStroke();
   fill(0);
-  ellipse(x+width/2, y+height/2, 16, 16);
+  ellipse(x + width/2, y + height/2, 16, 16);
 
   theta += 0.01;
 }</pre>
@@ -546,7 +535,7 @@ void draw() {
 
 <p>Now, in the Processing world we live in, what is amplitude and what is period? Amplitude can be measured rather easily in pixels. In the case of a window 200 pixels wide, we would oscillate from the center 100 pixels to the right and 100 pixels to the left. Therefore:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Our amplitude is measured in pixels.
 float amplitude = 100;</pre>
 
@@ -554,13 +543,13 @@ float amplitude = 100;</pre>
 
 <p><em>Period</em> is the amount of time it takes for one cycle, but what is time in our Processing world? I mean, certainly we could say we want the circle to oscillate every three seconds. And we could track the milliseconds&mdash;using <span class="function">millis()</span> &mdash;in Processing and come up with an elaborate algorithm for oscillating an object according to real-world time. But for us, real-world time doesn&rsquo;t really matter. The real measure of time in Processing is in frames. The oscillating motion should repeat every 30 frames, or 50 frames, or 1000 frames, etc.</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// Our period is measured in frames (our unit of time for animation).
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// Period is measured in frames (the unit of time for animation).
 float period = 120;</pre>
 
 <p>Once we have the amplitude and period, it&rsquo;s time to write a formula to calculate x as a function of time, which we now know is the current frame count.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <a data-primary="map() function (Processing)" data-secondary="oscillation and" data-type="indexterm"></a>
@@ -642,9 +631,9 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
@@ -652,13 +641,13 @@ void draw() {
 
   float period = 120;
   float amplitude = 100;
-  //[offset-down] Calculating horizontal location according to the formula for simple harmonic motion
+  //{!1} Calculating horizontal location according to the formula for simple harmonic motion
   float x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
-  translate(width/2,height/2);
-  line(0,0,x,0);
-  ellipse(x,0,20,20);
+  translate(width/2, height/2);
+  line(0, 0, x, 0);
+  ellipse(x, 0, 20, 20);
 }</pre>
 
 <a data-primary="frequency (of oscillations)" data-type="indexterm"></a> <a data-primary="oscillation" data-secondary="frequency of" data-type="indexterm"></a>
@@ -679,23 +668,23 @@ void draw() {
 
 <p>An understanding of the concepts of oscillation, amplitude, and frequency/period is often required in the course of simulating real-world behaviors. However, there is a slightly easier way to rewrite the above example with the same result. Let&rsquo;s take one more look at our oscillation formula:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <p>And let&rsquo;s rewrite it a slightly different way:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = amplitude * sin ( some value that increments slowly );</pre>
 
 <p>If we care about precisely defining the period of oscillation in terms of frames of animation, we might need the formula the way we first wrote it, but we can just as easily rewrite our example using the concept of angular velocity (and acceleration) from <a href="#chapter03_section2">section 3.2</a>. Assuming:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float angle = 0;
 float aVelocity = 0.05;</pre>
 
 <p>in <span class="function">draw()</span>, we can simply say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 angle += aVelocity;
 float x = amplitude * sin(angle);</pre>
 
@@ -703,12 +692,12 @@ float x = amplitude * sin(angle);</pre>
 
 <div data-type="example"><h5>Example 3.6: Simple Harmonic Motion II</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float angle = 0;
 float aVelocity = 0.05;
 
 void setup() {
-  size(640,360);
+  size(640, 360);
 }
 
 void draw() {
@@ -716,15 +705,15 @@ void draw() {
 
   float amplitude = 100;
   float x = amplitude * sin(angle);
-  // Using the concept of angular velocity to increment an angle variable
+  //{!1} Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
 
   ellipseMode(CENTER);
   stroke(0);
   fill(175);
-  translate(width/2,height/2);
-  line(0,0,x,0);
-  ellipse(x,0,20,20);
+  translate(width/2, height/2);
+  line(0, 0, x, 0);
+  ellipse(x, 0, 20, 20);
 }</pre>
 
 <p>Just because we&rsquo;re not referencing it directly doesn&rsquo;t mean that we&rsquo;ve eliminated the concept of <span class="var">period</span>. After all, the greater the angular velocity, the faster the circle will oscillate (therefore lowering the period). In fact, the number of times it takes to add up the angular velocity to get to <span class="var">TWO_PI</span> is the period or:</p>
@@ -741,10 +730,10 @@ void draw() {
 
 <div data-type="example"><h5>Example 3.7: Oscillator objects</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Oscillator  {
 
-  // Using a PVector to track two angles!
+  //{!3} Using a PVector to track two angles!
   PVector angle;
   PVector velocity;
   PVector amplitude;
@@ -752,8 +741,8 @@ class Oscillator  {
   Oscillator()  {
     angle = new PVector();
     velocity = new PVector(random(-0.05,0.05),random(-0.05,0.05));
-    //[offset-down] Random velocities and amplitudes
-    amplitude = new PVector(random(width/2),random(height/2));
+    //{!1} Random velocities and amplitudes
+    amplitude = new PVector(random(width/2), random(height/2));
   }
 
   void oscillate()  {
@@ -762,17 +751,17 @@ class Oscillator  {
 
   void display()  {
     // Oscillating on the x-axis
-    float x = sin(angle.x)*amplitude.x;
-    // Oscillating on the y-axis
-    float y = sin(angle.y)*amplitude.y;
+    float x = sin(angle.x) * amplitude.x;
+    //{!1} Oscillating on the y-axis
+    float y = sin(angle.y) * amplitude.y;
 
     pushMatrix();
-    translate(width/2,height/2);
+    translate(width/2, height/2);
     stroke(0);
     fill(175);
     // Drawing the Oscillator as a line connecting a circle
-    line(0,0,x,y);
-    ellipse(x,y,16,16);
+    line(0, 0, x, y);
+    ellipse(x, y, 16, 16);
     popMatrix();
   }
 }</pre>
@@ -809,7 +798,7 @@ class Oscillator  {
 
 <p>Let&rsquo;s go with the simpler case, angular velocity. We know we need to start with an angle, an angular velocity, and an amplitude:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float angle = 0;
 float angleVel = 0.2;
 float amplitude = 100;</pre>
@@ -828,16 +817,12 @@ float amplitude = 100;</pre>
 	</li>
 </ol>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   for (int x = 0; x &lt;= width; x += 24) {
-
-    // 1) Calculate the y location according to
-    // amplitude and sine of the angle.
-    float y = amplitude*sin(angle);
-
+    // 1) Calculate the y location according to amplitude and sine of the angle.
+    float y = amplitude * sin(angle);
     // 2) Draw a circle at the (x,y) location.
-    ellipse(x,y+height/2,48,48);
-
+    ellipse(x, y + height/2, 48, 48);
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
   }</pre>
@@ -864,12 +849,12 @@ float amplitude = 100;</pre>
 
 <div data-type="example"><h5>Example 3.8: Static wave drawn as a continuous line</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float angle = 0;
 float angleVel = 0.2;
 float amplitude = 100;
 
-size(400,200);
+size(400, 200);
 background(255);
 
 stroke(0);
@@ -880,11 +865,11 @@ beginShape();
 for (int x = 0; x &lt;= width; x += 5) {
   // Here&rsquo;s an example of using the map() function
   // instead.
-  float y = map(sin(angle),-1,1,0,height);
+  float y = map(sin(angle), -1, 1, 0, height);
   // With beginShape() and endShape(), you call
   // vertex() to set all the vertices of your shape.
-  vertex(x,y);
-  angle +=angleVel;
+  vertex(x, y);
+  angle += angleVel;
 }
 endShape();</pre>
 
@@ -900,20 +885,20 @@ endShape();</pre>
 
 <div data-type="example"><h5>Example 3.9: The Wave</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float startAngle = 0;
 float angleVel = 0.1;
 
 void setup() {
-  size(400,200);
+  size(400, 200);
 }
 
 void draw() {
   background(255);
 
-  //[full] In order to move the wave, we start at a different theta value each frame.  startAngle += 0.02;
-float angle = startAngle;
-  //[end]
+  //{!2} In order to move the wave, we start at a different theta value each frame.
+  startAngle += 0.02;
+  float angle = startAngle;
 
   for (int x = 0; x &lt;= width; x += 24) {
     float y = map(sin(angle),-1,1,0,height);
@@ -1024,7 +1009,7 @@ float angle = startAngle;
 	</li>
 </ul>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Pendulum  {
 
   // Length of arm
@@ -1038,7 +1023,7 @@ class Pendulum  {
 
 <p>We&rsquo;ll also need to write a function <span class="function">update()</span> to update the pendulum&rsquo;s angle according to our formula&hellip;</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
     // Arbitrary constant
     float gravity = 0.4;
@@ -1046,7 +1031,7 @@ class Pendulum  {
     aAcceleration = -1 * gravity * sin(angle);
     // Increment velocity.
     aVelocity += aAcceleration;
-    // Increment angle.
+    //{!1} Increment angle.
     angle += aVelocity;
   }</pre>
 
@@ -1058,38 +1043,38 @@ class Pendulum  {
 
 <p>The origin is just something we make up, as is the arm length. Let&rsquo;s say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector origin = new PVector(100,10);
 float r = 125;</pre>
 
 <p>We&rsquo;ve got the current angle stored in our variable <span class="var">angle</span>. So relative to the origin, the pendulum&rsquo;s location is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector location = new PVector(r*sin(angle),r*cos(angle));</pre>
 
 <p>Since the location is relative to wherever the origin happens to be, we can just add origin to the location <span class="klass">PVector</span>:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 location.add(origin);</pre>
 
 <p>And all that remains is the little matter of drawing a line and ellipse (you should be more creative, of course).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 stroke(0);
 fill(175);
-line(origin.x,origin.y,location.x,location.y);
-ellipse(location.x,location.y,16,16);</pre>
+line(origin.x, origin.y, location.x, location.y);
+ellipse(location.x, location.y, 16, 16);</pre>
 
 <p>Before we put everything together, there&rsquo;s one last little detail I neglected to mention. Let&rsquo;s think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a lot of questions that we could continue to ask that would affect the simulation. We&rsquo;re living, of course, in a fantasy world, one where the pendulum&rsquo;s arm is some idealized rod that never bends and the mass of the bob is concentrated in a single, infinitesimally small point. Nevertheless, even though we don&rsquo;t want to worry ourselves with all of the questions, we should add one more variable to our calculation of angular acceleration. To keep things simple, in our derivation of the pendulum&rsquo;s acceleration, we assumed that the length of the pendulum&rsquo;s arm is 1. In fact, the length of the pendulum&rsquo;s arm affects the acceleration greatly: the longer the arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that length, in this case <span class="var">r</span>. For a more involved explanation, visit <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum website</a>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 aAcceleration = (-1 * G * sin(angle)) / r;</pre>
 
 <a data-primary="acceleration" data-secondary="damping" data-type="indexterm"></a> <a data-primary="damping" data-type="indexterm"></a> <a data-primary="forces" data-secondary="damping" data-type="indexterm"></a> <a data-primary="friction" data-secondary="damping" data-type="indexterm"></a>
 
 <p>Finally, a real-world pendulum is going to experience some amount of friction (at the pivot point) and air resistance. With our code as is, the pendulum would swing forever, so to make it more realistic we can use a &ldquo;damping&rdquo; trick. I say <em>trick</em> because rather than model the resistance forces with some degree of accuracy (as we did in Chapter 2), we can achieve a similar result by simply reducing the angular velocity during each cycle. The following code reduces the velocity by 1% (or multiplies it by 99%) during each frame of animation:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 aVelocity *= 0.99;</pre>
 
 <p>Putting everything together, we have the following example (with the pendulum beginning at a 45-degree angle).</p>
@@ -1100,13 +1085,12 @@ aVelocity *= 0.99;</pre>
 
 <div data-type="example"><h5>Example 3.10: Swinging pendulum</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Pendulum p;
 
 void setup() {
-  size(640,360);
-  // We make a new Pendulum object with
-  // an origin location and arm length.
+  size(640, 360);
+  //{!1} We make a new Pendulum object with an origin location and arm length.
   p = new Pendulum(new PVector(width/2,10),125);
 }
 
@@ -1116,7 +1100,7 @@ void draw() {
 }
 
 class Pendulum  {
-  //[full] Many, many variables to keep track of the Pendulum&rsquo;s various properties
+  //{!7} Many, many variables to keep track of the Pendulum&rsquo;s various properties
   PVector location;    // Location of bob
   PVector origin;      // Location of arm origin
   float r;             // Length of arm
@@ -1124,18 +1108,16 @@ class Pendulum  {
   float aVelocity;     // Angle velocity
   float aAcceleration; // Angle acceleration
   float damping;       // Arbitrary damping amount
-  //[end]
 
   Pendulum(PVector origin_, float r_) {
-    origin = origin_.get();
+    origin = origin_.copy();
     location = new PVector();
     r = r_;
     angle = PI/4;
 
     aVelocity = 0.0;
     aAcceleration = 0.0;
-    // An arbitrary damping so that the Pendulum slows
-    // over time
+    // An arbitrary damping so that the Pendulum slows over time
     damping = 0.995;
   }
 
@@ -1146,30 +1128,28 @@ class Pendulum  {
 
   void update() {
     float gravity = 0.4;
-    //[offset-up] Formula we worked out for angular acceleration
+    //{!1} Formula we worked out for angular acceleration
     aAcceleration = (-1 * gravity / r) * sin(angle);
 
-    //[full] Standard angular motion algorithm
+    //{!2} Standard angular motion algorithm
     aVelocity += aAcceleration;
     angle += aVelocity;
-    //[end]
 
     // Apply some damping.
     aVelocity *= damping;
   }
 
   void display() {
-    // Where is the bob relative to the origin?
-    // Polar to Cartesian coordinates will tell us!
-    location.set(r*sin(angle),r*cos(angle),0);
+    //{!1} Where is the bob relative to the origin? Polar to Cartesian coordinates will tell us!
+    location.set(r * sin(angle), r * cos(angle));
     location.add(origin);
 
     stroke(0);
-    // The arm
-    line(origin.x,origin.y,location.x,location.y);
+    //{!1} The arm
+    line(origin.x, origin.y, location.x, location.y);
     fill(175);
-    // The bob
-    ellipse(location.x,location.y,16,16);
+    //{!1} The bob
+    ellipse(location.x, location.y, 16, 16);
   }
 }</pre>
 
@@ -1246,7 +1226,7 @@ class Pendulum  {
 
 <p>Let&rsquo;s establish the following three variables as shown in Figure 3.16.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector anchor;
 PVector location;
 float restLength;</pre>
@@ -1255,17 +1235,16 @@ float restLength;</pre>
 
 <p>First, let&rsquo;s use Hooke&rsquo;s law to calculate the magnitude of the force. We need to know <span class="var">k</span> and <span class="var">x</span>. <span class="var">k</span> is easy; it&rsquo;s just a constant, so let&rsquo;s make something up.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float k = 0.1;</pre>
 
 <a data-primary="springs" data-secondary="rest length" data-type="indexterm"></a>
 
 <p><span class="var">x</span> is perhaps a bit more difficult. We need to know the &ldquo;difference between the current length and the rest length.&rdquo; The rest length is defined as the variable <span class="var">restLength</span>. What&rsquo;s the current length? The distance between the anchor and the bob. And how can we calculate that distance? How about the magnitude of a vector that points from the anchor to the bob? (Note that this is exactly the same process we employed when calculating distance in Example 2.9: gravitational attraction.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// A vector pointing from anchor to bob
-// gives us the current length of the spring.
-PVector dir = PVector.sub(bob,anchor);
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!1} A vector pointing from anchor to bob gives us the current length of the spring.
+PVector dir = PVector.sub(bob, anchor);
 float currentLength = dir.mag();
 float x = currentLength - restLength;</pre>
 
@@ -1279,14 +1258,14 @@ float x = currentLength - restLength;</pre>
 
 <p>In Figure 3.17, we can see that if we stretch the spring beyond its rest length, there should be a force pulling it back towards the anchor. And if it shrinks below its rest length, the force should push it away from the anchor. This reversal of direction is accounted for in the formula with the -1. And so all we need to do is normalize the <span class="klass">PVector</span> we used for the distance calculation! Let&rsquo;s take a look at the code and rename that <span class="klass">PVector</span> variable as &ldquo;force.&rdquo;</p>
 
-<pre data-code-language="java" data-type="programlisting">
-// Magnitude of spring force according to Hooke&rsquo;s law
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!4} Magnitude of spring force according to Hooke&rsquo;s law
 float k = 0.1;
-PVector force = PVector.sub(bob,anchor);
+PVector force = PVector.sub(bob, anchor);
 float currentLength = force.mag();
 float x = currentLength - restLength;
 
-// Direction of spring force (unit vector)
+//{!1} Direction of spring force (unit vector)
 force.normalize();
 
 // Putting it together: direction and magnitude!
@@ -1296,7 +1275,7 @@ force.mult(-1 * k * x);</pre>
 
 <p>Now that we have the algorithm worked out for computing the spring force vector, the question remains: what object-oriented programming structure should we use? This, again, is one of those situations in which there is no &ldquo;correct&rdquo; answer. There are several possibilities; which one we choose depends on the program&rsquo;s goals and one&rsquo;s own personal coding style. Still, since we&rsquo;ve been working all along with a <span class="klass">Mover</span> class, let&rsquo;s keep going with this same framework. Let&rsquo;s think of our <span class="klass">Mover</span> class as the spring&rsquo;s &ldquo;bob.&rdquo; The bob needs <span class="var">location</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span> vectors to move about the screen. Perfect&mdash;we&rsquo;ve got that already! And perhaps the bob experiences a gravity force via the <span class="function">applyForce()</span> function. Just one more step&mdash;we need to apply the spring force:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Bob bob;
 
 void setup() {
@@ -1304,15 +1283,14 @@ void setup() {
 }
 
 void draw()  {
-  // Our Chapter 2 &ldquo;make-up-a-gravity force&rdquo;
-  PVector gravity = new PVector(0,1);
+  //{!1} Our Chapter 2 &ldquo;make-up-a-gravity force&rdquo;
+  PVector gravity = new PVector(0, 1);
   bob.applyForce(gravity);
-  //[full] We need to also calculate and apply a spring force!
-  PVector springForce = _______________????  //[bold]
-  bob.applyForce(spring); //[bold]
-  //[end]
+  //{!2 .bold} We need to also calculate and apply a spring force!
+  PVector springForce = _______________????
+  bob.applyForce(spring);
 
-  // Our standard update() and display() functions
+  //{!2} Our standard update() and display() functions
   bob.update();
   bob.display();
 }</pre>
@@ -1325,10 +1303,10 @@ void draw()  {
 
 <p>This allows us to write a lovely main program as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Bob bob;
-// Adding a Spring object
-Spring spring;  //[bold]
+//{!1 .bold} Adding a Spring object
+Spring spring;
 
 void setup() {
   bob = new Bob();
@@ -1339,9 +1317,8 @@ void draw()  {
   PVector gravity = new PVector(0,1);
   bob.applyForce(gravity);
 
-  // This new function in the Spring class will take care of
-  // computing the force of the spring on the bob.
-  spring.connect(bob); //[bold]
+  //{!1 .bold} This new function in the Spring class will take care of computing the force of the spring on the bob.
+  spring.connect(bob);
 
   bob.update();
   bob.display();
@@ -1350,30 +1327,28 @@ void draw()  {
 
 <p>You may notice here that this is quite similar to what we did in <a href="#chapter02_example6">Example 2.6</a> with an attractor. There, we said something like:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector force = attractor.attract(mover);
   mover.applyForce(force);</pre>
 
 <p>The analogous situation here with a spring would be:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector force = spring.connect(bob);
   bob.applyForce(force);</pre>
 
 <p>Nevertheless, in this example all we said was:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   spring.connect(bob);</pre>
 
 <p>What gives? Why don&rsquo;t we need to call <span class="function">applyForce()</span> on the bob? The answer is, of course, that we do need to call <span class="function">applyForce()</span> on the bob. Only instead of doing it in <span class="function">draw()</span>, we&rsquo;re just demonstrating that a perfectly reasonable (and sometimes preferable) alternative is to ask the <span class="function">connect()</span> function to internally handle calling <span class="function">applyForce()</span> on the bob.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Bob b) {
     PVector force = some fancy calculations
 
-    // The function connect() takes care of calling applyForce()
-    // and therefore doesn&rsquo;t have to return a vector to the calling
-    // area.
+    //{!1} The function connect() takes care of calling applyForce() and therefore doesn&rsquo;t have to return a vector to the calling area.
     b.applyForce(force);
   }</pre>
 
@@ -1387,59 +1362,51 @@ void draw()  {
 
 <div data-type="example"><h5>Example 3.11: A Spring connection</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Spring {
 
-  // We need to keep track of the spring&rsquo;s anchor location.
+  //{!1} We need to keep track of the spring&rsquo;s anchor location.
   PVector anchor;
 
-  // Rest length and spring constant variables
+  //{!2} Rest length and spring constant variables
   float len;
   float k = 0.1;
 
-  //[full] The constructor initializes the anchor point and rest length.
+  //{!4} The constructor initializes the anchor point and rest length.
   Spring(float x, float y, int l) {
     anchor = new PVector(x,y);
     len = l;
   }
-  //[end]
 
-  // Calculate spring force&mdash;our implementation of Hooke&rsquo;s Law.
+  //{!1} Calculate spring force&mdash;our implementation of Hooke&rsquo;s Law.
   void connect(Bob b) {
 
-    //[full] Get a vector pointing from anchor to Bob location.
-    PVector force = //[bold]
-      PVector.sub(b.location,anchor); //[bold]
-    //[end]
-    float d = force.mag(); //[bold]
-    // Calculate the displacement between
-    // distance and rest length.
-    float stretch = d - len; //[bold]
+    //{!1 .bold} Get a vector pointing from anchor to Bob location.
+    PVector force = PVector.sub(b.location, anchor);
+    //{!2 .bold} Calculate the displacement between distance and rest length.
+    float d = force.mag();
+    float stretch = d - len;
 
-    //[full] Direction and magnitude together!
-    force.normalize(); //[bold]
-    force.mult(-1 * k * stretch); //[bold]
-    //[end]
+    //{!2 .bold} Direction and magnitude together!
+    force.normalize();
+    force.mult(-1 * k * stretch);
 
-    // Call applyForce() right here!
+    //{!1} Call applyForce() right here!
     b.applyForce(force);
   }
 
-  //[full] Draw the anchor.
+  //{!5} Draw the anchor.
   void display() {
     fill(100);
     rectMode(CENTER);
     rect(anchor.x,anchor.y,10,10);
   }
-  //[end]
 
-  //[full] Draw the spring connection between Bob location and anchor.
+  //{!4} Draw the spring connection between Bob location and anchor.
   void displayLine(Bob b) {
     stroke(255);
     line(b.location.x,b.location.y,anchor.x,anchor.y);
   }
-  //[end]
-
 }</pre>
 
 <p>The full code for this example is included on the book website, and the Web version also incorporates two additional features: (1) the <span class="klass">Bob</span> class includes functions for mouse interactivity so that the bob can be dragged around the window, and (2) the <span class="klass">Spring</span> object includes a function to constrain the connection&rsquo;s length between a minimum and a maximum.</p>
@@ -1449,24 +1416,24 @@ class Spring {
 
 <p>Before running to see the example online, take a look at this constrain function and see if you can fill in the blanks.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void constrainLength(Bob b, float minlen, float maxlen) {
-  // Vector pointing from Bob to Anchor
+  //{!1} Vector pointing from Bob to Anchor
   PVector dir = PVector.sub(______,______);
   float d = dir.mag();
 
-  // Is it too short?
+  //{!1} Is it too short?
   if (d &lt; minlen) {
     dir.normalize();
     dir.mult(________);
-    // Keep location within constraint.
+    //{!1} Keep location within constraint.
     b.location = PVector.add(______,______);
     b.velocity.mult(0);
-  // Is it too long?
+  //{!1} Is it too long?
   } else if (____________) {
     dir.normalize();
     dir.mult(_________);
-    // Keep location within constraint.
+    //{!1} Keep location within constraint.
     b.location = PVector.add(______,______);
     b.velocity.mult(0);
   }
