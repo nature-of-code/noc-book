@@ -2,24 +2,24 @@
 <h1>Chapter 10. Neural Networks</h1>
 
 <blockquote data-type="epigraph">
-<p>&ldquo;You can&rsquo;t process me with a normal brain.&rdquo;</p>
+<p>“You can’t process me with a normal brain.”</p>
 
-<p data-type="attribution">&mdash; Charlie Sheen</p>
+<p data-type="attribution">— Charlie Sheen</p>
 </blockquote>
 
 <a data-primary="artificial intelligence" data-type="indexterm"></a> <a data-primary="neural networks" data-type="indexterm"></a>
 
-<p>We&rsquo;re at the end of our story. This is the last official chapter of this book (though I envision additional supplemental material for the website and perhaps new chapters in the future). We began with inanimate objects living in a world of forces and gave those objects desires, autonomy, and the ability to take action according to a system of rules. Next, we allowed those objects to live in a population and evolve over time. Now we ask: What is each object&rsquo;s decision-making process? How can it adjust its choices by learning over time? Can a computational entity process its environment and generate a decision?</p>
+<p>We’re at the end of our story. This is the last official chapter of this book (though I envision additional supplemental material for the website and perhaps new chapters in the future). We began with inanimate objects living in a world of forces and gave those objects desires, autonomy, and the ability to take action according to a system of rules. Next, we allowed those objects to live in a population and evolve over time. Now we ask: What is each object’s decision-making process? How can it adjust its choices by learning over time? Can a computational entity process its environment and generate a decision?</p>
 
-<p>The human brain can be described as a biological neural network&mdash;an interconnected web of neurons transmitting elaborate patterns of electrical signals. Dendrites receive input signals and, based on those inputs, fire an output signal via an axon. Or something like that. How the human brain actually works is an elaborate and complex mystery, one that we certainly are not going to attempt to tackle in rigorous detail in this chapter.</p>
+<p>The human brain can be described as a biological neural network—an interconnected web of neurons transmitting elaborate patterns of electrical signals. Dendrites receive input signals and, based on those inputs, fire an output signal via an axon. Or something like that. How the human brain actually works is an elaborate and complex mystery, one that we certainly are not going to attempt to tackle in rigorous detail in this chapter.</p>
 
 <figure id="chapter10_figure1"><img alt="Figure 10.1" src="chapter10/ch10_01.png" />
 <figcaption>Figure 10.1</figcaption>
 </figure>
 
-<p>The good news is that developing engaging animated systems with code does not require scientific rigor or accuracy, as we&rsquo;ve learned throughout this book. We can simply be inspired by the idea of brain function.</p>
+<p>The good news is that developing engaging animated systems with code does not require scientific rigor or accuracy, as we’ve learned throughout this book. We can simply be inspired by the idea of brain function.</p>
 
-<p>In this chapter, we&rsquo;ll begin with a conceptual overview of the properties and features of neural networks and build the simplest possible example of one (a network that consists of a single neuron). Afterwards, we&rsquo;ll examine strategies for creating a &ldquo;Brain&rdquo; object that can be inserted into our <span class="klass">Vehicle</span> class and used to determine steering. Finally, we&rsquo;ll also look at techniques for visualizing and animating a network of neurons.</p>
+<p>In this chapter, we’ll begin with a conceptual overview of the properties and features of neural networks and build the simplest possible example of one (a network that consists of a single neuron). Afterwards, we’ll examine strategies for creating a “Brain” object that can be inserted into our <span class="klass">Vehicle</span> class and used to determine steering. Finally, we’ll also look at techniques for visualizing and animating a network of neurons.</p>
 
 <section data-type="sect1" id="chapter10_section1">
 <h2>10.1 Artificial Neural Networks: Introduction and Application</h2>
@@ -28,15 +28,15 @@
 
 <a data-primary="McCulloch" data-secondary="Warren S." data-type="indexterm"></a> <a data-primary="Pitts" data-secondary="Walter" data-type="indexterm"></a>
 
-<p>Computer scientists have long been inspired by the human brain. In 1943, Warren S. McCulloch, a neuroscientist, and Walter Pitts, a logician, developed the first conceptual model of an artificial neural network. In their paper, "A logical calculus of the ideas imminent in nervous activity,&rdquo; they describe the concept of a neuron, a single cell living in a network of cells that receives inputs, processes those inputs, and generates an output.</p>
+<p>Computer scientists have long been inspired by the human brain. In 1943, Warren S. McCulloch, a neuroscientist, and Walter Pitts, a logician, developed the first conceptual model of an artificial neural network. In their paper, "A logical calculus of the ideas imminent in nervous activity,” they describe the concept of a neuron, a single cell living in a network of cells that receives inputs, processes those inputs, and generates an output.</p>
 
-<p>Their work, and the work of many scientists and researchers that followed, was not meant to accurately describe how the biological brain works. Rather, an artificial neural network (which we will now simply refer to as a &ldquo;neural network&rdquo;) was designed as a computational model based on the brain to solve certain kinds of problems.</p>
+<p>Their work, and the work of many scientists and researchers that followed, was not meant to accurately describe how the biological brain works. Rather, an artificial neural network (which we will now simply refer to as a “neural network”) was designed as a computational model based on the brain to solve certain kinds of problems.</p>
 
-<p>It&rsquo;s probably pretty obvious to you that there are problems that are incredibly simple for a computer to solve, but difficult for you. Take the square root of 964,324, for example. A quick line of code produces the value 982, a number Processing computed in less than a millisecond. There are, on the other hand, problems that are incredibly simple for you or me to solve, but not so easy for a computer. Show any toddler a picture of a kitten or puppy and they&rsquo;ll be able to tell you very quickly which one is which. Say hello and shake my hand one morning and you should be able to pick me out of a crowd of people the next day. But need a machine to perform one of these tasks? Scientists have already spent entire careers researching and implementing complex solutions.</p>
+<p>It’s probably pretty obvious to you that there are problems that are incredibly simple for a computer to solve, but difficult for you. Take the square root of 964,324, for example. A quick line of code produces the value 982, a number Processing computed in less than a millisecond. There are, on the other hand, problems that are incredibly simple for you or me to solve, but not so easy for a computer. Show any toddler a picture of a kitten or puppy and they’ll be able to tell you very quickly which one is which. Say hello and shake my hand one morning and you should be able to pick me out of a crowd of people the next day. But need a machine to perform one of these tasks? Scientists have already spent entire careers researching and implementing complex solutions.</p>
 
 <a data-primary="&lt;em&gt;AI for Game Developers&lt;/em&gt; (Bourg/Seemann)" data-type="indexterm"></a> <a data-primary="&lt;em&gt;Artificial Intelligence: A Modern Approach&lt;/em&gt; (Russell/Norvig)" data-type="indexterm"></a> <a data-primary="artificial intelligence" data-secondary="pattern recognition" data-type="indexterm"></a> <a data-primary="Bourg" data-secondary="David M." data-type="indexterm"></a> <a data-primary="neural networks" data-secondary="pattern recognition" data-type="indexterm"></a> <a data-primary="Norvig" data-secondary="Peter" data-type="indexterm"></a> <a data-primary="pattern recognition" data-type="indexterm"></a> <a data-primary="Russell" data-secondary="Stuart J." data-type="indexterm"></a> <a data-primary="Seemann" data-secondary="Glenn" data-type="indexterm"></a>
 
-<p>The most common application of neural networks in computing today is to perform one of these &ldquo;easy-for-a-human, difficult-for-a-machine&rdquo; tasks, often referred to as pattern recognition. Applications range from optical character recognition (turning printed or handwritten scans into digital text) to facial recognition. We don&rsquo;t have the time or need to use some of these more elaborate artificial intelligence algorithms here, but if you are interested in researching neural networks, I&rsquo;d recommend the books <em>Artificial Intelligence: A Modern Approach</em> by Stuart J. Russell and Peter Norvig and <em>AI for Game Developers</em> by David M. Bourg and Glenn Seemann.</p>
+<p>The most common application of neural networks in computing today is to perform one of these “easy-for-a-human, difficult-for-a-machine” tasks, often referred to as pattern recognition. Applications range from optical character recognition (turning printed or handwritten scans into digital text) to facial recognition. We don’t have the time or need to use some of these more elaborate artificial intelligence algorithms here, but if you are interested in researching neural networks, I’d recommend the books <em>Artificial Intelligence: A Modern Approach</em> by Stuart J. Russell and Peter Norvig and <em>AI for Game Developers</em> by David M. Bourg and Glenn Seemann.</p>
 
 <figure class="half-width-right" id="chapter10_figure2"><img alt="Figure 10.2" src="chapter10/ch10_02.png" />
 <figcaption>Figure 10.2</figcaption>
@@ -44,21 +44,21 @@
 
 <a data-primary="complex systems" data-secondary="connectionist computational system" data-type="indexterm"></a> <a data-primary="connectionist computational system" data-type="indexterm"></a> <a data-primary="neural networks" data-secondary="connectionist computational system" data-type="indexterm"></a>
 
-<p>A neural network is a &ldquo;connectionist&rdquo; computational system. The computational systems we write are procedural; a program starts at the first line of code, executes it, and goes on to the next, following instructions in a linear fashion. A true neural network does not follow a linear path. Rather, information is processed collectively, in parallel throughout a network of nodes (the nodes, in this case, being neurons).</p>
+<p>A neural network is a “connectionist” computational system. The computational systems we write are procedural; a program starts at the first line of code, executes it, and goes on to the next, following instructions in a linear fashion. A true neural network does not follow a linear path. Rather, information is processed collectively, in parallel throughout a network of nodes (the nodes, in this case, being neurons).</p>
 
 <p>Here we have yet another example of a complex system, much like the ones we examined in Chapters 6, 7, and 8. The individual elements of the network, the neurons, are simple. They read an input, process it, and generate an output. A network of many neurons, however, can exhibit incredibly rich and intelligent behaviors.</p>
 
 <a data-primary="neural networks" data-secondary="learning and" data-type="indexterm"></a> <a data-primary="weight" data-secondary="neural networks and" data-type="indexterm"></a>
 
-<p>One of the key elements of a neural network is its ability to <em>learn</em>. A neural network is not just a complex system, but a complex <strong><em>adaptive</em></strong> system, meaning it can change its internal structure based on the information flowing through it. Typically, this is achieved through the adjusting of <em>weights</em>. In the diagram above, each line represents a connection between two neurons and indicates the pathway for the flow of information. Each connection has a <strong><em>weight</em></strong>, a number that controls the signal between the two neurons. If the network generates a &ldquo;good&rdquo; output (which we&rsquo;ll define later), there is no need to adjust the weights. However, if the network generates a &ldquo;poor&rdquo; output&mdash;an error, so to speak&mdash;then the system adapts, altering the weights in order to improve subsequent results.</p>
+<p>One of the key elements of a neural network is its ability to <em>learn</em>. A neural network is not just a complex system, but a complex <strong><em>adaptive</em></strong> system, meaning it can change its internal structure based on the information flowing through it. Typically, this is achieved through the adjusting of <em>weights</em>. In the diagram above, each line represents a connection between two neurons and indicates the pathway for the flow of information. Each connection has a <strong><em>weight</em></strong>, a number that controls the signal between the two neurons. If the network generates a “good” output (which we’ll define later), there is no need to adjust the weights. However, if the network generates a “poor” output—an error, so to speak—then the system adapts, altering the weights in order to improve subsequent results.</p>
 
-<p>There are several strategies for learning, and we&rsquo;ll examine two of them in this chapter.</p>
+<p>There are several strategies for learning, and we’ll examine two of them in this chapter.</p>
 
 <a data-primary="neural networks" data-secondary="supervised learning" data-type="indexterm"></a> <a data-primary="supervised learning (neural networks)" data-type="indexterm"></a>
 
 <ul>
 	<li>
-	<p><strong><em>Supervised Learning</em></strong> &mdash;Essentially, a strategy that involves a teacher that is smarter than the network itself. For example, let&rsquo;s take the facial recognition example. The teacher shows the network a bunch of faces, and the teacher already knows the name associated with each face. The network makes its guesses, then the teacher provides the network with the answers. The network can then compare its answers to the known &ldquo;correct&rdquo; ones and make adjustments according to its errors. Our first neural network in the next section will follow this model.</p>
+	<p><strong><em>Supervised Learning</em></strong> —Essentially, a strategy that involves a teacher that is smarter than the network itself. For example, let’s take the facial recognition example. The teacher shows the network a bunch of faces, and the teacher already knows the name associated with each face. The network makes its guesses, then the teacher provides the network with the answers. The network can then compare its answers to the known “correct” ones and make adjustments according to its errors. Our first neural network in the next section will follow this model.</p>
 	</li>
 </ul>
 
@@ -66,7 +66,7 @@
 
 <ul>
 	<li>
-	<p><strong><em>Unsupervised Learning</em></strong> &mdash;Required when there isn&rsquo;t an example data set with known answers. Imagine searching for a hidden pattern in a data set. An application of this is clustering, i.e. dividing a set of elements into groups according to some unknown pattern. We won&rsquo;t be looking at any examples of unsupervised learning in this chapter, as this strategy is less relevant for our examples.</p>
+	<p><strong><em>Unsupervised Learning</em></strong> —Required when there isn’t an example data set with known answers. Imagine searching for a hidden pattern in a data set. An application of this is clustering, i.e. dividing a set of elements into groups according to some unknown pattern. We won’t be looking at any examples of unsupervised learning in this chapter, as this strategy is less relevant for our examples.</p>
 	</li>
 </ul>
 
@@ -74,7 +74,7 @@
 
 <ul>
 	<li>
-	<p><strong><em>Reinforcement Learning</em></strong> &mdash;A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don&rsquo;t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <span class="var">t</span>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We&rsquo;ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
+	<p><strong><em>Reinforcement Learning</em></strong> —A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don’t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <span class="var">t</span>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We’ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
 	</li>
 </ul>
 
@@ -84,28 +84,28 @@
 
 <ul>
 	<li>
-	<p><strong><em>Pattern Recognition</em></strong> &mdash;We&rsquo;ve mentioned this several times already and it&rsquo;s probably the most common application. Examples are facial recognition, optical character recognition, etc.</p>
+	<p><strong><em>Pattern Recognition</em></strong> —We’ve mentioned this several times already and it’s probably the most common application. Examples are facial recognition, optical character recognition, etc.</p>
 	</li>
 	<li>
-	<p><strong><em>Time Series Prediction</em></strong> &mdash;Neural networks can be used to make predictions. Will the stock rise or fall tomorrow? Will it rain or be sunny?</p>
+	<p><strong><em>Time Series Prediction</em></strong> —Neural networks can be used to make predictions. Will the stock rise or fall tomorrow? Will it rain or be sunny?</p>
 	</li>
 	<li>
-	<p><strong><em>Signal Processing</em></strong> &mdash;Cochlear implants and hearing aids need to filter out unnecessary noise and amplify the important sounds. Neural networks can be trained to process an audio signal and filter it appropriately.</p>
+	<p><strong><em>Signal Processing</em></strong> —Cochlear implants and hearing aids need to filter out unnecessary noise and amplify the important sounds. Neural networks can be trained to process an audio signal and filter it appropriately.</p>
 	</li>
 	<li>
-	<p><strong><em>Control</em></strong> &mdash;You may have read about recent research advances in self-driving cars. Neural networks are often used to manage steering decisions of physical vehicles (or simulated ones).</p>
+	<p><strong><em>Control</em></strong> —You may have read about recent research advances in self-driving cars. Neural networks are often used to manage steering decisions of physical vehicles (or simulated ones).</p>
 	</li>
 	<li>
-	<p><strong><em>Soft Sensors</em></strong> &mdash;A soft sensor refers to the process of analyzing a collection of many measurements. A thermometer can tell you the temperature of the air, but what if you also knew the humidity, barometric pressure, dewpoint, air quality, air density, etc.? Neural networks can be employed to process the input data from many individual sensors and evaluate them as a whole.</p>
+	<p><strong><em>Soft Sensors</em></strong> —A soft sensor refers to the process of analyzing a collection of many measurements. A thermometer can tell you the temperature of the air, but what if you also knew the humidity, barometric pressure, dewpoint, air quality, air density, etc.? Neural networks can be employed to process the input data from many individual sensors and evaluate them as a whole.</p>
 	</li>
 	<li>
-	<p><strong><em>Anomaly Detection</em></strong> &mdash;Because neural networks are so good at recognizing patterns, they can also be trained to generate an output when something occurs that doesn&rsquo;t fit the pattern. Think of a neural network monitoring your daily routine over a long period of time. After learning the patterns of your behavior, it could alert you when something is amiss.</p>
+	<p><strong><em>Anomaly Detection</em></strong> —Because neural networks are so good at recognizing patterns, they can also be trained to generate an output when something occurs that doesn’t fit the pattern. Think of a neural network monitoring your daily routine over a long period of time. After learning the patterns of your behavior, it could alert you when something is amiss.</p>
 	</li>
 </ul>
 
-<p>This is by no means a comprehensive list of applications of neural networks. But hopefully it gives you an overall sense of the features and possibilities. The thing is, neural networks are complicated and difficult. They involve all sorts of fancy mathematics. While this is all fascinating (and incredibly important to scientific research), a lot of the techniques are not very practical in the world of building interactive, animated Processing sketches. Not to mention that in order to cover all this material, we would need another book&mdash;or more likely, a series of books.</p>
+<p>This is by no means a comprehensive list of applications of neural networks. But hopefully it gives you an overall sense of the features and possibilities. The thing is, neural networks are complicated and difficult. They involve all sorts of fancy mathematics. While this is all fascinating (and incredibly important to scientific research), a lot of the techniques are not very practical in the world of building interactive, animated Processing sketches. Not to mention that in order to cover all this material, we would need another book—or more likely, a series of books.</p>
 
-<p>So instead, we&rsquo;ll begin our last hurrah in the nature of code with the simplest of all neural networks, in an effort to understand how the overall concepts are applied in code. Then we&rsquo;ll look at some Processing sketches that generate visual results inspired by these concepts.</p>
+<p>So instead, we’ll begin our last hurrah in the nature of code with the simplest of all neural networks, in an effort to understand how the overall concepts are applied in code. Then we’ll look at some Processing sketches that generate visual results inspired by these concepts.</p>
 </section>
 
 <section data-type="sect1" id="chapter10_section2">
@@ -121,20 +121,20 @@
 
 <a data-primary="feed-forward model (neural networks)" data-type="indexterm"></a>
 
-<p>A perceptron follows the &ldquo;feed-forward&rdquo; model, meaning inputs are sent into the neuron, are processed, and result in an output. In the diagram above, this means the network (one neuron) reads from left to right: inputs come in, output goes out.</p>
+<p>A perceptron follows the “feed-forward” model, meaning inputs are sent into the neuron, are processed, and result in an output. In the diagram above, this means the network (one neuron) reads from left to right: inputs come in, output goes out.</p>
 
-<p>Let&rsquo;s follow each of these steps in more detail.</p>
+<p>Let’s follow each of these steps in more detail.</p>
 
 <p><span class="highlight">Step 1: Receive inputs.</span></p>
 
-<p>Say we have a perceptron with two inputs&mdash;let&rsquo;s call them <em>x1</em> and <em>x2</em>.</p>
+<p>Say we have a perceptron with two inputs—let’s call them <em>x1</em> and <em>x2</em>.</p>
 
 <p><span class="mono">Input 0: x1 = 12</span><br />
 Input 1: x2 = 4</strong></p>
 
 <p><span class="highlight">Step 2: Weight inputs.</span></p>
 
-<p>Each input that is sent into the neuron must first be weighted, i.e. multiplied by some value (often a number between -1 and 1). When creating a perceptron, we&rsquo;ll typically begin by assigning random weights. Here, let&rsquo;s give the inputs the following weights:</p>
+<p>Each input that is sent into the neuron must first be weighted, i.e. multiplied by some value (often a number between -1 and 1). When creating a perceptron, we’ll typically begin by assigning random weights. Here, let’s give the inputs the following weights:</p>
 
 <p><span class="mono">Weight 0: 0.5</span><br />
 Weight 1: -1</strong></p>
@@ -155,13 +155,13 @@ Weight 1: -1</strong></p>
 
 <a data-primary="activation functions of neural networks" data-type="indexterm"></a> <a data-primary="neural networks" data-secondary="activation functions of" data-type="indexterm"></a>
 
-<p>The output of a perceptron is generated by passing that sum through an activation function. In the case of a simple binary output, the activation function is what tells the perceptron whether to &ldquo;fire&rdquo; or not. You can envision an LED connected to the output signal: if it fires, the light goes on; if not, it stays off.</p>
+<p>The output of a perceptron is generated by passing that sum through an activation function. In the case of a simple binary output, the activation function is what tells the perceptron whether to “fire” or not. You can envision an LED connected to the output signal: if it fires, the light goes on; if not, it stays off.</p>
 
-<p>Activation functions can get a little bit hairy. If you start reading one of those artificial intelligence textbooks looking for more info about activation functions, you may soon find yourself reaching for a calculus textbook. However, with our friend the simple perceptron, we&rsquo;re going to do something really easy. Let&rsquo;s make the activation function the sign of the sum. In other words, if the sum is a positive number, the output is 1; if it is negative, the output is -1.</p>
+<p>Activation functions can get a little bit hairy. If you start reading one of those artificial intelligence textbooks looking for more info about activation functions, you may soon find yourself reaching for a calculus textbook. However, with our friend the simple perceptron, we’re going to do something really easy. Let’s make the activation function the sign of the sum. In other words, if the sum is a positive number, the output is 1; if it is negative, the output is -1.</p>
 
 <p><span class="mono">Output = sign(sum) &rArr; sign(2) &rArr; +1</span></p>
 
-<p>Let&rsquo;s review and condense these steps so we can implement them with a code snippet.</p>
+<p>Let’s review and condense these steps so we can implement them with a code snippet.</p>
 
 <p><strong><em>The Perceptron Algorithm:</em></strong></p>
 
@@ -177,13 +177,13 @@ Weight 1: -1</strong></p>
 	</li>
 </ol>
 
-<p>Let&rsquo;s assume we have two arrays of numbers, the inputs and the weights. For example:</p>
+<p>Let’s assume we have two arrays of numbers, the inputs and the weights. For example:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 float[] inputs  = {12 , 4};
 float[] weights = {0.5,-1};</pre>
 
-<p>&ldquo;For every input&rdquo; implies a loop that multiplies each input by its corresponding weight. Since we need the sum, we can add up the results in that very loop.</p>
+<p>“For every input” implies a loop that multiplies each input by its corresponding weight. Since we need the sum, we can add up the results in that very loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 //[full] Steps 1 and 2: Add up all the weighted inputs.
@@ -222,7 +222,7 @@ int activate(float sum) {
 
 <p>Consider a line in two-dimensional space. Points in that space can be classified as living on either one side of the line or the other. While this is a somewhat silly example (since there is clearly no need for a neural network; we can determine on which side a point lies with some simple algebra), it shows how a perceptron can be trained to recognize points on one side versus another.</p>
 
-<p>Let&rsquo;s say a perceptron has 2 inputs (the x- and y-coordinates of a point). Using a sign activation function, the output will either be -1 or 1&mdash;i.e., the input data is classified according to the sign of the output. In the above diagram, we can see how each point is either below the line (-1) or above (+1).</p>
+<p>Let’s say a perceptron has 2 inputs (the x- and y-coordinates of a point). Using a sign activation function, the output will either be -1 or 1—i.e., the input data is classified according to the sign of the output. In the above diagram, we can see how each point is either below the line (-1) or above (+1).</p>
 
 <p>The perceptron itself can be diagrammed as follows:</p>
 
@@ -232,7 +232,7 @@ int activate(float sum) {
 
 <p>We can see how there are two inputs (<em>x</em> and <em>y</em>), a weight for each input (<em>weight<sub>x</sub></em> and <em>weight<sub>y</sub></em>), as well as a processing neuron that generates the output.</p>
 
-<p>There is a pretty significant problem here, however. Let&rsquo;s consider the point (0,0). What if we send this point into the perceptron as its input: x = 0 and y = 0? What will the sum of its weighted inputs be? No matter what the weights are, the sum will always be 0! But this can&rsquo;t be right&mdash;after all, the point (0,0) could certainly be above or below various lines in our two-dimensional world.</p>
+<p>There is a pretty significant problem here, however. Let’s consider the point (0,0). What if we send this point into the perceptron as its input: x = 0 and y = 0? What will the sum of its weighted inputs be? No matter what the weights are, the sum will always be 0! But this can’t be right—after all, the point (0,0) could certainly be above or below various lines in our two-dimensional world.</p>
 
 <p>To avoid this dilemma, our perceptron will require a third input, typically referred to as a <strong><em>bias</em></strong> input. A bias input always has the value of 1 and is also weighted. Here is our perceptron with the addition of the bias:</p>
 
@@ -240,19 +240,19 @@ int activate(float sum) {
 <figcaption>Figure 10.6</figcaption>
 </figure>
 
-<p>Let&rsquo;s go back to the point (0,0). Here are our inputs:</p>
+<p>Let’s go back to the point (0,0). Here are our inputs:</p>
 
 <p><span class="mono">0 <code>*</code> weight for x = 0</span><br />
 0 <code>*</code> weight for y = 0<br />
 1 <code>*</code> weight for bias = weight for bias</strong></p>
 
-<p>The output is the sum of the above three values, 0 plus 0 plus the bias&rsquo;s weight. Therefore, the bias, on its own, answers the question as to where (0,0) is in relation to the line. If the bias&rsquo;s weight is positive, (0,0) is above the line; negative, it is below. It &ldquo;biases&rdquo; the perceptron&rsquo;s understanding of the line&rsquo;s position relative to (0,0).</p>
+<p>The output is the sum of the above three values, 0 plus 0 plus the bias’s weight. Therefore, the bias, on its own, answers the question as to where (0,0) is in relation to the line. If the bias’s weight is positive, (0,0) is above the line; negative, it is below. It “biases” the perceptron’s understanding of the line’s position relative to (0,0).</p>
 </section>
 
 <section data-type="sect1" id="chapter10_section4">
 <h2>10.4 Coding the Perceptron</h2>
 
-<p>We&rsquo;re now ready to assemble the code for a <span class="klass">Perceptron</span> class. The only data the perceptron needs to track are the input weights, and we could use an array of floats to store these.</p>
+<p>We’re now ready to assemble the code for a <span class="klass">Perceptron</span> class. The only data the perceptron needs to track are the input weights, and we could use an array of floats to store these.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Perceptron {
@@ -269,7 +269,7 @@ class Perceptron {
     }
   }</pre>
 
-<p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <span class="function">feedforward()</span>. In this example, we&rsquo;ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
+<p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <span class="function">feedforward()</span>. In this example, we’ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   int feedforward(float[] inputs) {
@@ -297,11 +297,11 @@ float[] point = {50,-12,1};
 // The answer!
 int result = p.feedforward(point);</pre>
 
-<p>Did the perceptron get it right? At this point, the perceptron has no better than a 50/50 chance of arriving at the right answer. Remember, when we created it, we gave each weight a random value. A neural network isn&rsquo;t magic. It&rsquo;s not going to be able to guess anything correctly unless we teach it how to!</p>
+<p>Did the perceptron get it right? At this point, the perceptron has no better than a 50/50 chance of arriving at the right answer. Remember, when we created it, we gave each weight a random value. A neural network isn’t magic. It’s not going to be able to guess anything correctly unless we teach it how to!</p>
 
-<p>To train a neural network to answer correctly, we&rsquo;re going to employ the method of <em>supervised learning</em> that we described in <a href="#chapter10_section1">section 10.1</a>.</p>
+<p>To train a neural network to answer correctly, we’re going to employ the method of <em>supervised learning</em> that we described in <a href="#chapter10_section1">section 10.1</a>.</p>
 
-<p>With this method, the network is provided with inputs for which there is a known answer. This way the network can find out if it has made a correct guess. If it&rsquo;s incorrect, the network can learn from its mistake and adjust its weights. The process is as follows:</p>
+<p>With this method, the network is provided with inputs for which there is a known answer. This way the network can find out if it has made a correct guess. If it’s incorrect, the network can learn from its mistake and adjust its weights. The process is as follows:</p>
 
 <ol>
 	<li>
@@ -321,9 +321,9 @@ int result = p.feedforward(point);</pre>
 	</li>
 </ol>
 
-<p>Steps 1 through 4 can be packaged into a function. Before we can write the entire function, however, we need to examine Steps 3 and 4 in more detail. How do we define the perceptron&rsquo;s error? And how should we adjust the weights according to this error?</p>
+<p>Steps 1 through 4 can be packaged into a function. Before we can write the entire function, however, we need to examine Steps 3 and 4 in more detail. How do we define the perceptron’s error? And how should we adjust the weights according to this error?</p>
 
-<p>The perceptron&rsquo;s error can be defined as the difference between the desired answer and its guess.</p>
+<p>The perceptron’s error can be defined as the difference between the desired answer and its guess.</p>
 
 <p><span class="formula">ERROR = DESIRED OUTPUT - GUESS OUTPUT</span></p>
 
@@ -331,11 +331,11 @@ int result = p.feedforward(point);</pre>
 
 <p><span class="formula">STEERING = DESIRED VELOCITY - CURRENT VELOCITY</span></p>
 
-<p>This was also an error calculation. The current velocity acts as a guess and the error (the steering force) tells us how to adjust the velocity in the right direction. In a moment, we&rsquo;ll see how adjusting the vehicle&rsquo;s velocity to follow a target is just like adjusting the weights of a neural network to arrive at the right answer.</p>
+<p>This was also an error calculation. The current velocity acts as a guess and the error (the steering force) tells us how to adjust the velocity in the right direction. In a moment, we’ll see how adjusting the vehicle’s velocity to follow a target is just like adjusting the weights of a neural network to arrive at the right answer.</p>
 
 <p>In the case of the perceptron, the output has only two possible values: <strong><em>+1</em></strong> or <strong><em>-1</em></strong>. This means there are only three possible errors.</p>
 
-<p>If the perceptron guesses the correct answer, then the guess equals the desired output and the error is 0. If the correct answer is -1 and we&rsquo;ve guessed +1, then the error is -2. If the correct answer is +1 and we&rsquo;ve guessed -1, then the error is +2.</p>
+<p>If the perceptron guesses the correct answer, then the guess equals the desired output and the error is 0. If the correct answer is -1 and we’ve guessed +1, then the error is -2. If the correct answer is +1 and we’ve guessed -1, then the error is +2.</p>
 
 <table>
 	<thead>
@@ -395,7 +395,7 @@ int result = p.feedforward(point);</pre>
 
 <a data-primary="delta weight" data-type="indexterm"></a>
 
-<p>The error is the determining factor in how the perceptron&rsquo;s weights should be adjusted. For any given weight, what we are looking to calculate is the change in weight, often called <em>&Delta;weight</em> (or &ldquo;delta&rdquo; weight, delta being the Greek letter &Delta;).</p>
+<p>The error is the determining factor in how the perceptron’s weights should be adjusted. For any given weight, what we are looking to calculate is the change in weight, often called <em>&Delta;weight</em> (or “delta” weight, delta being the Greek letter &Delta;).</p>
 
 <p><span class="formula">NEW WEIGHT = WEIGHT + &Delta;WEIGHT</span></p>
 
@@ -407,15 +407,15 @@ int result = p.feedforward(point);</pre>
 
 <p><span class="formula">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT</span></p>
 
-<p>To understand why this works, we can again return to <a href="#chapter06_section3">steering</a>. A steering force is essentially an error in velocity. If we apply that force as our acceleration (&Delta;velocity), then we adjust our velocity to move in the correct direction. This is what we want to do with our neural network&rsquo;s weights. We want to adjust them in the right direction, as defined by the error.</p>
+<p>To understand why this works, we can again return to <a href="#chapter06_section3">steering</a>. A steering force is essentially an error in velocity. If we apply that force as our acceleration (&Delta;velocity), then we adjust our velocity to move in the correct direction. This is what we want to do with our neural network’s weights. We want to adjust them in the right direction, as defined by the error.</p>
 
 <a data-primary="learning constant" data-type="indexterm"></a> <a data-primary="perceptron" data-secondary="learning constant" data-type="indexterm"></a>
 
-<p>With steering, however, we had an additional variable that controlled the vehicle&rsquo;s ability to steer: the <em>maximum force</em>. With a high maximum force, the vehicle was able to accelerate and turn very quickly; with a lower force, the vehicle would take longer to adjust its velocity. The neural network will employ a similar strategy with a variable called the &ldquo;learning constant.&rdquo; We&rsquo;ll add in the learning constant as follows:</p>
+<p>With steering, however, we had an additional variable that controlled the vehicle’s ability to steer: the <em>maximum force</em>. With a high maximum force, the vehicle was able to accelerate and turn very quickly; with a lower force, the vehicle would take longer to adjust its velocity. The neural network will employ a similar strategy with a variable called the “learning constant.” We’ll add in the learning constant as follows:</p>
 
 <p><span class="formula">NEW WEIGHT = WEIGHT + ERROR <code>*</code> INPUT <code>*</code> LEARNING CONSTANT</span></p>
 
-<p>Notice that a high learning constant means the weight will change more drastically. This may help us arrive at a solution more quickly, but with such large changes in weight it&rsquo;s possible we will overshoot the optimal weights. With a small learning constant, the weights will be adjusted slowly, requiring more training time but allowing the network to make very small adjustments that could improve the network&rsquo;s overall accuracy.</p>
+<p>Notice that a high learning constant means the weight will change more drastically. This may help us arrive at a solution more quickly, but with such large changes in weight it’s possible we will overshoot the optimal weights. With a small learning constant, the weights will be adjusted slowly, requiring more training time but allowing the network to make very small adjustments that could improve the network’s overall accuracy.</p>
 
 <p>Assuming the addition of a variable <span class="var">c</span> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
 
@@ -510,7 +510,7 @@ class Trainer {
   }
 }</pre>
 
-<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let&rsquo;s start with the formula for a line, where <span class="var">y</span> is calculated as a function of <span class="var">x</span>:</p>
+<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let’s start with the formula for a line, where <span class="var">y</span> is calculated as a function of <span class="var">x</span>:</p>
 
 <p><span class="formula">y = f(x)</span></p>
 
@@ -518,7 +518,7 @@ class Trainer {
 
 <p><span class="formula">y = ax + b</span></p>
 
-<p>Here&rsquo;s a specific example:</p>
+<p>Here’s a specific example:</p>
 
 <p><span class="formula">y = 2*x + 1</span></p>
 
@@ -537,7 +537,7 @@ float f(float x) {
 float x = random(width);
 float y = random(height);</pre>
 
-<p>How do we know if this point is above or below the line? The line function <span class="function">f(x)</span> gives us the <span class="var">y</span> value on the line for that <span class="var">x</span> position. Let&rsquo;s call that <span class="var">yline</span>.</p>
+<p>How do we know if this point is above or below the line? The line function <span class="function">f(x)</span> gives us the <span class="var">y</span> value on the line for that <span class="var">x</span> position. Let’s call that <span class="var">yline</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // The y position on the line
@@ -567,9 +567,9 @@ Trainer t = new Trainer(x, y, answer);</pre>
 <pre data-code-language="java" data-type="programlisting">
 ptron.train(t.inputs,t.answer);</pre>
 
-<p>Now, it&rsquo;s important to remember that this is just a demonstration. Remember our <a href="#chapter09_section2">Shakespeare-typing monkeys</a>? We asked our genetic algorithm to solve for &ldquo;to be or not to be&rdquo;&mdash;an answer we already knew. We did this to make sure our genetic algorithm worked properly. The same reasoning applies to this example. We don&rsquo;t need a perceptron to tell us whether a point is above or below a line; we can do that with simple math. We are using this scenario, one that we can easily solve without a perceptron, to demonstrate the perceptron&rsquo;s algorithm as well as easily confirm that it is working properly.</p>
+<p>Now, it’s important to remember that this is just a demonstration. Remember our <a href="#chapter09_section2">Shakespeare-typing monkeys</a>? We asked our genetic algorithm to solve for “to be or not to be”—an answer we already knew. We did this to make sure our genetic algorithm worked properly. The same reasoning applies to this example. We don’t need a perceptron to tell us whether a point is above or below a line; we can do that with simple math. We are using this scenario, one that we can easily solve without a perceptron, to demonstrate the perceptron’s algorithm as well as easily confirm that it is working properly.</p>
 
-<p>Let&rsquo;s look at how the perceptron works with an array of many training points.</p>
+<p>Let’s look at how the perceptron works with an array of many training points.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_01_SimplePerceptron/_10_01_SimplePerceptron.pde processingjs/chapter10/_10_01_SimplePerceptron/Perceptron.pde processingjs/chapter10/_10_01_SimplePerceptron/Trainer.pde"><img alt="ch10 ex01" src="chapter10/ch10_ex01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -619,7 +619,7 @@ void draw() {
   for (int i = 0; i &lt; count; i++) {
     stroke(0);
     int guess = ptron.feedforward(training[i].inputs);
-    //[full] Show the classification&mdash;no fill for -1, black for +1.
+    //[full] Show the classification—no fill for -1, black for +1.
     if (guess &gt; 0) noFill();
     else           fill(0);
     //[end]
@@ -645,11 +645,11 @@ void draw() {
 
 <a data-primary="perceptron" data-secondary="steering and" data-type="indexterm"></a> <a data-primary="steering behaviors" data-secondary="perceptron for" data-type="indexterm"></a> <a data-primary="steering perceptron" data-type="indexterm"></a>
 
-<p>While classifying points according to their position above or below a line was a useful demonstration of the perceptron in action, it doesn&rsquo;t have much practical relevance to the other examples throughout this book. In this section, we&rsquo;ll take the concepts of a perceptron (array of inputs, single output), apply it to steering behaviors, and demonstrate reinforcement learning along the way.</p>
+<p>While classifying points according to their position above or below a line was a useful demonstration of the perceptron in action, it doesn’t have much practical relevance to the other examples throughout this book. In this section, we’ll take the concepts of a perceptron (array of inputs, single output), apply it to steering behaviors, and demonstrate reinforcement learning along the way.</p>
 
-<p>We are now going to take significant creative license with the concept of a neural network. This will allow us to stick with the basics and avoid some of the highly complex algorithms associated with more sophisticated neural networks. Here we&rsquo;re not so concerned with following rules outlined in artificial intelligence textbooks&mdash;we&rsquo;re just hoping to make something interesting and brain-like.</p>
+<p>We are now going to take significant creative license with the concept of a neural network. This will allow us to stick with the basics and avoid some of the highly complex algorithms associated with more sophisticated neural networks. Here we’re not so concerned with following rules outlined in artificial intelligence textbooks—we’re just hoping to make something interesting and brain-like.</p>
 
-<p>Remember our good friend the <span class="klass">Vehicle</span> class? You know, that one for making objects with a location, velocity, and acceleration? That could obey Newton&rsquo;s laws with an <span class="function">applyForce()</span> function and move around the window according to a variety of steering rules?</p>
+<p>Remember our good friend the <span class="klass">Vehicle</span> class? You know, that one for making objects with a location, velocity, and acceleration? That could obey Newton’s laws with an <span class="function">applyForce()</span> function and move around the window according to a variety of steering rules?</p>
 
 <p>What if we added one more variable to our <span class="klass">Vehicle</span> class?</p>
 
@@ -664,13 +664,13 @@ class Vehicle {
   PVector acceleration;
   [inline]//etc...</pre>
 
-<p>Here&rsquo;s our scenario. Let&rsquo;s say we have a Processing sketch with an <span class="klass">ArrayList</span> of targets and a single vehicle.</p>
+<p>Here’s our scenario. Let’s say we have a Processing sketch with an <span class="klass">ArrayList</span> of targets and a single vehicle.</p>
 
 <figure id="chapter10_figure09"><img alt="Figure 10.9" src="chapter10/ch10_09.png" />
 <figcaption>Figure 10.9</figcaption>
 </figure>
 
-<p>Let&rsquo;s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object&rsquo;s acceleration. Assuming the targets are an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> objects, it would look something like:</p>
+<p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object’s acceleration. Assuming the targets are an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> objects, it would look something like:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void seek(ArrayList&lt;PVector&gt; targets) {
@@ -715,9 +715,9 @@ class Vehicle {
     //[end]
   }</pre>
 
-<p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an array of forces to the vehicle&rsquo;s &ldquo;brain&rdquo; object and allow the brain to weight and sum the forces for us. The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could make decisions as to how to steer on its own, learning from its mistakes and responding to stimuli in its environment. Let&rsquo;s see how this works.</p>
+<p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an array of forces to the vehicle’s “brain” object and allow the brain to weight and sum the forces for us. The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could make decisions as to how to steer on its own, learning from its mistakes and responding to stimuli in its environment. Let’s see how this works.</p>
 
-<p>We can use the line classification perceptron as a model, with one important difference&mdash;the inputs are not single numbers, but vectors! Let&rsquo;s look at how the <span class="function">feedforward()</span> function works in our vehicle&rsquo;s perceptron, alongside the one from our previous example.</p>
+<p>We can use the line classification perceptron as a model, with one important difference—the inputs are not single numbers, but vectors! Let’s look at how the <span class="function">feedforward()</span> function works in our vehicle’s perceptron, alongside the one from our previous example.</p>
 
 <table class="codewide">
 	<tbody>
@@ -767,15 +767,15 @@ int feedforward(float[] inputs) {
 	<p><strong><em>Summing PVectors.</em></strong> Instead of a series of numbers added together, each input is a <span class="klass">PVector</span> and must be multiplied by the weight and added to a sum according to the mathematical <span class="klass">PVector</span> functions.</p>
 	</li>
 	<li>
-	<p><strong><em>No activation function.</em></strong> In this case, we&rsquo;re taking the result and applying it directly as a steering force for the vehicle, so we&rsquo;re not asking for a simple boolean value that classifies it in one of two categories. Rather, we&rsquo;re asking for raw output itself, the resulting overall force.</p>
+	<p><strong><em>No activation function.</em></strong> In this case, we’re taking the result and applying it directly as a steering force for the vehicle, so we’re not asking for a simple boolean value that classifies it in one of two categories. Rather, we’re asking for raw output itself, the resulting overall force.</p>
 	</li>
 </ol>
 
 <a data-primary="reinforcement learning(neural networks)" data-type="indexterm"></a> <a data-primary="steering perceptron" data-secondary="reinforcement learning(neural networks)" data-type="indexterm"></a>
 
-<p>Once the resulting steering force has been applied, it&rsquo;s time to give feedback to the brain, i.e. <em>reinforcement learning</em>. Was the decision to steer in that particular direction a good one or a bad one? Presumably if some of the targets were predators (resulting in being eaten) and some of the targets were food (resulting in greater health), the network would adjust its weights in order to steer away from the predators and towards the food.</p>
+<p>Once the resulting steering force has been applied, it’s time to give feedback to the brain, i.e. <em>reinforcement learning</em>. Was the decision to steer in that particular direction a good one or a bad one? Presumably if some of the targets were predators (resulting in being eaten) and some of the targets were food (resulting in greater health), the network would adjust its weights in order to steer away from the predators and towards the food.</p>
 
-<p>Let&rsquo;s take a simpler example, where the vehicle simply wants to stay close to the center of the window. We&rsquo;ll train the brain as follows:</p>
+<p>Let’s take a simpler example, where the vehicle simply wants to stay close to the center of the window. We’ll train the brain as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting">
     PVector desired = new PVector(width/2,height/2);
@@ -786,9 +786,9 @@ int feedforward(float[] inputs) {
 <figcaption>Figure 10.10</figcaption>
 </figure>
 
-<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current location to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error&mdash;the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
+<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current location to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error—the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
 
-<p>The brain can then apply this &ldquo;error&rdquo; vector (which has two error values, one for <span class="var">x</span> and one for <span class="var">y</span>) as a means for adjusting the weights, just as we did in the line classification example.</p>
+<p>The brain can then apply this “error” vector (which has two error values, one for <span class="var">x</span> and one for <span class="var">y</span>) as a means for adjusting the weights, just as we did in the line classification example.</p>
 
 <table class="codewide">
 	<tbody>
@@ -919,7 +919,7 @@ class Vehicle {
 <div data-type="exercise" id="chapter10_exercise3">
 <h5>Exercise 10.3</h5>
 
-<p>Visualize the weights of the network. Try mapping each target&rsquo;s corresponding weight to its brightness.</p>
+<p>Visualize the weights of the network. Try mapping each target’s corresponding weight to its brightness.</p>
 </div>
 
 <div data-type="exercise" id="chapter10_exercise4">
@@ -930,21 +930,21 @@ class Vehicle {
 </section>
 
 <section data-type="sect1" id="chapter10_section6">
-<h2>10.6 It&rsquo;s a &ldquo;Network,&rdquo; Remember?</h2>
+<h2>10.6 It’s a “Network,” Remember?</h2>
 
 <a data-primary="linearly separable problems" data-type="indexterm"></a> <a data-primary="perceptron" data-secondary="linearly separable problems and" data-type="indexterm"></a>
 
-<p>Yes, a perceptron can have multiple inputs, but it is still a lonely neuron. The power of neural networks comes in the networking itself. Perceptrons are, sadly, incredibly limited in their abilities. If you read an AI textbook, it will say that a perceptron can only solve <strong><em>linearly separable</em></strong> problems. What&rsquo;s a linearly separable problem? Let&rsquo;s take a look at our first example, which determined whether points were on one side of a line or the other.</p>
+<p>Yes, a perceptron can have multiple inputs, but it is still a lonely neuron. The power of neural networks comes in the networking itself. Perceptrons are, sadly, incredibly limited in their abilities. If you read an AI textbook, it will say that a perceptron can only solve <strong><em>linearly separable</em></strong> problems. What’s a linearly separable problem? Let’s take a look at our first example, which determined whether points were on one side of a line or the other.</p>
 
 <figure id="chapter10_figure11"><img alt="Figure 10.11" src="chapter10/ch10_11.png" />
 <figcaption>Figure 10.11</figcaption>
 </figure>
 
-<p>On the left of Figure 10.11, we have classic linearly separable data. Graph all of the possibilities; if you can classify the data with a straight line, then it is linearly separable. On the right, however, is non-linearly separable data. You can&rsquo;t draw a straight line to separate the black dots from the gray ones.</p>
+<p>On the left of Figure 10.11, we have classic linearly separable data. Graph all of the possibilities; if you can classify the data with a straight line, then it is linearly separable. On the right, however, is non-linearly separable data. You can’t draw a straight line to separate the black dots from the gray ones.</p>
 
 <a data-primary="exclusive or (XOR)" data-type="indexterm"></a> <a data-primary="non-linearly separable problems" data-type="indexterm"></a> <a data-primary="XOR (exclusive or)" data-type="indexterm"></a>
 
-<p>One of the simplest examples of a non-linearly separable problem is <em>XOR</em>, or &ldquo;exclusive or.&rdquo; We&rsquo;re all familiar with <em>AND</em>. For <em>A</em> <em>AND</em> <em>B</em> to be true, both <em>A</em> and <em>B</em> must be true. With <em>OR</em>, either <em>A</em> or <em>B</em> can be true for <em>A</em> <em>OR</em> <em>B</em> to evaluate as true. These are both linearly separable problems. Let&rsquo;s look at the solution space, a &ldquo;truth table.&rdquo;</p>
+<p>One of the simplest examples of a non-linearly separable problem is <em>XOR</em>, or “exclusive or.” We’re all familiar with <em>AND</em>. For <em>A</em> <em>AND</em> <em>B</em> to be true, both <em>A</em> and <em>B</em> must be true. With <em>OR</em>, either <em>A</em> or <em>B</em> can be true for <em>A</em> <em>OR</em> <em>B</em> to evaluate as true. These are both linearly separable problems. Let’s look at the solution space, a “truth table.”</p>
 
 <figure id="chapter10_figure12"><img alt="Figure 10.12" src="chapter10/ch10_12.png" />
 <figcaption>Figure 10.12</figcaption>
@@ -958,17 +958,17 @@ class Vehicle {
 <figcaption>Figure 10.13</figcaption>
 </figure>
 
-<p>This is not linearly separable. Try to draw a straight line to separate the true outputs from the false ones&mdash;you can&rsquo;t!</p>
+<p>This is not linearly separable. Try to draw a straight line to separate the true outputs from the false ones—you can’t!</p>
 
 <a data-primary="neural networks" data-secondary="networks of perceptrons" data-type="indexterm"></a> <a data-primary="perceptron" data-secondary="networks of" data-type="indexterm"></a>
 
-<p>So perceptrons can&rsquo;t even solve something as simple as <em>XOR</em>. But what if we made a network out of two perceptrons? If one perceptron can solve <em>OR</em> and one perceptron can solve <em>NOT AND</em>, then two perceptrons combined can solve <em>XOR</em>.</p>
+<p>So perceptrons can’t even solve something as simple as <em>XOR</em>. But what if we made a network out of two perceptrons? If one perceptron can solve <em>OR</em> and one perceptron can solve <em>NOT AND</em>, then two perceptrons combined can solve <em>XOR</em>.</p>
 
 <figure id="chapter10_figure14"><img alt="Figure 10.14" src="chapter10/ch10_14.png" />
 <figcaption>Figure 10.14</figcaption>
 </figure>
 
-<p>The above diagram is known as a <em>multi-layered perceptron</em>, a network of many neurons. Some are input neurons and receive the inputs, some are part of what&rsquo;s called a &ldquo;hidden&rdquo; layer (as they are connected to neither the inputs nor the outputs of the network directly), and then there are the output neurons, from which we read the results.</p>
+<p>The above diagram is known as a <em>multi-layered perceptron</em>, a network of many neurons. Some are input neurons and receive the inputs, some are part of what’s called a “hidden” layer (as they are connected to neither the inputs nor the outputs of the network directly), and then there are the output neurons, from which we read the results.</p>
 
 <p>Training these networks is much more complicated. With the simple perceptron, we could easily evaluate how to change the weights according to the error. But here there are so many different connections, each in a different layer of the network. How does one know how much each neuron or connection contributed to the overall error of the network?</p>
 
@@ -978,7 +978,7 @@ class Vehicle {
 
 <p>Backpropagation is a bit beyond the scope of this book and involves a fancier activation function (called the sigmoid function) as well as some basic calculus. If you are interested in how backpropagation works, check the book website (and GitHub repository) for an example that solves <em>XOR</em> using a multi-layered feed forward network with backpropagation.</p>
 
-<p>Instead, here we&rsquo;ll focus on a code framework for building the visual architecture of a network. We&rsquo;ll make <span class="klass">Neuron</span> objects and <span class="klass">Connection</span> objects from which a <span class="klass">Network</span> object can be created and animated to show the feed forward process. This will closely resemble some of the force-directed graph examples we examined in Chapter 5 (toxiclibs).</p>
+<p>Instead, here we’ll focus on a code framework for building the visual architecture of a network. We’ll make <span class="klass">Neuron</span> objects and <span class="klass">Connection</span> objects from which a <span class="klass">Network</span> object can be created and animated to show the feed forward process. This will closely resemble some of the force-directed graph examples we examined in Chapter 5 (toxiclibs).</p>
 </section>
 
 <section data-type="sect1" id="chapter10_section7">
@@ -1010,7 +1010,7 @@ class Neuron {
   }
 }</pre>
 
-<p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own location (so that each neuron is drawn relative to the network&rsquo;s center). This is particle systems 101. We have a single element (a neuron) and a network (a &ldquo;system&rdquo; of many neurons).</p>
+<p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own location (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
 
 <pre data-code-language="java" data-type="programlisting">
 //[full] A Network is a list of neurons.
@@ -1079,7 +1079,7 @@ void draw() {
 <figcaption>ch10 ex03a&nbsp;</figcaption>
 </figure>
 
-<p>What&rsquo;s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>) and a <span class="var">weight</span>.</p>
+<p>What’s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>) and a <span class="var">weight</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
@@ -1104,7 +1104,7 @@ class Connection {
   }
 }</pre>
 
-<p>Once we have the idea of a <span class="klass">Connection</span> object, we can write a function (let&rsquo;s put it inside the <span class="klass">Network</span> class) that connects two neurons together&mdash;the goal being that in addition to making the neurons in <span class="function">setup()</span>, we can also connect them.</p>
+<p>Once we have the idea of a <span class="klass">Connection</span> object, we can write a function (let’s put it inside the <span class="klass">Network</span> class) that connects two neurons together—the goal being that in addition to making the neurons in <span class="function">setup()</span>, we can also connect them.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -1138,7 +1138,7 @@ void setup() {
     [inline]// But what do we do with the Connection object?
   }</pre>
 
-<p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to &ldquo;feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the &ldquo;forward&rdquo; direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <span class="var">a</span> connects to <span class="var">b</span>, we want <span class="var">a</span> to store a reference of that connection so that it can pass its output to <span class="var">b</span> when the time comes.</p>
+<p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <span class="var">a</span> connects to <span class="var">b</span>, we want <span class="var">a</span> to store a reference of that connection so that it can pass its output to <span class="var">b</span> when the time comes.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void connect(Neuron a, Neuron b) {
@@ -1168,7 +1168,7 @@ class Neuron {
   }
   //[end]</pre>
 
-<p>The neuron&rsquo;s <span class="function">display()</span> function can draw the connections as well. And finally, we have our network diagram.</p>
+<p>The neuron’s <span class="function">display()</span> function can draw the connections as well. And finally, we have our network diagram.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_03_NetworkViz/_10_03_NetworkViz.pde processingjs/chapter10/_10_03_NetworkViz/Connection.pde processingjs/chapter10/_10_03_NetworkViz/Network.pde processingjs/chapter10/_10_03_NetworkViz/Neuron.pde"><img alt="ch10 ex03" src="chapter10/ch10_ex03.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1199,7 +1199,7 @@ class Neuron {
 
 <p>An interesting problem to consider is how to visualize the flow of information as it travels throughout a neural network. Our network is built on the feed forward model, meaning that an input arrives at the first neuron (drawn on the lefthand side of the window) and the output of that neuron flows across the connections to the right until it exits as output from the network itself.</p>
 
-<p>Our first step is to add a function to the network to receive this input, which we&rsquo;ll make a random number between 0 and 1.</p>
+<p>Our first step is to add a function to the network to receive this input, which we’ll make a random number between 0 and 1.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 void setup() {
@@ -1210,7 +1210,7 @@ void setup() {
   network.feedforward(random(1));
 }</pre>
 
-<p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In this case, we&rsquo;ll do something simple and just feed a single input into the first neuron in the <span class="klass">ArrayList</span>, which happens to be the left-most one.</p>
+<p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In this case, we’ll do something simple and just feed a single input into the first neuron in the <span class="klass">ArrayList</span>, which happens to be the left-most one.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Network {
@@ -1244,7 +1244,7 @@ class Neuron
     sum += input; //[bold]
   }</pre>
 
-<p>The neuron can then decide whether it should &ldquo;fire,&rdquo; or pass an output through any of its connections to the next layer in the network. Here we can create a really simple activation function: if the sum is greater than 1, fire!</p>
+<p>The neuron can then decide whether it should “fire,” or pass an output through any of its connections to the next layer in the network. Here we can create a really simple activation function: if the sum is greater than 1, fire!</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void feedforward(float input) {
@@ -1252,13 +1252,13 @@ class Neuron
     // Activate the neuron and fire the outputs?
     if (sum &gt; 1) {
       fire();
-      // If we&rsquo;ve fired off our output,
+      // If we’ve fired off our output,
       // we can reset our sum to 0.
       sum = 0;
     }
   }</pre>
 
-<p>Now, what do we do in the <span class="function">fire()</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">feedforward()</span> the neuron&rsquo;s output. For this simple example, we&rsquo;ll just take the neuron&rsquo;s <span class="var">sum</span> variable and make it the output.</p>
+<p>Now, what do we do in the <span class="function">fire()</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">feedforward()</span> the neuron’s output. For this simple example, we’ll just take the neuron’s <span class="var">sum</span> variable and make it the output.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void fire() {
@@ -1271,7 +1271,7 @@ class Neuron
 
 <a data-primary="neural networks" data-secondary="real vs. simulated" data-type="indexterm"></a>
 
-<p>Here&rsquo;s where things get a little tricky. After all, our job here is not to actually make a functioning neural network, but to animate a simulation of one. If the neural network were just continuing its work, it would instantly pass those inputs (multiplied by the connection&rsquo;s weight) along to the connected neurons. We&rsquo;d say something like:</p>
+<p>Here’s where things get a little tricky. After all, our job here is not to actually make a functioning neural network, but to animate a simulation of one. If the neural network were just continuing its work, it would instantly pass those inputs (multiplied by the connection’s weight) along to the connected neurons. We’d say something like:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
@@ -1282,18 +1282,18 @@ class Connection {
 
 <p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>.</p>
 
-<p>Let&rsquo;s first think about how we might do that. We know the location of <span class="klass">Neuron</span> <span class="var">a</span>; it&rsquo;s the <span class="klass">PVector</span> <span class="var">a.location</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.location</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
+<p>Let’s first think about how we might do that. We know the location of <span class="klass">Neuron</span> <span class="var">a</span>; it’s the <span class="klass">PVector</span> <span class="var">a.location</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.location</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   PVector sender = a.location.get();</pre>
 
-<p>Once we have a copy of that location, we can use any of the motion algorithms that we&rsquo;ve studied throughout this book to move along this path. Here&mdash;let&rsquo;s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
+<p>Once we have a copy of that location, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   sender.x = lerp(sender.x, b.location.x, 0.1);
   sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
 
-<p>Along with the connection&rsquo;s line, we can then draw a circle at that location:</p>
+<p>Along with the connection’s line, we can then draw a circle at that location:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   stroke(0);
@@ -1307,14 +1307,14 @@ class Connection {
 <figcaption>Figure 10.16</figcaption>
 </figure>
 
-<p>OK, so that&rsquo;s how we might move something along the connection. But how do we know when to do so? We start this process the moment the <span class="klass">Connection</span> object receives the &ldquo;feedforward&rdquo; signal. We can keep track of this process by employing a simple <span class="klass">boolean</span> to know whether the connection is sending or not. Before, we had:</p>
+<p>OK, so that’s how we might move something along the connection. But how do we know when to do so? We start this process the moment the <span class="klass">Connection</span> object receives the “feedforward” signal. We can keep track of this process by employing a simple <span class="klass">boolean</span> to know whether the connection is sending or not. Before, we had:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void feedforward(float val) {
     b.feedforward(val*weight);
   }</pre>
 
-<p>Now, instead of sending the value on straight away, we&rsquo;ll trigger an animation:</p>
+<p>Now, instead of sending the value on straight away, we’ll trigger an animation:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Connection {
@@ -1332,21 +1332,21 @@ class Connection {
     output = val*weight;
   }</pre>
 
-<p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> &ldquo;sending&rdquo; that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> &ldquo;sender&rdquo; for the location where we&rsquo;ll draw the traveling dot. And since we aren&rsquo;t passing the output along this instant, we&rsquo;ll need to store it in a variable that will do the job later.</p>
+<p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> “sender” for the location where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
 
-<p>The <span class="function">feedforward()</span> function is called the moment the connection becomes active. Once it&rsquo;s active, we&rsquo;ll need to call another function continuously (each time through <span class="function">draw()</span>), one that will update the location of the traveling data.</p>
+<p>The <span class="function">feedforward()</span> function is called the moment the connection becomes active. Once it’s active, we’ll need to call another function continuously (each time through <span class="function">draw()</span>), one that will update the location of the traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting">
  void update() {
     if (sending) {
-      //[full] As long as we&rsquo;re sending, interpolate our points.
+      //[full] As long as we’re sending, interpolate our points.
       sender.x = lerp(sender.x, b.location.x, 0.1);
       sender.y = lerp(sender.y, b.location.y, 0.1);
       //[end]
     }
   }</pre>
 
-<p>We&rsquo;re missing a key element, however. We need to check if the sender has arrived at location b, and if it has, feed forward that output to the next neuron.</p>
+<p>We’re missing a key element, however. We need to check if the sender has arrived at location b, and if it has, feed forward that output to the next neuron.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   void update() {
@@ -1357,7 +1357,7 @@ class Connection {
       // How far are we from neuron b?
       float d = PVector.dist(sender, b.location); //[bold]
 
-      // If we&rsquo;re close enough (within one pixel) pass on the output. Turn off sending.
+      // If we’re close enough (within one pixel) pass on the output. Turn off sending.
       if (d &lt; 1) { //[bold]
         b.feedforward(output); //[bold]
         sending = false; //[bold]
@@ -1365,7 +1365,7 @@ class Connection {
     }
   }</pre>
 
-<p>Let&rsquo;s look at the <span class="klass">Connection</span> class all together, as well as our new <span class="function">draw()</span> function.</p>
+<p>Let’s look at the <span class="klass">Connection</span> class all together, as well as our new <span class="function">draw()</span> function.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_04_NetworkAnimation/_10_04_NetworkAnimation.pde processingjs/chapter10/_10_04_NetworkAnimation/Connection.pde processingjs/chapter10/_10_04_NetworkAnimation/Network.pde processingjs/chapter10/_10_04_NetworkAnimation/Neuron.pde"><img alt="ch10 ex04" src="chapter10/ch10_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1387,7 +1387,7 @@ void draw() {
 }
 
 class Connection {
-  // The Connection&rsquo;s data
+  // The Connection’s data
   float weight;
   Neuron a;
   Neuron b;
@@ -1440,7 +1440,7 @@ class Connection {
 <div data-type="exercise" id="chapter10_exercise5">
 <h5>Exercise 10.5</h5>
 
-<p>The network in the above example was manually configured by setting the location of each neuron and its connections with hard-coded values. Rewrite this example to generate the network&rsquo;s layout via an algorithm. Can you make a circular network diagram? A random one? An example of a multi-layered network is below.</p>
+<p>The network in the above example was manually configured by setting the location of each neuron and its connections with hard-coded values. Rewrite this example to generate the network’s layout via an algorithm. Can you make a circular network diagram? A random one? An example of a multi-layered network is below.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Ex_10_5_LayeredNetworkAnimation.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Connection.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Network.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Neuron.pde"><img alt="ch10 exc05" src="chapter10/ch10_exc05.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1464,11 +1464,11 @@ class Connection {
 
 <p>Step 10 Exercise:</p>
 
-<p>Try incorporating the concept of a &ldquo;brain&rdquo; into your creatures.</p>
+<p>Try incorporating the concept of a “brain” into your creatures.</p>
 
 <ul>
 	<li>
-	<p>Use reinforcement learning in the creatures&rsquo; decision-making process.</p>
+	<p>Use reinforcement learning in the creatures’ decision-making process.</p>
 	</li>
 	<li>
 	<p>Create a creature that features a visualization of its brain as part of its design (even if the brain itself is not functional).</p>
@@ -1482,7 +1482,7 @@ class Connection {
 <section data-type="sect3" id="_the_end">
 <h3>The end</h3>
 
-<p>If you&rsquo;re still reading, thank you! You&rsquo;ve reached the end of the book. But for as much material as this book contains, we&rsquo;ve barely scratched the surface of the world we inhabit and of techniques for simulating it. It&rsquo;s my intention for this book to live as an ongoing project, and I hope to continue adding new tutorials and examples to the <a href="http://natureofcode.com">book&rsquo;s website</a> as well as expand and update the printed material. Your feedback is truly appreciated, so please get in touch via email at <code>(daniel@shiffman.net)</code> or by contributing to the <a href="http://github.com/shiffman/The-Nature-of-Code/">GitHub repository</a>, in keeping with the open-source spirit of the project. Share your work. Keep in touch. Let&rsquo;s be two with nature.</p>
+<p>If you’re still reading, thank you! You’ve reached the end of the book. But for as much material as this book contains, we’ve barely scratched the surface of the world we inhabit and of techniques for simulating it. It’s my intention for this book to live as an ongoing project, and I hope to continue adding new tutorials and examples to the <a href="http://natureofcode.com">book’s website</a> as well as expand and update the printed material. Your feedback is truly appreciated, so please get in touch via email at <code>(daniel@shiffman.net)</code> or by contributing to the <a href="http://github.com/shiffman/The-Nature-of-Code/">GitHub repository</a>, in keeping with the open-source spirit of the project. Share your work. Keep in touch. Let’s be two with nature.</p>
 </section>
 </section>
 </section>

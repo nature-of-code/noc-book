@@ -2,10 +2,10 @@
 <h1>Chapter 4. Particle Systems</h1>
 
 
-<p>First, we&rsquo;re going to want to deal with flexible quantities of elements. Sometimes we&rsquo;ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we&rsquo;re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we&rsquo;re also going to want to write a class that describes the collection of particles&mdash;the particle system itself. The goal here is to be able to write a main program that looks like the following:</p>
+<p>First, we’re going to want to deal with flexible quantities of elements. Sometimes we’ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we’re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we’re also going to want to write a class that describes the collection of particles—the particle system itself. The goal here is to be able to write a main program that looks like the following:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] Ah, isn&rsquo;t this main program so simple and lovely?
+//[full] Ah, isn’t this main program so simple and lovely?
 ParticleSystem ps;
 
 void setup() {
@@ -20,11 +20,11 @@ void draw() {
 //[end]</pre>
 
 
-<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we&rsquo;ve done this already. Our <span class="klass">Mover</span> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <span class="var">location</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span>, a constructor to initialize those variables, and functions to <span class="function">display()</span> itself and <span class="function">update()</span> its location.</p>
+<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we’ve done this already. Our <span class="klass">Mover</span> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <span class="var">location</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span>, a constructor to initialize those variables, and functions to <span class="function">display()</span> itself and <span class="function">update()</span> its location.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle {
-  //[full] A &ldquo;Particle&rdquo; object is just another name for our &ldquo;Mover.&rdquo; It has location, velocity, and acceleration.
+  //[full] A “Particle” object is just another name for our “Mover.” It has location, velocity, and acceleration.
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -49,7 +49,7 @@ class Particle {
 }</pre>
 
 
-<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <span class="klass">Particle</span> class, however, we&rsquo;re simply going to add a <span class="var">lifespan</span> variable. The timer will start at 255 and count down to 0, when the particle will be considered &ldquo;dead.&rdquo; And so we expand the <span class="klass">Particle</span> class as follows:</p>
+<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <span class="klass">Particle</span> class, however, we’re simply going to add a <span class="var">lifespan</span> variable. The timer will start at 255 and count down to 0, when the particle will be considered “dead.” And so we expand the <span class="klass">Particle</span> class as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle {
@@ -57,7 +57,7 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   // A new variable to keep track of how long the particle
-  // has been &ldquo;alive&rdquo;
+  // has been “alive”
   float lifespan; //[bold]
 
   Particle(PVector l) {

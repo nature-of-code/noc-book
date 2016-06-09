@@ -1,33 +1,33 @@
 <section data-type="chapter" id="_chapter_7_cellular_automata">
 <h1>Chapter 7. Cellular Automata</h1>
 
-<blockquote class="long-quote">&ldquo;To play life you must have a fairly large checkerboard and a plentiful supply of flat counters of two colors. It is possible to work with pencil and graph paper but it is much easier, particularly for beginners, to use counters and a board.&rdquo; <span class="attribution"> &mdash; Martin Gardner, <em>Scientific American</em> (October 1970) </span></blockquote>
+<blockquote class="long-quote">“To play life you must have a fairly large checkerboard and a plentiful supply of flat counters of two colors. It is possible to work with pencil and graph paper but it is much easier, particularly for beginners, to use counters and a board.” <span class="attribution"> — Martin Gardner, <em>Scientific American</em> (October 1970) </span></blockquote>
 
 <a data-primary="complex systems" data-secondary="cellular automata" data-type="indexterm"></a>
 
-<p>In this chapter, we&rsquo;re going to take a break from talking about vectors and motion. In fact, the rest of the book will mostly focus on systems and algorithms (albeit ones that we can, should, and will apply to moving bodies). In the previous chapter, we encountered our first Processing example of a complex system: flocking. We briefly stated the core principles behind complex systems: more than the sum of its parts, a complex system is a system of elements, operating in parallel, with short-range relationships that as a whole exhibit emergent behavior. This entire chapter is going to be dedicated to building another complex system simulation in Processing. Oddly, we are going to take some steps backward and simplify the elements of our system. No longer are the individual elements going to be members of a physics world; instead we will build a system out of the simplest digital element possible, a single bit. This bit is going to be called a cell and its value (0 or 1) will be called its state. Working with such simple elements will help us understand more of the details behind how complex systems work, and we&rsquo;ll also be able to elaborate on some programming techniques that we can apply to code-based projects.</p>
+<p>In this chapter, we’re going to take a break from talking about vectors and motion. In fact, the rest of the book will mostly focus on systems and algorithms (albeit ones that we can, should, and will apply to moving bodies). In the previous chapter, we encountered our first Processing example of a complex system: flocking. We briefly stated the core principles behind complex systems: more than the sum of its parts, a complex system is a system of elements, operating in parallel, with short-range relationships that as a whole exhibit emergent behavior. This entire chapter is going to be dedicated to building another complex system simulation in Processing. Oddly, we are going to take some steps backward and simplify the elements of our system. No longer are the individual elements going to be members of a physics world; instead we will build a system out of the simplest digital element possible, a single bit. This bit is going to be called a cell and its value (0 or 1) will be called its state. Working with such simple elements will help us understand more of the details behind how complex systems work, and we’ll also be able to elaborate on some programming techniques that we can apply to code-based projects.</p>
 
 <section data-type="sect1" id="chapter07_section1">
 <h2>7.1 What Is a Cellular Automaton?</h2>
 
 <a data-primary="cellular automaton (automata)" data-secondary="defined" data-type="indexterm"></a> <a data-primary="natural phenomena" data-secondary="cellular automata" data-type="indexterm"></a>
 
-<p>First, let&rsquo;s get one thing straight. The term <strong><em>cellular automata</em></strong> is plural. Our code examples will simulate just one&mdash;a <strong><em>cellular automaton</em></strong>, singular. To simplify our lives, we&rsquo;ll also refer to cellular automata as &ldquo;CA.&rdquo;</p>
+<p>First, let’s get one thing straight. The term <strong><em>cellular automata</em></strong> is plural. Our code examples will simulate just one—a <strong><em>cellular automaton</em></strong>, singular. To simplify our lives, we’ll also refer to cellular automata as “CA.”</p>
 
-<p>In Chapters 1 through 6, our objects (mover, particle, vehicle, boid) generally existed in only one &ldquo;state.&rdquo; They might have moved around with advanced behaviors and physics, but ultimately they remained the same type of object over the course of their digital lifetime. We&rsquo;ve alluded to the possibility that these entities can change over time (for example, the weights of steering &ldquo;desires&rdquo; can vary), but we haven&rsquo;t fully put this into practice. In this context, cellular automata make a great first step in building a system of many objects that have varying states over time.</p>
+<p>In Chapters 1 through 6, our objects (mover, particle, vehicle, boid) generally existed in only one “state.” They might have moved around with advanced behaviors and physics, but ultimately they remained the same type of object over the course of their digital lifetime. We’ve alluded to the possibility that these entities can change over time (for example, the weights of steering “desires” can vary), but we haven’t fully put this into practice. In this context, cellular automata make a great first step in building a system of many objects that have varying states over time.</p>
 
 <a data-primary="cellular automaton (automata)" data-secondary="characteristics of" data-type="indexterm"></a>
 
-<p>A cellular automaton is a model of a system of &ldquo;cell&rdquo; objects with the following characteristics.</p>
+<p>A cellular automaton is a model of a system of “cell” objects with the following characteristics.</p>
 
 <a data-primary="grid (cellular automata)" data-type="indexterm"></a> <a data-primary="state (cellular automata)" data-type="indexterm"></a>
 
 <ul>
 	<li>
-	<p>The cells live on a <strong><em>grid</em></strong>. (We&rsquo;ll see examples in both one and two dimensions in this chapter, though a cellular automaton can exist in any finite number of dimensions.)</p>
+	<p>The cells live on a <strong><em>grid</em></strong>. (We’ll see examples in both one and two dimensions in this chapter, though a cellular automaton can exist in any finite number of dimensions.)</p>
 	</li>
 	<li>
-	<p>Each cell has a <strong><em>state</em></strong>. The number of state possibilities is typically finite. The simplest example has the two possibilities of 1 and 0 (otherwise referred to as &ldquo;on&rdquo; and &ldquo;off&rdquo; or &ldquo;alive&rdquo; and &ldquo;dead&rdquo;).</p>
+	<p>Each cell has a <strong><em>state</em></strong>. The number of state possibilities is typically finite. The simplest example has the two possibilities of 1 and 0 (otherwise referred to as “on” and “off” or “alive” and “dead”).</p>
 	</li>
 	<li>
 	<p>Each cell has a <strong><em>neighborhood</em></strong>. This can be defined in any number of ways, but it is typically a list of adjacent cells.</p>
@@ -40,11 +40,11 @@
 
 <a data-primary="cellular automaton (automata)" data-secondary="self-replicating cells" data-type="indexterm"></a> <a data-primary="Game of Life" data-type="indexterm"></a> <a data-primary="Los Alamos National Laboratory" data-type="indexterm"></a> <a data-primary="self-replicating cells" data-type="indexterm"></a> <a data-primary="Ulam" data-secondary="Stanisław" data-type="indexterm"></a> <a data-primary="von Neumann" data-secondary="John" data-type="indexterm"></a>
 
-<p>The development of cellular automata systems is typically attributed to Stanisław Ulam and John von Neumann, who were both researchers at the Los Alamos National Laboratory in New Mexico in the 1940s. Ulam was studying the growth of crystals and von Neumann was imagining a world of self-replicating robots. That&rsquo;s right, robots that build copies of themselves. Once we see some examples of CA visualized, it&rsquo;ll be clear how one might imagine modeling crystal growth; the robots idea is perhaps less obvious. Consider the design of a robot as a pattern on a grid of cells (think of filling in some squares on a piece of graph paper). Now consider a set of simple rules that would allow that pattern to create copies of itself on that grid. This is essentially the process of a CA that exhibits behavior similar to biological reproduction and evolution. (Incidentally, von Neumann&rsquo;s cells had twenty-nine possible states.) Von Neumann&rsquo;s work in self-replication and CA is conceptually similar to what is probably the most famous cellular automaton: the &ldquo;Game of Life,&rdquo; which we will discuss in detail in section 7.3.</p>
+<p>The development of cellular automata systems is typically attributed to Stanisław Ulam and John von Neumann, who were both researchers at the Los Alamos National Laboratory in New Mexico in the 1940s. Ulam was studying the growth of crystals and von Neumann was imagining a world of self-replicating robots. That’s right, robots that build copies of themselves. Once we see some examples of CA visualized, it’ll be clear how one might imagine modeling crystal growth; the robots idea is perhaps less obvious. Consider the design of a robot as a pattern on a grid of cells (think of filling in some squares on a piece of graph paper). Now consider a set of simple rules that would allow that pattern to create copies of itself on that grid. This is essentially the process of a CA that exhibits behavior similar to biological reproduction and evolution. (Incidentally, von Neumann’s cells had twenty-nine possible states.) Von Neumann’s work in self-replication and CA is conceptually similar to what is probably the most famous cellular automaton: the “Game of Life,” which we will discuss in detail in section 7.3.</p>
 
 <a data-primary="&lt;em&gt;New Kind of Science" data-secondary="A&lt;/em&gt; (Wolfram)" data-type="indexterm"></a> <a data-primary="Wolfram" data-secondary="Stephen" data-type="indexterm"></a>
 
-<p>Perhaps the most significant scientific (and lengthy) work studying cellular automata arrived in 2002: Stephen Wolfram&rsquo;s 1,280-page <a href="http://www.wolframscience.com/nksonline/toc.html"><em>A New Kind of Science</em></a>. Available in its entirety for free online, Wolfram&rsquo;s book discusses how CA are not simply neat tricks, but are relevant to the study of biology, chemistry, physics, and all branches of science. This chapter will barely scratch the surface of the theories Wolfram outlines (we will focus on the code implementation) so if the examples provided spark your curiosity, you&rsquo;ll find plenty more to read about in his book.</p>
+<p>Perhaps the most significant scientific (and lengthy) work studying cellular automata arrived in 2002: Stephen Wolfram’s 1,280-page <a href="http://www.wolframscience.com/nksonline/toc.html"><em>A New Kind of Science</em></a>. Available in its entirety for free online, Wolfram’s book discusses how CA are not simply neat tricks, but are relevant to the study of biology, chemistry, physics, and all branches of science. This chapter will barely scratch the surface of the theories Wolfram outlines (we will focus on the code implementation) so if the examples provided spark your curiosity, you’ll find plenty more to read about in his book.</p>
 </section>
 
 <section data-type="sect1" id="chapter07_section2">
@@ -52,9 +52,9 @@
 
 <a data-primary="cellular automaton (automata)" data-secondary="elementary" data-type="indexterm"></a> <a data-primary="cellular automaton (automata)" data-secondary="Wolfram algorithm for" data-type="indexterm"></a> <a data-primary="elementary cellular automata" data-type="indexterm"></a> <a data-primary="Wolfram" data-secondary="Stephen" data-tertiary="elementary cellular automata algorithm" data-type="indexterm"></a>
 
-<p>The examples in this chapter will begin with a simulation of Wolfram&rsquo;s work. To understand Wolfram&rsquo;s elementary CA, we should ask ourselves the question: &ldquo;What is the simplest cellular automaton we can imagine?&rdquo; What&rsquo;s exciting about this question and its answer is that even with the simplest CA imaginable, we will see the properties of complex systems at work.</p>
+<p>The examples in this chapter will begin with a simulation of Wolfram’s work. To understand Wolfram’s elementary CA, we should ask ourselves the question: “What is the simplest cellular automaton we can imagine?” What’s exciting about this question and its answer is that even with the simplest CA imaginable, we will see the properties of complex systems at work.</p>
 
-<p>Let&rsquo;s build Wolfram&rsquo;s elementary CA from scratch. Concepts first, then code. What are the three key elements of a CA?</p>
+<p>Let’s build Wolfram’s elementary CA from scratch. Concepts first, then code. What are the three key elements of a CA?</p>
 
 <p>1) <strong><em>Grid</em></strong>. The simplest grid would be one-dimensional: a line of cells.</p>
 
@@ -76,7 +76,7 @@
 <figcaption>Figure 7.4: A neighborhood is three cells.&nbsp;</figcaption>
 </figure>
 
-<p>So we begin with a line of cells, each with an initial state (let&rsquo;s say it is random), and each with two neighbors. We&rsquo;ll have to figure out what we want to do with the cells on the edges (since those have only one neighbor each), but this is something we can sort out later.</p>
+<p>So we begin with a line of cells, each with an initial state (let’s say it is random), and each with two neighbors. We’ll have to figure out what we want to do with the cells on the edges (since those have only one neighbor each), but this is something we can sort out later.</p>
 
 <figure id="chapter07_figure5"><img alt="Figure 7.5: The edge cell only has a neighborhood of two." src="chapter07/ch07_05.png" />
 <figcaption>Figure 7.5: The edge cell only has a neighborhood of two.&nbsp;</figcaption>
@@ -84,25 +84,25 @@
 
 <a data-primary="cellular automaton (automata)" data-secondary="time and" data-type="indexterm"></a> <a data-primary="time" data-secondary="cellular automata and" data-type="indexterm"></a>
 
-<p>We haven&rsquo;t yet discussed, however, what is perhaps the most important detail of how cellular automata work&mdash;<em>time</em>. We&rsquo;re not really talking about real-world time here, but about the CA living over a period of <em>time</em>, which could also be called a <strong><em>generation</em></strong> and, in our case, will likely refer to the <strong><em>frame count</em></strong> of an animation. The figures above show us the CA at time equals 0 or generation 0. The questions we have to ask ourselves are: <em>How do we compute the states for all cells at generation 1? And generation 2?</em> And so on and so forth.</p>
+<p>We haven’t yet discussed, however, what is perhaps the most important detail of how cellular automata work—<em>time</em>. We’re not really talking about real-world time here, but about the CA living over a period of <em>time</em>, which could also be called a <strong><em>generation</em></strong> and, in our case, will likely refer to the <strong><em>frame count</em></strong> of an animation. The figures above show us the CA at time equals 0 or generation 0. The questions we have to ask ourselves are: <em>How do we compute the states for all cells at generation 1? And generation 2?</em> And so on and so forth.</p>
 
 <figure id="chapter07_figure6"><img alt="Figure 7.6" src="chapter07/ch07_06.png" />
 <figcaption>Figure 7.6</figcaption>
 </figure>
 
-<p>Let&rsquo;s say we have an individual cell in the CA, and let&rsquo;s call it CELL. The formula for calculating CELL&rsquo;s state at any given time <span class="var">t</span> is as follows:</p>
+<p>Let’s say we have an individual cell in the CA, and let’s call it CELL. The formula for calculating CELL’s state at any given time <span class="var">t</span> is as follows:</p>
 
 <p><span class="formula">CELL state at time t = f(CELL neighborhood at time t - 1)</span></p>
 
-<p>In other words, a cell&rsquo;s new state is a function of all the states in the cell&rsquo;s neighborhood at the previous moment in time (or during the previous generation). We calculate a new state value by looking at all the previous neighbor states.</p>
+<p>In other words, a cell’s new state is a function of all the states in the cell’s neighborhood at the previous moment in time (or during the previous generation). We calculate a new state value by looking at all the previous neighbor states.</p>
 
 <figure id="chapter07_figure7"><img alt="Figure 7.7" src="chapter07/ch07_07.png" />
 <figcaption>Figure 7.7</figcaption>
 </figure>
 
-<p>Now, in the world of cellular automata, there are many ways we could compute a cell&rsquo;s state from a group of cells. Consider blurring an image. (Guess what? Image processing works with CA-like rules.) A pixel&rsquo;s new state (i.e. its color) is the average of all of its neighbors&rsquo; colors. We could also say that a cell&rsquo;s new state is the sum of all of its neighbors&rsquo; states. With Wolfram&rsquo;s elementary CA, however, we can actually do something a bit simpler and seemingly absurd: We can look at all the possible configurations of a cell and its neighbor and define the state outcome for every possible configuration. It seems ridiculous&mdash;wouldn&rsquo;t there be way too many possibilities for this to be practical? Let&rsquo;s give it a try.</p>
+<p>Now, in the world of cellular automata, there are many ways we could compute a cell’s state from a group of cells. Consider blurring an image. (Guess what? Image processing works with CA-like rules.) A pixel’s new state (i.e. its color) is the average of all of its neighbors’ colors. We could also say that a cell’s new state is the sum of all of its neighbors’ states. With Wolfram’s elementary CA, however, we can actually do something a bit simpler and seemingly absurd: We can look at all the possible configurations of a cell and its neighbor and define the state outcome for every possible configuration. It seems ridiculous—wouldn’t there be way too many possibilities for this to be practical? Let’s give it a try.</p>
 
-<p>We have three cells, each with a state of 0 or 1. How many possible ways can we configure the states? If you love binary, you&rsquo;ll notice that three cells define a 3-bit number, and how high can you count with 3 bits? Up to 8. Let&rsquo;s have a look.</p>
+<p>We have three cells, each with a state of 0 or 1. How many possible ways can we configure the states? If you love binary, you’ll notice that three cells define a 3-bit number, and how high can you count with 3 bits? Up to 8. Let’s have a look.</p>
 
 <figure id="chapter07_figure8"><img alt="Figure 7.8" src="chapter07/ch07_08.png" />
 <figcaption>Figure 7.8</figcaption>
@@ -120,7 +120,7 @@
 <figcaption>Figure 7.10</figcaption>
 </figure>
 
-<p>Referring to the ruleset above, let&rsquo;s see how a given cell (we&rsquo;ll pick the center one) would change from generation 0 to generation 1.</p>
+<p>Referring to the ruleset above, let’s see how a given cell (we’ll pick the center one) would change from generation 0 to generation 1.</p>
 
 <figure id="chapter07_figure11"><img alt="Figure 7.11" src="chapter07/ch07_11.png" />
 <figcaption>Figure 7.11</figcaption>
@@ -128,7 +128,7 @@
 
 <p>Try applying the same logic to all of the cells above and fill in the empty cells.</p>
 
-<p>Now, let&rsquo;s go past just one generation and color the cells &mdash;0 means white, 1 means black&mdash;and stack the generations, with each new generation appearing below the previous one.</p>
+<p>Now, let’s go past just one generation and color the cells —0 means white, 1 means black—and stack the generations, with each new generation appearing below the previous one.</p>
 
 <figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12: Rule 90" src="chapter07/ch07_12.png" />
 <figcaption>Figure 7.12: Rule 90&nbsp;</figcaption>
@@ -136,13 +136,13 @@
 
 <a data-primary="cellular automaton (automata)" data-secondary="Sierpiński triangle" data-type="indexterm"></a> <a data-primary="Sierpiński triangle" data-type="indexterm"></a> <a data-primary="Sierpiński" data-secondary="Wacław" data-type="indexterm"></a>
 
-<p>The low-resolution shape we&rsquo;re seeing above is the &ldquo;Sierpiński triangle.&rdquo; Named after the Polish mathematician Wacław Sierpiński, it&rsquo;s a fractal pattern that we&rsquo;ll examine in the next chapter. That&rsquo;s right: this incredibly simple system of 0s and 1s, with little neighborhoods of three cells, can generate a shape as sophisticated and detailed as the Sierpiński triangle. Let&rsquo;s look at it again, only with each cell a single pixel wide so that the resolution is much higher.</p>
+<p>The low-resolution shape we’re seeing above is the “Sierpiński triangle.” Named after the Polish mathematician Wacław Sierpiński, it’s a fractal pattern that we’ll examine in the next chapter. That’s right: this incredibly simple system of 0s and 1s, with little neighborhoods of three cells, can generate a shape as sophisticated and detailed as the Sierpiński triangle. Let’s look at it again, only with each cell a single pixel wide so that the resolution is much higher.</p>
 
 <figure class="screenshot" id="chapter07_figure13"><img alt="Figure 7.13: Rule 90" src="chapter07/ch07_13.png" />
 <figcaption>Figure 7.13: Rule 90&nbsp;</figcaption>
 </figure>
 
-<p>This particular result didn&rsquo;t happen by accident. I picked this set of rules because of the pattern it generates. Take a look at Figure 7.8 one more time. Notice how there are eight possible neighborhood configurations; we therefore define a &ldquo;ruleset&rdquo; as a list of 8 bits.</p>
+<p>This particular result didn’t happen by accident. I picked this set of rules because of the pattern it generates. Take a look at Figure 7.8 one more time. Notice how there are eight possible neighborhood configurations; we therefore define a “ruleset” as a list of 8 bits.</p>
 
 <p>So this particular rule can be illustrated as follows:</p>
 
@@ -152,7 +152,7 @@
 
 <p>Eight 0s and 1s means an 8-bit number. How many combinations of eight 0s and 1s are there? 256. This is just like how we define the components of an RGB color. We get 8 bits for red, green, and blue, meaning we make colors with values from 0 to 255 (256 possibilities).</p>
 
-<p>In terms of a Wolfram elementary CA, we have now discovered that there are 256 possible rulesets. The above ruleset is commonly referred to as &ldquo;Rule 90&rdquo; because if you convert the binary sequence&mdash;01011010&mdash;to a decimal number, you&rsquo;ll get the integer 90. Let&rsquo;s try looking at the results of another ruleset.</p>
+<p>In terms of a Wolfram elementary CA, we have now discovered that there are 256 possible rulesets. The above ruleset is commonly referred to as “Rule 90” because if you convert the binary sequence—01011010—to a decimal number, you’ll get the integer 90. Let’s try looking at the results of another ruleset.</p>
 
 <figure class="screenshot" id="chapter07_figure15"><img alt="Figure 7.15: Rule 222" src="chapter07/ch07_15.png" />
 <figcaption>Figure 7.15: Rule 222&nbsp;</figcaption>
@@ -162,9 +162,9 @@
 <figcaption>Figure 7.16: A Textile Cone Snail (Conus textile), Cod Hole, Great Barrier Reef, Australia, 7 August 2005. Photographer: Richard Ling richard@research.canon.com.au&nbsp;</figcaption>
 </figure>
 
-<p>As we can now see, the simple act of creating a CA and defining a ruleset does not guarantee visually interesting results. Out of all 256 rulesets, only a handful produce compelling outcomes. However, it&rsquo;s quite incredible that even one of these rulesets for a one-dimensional CA with only two possible states can produce the patterns we see every day in nature (see Figure 7.16), and it demonstrates how valuable these systems can be in simulation and pattern generation.</p>
+<p>As we can now see, the simple act of creating a CA and defining a ruleset does not guarantee visually interesting results. Out of all 256 rulesets, only a handful produce compelling outcomes. However, it’s quite incredible that even one of these rulesets for a one-dimensional CA with only two possible states can produce the patterns we see every day in nature (see Figure 7.16), and it demonstrates how valuable these systems can be in simulation and pattern generation.</p>
 
-<p>Before we go too far down the road of how Wolfram classifies the results of varying rulesets, let&rsquo;s look at how we actually build a Processing sketch that generates the Wolfram CA and visualizes it onscreen.</p>
+<p>Before we go too far down the road of how Wolfram classifies the results of varying rulesets, let’s look at how we actually build a Processing sketch that generates the Wolfram CA and visualizes it onscreen.</p>
 </section>
 
 <section data-type="sect1" id="chapter07_section3">
@@ -172,7 +172,7 @@
 
 <a data-primary="cellular automaton (automata)" data-secondary="elementary" data-tertiary="implementing" data-type="indexterm"></a> <a data-primary="elementary cellular automata" data-secondary="implementing" data-type="indexterm"></a>
 
-<p>You may be thinking: &ldquo;OK, I&rsquo;ve got this cell thing. And the cell thing has some properties, like a state, what generation it&rsquo;s on, who its neighbors are, where it lives pixel-wise on the screen. And maybe it has some functions: it can display itself, it can generate its new state, etc.&rdquo; This line of thinking is an excellent one and would likely lead you to write some code like this:</p>
+<p>You may be thinking: “OK, I’ve got this cell thing. And the cell thing has some properties, like a state, what generation it’s on, who its neighbors are, where it lives pixel-wise on the screen. And maybe it has some functions: it can display itself, it can generate its new state, etc.” This line of thinking is an excellent one and would likely lead you to write some code like this:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Cell {
@@ -188,7 +188,7 @@ class Cell {
 <pre data-code-language="java" data-type="programlisting">
 int[] cells = {1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0};</pre>
 
-<p>To draw that array, we simply check if we&rsquo;ve got a 0 or a 1 and create a fill accordingly.</p>
+<p>To draw that array, we simply check if we’ve got a 0 or a 1 and create a fill accordingly.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Loop through every cell.
@@ -200,7 +200,7 @@ for (int i = 0; i &lt; cells.length; i++) {
   rect(i*50,0,50,50);
 }</pre>
 
-<p>Now that we have the array to describe the cell states of a given generation (which we&rsquo;ll ultimately consider the &ldquo;current&rdquo; generation), we need a mechanism by which to compute the next generation. Let&rsquo;s think about the pseudocode of what we are doing at the moment.</p>
+<p>Now that we have the array to describe the cell states of a given generation (which we’ll ultimately consider the “current” generation), we need a mechanism by which to compute the next generation. Let’s think about the pseudocode of what we are doing at the moment.</p>
 
 <p><strong>For every cell in the array:</strong></p>
 
@@ -212,7 +212,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 	<p><strong><em>Look up the new value for the cell state according to some ruleset.</em></strong></p>
 	</li>
 	<li>
-	<p><strong><em>Set the cell&rsquo;s state to that new value.</em></strong></p>
+	<p><strong><em>Set the cell’s state to that new value.</em></strong></p>
 	</li>
 </ul>
 
@@ -231,21 +231,21 @@ for (int i = 0; i &lt; cells.length; i++) {
   // Look up the new value according to the rules.
   int newstate = rules(left,middle,right);
 
-  // Set the cell&rsquo;s state to the new value.
+  // Set the cell’s state to the new value.
   cell[i] = newstate;
 }</pre>
 
-<p>We&rsquo;re fairly close to getting this right, but we&rsquo;ve made one minor blunder and one major blunder in the above code. Let&rsquo;s talk about what we&rsquo;ve done well so far.</p>
+<p>We’re fairly close to getting this right, but we’ve made one minor blunder and one major blunder in the above code. Let’s talk about what we’ve done well so far.</p>
 
-<p>Notice how easy it is to look at a cell&rsquo;s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <span class="var">i</span>, its neighbors are <span class="var">i-1</span> and <span class="var">i+1</span>.</p>
+<p>Notice how easy it is to look at a cell’s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <span class="var">i</span>, its neighbors are <span class="var">i-1</span> and <span class="var">i+1</span>.</p>
 
 <a data-primary="elementary cellular automata" data-secondary="edge cases and" data-type="indexterm"></a>
 
-<p>We&rsquo;re also farming out the calculation of a new state value to some function called <span class="function">rules()</span>. Obviously, we&rsquo;re going to have to write this function ourselves, but the point we&rsquo;re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don&rsquo;t have to touch that framework; we can simply rewrite the <span class="function">rules()</span> function to compute the new states differently.</p>
+<p>We’re also farming out the calculation of a new state value to some function called <span class="function">rules()</span>. Obviously, we’re going to have to write this function ourselves, but the point we’re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don’t have to touch that framework; we can simply rewrite the <span class="function">rules()</span> function to compute the new states differently.</p>
 
-<p>So what have we done wrong? Let&rsquo;s talk through how the code will execute. First, we look at cell index <span class="var">i</span> equals 0. Now let&rsquo;s look at 0&rsquo;s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we&rsquo;ve alluded to before: the edge cases.</p>
+<p>So what have we done wrong? Let’s talk through how the code will execute. First, we look at cell index <span class="var">i</span> equals 0. Now let’s look at 0’s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we’ve alluded to before: the edge cases.</p>
 
-<p>How do we deal with the cells on the edge who don&rsquo;t have a neighbor to both their left and their right? Here are three possible solutions to this problem:</p>
+<p>How do we deal with the cells on the edge who don’t have a neighbor to both their left and their right? Here are three possible solutions to this problem:</p>
 
 <ol>
 	<li>
@@ -255,11 +255,11 @@ for (int i = 0; i &lt; cells.length; i++) {
 	<p><strong><em>Edges wrap around.</em></strong> Think of the CA as a strip of paper and turn that strip of paper into a ring. The cell on the left edge is a neighbor of the cell on the right and vice versa. This can create the appearance of an infinite grid and is probably the most used solution.</p>
 	</li>
 	<li>
-	<p><strong><em>Edges have different neighborhoods and rules.</em></strong> If we wanted to, we could treat the edge cells differently and create rules for cells that have a neighborhood of two instead of three. You may want to do this in some circumstances, but in our case, it&rsquo;s going to be a lot of extra lines of code for little benefit.</p>
+	<p><strong><em>Edges have different neighborhoods and rules.</em></strong> If we wanted to, we could treat the edge cells differently and create rules for cells that have a neighborhood of two instead of three. You may want to do this in some circumstances, but in our case, it’s going to be a lot of extra lines of code for little benefit.</p>
 	</li>
 </ol>
 
-<p>To make the code easiest to read and understand right now, we&rsquo;ll go with option #1 and just skip the edge cases, leaving their values constant. This can be accomplished by starting the loop one cell later and ending one cell earlier:</p>
+<p>To make the code easiest to read and understand right now, we’ll go with option #1 and just skip the edge cases, leaving their values constant. This can be accomplished by starting the loop one cell later and ending one cell earlier:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // A loop that ignores the first and last cell
@@ -273,22 +273,22 @@ for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
 
 <a data-primary="elementary cellular automata" data-secondary="generations" data-tertiary="maintaining integrity of" data-type="indexterm"></a>
 
-<p>There&rsquo;s one more problem we have to fix before we&rsquo;re done. It&rsquo;s subtle and you won&rsquo;t get a compilation error; the CA just won&rsquo;t perform correctly. However, identifying this problem is absolutely fundamental to the techniques behind programming CA simulations. It all lies in this line of code:</p>
+<p>There’s one more problem we have to fix before we’re done. It’s subtle and you won’t get a compilation error; the CA just won’t perform correctly. However, identifying this problem is absolutely fundamental to the techniques behind programming CA simulations. It all lies in this line of code:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   cell[i] = newstate;</pre>
 
-<p>This seems like a perfectly innocent line. After all, we&rsquo;ve computed the new state value and we&rsquo;re simply giving the cell its new state. But in the next iteration, you&rsquo;ll discover a massive bug. Let&rsquo;s say we&rsquo;ve just computed the new state for cell #5. What do we do next? We calculate the new state value for cell #6.</p>
+<p>This seems like a perfectly innocent line. After all, we’ve computed the new state value and we’re simply giving the cell its new state. But in the next iteration, you’ll discover a massive bug. Let’s say we’ve just computed the new state for cell #5. What do we do next? We calculate the new state value for cell #6.</p>
 
 <p><em>Cell #6, generation 0 = some state, 0 or 1</em><br />
 <em>Cell #6, generation 1 = a function of states for <strong>cell #5</strong>, cell #6, and cell #7 at *generation 0*</em></p>
 
-<p>Notice how we need the value of cell #5 at generation 0 in order to calculate cell #6&rsquo;s new state at generation 1? A cell&rsquo;s new state is a function of the previous neighbor states. Do we know cell #5&rsquo;s value at generation 0? Remember, Processing just executes this line of code for <em>i = 5</em>.</p>
+<p>Notice how we need the value of cell #5 at generation 0 in order to calculate cell #6’s new state at generation 1? A cell’s new state is a function of the previous neighbor states. Do we know cell #5’s value at generation 0? Remember, Processing just executes this line of code for <em>i = 5</em>.</p>
 
 <pre data-code-language="java" data-type="programlisting">
   cell[i] = newstate;</pre>
 
-<p>Once this happens, we no longer have access to cell #5&rsquo;s state at generation 0, and cell index 5 is storing the value for generation 1. We cannot overwrite the values in the array while we are processing the array, because we need those values to calculate the new values. A solution to this problem is to have two arrays, one to store the current generation states and one for the next generation states.</p>
+<p>Once this happens, we no longer have access to cell #5’s state at generation 0, and cell index 5 is storing the value for generation 1. We cannot overwrite the values in the array while we are processing the array, because we need those values to calculate the new values. A solution to this problem is to have two arrays, one to store the current generation states and one for the next generation states.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Another array to store the states
@@ -312,17 +312,17 @@ for (int i = 1; i &lt; cells.length-1; i++) {
 // The new generation becomes the current generation.
 cells = newcells; //[bold]</pre>
 
-<p>We&rsquo;re almost done. The above code is complete except for the fact that we haven&rsquo;t yet written the <span class="function">rules()</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
+<p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the <span class="function">rules()</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // Function receives 3 ints and returns 1.
   int rules (int a, int b, int c) {</pre>
 
-<p>Now, there are many ways we could write this function, but I&rsquo;d like to start with a long-winded one that will hopefully provide a clear illustration of what we are doing.</p>
+<p>Now, there are many ways we could write this function, but I’d like to start with a long-winded one that will hopefully provide a clear illustration of what we are doing.</p>
 
 <a data-primary="cellular automaton (automata)" data-secondary="rulesets" data-tertiary="defining" data-type="indexterm"></a> <a data-primary="rulesets for cellular automata" data-type="indexterm"></a>
 
-<p>Let&rsquo;s first establish how we are storing the ruleset. The ruleset, if you remember from the previous section, is a series of 8 bits (0 or 1) that defines that outcome for every possible neighborhood configuration.</p>
+<p>Let’s first establish how we are storing the ruleset. The ruleset, if you remember from the previous section, is a series of 8 bits (0 or 1) that defines that outcome for every possible neighborhood configuration.</p>
 
 <figure id="chapter07_figure14"><img alt="Figure 7.14 (repeated)" src="chapter07/ch07_14.png" />
 <figcaption>Figure 7.14 (repeated)&nbsp;</figcaption>
@@ -356,7 +356,7 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
     return 0;
   }</pre>
 
-<p>I like having the example written as above because it describes line by line exactly what is happening for each neighborhood configuration. However, it&rsquo;s not a great solution. After all, what if we design a CA that has 4 possible states (0-3) and suddenly we have 64 possible neighborhood configurations? With 10 possible states, we have 1,000 configurations. Certainly we don&rsquo;t want to type in 1,000 lines of code!</p>
+<p>I like having the example written as above because it describes line by line exactly what is happening for each neighborhood configuration. However, it’s not a great solution. After all, what if we design a CA that has 4 possible states (0-3) and suddenly we have 64 possible neighborhood configurations? With 10 possible states, we have 1,000 configurations. Certainly we don’t want to type in 1,000 lines of code!</p>
 
 <p>Another solution, though perhaps a bit more difficult to follow, is to convert the neighborhood configuration (a 3-bit number) into a regular integer and use that value as the index into the ruleset array. This can be done in Java like so.</p>
 
@@ -365,31 +365,31 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
     // A quick way to join three bits into a String
     String s = "" + a + b + c;
 
-    // The second argument &lsquo;2&rsquo; indicates that we intend to
+    // The second argument ‘2’ indicates that we intend to
     // parse a binary number (base 2).
     int index = Integer.parseInt(s,2);
 
     return ruleset[index];
   }</pre>
 
-<p>There&rsquo;s one tiny problem with this solution, however. Let&rsquo;s say we are implementing rule 222:</p>
+<p>There’s one tiny problem with this solution, however. Let’s say we are implementing rule 222:</p>
 
 <pre data-code-language="java" data-type="programlisting">
 // Rule 222
 int[] ruleset = {1,1,0,1,1,1,1,0};</pre>
 
-<p>And we have the neighborhood &ldquo;111&rdquo;. The resulting state is equal to ruleset index 0, as we see in the first way we wrote the function.</p>
+<p>And we have the neighborhood “111”. The resulting state is equal to ruleset index 0, as we see in the first way we wrote the function.</p>
 
 <pre data-code-language="java" data-type="programlisting">
     if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
 
-<p>If we convert &ldquo;111&rdquo; to a decimal number, we get 7. But we don&rsquo;t want ruleset[7]; we want ruleset[0]. For this to work, we need to write the ruleset with the bits in reverse order, i.e.</p>
+<p>If we convert “111” to a decimal number, we get 7. But we don’t want ruleset[7]; we want ruleset[0]. For this to work, we need to write the ruleset with the bits in reverse order, i.e.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-// Rule 222 in &ldquo;reverse&rdquo; order
+// Rule 222 in “reverse” order
 int[] ruleset = {0,1,1,1,1,0,1,1};</pre>
 
-<p>So far in this section, we&rsquo;ve written everything we need to compute the generations for a Wolfram elementary CA. Let&rsquo;s take a moment to organize the above code into a class, which will ultimately help in the design of our overall sketch.</p>
+<p>So far in this section, we’ve written everything we need to compute the generations for a Wolfram elementary CA. Let’s take a moment to organize the above code into a class, which will ultimately help in the design of our overall sketch.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class CA {
@@ -440,26 +440,26 @@ class CA {
 
 <a data-primary="elementary cellular automata" data-secondary="drawing" data-type="indexterm"></a>
 
-<p>What&rsquo;s missing? Presumably, it&rsquo;s our intention to display cells and their states in visual form. As we saw earlier, the standard technique for doing this is to stack the generations one on top of each other and draw a rectangle that is black (for state 1) or white (for state 0).</p>
+<p>What’s missing? Presumably, it’s our intention to display cells and their states in visual form. As we saw earlier, the standard technique for doing this is to stack the generations one on top of each other and draw a rectangle that is black (for state 1) or white (for state 0).</p>
 
 <figure class="screenshot" id="chapter07_figure12"><img alt="Figure 7.12 (repeated)" src="chapter07/ch07_12.png" />
 <figcaption>Figure 7.12 (repeated)&nbsp;</figcaption>
 </figure>
 
-<p>Before we implement this particular visualization, I&rsquo;d like to point out two things.</p>
+<p>Before we implement this particular visualization, I’d like to point out two things.</p>
 
-<p>One, this visual interpretation of the data is completely literal. It&rsquo;s useful for demonstrating the algorithms and results of Wolfram&rsquo;s elementary CA, but it shouldn&rsquo;t necessarily drive your own personal work. It&rsquo;s rather unlikely that you are building a project that needs precisely this algorithm with this visual style. So while learning to draw the CA in this way will help you understand and implement CA systems, this skill should exist only as a foundation.</p>
+<p>One, this visual interpretation of the data is completely literal. It’s useful for demonstrating the algorithms and results of Wolfram’s elementary CA, but it shouldn’t necessarily drive your own personal work. It’s rather unlikely that you are building a project that needs precisely this algorithm with this visual style. So while learning to draw the CA in this way will help you understand and implement CA systems, this skill should exist only as a foundation.</p>
 
-<p>Second, the fact that we are visualizing a one-dimensional CA with a two-dimensional image can be confusing. It&rsquo;s very important to remember that this is not a 2D CA. We are simply choosing to show a history of all the generations stacked vertically. This technique creates a two-dimensional image out of many instances of one-dimensional data. But the system itself is one-dimensional. Later, we are going to look at an actual 2D CA (the Game of Life) and discuss how we might choose to display such a system.</p>
+<p>Second, the fact that we are visualizing a one-dimensional CA with a two-dimensional image can be confusing. It’s very important to remember that this is not a 2D CA. We are simply choosing to show a history of all the generations stacked vertically. This technique creates a two-dimensional image out of many instances of one-dimensional data. But the system itself is one-dimensional. Later, we are going to look at an actual 2D CA (the Game of Life) and discuss how we might choose to display such a system.</p>
 
-<p>The good news is that drawing the CA is not particularly difficult. Let&rsquo;s begin by looking at how we would render a single generation. Assume we have a Processing window 600 pixels wide and we want each cell to be a 10x10 square. We therefore have a CA with 60 cells. Of course, we can calculate this value dynamically.</p>
+<p>The good news is that drawing the CA is not particularly difficult. Let’s begin by looking at how we would render a single generation. Assume we have a Processing window 600 pixels wide and we want each cell to be a 10x10 square. We therefore have a CA with 60 cells. Of course, we can calculate this value dynamically.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int w = 10;
 // How many cells fit across given a certain width
 int[] cells = new int[width/w];</pre>
 
-<p>Assuming we&rsquo;ve gone through the process of generating the cell states (which we did in the previous section), we can now loop through the entire array of cells, drawing a black cell when the state is 1 and a white one when the state is 0.</p>
+<p>Assuming we’ve gone through the process of generating the cell states (which we did in the previous section), we can now loop through the entire array of cells, drawing a black cell when the state is 1 and a white one when the state is 0.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int i = 0; i &lt; cells.length; i++) {
@@ -472,9 +472,9 @@ for (int i = 0; i &lt; cells.length; i++) {
   rect(i*w, 0, w, w);
 }</pre>
 
-<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing&rsquo;s <span class="function">rect()</span> function, but rather access the pixel array directly.</p>
+<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing’s <span class="function">rect()</span> function, but rather access the pixel array directly.</p>
 
-<p>In the above code, you&rsquo;ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we&rsquo;ll also need to compute a y-location based on how many iterations of the CA we&rsquo;ve executed. We could accomplish this by adding a &ldquo;generation&rdquo; variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
+<p>In the above code, you’ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we’ll also need to compute a y-location based on how many iterations of the CA we’ve executed. We could accomplish this by adding a “generation” variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -545,7 +545,7 @@ class CA {
 <div data-type="exercise" id="chapter07_exercise3">
 <h5>Exercise 7.3</h5>
 
-<p>Visualize the CA in a non-traditional way. Break all the rules you can; don&rsquo;t feel tied to using squares on a perfect grid with black and white.</p>
+<p>Visualize the CA in a non-traditional way. Break all the rules you can; don’t feel tied to using squares on a perfect grid with black and white.</p>
 </div>
 
 
@@ -553,7 +553,7 @@ class CA {
 <div data-type="exercise" id="chapter07_exercise4">
 <h5>Exercise 7.4</h5>
 
-<p>Create a visualization of the CA that scrolls upwards as the generations increase so that you can view the generations to &ldquo;infinity.&rdquo; Hint: instead of keeping track of only one generation at a time, you&rsquo;ll need to store a history of generations, always adding a new one and deleting the oldest one in each frame.</p>
+<p>Create a visualization of the CA that scrolls upwards as the generations increase so that you can view the generations to “infinity.” Hint: instead of keeping track of only one generation at a time, you’ll need to store a history of generations, always adding a new one and deleting the oldest one in each frame.</p>
 </div>
 </section>
 
@@ -562,7 +562,7 @@ class CA {
 
 <a data-primary="cellular automaton (automata)" data-secondary="Wolfram classification" data-type="indexterm"></a> <a data-primary="Wolfram classification" data-type="indexterm"></a> <a data-primary="Wolfram" data-secondary="Stephen" data-tertiary="Wolfram classification" data-type="indexterm"></a>
 
-<p>Before we move on to looking at CA in two dimensions, it&rsquo;s worth taking a brief look at Wolfram&rsquo;s classification for cellular automata. As we noted earlier, the vast majority of elementary CA rulesets produce uninspiring results, while some result in wondrously complex patterns like those found in nature. Wolfram has divided up the range of outcomes into four classes:</p>
+<p>Before we move on to looking at CA in two dimensions, it’s worth taking a brief look at Wolfram’s classification for cellular automata. As we noted earlier, the vast majority of elementary CA rulesets produce uninspiring results, while some result in wondrously complex patterns like those found in nature. Wolfram has divided up the range of outcomes into four classes:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/Ex_7_04_WolframCA_scrolling_222.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_222/CA.pde" id="chapter07_figure18"><img alt="Figure 7.18: Rule 222" src="chapter07/ch07_18.png" />
 <figcaption>Figure 7.18: Rule 222&nbsp;</figcaption>
@@ -586,7 +586,7 @@ class CA {
 
 <a data-primary="Random class (Wolfram classification)" data-type="indexterm"></a> <a data-primary="Wolfram classification" data-secondary="Random class" data-type="indexterm"></a>
 
-<p><strong><em>Class 3: Random.</em></strong> Class 3 CAs appear random and have no easily discernible pattern. In fact, rule 30 (above) is used as a random number generator in Wolfram&rsquo;s Mathematica software. Again, this is a moment where we can feel amazed that such a simple system with simple rules can descend into a chaotic and random pattern.</p>
+<p><strong><em>Class 3: Random.</em></strong> Class 3 CAs appear random and have no easily discernible pattern. In fact, rule 30 (above) is used as a random number generator in Wolfram’s Mathematica software. Again, this is a moment where we can feel amazed that such a simple system with simple rules can descend into a chaotic and random pattern.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/Ex_7_04_WolframCA_scrolling_110.pde processingjs/chapter07/Ex_7_04_WolframCA_scrolling_110/CA.pde" id="chapter07_figure21"><img alt="Figure 7.21: Rule 110" src="chapter07/ch07_21.png" />
 <figcaption>Figure 7.21: Rule 110&nbsp;</figcaption>
@@ -612,23 +612,23 @@ class CA {
 
 <a data-primary="complex systems" data-secondary="Game of Life as" data-type="indexterm"></a> <a data-primary="Conway" data-secondary="John" data-type="indexterm"></a> <a data-primary="Game of Life" data-type="indexterm"></a> <a data-primary="Gardner" data-secondary="Martin" data-type="indexterm"></a>
 
-<p>In 1970, Martin Gardner wrote an article in <em>Scientific American</em> that documented mathematician John Conway&rsquo;s new &ldquo;Game of Life,&rdquo; describing it as &ldquo;recreational&rdquo; mathematics and suggesting that the reader get out a chessboard and some checkers and &ldquo;play.&rdquo; While the Game of Life has become something of a computational clich&eacute; (make note of the myriad projects that display the Game of Life on LEDs, screens, projection surfaces, etc.), it is still important for us to build it from scratch. For one, it provides a good opportunity to practice our skills with two-dimensional arrays, object orientation, etc. But perhaps more importantly, its core principles are tied directly to our core goals&mdash;simulating the natural world with code. Though we may want to avoid simply duplicating it without a great deal of thought or care, the algorithm and its technical implementation will provide us with the inspiration and foundation to build simulations that exhibit the characteristics and behaviors of biological systems of reproduction.</p>
+<p>In 1970, Martin Gardner wrote an article in <em>Scientific American</em> that documented mathematician John Conway’s new “Game of Life,” describing it as “recreational” mathematics and suggesting that the reader get out a chessboard and some checkers and “play.” While the Game of Life has become something of a computational clich&eacute; (make note of the myriad projects that display the Game of Life on LEDs, screens, projection surfaces, etc.), it is still important for us to build it from scratch. For one, it provides a good opportunity to practice our skills with two-dimensional arrays, object orientation, etc. But perhaps more importantly, its core principles are tied directly to our core goals—simulating the natural world with code. Though we may want to avoid simply duplicating it without a great deal of thought or care, the algorithm and its technical implementation will provide us with the inspiration and foundation to build simulations that exhibit the characteristics and behaviors of biological systems of reproduction.</p>
 
-<p>Unlike von Neumann, who created an extraordinarily complex system of states and rules, Conway wanted to achieve a similar &ldquo;lifelike&rdquo; result with the simplest set of rules possible. Martin Gardner outlined Conway&rsquo;s goals as follows:</p>
+<p>Unlike von Neumann, who created an extraordinarily complex system of states and rules, Conway wanted to achieve a similar “lifelike” result with the simplest set of rules possible. Martin Gardner outlined Conway’s goals as follows:</p>
 
-<blockquote>&ldquo;1. There should be no initial pattern for which there is a simple proof that the population can grow without limit. 2. There should be initial patterns that apparently do grow without limit. 3. There should be simple initial patterns that grow and change for a considerable period of time before coming to an end in three possible ways: fading away completely (from overcrowding or becoming too sparse), settling into a stable configuration that remains unchanged thereafter, or entering an oscillating phase in which they repeat an endless cycle of two or more periods.&rdquo; <span class="attribution"> &mdash;Martin Gardner, <span style="font-style:normal"><a href="http://www.ibiblio.org/lifepatterns/october1970.html">Scientific American</a></span> 223 (October 1970): 120-123. </span></blockquote>
+<blockquote>“1. There should be no initial pattern for which there is a simple proof that the population can grow without limit. 2. There should be initial patterns that apparently do grow without limit. 3. There should be simple initial patterns that grow and change for a considerable period of time before coming to an end in three possible ways: fading away completely (from overcrowding or becoming too sparse), settling into a stable configuration that remains unchanged thereafter, or entering an oscillating phase in which they repeat an endless cycle of two or more periods.” <span class="attribution"> —Martin Gardner, <span style="font-style:normal"><a href="http://www.ibiblio.org/lifepatterns/october1970.html">Scientific American</a></span> 223 (October 1970): 120-123. </span></blockquote>
 
-<p>The above might sound a bit cryptic, but it essentially describes a Wolfram class 4 CA. The CA should be patterned but unpredictable over time, eventually settling into a uniform or oscillating state. In other words, though Conway didn&rsquo;t use this terminology, it should have all those properties of a <em>complex system</em> that we keep mentioning.</p>
+<p>The above might sound a bit cryptic, but it essentially describes a Wolfram class 4 CA. The CA should be patterned but unpredictable over time, eventually settling into a uniform or oscillating state. In other words, though Conway didn’t use this terminology, it should have all those properties of a <em>complex system</em> that we keep mentioning.</p>
 
-<p>Let&rsquo;s look at how the Game of Life works. It won&rsquo;t take up too much time or space, since we&rsquo;ve covered the basics of CA already.</p>
+<p>Let’s look at how the Game of Life works. It won’t take up too much time or space, since we’ve covered the basics of CA already.</p>
 
 <figure class="half-width-right" id="chapter07_figure22"><img alt="Figure 7.22" src="chapter07/ch07_22.png" />
 <figcaption>Figure 7.22</figcaption>
 </figure>
 
-<p>First, instead of a line of cells, we now have a two-dimensional matrix of cells. As with the elementary CA, the possible states are 0 or 1. Only in this case, since we&rsquo;re talking about &ldquo;life," 0 means dead and 1 means alive.</p>
+<p>First, instead of a line of cells, we now have a two-dimensional matrix of cells. As with the elementary CA, the possible states are 0 or 1. Only in this case, since we’re talking about “life," 0 means dead and 1 means alive.</p>
 
-<p>The cell&rsquo;s neighborhood has also expanded. If a neighbor is an adjacent cell, a neighborhood is now nine cells instead of three.</p>
+<p>The cell’s neighborhood has also expanded. If a neighbor is an adjacent cell, a neighborhood is now nine cells instead of three.</p>
 
 <p>With three cells, we had a 3-bit number or eight possible configurations. With nine cells, we have 9 bits, or 512 possible neighborhoods. In most cases, it would be impractical to define an outcome for every single possibility. The Game of Life gets around this problem by defining a set of rules according to general characteristics of the neighborhood. In other words, is the neighborhood overpopulated with life? Surrounded by death? Or just right? Here are the rules of life.</p>
 
@@ -651,7 +651,7 @@ class CA {
 	<p><strong><em>Birth.</em></strong> If a cell is dead (state = 0) it will come to life (state becomes 1) if it has exactly three alive neighbors (no more, no less).</p>
 	</li>
 	<li>
-	<p><strong><em>Stasis.</em></strong> In all other cases, the cell state does not change. To be thorough, let&rsquo;s describe those scenarios.</p>
+	<p><strong><em>Stasis.</em></strong> In all other cases, the cell state does not change. To be thorough, let’s describe those scenarios.</p>
 
 	<ul>
 		<li>
@@ -664,7 +664,7 @@ class CA {
 	</li>
 </ol>
 
-<p>Let&rsquo;s look at a few examples, focussing on the center cell.</p>
+<p>Let’s look at a few examples, focussing on the center cell.</p>
 
 <figure id="chapter07_figure23"><img alt="Figure 7.23" src="chapter07/ch07_23.png" />
 <figcaption>Figure 7.23</figcaption>
@@ -686,13 +686,13 @@ class CA {
 <figcaption>Figure 7.25</figcaption>
 </figure>
 
-<p>And there are also patterns that from generation to generation move about the grid. (It&rsquo;s important to note that the cells themselves aren&rsquo;t actually moving, although we see the appearance of motion in the result as the cells turn on and off.)</p>
+<p>And there are also patterns that from generation to generation move about the grid. (It’s important to note that the cells themselves aren’t actually moving, although we see the appearance of motion in the result as the cells turn on and off.)</p>
 
 <figure id="chapter07_figure26"><img alt="Figure 7.26" src="chapter07/ch07_26.png" />
 <figcaption>Figure 7.26</figcaption>
 </figure>
 
-<p>If you are interested in these patterns, there are several good &ldquo;out of the box&rdquo; Game of Life demonstrations online that allow you to configure the CA&rsquo;s initial state and watch it run at varying speeds. Two examples you might want to examine are:</p>
+<p>If you are interested in these patterns, there are several good “out of the box” Game of Life demonstrations online that allow you to configure the CA’s initial state and watch it run at varying speeds. Two examples you might want to examine are:</p>
 
 <a data-primary="Conway's Game of Life (Klise)" data-type="indexterm"></a> <a data-primary="Exploring Emergence (Resnick/Silverman)" data-type="indexterm"></a> <a data-primary="Klise" data-secondary="Steven" data-type="indexterm"></a> <a data-primary="Resnick" data-secondary="Mitchel" data-type="indexterm"></a> <a data-primary="Silverman" data-secondary="Brian" data-type="indexterm"></a>
 
@@ -701,11 +701,11 @@ class CA {
 	<p><a href="http://llk.media.mit.edu/projects/emergence/">Exploring Emergence</a> by Mitchel Resnick and Brian Silverman, Lifelong Kindergarten Group, MIT Media Laboratory</p>
 	</li>
 	<li>
-	<p><a href="http://stevenklise.github.com/ConwaysGameOfLife">Conway&rsquo;s Game of Life</a> by Steven Klise (uses Processing.js!)</p>
+	<p><a href="http://stevenklise.github.com/ConwaysGameOfLife">Conway’s Game of Life</a> by Steven Klise (uses Processing.js!)</p>
 	</li>
 </ul>
 
-<p>For the example we&rsquo;ll build from scratch in the next section, it will be easier to simply randomly set the states for each cell.</p>
+<p>For the example we’ll build from scratch in the next section, it will be easier to simply randomly set the states for each cell.</p>
 </section>
 
 <section data-type="sect1" id="chapter07_section7">
@@ -718,7 +718,7 @@ class CA {
 <pre data-code-language="java" data-type="programlisting">
 int[][] board = new int[columns][rows];</pre>
 
-<p>We&rsquo;ll begin by initializing each cell of the board with a random state: 0 or 1.</p>
+<p>We’ll begin by initializing each cell of the board with a random state: 0 or 1.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int x = 0; x &lt; columns; x++) {
@@ -728,7 +728,7 @@ for (int x = 0; x &lt; columns; x++) {
   }
 }</pre>
 
-<p>And to compute the next generation, just as before, we need a fresh 2D array to write to as we analyze each cell&rsquo;s neighborhood and calculate a new state.</p>
+<p>And to compute the next generation, just as before, we need a fresh 2D array to write to as we analyze each cell’s neighborhood and calculate a new state.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int[][] next = new int[columns][rows];
@@ -746,9 +746,9 @@ for (int x = 0; x &lt; columns; x++) {
 <figcaption>Figure 7.27</figcaption>
 </figure>
 
-<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell&rsquo;s neighbor. In the case of the 1D CA, this was simple: if a cell index was <span class="var">i</span>, its neighbors were i-1 and i+1. Here each cell doesn&rsquo;t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
+<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell’s neighbor. In the case of the 1D CA, this was simple: if a cell index was <span class="var">i</span>, its neighbors were i-1 and i+1. Here each cell doesn’t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
 
-<p>All of the Game of Life rules operate by knowing how many neighbors are alive. So if we create a neighbor counter variable and increment it each time we find a neighbor with a state of 1, we&rsquo;ll have the total of live neighbors.</p>
+<p>All of the Game of Life rules operate by knowing how many neighbors are alive. So if we create a neighbor counter variable and increment it each time we find a neighbor with a state of 1, we’ll have the total of live neighbors.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int neighbors = 0;
@@ -760,7 +760,7 @@ if (board[x+1][y-1] == 1) neighbors++;
 //[end]
 
 //[full] Middle row of neighbors
-// (note we don&rsquo;t count self)
+// (note we don’t count self)
 if (board[x-1][y]   == 1) neighbors++;
 if (board[x+1][y]   == 1) neighbors++;
 //[end]
@@ -771,24 +771,24 @@ if (board[x  ][y+1] == 1) neighbors++;
 if (board[x+1][y+1] == 1) neighbors++;
 //[end]</pre>
 
-<p>And again, just as with the Wolfram CA, we find ourselves in a situation where the above is a useful and clear way to write the code for teaching purposes, allowing us to see every step (each time we find a neighbor with a state of one, we increase a counter). Nevertheless, it&rsquo;s a bit silly to say, &ldquo;If the cell state equals one, add one to a counter&rdquo; when we could just say, &ldquo;Add the cell state to a counter.&rdquo; After all, if the state is only a 0 or 1, the sum of all the neighbors&rsquo; states will yield the total number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
+<p>And again, just as with the Wolfram CA, we find ourselves in a situation where the above is a useful and clear way to write the code for teaching purposes, allowing us to see every step (each time we find a neighbor with a state of one, we increase a counter). Nevertheless, it’s a bit silly to say, “If the cell state equals one, add one to a counter” when we could just say, “Add the cell state to a counter.” After all, if the state is only a 0 or 1, the sum of all the neighbors’ states will yield the total number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int i = -1; i &lt;= 1; i++) {
   for (int j = -1; j &lt;= 1; j++) {
-    // Add up all the neighbors&rsquo; states.
+    // Add up all the neighbors’ states.
     neighbors += board[x+i][y+j];
    }
 }</pre>
 
-<p>Of course, we&rsquo;ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">i</span> and <span class="var">j</span> equal 0, but another option would be to just subtract the cell state once we&rsquo;ve finished the loop.</p>
+<p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">i</span> and <span class="var">j</span> equal 0, but another option would be to just subtract the cell state once we’ve finished the loop.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-// Whoops! Subtract the cell&rsquo;s state,
-// which we don&rsquo;t want in the total.
+// Whoops! Subtract the cell’s state,
+// which we don’t want in the total.
 neighbors -= board[x][y];</pre>
 
-<p>Finally, once we know the total number of live neighbors, we can decide what the cell&rsquo;s new state should be according to the rules: birth, death, or stasis.</p>
+<p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new state should be according to the rules: birth, death, or stasis.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 //[full] If it is alive and has less than 2 live neighbors, it dies from loneliness.
@@ -848,10 +848,10 @@ for (int x = 1; x &lt; columns-1; x++) {
   }
 }
 
-// The 2D array &ldquo;next&rdquo; is now the current board.
+// The 2D array “next” is now the current board.
 board = next;</pre>
 
-<p>Finally, once the next generation is calculated, we can employ the same method we used to draw the Wolfram CA&mdash;a square for each spot, white for off, black for on.</p>
+<p>Finally, once the next generation is calculated, we can employ the same method we used to draw the Wolfram CA—a square for each spot, white for off, black for on.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/_7_02_GameOfLifeSimple/_7_02_GameOfLifeSimple.pde processingjs/chapter07/_7_02_GameOfLifeSimple/GOL.pde"><img alt="ch07 ex02" src="chapter07/ch07_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -882,13 +882,13 @@ for ( int i = 0; i &lt; columns;i++) {
 <div data-type="exercise" id="chapter07_exercise7">
 <h5>Exercise 7.7</h5>
 
-<p>Implement &ldquo;wrap-around&rdquo; for the Game of Life so that cells on the edges have neighbors on the opposite side of the grid.</p>
+<p>Implement “wrap-around” for the Game of Life so that cells on the edges have neighbors on the opposite side of the grid.</p>
 </div>
 
 <div data-type="exercise" id="chapter07_exercise8">
 <h5>Exercise 7.8</h5>
 
-<p>While the above solution (Example 7.2) is convenient, it is not particularly memory-efficient. It creates a new 2D array for every frame of animation! This matters very little for a Processing desktop application, but if you were implementing the Game of Life on a microcontroller or mobile device, you&rsquo;d want to be more careful. One solution is to have only two arrays and constantly swap them, writing the next set of states into whichever one isn&rsquo;t the current array. Implement this particular solution.</p>
+<p>While the above solution (Example 7.2) is convenient, it is not particularly memory-efficient. It creates a new 2D array for every frame of animation! This matters very little for a Processing desktop application, but if you were implementing the Game of Life on a microcontroller or mobile device, you’d want to be more careful. One solution is to have only two arrays and constantly swap them, writing the next set of states into whichever one isn’t the current array. Implement this particular solution.</p>
 </div>
 </section>
 
@@ -897,14 +897,14 @@ for ( int i = 0; i &lt; columns;i++) {
 
 <a data-primary="object" data-secondary="cells in cellular automata as" data-type="indexterm"></a> <a data-primary="object-oriented programming" data-secondary="cellular automata and" data-type="indexterm"></a>
 
-<p>Over the course of the previous six chapters, we&rsquo;ve slowly built examples of systems of <em>objects</em> with properties that move about the screen. And in this chapter, although we&rsquo;ve been talking about a &ldquo;cell&rdquo; as if it were an object, we actually haven&rsquo;t been using any object orientation in our code (other than a class to describe the CA system as a whole). This has worked because a cell is such an enormously simple object (a single bit). However, in a moment, we are going to discuss some ideas for further developing CA systems, many of which involve keeping track of multiple properties for each cell. For example, what if a cell needed to remember its last ten states? Or what if we wanted to apply some of our motion and physics thinking to a CA and have the cells move about the window, dynamically changing their neighbors from frame to frame?</p>
+<p>Over the course of the previous six chapters, we’ve slowly built examples of systems of <em>objects</em> with properties that move about the screen. And in this chapter, although we’ve been talking about a “cell” as if it were an object, we actually haven’t been using any object orientation in our code (other than a class to describe the CA system as a whole). This has worked because a cell is such an enormously simple object (a single bit). However, in a moment, we are going to discuss some ideas for further developing CA systems, many of which involve keeping track of multiple properties for each cell. For example, what if a cell needed to remember its last ten states? Or what if we wanted to apply some of our motion and physics thinking to a CA and have the cells move about the window, dynamically changing their neighbors from frame to frame?</p>
 
-<p>To accomplish any of these ideas (and more), it would be helpful to see how we might treat a cell as an object with multiple properties, rather than as a single 0 or 1. To show this, let&rsquo;s just recreate the Game of Life simulation. Only instead of:</p>
+<p>To accomplish any of these ideas (and more), it would be helpful to see how we might treat a cell as an object with multiple properties, rather than as a single 0 or 1. To show this, let’s just recreate the Game of Life simulation. Only instead of:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   int[][] board;</pre>
 
-<p>Let&rsquo;s have:</p>
+<p>Let’s have:</p>
 
 <pre data-code-language="java" data-type="programlisting">
   Cell[][] board;</pre>
@@ -919,10 +919,10 @@ class Cell {
   float w;
   //[end]
 
-  // What is the cell&rsquo;s state?
+  // What is the cell’s state?
   int state;</pre>
 
-<p>In the non-OOP version, we used a separate 2D array to keep track of the states for the current and next generation. By making a cell an object, however, each cell could keep track of both states. In this case, we&rsquo;ll think of the cell as remembering its previous state (for when new states need to be computed).</p>
+<p>In the non-OOP version, we used a separate 2D array to keep track of the states for the current and next generation. By making a cell an object, however, each cell could keep track of both states. In this case, we’ll think of the cell as remembering its previous state (for when new states need to be computed).</p>
 
 <pre data-code-language="java" data-type="programlisting">
   // What was its previous state?
@@ -949,7 +949,7 @@ void display() {
   rect(x, y, w, w);
 }</pre>
 
-<p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be counted the same way; the difference is that we now need to refer to the object&rsquo;s state variables as we loop through the 2D array.</p>
+<p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be counted the same way; the difference is that we now need to refer to the object’s state variables as we loop through the 2D array.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 for (int x = 1; x &lt; columns-1; x++) {
@@ -982,11 +982,11 @@ for (int x = 1; x &lt; columns-1; x++) {
 
 <a data-primary="cellular automaton (automata)" data-secondary="variations of" data-type="indexterm"></a>
 
-<p>Now that we have covered the basic concepts, algorithms, and programming strategies behind the most famous 1D and 2D cellular automata, it&rsquo;s time to think about how you might take this foundation of code and build on it, developing creative applications of CAs in your own work. In this section, we&rsquo;ll talk through some ideas for expanding the features of the CA examples. Example answers to each of these exercises can be found on the book website.</p>
+<p>Now that we have covered the basic concepts, algorithms, and programming strategies behind the most famous 1D and 2D cellular automata, it’s time to think about how you might take this foundation of code and build on it, developing creative applications of CAs in your own work. In this section, we’ll talk through some ideas for expanding the features of the CA examples. Example answers to each of these exercises can be found on the book website.</p>
 
 <a data-primary="cellular automaton (automata)" data-secondary="non-rectangular grids and" data-type="indexterm"></a> <a data-primary="non-rectangular grids (cellular automata)" data-type="indexterm"></a>
 
-<p><strong><em>1) Non-rectangular Grids</em></strong>. There&rsquo;s no particular reason why you should limit yourself to having your cells on a rectangular grid. What happens if you design a CA with another type of shape?</p>
+<p><strong><em>1) Non-rectangular Grids</em></strong>. There’s no particular reason why you should limit yourself to having your cells on a rectangular grid. What happens if you design a CA with another type of shape?</p>
 
 <div data-type="exercise" id="chapter07_exercise9">
 <h5>Exercise 7.9</h5>
@@ -1000,7 +1000,7 @@ for (int x = 1; x &lt; columns-1; x++) {
 
 <a data-primary="cellular automaton (automata)" data-secondary="probabilistic" data-type="indexterm"></a> <a data-primary="probabilistic (cellular automata)" data-type="indexterm"></a> <a data-primary="probability" data-secondary="cellular automata based on" data-type="indexterm"></a>
 
-<p><strong><em>2) Probabilistic</em></strong>. The rules of a CA don&rsquo;t necessarily have to define an exact outcome.</p>
+<p><strong><em>2) Probabilistic</em></strong>. The rules of a CA don’t necessarily have to define an exact outcome.</p>
 
 <div data-type="exercise" id="chapter07_exercise10">
 <h5>Exercise 7.10</h5>
@@ -1014,12 +1014,12 @@ Etc.</p>
 
 <a data-primary="cellular automaton (automata)" data-secondary="continuous" data-type="indexterm"></a> <a data-primary="continuous (cellular automata)" data-type="indexterm"></a>
 
-<p><strong><em>3) Continuous</em></strong>. We&rsquo;ve looked at examples where the cell&rsquo;s state can only be a 1 or a 0. But what if the cell&rsquo;s state was a floating point number between 0 and 1?</p>
+<p><strong><em>3) Continuous</em></strong>. We’ve looked at examples where the cell’s state can only be a 1 or a 0. But what if the cell’s state was a floating point number between 0 and 1?</p>
 
 <div data-type="exercise" id="chapter07_exercise11">
 <h5>Exercise 7.11</h5>
 
-<p>Adapt Wolfram elementary CA to have the state be a float. You could define rules such as, &ldquo;If the state is greater than 0.5&rdquo; or &ldquo;&hellip;less than 0.2.&rdquo;</p>
+<p>Adapt Wolfram elementary CA to have the state be a float. You could define rules such as, “If the state is greater than 0.5” or “&hellip;less than 0.2.”</p>
 </div>
 
 <a data-primary="cellular automaton (automata)" data-secondary="image processing" data-type="indexterm"></a> <a data-primary="image processing (cellular automata)" data-type="indexterm"></a>
@@ -1034,12 +1034,12 @@ Etc.</p>
 
 <a data-primary="cellular automaton (automata)" data-secondary="historical" data-type="indexterm"></a> <a data-primary="historical (cellular automata)" data-type="indexterm"></a>
 
-<p><strong><em>5) Historical</em></strong>. In the Game of Life object-oriented example, we used two variables to keep track of its state: current and previous. What if you use an array to keep track of a cell&rsquo;s state history? This relates to the idea of a &ldquo;complex adaptive system,&rdquo; one that has the ability to adapt and change its rules over time by learning from its history. We&rsquo;ll see an example of this in Chapter 10: Neural Networks.</p>
+<p><strong><em>5) Historical</em></strong>. In the Game of Life object-oriented example, we used two variables to keep track of its state: current and previous. What if you use an array to keep track of a cell’s state history? This relates to the idea of a “complex adaptive system,” one that has the ability to adapt and change its rules over time by learning from its history. We’ll see an example of this in Chapter 10: Neural Networks.</p>
 
 <div data-type="exercise" id="chapter07_exercise13">
 <h5>Exercise 7.13</h5>
 
-<p>Visualize the Game of Life by coloring each cell according to how long it&rsquo;s been alive or dead. Can you also use the cell&rsquo;s history to inform the rules?</p>
+<p>Visualize the Game of Life by coloring each cell according to how long it’s been alive or dead. Can you also use the cell’s history to inform the rules?</p>
 </div>
 
 <a data-primary="cellular automaton (automata)" data-secondary="moving cells" data-type="indexterm"></a> <a data-primary="moving cells (cellular automata)" data-type="indexterm"></a>
@@ -1071,10 +1071,10 @@ Etc.</p>
 
 <ul>
 	<li>
-	<p>Give each creature a state. How can that state drive their behavior? Taking inspiration from CA, how can that state change over time according to its neighbors&rsquo; states?</p>
+	<p>Give each creature a state. How can that state drive their behavior? Taking inspiration from CA, how can that state change over time according to its neighbors’ states?</p>
 	</li>
 	<li>
-	<p>Consider the ecosystem&rsquo;s world to be a CA. The creatures move from tile to tile. Each tile has a state&mdash;is it land? water? food?</p>
+	<p>Consider the ecosystem’s world to be a CA. The creatures move from tile to tile. Each tile has a state—is it land? water? food?</p>
 	</li>
 	<li>
 	<p>Use a CA to generate a pattern for the design of a creature in your ecosystem.</p>
