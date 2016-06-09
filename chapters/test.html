@@ -2,6 +2,54 @@
 <h1>Chapter 4. Particle Systems</h1>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!4 .offset} Separate ArrayLists for each animal
+ArrayList&lt;Dog&gt; dogs = new ArrayList&lt;Dog&gt;();
+ArrayList&lt;Cat&gt; cats = new ArrayList&lt;Cat&gt;();
+ArrayList&lt;Turtle&gt; turtles = new ArrayList&lt;Turtle&gt;();
+ArrayList&lt;Kiwi&gt; kiwis = new ArrayList&lt;Kiwi&gt;();
+
+for (int i = 0; i &lt; 10; i++) {
+  dogs.add(new Dog());
+}
+for (int i = 0; i &lt; 15; i++) {
+  cats.add(new Cat());
+}
+for (int i = 0; i &lt; 6; i++) {
+  turtles.add(new Turtle());
+}
+for (int i = 0; i &lt; 98; i++) {
+  kiwis.add(new Kiwi());
+}</pre>
+
+
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+// Ah, isn’t this main program so simple and lovely?
+ParticleSystem ps;
+
+void setup() {
+  size(640, 360);
+  ps = new ParticleSystem();
+}
+
+void draw() {
+  background(255);
+  ps.run();
+}</pre>
+
+<p>more</p>
+
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+void draw() {
+  background(100);
+
+  PVector gravity = new PVector(0, 0.1);
+  //{!1} Applying a force to the system as a whole
+  ps.applyForce(gravity);
+  ps.addParticle();
+  ps.run();
+}</pre>
+
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle extends VerletParticle2D {
 
   //{!1} Add a radius to every Particle.
