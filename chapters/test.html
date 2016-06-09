@@ -1,113 +1,26 @@
-<section data-type="chapter" id="_chapter_4_particle_systems">
+<section data-type="chapter" id="test">
 <h1>Chapter 4. Particle Systems</h1>
 
-
-<p>First, we’re going to want to deal with flexible quantities of elements. Sometimes we’ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we’re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we’re also going to want to write a class that describes the collection of particles—the particle system itself. The goal here is to be able to write a main program that looks like the following:</p>
-
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] Ah, isn’t this main program so simple and lovely?
-ParticleSystem ps;
+class Particle extends VerletParticle2D {
 
-void setup() {
-  size(640,360);
-  ps = new ParticleSystem();
-}
+  //{!1} Add a radius to every Particle.
+  float r;
 
-void draw() {
-  background(255);
-  ps.run();
-}
-//[end]</pre>
-
-
-<p>Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we’ve done this already. Our <span class="klass">Mover</span> class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has <span class="var">location</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span>, a constructor to initialize those variables, and functions to <span class="function">display()</span> itself and <span class="function">update()</span> its location.</p>
-
-<pre data-code-language="java" data-type="programlisting" class="codesplit">
-class Particle {
-  //[full] A “Particle” object is just another name for our “Mover.” It has location, velocity, and acceleration.
-  PVector location;
-  PVector velocity;
-  PVector acceleration;
-  //[end]
-
-  Particle(PVector l) {
-    location = l.get();
-    acceleration = new PVector();
-    velocity = new PVector();
+  Particle (Vec2D loc) {
+    super(loc);
+    r = 4;
+    //{!1 .offset}  Every time a Particle is made, an AttractionBehavior is
+    // generated and added to the physics world.
+    // Note that when the strength
+    // is negative, it’s a repulsive force!
+    physics.addBehavior(new AttractionBehavior(this, r*4, -1));
   }
 
-  void update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-  }
-
-  void display() {
-    stroke(0);
-    fill(175);
-    ellipse(location.x,location.y,8,8);
-  }
-}</pre>
-
-
-<p>Typical particle systems involve something called an <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Processing sketch would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first <span class="klass">Particle</span> class, however, we’re simply going to add a <span class="var">lifespan</span> variable. The timer will start at 255 and count down to 0, when the particle will be considered “dead.” And so we expand the <span class="klass">Particle</span> class as follows:</p>
-
-<pre data-code-language="java" data-type="programlisting" class="codesplit">
-class Particle {
-  PVector location;
-  PVector velocity;
-  PVector acceleration;
-  // A new variable to keep track of how long the particle
-  // has been “alive”
-  float lifespan; //[bold]
-
-  Particle(PVector l) {
-    location = l.get();
-    acceleration = new PVector();
-    velocity = new PVector();
-    // We start at 255 and count down for convenience
-    lifespan = 255; //[bold]
-  }
-
-  void update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-    // Lifespan decreases
-    lifespan -= 2.0; //[bold]
-  }
-
-  void display() {
-    //[full] Since our life ranges from 255 to 0 we can use it for alpha
-    stroke(0,lifespan); //[bold]
-    fill(175,lifespan); //[bold]
-    //[end]
-    ellipse(location.x,location.y,8,8);
-  }
-}</pre>
-
-
-<pre data-code-language="java" data-type="programlisting" class="codesplit">
-// This enhanced loop also works for regular arrays!
-for (Particle p : particles) {
-  p.run();
-}</pre>
-
-
-<pre data-code-language="java" data-type="programlisting" class="codesplit">
-ArrayList&lt;Particle&gt; particles;
-
-void setup() {
-  size(640,360);
-  particles = new ArrayList&lt;Particle&gt;();
-}
-
-void draw() {
-  background(255);
-  //[offset-down] A new Particle object is added to the ArrayList every cycle through draw().
-  particles.add(new Particle(new PVector(width/2,50)));
-
-  for (int i = 0; i &lt; particles.size(); i++) {
-    Particle p = particles.get(i);
-    p.run();
+  void display () {
+    fill (255);
+    stroke (255);
+    ellipse (x, y, r*2, r*2);
   }
 }</pre>
 
