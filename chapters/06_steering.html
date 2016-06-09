@@ -48,7 +48,7 @@
 
 <p>Now that we understand the core concepts behind autonomous agents, we can begin writing the code. There are many places where we could start. Artificial simulations of ant and termite colonies are fantastic demonstrations of systems of autonomous agents. (For more on this topic, I encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by Mitchel Resnick.) However, we want to begin by examining agent behaviors that build on the work we’ve done in the first five chapters of this book: modeling motion with vectors and driving motion with forces. And so it’s time to rename our <span class="klass">Mover</span> class that became our <span class="klass">Particle</span> class once again. This time we are going to call it <span class="klass">Vehicle</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   PVector location;
@@ -107,7 +107,7 @@ class Vehicle {
 
 <p>Or as we might write in Processing:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector steer = PVector.sub(desired,velocity);</pre>
 
 <a data-primary="desired velocity" data-type="indexterm"></a> <a data-primary="steering force" data-secondary="desired velocity" data-type="indexterm"></a>
@@ -120,7 +120,7 @@ PVector steer = PVector.sub(desired,velocity);</pre>
 
 <p>Assuming a <span class="klass">PVector</span> target, we then have:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector desired = PVector.sub(target,location);</pre>
 
 <p>But this isn’t particularly realistic. What if we have a very high-resolution window and the target is thousands of pixels away? Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation. What we really want to say is:</p>
@@ -129,7 +129,7 @@ PVector desired = PVector.sub(target,location);</pre>
 
 <p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So first, we need to make sure we add a variable to our <span class="klass">Vehicle</span> class that stores maximum speed.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
   PVector location;
   PVector velocity;
@@ -139,7 +139,7 @@ class Vehicle {
 
 <p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector desired = PVector.sub(target,location);
 desired.normalize();
 desired.mult(maxspeed);</pre>
@@ -150,7 +150,7 @@ desired.mult(maxspeed);</pre>
 
 <p>Putting this all together, we can write a function called <span class="function">seek()</span> that receives a <span class="klass">PVector</span> target and calculates a steering force towards that target.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);
     desired.normalize();
@@ -179,7 +179,7 @@ desired.mult(maxspeed);</pre>
 
 <p>In all of this excitement, however, we’ve missed one last step. What sort of vehicle is this? Is it a super sleek race car with amazing handling? Or a giant Mack truck that needs a lot of advance notice to turn? A graceful panda, or a lumbering elephant? Our example code, as it stands, has no feature to account for this variability in steering ability. Steering ability can be controlled by limiting the magnitude of the steering force. Let’s call that limit the “maximum force” (or <span class="var">maxforce</span> for short). And so finally, we have:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
   PVector location;
   PVector velocity;
@@ -191,7 +191,7 @@ class Vehicle {
 
 <p>followed by:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);
     desired.normalize();
@@ -218,7 +218,7 @@ class Vehicle {
 
 <div data-type="example"><h5>Example 6.1: Seeking a target</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   PVector location;
@@ -337,7 +337,7 @@ Frame 6: I’m there. I want to stop!</p>
 
 <p>How can we implement this “arriving” behavior in code? Let’s return to our <span class="function">seek()</span> function and find the line of code where we set the magnitude of the desired velocity.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    PVector desired = PVector.sub(target,location);
    desired.normalize();
    desired.mult(maxspeed);</pre>
@@ -354,13 +354,13 @@ Frame 6: I’m there. I want to stop!</p>
 <figcaption>Figure 6.9</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    PVector desired = PVector.sub(target,location);
    desired.div(2);</pre>
 
 <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it’s not particularly reasonable. After all, 10 pixels away is rather close and a desired speed of 5 is rather large. Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector desired = PVector.sub(target,location);
   desired.mult(0.05);</pre>
 
@@ -378,7 +378,7 @@ Frame 6: I’m there. I want to stop!</p>
 
 <div data-type="example"><h5>Example 6.2: Arrive steering behavior</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void arrive(PVector target) {
     PVector desired = PVector.sub(target,location);
 
@@ -471,7 +471,7 @@ Frame 6: I’m there. I want to stop!</p>
 
 <div data-type="example"><h5>Example 6.3: “Stay within walls” steering behavior</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (location.x &gt; 25) {
   //[offset-down] Make a desired vector that retains the y direction of
   // the vehicle but points the x direction directly away from
@@ -506,7 +506,7 @@ if (location.x &gt; 25) {
 
 <p>Before we can write the additional code for our <span class="klass">Vehicle</span> class, we’ll need to build a class that describes the flow field itself, the grid of vectors. A two-dimensional array is a convenient data structure in which to store a grid of information. If you are not familiar with 2D arrays, I suggest reviewing this online Processing tutorial: <a href="http://processing.org/learning/2darray/">2D array</a>. The 2D array is convenient because we reference each element with two indices, which we can think of as columns and rows.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class FlowField {
 
   // Declaring a 2D array of PVectors
@@ -521,7 +521,7 @@ class FlowField {
 
 <p>Notice how we are defining a third variable called <span class="var">resolution</span> above. What is this variable? Let’s say we have a Processing window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a <span class="klass">PVector</span> object for every single pixel, or 40,000 <span class="klass">PVector</span><code>s</code> (200 * 200). This isn’t terribly unreasonable, but in our case, it’s overkill. We don’t need a <span class="klass">PVector</span> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   FlowField() {
     resolution = 10;
     // Total columns equals width divided by resolution.
@@ -539,7 +539,7 @@ class FlowField {
 <figcaption>Figure 6.15</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] Using a nested loop to hit every column
 // and every row of the flow field
 for (int i = 0; i &lt; cols; i++) {
@@ -556,7 +556,7 @@ for (int i = 0; i &lt; cols; i++) {
 <figcaption>Figure 6.16</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i &lt; cols; i++) {
   for (int j = 0; j &lt; rows; j++) {
 
@@ -573,7 +573,7 @@ for (int i = 0; i &lt; cols; i++) {
 <figcaption>Figure 6.17</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float xoff = 0;
 for (int i = 0; i &lt; cols; i++) {
   float yoff = 0;
@@ -597,7 +597,7 @@ for (int i = 0; i &lt; cols; i++) {
 <figcaption>&nbsp;</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(____________,____________);
 v.______________();
 field[i][j] = v;</pre>
@@ -605,7 +605,7 @@ field[i][j] = v;</pre>
 
 <p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let’s say we have a vehicle that lives at a <span class="klass">PVector</span>: its location. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int column = int(location.x/resolution);
 int row = int(location.y/resolution);</pre>
 
@@ -613,7 +613,7 @@ int row = int(location.y/resolution);</pre>
 
 <p>Because a vehicle could theoretically wander off the Processing window, it’s also useful for us to employ the <span class="function">constrain()</span> function to make sure we don’t look outside of the flow field array. Here is a function we’ll call <span class="function">lookup()</span> that goes in the <span class="klass">FlowField</span> class—it receives a <span class="klass">PVector</span> (presumably the location of our vehicle) and returns the corresponding flow field <span class="klass">PVector</span> for that location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector lookup(PVector lookup) {
     //[full]
     // Using constrain()
@@ -628,7 +628,7 @@ int row = int(location.y/resolution);</pre>
 
 <p>Before we move on to the <span class="klass">Vehicle</span> class, let’s take a look at the <span class="klass">FlowField</span> class all together.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class FlowField {
 
   // A flow field is a two-dimensional array of PVectors.
@@ -679,7 +679,7 @@ class FlowField {
 
 <div data-type="example"><h5>Example 6.4: Flow field following</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   void follow(FlowField flow) {
@@ -741,7 +741,7 @@ class Vehicle {
 
 <p>In Processing, this would translate to:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector a = new PVector(-3,5);
 PVector b = new PVector(10,1);
 
@@ -751,7 +751,7 @@ float n = a.dot(b);</pre>
 
 <p>And if we were to look in the guts of the <span class="klass">PVector</span> source, we’d find a pretty simple implementation of this function:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 public float dot(PVector v) {
   return x*v.x + y*v.y + z*v.z;
 }</pre>
@@ -805,14 +805,14 @@ public float dot(PVector v) {
 
 <p>The Processing version of this would be:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector a = new PVector(10,2);
 PVector b = new PVector(4,-3);
 float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <p>And, again, if we were to dig into the guts of the Processing source code, we would see a function that implements this exact algorithm.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   static public float angleBetween(PVector v1, PVector v2) {
     float dot = v1.dot(v2);
     float theta = (float) Math.acos(dot / (v1.mag() * v2.mag()));
@@ -880,7 +880,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 <figcaption>ch06 ex5 a&nbsp;</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Path {
 
   //[full] A path is only two points, start and end.
@@ -916,7 +916,7 @@ class Path {
 
 <p>The first thing we want to do is predict, assuming a constant velocity, where that vehicle will be in the future.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Start by making a copy of the velocity.
 PVector predict = vel.get();
 
@@ -942,12 +942,12 @@ PVector predictLoc = PVector.add(loc, predict);</pre>
 
 <p>Let’s figure out what we do know. We know we have a vector (call it {vectora}) that extends from the path’s starting point to the vehicle’s predicted location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector a = PVector.sub(predictLoc,path.start);</pre>
 
 <p>We also know that we can define a vector (call it {vectorb}) that points from the start of the path to the end.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector b = PVector.sub(path.end,path.start);</pre>
 
 <p>Now, with basic trigonometry, we know that the distance from the path’s start to the normal point is: <span class="formula">|A| * cos(theta)</span>.</p>
@@ -958,7 +958,7 @@ PVector b = PVector.sub(path.end,path.start);</pre>
 
 <p>If we knew theta, we could easily define that normal point as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The distance from START to NORMAL
 float d = a.mag()*cos(theta);
 b.normalize();
@@ -971,7 +971,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p>And if the dot product has taught us anything, it’s that given two vectors, we can get theta, the angle between.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // What is theta?  The angle between A and B
 float theta = PVector.angleBetween(a,b);
 b.normalize();
@@ -1000,12 +1000,12 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 
 <p>And what are we doing in our code? Normalizing b!</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 b.normalize();</pre>
 
 <p>Because of this fact, we can simplify our code as:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float theta = PVector.angleBetween(a,b); //[line-through]
 
 b.normalize();
@@ -1030,7 +1030,7 @@ PVector normalPoint = PVector.add(path.start,b);</pre>
 <figcaption>Figure 6.27</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float distance = PVector.dist(predictLoc, normalPoint);
 
 // If the vehicle is outside the path,
@@ -1048,7 +1048,7 @@ if (distance &gt; path.radius) {
 
 <p>Reynolds’s algorithm involves picking a point ahead of the normal on the path (see step #3 above). But for simplicity, we could just say that the target is the normal itself. This will work fairly well:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float distance = PVector.dist(predictLoc, normalPoint);
 if (distance &gt; path.radius) {
   // Seek the normal point on the path.
@@ -1061,7 +1061,7 @@ if (distance &gt; path.radius) {
 <figcaption>Figure 6.28</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float distance = PVector.dist(predictLoc, normalPoint);
 if (distance &gt; path.radius) {
   //[full] Normalize and scale b (pick 25 pixels arbitrarily).
@@ -1083,7 +1083,7 @@ if (distance &gt; path.radius) {
 
 <div data-type="example"><h5>Example 6.5: Simple path following</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void follow(Path p) {
 
     //[full] Step 1: Predict the vehicle’s future location.
@@ -1121,7 +1121,7 @@ if (distance &gt; path.radius) {
 <figcaption>Figure 6.29</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector getNormalPoint(PVector p, PVector a, PVector b) {
     // PVector that points from a to p
     PVector ap = PVector.sub(p, a);
@@ -1180,7 +1180,7 @@ if (distance &gt; path.radius) {
 <figcaption>ch06 ex6 a&nbsp;</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  class Path {
 
   // A Path is now an ArrayList of points (PVector objects).
@@ -1214,7 +1214,7 @@ if (distance &gt; path.radius) {
 
 <p>Now that we have the <span class="klass">Path</span> class defined, it’s the vehicle’s turn to deal with multiple line segments. All we did before was find the normal for one line segment. We can now find the normals for all the line segments in a loop.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i &lt; p.points.size()-1; i++) {
   PVector a = p.points.get(i);
   PVector b = p.points.get(i+1);
@@ -1224,7 +1224,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>Then we should make sure the normal point is actually between points <span class="var">a</span> and <span class="var">b</span>. Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <span class="var">normalPoint</span> is outside the <em>x</em> components of <span class="var">a</span> and <span class="var">b</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    if (normalPoint.x &lt; a.x || normalPoint.x &gt; b.x) {
       // Use the end point of the segment
       // as our normal point if we can’t find one.
@@ -1241,7 +1241,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <div data-type="example"><h5>Example 6.6: Path following</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector target = null;
 // Start with a very high record
 // that can easily be beaten.
@@ -1271,7 +1271,7 @@ for (int i = 0; i &lt; p.points.size()-1; i++) {
 
 <p>Update the path-following example so that the path can go in any direction. (Hint: you’ll need to use the <span class="function">min()</span> and <span class="function">max()</span> function when determining if the normal point is inside the line segment.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
   normalPoint = b.get();
 }</pre>
@@ -1349,7 +1349,7 @@ if (normalPoint.x &lt; ____(____,____) || normalPoint.x &gt; ____(____,____)) {
 
 <p>A group is certainly not a new concept. We’ve done this before—in Chapter 4, where we developed a framework for managing collections of particles in a <span class="klass">ParticleSystem</span> class. There, we stored a list of particles in an <span class="klass">ArrayList</span>. We’ll do the same thing here: store a bunch of <span class="klass">Vehicle</span> objects in an <span class="klass">ArrayList</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Declare an ArrayList of Vehicle objects.
 ArrayList&lt;Vehicle&gt; vehicles;
 
@@ -1364,7 +1364,7 @@ void setup() {
 
 <p>Now when it comes time to deal with all the vehicles in <span class="function">draw()</span>, we simply loop through all of them and call the necessary functions.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw(){
   for (Vehicle v : vehicles) {
     v.update();
@@ -1374,26 +1374,26 @@ void draw(){
 
 <p>OK, so maybe we want to add a behavior, a force to be applied to all the vehicles. This could be seeking the mouse.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     v.seek(mouseX,mouseY);</pre>
 
 <a data-primary="collisions" data-secondary="avoiding in group behavior" data-type="indexterm"></a> <a data-primary="group behavior" data-secondary="collisions" data-tertiary="avoiding" data-type="indexterm"></a>
 
 <p>But that’s an individual behavior. We’ve already spent thirty-odd pages worrying about individual behaviors. We’re here because we want to apply a group behavior. Let’s begin with separation, a behavior that commands, “Avoid colliding with your neighbors!”</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     v.separate();</pre>
 
 <p>Is that right? It sounds good, but it’s not. What’s missing? In the case of seek, we said, “Seek <span class="var">mouseX</span> and <span class="var">mouseY</span>.” In the case of separate, we’re saying “separate from <em>everyone else</em>.” Who is everyone else? It’s the list of all the other vehicles.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     v.separate(vehicles);</pre>
 
 <p>This is the big leap beyond what we did before with particle systems. Instead of having each element (particle or vehicle) operate on its own, we’re now saying, “Hey you, the vehicle! When it comes time for you to operate, you need to operate with an awareness of everyone else. So I’m going to go ahead and pass you the <span class="klass">ArrayList</span> of everyone else.”</p>
 
 <p>This is how we’ve mapped out <span class="function">setup()</span> and <span class="function">draw()</span> to deal with a group behavior.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;Vehicle&gt; vehicles;
 
 void setup() {
@@ -1433,14 +1433,14 @@ void draw() {
 
 <p>Let’s begin to write the code. As we just worked out, we’re writing a function called <span class="function">separate()</span> that receives an <span class="klass">ArrayList</span> of Vehicle objects as an argument.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 }</pre>
 
 <p>Inside this function, we’re going to loop through all of the vehicles and see if any are too close.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // This variable specifies how close is too close.
   float desiredseparation = 20;
 
@@ -1460,7 +1460,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Once we know that two vehicles are too close, we need to make a vector that points away from the offending vehicle.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     if ((d &gt; 0) &amp;&amp; (d &lt; desiredseparation)) {
       //[offset-down] A PVector pointing away from the other’s location
       PVector diff = PVector.sub(location, other.location);
@@ -1469,7 +1469,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>This is not enough. We have that vector now, but we need to make sure we calculate the average of all vectors pointing away from close vehicles. How do we compute average? We add up all the vectors and divide by the total.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // Start with an empty PVector.
   PVector sum = new PVector();  //[bold]
   int count = 0;  //[bold]
@@ -1496,7 +1496,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Once we have the average vector (stored in the <span class="klass">PVector</span> object “sum”), that <span class="klass">PVector</span> can be scaled to maximum speed and become our desired velocity—we <em>desire</em> to move in that direction at maximum speed! (In fact, we don't have to divide by count anymore since we are manually setting the magnitude.) And once we have the desired velocity, it’s the same old Reynolds story: steering equals desired minus velocity.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   if (count &gt; 0) {
     // Scale average to maxspeed
     // (this becomes desired).
@@ -1519,7 +1519,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <div data-type="example"><h5>Example 6.7: Group behavior: Separation</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void separate (ArrayList&lt;Vehicle&gt; vehicles) {
     // Note how the desired separation is based
     // on the Vehicle’s size.
@@ -1577,7 +1577,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>You may be thinking, “Duh, this is nothing new. We do this all the time.” You would be right. In fact, we did this as early as Chapter 2.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector wind = new PVector(0.001,0);
   PVector gravity = new PVector(0,0.1);
   mover.applyForce(wind);
@@ -1596,7 +1596,7 @@ void separate (ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>We might begin by adding a function to the <span class="klass">Vehicle</span> class that manages all of the behaviors. Let’s call it <span class="function">applyBehaviors()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
   separate(vehicles);
   seek(new PVector(mouseX,mouseY));
@@ -1604,7 +1604,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Here we see how a single function takes care of calling the other functions that apply the forces—<span class="function">separate()</span> and <span class="function">seek()</span>. We could start mucking around with those functions and see if we can adjust the strength of the forces they are calculating. But it would be easier for us to ask those functions to return the forces so that we can adjust their strength before applying them to the vehicle’s acceleration.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     PVector separate = separate(vehicles);
     PVector seek = seek(new PVector(mouseX,mouseY));
@@ -1616,7 +1616,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Let’s look at how the seek function changed.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector seek(PVector target) {
     PVector desired = PVector.sub(target,loc);
     desired.normalize();
@@ -1638,7 +1638,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <div data-type="example"><h5>Example 6.8: Combining steering behaviors: Seek and separate</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
   PVector separate = separate(vehicles);
   PVector seek = seek(new PVector(mouseX,mouseY));
@@ -1710,7 +1710,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Just as we did with our separate and seek example, we’ll want our <span class="klass">Boid</span> objects to have a single function that manages all the above behaviors. We’ll call this function <span class="function">flock()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void flock(ArrayList&lt;Boid&gt; boids) {
     //[full] The three flocking rules
     PVector sep = separate(boids);
@@ -1738,7 +1738,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <a data-primary="separation (flocking)" data-secondary="implementing" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector align (ArrayList&lt;Boid&gt; boids) {
     //[full] Add up all the velocities
     // and divide by the total
@@ -1775,7 +1775,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <a data-primary="alignment (flocking)" data-secondary="implementing" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector align (ArrayList&lt;Boid&gt; boids) {
     // This is an arbitrary value and could
     // vary from boid to boid.
@@ -1822,7 +1822,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>Finally, we are ready for cohesion. Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average location of the boid’s neighbors (and use that as a target to seek).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector cohesion (ArrayList&lt;Boid&gt; boids) {
     float neighbordist = 50;
     PVector sum = new PVector(0,0);
@@ -1849,7 +1849,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <p>It’s also worth taking the time to write a class called <span class="klass">Flock</span>, which will be virtually identical to the <span class="klass">ParticleSystem</span> class we wrote in Chapter 4 with only one tiny change: When we call <span class="function">run()</span> on each <span class="klass">Boid</span> object (as we did to each <span class="klass">Particle</span> object), we’ll pass in a reference to the entire <span class="klass">ArrayList</span> of boids.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Flock {
   ArrayList&lt;Boid&gt; boids;
 
@@ -1878,7 +1878,7 @@ class Flock {
 
 <div data-type="example"><h5>Example 6.9: Flocking</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A Flock object manages the
 // entire group.
 Flock flock;
@@ -1975,17 +1975,17 @@ void draw() {
 
 <p>This technique is known as “bin-lattice spatial subdivision” and is outlined in more detail in (surprise, surprise) Reynolds’s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">“Interaction with Groups of Autonomous Characters”</a>. How do we implement such an algorithm in Processing? One way is to keep multiple <span class="klass">ArrayList</span><code>s</code>. One <span class="klass">ArrayList</span> would keep track of all the boids, just like in our flocking example.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;Boid&gt; boids;</pre>
 
 <p>In addition to that <span class="klass">ArrayList</span>, we store an additional reference to each <span class="klass">Boid</span> object in a two-dimensional <span class="klass">ArrayList</span>. For each cell in the grid, there is an <span class="klass">ArrayList</span> that tracks the objects in that cell.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;Boid&gt;[][] grid;</pre>
 
 <p>In the main <span class="function">draw()</span> loop, each <span class="klass">Boid</span> object then registers itself in the appropriate cell according to its location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int column = int(boid.x) / resolution;
 int row    = int(boid.y) /resolution;
 grid[column][row].add(boid);</pre>
@@ -1994,7 +1994,7 @@ grid[column][row].add(boid);</pre>
 
 <div data-type="example"><h5>Example 6.10: Bin-lattice spatial subdivision</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int column = int(boid.x) / resolution;
 int row    = int(boid.y) /resolution;
 boid.flock(boids);
@@ -2021,28 +2021,28 @@ boid.flock(grid[column][row]);</pre>
 
 <p>What is magnitude squared and when should you use it? Let’s revisit how the magnitude of a vector is calculated.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float mag() {
   return sqrt(x*x + y*y);
 }</pre>
 
 <p>Magnitude requires the square root operation. And it should. After all, if you want the magnitude of a vector, then you’ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1). However, if you could somehow skip using the square root, your code would run faster. Let’s consider a situation where you just want to know the relative magnitude of a vector. For example, is the magnitude greater than ten? (Assume a <span class="klass">PVector</span> <span class="var">v</span>.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (v.mag() &gt; 10) {
   [inline]// Do Something!
 }</pre>
 
 <p>Well, this is equivalent to saying:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (v.magSq() &gt; 100) {
   [inline]// Do Something!
 }</pre>
 
 <p>And how is magnitude squared calculated?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float magSq() {
   return x*x + y*y;
 }</pre>
@@ -2059,7 +2059,7 @@ float magSq() {
 
 <p>There’s a pattern here. What kinds of functions are slow to compute? Square root. Sine. Cosine. Tangent. Again, if you just need a sine or cosine value here or there in your code, you are never going to run into a problem. But what if you had something like this?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   for (int i = 0; i &lt; 10000; i++) {
      println(sin(PI));
@@ -2068,7 +2068,7 @@ void draw() {
 
 <p>Sure, this is a totally ridiculous code snippet that you would never write. But it illustrates a certain point. If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary? This is the principle behind sine and cosine lookup tables. Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <span class="var">TWO_PI</span> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float sinvalues[] = new float[360];
 float cosvalues[] = new float[360];
 for (int i = 0; i &lt; 360; i++) {
@@ -2078,7 +2078,7 @@ for (int i = 0; i &lt; 360; i++) {
 
 <p>Now, what if you need the value of sine of pi?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int angle = int(degrees(PI));
 float answer = sinvalues[angle];</pre>
 
@@ -2092,7 +2092,7 @@ float answer = sinvalues[angle];</pre>
 
 <p>I have to admit, I am perhaps the biggest culprit of this last note. In fact, in the interest of writing clear and understandable examples, I often choose to make extra <span class="klass">PVector</span> objects when I absolutely do not need to. For the most part, this is not a problem at all. But sometimes, it can be. Let’s take a look at an example.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   for (Vehicle v : vehicles) {
    PVector mouse = new PVector(mouseX,mouseY);
@@ -2104,7 +2104,7 @@ void draw() {
 
 <p>If your numbers grow larger (and they easily could) or perhaps more likely, if you are working with Processing on Android, you will almost certainly run into a problem. In cases like this you want to look for ways to reduce the number of <span class="klass">PVector</span> objects you make. An obvious fix for the above code is:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   PVector mouse = new PVector(mouseX,mouseY);
   for (Vehicle v : vehicles) {
@@ -2114,7 +2114,7 @@ void draw() {
 
 <p>Now you’ve made just one <span class="klass">PVector</span> instead of one thousand. Even better, you could turn the <span class="klass">PVector</span> into a global variable and just assign the <span class="var">x</span> and <span class="var">y</span> value:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector mouse = new PVector();
 
 void draw() {
@@ -2129,7 +2129,7 @@ void draw() {
 
 <p>Throughout the book’s examples, you can find lots of opportunities to reduce the number of temporary objects. Let’s look at one more. Here is a snippet from our <span class="function">seek()</span> function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     PVector desired = PVector.sub(target,location);
     desired.normalize();
     desired.mult(maxspeed);
@@ -2141,7 +2141,7 @@ void draw() {
 
 <p>See how we’ve made two <span class="klass">PVector</span> objects? First, we figure out the desired vector, then we calculate the steering force. Notice how we could rewrite this to create only one <span class="klass">PVector</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     PVector desired = PVector.sub(target, location);
     desired.normalize();
     desired.mult(maxspeed);

@@ -353,7 +353,7 @@ a.normalize();
 
 <p>In order to have Box2D as part of our Processing sketches, the <span class="klass">World</span> is the very first thing that needs to be set up. Here is where Box2D-for-Processing comes in handy and takes care of making the world for us.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Box2DProcessing box2d;
 
 void setup() {
@@ -366,7 +366,7 @@ void setup() {
 
 <a data-primary="setGravity() function (World class)" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   box2d.setGravity(0, -10);</pre>
 
 <p>It’s worth noting that gravity doesn’t have to be fixed, nor does it always have to point downwards; you can adjust the gravity vector while your program is running. Gravity can be turned off by setting it to a (0,0) vector.</p>
@@ -381,7 +381,7 @@ void setup() {
 
 <p>Notice how in Box2D <em>(0,0)</em> is in the center and <em>up</em> is the positive direction along the y-axis! Box2D’s coordinate system is just like that lovely old-fashioned Cartesian one with <em>(0,0)</em> in the center and <em>up</em> pointing in a positive direction. Processing, on the other hand, uses a traditional computer graphics coordinate system where <em>(0,0)</em> is in the top left corner and <em>down</em> is the positive direction along the y-axis. This is why if we want objects to fall down with gravity, we need to give Box2D a gravity force with a negative y-value.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 gravity = new Vec2(0, -10);</pre>
 
 <p>Luckily for us, if we prefer to think in terms of pixel coordinates (which as Processing programmers, we are likely to do), Box2D-for-Processing offers a series of helper functions that convert between pixel space and Box2D space. Before we move onto the next section and begin creating Box2D bodies, let’s take a look at how these helper functions work.</p>
@@ -390,14 +390,14 @@ Vec2 gravity = new Vec2(0, -10);</pre>
 
 <p>Let’s say we want to tell Box2D where the mouse is in its world. We know the mouse is located at <span class="var">(mouseX,mouseY)</span> in Processing. To convert it, we say we want to convert a “coordinate” from “pixels” to “world”—<span class="function">coordPixelsToWorld()</span>. Or:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Convert mouseX,mouseY to
 // coordinate in Box2D world.
 Vec2 mouseWorld = box2d.coordPixelsToWorld(mouseX,mouseY);</pre>
 
 <p>What if we had a Box2D world coordinate and wanted to translate it to our pixel space?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // To demonstrate, let’s just make up a world position.
 Vec2 worldPos = new Vec2(-10,25);
 
@@ -481,7 +481,7 @@ float scalarWorldToPixels(float val)</pre>
 
 <p>The first thing we have to do is create a “body definition.” This will let us define the properties of the body we intend to make. This may seem a bit awkward at first, but it’s how Box2D is structured. Anytime you want to make a “thing,” you have to make a “thing definition” first. This will hold true for bodies, shapes, and joints.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Make a body definition before making a Body.
 BodyDef bd = new BodyDef();</pre>
 </section>
@@ -493,13 +493,13 @@ BodyDef bd = new BodyDef();</pre>
 
 <p>The body definition is where we can set specific properties or attributes of the body we intend to make. One attribute of a body, for example, is its starting location. Let’s say we want to position the body in the center of the Processing window.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A Vec2 in the center of the Processing window
 Vec2 center = new Vec2(width/2,height/2);</pre>
 
 <p>Danger, danger! I’m not going to address this with every single example, but it’s important to at least point out the perilous path we are taking with the above line of code. Remember, if we are going to tell Box2D where we want the body to start, we must give Box2D a world coordinate! Yes, we want to think of its location in terms of pixels, but Box2D doesn’t care. And so before we pass that position to the body definition, we must make sure to use one of our helper conversion functions.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A Vec2 in the center of the
 // Processing window converted to Box2D World coordinates!
 Vec2 center = box2d.coordPixelsToWorld(width/2,height/2));
@@ -524,12 +524,12 @@ bd.position.set(center);</pre>
 
 <p>There are several other properties you can set in the body definition. For example, if you want your body to have a fixed orientation (i.e. never rotate), you can say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 bd.fixedRotation = true;</pre>
 
 <p>You can also set a value for linear or angular damping, so that the object continuously slows as if there is friction.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 bd.linearDamping = 0.8;
 bd.angularDamping = 0.9;</pre>
 
@@ -537,7 +537,7 @@ bd.angularDamping = 0.9;</pre>
 
 <p>In addition, fast-moving objects in Box2D should be set as bullets. This tells the Box2D engine that the object may move very quickly and to check its collisions more carefully so that it doesn’t accidentally jump over another body.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 bd.bullet = true;</pre>
 </section>
 
@@ -548,7 +548,7 @@ bd.bullet = true;</pre>
 
 <p>Once we’re done with the definition (<span class="klass">BodyDef</span>), we can create the <span class="klass">Body</span> object itself. Box2DProcessing provides a helper function for this—<span class="function">createBody</span>().</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The Body object is created by passing in the Body
 // Definition. (This allows for making multiple bodies from
 // one definition.)
@@ -562,7 +562,7 @@ Body body = box2d.createBody(bd);</pre>
 
 <p>Finally, though not required, if you want to set any other initial conditions for the body, such as linear or angular velocity, you can do so with the newly created <span class="klass">Body</span> object.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Setting an arbitrary initial velocity
 body.setLinearVelocity(new Vec2(0,3));
 // Setting an arbitrary initial angular velocity
@@ -588,13 +588,13 @@ body.setAngularVelocity(1.2);</pre>
 
 <a data-primary="Shape (Box2D element)" data-secondary="defining" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Define the shape: a polygon.
 PolygonShape ps = new PolygonShape();</pre>
 
 <p>Next up, we have to define the width and height of the rectangle. Let’s say we want our rectangle to be 150&times;100 pixels. Remember, pixel units are no good for Box2D shapes! So we have to use our helper functions to convert them first.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] Scale dimensions from pixels to Box2D world.
 float box2Dw = box2d.scalarPixelsToWorld(150);
 float box2Dh = box2d.scalarPixelsToWorld(100);
@@ -611,14 +611,14 @@ ps.setAsBox(box2Dw, box2Dh);</pre>
 
 <p>The shape and body are made as two separate entities. In order to attach a shape to a body, we must make a fixture. A fixture is created, just as with the body, via a fixture definition (i.e. <span class="klass">FixtureDef</span> class) and assigned a shape.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 FixtureDef fd = new FixtureDef();
 // The fixture is assigned the PolygonShape we just made.
 fd.shape = ps;</pre>
 
 <p>Once we have the fixture definition, we can set parameters that affect the physics for the shape being attached.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The coefficient of friction for the
 // shape, typically between 0 and 1
 fd.friction = 0.3;
@@ -637,13 +637,13 @@ fd.density = 1.0;</pre>
 
 <p>Once the fixture is defined, all we have left to do is attach the shape to the body with the fixture by calling the <span class="function">createFixture()</span> function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Creates the Fixture and attaches the Shape to the Body object
 body.createFixture(fd);</pre>
 
 <p>I should note that Step 2 can be skipped if you do not need to set the physics properties. (Box2D will use default values.) You can create a fixture and attach the shape all in one step by saying:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Creates the Fixture and attaches the Shape with a density of 1
 body.createFixture(ps,1);</pre>
 
@@ -669,7 +669,7 @@ body.createFixture(ps,1);</pre>
 	</li>
 </ol>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Step 1. Define the body.
 BodyDef bd = new BodyDef();
 bd.position.set(box2d.coordPixelsToWorld(width/2,height/2));
@@ -698,7 +698,7 @@ body.createFixture(fd);</pre>
 
 <p>Knowing what you know about Box2D so far, fill in the blank in the code below that demonstrates how to make a circular shape in Box2D.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 CircleShape cs = new CircleShape();
 float radius = 10;
 cs.m_radius = ____________________;
@@ -728,7 +728,7 @@ body.createFixture(fd);</pre>
 
 <p>This looks like any ol’ Processing sketch. We have a main tab called “Boxes” and a “Boundary” and a “Box” tab. Let’s think about the Box tab for a moment. The Box tab is where we will write a simple class to describe a <span class="klass">Box</span> object, a rectangular body in our world.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Box  {
 
   //[full] Our Box object has an x,y location and a width and a height.
@@ -762,7 +762,7 @@ class Box  {
 
 <div data-type="example"><h5>Example 5.1: A comfortable and cozy Processing sketch that needs a little Box2D</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A list to store all Box objects
 ArrayList&lt;Box&gt; boxes;
 
@@ -799,7 +799,7 @@ void draw() {
 
 <p>This part is not too tough. We saw this already in our discussion of building a Box2D world. This is taken care of for us by the Box2D-for-Processing helper class. We can create a Box2DProcessing object and initialize it in <span class="function">setup()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Box2DProcessing box2d;
 
 void setup() {
@@ -813,7 +813,7 @@ void setup() {
 
 <p>Then in <span class="function">draw()</span>, we need to make sure we call one very important function: <span class="function">step()</span>. Without this function, nothing would ever happen! <span class="function">step()</span> advances the Box2D world a step further in time. Internally, Box2D sweeps through and looks at all of the Bodies and figures out what to do with them. Just calling <span class="function">step()</span> on its own moves the Box2D world forward with default settings; however, it is customizable (and this is documented in the Box2D-for-Processing source).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   // We must always step through time!
   box2d.step();
@@ -827,7 +827,7 @@ void draw() {
 
 <p>“I hereby relinquish the command of this object’s position to Box2D. I no longer need to keep track of anything related to location, velocity, and acceleration. Instead, I only need to keep track of a Box2D body and have faith that Box2D will do the rest.”</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Box  {
 
   // Instead of any of the usual variables,
@@ -840,7 +840,7 @@ class Box  {
 
 <p>Then, in our constructor, in addition to initializing the width and height, we can go ahead and include all of the body and shape code we learned in the previous two sections!</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Box() {
     w = 16;
     h = 16;
@@ -872,7 +872,7 @@ class Box  {
 
 <p>OK, we’re almost there. Before we introduced Box2D, it was easy to draw the <span class="klass">Box</span>. The object’s location was stored in variables <span class="var">x</span> and <span class="var">y</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   //[full] Drawing the object using rect()
   void display() {
     fill(175);
@@ -886,14 +886,14 @@ class Box  {
 
 <p>But now Box2D manages the object’s motion, so we can no longer use our own variables to display the shape. Not to fear! Our <span class="klass">Box</span> object has a reference to the Box2D body associated with it. So all we need to do is politely ask the body, “Pardon me, where are you located?” Since this is a task we’ll need to do quite often, Box2D-for-Processing includes a helper function: <span class="function">getBodyPixelCoord()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 pos = box2d.getBodyPixelCoord(body);</pre>
 
 <p>Just knowing the location of a body isn’t enough; we also need to know its angle of rotation.</p>
 
 <a data-primary="getAngle() function (Box2DProcessing)" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float a = body.getAngle();</pre>
 
 <a data-primary="rotate() function (Box2DProcessing)" data-type="indexterm"></a> <a data-primary="translate() function (Box2DProcessing)" data-type="indexterm"></a>
@@ -904,7 +904,7 @@ float a = body.getAngle();</pre>
 <figcaption>Figure 5.4</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
     //[full] We need the Body’s location and angle.
     Vec2 pos = box2d.getBodyPixelCoord(body);
@@ -927,7 +927,7 @@ float a = body.getAngle();</pre>
 
 <a data-primary="destroyBody() function (Box2DProcessing)" data-type="indexterm"></a>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // This function removes a body from the Box2D world.
   void killBody() {
     box2d.destroyBody(body);
@@ -954,7 +954,7 @@ float a = body.getAngle();</pre>
 
 <p>Box2D makes this easy for us by providing a means to lock a body (and any associated shapes) in place. Just set the <span class="klass">BodyDef</span> object’s type to <span class="var">STATIC</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  BodyDef bd = new BodyDef();
  // When BodyDef type = STATIC, the
  // Body is locked in place.
@@ -968,7 +968,7 @@ float a = body.getAngle();</pre>
 
 <div data-type="example"><h5>Example 5.2: Falling boxes hitting boundaries</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Boundary {
 
   //[full] A boundary is a simple rectangle with x, y, width, and height.
@@ -1025,7 +1025,7 @@ class Boundary {
 <section data-type="sect2" id="_step_1_define_a_body_2">
 <h3>Step 1: Define a body.</h3>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The body does not need a position; the
 // EdgeShape will take care of that for us.
 // It also does not need a type, as it is STATIC
@@ -1037,7 +1037,7 @@ Body body = box2d.world.createBody(bd);</pre>
 <section data-type="sect2" id="_step_2_define_the_shape">
 <h3>Step 2: Define the Shape.</h3>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ChainShape chain = new ChainShape();</pre>
 </section>
 
@@ -1048,7 +1048,7 @@ ChainShape chain = new ChainShape();</pre>
 
 <p>The <span class="klass">ChainShape</span> object is a series of connected vertices. To create the chain, we must first specify an array of vertices (each as a <span class="klass">Vec2</span> object). For example, if we wanted a straight line from the left-hand side of our window to the right-hand side, we would just need an array of two vertices: (0,150) and (width,150).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2[] vertices = new Vec2[2];
 // Adding a vertex on the right side of window
 vertices[0] = box2d.coordPixelsToWorld(0,150);
@@ -1057,7 +1057,7 @@ vertices[1] = box2d.coordPixelsToWorld(width,150);</pre>
 
 <p>To create the chain with the vertices, the array is then passed into a function called <span class="function">createChain()</span>.   (Note that if you want to create a loop where the first vertex connects to the last vertex in a loop, you can use the <span class="function">createLoop()</span> function instead.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // If you don’t want to use the entire array,
 // you can specify a value less than length.
 chain.createChain(vertices, vertices.length);</pre>
@@ -1067,7 +1067,7 @@ chain.createChain(vertices, vertices.length);</pre>
 
 <p>A <span class="klass">Shape</span> is not part of Box2D unless it is attached to a body. Even if it is a fixed boundary and never moves, it must still be attached. Just as with other shapes, a <span class="klass">ChainShape</span> object can be given properties like restitution and friction with a <span class="klass">Fixture</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 FixtureDef fd = new FixtureDef();
 // A fixture assigned to the ChainShape
 fd.shape = chain;
@@ -1085,7 +1085,7 @@ body.createFixture(fd);</pre>
 
 <div data-type="example"><h5>Example 5.3: ChainShape with three hard-coded vertices</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Surface {
   ArrayList&lt;Vec2&gt; surface;
 
@@ -1121,7 +1121,7 @@ class Surface {
 
 <p>Notice how the above class includes an <span class="klass">ArrayList</span> to store a series of <span class="klass">Vec2</span> objects. Even though we fully intend to store the coordinates of the chain in the chain shape itself, we are choosing the ease of redundancy and keeping our own list of those points as well. Later, when we go to draw the <span class="klass">Surface</span> object, we don’t have to ask Box2D for the locations of the chain shape’s vertices.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
     strokeWeight(1);
     stroke(0);
@@ -1138,7 +1138,7 @@ class Surface {
 
 <p>What we need in <span class="function">setup()</span> and <span class="function">draw()</span> for the <span class="klass">Surface</span> object is quite simple, given that Box2D takes care of all of the physics for us.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Box2DProcessing box2d;
 
 Surface surface;
@@ -1193,7 +1193,7 @@ void draw() {
 
 <p>There are two strategies in Box2D for making forms that are more advanced than a basic circle or square. One is to use a <span class="klass">PolygonShape</span> in a different way. In our previous examples, we used <span class="klass">PolygonShape</span> to generate a rectangular shape with the <span class="function">setAsBox()</span> function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PolygonShape ps = new PolygonShape();
   ps.setAsBox(box2dW, box2dH);</pre>
 
@@ -1207,7 +1207,7 @@ void draw() {
 
 <div data-type="example"><h5>Example 5.4: Polygon shapes</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2[] vertices = new Vec2[4];	// An array of 4 vectors
 vertices[0] = box2d.vectorPixelsToWorld(new Vec2(-15, 25));
 vertices[1] = box2d.vectorPixelsToWorld(new Vec2(15, 0));
@@ -1246,7 +1246,7 @@ ps.set(vertices, vertices.length);
 
 <p>Now, when it comes time to display the shape in Processing, we can no longer just use <span class="function">rect()</span> or <span class="function">ellipse()</span>. Since the shape is built out of custom vertices, we’ll want to use Processing’s <span class="function">beginShape()</span>, <span class="function">endShape()</span>, and <span class="function">vertex()</span> functions. As we saw with the <span class="klass">ChainShape</span>, we could choose to store the pixel locations of the vertices in our own <span class="klass">ArrayList</span> for drawing. However, it’s also useful to see how we can ask Box2D to report back to use the vertex locations.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     float a = body.getAngle();
@@ -1304,7 +1304,7 @@ etc. etc. etc.</p>
 
 <p>Let’s see what this would look like with actual Box2D code.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] Making the body
 BodyDef bd = new BodyDef();
 bd.type = BodyType.DYNAMIC;
@@ -1345,7 +1345,7 @@ body.createFixture(cs, 1.0);
 
 <p>This is achieved by using the local position of a shape, accessed via a <span class="klass">Vec2</span> variable called <span class="var">m_p</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Our offset in pixels
 Vec2 offset = new Vec2(0,-h/2);
 // Converting the vector to Box2D world
@@ -1361,7 +1361,7 @@ circle.m_p.set(offset.x,offset.y);</pre>
 
 <div data-type="example"><h5>Example 5.5: Multiple shapes on one body</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     float a = body.getAngle();
@@ -1381,12 +1381,12 @@ circle.m_p.set(offset.x,offset.y);</pre>
 
 <p>Finishing off this section, I want to stress the following: the stuff you draw in your Processing window doesn’t magically experience physics simply because we created some Box2D bodies and shapes. These examples work because we very carefully matched how we draw our elements with how we defined the bodies and shapes we put into the Box2D world. If you accidentally draw your shape differently, you won’t get an error, not from Processing or from Box2D. However, your sketch will look odd and the physics won’t work correctly. For example, what if we had written:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 offset = new Vec2(0,-h/2);</pre>
 
 <p>when we created the shape, but:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ellipse(0,h/2,r*2,r*2);</pre>
 
 <p>when it came time to display the shape?</p>
@@ -1426,7 +1426,7 @@ ellipse(0,h/2,r*2,r*2);</pre>
 
 <p>Let’s assume we have two <span class="klass">Particle</span> objects that each store a reference to a Box2D <span class="klass">Body</span> object. We’ll call them particles <span class="var">p1</span> and <span class="var">p2</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Particle p1 = new Particle();
 Particle p2 = new Particle();</pre>
 
@@ -1434,12 +1434,12 @@ Particle p2 = new Particle();</pre>
 
 <p>OK, onto Step 2. Let’s define the joint.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 DistanceJointDef djd = new DistanceJointDef();</pre>
 
 <p>Easy, right? Now it’s time to configure the joint. First we tell the joint which two bodies it connects:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 djd.bodyA = p1.body;
 djd.bodyB = p2.body;</pre>
 
@@ -1447,14 +1447,14 @@ djd.bodyB = p2.body;</pre>
 
 <p>Then we set up a rest length. Remember, if our rest length is in pixels, we need to convert it!</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 djd.length = box2d.scalarPixelsToWorld(10);</pre>
 
 <a data-primary="dampingRatio setting (Box2D joint element)" data-type="indexterm"></a> <a data-primary="frequencyHz setting (Box2D joint element)" data-type="indexterm"></a>
 
 <p>A distance joint also includes two optional settings that can make the joint soft, like a spring connection: <span class="var">frequencyHz</span> and <span class="var">dampingRatio</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // Measured in Hz, like the frequency of harmonic
   // oscillation; try values between 1 and 5.
   djd.frequencyHz  = ___;
@@ -1463,7 +1463,7 @@ djd.length = box2d.scalarPixelsToWorld(10);</pre>
 
 <p>Finally, we create the joint.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);</pre>
 
 <p>Box2D won’t keep track of what kind of joint we are making, so we have to cast it as a <span class="klass">DistanceJoint</span> upon creation.</p>
@@ -1476,7 +1476,7 @@ DistanceJoint dj = (DistanceJoint) box2d.world.createJoint(djd);</pre>
 
 <div data-type="example"><h5>Example 5.6: DistanceJoint</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Pair {
 
   //[full] Two objects that each have a Box2D body
@@ -1541,7 +1541,7 @@ class Pair {
 
 <p>Let’s assume we have two <span class="klass">Box</span> objects, each of which stores a reference to a Box2D body.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Box box1 = new Box();
 Box box2 = new Box();</pre>
 </section>
@@ -1553,7 +1553,7 @@ Box box2 = new Box();</pre>
 
 <p>Now we want a <span class="klass">RevoluteJointDef</span> object.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 RevoluteJointDef rjd = new RevoluteJointDef();</pre>
 </section>
 
@@ -1564,14 +1564,14 @@ RevoluteJointDef rjd = new RevoluteJointDef();</pre>
 
 <p>The most important properties of a revolute joint are the two bodies it connects as well as their mutual anchor point (i.e. where they are connected). They are set with the function <span class="function">initialize()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 rjd.initialize(box1.body, box2.body, box1.body.getWorldCenter());</pre>
 
 <p>Notice how the first two arguments specify the bodies and the second point specifies the anchor, which in this case is located at the center of the first body.</p>
 
 <p>An exciting feature of a <span class="klass">RevoluteJoint</span> object is that you can motorize it so it spins autonomously. For example:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Turn on the motor.
 rjd.enableMotor = true;
  // How fast is the motor?
@@ -1583,7 +1583,7 @@ rjd.maxMotorTorque = 1000.0;</pre>
 
 <p>Finally, the ability for a revolute joint to spin can be constrained between two angles. (By default, it can rotate a full 360 degrees, or <span class="var">TWO_PI</span> radians.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 rjd.enableLimit = true;
 rjd.lowerAngle = -PI/8;
 rjd.upperAngle = PI/8;</pre>
@@ -1592,7 +1592,7 @@ rjd.upperAngle = PI/8;</pre>
 <section data-type="sect2" id="_step_4_create_the_joint">
 <h3>Step 4: Create the joint.</h3>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 
 <p>Let’s take a look at all of these steps together in a class called <span class="klass">Windmill</span>, which connects two boxes with a revolute joint. In this case, <span class="var">box1</span> has a density of zero, so only <span class="var">box2</span> spins around a fixed point.</p>
@@ -1603,7 +1603,7 @@ RevoluteJoint joint = (RevoluteJoint) box2d.world.createJoint(rjd);</pre>
 
 <div data-type="example"><h5>Example 5.7: Spinning Windmill</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Windmill {
 
   // Our “Windmill” is two boxes and one joint.
@@ -1670,7 +1670,7 @@ class Windmill {
 
 <p>Before we look at the <span class="klass">MouseJoint</span> object itself, let’s ask ourselves why we even need it in the first place. If you look at the Box2D documentation, there is a function called <span class="function">setTransform()</span> that specifically “sets the position of the body’s origin and rotation (radians).” If a body has a position, can’t we just assign the body’s position to the mouse?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 mouse = box2d.screenToWorld(x,y);
 body.setTransform(mouse,0);</pre>
 
@@ -1678,7 +1678,7 @@ body.setTransform(mouse,0);</pre>
 
 <p>Let’s look at making this joint, assuming we have a <span class="klass">Box</span> object called <span class="var">box</span>. This code will look identical to our distance joint with one small difference.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Just like before, define the Joint.
 MouseJointDef md = new MouseJointDef();
 
@@ -1699,14 +1699,14 @@ MouseJoint mouseJoint = (MouseJoint) box2d.world.createJoint(md);.</pre>
 
 <p>So, what’s this line of code all about?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 md.bodyA = box2d.getGroundBody(); //[bold]</pre>
 
 <p>Well, as we’ve stated, a joint is a connection between <em>two</em> bodies. With a mouse joint, we’re saying that the second body is, well, the ground. Hmm. What the heck is the <em>ground</em> in Box2D? One way to imagine it is to think of the screen as the ground. What we’re doing is making a joint that connects a rectangle drawn on the window with the Processing window itself. And the point in the window to which the connection is tied is a moving target.</p>
 
 <p>Once we have a mouse joint, we’ll want to update the target location continually while the sketch is running.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 mouseWorld = box2d.coordPixelsToWorld(mouseX,mouseY);
 mouseJoint.setTarget(mouseWorld);</pre>
 
@@ -1732,7 +1732,7 @@ mouseJoint.setTarget(mouseWorld);</pre>
 
 <div data-type="example"><h5>Example 5.8: MouseJoint demonstration</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Box2DProcessing box2d;
 
 // One Box
@@ -1785,7 +1785,7 @@ void draw() {
 
 <p>It’s worth noting that while the technique for dragging an object around using a <span class="klass">MouseJoint</span> is useful, Box2D also allows a body to have a <span class="var">KINEMATIC</span> type.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 BodyDef bd = new BodyDef();
 // Setting the body type to Kinematic
 bd.type = BodyType.KINEMATIC;</pre>
@@ -1796,7 +1796,7 @@ bd.type = BodyType.KINEMATIC;</pre>
 
 <p>Kinematic bodies can be controlled by the user by setting their velocity directly. For example, let’s say you want an object to follow a target (like your mouse). You could create a vector that points from a body’s location to a target.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 pos = body.getWorldCenter();
 Vec2 target = box2d.coordPixelsToWorld(mouseX,mouseY);
 // A vector pointing from the body position to the Mouse
@@ -1804,7 +1804,7 @@ Vec2 v = target.sub(pos);</pre>
 
 <p>Once you have that vector, you could assign it to the body’s velocity so that it moves to the target.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Assigning a body’s velocity directly, overriding physics!
 body.setLinearVelocity(v);</pre>
 
@@ -1825,7 +1825,7 @@ body.setLinearVelocity(v);</pre>
 
 <p>In Chapter 2, we spent a lot of time thinking about building environments with multiple forces. An object might respond to gravitational attraction, wind, air resistance, etc. Clearly there are forces at work in Box2D as we watch rectangles and circles spin and fly around the screen. But so far, we’ve only had the ability to manipulate a single global force—gravity.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   // Setting the global gravity force
@@ -1835,7 +1835,7 @@ body.setLinearVelocity(v);</pre>
 
 <p>If we want to use any of our Chapter 2 techniques with Box2D, we need look no further than our trusty <span class="function">applyForce()</span> function. In our <span class="klass">Mover</span> class we wrote a function called <span class="function">applyForce()</span>, which received a vector, divided it by mass, and accumulated it into the mover’s acceleration. With Box2D, the same function exists, but we don’t need to write it ourselves. Instead, we can call the Box2D body’s <span class="function">applyForce()</span> function!</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Box {
   Body body;
 
@@ -1850,7 +1850,7 @@ class Box {
 
 <p>Let’s say we wanted to use a gravitational attraction force. Remember the code we wrote back in Chapter 2 in our <span class="klass">Attractor</span> class?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector attract(Mover m) {
   PVector force = PVector.sub(location,m.location);
   float distance = force.mag();
@@ -1863,7 +1863,7 @@ PVector attract(Mover m) {
 
 <p>We can rewrite the exact same function using <span class="klass">Vec2</span> instead and use it in a Box2D example. Note how for our force calculation we can stay completely within the Box2D coordinate system and never think about pixels.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Vec2 attract(Mover m) {
   // We have to ask Box2D for the locations first!
   Vec2 pos = body.getWorldCenter();
@@ -1910,7 +1910,7 @@ Vec2 attract(Mover m) {
 
 <p>If you are using Box2D-for-Processing, as we are here, you don’t need to implement your own interface. Detecting collision events is done through a callback function. Much like <span class="function">mousePressed()</span> is triggered when the mouse is pressed, <span class="function">beginContact()</span> is triggered when two shapes collide.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The mousePressed event with which we are comfortable.
 void mousePressed() {
   println("The mouse was pressed!");
@@ -1923,7 +1923,7 @@ void beginContact(Contact cp) {
 
 <p>Before the above will work, you must first let Box2D-for-Processing know you intend to listen for collisions. (This allows the library to reduce overhead by default; it won’t bother listening if it doesn’t have to.)</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
@@ -1954,7 +1954,7 @@ void setup() {
 
 <p><span class="function">beginContact()</span> is written as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void beginContact(Contact cp) {
 
 }</pre>
@@ -1968,7 +1968,7 @@ void beginContact(Contact cp) {
 
 <p>Now, what has collided here? Is it the bodies? The shapes? The fixtures? Box2D detects collisions between shapes; after all, these are the entities that have geometry. However, because shapes are attached to bodies with fixtures, what we really want to ask Box2D is: “Could you tell me which two fixtures collided?”</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] The contact stores the fixtures as A and B.
 Fixture f1 = cp.getFixtureA();
 Fixture f2 = cp.getFixtureB();
@@ -1978,7 +1978,7 @@ Fixture f2 = cp.getFixtureB();
 <section data-type="sect2" id="_step_2_fixtures_could_you_tell_me_which_body_you_are_attached_to">
 <h3>Step 2: Fixtures, could you tell me which body you are attached to?</h3>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] getBody() gives us the body to which the Fixture is attached.
 Body b1 = f1.getBody();
 Body b2 = f2.getBody();
@@ -1992,7 +1992,7 @@ Body b2 = f2.getBody();
 
 <p>Let’s take a look at the constructor in our <span class="klass">Particle</span> class where the body is made. We are expanding our body-making procedure by one line of code, noted below.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle {
   Body body;
 
@@ -2020,7 +2020,7 @@ class Particle {
 
 <div data-type="example"><h5>Example 5.9: CollisionListening</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void beginContact(Contact cp) {
 
   Fixture f1 = cp.getFixtureA();
@@ -2045,7 +2045,7 @@ void beginContact(Contact cp) {
 
 <p>Now, in many cases, we cannot assume that the objects that collided are all <span class="klass">Particle</span> objects. We might have a sketch with <span class="klass">Boundary</span> objects, <span class="klass">Particle</span> objects, <span class="klass">Box</span> objects, etc. So often we will have to query the “user data” and find out what kind of object it is before proceeding.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // Getting a generic object
   Object o1 = b1.getUserData();
   // Asking that object if it’s a Particle
@@ -2087,7 +2087,7 @@ void beginContact(Contact cp) {
 
 <p>So we’ve been doing integration all along! It looks like this:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 velocity.add(acceleration);
 location.add(velocity);</pre>
 
@@ -2382,7 +2382,7 @@ a.normalize();
 
 <p>The first thing we need to do to create a toxiclibs physics world in our examples is import the library itself.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] Importing the libraries
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
@@ -2393,7 +2393,7 @@ import toxi.geom.*;
 
 <p>Then we’ll need a reference to our physics world, a <span class="klass">VerletPhysics</span> or <span class="klass">VerletPhysics2D</span> object (depending on whether we are working in two or three dimensions). The examples in this chapter will operate in 2D only for simplicity, but they could easily be extended into 3D (and 3D versions are available with the chapter download).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 VerletPhysics2D physics;
 
 void setup() {
@@ -2402,14 +2402,14 @@ void setup() {
 
 <p>Once you have your <span class="klass">VerletPhysics</span> object, you can set some global properties for your world. For example, if you want it to have hard boundaries past which objects cannot travel, you can set its limits:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   physics.setWorldBounds(new Rect(0,0,width,height));</pre>
 
 <a data-primary="gravity" data-secondary="GravityBehavior (toxiclibs)" data-type="indexterm"></a> <a data-primary="GravityBehavior class (toxiclibs)" data-type="indexterm"></a>
 
 <p>In addition, you can add gravity to the physics world with a <span class="klass">GravityBehavior</span> object. A gravity behavior requires a vector—how strong and in what direction is the gravity?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   physics.addBehavior(new GravityBehavior(new Vec2D(0,0.5)));
 }</pre>
 
@@ -2417,7 +2417,7 @@ void setup() {
 
 <p>Finally, in order to calculate the physics of the world and move the objects in the world, we have to call <span class="function">update()</span>. Typically this would happen once per frame in <span class="function">draw()</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   // This is the same as Box2D’s “step()” function
   physics.update();
@@ -2432,7 +2432,7 @@ void draw() {
 
 <p>In the Box2D examples, we saw how we can create our own class (called, say, <span class="klass">Particle</span>) and include a reference to a Box2D body.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle {
   Body body;</pre>
 
@@ -2442,7 +2442,7 @@ class Particle {
 
 <p>Let’s look at how we might take the same approach with the class <span class="klass">VerletParticle2D</span> in toxiclibs. We want to make our own <span class="klass">Particle</span> class so that we can draw our particles a certain way and include any custom properties. We’d probably write our code as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle {
   // Our Particle has a reference to a VerletParticle.
   VerletParticle2D p;
@@ -2463,7 +2463,7 @@ class Particle {
 
 <p>Looking at the above, we should first be thrilled to notice that drawing the particle is as simple as grabbing the <em>x</em> and <em>y</em> and using them. No awkward conversions between coordinate systems here since toxiclibs is designed to think in pixels. Second, you might notice that this <span class="klass">Particle</span> class’s sole purpose is to store a reference to a <span class="klass">VerletParticle2D</span> object. This hints at something. Remember our discussion of inheritance back in Chapter 4: Particle Systems? What is a <span class="klass">Particle</span> object other than an “augmented” <span class="klass">VerletParticle</span>? Why bother making a Verlet particle inside a particle when we could simply <span class="klass">extend VerletParticle</span>?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle extends VerletParticle2D {
 
   Particle(Vec2D loc) {
@@ -2488,7 +2488,7 @@ class Particle extends VerletParticle2D {
 
 <p>We can now create particles anywhere within our sketch.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Particle p1 = new Particle(new Vec2D(100,20));
   Particle p2 = new Particle(new Vec2D(100,180));</pre>
 
@@ -2496,7 +2496,7 @@ class Particle extends VerletParticle2D {
 
 <p>Just making a particle isn’t enough, however. We have to make sure we tell our physics world about them with the <span class="function">addParticle()</span> function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   physics.addParticle(p1);
   physics.addParticle(p2);</pre>
 
@@ -2526,7 +2526,7 @@ class Particle extends VerletParticle2D {
 
 <p>The inheritance and polymorphism technique we employed in the previous section also proves to be useful when creating springs. A spring expects two particles when it is created. And again, because our <span class="klass">Particle</span> class <span class="klass">extends VerletParticle</span>, a <span class="klass">VerletSpring</span> object will accept our <span class="klass">Particle</span> objects passed into the constructor. Let’s take a look at some example code that assumes the existence of our two previous particles <span class="var">p1</span> and <span class="var">p2</span> and creates a connection between them with a given rest length and strength.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // What is the rest length of the spring?
 float len = 80;
 // How strong is the spring?
@@ -2535,7 +2535,7 @@ VerletSpring2D spring=new VerletSpring2D(p1,p2,len,strength);</pre>
 
 <p>Just as with particles, in order for the connection to actually be part of the physics world, we need to explicitly add it.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 physics.addSpring(spring);</pre>
 </section>
 
@@ -2546,9 +2546,9 @@ physics.addSpring(spring);</pre>
 
 <p>One thing we saw with Box2D is that the physics simulation broke down when we overrode it and manually set the location of a body. With toxiclibs, we don’t have this problem. If we want to move the location of a particle, we can simply set its <em>x</em> and <em>y</em> location manually. However, before we do so, it’s generally a good idea to call the <span class="function">lock()</span> function.</p>
 
-<p><span class="function">lock()</span> is typically used to lock a particle in place and is identical to setting a Box2D body’s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation.  Let’s say you want to move a given particle whenever you click the mouse.</p>
+<p><span class="function">lock()</span> is typically used to lock a particle in place and is identical to setting a Box2D body’s density to 0. However, here we are going to show how to lock a particle temporarily, move it, and then unlock it so that it continues to move according to the physics simulation. Let’s say you want to move a given particle whenever you click the mouse.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   if (mousePressed) {
     //[full] First lock the particle, then set the x and y, then unlock() it.
     p2.lock();
@@ -2566,7 +2566,7 @@ physics.addSpring(spring);</pre>
 
 <div data-type="example"><h5>Example 5.10: Simple Spring with toxiclibs</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
 import toxi.geom.*;
@@ -2650,7 +2650,7 @@ class Particle extends VerletParticle2D {
 
 <p>First, we’ll need a list of particles (let’s use the same <span class="klass">Particle</span> class we built in the previous example).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();</pre>
 
 <p>Now, let’s say we want to have 20 particles, all spaced 10 pixels apart.</p>
@@ -2659,13 +2659,13 @@ ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();</pre>
 <figcaption>Figure 5.15</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float len = 10;
 float numParticles = 20;</pre>
 
 <p>We can loop from <span class="var">i</span> equals 0 all the way up to 20, with each particle’s <em>y</em> location set to <span class="var">i <code>*</code> 10</span> so that the first particle is at <em>(0,10)</em>, the second at <em>(0,20)</em>, the third at <em>(0,30)</em>, etc.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for(int i=0; i &lt; numPoints; i++) {
   // Spacing them out along the x-axis
   Particle particle=new Particle(i*len,10);
@@ -2685,7 +2685,7 @@ for(int i=0; i &lt; numPoints; i++) {
 
 <p>In other words, particle <span class="var">i</span> needs to be connected to particle <span class="var">i-1</span> (except for when <span class="var">i</span> equals zero).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (i != 0) {
   // First we need a reference to the previous particle.
   Particle previous = particles.get(i-1);
@@ -2704,7 +2704,7 @@ if (i != 0) {
 
 <p>Now, what if we want the string to hang from a fixed point? We can lock one of the particles—the first, the last, the middle one, etc. Here’s how we would access the first particle (in the <span class="klass">ArrayList</span>) and lock it.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Particle head=particles.get(0);
 head.lock();</pre>
 
@@ -2716,7 +2716,7 @@ head.lock();</pre>
 
 <div data-type="example"><h5>Example 5.11: Soft swinging pendulum</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 stroke(0);
 noFill();
 beginShape();
@@ -2769,7 +2769,7 @@ tail.display();</pre>
 
 <p>First, we’ll need a <span class="klass">Node</span> class. This is the easy part; it can <span class="klass">extend VerletParticle2D</span>. Really, this is just what we did before, only we’re calling it <span class="klass">Node</span> now instead of <span class="klass">Particle</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Node extends VerletParticle2D {
   Node(Vec2D pos) {
     super(pos);
@@ -2784,7 +2784,7 @@ class Node extends VerletParticle2D {
 
 <p>Next we can write a class called <span class="klass">Cluster</span>, which will describe a list of nodes.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Cluster {
 
   ArrayList&lt;Node&gt; nodes;
@@ -2833,20 +2833,20 @@ class Cluster {
 
 <p>Look at the left column. It reads: 000 11 2. So we know we need to access each node in the list from 0 to <em>N</em>-1.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     for (int i = 0; i &lt; nodes.size()-1; i++) {
       VerletParticle2D ni = nodes.get(i);</pre>
 
 <p>Now, we know we need to connect node 0 to nodes 1,2,3. For node 1: 2,3. For node 2: 3. So for every node i, we must loop from i+1 until the end of the list.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
       // Look how we start j at i + 1.
       for (int j = i+1; j &lt; nodes.size(); j++) { //[bold]
         VerletParticle2D nj = nodes.get(j);</pre>
 
 <p>With every two <span class="klass">Node</span><code>s</code> we find, all we have to do then is make a spring.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
         // The Spring connects Nodes “ni” and “nj”.
         physics.addSpring(new VerletSpring2D(ni,nj,diameter,0.01));
       }
@@ -2860,7 +2860,7 @@ class Cluster {
 
 <div data-type="example"><h5>Example 5.12: Cluster</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 import toxi.geom.*;
 import toxi.physics2d.*;
 
@@ -2911,12 +2911,12 @@ void draw() {
 
 <p>Let’s say we have a <span class="klass">Particle</span> class (that <span class="klass">extends VerletParticle</span>).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Particle p = new Particle(new Vec2D(200,200));</pre>
 
 <p>Once we’ve made a <span class="klass">Particle</span> object, we can create an <span class="klass">AttractionBehavior</span> object associated with that particle.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float distance = 20;
 float strength = 0.1;
 AttractionBehavior behavior = new AttractionBehavior(p, distance, strength);</pre>
@@ -2925,14 +2925,14 @@ AttractionBehavior behavior = new AttractionBehavior(p, distance, strength);</pr
 
 <p>Finally, in order for the force to be activated, the behavior needs to be added to the physics world.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 physics.addBehavior(behavior);</pre>
 
 <p>This means everything that lives in the physics simulation will always be attracted to that particle, as long as it is within the distance threshold.</p>
 
 <p>Even though toxiclibs does not handle collisions, you can create a collision-like effect by adding a repulsive behavior to each and every particle (so that every particle repels every other particle). Let’s look at how we might modify our <span class="klass">Particle</span> class to do this.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Particle extends VerletParticle2D {
 
   // We’ve added a radius to every Particle.
@@ -2963,7 +2963,7 @@ class Particle extends VerletParticle2D {
 
 <div data-type="example"><h5>Example 5.13: Attraction/Repulsion</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Attractor extends VerletParticle2D {
 
   float r;

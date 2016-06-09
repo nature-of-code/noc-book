@@ -174,7 +174,7 @@
 
 <p>You may be thinking: “OK, I’ve got this cell thing. And the cell thing has some properties, like a state, what generation it’s on, who its neighbors are, where it lives pixel-wise on the screen. And maybe it has some functions: it can display itself, it can generate its new state, etc.” This line of thinking is an excellent one and would likely lead you to write some code like this:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Cell {
 
 }</pre>
@@ -185,12 +185,12 @@ class Cell {
 <figcaption>Figure 7.17</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int[] cells = {1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0};</pre>
 
 <p>To draw that array, we simply check if we’ve got a 0 or a 1 and create a fill accordingly.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Loop through every cell.
 for (int i = 0; i &lt; cells.length; i++) {
   if (cells[i] == 0) fill(255);
@@ -218,7 +218,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <p>This may lead you to write some code like this:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // For every cell in the array...
 for (int i = 0; i &lt; cells.length; i++) {
 
@@ -261,7 +261,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <p>To make the code easiest to read and understand right now, we’ll go with option #1 and just skip the edge cases, leaving their values constant. This can be accomplished by starting the loop one cell later and ending one cell earlier:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A loop that ignores the first and last cell
 for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
   int left   = cell[i-1];
@@ -275,7 +275,7 @@ for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
 
 <p>There’s one more problem we have to fix before we’re done. It’s subtle and you won’t get a compilation error; the CA just won’t perform correctly. However, identifying this problem is absolutely fundamental to the techniques behind programming CA simulations. It all lies in this line of code:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   cell[i] = newstate;</pre>
 
 <p>This seems like a perfectly innocent line. After all, we’ve computed the new state value and we’re simply giving the cell its new state. But in the next iteration, you’ll discover a massive bug. Let’s say we’ve just computed the new state for cell #5. What do we do next? We calculate the new state value for cell #6.</p>
@@ -285,12 +285,12 @@ for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
 
 <p>Notice how we need the value of cell #5 at generation 0 in order to calculate cell #6’s new state at generation 1? A cell’s new state is a function of the previous neighbor states. Do we know cell #5’s value at generation 0? Remember, Processing just executes this line of code for <em>i = 5</em>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   cell[i] = newstate;</pre>
 
 <p>Once this happens, we no longer have access to cell #5’s state at generation 0, and cell index 5 is storing the value for generation 1. We cannot overwrite the values in the array while we are processing the array, because we need those values to calculate the new values. A solution to this problem is to have two arrays, one to store the current generation states and one for the next generation states.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Another array to store the states
 // for the next generation.
 int[] newcells = new int[cells.length]; //[bold]
@@ -308,13 +308,13 @@ for (int i = 1; i &lt; cells.length-1; i++) {
 
 <p>Once the entire array of values is processed, we can then discard the old array and set it equal to the new array of states.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The new generation becomes the current generation.
 cells = newcells; //[bold]</pre>
 
 <p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the <span class="function">rules()</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // Function receives 3 ints and returns 1.
   int rules (int a, int b, int c) {</pre>
 
@@ -330,17 +330,17 @@ cells = newcells; //[bold]</pre>
 
 <p>We can store this ruleset in Processing as an array.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int[] ruleset = {0,1,0,1,1,0,1,0};</pre>
 
 <p>And then say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
 
 <p>If left, middle, and right all have the state 1, then that matches the configuration 111 and the new state should be equal to the first value in the ruleset array. We can now duplicate this strategy for all eight possibilities.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   int rules (int a, int b, int c) {
     if      (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];
     else if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 0) return ruleset[1];
@@ -360,7 +360,7 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
 
 <p>Another solution, though perhaps a bit more difficult to follow, is to convert the neighborhood configuration (a 3-bit number) into a regular integer and use that value as the index into the ruleset array. This can be done in Java like so.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   int rules (int a, int b, int c) {
     // A quick way to join three bits into a String
     String s = "" + a + b + c;
@@ -374,24 +374,24 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
 
 <p>There’s one tiny problem with this solution, however. Let’s say we are implementing rule 222:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Rule 222
 int[] ruleset = {1,1,0,1,1,1,1,0};</pre>
 
 <p>And we have the neighborhood “111”. The resulting state is equal to ruleset index 0, as we see in the first way we wrote the function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
 
 <p>If we convert “111” to a decimal number, we get 7. But we don’t want ruleset[7]; we want ruleset[0]. For this to work, we need to write the ruleset with the bits in reverse order, i.e.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Rule 222 in “reverse” order
 int[] ruleset = {0,1,1,1,1,0,1,1};</pre>
 
 <p>So far in this section, we’ve written everything we need to compute the generations for a Wolfram elementary CA. Let’s take a moment to organize the above code into a class, which will ultimately help in the design of our overall sketch.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class CA {
   //[full] We need an array for the cells and
   // one for the rules.
@@ -454,14 +454,14 @@ class CA {
 
 <p>The good news is that drawing the CA is not particularly difficult. Let’s begin by looking at how we would render a single generation. Assume we have a Processing window 600 pixels wide and we want each cell to be a 10x10 square. We therefore have a CA with 60 cells. Of course, we can calculate this value dynamically.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int w = 10;
 // How many cells fit across given a certain width
 int[] cells = new int[width/w];</pre>
 
 <p>Assuming we’ve gone through the process of generating the cell states (which we did in the previous section), we can now loop through the entire array of cells, drawing a black cell when the state is 1 and a white one when the state is 0.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i &lt; cells.length; i++) {
   //[full] Black or white fill?
   if (cells[i] == 1) fill(0);
@@ -482,7 +482,7 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <div data-type="example"><h5>Example 7.1: Wolfram elementary cellular automata</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class CA {
   int[] cells;
   int[] ruleset;
@@ -715,12 +715,12 @@ class CA {
 
 <p>Now we just need to extend our code from the Wolfram CA to two dimensions. We used a one-dimensional array to store the list of cell states before, and for the Game of Life, we can use a <a href="http://www.processing.org/learning/2darray/">two-dimensional array</a>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int[][] board = new int[columns][rows];</pre>
 
 <p>We’ll begin by initializing each cell of the board with a random state: 0 or 1.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int x = 0; x &lt; columns; x++) {
   for (int y = 0; y &lt; rows; y++) {
     // Initialize each cell with a 0 or 1.
@@ -730,7 +730,7 @@ for (int x = 0; x &lt; columns; x++) {
 
 <p>And to compute the next generation, just as before, we need a fresh 2D array to write to as we analyze each cell’s neighborhood and calculate a new state.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int[][] next = new int[columns][rows];
 
 for (int x = 0; x &lt; columns; x++) {
@@ -750,7 +750,7 @@ for (int x = 0; x &lt; columns; x++) {
 
 <p>All of the Game of Life rules operate by knowing how many neighbors are alive. So if we create a neighbor counter variable and increment it each time we find a neighbor with a state of 1, we’ll have the total of live neighbors.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int neighbors = 0;
 
 //[full] Top row of neighbors
@@ -773,7 +773,7 @@ if (board[x+1][y+1] == 1) neighbors++;
 
 <p>And again, just as with the Wolfram CA, we find ourselves in a situation where the above is a useful and clear way to write the code for teaching purposes, allowing us to see every step (each time we find a neighbor with a state of one, we increase a counter). Nevertheless, it’s a bit silly to say, “If the cell state equals one, add one to a counter” when we could just say, “Add the cell state to a counter.” After all, if the state is only a 0 or 1, the sum of all the neighbors’ states will yield the total number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = -1; i &lt;= 1; i++) {
   for (int j = -1; j &lt;= 1; j++) {
     // Add up all the neighbors’ states.
@@ -783,14 +783,14 @@ for (int i = -1; i &lt;= 1; i++) {
 
 <p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">i</span> and <span class="var">j</span> equal 0, but another option would be to just subtract the cell state once we’ve finished the loop.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Whoops! Subtract the cell’s state,
 // which we don’t want in the total.
 neighbors -= board[x][y];</pre>
 
 <p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new state should be according to the rules: birth, death, or stasis.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] If it is alive and has less than 2 live neighbors, it dies from loneliness.
 if      ((board[x][y] == 1) &amp;&amp; (neighbors &lt;  2)) {
   next[x][y] = 0;
@@ -817,7 +817,7 @@ else {
 
 <p>Putting this all together, we have:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The next board
 int[][] next = new int[columns][rows];
 
@@ -859,7 +859,7 @@ board = next;</pre>
 
 <div data-type="example"><h5>Example 7.2: Game of Life</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for ( int i = 0; i &lt; columns;i++) {
   for ( int j = 0; j &lt; rows;j++) {
 
@@ -901,17 +901,17 @@ for ( int i = 0; i &lt; columns;i++) {
 
 <p>To accomplish any of these ideas (and more), it would be helpful to see how we might treat a cell as an object with multiple properties, rather than as a single 0 or 1. To show this, let’s just recreate the Game of Life simulation. Only instead of:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   int[][] board;</pre>
 
 <p>Let’s have:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Cell[][] board;</pre>
 
 <p>where <span class="klass">Cell</span> is a class we will write. What are the properties of a <span class="klass">Cell</span> object? In our Game of Life example, each cell has a location and size, as well as a state.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Cell {
 
   //[full] Location and size
@@ -924,7 +924,7 @@ class Cell {
 
 <p>In the non-OOP version, we used a separate 2D array to keep track of the states for the current and next generation. By making a cell an object, however, each cell could keep track of both states. In this case, we’ll think of the cell as remembering its previous state (for when new states need to be computed).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // What was its previous state?
   int previous;</pre>
 
@@ -936,7 +936,7 @@ class Cell {
 
 <div data-type="example"><h5>Example 7.3: Game of Life OOP</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void display() {
   // If the cell is born, color it blue!
   if (previous == 0 &amp;&amp; state == 1) fill(0,0,255);
@@ -951,7 +951,7 @@ void display() {
 
 <p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be counted the same way; the difference is that we now need to refer to the object’s state variables as we loop through the 2D array.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int x = 1; x &lt; columns-1; x++) {
   for (int y = 1; y &lt; rows-1; y++) {
 

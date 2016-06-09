@@ -179,13 +179,13 @@ Weight 1: -1</strong></p>
 
 <p>Let’s assume we have two arrays of numbers, the inputs and the weights. For example:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float[] inputs  = {12 , 4};
 float[] weights = {0.5,-1};</pre>
 
 <p>“For every input” implies a loop that multiplies each input by its corresponding weight. Since we need the sum, we can add up the results in that very loop.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] Steps 1 and 2: Add up all the weighted inputs.
 float sum = 0;
 for (int i = 0; i &lt; inputs.length; i++) {
@@ -195,7 +195,7 @@ for (int i = 0; i &lt; inputs.length; i++) {
 
 <p>Once we have the sum we can compute the output.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Step 3: Passing the sum
 // through an activation function
 float output = activate(sum);
@@ -254,13 +254,13 @@ int activate(float sum) {
 
 <p>We’re now ready to assemble the code for a <span class="klass">Perceptron</span> class. The only data the perceptron needs to track are the input weights, and we could use an array of floats to store these.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Perceptron {
   float[] weights;</pre>
 
 <p>The constructor could receive an argument indicating the number of inputs (in this case three: x, y, and a bias) and size the array accordingly.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   Perceptron(int n) {
     weights = new float[n];
     for (int i = 0; i &lt; weights.length; i++) {
@@ -271,7 +271,7 @@ class Perceptron {
 
 <p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements into a function called <span class="function">feedforward()</span>. In this example, we’ll have the perceptron receive its inputs as an array (which should be the same length as the array of weights) and return the output as an integer.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   int feedforward(float[] inputs) {
     float sum = 0;
     for (int i = 0; i &lt; weights.length; i++) {
@@ -289,7 +289,7 @@ class Perceptron {
 <figcaption>Figure 10.7</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Create the Perceptron.
 Perceptron p = new Perceptron(3);
 // The input is 3 values: x,y and bias.
@@ -419,7 +419,7 @@ int result = p.feedforward(point);</pre>
 
 <p>Assuming the addition of a variable <span class="var">c</span> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A new variable is introduced
 // to control the learning rate.
 float c = 0.01;
@@ -445,7 +445,7 @@ void train(float[] inputs, int desired) {
 
 <p>We can now see the <span class="klass">Perceptron</span> class as a whole.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Perceptron {
   //[full] The Perceptron stores its weights and learning constants.
   float[] weights;
@@ -493,7 +493,7 @@ class Perceptron {
 
 <p>To train the perceptron, we need a set of inputs with a known answer. We could package this up in a class like so:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Trainer {
 
   // A "Trainer" object stores the inputs and the correct answer.
@@ -524,7 +524,7 @@ class Trainer {
 
 <p>We can then write a Processing function with this in mind.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] A function to calculate y based on x along a line
 float f(float x) {
   return 2*x+1;
@@ -533,13 +533,13 @@ float f(float x) {
 
 <p>So, if we make up a point:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float x = random(width);
 float y = random(height);</pre>
 
 <p>How do we know if this point is above or below the line? The line function <span class="function">f(x)</span> gives us the <span class="var">y</span> value on the line for that <span class="var">x</span> position. Let’s call that <span class="var">yline</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The y position on the line
 float yline = f(x);</pre>
 
@@ -549,7 +549,7 @@ float yline = f(x);</pre>
 <figcaption>Figure 10.8</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (y &lt; yline) {
   // The answer is -1 if y is above the line.
   answer = -1;
@@ -559,12 +559,12 @@ if (y &lt; yline) {
 
 <p>We can then make a <span class="klass">Trainer</span> object with the inputs and the correct answer.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Trainer t = new Trainer(x, y, answer);</pre>
 
 <p>Assuming we had a <span class="klass">Perceptron</span> object <span class="var">ptron</span>, we could then train it by sending the inputs along with the known answer.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ptron.train(t.inputs,t.answer);</pre>
 
 <p>Now, it’s important to remember that this is just a demonstration. Remember our <a href="#chapter09_section2">Shakespeare-typing monkeys</a>? We asked our genetic algorithm to solve for “to be or not to be”—an answer we already knew. We did this to make sure our genetic algorithm worked properly. The same reasoning applies to this example. We don’t need a perceptron to tell us whether a point is above or below a line; we can do that with simple math. We are using this scenario, one that we can easily solve without a perceptron, to demonstrate the perceptron’s algorithm as well as easily confirm that it is working properly.</p>
@@ -577,7 +577,7 @@ ptron.train(t.inputs,t.answer);</pre>
 
 <div data-type="example"><h5>Example 10.1: The Perceptron</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The Perceptron
 Perceptron ptron;
 // 2,000 training points
@@ -653,7 +653,7 @@ void draw() {
 
 <p>What if we added one more variable to our <span class="klass">Vehicle</span> class?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   // Giving the vehicle a brain!
@@ -672,7 +672,7 @@ class Vehicle {
 
 <p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object’s acceleration. Assuming the targets are an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> objects, it would look something like:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(ArrayList&lt;PVector&gt; targets) {
     for (PVector target : targets) {
       // For every target, apply a steering force towards the target.
@@ -683,7 +683,7 @@ class Vehicle {
 
 <p>In Chapter 6, we also examined how we could create more dynamic simulations by weighting each steering force according to some rule. For example, we could say that the farther you are from a target, the stronger the force.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  void seek(ArrayList&lt;PVector&gt; targets) {
     for (PVector target : targets) {
       PVector force = seek(targets.get(i));
@@ -697,7 +697,7 @@ class Vehicle {
 
 <p>But what if instead we could ask our brain (i.e. perceptron) to take in all the forces as an input, process them according to weights of the perceptron inputs, and generate an output steering force? What if we could instead say:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(ArrayList&lt;PVector&gt; targets) {
 
     // Make an array of inputs for our brain.
@@ -777,7 +777,7 @@ int feedforward(float[] inputs) {
 
 <p>Let’s take a simpler example, where the vehicle simply wants to stay close to the center of the window. We’ll train the brain as follows:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     PVector desired = new PVector(width/2,height/2);
     PVector error = PVector.sub(desired, location);
     brain.train(forces,error);</pre>
@@ -831,7 +831,7 @@ void train(float[] inputs, int desired) {
 
 <p>Because the vehicle observes its own error, there is no need to calculate one; we can simply receive the error as an argument. Notice how the change in weight is processed twice, once for the error along the x-axis and once for the y-axis.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 weights[i] += c*error.x*forces[i].x;
 weights[i] += c*error.y*forces[i].y;</pre>
 
@@ -843,7 +843,7 @@ weights[i] += c*error.y*forces[i].y;</pre>
 
 <div data-type="example"><h5>Example 10.2: Perceptron steering</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   // The Vehicle now has a brain.
@@ -994,7 +994,7 @@ class Vehicle {
 
 <p>The primary building block for this diagram is a neuron. For the purpose of this example, the <span class="klass">Neuron</span> class describes an entity with an <em>(x,y)</em> location.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // An incredibly simple Neuron class stores and displays the location of a single neuron.
 class Neuron {
   PVector location;
@@ -1012,7 +1012,7 @@ class Neuron {
 
 <p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own location (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 //[full] A Network is a list of neurons.
 class Network {
   ArrayList&lt;Neuron&gt; neurons;
@@ -1044,7 +1044,7 @@ class Network {
 
 <p>Now we can pretty easily make the diagram above.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 Network network;
 
 void setup() {
@@ -1081,7 +1081,7 @@ void draw() {
 
 <p>What’s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>) and a <span class="var">weight</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
   //[full] A connection is between two neurons.
   Neuron a;
@@ -1106,7 +1106,7 @@ class Connection {
 
 <p>Once we have the idea of a <span class="klass">Connection</span> object, we can write a function (let’s put it inside the <span class="klass">Network</span> class) that connects two neurons together—the goal being that in addition to making the neurons in <span class="function">setup()</span>, we can also connect them.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   size(640, 360);
   network = new Network(width/2,height/2);
@@ -1130,7 +1130,7 @@ void setup() {
 
 <p>The <span class="klass">Network</span> class therefore needs a new function called <span class="function">connect()</span>, which makes a <span class="klass">Connection</span> object between the two specified neurons.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
     // Connection has a random weight.
     Connection c = new Connection(a, b, random(1));
@@ -1140,7 +1140,7 @@ void setup() {
 
 <p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <span class="var">a</span> connects to <span class="var">b</span>, we want <span class="var">a</span> to store a reference of that connection so that it can pass its output to <span class="var">b</span> when the time comes.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
     Connection c = new Connection(a, b, random(1));
     a.addConnection(c);
@@ -1150,7 +1150,7 @@ void setup() {
 
 <p>For this to work, we have to add an <span class="klass">ArrayList</span> of connections to the <span class="klass">Neuron</span> class. Then we implement the <span class="function">addConnection()</span> function that stores the connection in that <span class="klass">ArrayList</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron {
   PVector location;
 
@@ -1176,7 +1176,7 @@ class Neuron {
 
 <div data-type="example"><h5>Example 10.3: Neural network diagram</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void display() {
     stroke(0);
     strokeWeight(1);
@@ -1201,7 +1201,7 @@ class Neuron {
 
 <p>Our first step is to add a function to the network to receive this input, which we’ll make a random number between 0 and 1.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   // All our old network set up code
 
@@ -1212,7 +1212,7 @@ void setup() {
 
 <p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In this case, we’ll do something simple and just feed a single input into the first neuron in the <span class="klass">ArrayList</span>, which happens to be the left-most one.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Network {
 
   //[full] A new function to feed an input into the neuron
@@ -1224,7 +1224,7 @@ class Network {
 
 <p>What did we do? Well, we made it necessary to add a function called <span class="function">feedforward()</span> in the <span class="klass">Neuron</span> class that will receive the input and process it.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
 
   void feedforward(float input) {
@@ -1234,7 +1234,7 @@ class Neuron
 
 <p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">Neuron</span> class adds a variable called <span class="var">sum</span>, it can simply accumulate the inputs as they are received.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
 
   int sum = 0; //[bold]
@@ -1246,7 +1246,7 @@ class Neuron
 
 <p>The neuron can then decide whether it should “fire,” or pass an output through any of its connections to the next layer in the network. Here we can create a really simple activation function: if the sum is greater than 1, fire!</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  void feedforward(float input) {
     sum += input;
     // Activate the neuron and fire the outputs?
@@ -1260,7 +1260,7 @@ class Neuron
 
 <p>Now, what do we do in the <span class="function">fire()</span> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <span class="function">feedforward()</span> the neuron’s output. For this simple example, we’ll just take the neuron’s <span class="var">sum</span> variable and make it the output.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fire() {
     for (Connection c : connections) {
       // The Neuron sends the sum out
@@ -1273,7 +1273,7 @@ class Neuron
 
 <p>Here’s where things get a little tricky. After all, our job here is not to actually make a functioning neural network, but to animate a simulation of one. If the neural network were just continuing its work, it would instantly pass those inputs (multiplied by the connection’s weight) along to the connected neurons. We’d say something like:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
 
   void feedforward(float val) {
@@ -1284,18 +1284,18 @@ class Connection {
 
 <p>Let’s first think about how we might do that. We know the location of <span class="klass">Neuron</span> <span class="var">a</span>; it’s the <span class="klass">PVector</span> <span class="var">a.location</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.location</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector sender = a.location.get();</pre>
 
 <p>Once we have a copy of that location, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   sender.x = lerp(sender.x, b.location.x, 0.1);
   sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
 
 <p>Along with the connection’s line, we can then draw a circle at that location:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   stroke(0);
   line(a.location.x, a.location.y, b.location.x, b.location.y);
   fill(0);
@@ -1309,14 +1309,14 @@ class Connection {
 
 <p>OK, so that’s how we might move something along the connection. But how do we know when to do so? We start this process the moment the <span class="klass">Connection</span> object receives the “feedforward” signal. We can keep track of this process by employing a simple <span class="klass">boolean</span> to know whether the connection is sending or not. Before, we had:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void feedforward(float val) {
     b.feedforward(val*weight);
   }</pre>
 
 <p>Now, instead of sending the value on straight away, we’ll trigger an animation:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
 
   boolean sending = false;
@@ -1336,7 +1336,7 @@ class Connection {
 
 <p>The <span class="function">feedforward()</span> function is called the moment the connection becomes active. Once it’s active, we’ll need to call another function continuously (each time through <span class="function">draw()</span>), one that will update the location of the traveling data.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
     if (sending) {
       //[full] As long as we’re sending, interpolate our points.
@@ -1348,7 +1348,7 @@ class Connection {
 
 <p>We’re missing a key element, however. We need to check if the sender has arrived at location b, and if it has, feed forward that output to the next neuron.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
     if (sending) {
       sender.x = lerp(sender.x, b.location.x, 0.1);
@@ -1373,7 +1373,7 @@ class Connection {
 
 <div data-type="example"><h5>Example 10.4: Animating a neural network diagram</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   background(255);
   // The Network now has a new update() method that updates all of the Connection objects.

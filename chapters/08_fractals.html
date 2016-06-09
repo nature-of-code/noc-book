@@ -97,7 +97,7 @@ On a cold November day a man named Benoit Mandelbrot was born”<br />
 
 <p>Before we implement the Cantor set, let’s take a look at what it means to have recursion in code. Here’s something we’re used to doing all the time—calling a function inside another function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void someFunction() {
   // Calling the function background()
   // in the definition of someFunction()
@@ -106,7 +106,7 @@ void someFunction() {
 
 <p>What would happen if we called the function we are defining within the function itself? Can <span class="function">someFunction()</span> call <span class="function">someFunction()</span>?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void someFunction() {
   someFunction();
 }</pre>
@@ -122,7 +122,7 @@ void someFunction() {
 
 <p>Here we’ll write a function in Processing that uses a <span class="function">for</span> loop to calculate factorial:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int factorial(int n) {
   int f = 1;
   //[full] Using a regular loop to compute factorial
@@ -153,7 +153,7 @@ int factorial(int n) {
 
 <p>The definition of <strong><em>factorial</em></strong> includes <strong><em>factorial</em></strong>?! It’s kind of like defining “tired" as “the feeling you get when you are tired.” This concept of self-reference in functions is an example of recursion. And we can use it to write a factorial function that calls itself.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 int factorial(int n) {
   if (n == 1) {
     return 1;
@@ -176,7 +176,7 @@ int factorial(int n) {
 
 <div data-type="example"><h5>Example 8.1: Recursive Circles I</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void drawCircle(int x, int y, float radius) {
   ellipse(x, y, radius, radius);
   if(radius &gt; 2) {
@@ -203,7 +203,7 @@ void drawCircle(int x, int y, float radius) {
 
 <div data-type="example"><h5>Example 8.2: Recursion twice</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   size(640,360);
 }
@@ -236,7 +236,7 @@ void drawCircle(float x, float y, float radius) {
 
 <div data-type="example"><h5>Example 8.3: Recursion four times</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void drawCircle(float x, float y, float radius) {
   ellipse(x, y, radius, radius);
   if(radius &gt; 8) {
@@ -257,14 +257,14 @@ void drawCircle(float x, float y, float radius) {
 
 <p>Now we’re ready to visualize the Cantor set in Processing using a recursive function. Where do we begin? Well, we know that the Cantor set begins with a line. So let’s start there and write a function that draws a line.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void cantor(float x, float y, float len) {
   line(x,y,x+len,y);
 }</pre>
 
 <p>The above <span class="function">cantor()</span> function draws a line that starts at pixel coordinate <em>(x,y)</em> with a length of <span class="var">len</span>. (The line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function, saying:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 cantor(10, 20, width-20);</pre>
 
 <p>we’d get the following:</p>
@@ -281,7 +281,7 @@ cantor(10, 20, width-20);</pre>
 
 <p>We can now add two more lines of code to draw the second pair of lines, moving the y-location down a bunch of pixels so that we can see the result below the original line.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void cantor(float x, float y, float len) {
   line(x,y,x+len,y);
 
@@ -300,22 +300,22 @@ void cantor(float x, float y, float len) {
 
 <p>Take a look at where we draw that first line from the start to the one-third mark.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    line(x,y,x+len/3,y);</pre>
 
 <p>Instead of calling the <span class="function">line()</span> function directly, we can simply call the <span class="function">cantor()</span> function itself. After all, what does the <span class="function">cantor()</span> function do? It draws a line at an <em>(x,y)</em> location with a given length! And so:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    line(x,y,x+len/3,y);         becomes -------&gt;  cantor(x,y,len/3);</pre>
 
 <p>And for the second line:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
    line(x+len*2/3,y,x+len,y);   becomes -------&gt;  cantor(x+len*2/3,y,len/3);</pre>
 
 <p>Leaving us with:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void cantor(float x, float y, float len) {
   line(x,y,x+len,y);
 
@@ -333,7 +333,7 @@ void cantor(float x, float y, float len) {
 
 <div data-type="example"><h5>Example 8.4: Cantor set</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void cantor(float x, float y, float len) {
   // Stop at 1 pixel!
   if (len &gt;= 1) {
@@ -390,7 +390,7 @@ void cantor(float x, float y, float len) {
 
 <p>The Koch curve is a series of connected lines, and so we will think of each segment as a “KochLine.” Each <span class="klass">KochLine</span> object has a start point (“a”) and an end point (“b”). These points are <span class="klass">PVector</span> objects, and the line is drawn with Processing’s <span class="function">line()</span> function.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class KochLine {
 
   //[full] A line between two points: start and end
@@ -412,12 +412,12 @@ class KochLine {
 
 <p>Now that we have our <span class="klass">KochLine</span> class, we can get started on the main program. We’ll need a data structure to keep track of what will eventually become many <span class="klass">KochLine</span> objects, and an <span class="klass">ArrayList</span> (see Chapter 4 for a review of <span class="klass">ArrayList</span><code>s</code>) will do just fine.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;KochLine&gt; lines;</pre>
 
 <p>In <span class="function">setup()</span>, we’ll want to create the <span class="klass">ArrayList</span> and add the first line segment to it, a line that stretches from 0 to the width of the sketch.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
   size(600, 300);
   // Create the ArrayList.
@@ -434,7 +434,7 @@ void setup() {
 
 <p>Then in <span class="function">draw()</span>, all <span class="klass">KochLine</span> objects (just one right now) can be displayed in a loop.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   background(255);
   for (KochLine l : lines) {
@@ -465,7 +465,7 @@ void draw() {
 
 <p>Here’s how the code will look:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void generate() {
   // Create the next ArrayList...
   ArrayList next = new ArrayList&lt;KochLine&gt;();
@@ -494,7 +494,7 @@ void generate() {
 
 <p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new <span class="klass">KochLine</span> objects and make the new line segments (ab, cb, cd, and de).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
     next.add(new KochLine(a,b));
     next.add(new KochLine(b,c));
     next.add(new KochLine(c,d));
@@ -502,7 +502,7 @@ void generate() {
 
 <p>Where do we get these points? Since we have a <span class="klass">KochLine</span> object, why not ask the <span class="klass">KochLine</span> object to compute all these points for us?</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void generate() {
   ArrayList next = new ArrayList&lt;KochLine&gt;();
   for (KochLine l : lines) {
@@ -528,7 +528,7 @@ void generate() {
 
 <p>Now we just need to write five new functions in the <span class="klass">KochLine</span> class, each one returning a <span class="klass">PVector</span> according to <a href="#chapter08_figure16">Figure 8.16</a> above. Let’s knock off <span class="function">kochA()</span> and <span class="function">kochE()</span> first, which are simply the start and end points of the original line.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector kochA() {
     // Note the use of get(), which returns a copy of the PVector. As was noted in
     // Chapter 6, section 14, we want to avoid making copies whenever
@@ -548,7 +548,7 @@ void generate() {
 <figcaption>Figure 8.17</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector kochB() {
     // PVector from start to end
     PVector v = PVector.sub(end, start);
@@ -575,7 +575,7 @@ void generate() {
 <figcaption>Figure 8.18</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector kochC() {
     // Start at the beginning.
     PVector a = start.get();
@@ -601,7 +601,7 @@ void generate() {
 
 <div data-type="example"><h5>Example 8.5: Koch curve</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList&lt;KochLine&gt; lines;
 
 void setup() {
@@ -678,7 +678,7 @@ void setup() {
 
 <p>Let’s begin by drawing a single branch, the trunk of the tree. Since we are going to involve the <span class="function">rotate()</span> function, we’ll need to make sure we are continuously translating along the branches while we draw the tree. And since the root starts at the bottom of the window (see above), the first step requires translating to that spot:</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 translate(width/2,height);</pre>
 
 <figure class="half-width-right-border" id="chapter08_figure20"><img alt="Figure 8.20" src="chapter08/ch08_20.png" />
@@ -687,7 +687,7 @@ translate(width/2,height);</pre>
 
 <p>&hellip;followed by drawing a line upwards (Figure 8.20):</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 line(0,0,0,-100);</pre>
 
 <p>Once we’ve finished the root, we just need to translate to the end and rotate in order to draw the next branch. (Eventually, we’re going to need to package up what we’re doing right now into a recursive function, but let’s sort out the steps first.)</p>
@@ -698,7 +698,7 @@ line(0,0,0,-100);</pre>
 
 <p>Remember, when we rotate in Processing, we are always rotating around the point of origin, so here the point of origin must always be translated to the end of our current branch.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 translate(0,-100);
 rotate(PI/6);
 line(0,0,0,-100);</pre>
@@ -713,7 +713,7 @@ line(0,0,0,-100);</pre>
 <figcaption>Figure 8.23</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 translate(width/2,height);
 // The root
 line(0,0,0,-100);
@@ -733,7 +733,7 @@ line(0,0,0,-100);</pre>
 
 <div data-type="example"><h5>Example 8.6: Recursive tree</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void branch() {
   // Draw the branch itself.
   line(0, 0, 0, -100);
@@ -767,7 +767,7 @@ void branch() {
 
 <p>You may have noticed that the recursive function we just wrote would not actually draw the above tree. After all, it has no exit condition and would get stuck in infinite recursive calls to itself. You’ll also probably notice that the branches of the tree get shorter at each level. Let’s look at how we can shrink the length of the lines as the tree is drawn, and stop branching once the lines have become too short.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Each branch now receives
 // its length as an argument.
 void branch(float len) {
@@ -810,7 +810,7 @@ void branch(float len) {
 
 <div data-type="example"><h5>Example 8.7: Recursive tree</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 float theta;
 
 void setup() {
@@ -858,7 +858,7 @@ void draw() {
 <figcaption>ch08 ex07a&nbsp;</figcaption>
 </figure>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void branch(float len) {
   // Start by picking a random
   // angle for each branch.
@@ -887,7 +887,7 @@ void branch(float len) {
 
 <div data-type="example"><h5>Example 8.8: Stochastic tree</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 void branch(float len) {
 
   line(0, 0, 0, -len);
@@ -971,17 +971,17 @@ void branch(float len) {
 
 <p>Let’s look at how we might create these generations with code. We’ll start by using a <span class="klass">String</span> object to store the axiom.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 String current = "A";</pre>
 
 <p>And once again, just as we did with the Game of Life and the Koch curve <span class="klass">ArrayList</span> examples, we will need an entirely separate string to keep track of the “next” generation.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 String next = "";</pre>
 
 <p>Now it’s time to apply the rules to the current generation and place the results in the next.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i &lt; current.length(); i++) {
   char c = current.charAt(i);
   // Production rule A --&gt; AB
@@ -995,7 +995,7 @@ for (int i = 0; i &lt; current.length(); i++) {
 
 <p>And when we’re done, current can become next.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 current = next;</pre>
 
 <p>To be sure this is working, let’s package it into a function and and call it every time the mouse is pressed.</p>
@@ -1006,7 +1006,7 @@ current = next;</pre>
 
 <div data-type="example"><h5>Example 8.9: Simple L-system sentence generation</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Start with an axiom.
 String current = "A";
 // Let’s keep track of how many generations.
@@ -1037,7 +1037,7 @@ void mousePressed() {
 
 <p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <span class="klass">String</span> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <span class="klass">String</span> object is “immutable,” which means once the object is created it can never be changed. Whenever you add on to the end of a <span class="klass">String</span> object, Java has to make a brand new <span class="klass">String</span> object (even if you are using the same variable name).</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 String s = "blah";
 s += "add some more stuff";</pre>
 
@@ -1045,7 +1045,7 @@ s += "add some more stuff";</pre>
 
 <p>In most cases, this is fine, but why duplicate a 46,000-character string if you don’t have to? For better efficiency in our L-system examples, we’ll use the <span class="klass">StringBuffer</span> class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
   // A StringBuffer for the “next” sentence
   StringBuffer next = new StringBuffer();
   for (int i = 0; i &lt; current.length(); i++) {
@@ -1115,7 +1115,7 @@ s += "add some more stuff";</pre>
 
 <p>Assuming we have a sentence generated from the L-system, we can walk through the sentence character by character and call the appropriate function as outlined above.</p>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i &lt; sentence.length(); i++) {
 
   // Looking at each character one at a time
@@ -1170,7 +1170,7 @@ for (int i = 0; i &lt; sentence.length(); i++) {
 
 <div data-type="example"><h5>Example 8.10: LSystem</h5></div>
 
-<pre data-code-language="java" data-type="programlisting">
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 LSystem lsys;
 Turtle turtle;
 
