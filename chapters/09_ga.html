@@ -52,7 +52,7 @@
 
 <a data-primary="&lt;em&gt;Adaptation in Natural and Artificial Systems&lt;/em&gt; (Holland)" data-type="indexterm"></a> <a data-primary="evolutionary computing" data-type="indexterm"></a> <a data-primary="genetic algorithms" data-secondary="purpose of" data-type="indexterm"></a> <a data-primary="Holland" data-secondary="John" data-type="indexterm"></a>
 
-<p>While computer simulations of evolutionary processes date back to the 1950s, much of what we think of as genetic algorithms (also known as &ldquo;GAs&rdquo;) today was developed by John Holland, a professor at the University of Michigan, whose book <em>Adaptation in Natural and Artificial Systems</em> pioneered GA research. Today, more genetic algorithms are part of a wider field of research, often referred to as &quot;Evolutionary Computing.&quot;</p>
+<p>While computer simulations of evolutionary processes date back to the 1950s, much of what we think of as genetic algorithms (also known as &ldquo;GAs&rdquo;) today was developed by John Holland, a professor at the University of Michigan, whose book <em>Adaptation in Natural and Artificial Systems</em> pioneered GA research. Today, more genetic algorithms are part of a wider field of research, often referred to as "Evolutionary Computing."</p>
 
 <a data-primary="brute force method" data-type="indexterm"></a> <a data-primary="infinite monkey theorem" data-type="indexterm"></a> <a data-primary="probability" data-secondary="infinite monkey theorem" data-type="indexterm"></a>
 
@@ -66,7 +66,7 @@
 
 <p>Let&rsquo;s consider a monkey named George. George types on a reduced typewriter containing only twenty-seven characters: twenty-six letters and one space bar. So the probability of George hitting any given key is one in twenty-seven.</p>
 
-<p>Let&rsquo;s consider the phrase &ldquo;to be or not to be that is the question&rdquo; (we&rsquo;re simplifying it from the original &ldquo;To be, or not to be: that is the question&rdquo;). The phrase is 39 characters long. If George starts typing, the chance he&rsquo;ll get the first character right is 1 in 27. Since the probability he&rsquo;ll get the second character right is also 1 in 27, he has a 1 in 27*27 chance of landing the first two characters in correct order&mdash;which follows directly from our discussion of <a href="#intro_section3">&quot;event probability&quot; in the Introduction</a>. Therefore, the probability that George will type the full phrase is:</p>
+<p>Let&rsquo;s consider the phrase &ldquo;to be or not to be that is the question&rdquo; (we&rsquo;re simplifying it from the original &ldquo;To be, or not to be: that is the question&rdquo;). The phrase is 39 characters long. If George starts typing, the chance he&rsquo;ll get the first character right is 1 in 27. Since the probability he&rsquo;ll get the second character right is also 1 in 27, he has a 1 in 27*27 chance of landing the first two characters in correct order&mdash;which follows directly from our discussion of <a href="#intro_section3">"event probability" in the Introduction</a>. Therefore, the probability that George will type the full phrase is:</p>
 
 <p>(1/27) multiplied by itself 39 times, i.e. (1/27)<sup>39</sup></p>
 
@@ -79,7 +79,7 @@
 <p>Now, it&rsquo;s worth noting that this problem (<em>arrive at the phrase &ldquo;to be or not to be that is the question&rdquo;</em>) is a ridiculous one. Since we know the answer, all we need to do is type it. Here&rsquo;s a Processing sketch that solves the problem.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-String s = &quot;to be or not to be that is the question&quot;;
+String s = "to be or not to be that is the question";
 println(s);</pre>
 
 <p>Nevertheless, the point here is that solving a problem with a known answer allows us to easily test our code. Once we&rsquo;ve successfully solved the problem, we can feel more confident in using genetic algorithms to do some actual useful work: solving problems with unknown answers. So this first example serves no real purpose other than to demonstrate how genetic algorithms work. If we test the GA results against the known answer and get &ldquo;to be or not to be&rdquo;, then we&rsquo;ve succeeded in writing our genetic algorithm.</p>
@@ -528,7 +528,7 @@ class DNA {
 
 <pre data-code-language="java" data-type="programlisting">
 class DNA {
-  // Each &quot;gene&quot; is one element of the array.
+  // Each "gene" is one element of the array.
   // We need 18 genes because &ldquo;to be or not to be&rdquo; is 18 characters long.
   char[] genes = new char[18];
 }</pre>
@@ -579,7 +579,7 @@ void setup() {
 <p>Where should we calculate the fitness? Since the <span class="klass">DNA</span> class contains the genetic information (the phrase we will test against the target phrase), we can write a function inside the <span class="klass">DNA</span> class itself to score its own fitness. Let&rsquo;s assume we have a target phrase:</p>
 
 <pre data-code-language="java" data-type="programlisting">
-String target = &quot;to be or not to be&quot;;</pre>
+String target = "to be or not to be";</pre>
 
 <p>We can now compare each &ldquo;gene&rdquo; against the corresponding character in the target phrase, incrementing a counter each time we get a correct character.</p>
 
@@ -784,7 +784,7 @@ if (random(1) &lt; mutationRate) {
 <div data-type="example"><h5>Example 9.1: Genetic algorithm: Evolving Shakespeare</h5></div>
 
 <pre data-code-language="java" data-type="programlisting">
-// &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Variables we need for our GA&lt;/b&gt;&lt;/span&gt;
+// &lt;b&gt;&lt;span style="font-size: 110%; text-decoration:underline;"&gt;Variables we need for our GA&lt;/b&gt;&lt;/span&gt;
 
 // Mutation rate
 float mutationRate;
@@ -802,10 +802,10 @@ void setup() {
   size(640, 360);
 
   // Initializing target phrase and mutation rate
-  target = &quot;to be or not to be&quot;;
+  target = "to be or not to be";
   mutationRate = 0.01;
 
-  // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 1: Initialize Population&lt;/b&gt;&lt;/span&gt;
+  // &lt;b&gt;&lt;span style="font-size: 110%; text-decoration:underline;"&gt;Step 1: Initialize Population&lt;/b&gt;&lt;/span&gt;
   population = new DNA[totalPopulation];
   for (int i = 0; i &lt; population.length; i++) {
     population[i] = new DNA();
@@ -814,7 +814,7 @@ void setup() {
 
 void draw() {
 
-  // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 2: Selection&lt;/b&gt;&lt;/span&gt;
+  // &lt;b&gt;&lt;span style="font-size: 110%; text-decoration:underline;"&gt;Step 2: Selection&lt;/b&gt;&lt;/span&gt;
 
   // Step 2a: Calculate fitness.
   for (int i = 0; i &lt; population.length; i++) {
@@ -833,7 +833,7 @@ void draw() {
     //[end]
   }
 
-  // &lt;b&gt;&lt;span style=&quot;font-size: 110%; text-decoration:underline;&quot;&gt;Step 3: Reproduction&lt;/b&gt;&lt;/span&gt;
+  // &lt;b&gt;&lt;span style="font-size: 110%; text-decoration:underline;"&gt;Step 3: Reproduction&lt;/b&gt;&lt;/span&gt;
   for (int i = 0; i &lt; population.length; i++) {
     int a = int(random(matingPool.size()));
     int b = int(random(matingPool.size()));
@@ -2006,7 +2006,7 @@ void setup() {
   size(780,200);
   float mutationRate = 0.05;
   population = new Population(mutationRate,10);
-  button = new Button(15,150,160,20, &quot;evolve new generation&quot;);
+  button = new Button(15,150,160,20, "evolve new generation");
 }
 
 void draw() {
@@ -2057,7 +2057,7 @@ void mousePressed() {
 
 <p>You won&rsquo;t necessarily find simulations of &ldquo;real-world&rdquo; evolution in artificial intelligence textbooks. Genetic algorithms are generally used in the more formal manner we outlined in this chapter. However, since we are reading this book to develop simulations of natural systems, it&rsquo;s worth looking at some ways in which we might use a genetic algorithm to build something that resembles a living &ldquo;ecosystem,&rdquo; much like the one we&rsquo;ve described in the exercises at the end of each chapter.</p>
 
-<p>Let&rsquo;s begin by developing a very simple scenario. We&rsquo;ll create a creature called a &quot;bloop,&quot; a circle that moves about the screen according to Perlin noise. The creature will have a radius and a maximum speed. The bigger it is, the slower it moves; the smaller, the faster.</p>
+<p>Let&rsquo;s begin by developing a very simple scenario. We&rsquo;ll create a creature called a "bloop," a circle that moves about the screen according to Perlin noise. The creature will have a radius and a maximum speed. The bigger it is, the slower it moves; the smaller, the faster.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 class Bloop {

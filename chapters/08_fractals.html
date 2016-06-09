@@ -151,7 +151,7 @@ int factorial(int n) {
 
 <p>The <em>factorial</em> of <span class="var">n</span> is defined as <span class="var">n</span> times the <em>factorial</em> of <span class="var">n-1</span>.</p>
 
-<p>The definition of <strong><em>factorial</em></strong> includes <strong><em>factorial</em></strong>?! It&rsquo;s kind of like defining &ldquo;tired&quot; as &ldquo;the feeling you get when you are tired.&rdquo; This concept of self-reference in functions is an example of recursion. And we can use it to write a factorial function that calls itself.</p>
+<p>The definition of <strong><em>factorial</em></strong> includes <strong><em>factorial</em></strong>?! It&rsquo;s kind of like defining &ldquo;tired" as &ldquo;the feeling you get when you are tired.&rdquo; This concept of self-reference in functions is an example of recursion. And we can use it to write a factorial function that calls itself.</p>
 
 <pre data-code-language="java" data-type="programlisting">
 int factorial(int n) {
@@ -972,12 +972,12 @@ void branch(float len) {
 <p>Let&rsquo;s look at how we might create these generations with code. We&rsquo;ll start by using a <span class="klass">String</span> object to store the axiom.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-String current = &quot;A&quot;;</pre>
+String current = "A";</pre>
 
 <p>And once again, just as we did with the Game of Life and the Koch curve <span class="klass">ArrayList</span> examples, we will need an entirely separate string to keep track of the &ldquo;next&rdquo; generation.</p>
 
 <pre data-code-language="java" data-type="programlisting">
-String next = &quot;&quot;;</pre>
+String next = "";</pre>
 
 <p>Now it&rsquo;s time to apply the rules to the current generation and place the results in the next.</p>
 
@@ -986,10 +986,10 @@ for (int i = 0; i &lt; current.length(); i++) {
   char c = current.charAt(i);
   // Production rule A --&gt; AB
   if (c == 'A') {
-    next += &quot;AB&quot;;
+    next += "AB";
   // Production rule B --&gt; A
   } else if (c == 'B') {
-    next += &quot;A&quot;;
+    next += "A";
   }
 }</pre>
 
@@ -1008,38 +1008,38 @@ current = next;</pre>
 
 <pre data-code-language="java" data-type="programlisting">
 // Start with an axiom.
-String current = &quot;A&quot;;
+String current = "A";
 // Let&rsquo;s keep track of how many generations.
 int count = 0;
 
 void setup() {
-  println(&quot;Generation &quot; + count + &quot;: &quot; + current);
+  println("Generation " + count + ": " + current);
 }
 
 void draw() {
 }
 
 void mousePressed() {
-  String next = &quot;&quot;;
+  String next = "";
   // Traverse the current String and make the new one.
   for (int i = 0; i &lt; current.length(); i++) {
     char c = current.charAt(i);
     if (c == 'A') {
-      next += &quot;AB&quot;;
+      next += "AB";
     }  else if (c == 'B') {
-      next += &quot;A&quot;;
+      next += "A";
     }
   }
   current = next;
   count++;
-  println(&quot;Generation &quot; + count + &quot;: &quot; + current);
+  println("Generation " + count + ": " + current);
 }</pre>
 
 <p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The Java <span class="klass">String</span> class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A <span class="klass">String</span> object is &ldquo;immutable,&rdquo; which means once the object is created it can never be changed. Whenever you add on to the end of a <span class="klass">String</span> object, Java has to make a brand new <span class="klass">String</span> object (even if you are using the same variable name).</p>
 
 <pre data-code-language="java" data-type="programlisting">
-String s = &quot;blah&quot;;
-s += &quot;add some more stuff&quot;;</pre>
+String s = "blah";
+s += "add some more stuff";</pre>
 
 <a data-primary="StringBuffer class" data-type="indexterm"></a> <a data-primary="strings" data-secondary="StringBuffer class vs." data-type="indexterm"></a>
 
@@ -1052,9 +1052,9 @@ s += &quot;add some more stuff&quot;;</pre>
     char c = current.charAt(i);
     if (c == 'A') {
       // append() instead of +=
-      next.append(&quot;AB&quot;);
+      next.append("AB");
     } else if (c == 'B') {
-      next.append(&quot;A&quot;);
+      next.append("A");
     }
   }
   // StringBuffer can easily be converted
@@ -1179,10 +1179,10 @@ void setup() {
 
   // A ruleset is an array of Rule objects.
   Rule[] ruleset = new Rule[1];
-  ruleset[0] = new Rule('F',&quot;FF+[+F-F-F]-[-F+F+F]&quot;);
+  ruleset[0] = new Rule('F',"FF+[+F-F-F]-[-F+F+F]");
 
   // The L-system is created with an axiom and a ruleset.
-  lsys = new LSystem(&quot;F&quot;,ruleset);
+  lsys = new LSystem("F",ruleset);
 
   //[offset-down] The Turtle graphics renderer is given a sentence,
   // a starting length, and an angle for rotations.
