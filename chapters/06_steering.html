@@ -121,7 +121,7 @@ PVector steer = PVector.sub(desired,velocity);</pre>
 <p>Assuming a <span class="klass">PVector</span> target, we then have:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector desired = PVector.sub(target,location);</pre>
+PVector desired = PVector.sub(target, location);</pre>
 
 <p>But this isn’t particularly realistic. What if we have a very high-resolution window and the target is thousands of pixels away? Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation. What we really want to say is:</p>
 
@@ -154,13 +154,13 @@ desired.mult(maxspeed);</pre>
   void seek(PVector target) {
     PVector desired = PVector.sub(target,location);
     desired.normalize();
-    // Calculating the desired velocity
+    //{!1} Calculating the desired velocity
     // to target at max speed
     desired.mult(maxspeed);
 
     // Reynolds’s formula for steering force
     PVector steer = PVector.sub(desired,velocity);
-    // Using our physics model and applying the force
+    //{!1} Using our physics model and applying the force
     // to the object’s acceleration
     applyForce(steer);
   }</pre>
@@ -193,12 +193,12 @@ class Vehicle {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(PVector target) {
-    PVector desired = PVector.sub(target,location);
+    PVector desired = PVector.sub(target, location);
     desired.normalize();
     desired.mult(maxspeed);
-    PVector steer = PVector.sub(desired,velocity);
+    PVector steer = PVector.sub(desired, velocity);
 
-    // Limit the magnitude of the steering force.
+    //{!1} Limit the magnitude of the steering force.
     steer.limit(maxforce);
 
     applyForce(steer);
@@ -224,17 +224,17 @@ class Vehicle {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  // Additional variable for size
+  //{!1} Additional variable for size
   float r;
   float maxforce;
   float maxspeed;
 
   Vehicle(float x, float y) {
-    acceleration = new PVector(0,0);
-    velocity = new PVector(0,0);
-    location = new PVector(x,y);
+    acceleration = new PVector(0, 0);
+    velocity = new PVector(0, 0);
+    location = new PVector(x, y);
     r = 3.0;
-    //[full] Arbitrary values for maxspeed and
+    //{!2} Arbitrary values for maxspeed and
     // force; try varying these!
     maxspeed = 4;
     maxforce = 0.1;
@@ -256,23 +256,23 @@ class Vehicle {
 
   // Our seek steering force algorithm
   void seek(PVector target) {
-    PVector desired = PVector.sub(target,location);
+    PVector desired = PVector.sub(target, location);
     desired.normalize();
     desired.mult(maxspeed);
-    PVector steer = PVector.sub(desired,velocity);
+    PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);
     applyForce(steer);
   }
 
   void display() {
-    // Vehicle is a triangle pointing in
+    //{!1} Vehicle is a triangle pointing in
     // the direction of velocity; since it is drawn
     // pointing up, we rotate it an additional 90 degrees.
     float theta = velocity.heading() + PI/2;
     fill(175);
     stroke(0);
     pushMatrix();
-    translate(location.x,location.y);
+    translate(location.x, location.y);
     rotate(theta);
     beginShape();
     vertex(0, -r*2);
@@ -338,7 +338,7 @@ Frame 6: I’m there. I want to stop!</p>
 <p>How can we implement this “arriving” behavior in code? Let’s return to our <span class="function">seek()</span> function and find the line of code where we set the magnitude of the desired velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-   PVector desired = PVector.sub(target,location);
+   PVector desired = PVector.sub(target, location);
    desired.normalize();
    desired.mult(maxspeed);</pre>
 
@@ -355,7 +355,7 @@ Frame 6: I’m there. I want to stop!</p>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-   PVector desired = PVector.sub(target,location);
+   PVector desired = PVector.sub(target, location);
    desired.div(2);</pre>
 
 <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it’s not particularly reasonable. After all, 10 pixels away is rather close and a desired speed of 5 is rather large. Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
@@ -382,24 +382,23 @@ Frame 6: I’m there. I want to stop!</p>
   void arrive(PVector target) {
     PVector desired = PVector.sub(target,location);
 
-    // The distance is the magnitude of
+    //{!1} The distance is the magnitude of
     // the vector pointing from
     // location to target.
     float d = desired.mag();
     desired.normalize();
-    // If we are closer than 100 pixels...
-    if (d &lt; 100) {
-      //[full] ...set the magnitude
+    //{!1} If we are closer than 100 pixels...
+    if (d < 100) {
+      //{!2} ...set the magnitude
       // according to how close we are.
-      float m = map(d,0,100,0,maxspeed);
+      float m = map(d, 0, 100, 0, maxspeed);
       desired.mult(m);
-      //[end]
     } else {
-      // Otherwise, proceed at maximum speed.
+      //{!1} Otherwise, proceed at maximum speed.
       desired.mult(maxspeed);
     }
 
-    // The usual steering = desired - velocity
+    //{!1} The usual steering = desired - velocity
     PVector steer = PVector.sub(desired,velocity);
     steer.limit(maxforce);
     applyForce(steer);
