@@ -534,34 +534,21 @@ float h = random(200,300);</pre>
 
 <a data-primary="Processing" data-secondary="Random class" data-type="indexterm"></a> <a data-primary="Random class (Processing)" data-type="indexterm"></a>
 
-<p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don’t have to do any of these calculations ourselves. Instead, we can make use of a class known as <span class="klass">Random</span>, which we get for free as part of the default Java libraries imported into Processing (see <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Random.html">the JavaDocs</a> for more information).</p>
+<p>Luckily for us, to use a normal distribution of random numbers in a Processing sketch, we don’t have to do any of these calculations ourselves. Instead, we can make use of the <code>randomGaussian()</code> function.</p>
 
-<p>To use the <span class="klass">Random</span> class, we must first declare a variable of type <span class="klass">Random</span> and create the <span class="klass">Random</span> object in <span class="function">setup()</span>.</p>
-
-<pre data-code-language="java" data-type="programlisting" class="codesplit">
-// We use the variable name “generator” because what we have here can be thought of as a random number generator.
-Random generator;
-
-void setup() {
-  size(640, 360);
-  generator = new Random();
-}</pre>
-
-<a data-primary="nextGaussian() function (Random class)" data-type="indexterm"></a> <a data-primary="Random class (Processing)" data-secondary="nextGaussian() function" data-type="indexterm"></a>
-
-<p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through <span class="function">draw()</span>, it’s as easy as calling the function <span class="function">nextGaussian()</span>.</p>
+<a data-primary="randomGaussian() function" data-type="indexterm"></a>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
-  //{!1} Asking for a Gaussian random number. (Note nextGaussian() returns a double and must be converted to float.)
-  float num = (float) generator.nextGaussian();
+  //{!1} Asking for a Gaussian random number.
+  float num = randomGaussian();
 }</pre>
 
 <p>Here’s the thing. What are we supposed to do with this value? What if we wanted to use it, for example, to assign the x-position of a shape we draw on screen?</p>
 
-<a data-primary="nextGaussian() function (Random class)" data-secondary="default mean/standard deviation settings of" data-type="indexterm"></a>
+<a data-primary="randomGaussian() function" data-secondary="default mean/standard deviation settings of" data-type="indexterm"></a>
 
-<p>The <span class="function">nextGaussian()</span> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let’s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
+<p>The <span class="function">randomGaussian()</span> function returns a normal distribution of random numbers with the following parameters: <em>a mean of zero</em> and <em>a standard deviation of one</em>. Let’s say we want a mean of 320 (the center horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the value to our parameters by multiplying it by the standard deviation and adding the mean.</p>
 
 <figure class="screenshot" data-pde="processingjs/intro/_I_4_Gaussian/_I_4_Gaussian.pde"><img alt="intro ex04" src="intro/intro_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -573,8 +560,8 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
-  //{!1} Note that nextGaussian() returns a double.
-  float num = (float) generator.nextGaussian();
+  //{!1} Note that randomGaussian() returns a value between 0 and 1.
+  float num = randomGaussian();
   float sd = 60;
   float mean = 320;
 
@@ -583,7 +570,7 @@ void draw() {
 
   noStroke();
   fill(0,10);
-  ellipse(x,180,16,16);
+  ellipse(x, 180, 16, 16);
 }</pre>
 
 <p>By drawing the ellipses on top of each other with some transparency, we can actually see the distribution. The darkest spot is near the center, where most of the values cluster, but every so often circles are drawn farther to the right or left of the center.</p>
