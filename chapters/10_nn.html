@@ -181,17 +181,16 @@ Weight 1: -1</strong></p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 float[] inputs  = {12 , 4};
-float[] weights = {0.5,-1};</pre>
+float[] weights = {0.5, -1};</pre>
 
 <p>“For every input” implies a loop that multiplies each input by its corresponding weight. Since we need the sum, we can add up the results in that very loop.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] Steps 1 and 2: Add up all the weighted inputs.
+// Steps 1 and 2: Add up all the weighted inputs.
 float sum = 0;
-for (int i = 0; i &lt; inputs.length; i++) {
-  sum += inputs[i]*weights[i];
-}
-//[end]</pre>
+for (int i = 0; i < inputs.length; i++) {
+  sum += inputs[i] * weights[i];
+}</pre>
 
 <p>Once we have the sum we can compute the output.</p>
 
@@ -202,10 +201,9 @@ float output = activate(sum);
 
 // The activation function
 int activate(float sum) {
-  //[full] Return a 1 if positive, -1 if negative.
+  //{!2} Return a 1 if positive, -1 if negative.
   if (sum &gt; 0) return 1;
   else return -1;
-  //[end]
 }</pre>
 </section>
 
@@ -263,9 +261,9 @@ class Perceptron {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   Perceptron(int n) {
     weights = new float[n];
-    for (int i = 0; i &lt; weights.length; i++) {
-      // The weights are picked randomly to start.
-      weights[i] = random(-1,1);
+    for (int i = 0; i < weights.length; i++) {
+      //{!1} The weights are picked randomly to start.
+      weights[i] = random(-1, 1);
     }
   }</pre>
 
@@ -274,10 +272,10 @@ class Perceptron {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   int feedforward(float[] inputs) {
     float sum = 0;
-    for (int i = 0; i &lt; weights.length; i++) {
-      sum += inputs[i]*weights[i];
+    for (int i = 0; i < weights.length; i++) {
+      sum += inputs[i] * weights[i];
     }
-    // Result is the sign of the sum, -1 or +1.
+    //{!1} Result is the sign of the sum, -1 or +1.
     // Here the perceptron is making a guess.
     // Is it on one side of the line or the other?
     return activate(sum);
@@ -293,7 +291,7 @@ class Perceptron {
 // Create the Perceptron.
 Perceptron p = new Perceptron(3);
 // The input is 3 values: x,y and bias.
-float[] point = {50,-12,1};
+float[] point = {50, -12, 1};
 // The answer!
 int result = p.feedforward(point);</pre>
 
@@ -435,58 +433,52 @@ void train(float[] inputs, int desired) {
   // between answer and guess).
   float error = desired - guess;
 
-  //[full] Step 4: Adjust all the weights according
+  //{!3} Step 4: Adjust all the weights according
   // to the error and learning constant.
-  for (int i = 0; i &lt; weights.length; i++) {
+  for (int i = 0; i < weights.length; i++) {
     weights[i] += c * error * inputs[i];
   }
-  //[end]
 }</pre>
 
 <p>We can now see the <span class="klass">Perceptron</span> class as a whole.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Perceptron {
-  //[full] The Perceptron stores its weights and learning constants.
+  //{!2} The Perceptron stores its weights and learning constants.
   float[] weights;
   float c = 0.01;
-  //[end]
 
   Perceptron(int n) {
     weights = new float[n];
-    //[full] Weights start off random.
-    for (int i = 0; i &lt; weights.length; i++) {
+    //{!3} Weights start off random.
+    for (int i = 0; i < weights.length; i++) {
       weights[i] = random(-1,1);
     }
-    //[end]
   }
 
-  //[full] Return an output based on inputs.
+  //{!7} Return an output based on inputs.
   int feedforward(float[] inputs) {
     float sum = 0;
-    for (int i = 0; i &lt; weights.length; i++) {
-      sum += inputs[i]*weights[i];
+    for (int i = 0; i < weights.length; i++) {
+      sum += inputs[i] * weights[i];
     }
     return activate(sum);
   }
-  //[end]
 
-  //[full] Output is a +1 or -1.
+  // Output is a +1 or -1.
   int activate(float sum) {
-    if (sum &gt; 0) return 1;
+    if (sum > 0) return 1;
     else return -1;
   }
-  //[end]
 
-  //[full] Train the network against known data.
+  //{!7} Train the network against known data.
   void train(float[] inputs, int desired) {
     int guess = feedforward(inputs);
     float error = desired - guess;
-    for (int i = 0; i &lt; weights.length; i++) {
+    for (int i = 0; i < weights.length; i++) {
       weights[i] += c * error * inputs[i];
     }
   }
-  //[end]
 }</pre>
 
 <a data-primary="perceptron" data-secondary="training" data-type="indexterm"></a>
@@ -496,7 +488,7 @@ class Perceptron {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Trainer {
 
-  // A "Trainer" object stores the inputs and the correct answer.
+  //{!2} A "Trainer" object stores the inputs and the correct answer.
   float[] inputs;
   int answer;
 
@@ -504,7 +496,7 @@ class Trainer {
     inputs = new float[3];
     inputs[0] = x;
     inputs[1] = y;
-    // Note that the Trainer has the bias input built into its array.
+    //{!1} Note that the Trainer has the bias input built into its array.
     inputs[2] = 1;
     answer = a;
   }
@@ -525,11 +517,10 @@ class Trainer {
 <p>We can then write a Processing function with this in mind.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] A function to calculate y based on x along a line
+// A function to calculate y based on x along a line
 float f(float x) {
-  return 2*x+1;
-}
-//[end]</pre>
+  return 2 * x + 1;
+}</pre>
 
 <p>So, if we make up a point:</p>
 
@@ -550,8 +541,8 @@ float yline = f(x);</pre>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-if (y &lt; yline) {
-  // The answer is -1 if y is above the line.
+if (y < yline) {
+  //{!1} The answer is -1 if y is above the line.
   answer = -1;
 } else {
   answer = 1;
@@ -565,7 +556,7 @@ Trainer t = new Trainer(x, y, answer);</pre>
 <p>Assuming we had a <span class="klass">Perceptron</span> object <span class="var">ptron</span>, we could then train it by sending the inputs along with the known answer.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-ptron.train(t.inputs,t.answer);</pre>
+ptron.train(t.inputs, t.answer);</pre>
 
 <p>Now, it’s important to remember that this is just a demonstration. Remember our <a href="#chapter09_section2">Shakespeare-typing monkeys</a>? We asked our genetic algorithm to solve for “to be or not to be”—an answer we already knew. We did this to make sure our genetic algorithm worked properly. The same reasoning applies to this example. We don’t need a perceptron to tell us whether a point is above or below a line; we can do that with simple math. We are using this scenario, one that we can easily solve without a perceptron, to demonstrate the perceptron’s algorithm as well as easily confirm that it is working properly.</p>
 
@@ -580,29 +571,27 @@ ptron.train(t.inputs,t.answer);</pre>
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The Perceptron
 Perceptron ptron;
-// 2,000 training points
+//{!1} 2,000 training points
 Trainer[] training = new Trainer[2000];
 int count = 0;
 
-//[full] The formula for a line
+//{!3} The formula for a line
 float f(float x) {
   return 2*x+1;
 }
-//[end]
 
 void setup() {
   size(640, 360);
 
   ptron = new Perceptron(3);
 
-  // Make 2,000 training points.
-  for (int i = 0; i &lt; training.length; i++) {
+  //{!1} Make 2,000 training points.
+  for (int i = 0; i < training.length; i++) {
     float x = random(-width/2,width/2);
     float y = random(-height/2,height/2);
-    //[full] Is the correct answer 1 or -1?
+    //{!2} Is the correct answer 1 or -1?
     int answer = 1;
-    if (y &lt; f(x)) answer = -1;
-    //[end]
+    if (y < f(x)) answer = -1;
     training[i] = new Trainer(x, y, answer);
   }
 }
@@ -610,19 +599,18 @@ void setup() {
 
 void draw() {
   background(255);
-  translate(width/2,height/2);
+  translate(width/2, height/2);
 
   ptron.train(training[count].inputs, training[count].answer);
-  // For animation, we are training one point at a time.
+  //{!1} For animation, we are training one point at a time.
   count = (count + 1) % training.length;
 
-  for (int i = 0; i &lt; count; i++) {
+  for (int i = 0; i < count; i++) {
     stroke(0);
     int guess = ptron.feedforward(training[i].inputs);
-    //[full] Show the classification—no fill for -1, black for +1.
-    if (guess &gt; 0) noFill();
+    //{!2} Show the classification—no fill for -1, black for +1.
+    if (guess > 0) noFill();
     else           fill(0);
-    //[end]
     ellipse(training[i].inputs[0], training[i].inputs[1], 8, 8);
   }
 }</pre>
@@ -656,7 +644,7 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
-  // Giving the vehicle a brain!
+  //{!1} Giving the vehicle a brain!
   Perceptron brain;
 
   PVector location;
@@ -673,9 +661,9 @@ class Vehicle {
 <p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object’s acceleration. Assuming the targets are an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> objects, it would look something like:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void seek(ArrayList&lt;PVector&gt; targets) {
+  void seek(ArrayList<PVector> targets) {
     for (PVector target : targets) {
-      // For every target, apply a steering force towards the target.
+      //{!2} For every target, apply a steering force towards the target.
       PVector force = seek(targets.get(i));
       applyForce(force);
     }
@@ -684,12 +672,12 @@ class Vehicle {
 <p>In Chapter 6, we also examined how we could create more dynamic simulations by weighting each steering force according to some rule. For example, we could say that the farther you are from a target, the stronger the force.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
- void seek(ArrayList&lt;PVector&gt; targets) {
+ void seek(ArrayList<PVector> targets) {
     for (PVector target : targets) {
       PVector force = seek(targets.get(i));
-      float d = PVector.dist(target,location);
-      float weight = map(d,0,width,0,5);
-      // Weighting each steering force individually
+      float d = PVector.dist(target, location);
+      float weight = map(d, 0, width, 0, 5);
+      //{!1} Weighting each steering force individually
       force.mult(weight);
       applyForce(force);
     }
@@ -700,19 +688,18 @@ class Vehicle {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(ArrayList&lt;PVector&gt; targets) {
 
-    // Make an array of inputs for our brain.
+    //{!1} Make an array of inputs for our brain.
     PVector[] forces = new PVector[targets.size()];
 
-    for (int i = 0; i &lt; forces.length; i++) {
-      // Fill the array with a steering force
+    for (int i = 0; i < forces.length; i++) {
+      //{!1} Fill the array with a steering force
       // for each target.
       forces[i] = seek(targets.get(i));
     }
 
-    //[full] Ask our brain for a result and apply that as the force!
+    //{!2} Ask our brain for a result and apply that as the force!
     PVector output = brain.process(forces);
     applyForce(output);
-    //[end]
   }</pre>
 
 <p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an array of forces to the vehicle’s “brain” object and allow the brain to weight and sum the forces for us. The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could make decisions as to how to steer on its own, learning from its mistakes and responding to stimuli in its environment. Let’s see how this works.</p>
@@ -729,30 +716,29 @@ class Vehicle {
 			<td>
 			<pre>
 PVector feedforward(PVector[] forces) {
-  // Sum is a PVector.
-  <b>PVector sum = new PVector();</b>
+  //{!1 .bold} Sum is a PVector.
+  PVector sum = new PVector();
   for (int i = 0; i &lt; weights.length; i++) {
-    // Vector addition and multiplication
-    <b>forces[i].mult(weights[i]);</b>
-    <b>sum.add(forces[i]);</b>
+    //{!2 .bold} Vector addition and multiplication
+    forces[i].mult(weights[i]);
+    sum.add(forces[i]);
   }
-  // No activation function
-  <b>return sum;</b>
+  //{!1 .bold} No activation function
+  return sum;
 }
 </pre>
 			</td>
 			<td>
 			<pre>
 int feedforward(float[] inputs) {
-  // Sum is a float.
-  <b>float sum = 0;</b>
+  //{!1 .bold} Sum is a float.
+  float sum = 0;
   for (int i = 0; i &lt; weights.length; i++) {
-    // Scalar addition and multiplication
-    <b>sum += inputs[i]*weights[i];</b>
-
+    //{!1 .bold} Scalar addition and multiplication
+    sum += inputs[i]*weights[i];
   }
-  // Activation function
-  <b>return activate(sum);</b>
+  //{!1 .bold} Activation function
+  return activate(sum);
 }
 </pre>
 			</td>
@@ -778,9 +764,9 @@ int feedforward(float[] inputs) {
 <p>Let’s take a simpler example, where the vehicle simply wants to stay close to the center of the window. We’ll train the brain as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    PVector desired = new PVector(width/2,height/2);
+    PVector desired = new PVector(width/2, height/2);
     PVector error = PVector.sub(desired, location);
-    brain.train(forces,error);</pre>
+    brain.train(forces, error);</pre>
 
 <figure class="half-width-right" id="chapter10_figure10"><img alt="Figure 10.10" src="chapter10/ch10_10.png" />
 <figcaption>Figure 10.10</figcaption>
@@ -804,9 +790,9 @@ void train(PVector[] forces, PVector error) {
 
 
 
-  for (int i = 0; i &lt; weights.length; i++) {
-    weights[i] += c*error.x*forces[i].x;
-    weights[i] += c*error.y*forces[i].y;
+  for (int i = 0; i < weights.length; i++) {
+    weights[i] += c*error.x * forces[i].x;
+    weights[i] += c*error.y * forces[i].y;
   }
 }
 </pre>
@@ -818,7 +804,7 @@ void train(float[] inputs, int desired) {
   int guess = feedforward(inputs);
   float error = desired - guess;
 
-  for (int i = 0; i &lt; weights.length; i++) {
+  for (int i = 0; i < weights.length; i++) {
     weights[i] += c * error * inputs[i];
 
   }
@@ -832,8 +818,8 @@ void train(float[] inputs, int desired) {
 <p>Because the vehicle observes its own error, there is no need to calculate one; we can simply receive the error as an argument. Notice how the change in weight is processed twice, once for the error along the x-axis and once for the y-axis.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-weights[i] += c*error.x*forces[i].x;
-weights[i] += c*error.y*forces[i].y;</pre>
+weights[i] += c * error.x * forces[i].x;
+weights[i] += c * error.y * forces[i].y;</pre>
 
 <p>We can now look at the <span class="klass">Vehicle</span> class and see how the <span class="function">steer</span> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
 
@@ -847,73 +833,66 @@ weights[i] += c*error.y*forces[i].y;</pre>
 class Vehicle {
 
   // The Vehicle now has a brain.
-  Perceptron brain; //[bold]
+  Perceptron brain;
 
-  //[full] Same old variables for physics
+  // Same old variables for physics
   PVector location;
   PVector velocity;
   PVector acceleration;
   float maxforce;
   float maxspeed;
-  //[end]
 
-  // The Vehicle creates a perceptron with n inputs and a learning constant.
   Vehicle(int n, float x, float y) {
-    brain = new Perceptron(n,0.001); //[bold]
-    acceleration = new PVector(0,0);
-    velocity = new PVector(0,0);
-    location = new PVector(x,y);
+		//{.bold} The Vehicle creates a perceptron with n inputs and a learning constant.
+    brain = new Perceptron(n, 0.001);
+    acceleration = new PVector(0, 0);
+    velocity = new PVector(0, 0);
+    location = new PVector(x, y);
     maxspeed = 4;
     maxforce = 0.1;
   }
 
-  //[full] Same old update() function
+  // Same old update() function
   void update() {
     velocity.add(acceleration);
     velocity.limit(maxspeed);
     location.add(velocity);
     acceleration.mult(0);
   }
-  //[end]
 
-  //[full] Same old applyForce() function
+  // Same old applyForce() function
   void applyForce(PVector force) {
     acceleration.add(force);
   }
-  //[end]
 
-  void steer(ArrayList&lt;PVector&gt; targets) {
+  void steer(ArrayList<PVector> targets) {
     PVector[] forces = new PVector[targets.size()];
 
-    for (int i = 0; i &lt; forces.length; i++) {
+    for (int i = 0; i < forces.length; i++) {
       forces[i] = seek(targets.get(i));
     }
-    // All the steering forces are inputs.
-    PVector result = brain.feedforward(forces); //[bold]
+    //{!1 .bold} All the steering forces are inputs.
+    PVector result = brain.feedforward(forces);
 
     // The result is applied.
     applyForce(result);
 
-    //[offset-down] The brain is trained according to
+    //{!3 .bold .offset} The brain is trained according to
     // the distance to the center.
-    PVector desired = new PVector(width/2,height/2); //[bold]
-    PVector error = PVector.sub(desired, location); //[bold]
-    brain.train(forces,error); //[bold]
-
+    PVector desired = new PVector(width/2, height/2);
+    PVector error = PVector.sub(desired, location);
+    brain.train(forces, error);
   }
 
-
-  //[full] Same old seek() function
+  //{!8} Same old seek() function
   PVector seek(PVector target) {
-    PVector desired = PVector.sub(target,location);
+    PVector desired = PVector.sub(target, location);
     desired.normalize();
     desired.mult(maxspeed);
-    PVector steer = PVector.sub(desired,velocity);
+    PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);
     return steer;
   }
-  //[end]
-
 }</pre>
 
 <div data-type="exercise" id="chapter10_exercise3">
@@ -1013,24 +992,22 @@ class Neuron {
 <p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own location (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] A Network is a list of neurons.
+//{!2} A Network is a list of neurons.
 class Network {
-  ArrayList&lt;Neuron&gt; neurons;
-  //[end]
+  ArrayList<Neuron> neurons;
   PVector location;
 
   Network(float x, float y) {
-    location = new PVector(x,y);
-    neurons = new ArrayList&lt;Neuron&gt;();
+    location = new PVector(x, y);
+    neurons = new ArrayList<Neuron>();
   }
 
-  //[full] We can add a neuron to the network.
+  // We can add a neuron to the network.
   void addNeuron(Neuron n) {
     neurons.add(n);
   }
-  //[end]
 
-  //[full] We can draw the entire network.
+  //{!8} We can draw the entire network.
   void display() {
     pushMatrix();
     translate(location.x, location.y);
@@ -1039,7 +1016,6 @@ class Network {
     }
     popMatrix();
   }
-  //[end]
 }</pre>
 
 <p>Now we can pretty easily make the diagram above.</p>
@@ -1052,24 +1028,22 @@ void setup() {
   // Make a Network.
   network = new Network(width/2,height/2);
 
-  //[full] Make the Neurons.
+  // Make the Neurons.
   Neuron a = new Neuron(-200,0);
   Neuron b = new Neuron(0,100);
   Neuron c = new Neuron(0,-100);
   Neuron d = new Neuron(200,0);
-  //[end]
 
-  //[full] Add the Neurons to the network.
+  //{!4} Add the Neurons to the network.
   network.addNeuron(a);
   network.addNeuron(b);
   network.addNeuron(c);
   network.addNeuron(d);
-  //[end]
 }
 
 void draw() {
   background(255);
-  // Show the network.
+  //{!1} Show the network.
   network.display();
 }</pre>
 
@@ -1083,10 +1057,9 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
-  //[full] A connection is between two neurons.
+  //{!2} A connection is between two neurons.
   Neuron a;
   Neuron b;
-  //[end]
   // A connection has a weight.
   float weight;
 
@@ -1096,10 +1069,10 @@ class Connection {
     b = to;
   }
 
-  // A connection is drawn as a line.
+  //{!5} A connection is drawn as a line.
   void display() {
     stroke(0);
-    strokeWeight(weight*4);
+    strokeWeight(weight * 4);
     line(a.location.x, a.location.y, b.location.x, b.location.y);
   }
 }</pre>
@@ -1116,11 +1089,11 @@ void setup() {
   Neuron c = new Neuron(0,-100);
   Neuron d = new Neuron(200,0);
 
-  // Making connections between the neurons
-  network.connect(a,b);
-  network.connect(a,c);
-  network.connect(b,d);
-  network.connect(c,d);
+  //{!4} Making connections between the neurons
+  network.connect(a, b);
+  network.connect(a, c);
+  network.connect(b, d);
+  network.connect(c, d);
 
   network.addNeuron(a);
   network.addNeuron(b);
@@ -1132,7 +1105,7 @@ void setup() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
-    // Connection has a random weight.
+    //{!1} Connection has a random weight.
     Connection c = new Connection(a, b, random(1));
 
     [inline]// But what do we do with the Connection object?
@@ -1154,19 +1127,18 @@ void setup() {
 class Neuron {
   PVector location;
 
-  // The neuron stores its connections.
-  ArrayList&lt;Connection&gt; connections;
+  //{!1} The neuron stores its connections.
+  ArrayList<Connection> connections;
 
   Neuron(float x, float y) {
     location = new PVector(x, y);
-    connections = new ArrayList&lt;Connection&gt;();
+    connections = new ArrayList<Connection>();
   }
 
-  //[full] Adding a connection to this neuron
+  // Adding a connection to this neuron
   void addConnection(Connection c) {
     connections.add(c);
-  }
-  //[end]</pre>
+  }</pre>
 
 <p>The neuron’s <span class="function">display()</span> function can draw the connections as well. And finally, we have our network diagram.</p>
 
@@ -1183,11 +1155,10 @@ class Neuron {
     fill(0);
     ellipse(location.x, location.y, 16, 16);
 
-    //[full] Drawing all the connections
+    //{!3} Drawing all the connections
     for (Connection c : connections) {
       c.display();
     }
-    //[end]
   }
 }</pre>
 </section>
@@ -1205,7 +1176,6 @@ class Neuron {
 void setup() {
   // All our old network set up code
 
-
   // A new function to send in an input
   network.feedforward(random(1));
 }</pre>
@@ -1215,12 +1185,11 @@ void setup() {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Network {
 
-  //[full] A new function to feed an input into the neuron
+  // A new function to feed an input into the neuron
   void feedforward(float input) {
     Neuron start = neurons.get(0);
     start.feedforward(input);
-  }
-  //[end]</pre>
+  }</pre>
 
 <p>What did we do? Well, we made it necessary to add a function called <span class="function">feedforward()</span> in the <span class="klass">Neuron</span> class that will receive the input and process it.</p>
 
@@ -1228,7 +1197,7 @@ class Network {
 class Neuron
 
   void feedforward(float input) {
-     // What do we do with the input?
+     //{!1} What do we do with the input?
 
   }</pre>
 
@@ -1236,12 +1205,12 @@ class Neuron
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
-
-  int sum = 0; //[bold]
+	//{!1 .bold}
+  int sum = 0;
 
   void feedforward(float input) {
-    // Accumulate the sums.
-    sum += input; //[bold]
+    //{!1 .bold} Accumulate the sums.
+    sum += input;
   }</pre>
 
 <p>The neuron can then decide whether it should “fire,” or pass an output through any of its connections to the next layer in the network. Here we can create a really simple activation function: if the sum is greater than 1, fire!</p>
@@ -1250,9 +1219,9 @@ class Neuron
  void feedforward(float input) {
     sum += input;
     // Activate the neuron and fire the outputs?
-    if (sum &gt; 1) {
+    if (sum > 1) {
       fire();
-      // If we’ve fired off our output,
+      //{!1} If we’ve fired off our output,
       // we can reset our sum to 0.
       sum = 0;
     }
@@ -1263,7 +1232,7 @@ class Neuron
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fire() {
     for (Connection c : connections) {
-      // The Neuron sends the sum out
+      //{!1} The Neuron sends the sum out
       // through all of its connections
       c.feedforward(sum);
     }
@@ -1311,7 +1280,7 @@ class Connection {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void feedforward(float val) {
-    b.feedforward(val*weight);
+    b.feedforward(val * weight);
   }</pre>
 
 <p>Now, instead of sending the value on straight away, we’ll trigger an animation:</p>
@@ -1327,9 +1296,9 @@ class Connection {
     // Sending is now true.
     sending = true;
     // Start the animation at the location of Neuron A.
-    sender = a.location.get();
-    // Store the output for when it is actually time to feed it forward.
-    output = val*weight;
+    sender = a.location.copy();
+    //{!1} Store the output for when it is actually time to feed it forward.
+    output = val * weight;
   }</pre>
 
 <p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> “sender” for the location where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
@@ -1339,10 +1308,9 @@ class Connection {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
     if (sending) {
-      //[full] As long as we’re sending, interpolate our points.
+      //{!2} As long as we’re sending, interpolate our points.
       sender.x = lerp(sender.x, b.location.x, 0.1);
       sender.y = lerp(sender.y, b.location.y, 0.1);
-      //[end]
     }
   }</pre>
 
@@ -1357,10 +1325,10 @@ class Connection {
       // How far are we from neuron b?
       float d = PVector.dist(sender, b.location); //[bold]
 
-      // If we’re close enough (within one pixel) pass on the output. Turn off sending.
-      if (d &lt; 1) { //[bold]
-        b.feedforward(output); //[bold]
-        sending = false; //[bold]
+      //{!4 .bold} If we’re close enough (within one pixel) pass on the output. Turn off sending.
+      if (d < 1) {
+        b.feedforward(output);
+        sending = false;
       }
     }
   }</pre>
@@ -1376,14 +1344,14 @@ class Connection {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void draw() {
   background(255);
-  // The Network now has a new update() method that updates all of the Connection objects.
-  network.update(); //[bold]
+  //{!1 .bold} The Network now has a new update() method that updates all of the Connection objects.
+  network.update();
   network.display();
 
-  if (frameCount % 30 == 0) { //[bold]
-    // We are choosing to send in an input every 30 frames.
-    network.feedforward(random(1)); //[bold]
-  } //[bold]
+	//{!3 .bold} We are choosing to send in an input every 30 frames.
+  if (frameCount % 30 == 0) {
+    network.feedforward(random(1));
+  }
 }
 
 class Connection {
@@ -1392,7 +1360,7 @@ class Connection {
   Neuron a;
   Neuron b;
 
-  // Variables to track the animation
+  //{!3} Variables to track the animation
   boolean sending = false;
   PVector sender;
   float output = 0;
@@ -1416,17 +1384,17 @@ class Connection {
       sender.x = lerp(sender.x, b.location.x, 0.1);
       sender.y = lerp(sender.y, b.location.y, 0.1);
       float d = PVector.dist(sender, b.location);
-      if (d &lt; 1) {
+      if (d < 1) {
         b.feedforward(output);
         sending = false;
       }
     }
   }
 
-  // Draw the connection as a line and traveling circle.
+  //{!11} Draw the connection as a line and traveling circle.
   void display() {
     stroke(0);
-    strokeWeight(1+weight*4);
+    strokeWeight(1 + weight * 4);
     line(a.location.x, a.location.y, b.location.x, b.location.y);
 
     if (sending) {
