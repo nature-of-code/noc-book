@@ -45,7 +45,7 @@ float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;
 
-// {!4} Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
+//{!4} Remember how Processing works?  setup() is executed once when the sketch starts and draw() loops forever and ever (until you quit).
 void setup() {
   size(640,360);
   background(255);
@@ -58,7 +58,7 @@ void draw() {
   x = x + xspeed;
   y = y + yspeed;
 
-  // {!6} Check for bouncing.
+  //{!6} Check for bouncing.
   if ((x &gt; width) || (x &lt; 0)) {
     xspeed = xspeed * -1;
   }
@@ -68,7 +68,7 @@ void draw() {
 
   stroke(0);
   fill(175);
-  // {!1} Display the ball at the location (x,y).
+  //{!1} Display the ball at the location (x,y).
   ellipse(x,y,16,16);
 }</pre>
 
@@ -318,7 +318,7 @@ class PVector {
     y = y_;
   }
 
-  // {!4 .bold} New! A function to add another PVector to this PVector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
+  //{!4 .bold} New! A function to add another PVector to this PVector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
   void add(PVector v) {
     y = y + v.y;
     x = x + v.x;
@@ -330,7 +330,7 @@ class PVector {
 <p>Now that we see how <span class="function">add()</span> is written inside of <span class="klass">PVector</span>, we can return to our bouncing ball example with its <strong><em>location + velocity</em></strong> algorithm and implement vector addition:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// {!1 .line-through}Add the current velocity to the location.
+//{!1 .line-through}Add the current velocity to the location.
 location = location + velocity;
 location.add(velocity);</pre>
 
@@ -375,7 +375,7 @@ void draw() {
 <p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">PVector</span> objects to describe two values—the <span class="var">x</span> and <span class="var">y</span> of location and the <span class="var">x</span> and <span class="var">y</span> of velocity—we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">PVector</span> individually. When we go to draw an object in Processing, there’s no means for us to say:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// {.line-through .no-comment}
+//{.line-through .no-comment}
 ellipse(location, 16, 16);</pre>
 
 <p>The <span class="function">ellipse()</span> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">x</span>-coordinate and a <span class="var">y</span>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
