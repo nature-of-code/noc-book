@@ -191,13 +191,16 @@ int[] cells = {1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0};</pre>
 <p>To draw that array, we simply check if we’ve got a 0 or a 1 and create a fill accordingly.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// Loop through every cell.
-for (int i = 0; i &lt; cells.length; i++) {
-  if (cells[i] == 0) fill(255);
-  // Create a fill based on its state (0 or 1).
-  else fill(0);
+//{!1} Loop through every cell.
+for (int i = 0; i < cells.length; i++) {
+	//{!5} Create a fill based on its state (0 or 1).
+  if (cells[i] == 0) {
+		fill(255);
+	} else {
+		fill(0);
+	}
   stroke(0);
-  rect(i*50,0,50,50);
+  rect(i*50, 0, 50, 50);
 }</pre>
 
 <p>Now that we have the array to describe the cell states of a given generation (which we’ll ultimately consider the “current” generation), we need a mechanism by which to compute the next generation. Let’s think about the pseudocode of what we are doing at the moment.</p>
@@ -220,18 +223,17 @@ for (int i = 0; i &lt; cells.length; i++) {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // For every cell in the array...
-for (int i = 0; i &lt; cells.length; i++) {
+for (int i = 0; i < cells.length; i++) {
 
-  //[full] ...take a look at the neighborhood.
+  //{!3} ...take a look at the neighborhood.
   int left   = cell[i-1];
   int middle = cell[i];
   int right  = cell[i+1];
-  //[end]
 
-  // Look up the new value according to the rules.
+  //{!1} Look up the new value according to the rules.
   int newstate = rules(left,middle,right);
 
-  // Set the cell’s state to the new value.
+  //{!1} Set the cell’s state to the new value.
   cell[i] = newstate;
 }</pre>
 
@@ -262,12 +264,12 @@ for (int i = 0; i &lt; cells.length; i++) {
 <p>To make the code easiest to read and understand right now, we’ll go with option #1 and just skip the edge cases, leaving their values constant. This can be accomplished by starting the loop one cell later and ending one cell earlier:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// A loop that ignores the first and last cell
-for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
+//{.bold} A loop that ignores the first and last cell
+for (int i = 1; i < cells.length-1; i++) {
   int left   = cell[i-1];
   int middle = cell[i];
   int right  = cell[i+1];
-  int newstate = rules(left,middle,right);
+  int newstate = rules(left, middle, right);
   cell[i] = newstate;
 }</pre>
 
@@ -291,31 +293,30 @@ for (int i = 1; i &lt; cells.length-1; i++) { //[bold]
 <p>Once this happens, we no longer have access to cell #5’s state at generation 0, and cell index 5 is storing the value for generation 1. We cannot overwrite the values in the array while we are processing the array, because we need those values to calculate the new values. A solution to this problem is to have two arrays, one to store the current generation states and one for the next generation states.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// Another array to store the states
+//{!1 .bold} Another array to store the states
 // for the next generation.
-int[] newcells = new int[cells.length]; //[bold]
+int[] newcells = new int[cells.length];
 
-for (int i = 1; i &lt; cells.length-1; i++) {
-  //[full] Look at the states from the current array.
+for (int i = 1; i < cells.length-1; i++) {
+  //{!3} Look at the states from the current array.
   int left   = cell[i-1];
   int middle = cell[i];
   int right  = cell[i+1];
-  //[end]
-  int newstate = rules(left,middle,right);
-  // Saving the new state in the new array
-  newcells[i] = newstate; //[bold]
+  int newstate = rules(left, middle, right);
+  //{!1 .bold} Saving the new state in the new array
+  newcells[i] = newstate;
 }</pre>
 
 <p>Once the entire array of values is processed, we can then discard the old array and set it equal to the new array of states.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// The new generation becomes the current generation.
-cells = newcells; //[bold]</pre>
+//{.bold} The new generation becomes the current generation.
+cells = newcells;</pre>
 
 <p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the <span class="function">rules()</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  // Function receives 3 ints and returns 1.
+  //{!1} Function receives 3 ints and returns 1.
   int rules (int a, int b, int c) {</pre>
 
 <p>Now, there are many ways we could write this function, but I’d like to start with a long-winded one that will hopefully provide a clear illustration of what we are doing.</p>
@@ -336,7 +337,7 @@ int[] ruleset = {0,1,0,1,1,0,1,0};</pre>
 <p>And then say:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
+if (a == 1 && b == 1 && c == 1) return ruleset[0];</pre>
 
 <p>If left, middle, and right all have the state 1, then that matches the configuration 111 and the new state should be equal to the first value in the ruleset array. We can now duplicate this strategy for all eight possibilities.</p>
 
@@ -350,7 +351,7 @@ if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
     else if (a == 0 &amp;&amp; b == 1 &amp;&amp; c == 0) return ruleset[5];
     else if (a == 0 &amp;&amp; b == 0 &amp;&amp; c == 1) return ruleset[6];
     else if (a == 0 &amp;&amp; b == 0 &amp;&amp; c == 0) return ruleset[7];
-    // For this function to be valid, we have to make sure something is returned
+    //{!1} For this function to be valid, we have to make sure something is returned
     // in cases where the states do not match one of the eight possibilities.
     // We know this is impossible given the rest of our code, but Processing does not.
     return 0;
@@ -386,52 +387,49 @@ int[] ruleset = {1,1,0,1,1,1,1,0};</pre>
 <p>If we convert “111” to a decimal number, we get 7. But we don’t want ruleset[7]; we want ruleset[0]. For this to work, we need to write the ruleset with the bits in reverse order, i.e.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// Rule 222 in “reverse” order
+//{!1} Rule 222 in “reverse” order
 int[] ruleset = {0,1,1,1,1,0,1,1};</pre>
 
 <p>So far in this section, we’ve written everything we need to compute the generations for a Wolfram elementary CA. Let’s take a moment to organize the above code into a class, which will ultimately help in the design of our overall sketch.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class CA {
-  //[full] We need an array for the cells and
+  //{!2} We need an array for the cells and
   // one for the rules.
   int[] cells;
   int[] ruleset;
-  //[end]
 
   CA() {
     cells = new int[width];
-    // Arbitrarily starting with rule 90
+    //{!1} Arbitrarily starting with rule 90
     ruleset = {0,1,0,1,1,0,1,0};
 
-    for (int i = 0; i &lt; cells.length; i++) {
+    for (int i = 0; i < cells.length; i++) {
       cells[i] = 0;
     }
-    // All cells start with state 0, except the center
+    //{!1} All cells start with state 0, except the center
     // cell has state 1.
     cells[cells.length/2] = 1;
   }
 
   void generate() {
-    //[full] Compute the next generation.
+    //{!7} Compute the next generation.
     int[] nextgen = new int[cells.length];
-    for (int i = 1; i &lt; cells.length-1; i++) {
+    for (int i = 1; i < cells.length-1; i++) {
       int left   = cells[i-1];
       int me     = cells[i];
       int right  = cells[i+1];
       nextgen[i] = rules(left, me, right);
     }
-    //[end]
     cells = nextgen;
   }
 
-  //[full] Look up a new state from the ruleset.
+  //{!4} Look up a new state from the ruleset.
   int rules (int a, int b, int c) {
     String s = "" + a + b + c;
     int index = Integer.parseInt(s,2);
     return ruleset[index];
   }
-  //[end]
 }</pre>
 </section>
 
@@ -456,18 +454,17 @@ class CA {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 int w = 10;
-// How many cells fit across given a certain width
+//{!1} How many cells fit across given a certain width
 int[] cells = new int[width/w];</pre>
 
 <p>Assuming we’ve gone through the process of generating the cell states (which we did in the previous section), we can now loop through the entire array of cells, drawing a black cell when the state is 1 and a white one when the state is 0.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = 0; i &lt; cells.length; i++) {
-  //[full] Black or white fill?
+for (int i = 0; i < cells.length; i++) {
+  //{!2} Black or white fill?
   if (cells[i] == 1) fill(0);
   else               fill(255);
-  //[end]
-  // Notice how the x-location is the cell index times the cell width.
+  //{!1} Notice how the x-location is the cell index times the cell width.
   // In the above scenario, this would give us cells located at x equals 0, 10, 20, 30, all the way up to 600.
   rect(i*w, 0, w, w);
 }</pre>
@@ -487,7 +484,7 @@ class CA {
   int[] cells;
   int[] ruleset;
   int w = 10;
-  // The CA should keep track of how
+  //{!1} The CA should keep track of how
   // many generations.
   int generation = 0;
   CA() {
@@ -496,17 +493,17 @@ class CA {
     cells[cells.length/2] = 1;
   }
 
-  // Function to compute the next generation
+  //{!1} Function to compute the next generation
   void generate() {
     int[] nextgen = new int[cells.length];
-    for (int i = 1; i &lt; cells.length-1; i++) {
+    for (int i = 1; i < cells.length-1; i++) {
       int left   = cells[i-1];
       int me     = cells[i];
       int right  = cells[i+1];
       nextgen[i] = rules(left, me, right);
     }
     cells = nextgen;
-    // Increment the generation counter.
+    //{!1} Increment the generation counter.
     generation++;
   }
 
@@ -517,10 +514,10 @@ class CA {
   }
 
   void display() {
-    for (int i = 0; i &lt; cells.length; i++) {
+    for (int i = 0; i < cells.length; i++) {
       if (cells[i] == 1) fill(0);
       else               fill(255);
-      // Set the y-location according to the generation.
+      //{!1} Set the y-location according to the generation.
       rect(i*w, generation*w, w, w);
     }
   }
@@ -721,9 +718,9 @@ int[][] board = new int[columns][rows];</pre>
 <p>We’ll begin by initializing each cell of the board with a random state: 0 or 1.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int x = 0; x &lt; columns; x++) {
-  for (int y = 0; y &lt; rows; y++) {
-    // Initialize each cell with a 0 or 1.
+for (int x = 0; x < columns; x++) {
+  for (int y = 0; y < rows; y++) {
+    //{!1} Initialize each cell with a 0 or 1.
     current[x][y] = int(random(2));
   }
 }</pre>
@@ -736,7 +733,7 @@ int[][] next = new int[columns][rows];
 for (int x = 0; x &lt; columns; x++) {
   for (int y = 0; y &lt; rows; y++) {
 
-    // We need a new state for each cell.
+    //{!1} We need a new state for each cell.
     next[x][y] = _______________?;
 
   }
@@ -753,32 +750,29 @@ for (int x = 0; x &lt; columns; x++) {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 int neighbors = 0;
 
-//[full] Top row of neighbors
+// Top row of neighbors
 if (board[x-1][y-1] == 1) neighbors++;
 if (board[x  ][y-1] == 1) neighbors++;
 if (board[x+1][y-1] == 1) neighbors++;
-//[end]
 
-//[full] Middle row of neighbors
+// Middle row of neighbors
 // (note we don’t count self)
 if (board[x-1][y]   == 1) neighbors++;
 if (board[x+1][y]   == 1) neighbors++;
-//[end]
 
-//[full] Bottom row of neighbors
+// Bottom row of neighbors
 if (board[x-1][y+1] == 1) neighbors++;
 if (board[x  ][y+1] == 1) neighbors++;
-if (board[x+1][y+1] == 1) neighbors++;
-//[end]</pre>
+if (board[x+1][y+1] == 1) neighbors++;</pre>
 
 <p>And again, just as with the Wolfram CA, we find ourselves in a situation where the above is a useful and clear way to write the code for teaching purposes, allowing us to see every step (each time we find a neighbor with a state of one, we increase a counter). Nevertheless, it’s a bit silly to say, “If the cell state equals one, add one to a counter” when we could just say, “Add the cell state to a counter.” After all, if the state is only a 0 or 1, the sum of all the neighbors’ states will yield the total number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = -1; i &lt;= 1; i++) {
-  for (int j = -1; j &lt;= 1; j++) {
-    // Add up all the neighbors’ states.
+for (int i = -1; i <= 1; i++) {
+  for (int j = -1; j <= 1; j++) {
+    //{!1} Add up all the neighbors’ states.
     neighbors += board[x+i][y+j];
-   }
+  }
 }</pre>
 
 <p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">i</span> and <span class="var">j</span> equal 0, but another option would be to just subtract the cell state once we’ve finished the loop.</p>
@@ -791,29 +785,19 @@ neighbors -= board[x][y];</pre>
 <p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new state should be according to the rules: birth, death, or stasis.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//[full] If it is alive and has less than 2 live neighbors, it dies from loneliness.
-if      ((board[x][y] == 1) &amp;&amp; (neighbors &lt;  2)) {
+// If it is alive and has less than 2 live neighbors, it dies from loneliness.
+if        ((board[x][y] == 1) &amp;&amp; (neighbors < 2)) {
   next[x][y] = 0;
-}
-//[end]
-
-//[full] If it is alive and has more than 3 live neighbors, it dies from overpopulation.
-else if ((board[x][y] == 1) &amp;&amp; (neighbors &gt;  3)) {
+// If it is alive and has more than 3 live neighbors, it dies from overpopulation.
+} else if ((board[x][y] == 1) &amp;&amp; (neighbors >  3)) {
   next[x][y] = 0;
-}
-//[end]
-
-//[full] If it is dead and has exactly 3 live neighbors, it is born!
-else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) {
+// If it is dead and has exactly 3 live neighbors, it is born!
+} else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) {
   next[x][y] = 1;
-}
-//[end]
-
-//[full] In all other cases, its state remains the same.
-else {
+// In all other cases, its state remains the same.
+} else {
   next[x][y] = board[x][y];
-}
-//[end]</pre>
+}</pre>
 
 <p>Putting this all together, we have:</p>
 
@@ -821,30 +805,25 @@ else {
 // The next board
 int[][] next = new int[columns][rows];
 
-//[full] Looping but skipping the edge cells
-for (int x = 1; x &lt; columns-1; x++) {
-  for (int y = 1; y &lt; rows-1; y++) {
-  //[end]
-
+//{!2} Looping but skipping the edge cells
+for (int x = 1; x < columns-1; x++) {
+  for (int y = 1; y < rows-1; y++) {
     // Add up all the neighbor states to
     // calculate the number of live neighbors.
     int neighbors = 0;
-    for (int i = -1; i &lt;= 1; i++) {
-      for (int j = -1; j &lt;= 1; j++) {
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++) {
         neighbors += board[x+i][y+j];
       }
     }
-
     // Correct by subtracting the cell state itself.
     neighbors -= board[x][y];
 
-    //[full] &lt;b&gt;The rules of life!&lt;/b&gt;
-
-    if      ((board[x][y] == 1) &amp;&amp; (neighbors &lt;  2)) next[x][y] = 0;
-    else if ((board[x][y] == 1) &amp;&amp; (neighbors &gt;  3)) next[x][y] = 0;
+    //{!4} The rules of life!
+    if      ((board[x][y] == 1) &amp;&amp; (neighbors <  2)) next[x][y] = 0;
+    else if ((board[x][y] == 1) &amp;&amp; (neighbors >  3)) next[x][y] = 0;
     else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) next[x][y] = 1;
     else next[x][y] = board[x][y];
-    //[end]
   }
 }
 
@@ -860,15 +839,13 @@ board = next;</pre>
 <div data-type="example"><h5>Example 7.2: Game of Life</h5></div>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for ( int i = 0; i &lt; columns;i++) {
-  for ( int j = 0; j &lt; rows;j++) {
-
+for ( int i = 0; i < columns; i++) {
+  for ( int j = 0; j < rows; j++) {
     // Black when state = 1
     if ((board[i][j] == 1)) fill(0);
-    // White when state = 0
+    //{!1} White when state = 0
     else fill(255);
     stroke(0);
-
     rect(i*w, j*w, w, w);
   }
 }</pre>
@@ -914,10 +891,9 @@ for ( int i = 0; i &lt; columns;i++) {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Cell {
 
-  //[full] Location and size
+  // Location and size
   float x, y;
   float w;
-  //[end]
 
   // What is the cell’s state?
   int state;</pre>
@@ -938,12 +914,12 @@ class Cell {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void display() {
-  // If the cell is born, color it blue!
-  if (previous == 0 &amp;&amp; state == 1) fill(0,0,255);
+  //{!1} If the cell is born, color it blue!
+  if (previous == 0 &amp;&amp; state == 1) fill(0, 0, 255);
   else if (state == 1) fill(0);
 
-  //[offset-down] If the cell dies, color it red!
-  else if (previous == 1 &amp;&amp; state == 0) fill(255,0,0);
+  //{!1} If the cell dies, color it red!
+  else if (previous == 1 &amp;&amp; state == 0) fill(255, 0, 0);
   else fill(255);
 
   rect(x, y, w, w);
@@ -952,26 +928,22 @@ void display() {
 <p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be counted the same way; the difference is that we now need to refer to the object’s state variables as we loop through the 2D array.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int x = 1; x &lt; columns-1; x++) {
-  for (int y = 1; y &lt; rows-1; y++) {
+for (int x = 1; x < columns-1; x++) {
+  for (int y = 1; y < rows-1; y++) {
 
     int neighbors = 0;
-    for (int i = -1; i &lt;= 1; i++) {
-      for (int j = -1; j &lt;= 1; j++) {
-        // Use the previous state when tracking neighbors.
-        neighbors += board[x+i][y+j].previous; //[bold]
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++) {
+        //{!1 .bold} Use the previous state when tracking neighbors.
+        neighbors += board[x+i][y+j].previous;
       }
     }
     neighbors -= board[x][y].previous;
 
-    //[full]
-    // We are calling a function newState() to assign a new state to each cell.
-
-
-    if      ((board[x][y].state == 1) &amp;&amp; (neighbors &lt;  2)) board[x][y].newState(0);
-    else if ((board[x][y].state == 1) &amp;&amp; (neighbors &gt;  3)) board[x][y].newState(0);
+    //{!3} We are calling a function newState() to assign a new state to each cell.
+    if      ((board[x][y].state == 1) &amp;&amp; (neighbors <  2)) board[x][y].newState(0);
+    else if ((board[x][y].state == 1) &amp;&amp; (neighbors >  3)) board[x][y].newState(0);
     else if ((board[x][y].state == 0) &amp;&amp; (neighbors == 3)) board[x][y].newState(1);
-    //[end]
     // else do nothing!
   }
 }</pre>
