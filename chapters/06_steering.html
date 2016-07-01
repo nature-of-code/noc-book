@@ -715,19 +715,19 @@ class Vehicle {
 
 <a data-primary="dot product (PVector)" data-secondary="defined" data-type="indexterm"></a>
 
-<p>However, there are two other <em>multiplication-like</em> operations with vectors that are useful in certain scenarios—the dot product and the cross product. For now we’re going to focus on the dot product, which is defined as follows. Assume vectors {vectora} and {vectorb}:</p>
+<p>However, there are two other <em>multiplication-like</em> operations with vectors that are useful in certain scenarios—the dot product and the cross product. For now we’re going to focus on the dot product, which is defined as follows. Assume vectors <span data-type="equation">\vec{A}</span> and <span data-type="equation">\vec{B}</span>:</p>
 
-<p>{vectora} {equals} {axay}<br />
-{vectorb} {equals} {bxby}</p>
+<p><span data-type="equation">\vec{A}=(a_x,a_y)</span><br />
+<span data-type="equation">\vec{B}=(a_x,a_y)</span></span></p>
 
-<p>THE DOT PRODUCT: {vectora} {dot} {vectorb} {equals} {dotform}</p>
+<p>THE DOT PRODUCT: <span data-type="equation">\vec{A}\cdot\vec{B}=a_x\times b_x + a_y\times b_y</span></p>
 
 <p>For example, if we have the following two vectors:</p>
 
-<p>{vectora} {equals} {threefive}<br />
-{vectorb} {equals} {tenone}</p>
+<p><span data-type="equation">\vec{A}=(-3,5)</span><br />
+<span data-type="equation">\vec{B}=(10,1)</span></p>
 
-<p>{vectora} {dot} {vectorb} {equals} {dotresult}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B} = -3 * 10 + 5 * 1 = -30 + 5 = -25</div>
 
 <p>Notice that the result of the dot product is a scalar value (a single number) and not a vector.</p>
 
@@ -752,7 +752,7 @@ public float dot(PVector v) {
 
 <p>One of the more common uses of the dot product is to find the angle between two vectors. Another way in which the dot product can be expressed is:</p>
 
-<p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B} = ||\vec{A}||\times||\vec{B}||\times\cos(\theta)</div>
 
 <a data-primary="dot product (PVector)" data-secondary="theta" data-type="indexterm"></a> <a data-primary="theta (θ)" data-secondary="dot product and" data-type="indexterm"></a>
 
@@ -760,12 +760,14 @@ public float dot(PVector v) {
 
 <p>The two formulas for dot product can be derived from one another with <a href="http://mathworld.wolfram.com/DotProduct.html">trigonometry</a>, but for our purposes we can be happy with operating on the assumption that:</p>
 
-<p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}<br />
-{vectora} {dot} {vectorb} {equals} {dotform}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B}=||\vec{A}||\times||\vec{B}||
+
+<p><span data-type="equation">\vec{A}\cdot\vec{B} = ||\vec{A}||\times||\vec{B}||\times\cos(\theta)</span><br />
+<span data-type="equation">\vec{A}\cdot\vec{B} = a_x\times b_x + a_y\times b_y</span></p>
 
 <p>both hold true and therefore:</p>
 
-<p>{dotform} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+<div data-type="equation">a_x\times b_x + a_y\times b_y=||\vec{A}||\times||\vec{B}||\times\cos(\theta)</div>
 
 <figure class="half-width-right" id="chapter06_figure19"><img alt="Figure 6.19" src="chapter06/ch06_19.png" />
 <figcaption>Figure 6.19</figcaption>
@@ -773,27 +775,30 @@ public float dot(PVector v) {
 
 <p>Now, let’s start with the following problem. We have the vectors A and B:</p>
 
-<p>{vectora} {equals} {tentwo}<br />
-{vectorb} {equals} {fourthree}</p>
+<p><span data-type="equation">\vec{A}=(10,2)</span><br/>
+<span data-type="equation">\vec{B}=(4,-3)</span></p>
 
 <p>We now have a situation in which we know everything except for theta. We know the components of the vector and can calculate the magnitude of each vector. We can therefore solve for cosine of theta:</p>
 
-<p>{costheta} {equals} {open} {vectora} {dot} {vectorb} {close} {div} {open} {maga} {mult} {magb} {close}</p>
+<div data-type="equation">\cos(\theta)=(\vec{A}\cdot\vec{B}) / (||\vec{A}||\times||\vec{B})</div>
 
 <p>To solve for theta, we can take the inverse cosine (often expressed as <em>cosine<sup>-1</sup></em> or <em>arccosine</em>).</p>
 
-<p>{theta} {equals} {arccos} {open} {open} {vectora} {dot} {vectorb} {close} {div} {open} {maga} {mult} {magb} {close} {close}</p>
+
+<div data-type="equation">\theta=\cos^{-1}((\vec{A}\cdot\vec{B}) / (||\vec{A}||\times||\vec{B}))</div>
 
 <p>Let’s now do the math with actual numbers:</p>
 
-<p>{maga} {equals} {tenpointtwo}<br />
-{magb} {equals} {five}</p>
+<p><span data-type="equation">||\vec{A}||=10.2</span><br/>
+<span data-type="equation">||\vec{B}||=5</span></p>
 
 <p>Therefore:</p>
 
-<p>{theta} {equals} {arccos} {open} {open} {ten} {mult} {four} + {two} {mult} {negthree} {close} {div} {open} {tenpointtwo} {mult} {five} {close} {close}<br />
-{theta} {equals} {arccos} {open} {threefour} {div} {fiveone} {close}<br />
-{theta} {equals} {foureightdeg}</p>
+<p>
+<span data-type="equation">\theta=\cos^{-1}((10\times4+2\times-3)/(10.2\times5))</span><br/>
+<span data-type="equation">\theta=\cos^{-1}(34/51)</span><br/>
+<span data-type="equation">\theta=\sim48^\circ</span>
+</p>
 
 <p>The Processing version of this would be:</p>
 
@@ -829,10 +834,10 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
 <ol>
 	<li>
-	<p>If two vectors ({vectora} and {vectorb}) are orthogonal (i.e. perpendicular), the dot product ({vectora} {dot} {vectorb}) is equal to 0.</p>
+	<p>If two vectors (<span data-type="equation">\vec{A}</span> and <span data-type="equation">\vec{B}</span>) are orthogonal (i.e. perpendicular), the dot product (<span data-type="equation">\vec{A}\cdot\vec{B}</span>) is equal to 0.</p>
 	</li>
 	<li>
-	<p>If two vectors are unit vectors, then the dot product is simply equal to cosine of the angle between them, i.e. {vectora} {dot} {vectorb} {equals} {costheta} if {vectora} and {vectorb} are of length 1.</p>
+	<p>If two vectors are unit vectors, then the dot product is simply equal to cosine of the angle between them, i.e. <span data-type="equation">\vec{A}\cdot\vec{B}\=\cos(\theta)</span> if <span data-type="equation">\vec{A}</span> and <span data-type="equation">\vec{B}</span> are of length 1.</p>
 	</li>
 </ol>
 </section>
@@ -931,12 +936,12 @@ PVector predictLoc = PVector.add(loc, predict);</pre>
 <figcaption>Figure 6.24</figcaption>
 </figure>
 
-<p>Let’s figure out what we do know. We know we have a vector (call it {vectora}) that extends from the path’s starting point to the vehicle’s predicted position.</p>
+<p>Let’s figure out what we do know. We know we have a vector (call it <span data-type="equation">\vec{A}</span>) that extends from the path’s starting point to the vehicle’s predicted position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector a = PVector.sub(predictLoc, path.start);</pre>
 
-<p>We also know that we can define a vector (call it {vectorb}) that points from the start of the path to the end.</p>
+<p>We also know that we can define a vector (call it <span data-type="equation">\vec{B}</span>) that points from the start of the path to the end.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector b = PVector.sub(path.end, path.start);</pre>
@@ -969,25 +974,25 @@ b.normalize();
 b.mult(a.mag() * cos(theta));
 PVector normalPoint = PVector.add(path.start, b);</pre>
 
-<p>While the above code will work, there’s one more simplification we can make. If you’ll notice, the desired magnitude for vector {vectorb} is:</p>
+<p>While the above code will work, there’s one more simplification we can make. If you’ll notice, the desired magnitude for vector <span data-type="equation">\vec{B}</span> is:</p>
 
 <p><span class="formula">a.mag() * cos(theta)</span></p>
 
 <p>which is the code translation of:</p>
 
-<p>{maga} {mult} {costheta}</p>
+<div data-type="equation">||\vec{A}||\times\cos(\theta)</div>
 
 <p>And if you recall:</p>
 
-<p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {magb} {mult} {costheta}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B}=||\vec{A}||\times||\vec{B}||\times\cos(\theta)</div>
 
 <p>Now, what if vector {vectorb} is a unit vector, i.e. length 1? Then:</p>
 
-<p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {one} {mult} {costheta}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B}=||\vec{A}||\times1\times\cos(\theta)</div>
 
 <p>or</p>
 
-<p>{vectora} {dot} {vectorb} {equals} {maga} {mult} {costheta}</p>
+<div data-type="equation">\vec{A}\cdot\vec{B}=||\vec{A}||\times\cos(\theta)</div>
 
 <p>And what are we doing in our code? Normalizing b!</p>
 
