@@ -10,4 +10,20 @@ By using GitHub to host all the raw material for the book, it's my hope that I w
 
 This repository is in progress.  It's for a new edition of the book that I will be generating with [The Magic Book](https://github.com/magicbookproject/magicbook).  For the previous version of the book, you can check out the [Nature of Code archived repo](https://github.com/shiffman/The-Nature-of-Code-archive).
 
-Stay tuned for more!
+# Steps to build Nature of Code
+
+* Install [node.js](https://nodejs.org/en/).
+* At a terminal prompt ([more info here](https://github.com/magicbookproject/magicbook/)):
+```
+npm install magicbook -g
+```
+* Clone (or download) this very repo.
+* In terminal, navigate to the directory where you cloned this repo.
+* Enter these commands:
+```
+npm install
+magicbook build
+```
+* Navigate to "build" directory and look for generated files.
+
+More information about Magic Book at [its README](https://github.com/magicbookproject/magicbook/blob/master/README.md).
