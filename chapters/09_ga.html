@@ -11,7 +11,7 @@
 
 <a data-primary="evolution" data-secondary="modeling" data-type="indexterm"></a> <a data-primary="natural phenomena" data-secondary="evolution" data-type="indexterm"></a>
 
-<p>In each and every example in this book, the variables of these objects have to be initialized. Perhaps you made a whole bunch of particles with random colors and sizes or a list of vehicles all starting at the same <span class="var">x</span>,<span class="var">y</span> location on screen. But instead of acting as “intelligent designers” and assigning the properties of our objects through randomness or thoughtful consideration, we can let a process found in nature<code>—</code><em>evolution</em><code>—</code>decide for us.</p>
+<p>In each and every example in this book, the variables of these objects have to be initialized. Perhaps you made a whole bunch of particles with random colors and sizes or a list of vehicles all starting at the same <span class="var">x</span>,<span class="var">y</span> position on screen. But instead of acting as “intelligent designers” and assigning the properties of our objects through randomness or thoughtful consideration, we can let a process found in nature<code>—</code><em>evolution</em><code>—</code>decide for us.</p>
 
 <p>Can we think of the variables of an object as its DNA? Can objects make other objects and pass down their DNA to a new generation? Can our simulation evolve?</p>
 
@@ -1377,8 +1377,8 @@ class Rocket {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Rocket {
 
-  // A rocket has three vectors: location, velocity, acceleration.
-  PVector location;
+  // A rocket has three vectors: position, velocity, acceleration.
+  PVector position;
   PVector velocity;
   PVector acceleration;
 
@@ -1391,8 +1391,8 @@ class Rocket {
   void update() {
     // Velocity changes according to acceleration.
     velocity.add(acceleration);
-    //{!2} Location changes according to velocity.
-    location.add(velocity);
+    //{!2} position changes according to velocity.
+    position.add(velocity);
     acceleration.mult(0);
   }
 }</pre>
@@ -1414,7 +1414,7 @@ class Rocket {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fitness() {
     // How close did we get?
-    float d = PVector.dist(location, target);
+    float d = PVector.dist(position, target);
     //{!1} Fitness is inversely proportional to distance.
     fitness = 1/d;
   }</pre>
@@ -1545,7 +1545,7 @@ class Rocket {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void fitness() {
-  float d = PVector.dist(location, target);
+  float d = PVector.dist(position, target);
   //{!1} Squaring 1 divided by distance
   fitness = pow(1/d, 2);
 }</pre>
@@ -1615,7 +1615,7 @@ class Rocket {
   // A Rocket has fitness.
   float fitness;
 
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;</pre>
 
@@ -1657,14 +1657,14 @@ class Population {
   void selection() {}
   void reproduction() {}</pre>
 
-<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <span class="klass">Population</span> class that runs the physics simulation itself. This is identical to what we did in the <span class="function">run()</span> function of a particle system—update all the particle locations and draw them.</p>
+<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <span class="klass">Population</span> class that runs the physics simulation itself. This is identical to what we did in the <span class="function">run()</span> function of a particle system—update all the particle positions and draw them.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void live () {
     for (int i = 0; i < population.length; i++) {
       //{!1} The run function takes care of
       // the forces, updating the rocket’s
-      // location, and displaying it.
+      // position, and displaying it.
       population[i].run();
     }
   }</pre>
@@ -1760,23 +1760,23 @@ void draw() {
 
 <a data-primary="fitness functions (natural selection algorithms)" data-secondary="avoidance of obstacles and" data-type="indexterm"></a>
 
-<p>Adding obstacles that the rockets must avoid will make the system more complex and demonstrate the power of the evolutionary algorithm more effectively. We can make rectangular, stationary obstacles fairly easily by creating a class that stores a location and dimensions.</p>
+<p>Adding obstacles that the rockets must avoid will make the system more complex and demonstrate the power of the evolutionary algorithm more effectively. We can make rectangular, stationary obstacles fairly easily by creating a class that stores a position and dimensions.</p>
 
 <div data-type="example"><h5>Example 9.3: Smart Rockets</h5></div>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Obstacle {
 
-  // An obstacle is a location (top left
+  // An obstacle is a position (top left
   // corner of rectangle) with a width and height.
-  PVector location;
+  PVector position;
   float w, h;</pre>
 
 <p>We can also write a <span class="function">contains()</span> function that will <span class="var">return true</span> or <span class="var">return false</span> to determine if a rocket has hit the obstacle.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   boolean contains(PVector v) {
-    if (v.x > location.x && v.x < location.x + w && v.y &gt; location.y && v.y < location.y + h) {
+    if (v.x > position.x && v.x < position.x + w && v.y &gt; position.y && v.y < position.y + h) {
       return true;
     } else {
       return false;
@@ -1791,13 +1791,13 @@ class Obstacle {
   // hit an obstacle.
   void obstacles() {
     for (Obstacle obs : obstacles) {
-      if (obs.contains(location)) {
+      if (obs.contains(position)) {
         stopped = true;
       }
     }
   }</pre>
 
-<p>If the rocket hits an obstacle, we choose to stop it from updating its location.</p>
+<p>If the rocket hits an obstacle, we choose to stop it from updating its position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void run() {
@@ -1815,7 +1815,7 @@ class Obstacle {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fitness() {
-    float d = dist(location.x, location.y, target.location.x, target.location.y);
+    float d = dist(position.x, position.y, target.position.x, target.position.y);
     fitness = pow(1/d, 2);
 		//{.bold !1}
     if (stopped) fitness *= 0.1;
@@ -1831,7 +1831,7 @@ class Obstacle {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void checkTarget() {
-    float d = dist(location.x, location.y, target.location.x, target.location.y);
+    float d = dist(position.x, position.y, target.position.x, target.position.y);
     // Every frame, we check its distance and see
     // if it’s closer than the “record” distance.
     // If it is, we have a new record.
@@ -1842,7 +1842,7 @@ class Obstacle {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     // If the object reaches the target,
     // set a boolean flag to true.
-    if (target.contains(location)) {
+    if (target.contains(position)) {
       hitTarget = true;
 		//{!3} As long as we haven’t yet reached
     // the target, keep incrementing the counter.
@@ -1927,7 +1927,7 @@ class Obstacle {
 <figcaption>Figure 9.14</figcaption>
 </figure>
 
-<p>To illustrate this technique, we’re going to build a population of simple faces. Each face will have a set of properties: head size, head color, eye location, eye size, mouth color, mouth location, mouth width, and mouth height.</p>
+<p>To illustrate this technique, we’re going to build a population of simple faces. Each face will have a set of properties: head size, head color, eye position, eye size, mouth color, mouth position, mouth width, and mouth height.</p>
 
 <p>The face’s DNA (genotype) is an array of floating point numbers between 0 and 1, with a single value for each property.</p>
 
@@ -1980,7 +1980,7 @@ class Face {
 
 <p>For this simple demonstration, we’ll increase fitness whenever a user rolls the mouse over a face. The next generation is created when the user presses a button with an “evolve next generation” label.</p>
 
-<p>Let’s look at how the steps of the genetic algorithm are applied in the main tab, noting how fitness is assigned according to mouse interaction and the next generation is created on a button press. The rest of the code for checking mouse locations, button interactions, etc. can be found in the accompanying example code.</p>
+<p>Let’s look at how the steps of the genetic algorithm are applied in the main tab, noting how fitness is assigned according to mouse interaction and the next generation is created on a button press. The rest of the code for checking mouse positions, button interactions, etc. can be found in the accompanying example code.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter09/_9_04_Faces_interactiveselection/Button.pde processingjs/chapter09/_9_04_Faces_interactiveselection/DNA.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Face.pde processingjs/chapter09/_9_04_Faces_interactiveselection/_9_04_Faces_interactiveselection.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Population.pde processingjs/chapter09/_9_04_Faces_interactiveselection/Rectangle.pde"><img alt="ch09 ex04" src="chapter09/ch09_ex04.png" />
 <figcaption>&nbsp;</figcaption>
@@ -2002,7 +2002,7 @@ void setup() {
 void draw() {
 
   population.display();
-  //{!1 .bold} The mouse location is passed to
+  //{!1 .bold} The mouse position is passed to
   // the population, which will score
   // each face according to rollover time.
   population.rollover(mouseX, mouseY);
@@ -2051,8 +2051,8 @@ void mousePressed() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Bloop {
-  // A location
-  PVector location;
+  // A position
+  PVector position;
 
   // Variables for size and speed
   float r;
@@ -2070,12 +2070,12 @@ class Bloop {
     yoff += 0.01;
 
     //{!1} The bloop moves.
-    location.add(velocity);
+    position.add(velocity);
   }
 
   //{!3} A bloop is a circle.
   void display() {
-    ellipse(location.x, location.y, r, r);
+    ellipse(position.x, position.y, r, r);
   }
 }</pre>
 
@@ -2147,13 +2147,13 @@ class Bloop {
 
 <p>There are many ways we could achieve variable lifespans with a more sophisticated world. For example, we could introduce predators that eat bloops. Perhaps the faster bloops would be able to escape being eaten more easily, and therefore our world would evolve to have faster and faster bloops. Another option would be to introduce food. When a bloop eats food, it increases its health points, and therefore extends its life.</p>
 
-<p>Let’s assume we have an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> locations for food, named “food.” We could test each bloop’s proximity to each food location. If the bloop is close enough, it eats the food (which is then removed from the world) and increases its health.</p>
+<p>Let’s assume we have an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> positions for food, named “food.” We could test each bloop’s proximity to each food position. If the bloop is close enough, it eats the food (which is then removed from the world) and increases its health.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void eat() {
     for (int i = food.size()-1; i >= 0; i--) {
-      PVector foodLocation = food.get(i);
-      float d = PVector.dist(location, foodLocation);
+      PVector foodposition = food.get(i);
+      float d = PVector.dist(position, foodposition);
       //{!1} Is the Bloop close to the food?
       if (d < r/2) {
 
@@ -2174,7 +2174,7 @@ class Bloop {
 
 <a data-primary="ecosystem simulation genetic algorithms" data-secondary="genotype" data-type="indexterm"></a> <a data-primary="ecosystem simulation genetic algorithms" data-secondary="phenotype" data-type="indexterm"></a> <a data-primary="genotype (natural selection algorithms)" data-secondary="ecosystem simulation" data-type="indexterm"></a> <a data-primary="phenotype (natural selection algorithms)" data-secondary="ecosystem simulation" data-type="indexterm"></a>
 
-<p>The ability for a bloop to find food is tied to two variables—size and speed. Bigger bloops will find food more easily simply because their size will allow them to intersect with food locations more often. And faster bloops will find more food because they can cover more ground in a shorter period of time.</p>
+<p>The ability for a bloop to find food is tied to two variables—size and speed. Bigger bloops will find food more easily simply because their size will allow them to intersect with food positions more often. And faster bloops will find more food because they can cover more ground in a shorter period of time.</p>
 
 <figure class="half-width-right" id="chapter09_figure15"><img alt="Figure 9.15" src="chapter09/ch09_15.png" />
 <figcaption>Figure 9.15</figcaption>
@@ -2202,7 +2202,7 @@ class DNA {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Bloop {
-  PVector location;
+  PVector position;
   float health;
 
   //{!1} A bloop now has DNA.
@@ -2211,7 +2211,7 @@ class Bloop {
   float maxspeed;
 
   Bloop(DNA dna_) {
-    location = new PVector(width/2, height/2);
+    position = new PVector(width/2, height/2);
     health = 200;
     dna = dna_;
 
@@ -2261,8 +2261,8 @@ class Bloop {
       DNA childDNA = dna.copy();
       //{.bold} 1% mutation rate
       childDNA.mutate(0.01);
-      //{!1 .bold} Make a new bloop at the same location with the new DNA.
-      return new Bloop(location, childDNA);
+      //{!1 .bold} Make a new bloop at the same position with the new DNA.
+      return new Bloop(position, childDNA);
 		//{!3 .bold} If the bloop does not
     // reproduce, return null.
     } else {
@@ -2288,7 +2288,7 @@ class DNA {
   }
 }</pre>
 
-<p>Now that we have all the pieces in place for selection and reproduction, we can finalize the <span class="klass">World</span> class that manages the list of all <span class="klass">Bloop</span> objects (as well as a <span class="klass">Food</span> object, which itself is a list of <span class="klass">PVector</span> locations for food).</p>
+<p>Now that we have all the pieces in place for selection and reproduction, we can finalize the <span class="klass">World</span> class that manages the list of all <span class="klass">Bloop</span> objects (as well as a <span class="klass">Food</span> object, which itself is a list of <span class="klass">PVector</span> positions for food).</p>
 
 <p>Before you run the example, take a moment to guess what size and speed of bloops the system will evolve towards. We’ll discuss following the code.</p>
 
@@ -2326,7 +2326,7 @@ class World {
 
     //{!4} Creating the population
     for (int i = 0; i < num; i++) {
-      PVector location = new PVector(random(width), random(height));
+      PVector position = new PVector(random(width), random(height));
       DNA dna = new DNA();
       bloops.add(new Bloop(l, dna));
     }
@@ -2340,10 +2340,10 @@ class World {
       Bloop b = bloops.get(i);
       b.run();
       b.eat(food);
-      // If one dies, it is removed from the population and food is added at its location.
+      // If one dies, it is removed from the population and food is added at its position.
       if (b.dead()) {
         bloops.remove(i);
-        food.add(b.location);
+        food.add(b.position);
       }
 
       //{!2} Here is where each living bloop has
@@ -2356,7 +2356,7 @@ class World {
   }
 }</pre>
 
-<p>If you guessed medium-sized bloops with medium speed, you were right. With the design of this system, bloops that are large are simply too slow to find food. And bloops that are fast are too small to find food. The ones that are able to live the longest tend to be in the middle, large enough and fast enough to find food (but not too large or too fast). There are also some anomalies. For example, if it so happens that a bunch of large bloops end up in the same location (and barely move because they are so large), they may all die out suddenly, leaving a lot of food for one large bloop who happens to be there to eat and allowing a mini-population of large bloops to sustain themselves for a period of time in one location.</p>
+<p>If you guessed medium-sized bloops with medium speed, you were right. With the design of this system, bloops that are large are simply too slow to find food. And bloops that are fast are too small to find food. The ones that are able to live the longest tend to be in the middle, large enough and fast enough to find food (but not too large or too fast). There are also some anomalies. For example, if it so happens that a bunch of large bloops end up in the same position (and barely move because they are so large), they may all die out suddenly, leaving a lot of food for one large bloop who happens to be there to eat and allowing a mini-population of large bloops to sustain themselves for a period of time in one position.</p>
 
 <p>This example is rather simplistic given its single gene and asexual reproduction. Here are some suggestions for how you might apply the bloop example in a more elaborate ecosystem simulation.</p>
 

@@ -464,14 +464,14 @@ for (int i = 0; i < cells.length; i++) {
   //{!2} Black or white fill?
   if (cells[i] == 1) fill(0);
   else               fill(255);
-  //{!1} Notice how the x-location is the cell index times the cell width.
+  //{!1} Notice how the x-position is the cell index times the cell width.
   // In the above scenario, this would give us cells located at x equals 0, 10, 20, 30, all the way up to 600.
   rect(i*w, 0, w, w);
 }</pre>
 
 <p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing’s <span class="function">rect()</span> function, but rather access the pixel array directly.</p>
 
-<p>In the above code, you’ll notice the y-location for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we’ll also need to compute a y-location based on how many iterations of the CA we’ve executed. We could accomplish this by adding a “generation” variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
+<p>In the above code, you’ll notice the y-position for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we’ll also need to compute a y-position based on how many iterations of the CA we’ve executed. We could accomplish this by adding a “generation” variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -517,7 +517,7 @@ class CA {
     for (int i = 0; i < cells.length; i++) {
       if (cells[i] == 1) fill(0);
       else               fill(255);
-      //{!1} Set the y-location according to the generation.
+      //{!1} Set the y-position according to the generation.
       rect(i*w, generation*w, w, w);
     }
   }
@@ -886,12 +886,12 @@ for ( int i = 0; i < columns; i++) {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   Cell[][] board;</pre>
 
-<p>where <span class="klass">Cell</span> is a class we will write. What are the properties of a <span class="klass">Cell</span> object? In our Game of Life example, each cell has a location and size, as well as a state.</p>
+<p>where <span class="klass">Cell</span> is a class we will write. What are the properties of a <span class="klass">Cell</span> object? In our Game of Life example, each cell has a position and size, as well as a state.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Cell {
 
-  // Location and size
+  // position and size
   float x, y;
   float w;
 

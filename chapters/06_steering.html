@@ -51,7 +51,7 @@
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
 
@@ -112,7 +112,7 @@ PVector steer = PVector.sub(desired, velocity);</pre>
 
 <a data-primary="desired velocity" data-type="indexterm"></a> <a data-primary="steering force" data-secondary="desired velocity" data-type="indexterm"></a>
 
-<p>In the above formula, velocity is no problem. After all, we’ve got a variable for that. However, we don’t have the <em>desired velocity</em>; this is something we have to calculate. Let’s take a look at Figure 6.2. If we’ve defined the vehicle’s goal as “seeking the target,” then its desired velocity is a vector that points from its current location to the target location.</p>
+<p>In the above formula, velocity is no problem. After all, we’ve got a variable for that. However, we don’t have the <em>desired velocity</em>; this is something we have to calculate. Let’s take a look at Figure 6.2. If we’ve defined the vehicle’s goal as “seeking the target,” then its desired velocity is a vector that points from its current position to the target position.</p>
 
 <figure id="chapter06_figure2"><img alt="Figure 6.2" src="chapter06/ch06_02.png" />
 <figcaption>Figure 6.2</figcaption>
@@ -121,17 +121,17 @@ PVector steer = PVector.sub(desired, velocity);</pre>
 <p>Assuming a <span class="klass">PVector</span> target, we then have:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector desired = PVector.sub(target, location);</pre>
+PVector desired = PVector.sub(target, position);</pre>
 
-<p>But this isn’t particularly realistic. What if we have a very high-resolution window and the target is thousands of pixels away? Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won’t make for an effective animation. What we really want to say is:</p>
+<p>But this isn’t particularly realistic. What if we have a very high-resolution window and the target is thousands of pixels away? Sure, the vehicle might desire to teleport itself instantly to the target position with a massive velocity, but this won’t make for an effective animation. What we really want to say is:</p>
 
 <p><em>The vehicle desires to move towards the target at maximum speed.</em></p>
 
-<p>In other words, the vector should point from location to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So first, we need to make sure we add a variable to our <span class="klass">Vehicle</span> class that stores maximum speed.</p>
+<p>In other words, the vector should point from position to target and with a magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So first, we need to make sure we add a variable to our <span class="klass">Vehicle</span> class that stores maximum speed.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   // Maximum speed
@@ -140,7 +140,7 @@ class Vehicle {
 <p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector desired = PVector.sub(target, location);
+PVector desired = PVector.sub(target, position);
 desired.normalize();
 desired.mult(maxspeed);</pre>
 
@@ -152,7 +152,7 @@ desired.mult(maxspeed);</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(PVector target) {
-    PVector desired = PVector.sub(target,location);
+    PVector desired = PVector.sub(target,position);
     desired.normalize();
     //{!1} Calculating the desired velocity
     // to target at max speed
@@ -167,7 +167,7 @@ desired.mult(maxspeed);</pre>
 
 <p>Note how in the above function we finish by passing the steering force into <span class="function">applyForce()</span>. This assumes that we are basing this example on the foundation we built in <a href="#chapter02_section2">Chapter 2</a>. However, you could just as easily use the steering force with Box2D’s <span class="function">applyForce()</span> function or toxiclibs’ <span class="function">addForce()</span> function.</p>
 
-<p>So why does this all work so well? Let’s see what the steering force looks like relative to the vehicle and target locations.</p>
+<p>So why does this all work so well? Let’s see what the steering force looks like relative to the vehicle and target positions.</p>
 
 <figure id="chapter06_figure4"><img alt="Figure 6.4" src="chapter06/ch06_04.png" />
 <figcaption>Figure 6.4</figcaption>
@@ -181,7 +181,7 @@ desired.mult(maxspeed);</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   // Maximum speed
@@ -193,7 +193,7 @@ class Vehicle {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(PVector target) {
-    PVector desired = PVector.sub(target, location);
+    PVector desired = PVector.sub(target, position);
     desired.normalize();
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired, velocity);
@@ -204,7 +204,7 @@ class Vehicle {
     applyForce(steer);
   }</pre>
 
-<p>Limiting the steering force brings up an important point. We must always remember that it’s not actually our goal to get the vehicle to the target as fast as possible. If that were the case, we would just say “location equals target” and there the vehicle would be. Our goal, as Reynolds puts it, is to move the vehicle in a “lifelike and improvisational manner.” We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to simulate a given behavior. For example, a large maximum steering force would result in a very different path than a small one. One is not inherently better or worse than the other; it depends on your desired effect. (And of course, these values need not be fixed and could change based on other conditions. Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
+<p>Limiting the steering force brings up an important point. We must always remember that it’s not actually our goal to get the vehicle to the target as fast as possible. If that were the case, we would just say “position equals target” and there the vehicle would be. Our goal, as Reynolds puts it, is to move the vehicle in a “lifelike and improvisational manner.” We’re trying to make it appear as if the vehicle is steering its way to the target, and so it’s up to us to play with the forces and variables of the system to simulate a given behavior. For example, a large maximum steering force would result in a very different path than a small one. One is not inherently better or worse than the other; it depends on your desired effect. (And of course, these values need not be fixed and could change based on other conditions. Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
 
 <figure id="chapter06_figure5"><img alt="Figure 6.5" src="chapter06/ch06_05.png" />
 <figcaption>Figure 6.5</figcaption>
@@ -221,7 +221,7 @@ class Vehicle {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
 
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   //{!1} Additional variable for size
@@ -232,7 +232,7 @@ class Vehicle {
   Vehicle(float x, float y) {
     acceleration = new PVector(0, 0);
     velocity = new PVector(0, 0);
-    location = new PVector(x, y);
+    position = new PVector(x, y);
     r = 3.0;
     //{!2} Arbitrary values for maxspeed and
     // force; try varying these!
@@ -245,7 +245,7 @@ class Vehicle {
   void update() {
     velocity.add(acceleration);
     velocity.limit(maxspeed);
-    location.add(velocity);
+    position.add(velocity);
     acceleration.mult(0);
   }
 
@@ -256,7 +256,7 @@ class Vehicle {
 
   // Our seek steering force algorithm
   void seek(PVector target) {
-    PVector desired = PVector.sub(target, location);
+    PVector desired = PVector.sub(target, position);
     desired.normalize();
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired, velocity);
@@ -272,7 +272,7 @@ class Vehicle {
     fill(175);
     stroke(0);
     pushMatrix();
-    translate(location.x, location.y);
+    translate(position.x, position.y);
     rotate(theta);
     beginShape();
     vertex(0, -r*2);
@@ -292,7 +292,7 @@ class Vehicle {
 <div data-type="exercise" id="chapter06_exercise2">
 <h5>Exercise 6.2</h5>
 
-<p>Implement seeking a moving target, often referred to as “pursuit.” In this case, your desired vector won’t point towards the object’s current location, but rather its “future” location as extrapolated from its current velocity. We’ll see this ability for a vehicle to “predict the future” in later examples.</p>
+<p>Implement seeking a moving target, often referred to as “pursuit.” In this case, your desired vector won’t point towards the object’s current position, but rather its “future” position as extrapolated from its current velocity. We’ll see this ability for a vehicle to “predict the future” in later examples.</p>
 </div>
 
 <div data-type="exercise" id="chapter06_exercise3">
@@ -338,7 +338,7 @@ Frame 6: I’m there. I want to stop!</p>
 <p>How can we implement this “arriving” behavior in code? Let’s return to our <span class="function">seek()</span> function and find the line of code where we set the magnitude of the desired velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-   PVector desired = PVector.sub(target, location);
+   PVector desired = PVector.sub(target, position);
    desired.normalize();
    desired.mult(maxspeed);</pre>
 
@@ -355,13 +355,13 @@ Frame 6: I’m there. I want to stop!</p>
 </figure>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-   PVector desired = PVector.sub(target, location);
+   PVector desired = PVector.sub(target, position);
    desired.div(2);</pre>
 
 <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it’s not particularly reasonable. After all, 10 pixels away is rather close and a desired speed of 5 is rather large. Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector desired = PVector.sub(target,location);
+  PVector desired = PVector.sub(target,position);
   desired.mult(0.05);</pre>
 
 <p>Reynolds describes a more sophisticated approach. Let’s imagine a circle around the target with a given radius. If the vehicle is within that circle, it slows down—at the edge of the circle, its desired speed is maximum speed, and at the target itself, its desired speed is 0.</p>
@@ -380,11 +380,11 @@ Frame 6: I’m there. I want to stop!</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void arrive(PVector target) {
-    PVector desired = PVector.sub(target,location);
+    PVector desired = PVector.sub(target,position);
 
     //{!1} The distance is the magnitude of
     // the vector pointing from
-    // location to target.
+    // position to target.
     float d = desired.mag();
     desired.normalize();
     //{!1} If we are closer than 100 pixels...
@@ -438,7 +438,7 @@ Frame 6: I’m there. I want to stop!</p>
 
 <p>For Reynolds, the goal of wandering is not simply random motion, but rather a sense of moving in one direction for a little while, wandering off to the next for a little bit, and so on and so forth. So how does Reynolds calculate a desired vector to achieve such an effect?</p>
 
-<p>Figure 6.12 illustrates how the vehicle predicts its future location as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <span class="var">r</span> at that location, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
+<p>Figure 6.12 illustrates how the vehicle predicts its future position as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <span class="var">r</span> at that position, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
 
 <p>Sounds a bit absurd, right? Or, at the very least, rather arbitrary. In fact, this is a very clever and thoughtful solution—it uses randomness to drive a vehicle’s steering, but constrains that randomness along the path of a circle to keep the vehicle’s movement from appearing jittery, and, well, random.</p>
 
@@ -471,7 +471,7 @@ Frame 6: I’m there. I want to stop!</p>
 <div data-type="example"><h5>Example 6.3: “Stay within walls” steering behavior</h5></div>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-if (location.x &gt; 25) {
+if (position.x &gt; 25) {
   //{.offset !1} Make a desired vector that retains the y direction of
   // the vehicle but points the x direction directly away from
   // the window’s left edge.
@@ -499,7 +499,7 @@ if (location.x &gt; 25) {
 <figcaption>Figure 6.14</figcaption>
 </figure>
 
-<p>Reynolds’s flow field following example has the vehicle predicting its future location and following the vector at that spot, but for simplicity’s sake, we’ll have the vehicle simply look to the vector at its current location.</p>
+<p>Reynolds’s flow field following example has the vehicle predicting its future position and following the vector at that spot, but for simplicity’s sake, we’ll have the vehicle simply look to the vector at its current position.</p>
 
 <a data-primary="arrays (2D)" data-type="indexterm"></a>
 
@@ -589,7 +589,7 @@ for (int i = 0; i < cols; i++) {
 <div data-type="exercise" id="chapter06_exercise6">
 <h5>Exercise 6.6</h5>
 
-<p>Write the code to calculate a <span class="klass">PVector</span> at every location in the flow field that points towards the center of a window.</p>
+<p>Write the code to calculate a <span class="klass">PVector</span> at every position in the flow field that points towards the center of a window.</p>
 
 <figure><img alt="ch06 exc6" src="chapter06/ch06_exc6.png" />
 <figcaption>&nbsp;</figcaption>
@@ -601,15 +601,15 @@ v.______________();
 field[i][j] = v;</pre>
 </div>
 
-<p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let’s say we have a vehicle that lives at a <span class="klass">PVector</span>: its location. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
+<p>Now that we have a two-dimensional array storing all of the flow field vectors, we need a way for a vehicle to look up its desired vector in the flow field. Let’s say we have a vehicle that lives at a <span class="klass">PVector</span>: its position. We first need to divide by the resolution of the grid. For example, if the resolution is 10 and the vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int column = int(location.x/resolution);
-int row = int(location.y/resolution);</pre>
+int column = int(position.x/resolution);
+int row = int(position.y/resolution);</pre>
 
 <a data-primary="constrain() function (Processing)" data-type="indexterm"></a>
 
-<p>Because a vehicle could theoretically wander off the Processing window, it’s also useful for us to employ the <span class="function">constrain()</span> function to make sure we don’t look outside of the flow field array. Here is a function we’ll call <span class="function">lookup()</span> that goes in the <span class="klass">FlowField</span> class—it receives a <span class="klass">PVector</span> (presumably the location of our vehicle) and returns the corresponding flow field <span class="klass">PVector</span> for that location.</p>
+<p>Because a vehicle could theoretically wander off the Processing window, it’s also useful for us to employ the <span class="function">constrain()</span> function to make sure we don’t look outside of the flow field array. Here is a function we’ll call <span class="function">lookup()</span> that goes in the <span class="klass">FlowField</span> class—it receives a <span class="klass">PVector</span> (presumably the position of our vehicle) and returns the corresponding flow field <span class="klass">PVector</span> for that position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector lookup(PVector lookup) {
@@ -655,7 +655,7 @@ class FlowField {
     }
   }
 
-  // A function to return a PVector based on a location
+  // A function to return a PVector based on a position
   PVector lookup(PVector lookup) {
     int column = int(constrain(lookup.x/resolution, 0, cols-1));
     int row = int(constrain(lookup.y/resolution, 0, rows-1));
@@ -676,7 +676,7 @@ class Vehicle {
 
   void follow(FlowField flow) {
     // What is the vector at that spot in the flow field?
-    PVector desired = flow.lookup(location);
+    PVector desired = flow.lookup(position);
     desired.mult(maxspeed);
 
     //{!3} Steering is desired minus velocity
@@ -917,13 +917,13 @@ PVector predict = vel.copy();
 predict.normalize();
 predict.mult(25);
 
-// Add vector to location to find the
-// predicted location.
+// Add vector to position to find the
+// predicted position.
 PVector predictLoc = PVector.add(loc, predict);</pre>
 
 <a data-primary="path following" data-secondary="current distance from path" data-tertiary="finding" data-type="indexterm"></a>
 
-<p>Once we have that location, it’s now our job to find out the vehicle’s current distance from the path of that predicted location. If it’s very far away, well, then, we’ve strayed from the path and need to steer back towards it. If it’s close, then we’re doing OK and are following the path nicely.</p>
+<p>Once we have that position, it’s now our job to find out the vehicle’s current distance from the path of that predicted position. If it’s very far away, well, then, we’ve strayed from the path and need to steer back towards it. If it’s close, then we’re doing OK and are following the path nicely.</p>
 
 <p>So, how do we find the distance between a point and a line? This concept is key. The distance between a point and a line is defined as the length of the normal between that point and line. The normal is a vector that extends from that point and is perpendicular to the line.</p>
 
@@ -931,7 +931,7 @@ PVector predictLoc = PVector.add(loc, predict);</pre>
 <figcaption>Figure 6.24</figcaption>
 </figure>
 
-<p>Let’s figure out what we do know. We know we have a vector (call it {vectora}) that extends from the path’s starting point to the vehicle’s predicted location.</p>
+<p>Let’s figure out what we do know. We know we have a vector (call it {vectora}) that extends from the path’s starting point to the vehicle’s predicted position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector a = PVector.sub(predictLoc, path.start);</pre>
@@ -1016,7 +1016,7 @@ PVector normalPoint = PVector.add(path.start, b);</pre>
 
 <a data-primary="normal points" data-type="indexterm"></a> <a data-primary="path following" data-secondary="normal points" data-type="indexterm"></a>
 
-<p>Once we have the normal point along the path, we have to decide whether the vehicle should steer towards the path and how. Reynolds’s algorithm states that the vehicle should only steer towards the path if it strays beyond the path (i.e., if the distance between the normal point and the predicted future location is greater than the path radius).</p>
+<p>Once we have the normal point along the path, we have to decide whether the vehicle should steer towards the path and how. Reynolds’s algorithm states that the vehicle should only steer towards the path if it strays beyond the path (i.e., if the distance between the normal point and the predicted future position is greater than the path radius).</p>
 
 <figure id="chapter06_figure27"><img alt="Figure 6.27" src="chapter06/ch06_27.png" />
 <figcaption>Figure 6.27</figcaption>
@@ -1077,7 +1077,7 @@ if (distance > path.radius) {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void follow(Path p) {
 
-    //{!4} Step 1: Predict the vehicle’s future location.
+    //{!4} Step 1: Predict the vehicle’s future position.
     PVector predict = vel.get();
     predict.normalize();
     predict.mult(25);
@@ -1159,7 +1159,7 @@ if (distance > path.radius) {
 <figcaption>Figure 6.32</figcaption>
 </figure>
 
-<p>If we have a point and an infinitely long line, we’ll always have a normal. But, as in the path-following example, if we have a point and a line segment, we won’t necessarily find a normal that is on the line segment itself. So if this happens for any of the segments, we can disqualify those normals. Once we are left with normals that are on the path itself (only two in the above diagram), we simply pick the one that is closest to our vehicle’s location.</p>
+<p>If we have a point and an infinitely long line, we’ll always have a normal. But, as in the path-following example, if we have a point and a line segment, we won’t necessarily find a normal that is on the line segment itself. So if this happens for any of the segments, we can disqualify those normals. Once we are left with normals that are on the path itself (only two in the above diagram), we simply pick the one that is closest to our vehicle’s position.</p>
 
 <p>In order to write the code for this, we’ll have to expand our <span class="klass">Path</span> class to have an <span class="klass">ArrayList</span> of points (rather than just two, a start and an end).</p>
 
@@ -1431,7 +1431,7 @@ void separate (ArrayList<Vehicle> vehicles) {
   for (Vehicle other : vehicles) {
 
     //{!1 .offset} What is the distance between me and another Vehicle?
-    float d = PVector.dist(location, other.location);
+    float d = PVector.dist(position, other.position);
 
     if ((d > 0) && (d < desiredseparation)) {
       // Any code here will be executed if the Vehicle is within 20 pixels.
@@ -1445,8 +1445,8 @@ void separate (ArrayList<Vehicle> vehicles) {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     if ((d > 0) && (d < desiredseparation)) {
-      //{!2 .offset} A PVector pointing away from the other’s location
-      PVector diff = PVector.sub(location, other.location);
+      //{!2 .offset} A PVector pointing away from the other’s position
+      PVector diff = PVector.sub(position, other.position);
       diff.normalize();
     }</pre>
 
@@ -1460,10 +1460,10 @@ void separate (ArrayList<Vehicle> vehicles) {
   // We have to keep track of how many Vehicles are too close.
   for (Vehicle other : vehicles) {
 
-    float d = PVector.dist(location, other.location);
+    float d = PVector.dist(position, other.position);
     if ((d > 0) && (d < desiredseparation)) {
 			//{!1 .bold}
-      PVector diff = PVector.sub(location, other.location);
+      PVector diff = PVector.sub(position, other.position);
       diff.normalize();
       //{!1 .bold} Add all the vectors together and increment the count.
       sum.add(diff);
@@ -1513,9 +1513,9 @@ void separate (ArrayList<Vehicle> vehicles) {
     PVector sum = new PVector();
     int count = 0;
     for (Vehicle other : vehicles) {
-      float d = PVector.dist(location, other.location);
+      float d = PVector.dist(position, other.position);
       if ((d > 0) && (d < desiredseparation)) {
-        PVector diff = PVector.sub(location, other.location);
+        PVector diff = PVector.sub(position, other.position);
         diff.normalize();
         //{!1 .bold} What is the magnitude of the PVector
         // pointing away from the other vehicle?
@@ -1573,7 +1573,7 @@ void separate (ArrayList<Vehicle> vehicles) {
 
 <ul>
 	<li>
-	<p><strong><em>Seek the mouse location.</em></strong></p>
+	<p><strong><em>Seek the mouse position.</em></strong></p>
 	</li>
 	<li>
 	<p><strong><em>Separate from any vehicles that are too close.</em></strong></p>
@@ -1760,7 +1760,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     PVector sum = new PVector(0,0);
     int count = 0;
     for (Boid other : boids) {
-      float d = PVector.dist(location,other.location);
+      float d = PVector.dist(position,other.position);
       if ((d > 0) && (d < neighbordist)) {
         sum.add(other.velocity);
         //{!1} For an average, we need to keep track of
@@ -1796,7 +1796,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <a data-primary="cohesion (flocking)" data-secondary="implementing" data-type="indexterm"></a>
 
-<p>Finally, we are ready for cohesion. Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average location of the boid’s neighbors (and use that as a target to seek).</p>
+<p>Finally, we are ready for cohesion. Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average position of the boid’s neighbors (and use that as a target to seek).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector cohesion (ArrayList<Boid> boids) {
@@ -1804,10 +1804,10 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     PVector sum = new PVector(0, 0);
     int count = 0;
     for (Boid other : boids) {
-      float d = PVector.dist(location, other.location);
+      float d = PVector.dist(position, other.position);
       if ((d > 0) && (d < neighbordist)) {
-        //{!2} Adding up all the others’ locations
-        sum.add(other.location);
+        //{!2} Adding up all the others’ positions
+        sum.add(other.position);
         count++;
       }
     }
@@ -1815,7 +1815,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       sum.div(count);
       //{!1 .bold} Here we make use of the seek() function we
       // wrote in Example 6.8.  The target
-      // we seek is the average location of
+      // we seek is the average position of
       // our neighbors.
       return seek(sum);
     } else {
@@ -1920,7 +1920,7 @@ void draw() {
 
 <p>Computer scientists classify algorithms with something called “Big O notation,” which describes the efficiency of an algorithm: how many computational cycles does it require to complete? Let’s consider a simple analog search problem. You have a basket containing one hundred chocolate treats, only one of which is pure dark chocolate. That’s the one you want to eat. To find it, you pick the chocolates out of the basket one by one. Sure, you might be lucky and find it on the first try, but in the worst-case scenario you have to check all one hundred before you find the dark chocolate. To find one thing in one hundred, you have to check one hundred things (or to find one thing in N things, you have to check N times.) Your Big O Notation is N. This, incidentally, is the Big O Notation that describes our simple particle system. If we have N particles, we have to run and display those particles N times.</p>
 
-<p>Now, let’s think about a group behavior (such as flocking). For every <span class="klass">Boid</span> object, we have to check every other <span class="klass">Boid</span> object (for its velocity and location). Let’s say we have one hundred boids. For boid #1, we need to check one hundred boids; for boid #2, we need to check one hundred boids, and so on and so forth. For one hundred boids, we need to perform one hundred times one hundred checks, or ten thousand. No problem: computers are fast and can do things ten thousand times pretty easily. Let’s try one thousand.</p>
+<p>Now, let’s think about a group behavior (such as flocking). For every <span class="klass">Boid</span> object, we have to check every other <span class="klass">Boid</span> object (for its velocity and position). Let’s say we have one hundred boids. For boid #1, we need to check one hundred boids; for boid #2, we need to check one hundred boids, and so on and so forth. For one hundred boids, we need to perform one hundred times one hundred checks, or ten thousand. No problem: computers are fast and can do things ten thousand times pretty easily. Let’s try one thousand.</p>
 
 <p>1,000 x 1,000 = 1,000,000 cycles.</p>
 
@@ -1960,7 +1960,7 @@ ArrayList<Boid> boids;</pre>
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 ArrayList<Boid>[][] grid;</pre>
 
-<p>In the main <span class="function">draw()</span> loop, each <span class="klass">Boid</span> object then registers itself in the appropriate cell according to its location.</p>
+<p>In the main <span class="function">draw()</span> loop, each <span class="klass">Boid</span> object then registers itself in the appropriate cell according to its position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 int column = int(boid.x) / resolution;
@@ -2107,7 +2107,7 @@ void draw() {
 <p>Throughout the book’s examples, you can find lots of opportunities to reduce the number of temporary objects. Let’s look at one more. Here is a snippet from our <span class="function">seek()</span> function.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    PVector desired = PVector.sub(target, location);
+    PVector desired = PVector.sub(target, position);
     desired.normalize();
     desired.mult(maxspeed);
 
@@ -2119,7 +2119,7 @@ void draw() {
 <p>See how we’ve made two <span class="klass">PVector</span> objects? First, we figure out the desired vector, then we calculate the steering force. Notice how we could rewrite this to create only one <span class="klass">PVector</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    PVector desired = PVector.sub(target, location);
+    PVector desired = PVector.sub(target, position);
     desired.normalize();
     desired.mult(maxspeed);
 

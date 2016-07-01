@@ -7,7 +7,7 @@
 <p data-type="attribution">— Anonymous</p>
 </blockquote>
 
-<p>In Chapters 1 and 2, we carefully worked out an object-oriented structure to make something move on the screen, using the concept of a vector to represent location, velocity, and acceleration driven by forces in the environment. We could move straight from here into topics such as particle systems, steering forces, group behaviors, etc. If we did that, however, we’d skip an important area of mathematics that we’re going to need: <strong><em>trigonometry</em></strong>, or the mathematics of triangles, specifically right triangles.</p>
+<p>In Chapters 1 and 2, we carefully worked out an object-oriented structure to make something move on the screen, using the concept of a vector to represent position, velocity, and acceleration driven by forces in the environment. We could move straight from here into topics such as particle systems, steering forces, group behaviors, etc. If we did that, however, we’d skip an important area of mathematics that we’re going to need: <strong><em>trigonometry</em></strong>, or the mathematics of triangles, specifically right triangles.</p>
 
 <p>Trigonometry is going to give us a lot of tools. We’ll get to think about angles and angular velocity and acceleration. Trig will teach us about the sine and cosine functions, which when used properly can yield a nice ease-in, ease-out wave pattern. It’s going to allow us to calculate more complex forces in an environment that involves angles, such as a pendulum swinging or a box sliding down an incline.</p>
 
@@ -87,7 +87,7 @@ rotate(angle);</pre>
 <p>Remember all this stuff?</p>
 
 <p><span class="formula">velocity = velocity + acceleration</span><br />
-<span class="formula">location = location + velocity</span></p>
+<span class="formula">position = position + velocity</span></p>
 
 <p>The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can apply exactly the same logic to a rotating object.</p>
 
@@ -114,7 +114,7 @@ ellipse(-50, 0, 8, 8);</pre>
 <div data-type="example"><h5>Example 3.1: Angular motion using rotate()</h5></div>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// Location
+// position
 float angle = 0;
 // Velocity
 float aVelocity = 0;
@@ -139,7 +139,7 @@ void draw() {
 
   // Angular equivalent of velocity.add(acceleration);
   aVelocity += aAcceleration;
-  //{!1} Angular equivalent of location.add(velocity);
+  //{!1} Angular equivalent of position.add(velocity);
   angle += aVelocity;
 }</pre>
 
@@ -149,7 +149,7 @@ void draw() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   float mass;
@@ -159,13 +159,13 @@ class Mover {
   float aAcceleration = 0;
 }</pre>
 
-<p>And then in <span class="function">update()</span>, we update both location and angle according to the same algorithm!</p>
+<p>And then in <span class="function">update()</span>, we update both position and angle according to the same algorithm!</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void update() {
   //{!2} Regular old-fashioned motion
   velocity.add(acceleration);
-  location.add(velocity);
+  position.add(velocity);
 
   //{!2} Newfangled angular motion
   aVelocity += aAcceleration;
@@ -184,8 +184,8 @@ void display() {
   //{!1} pushMatrix() and popMatrix() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
   pushMatrix();
 
-  // Set the origin at the shape’s location.
-  translate(location.x, location.y);
+  // Set the origin at the shape’s position.
+  translate(position.x, position.y);
   //{!1} Rotate by the angle.
   rotate(angle);
   rect(0, 0, mass * 16, mass * 16);
@@ -216,7 +216,7 @@ float aAcceleration = 0.01;</pre>
   void update() {
 
     velocity.add(acceleration);
-    location.add(velocity);
+    position.add(velocity);
 
     //{!1} Calculate angular acceleration according to acceleration’s horizontal direction and magnitude.
     aAcceleration = acceleration.x / 10.0;
@@ -337,7 +337,7 @@ float aAcceleration = 0.01;</pre>
     fill(175);
     pushMatrix();
     rectMode(CENTER);
-    translate(location.x, location.y);
+    translate(position.x, position.y);
     //{!1} Rotate according to that angle.
     rotate(angle);
     rect(0, 0, 30, 10);
@@ -374,7 +374,7 @@ float aAcceleration = 0.01;</pre>
     fill(175);
     pushMatrix();
     rectMode(CENTER);
-    translate(location.x, location.y);
+    translate(position.x, position.y);
     //{!1} Rotate according to that angle.
     rotate(angle);
     rect(0, 0, 30, 10);
@@ -401,7 +401,7 @@ float aAcceleration = 0.01;</pre>
 
 <a data-primary="Cartesian coordinates" data-type="indexterm"></a> <a data-primary="coordinate systems" data-type="indexterm"></a> <a data-primary="coordinate systems" data-secondary="Cartesian" data-type="indexterm"></a> <a data-primary="Descartes" data-secondary="René" data-type="indexterm"></a> <a data-primary="shapes" data-secondary="displaying" data-type="indexterm"></a>
 
-<p>Any time we display a shape in Processing, we have to specify a pixel location, a set of <span class="var">x</span> and <span class="var">y</span> coordinates. These coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for Ren&eacute; Descartes, the French mathematician who developed the ideas behind Cartesian space.</p>
+<p>Any time we display a shape in Processing, we have to specify a pixel position, a set of <span class="var">x</span> and <span class="var">y</span> coordinates. These coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for Ren&eacute; Descartes, the French mathematician who developed the ideas behind Cartesian space.</p>
 
 <a data-primary="coordinate systems" data-secondary="polar" data-type="indexterm"></a> <a data-primary="polar coordinates" data-type="indexterm"></a>
 
@@ -412,7 +412,7 @@ Polar coordinate—the magnitude (length) and direction (angle) of a vector</p>
 
 <a data-primary="coordinate systems" data-secondary="Processing and" data-type="indexterm"></a> <a data-primary="Processing" data-secondary="coordinate systems and" data-type="indexterm"></a>
 
-<p>Processing’s drawing functions, however, don’t understand polar coordinates. Whenever we want to display something in Processing, we have to specify locations as <em>(x,y)</em> Cartesian coordinates. However, sometimes it is a great deal more convenient for us to think in polar coordinates when designing. Happily for us, with trigonometry we can convert back and forth between polar and Cartesian, which allows us to design with whatever coordinate system we have in mind but always draw with Cartesian coordinates.</p>
+<p>Processing’s drawing functions, however, don’t understand polar coordinates. Whenever we want to display something in Processing, we have to specify positions as <em>(x,y)</em> Cartesian coordinates. However, sometimes it is a great deal more convenient for us to think in polar coordinates when designing. Happily for us, with trigonometry we can convert back and forth between polar and Cartesian, which allows us to design with whatever coordinate system we have in mind but always draw with Cartesian coordinates.</p>
 
 <a data-primary="theta (θ)" data-type="indexterm"></a> <a data-primary="angles" data-secondary="theta (θ)" data-type="indexterm"></a>
 
@@ -506,7 +506,7 @@ void draw() {
 
 <a data-primary="oscillation" data-secondary="simulating with sine curves" data-type="indexterm"></a>
 
-<p>And so we happily discover that we can simulate oscillation in a Processing sketch by assigning the output of the sine function to an object’s location. Note that this will follow the same methodology we applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.</p>
+<p>And so we happily discover that we can simulate oscillation in a Processing sketch by assigning the output of the sine function to an object’s position. Note that this will follow the same methodology we applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.</p>
 
 <p>Let’s begin with a really basic scenario. We want a circle to oscillate from the left side to the right side of a Processing window.</p>
 
@@ -518,7 +518,7 @@ void draw() {
 
 <p>This is what is known as <strong><em>simple harmonic motion</em></strong> (or, to be fancier, “the periodic sinusoidal oscillation of an object”). It’s going to be a simple program to write, but before we get into the code, let’s familiarize ourselves with some of the terminology of oscillation (and waves).</p>
 
-<p>Simple harmonic motion can be expressed as any location (in our case, the <span class="var">x</span> location) as a function of time, with the following two elements:</p>
+<p>Simple harmonic motion can be expressed as any position (in our case, the <span class="var">x</span> position) as a function of time, with the following two elements:</p>
 
 <a data-primary="amplitude" data-type="indexterm"></a> <a data-primary="oscillation" data-secondary="amplitude" data-type="indexterm"></a> <a data-primary="oscillation" data-secondary="period" data-type="indexterm"></a> <a data-primary="period" data-type="indexterm"></a>
 
@@ -627,7 +627,7 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
 <p><span class="var">frameCount</span> divided by <span class="var">period</span> tells us how many cycles we’ve completed—are we halfway through the first cycle? Have we completed two cycles? By multiplying that number by <span class="var">TWO_PI</span>, we get the result we want, since <span class="var">TWO_PI</span> is the number of radians required for one sine (or cosine) to complete one cycle.</p>
 
-<p>Wrapping this all up, here’s the Processing example that oscillates the <span class="var">x</span> location of a circle with an amplitude of 100 pixels and a period of 120 frames.</p>
+<p>Wrapping this all up, here’s the Processing example that oscillates the <span class="var">x</span> position of a circle with an amplitude of 100 pixels and a period of 120 frames.</p>
 
 <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
 
@@ -641,7 +641,7 @@ void draw() {
 
   float period = 120;
   float amplitude = 100;
-  //{!1} Calculating horizontal location according to the formula for simple harmonic motion
+  //{!1} Calculating horizontal position according to the formula for simple harmonic motion
   float x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
@@ -657,7 +657,7 @@ void draw() {
 <div data-type="exercise" id="chapter03_exercise6">
 <h5>Exercise 3.6</h5>
 
-<p>Using the sine function, create a simulation of a weight (sometimes referred to as a “bob”) that hangs from a spring from the top of the window. Use the <span class="function">map()</span> function to calculate the vertical location of the bob. Later in this chapter, we’ll see how to recreate this same simulation by modeling the forces of a spring according to Hooke’s law.</p>
+<p>Using the sine function, create a simulation of a weight (sometimes referred to as a “bob”) that hangs from a spring from the top of the window. Use the <span class="function">map()</span> function to calculate the vertical position of the bob. Later in this chapter, we’ll see how to recreate this same simulation by modeling the forces of a spring according to Hooke’s law.</p>
 </div>
 </section>
 
@@ -807,10 +807,10 @@ float amplitude = 100;</pre>
 
 <ol>
 	<li>
-	<p>Calculate the y location according to amplitude and sine of the angle.</p>
+	<p>Calculate the y position according to amplitude and sine of the angle.</p>
 	</li>
 	<li>
-	<p>Draw a circle at the <em>(x,y)</em> location.</p>
+	<p>Draw a circle at the <em>(x,y)</em> position.</p>
 	</li>
 	<li>
 	<p>Increment the angle according to angular velocity.</p>
@@ -819,9 +819,9 @@ float amplitude = 100;</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   for (int x = 0; x &lt;= width; x += 24) {
-    // 1) Calculate the y location according to amplitude and sine of the angle.
+    // 1) Calculate the y position according to amplitude and sine of the angle.
     float y = amplitude * sin(angle);
-    // 2) Draw a circle at the (x,y) location.
+    // 2) Draw a circle at the (x,y) position.
     ellipse(x, y + height/2, 48, 48);
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
@@ -1039,7 +1039,7 @@ class Pendulum  {
 <figcaption>Figure 3.13</figcaption>
 </figure>
 
-<p>&hellip;as well as a function <span class="function">display()</span> to draw the pendulum in the window. This begs the question: “Um, where do we draw the pendulum?” We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob location (let’s call it location)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
+<p>&hellip;as well as a function <span class="function">display()</span> to draw the pendulum in the window. This begs the question: “Um, where do we draw the pendulum?” We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob position (let’s call it position)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
 
 <p>The origin is just something we make up, as is the arm length. Let’s say:</p>
 
@@ -1047,23 +1047,23 @@ class Pendulum  {
 PVector origin = new PVector(100,10);
 float r = 125;</pre>
 
-<p>We’ve got the current angle stored in our variable <span class="var">angle</span>. So relative to the origin, the pendulum’s location is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
+<p>We’ve got the current angle stored in our variable <span class="var">angle</span>. So relative to the origin, the pendulum’s position is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector location = new PVector(r*sin(angle),r*cos(angle));</pre>
+PVector position = new PVector(r*sin(angle),r*cos(angle));</pre>
 
-<p>Since the location is relative to wherever the origin happens to be, we can just add origin to the location <span class="klass">PVector</span>:</p>
+<p>Since the position is relative to wherever the origin happens to be, we can just add origin to the position <span class="klass">PVector</span>:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-location.add(origin);</pre>
+position.add(origin);</pre>
 
 <p>And all that remains is the little matter of drawing a line and ellipse (you should be more creative, of course).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 stroke(0);
 fill(175);
-line(origin.x, origin.y, location.x, location.y);
-ellipse(location.x, location.y, 16, 16);</pre>
+line(origin.x, origin.y, position.x, position.y);
+ellipse(position.x, position.y, 16, 16);</pre>
 
 <p>Before we put everything together, there’s one last little detail I neglected to mention. Let’s think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a lot of questions that we could continue to ask that would affect the simulation. We’re living, of course, in a fantasy world, one where the pendulum’s arm is some idealized rod that never bends and the mass of the bob is concentrated in a single, infinitesimally small point. Nevertheless, even though we don’t want to worry ourselves with all of the questions, we should add one more variable to our calculation of angular acceleration. To keep things simple, in our derivation of the pendulum’s acceleration, we assumed that the length of the pendulum’s arm is 1. In fact, the length of the pendulum’s arm affects the acceleration greatly: the longer the arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that length, in this case <span class="var">r</span>. For a more involved explanation, visit <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum website</a>.</p>
 
@@ -1090,7 +1090,7 @@ Pendulum p;
 
 void setup() {
   size(640, 360);
-  //{!1} We make a new Pendulum object with an origin location and arm length.
+  //{!1} We make a new Pendulum object with an origin position and arm length.
   p = new Pendulum(new PVector(width/2,10),125);
 }
 
@@ -1101,8 +1101,8 @@ void draw() {
 
 class Pendulum  {
   //{!7} Many, many variables to keep track of the Pendulum’s various properties
-  PVector location;    // Location of bob
-  PVector origin;      // Location of arm origin
+  PVector position;    // position of bob
+  PVector origin;      // position of arm origin
   float r;             // Length of arm
   float angle;         // Pendulum arm angle
   float aVelocity;     // Angle velocity
@@ -1111,7 +1111,7 @@ class Pendulum  {
 
   Pendulum(PVector origin_, float r_) {
     origin = origin_.copy();
-    location = new PVector();
+    position = new PVector();
     r = r_;
     angle = PI/4;
 
@@ -1141,15 +1141,15 @@ class Pendulum  {
 
   void display() {
     //{!1} Where is the bob relative to the origin? Polar to Cartesian coordinates will tell us!
-    location.set(r * sin(angle), r * cos(angle));
-    location.add(origin);
+    position.set(r * sin(angle), r * cos(angle));
+    position.add(origin);
 
     stroke(0);
     //{!1} The arm
-    line(origin.x, origin.y, location.x, location.y);
+    line(origin.x, origin.y, position.x, position.y);
     fill(175);
     //{!1} The bob
-    ellipse(location.x, location.y, 16, 16);
+    ellipse(position.x, position.y, 16, 16);
   }
 }</pre>
 
@@ -1228,7 +1228,7 @@ class Pendulum  {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector anchor;
-PVector location;
+PVector position;
 float restLength;</pre>
 
 <a data-primary="springs" data-secondary="magnitude of force" data-tertiary="determining" data-type="indexterm"></a>
@@ -1273,7 +1273,7 @@ force.mult(-1 * k * x);</pre>
 
 <a data-primary="object-oriented programming" data-secondary="structures" data-tertiary="choosing between" data-type="indexterm"></a>
 
-<p>Now that we have the algorithm worked out for computing the spring force vector, the question remains: what object-oriented programming structure should we use? This, again, is one of those situations in which there is no “correct” answer. There are several possibilities; which one we choose depends on the program’s goals and one’s own personal coding style. Still, since we’ve been working all along with a <span class="klass">Mover</span> class, let’s keep going with this same framework. Let’s think of our <span class="klass">Mover</span> class as the spring’s “bob.” The bob needs <span class="var">location</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span> vectors to move about the screen. Perfect—we’ve got that already! And perhaps the bob experiences a gravity force via the <span class="function">applyForce()</span> function. Just one more step—we need to apply the spring force:</p>
+<p>Now that we have the algorithm worked out for computing the spring force vector, the question remains: what object-oriented programming structure should we use? This, again, is one of those situations in which there is no “correct” answer. There are several possibilities; which one we choose depends on the program’s goals and one’s own personal coding style. Still, since we’ve been working all along with a <span class="klass">Mover</span> class, let’s keep going with this same framework. Let’s think of our <span class="klass">Mover</span> class as the spring’s “bob.” The bob needs <span class="var">position</span>, <span class="var">velocity</span>, and <span class="var">acceleration</span> vectors to move about the screen. Perfect—we’ve got that already! And perhaps the bob experiences a gravity force via the <span class="function">applyForce()</span> function. Just one more step—we need to apply the spring force:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 Bob bob;
@@ -1365,7 +1365,7 @@ void draw()  {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Spring {
 
-  //{!1} We need to keep track of the spring’s anchor location.
+  //{!1} We need to keep track of the spring’s anchor position.
   PVector anchor;
 
   //{!2} Rest length and spring constant variables
@@ -1381,8 +1381,8 @@ class Spring {
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
   void connect(Bob b) {
 
-    //{!1 .bold} Get a vector pointing from anchor to Bob location.
-    PVector force = PVector.sub(b.location, anchor);
+    //{!1 .bold} Get a vector pointing from anchor to Bob position.
+    PVector force = PVector.sub(b.position, anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
     float d = force.mag();
     float stretch = d - len;
@@ -1402,10 +1402,10 @@ class Spring {
     rect(anchor.x,anchor.y,10,10);
   }
 
-  //{!4} Draw the spring connection between Bob location and anchor.
+  //{!4} Draw the spring connection between Bob position and anchor.
   void displayLine(Bob b) {
     stroke(255);
-    line(b.location.x,b.location.y,anchor.x,anchor.y);
+    line(b.position.x,b.position.y,anchor.x,anchor.y);
   }
 }</pre>
 
@@ -1426,15 +1426,15 @@ void constrainLength(Bob b, float minlen, float maxlen) {
   if (d &lt; minlen) {
     dir.normalize();
     dir.mult(________);
-    //{!1} Keep location within constraint.
-    b.location = PVector.add(______,______);
+    //{!1} Keep position within constraint.
+    b.position = PVector.add(______,______);
     b.velocity.mult(0);
   //{!1} Is it too long?
   } else if (____________) {
     dir.normalize();
     dir.mult(_________);
-    //{!1} Keep location within constraint.
-    b.location = PVector.add(______,______);
+    //{!1} Keep position within constraint.
+    b.position = PVector.add(______,______);
     b.velocity.mult(0);
   }
 }</pre>
@@ -1451,7 +1451,7 @@ void constrainLength(Bob b, float minlen, float maxlen) {
 
 <p>Step 3 Exercise:</p>
 
-<p>Take one of your creatures and incorporate oscillation into its motion. You can use the <span class="klass">Oscillator</span> class from Example 3.7 as a model. The <span class="klass">Oscillator</span> object, however, oscillates around a single point (the middle of the window). Try oscillating around a moving point. In other words, design a creature that moves around the screen according to location, velocity, and acceleration. But that creature isn’t just a static shape, it’s an oscillating body. Consider tying the speed of oscillation to the speed of motion. Think of a butterfly’s flapping wings or the legs of an insect. Can you make it appear that the creature’s internal mechanics (oscillation) drive its locomotion? For a sample, check out the “AttractionArrayWithOscillation” example with the code download.</p>
+<p>Take one of your creatures and incorporate oscillation into its motion. You can use the <span class="klass">Oscillator</span> class from Example 3.7 as a model. The <span class="klass">Oscillator</span> object, however, oscillates around a single point (the middle of the window). Try oscillating around a moving point. In other words, design a creature that moves around the screen according to position, velocity, and acceleration. But that creature isn’t just a static shape, it’s an oscillating body. Consider tying the speed of oscillation to the speed of motion. Think of a butterfly’s flapping wings or the legs of an insect. Can you make it appear that the creature’s internal mechanics (oscillation) drive its locomotion? For a sample, check out the “AttractionArrayWithOscillation” example with the code download.</p>
 </div>
 </section>
 </section>

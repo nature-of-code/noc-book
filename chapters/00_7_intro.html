@@ -106,7 +106,7 @@
 
 <p>A <strong><em>class</em></strong> is the template for building actual instances of objects. Think of a class as the cookie cutter; the objects are the cookies themselves.</p>
 
-<p>Let’s begin by defining the <span class="klass">Walker</span> class—what it means to be a <span class="klass">Walker</span> object. The <span class="klass">Walker</span> only needs two pieces of data—a number for its x-location and one for its y-location.</p>
+<p>Let’s begin by defining the <span class="klass">Walker</span> class—what it means to be a <span class="klass">Walker</span> object. The <span class="klass">Walker</span> only needs two pieces of data—a number for its x-position and one for its y-position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Walker {
@@ -116,7 +116,7 @@ class Walker {
 
 <a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm"></a> <a data-primary="constructor" data-type="indexterm"></a>
 
-<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object’s <span class="function">setup()</span>. There, we’ll initialize the <span class="klass">Walker</span><code>’</code>s starting location (in this case, the center of the window).</p>
+<p>Every class must have a constructor, a special function that is called when the object is first created. You can think of it as the object’s <span class="function">setup()</span>. There, we’ll initialize the <span class="klass">Walker</span><code>’</code>s starting position (in this case, the center of the window).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   //Objects have a constructor where they are initialized.
@@ -301,7 +301,7 @@ void draw() {
 
 <a data-primary="natural phenomena" data-secondary="modeling with the random() function" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="probability and" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="probability and" data-type="indexterm"></a> <a data-primary="probability" data-secondary="non-uniform distributions and" data-type="indexterm"></a> <a data-primary="random number generators" data-secondary="non-uniform distributions" data-tertiary="creating" data-type="indexterm"></a> <a data-primary="random() function" data-secondary="natural phenomena" data-tertiary="modeling with" data-type="indexterm"></a>
 
-<p>Remember when you first started programming in Processing? Perhaps you wanted to draw a lot of circles on the screen. So you said to yourself: “Oh, I know. I’ll draw all these circles at random locations, with random sizes and random colors.” In a computer graphics system, it’s often easiest to seed a system with randomness. In this book, however, we’re looking to build systems modeled on what we see in nature. Defaulting to randomness is not a particularly thoughtful solution to a design problem—in particular, the kind of problem that involves creating an organic or natural-looking simulation.</p>
+<p>Remember when you first started programming in Processing? Perhaps you wanted to draw a lot of circles on the screen. So you said to yourself: “Oh, I know. I’ll draw all these circles at random positions, with random sizes and random colors.” In a computer graphics system, it’s often easiest to seed a system with randomness. In this book, however, we’re looking to build systems modeled on what we see in nature. Defaulting to randomness is not a particularly thoughtful solution to a design problem—in particular, the kind of problem that involves creating an organic or natural-looking simulation.</p>
 
 <a data-primary="probability of the fittest" data-type="indexterm"></a>
 
@@ -589,7 +589,7 @@ void draw() {
 <div data-type="exercise" id="intro_exercise4">
 <h5>Exercise I.4</h5>
 
-<p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central location, but some dots do splatter out towards the edges. Can you use a normal distribution of random numbers to generate the locations of the dots? Can you also use a normal distribution of random numbers to generate a color palette?</p>
+<p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central position, but some dots do splatter out towards the edges. Can you use a normal distribution of random numbers to generate the positions of the dots? Can you also use a normal distribution of random numbers to generate a color palette?</p>
 </div>
 
 <a data-primary="random walks" data-secondary="Gaussian" data-type="indexterm"></a>
@@ -606,7 +606,7 @@ void draw() {
 
 <a data-primary="distributions" data-secondary="custom" data-type="indexterm"></a> <a data-primary="Lévy flight" data-type="indexterm"></a> <a data-primary="non-uniform distributions" data-secondary="custom" data-type="indexterm"></a> <a data-primary="distributions" data-secondary="non-uniform" data-tertiary="custom" data-type="indexterm"></a> <a data-primary="oversampling" data-type="indexterm"></a> <a data-primary="random number generators" data-secondary="custom distributions" data-tertiary="creating" data-type="indexterm"></a> <a data-primary="random walks" data-secondary="Lévy flight" data-type="indexterm"></a> <a data-primary="random walks" data-secondary="oversampling" data-type="indexterm"></a>
 
-<p>There will come a time in your life when you do not want a uniform distribution of random values, or a Gaussian one. Let’s imagine for a moment that you are a random walker in search of food. Moving randomly around a space seems like a reasonable strategy for finding something to eat. After all, you don’t know where the food is, so you might as well search randomly until you find it. The problem, as you may have noticed, is that random walkers return to previously visited locations many times (this is known as “oversampling”). One strategy to avoid such a problem is to, every so often, take a very large step. This allows the walker to forage randomly around a specific location while periodically jumping very far away to reduce the amount of oversampling. This variation on the random walk (known as a L&eacute;vy flight) requires a custom set of probabilities. Though not an exact implementation of a L&eacute;vy flight, we could state the probability distribution as follows: the longer the step, the less likely it is to be picked; the shorter the step, the more likely.</p>
+<p>There will come a time in your life when you do not want a uniform distribution of random values, or a Gaussian one. Let’s imagine for a moment that you are a random walker in search of food. Moving randomly around a space seems like a reasonable strategy for finding something to eat. After all, you don’t know where the food is, so you might as well search randomly until you find it. The problem, as you may have noticed, is that random walkers return to previously visited positions many times (this is known as “oversampling”). One strategy to avoid such a problem is to, every so often, take a very large step. This allows the walker to forage randomly around a specific position while periodically jumping very far away to reduce the amount of oversampling. This variation on the random walk (known as a L&eacute;vy flight) requires a custom set of probabilities. Though not an exact implementation of a L&eacute;vy flight, we could state the probability distribution as follows: the longer the step, the less likely it is to be picked; the shorter the step, the more likely.</p>
 
 <p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an array with values (some duplicated so that they would be picked more frequently) or by testing the result of <span class="function">random()</span>. We could implement a L&eacute;vy flight by saying that there is a 1% chance of the walker taking a large step.</p>
 
@@ -730,17 +730,17 @@ float acceptreject() {
 <p>An online lecture by Ken Perlin lets you learn more about how noise works from <a href="http://www.noisemachine.com/talk1/">Perlin himself</a>.</p>
 </div>
 
-<p>Consider drawing a circle in our Processing window at a random x-location.</p>
+<p>Consider drawing a circle in our Processing window at a random x-position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// A random x-location
+// A random x-position
 float x = random(0, width);
 ellipse(x, 180, 16, 16);</pre>
 
-<p>Now, instead of a random x-location, we want a Perlin noise x-location that is “smoother.” You might think that all you need to do is replace <span class="function">random()</span> with <span class="function">noise()</span>, i.e.</p>
+<p>Now, instead of a random x-position, we want a Perlin noise x-position that is “smoother.” You might think that all you need to do is replace <span class="function">random()</span> with <span class="function">noise()</span>, i.e.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-//{.line-through} A noise x-location?
+//{.line-through} A noise x-position?
 float x = noise(0, width);</pre>
 
 <a data-primary="noise() function (Processing)" data-secondary="arguments for" data-type="indexterm"></a>
@@ -883,7 +883,7 @@ class Walker {
   }
 
   void step() {
-    //{!2} x- and y-location mapped from noise
+    //{!2} x- and y-position mapped from noise
     x = map(noise(tx), 0, 1, 0, width);
     y = map(noise(ty), 0, 1, 0, height);
 
@@ -893,18 +893,18 @@ class Walker {
   }
 }</pre>
 
-<p>Notice how the above example requires an additional pair of variables: <span class="var">tx</span> and <span class="var">ty</span>. This is because we need to keep track of two time variables, one for the x-location of the <span class="klass">Walker</span> object and one for the y-location. But there is something a bit odd about these variables. Why does <span class="var">tx</span> start at 0 and <span class="var">ty</span> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <span class="var">t</span> each and every time. If we asked for the noise value at the same time <span class="var">t</span> for both <span class="var">x</span> and <span class="var">y</span>, then <span class="var">x</span> and <span class="var">y</span> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <span class="var">x</span> and 10,000 for <span class="var">y</span> so that <span class="var">x</span> and <span class="var">y</span> can appear to act independently of each other.</p>
+<p>Notice how the above example requires an additional pair of variables: <span class="var">tx</span> and <span class="var">ty</span>. This is because we need to keep track of two time variables, one for the x-position of the <span class="klass">Walker</span> object and one for the y-position. But there is something a bit odd about these variables. Why does <span class="var">tx</span> start at 0 and <span class="var">ty</span> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <span class="var">t</span> each and every time. If we asked for the noise value at the same time <span class="var">t</span> for both <span class="var">x</span> and <span class="var">y</span>, then <span class="var">x</span> and <span class="var">y</span> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <span class="var">x</span> and 10,000 for <span class="var">y</span> so that <span class="var">x</span> and <span class="var">y</span> can appear to act independently of each other.</p>
 
 <figure id="intro_figure9"><img alt="Figure I.9" src="intro/intro_09.png" />
 <figcaption>Figure I.9</figcaption>
 </figure>
 
-<p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-location whenever we want. In examples, you will often see a variable named <span class="var">xoff</span> to indicate the x-offset along the noise graph, rather than <span class="var">t</span> for time (as noted in the diagram).</p>
+<p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-position whenever we want. In examples, you will often see a variable named <span class="var">xoff</span> to indicate the x-offset along the noise graph, rather than <span class="var">t</span> for time (as noted in the diagram).</p>
 
 <div data-type="exercise" id="intro_exercise7">
 <h5>Exercise I.7</h5>
 
-<p>In the above random walker, the result of the noise function is mapped directly to the <span class="klass">Walker</span><code>’</code>s location. Create a random walker where you instead map the result of the <span class="function">noise()</span> function to a <span class="klass">Walker</span><code>’</code>s step size.</p>
+<p>In the above random walker, the result of the noise function is mapped directly to the <span class="klass">Walker</span><code>’</code>s position. Create a random walker where you instead map the result of the <span class="function">noise()</span> function to a <span class="klass">Walker</span><code>’</code>s step size.</p>
 </div>
 </section>
 
@@ -952,7 +952,7 @@ updatePixels();</pre>
    //{.bold} A Perlin noise brightness!
    float bright = map(noise(x,y),0,1,0,255);</pre>
 
-<p>This is a nice start conceptually—it gives you a noise value for every (<span class="var">x</span>,<span class="var">y</span>) location in our two-dimensional space. The problem is that this won’t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <span class="var">xoff</span> each time we move horizontally, and a <span class="var">yoff</span> variable each time we move vertically through the nested loops.</p>
+<p>This is a nice start conceptually—it gives you a noise value for every (<span class="var">x</span>,<span class="var">y</span>) position in our two-dimensional space. The problem is that this won’t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <span class="var">xoff</span> each time we move horizontally, and a <span class="var">yoff</span> variable each time we move vertically through the nested loops.</p>
 
 <div data-type="example">
 <h5>Example I.6: 2D Perlin noise</h5>
@@ -970,7 +970,7 @@ for (int x = 0; x &lt; width; x++) {
     //{!2 .bold} Use xoff and yoff for noise().
     float bright =
 		  map(noise(xoff,yoff),0,1,0,255);
-    // Use x and y for pixel location.
+    // Use x and y for pixel position.
     pixels[x + y * width] = color(bright);
     //{!1 .bold} Increment yoff.
     yoff += 0.01;
@@ -1001,7 +1001,7 @@ for (int x = 0; x &lt; width; x++) {
 </figure>
 </div>
 
-<p>We’ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise, we used smooth values to assign the location of an object to give the appearance of wandering. With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It’s important to remember, however, that Perlin noise values are just that—values. They aren’t inherently tied to pixel locations or color. Any example in this book that has a variable could be controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and direction of objects moving along a grid in a flow field simulation.</p>
+<p>We’ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise, we used smooth values to assign the position of an object to give the appearance of wandering. With two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It’s important to remember, however, that Perlin noise values are just that—values. They aren’t inherently tied to pixel positions or color. Any example in this book that has a variable could be controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and direction of objects moving along a grid in a flow field simulation.</p>
 
 <figure class="two-col" data-pde="processingjs/intro/TreeStochasticNoise/TreeStochasticNoise.pde" id="intro_figure12"><img alt="Figure I.12: Tree with Perlin noise" src="intro/intro_12.png" />
 <figcaption>Figure I.12: Tree with Perlin noise&nbsp;</figcaption>

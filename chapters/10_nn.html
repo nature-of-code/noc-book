@@ -637,7 +637,7 @@ void draw() {
 
 <p>We are now going to take significant creative license with the concept of a neural network. This will allow us to stick with the basics and avoid some of the highly complex algorithms associated with more sophisticated neural networks. Here we’re not so concerned with following rules outlined in artificial intelligence textbooks—we’re just hoping to make something interesting and brain-like.</p>
 
-<p>Remember our good friend the <span class="klass">Vehicle</span> class? You know, that one for making objects with a location, velocity, and acceleration? That could obey Newton’s laws with an <span class="function">applyForce()</span> function and move around the window according to a variety of steering rules?</p>
+<p>Remember our good friend the <span class="klass">Vehicle</span> class? You know, that one for making objects with a position, velocity, and acceleration? That could obey Newton’s laws with an <span class="function">applyForce()</span> function and move around the window according to a variety of steering rules?</p>
 
 <p>What if we added one more variable to our <span class="klass">Vehicle</span> class?</p>
 
@@ -647,7 +647,7 @@ class Vehicle {
   //{!1} Giving the vehicle a brain!
   Perceptron brain;
 
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   [inline]//etc...</pre>
@@ -675,7 +675,7 @@ class Vehicle {
  void seek(ArrayList<PVector> targets) {
     for (PVector target : targets) {
       PVector force = seek(targets.get(i));
-      float d = PVector.dist(target, location);
+      float d = PVector.dist(target, position);
       float weight = map(d, 0, width, 0, 5);
       //{!1} Weighting each steering force individually
       force.mult(weight);
@@ -765,14 +765,14 @@ int feedforward(float[] inputs) {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     PVector desired = new PVector(width/2, height/2);
-    PVector error = PVector.sub(desired, location);
+    PVector error = PVector.sub(desired, position);
     brain.train(forces, error);</pre>
 
 <figure class="half-width-right" id="chapter10_figure10"><img alt="Figure 10.10" src="chapter10/ch10_10.png" />
 <figcaption>Figure 10.10</figcaption>
 </figure>
 
-<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current location to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error—the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
+<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current position to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error—the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
 
 <p>The brain can then apply this “error” vector (which has two error values, one for <span class="var">x</span> and one for <span class="var">y</span>) as a means for adjusting the weights, just as we did in the line classification example.</p>
 
@@ -836,7 +836,7 @@ class Vehicle {
   Perceptron brain;
 
   // Same old variables for physics
-  PVector location;
+  PVector position;
   PVector velocity;
   PVector acceleration;
   float maxforce;
@@ -847,7 +847,7 @@ class Vehicle {
     brain = new Perceptron(n, 0.001);
     acceleration = new PVector(0, 0);
     velocity = new PVector(0, 0);
-    location = new PVector(x, y);
+    position = new PVector(x, y);
     maxspeed = 4;
     maxforce = 0.1;
   }
@@ -856,7 +856,7 @@ class Vehicle {
   void update() {
     velocity.add(acceleration);
     velocity.limit(maxspeed);
-    location.add(velocity);
+    position.add(velocity);
     acceleration.mult(0);
   }
 
@@ -880,13 +880,13 @@ class Vehicle {
     //{!3 .bold .offset} The brain is trained according to
     // the distance to the center.
     PVector desired = new PVector(width/2, height/2);
-    PVector error = PVector.sub(desired, location);
+    PVector error = PVector.sub(desired, position);
     brain.train(forces, error);
   }
 
   //{!8} Same old seek() function
   PVector seek(PVector target) {
-    PVector desired = PVector.sub(target, location);
+    PVector desired = PVector.sub(target, position);
     desired.normalize();
     desired.mult(maxspeed);
     PVector steer = PVector.sub(desired, velocity);
@@ -971,34 +971,34 @@ class Vehicle {
 <figcaption>Figure 10.15</figcaption>
 </figure>
 
-<p>The primary building block for this diagram is a neuron. For the purpose of this example, the <span class="klass">Neuron</span> class describes an entity with an <em>(x,y)</em> location.</p>
+<p>The primary building block for this diagram is a neuron. For the purpose of this example, the <span class="klass">Neuron</span> class describes an entity with an <em>(x,y)</em> position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// An incredibly simple Neuron class stores and displays the location of a single neuron.
+// An incredibly simple Neuron class stores and displays the position of a single neuron.
 class Neuron {
-  PVector location;
+  PVector position;
 
   Neuron(float x, float y) {
-    location = new PVector(x, y);
+    position = new PVector(x, y);
   }
 
   void display() {
     stroke(0);
     fill(0);
-    ellipse(location.x, location.y, 16, 16);
+    ellipse(position.x, position.y, 16, 16);
   }
 }</pre>
 
-<p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own location (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
+<p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own position (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!2} A Network is a list of neurons.
 class Network {
   ArrayList<Neuron> neurons;
-  PVector location;
+  PVector position;
 
   Network(float x, float y) {
-    location = new PVector(x, y);
+    position = new PVector(x, y);
     neurons = new ArrayList<Neuron>();
   }
 
@@ -1010,7 +1010,7 @@ class Network {
   //{!8} We can draw the entire network.
   void display() {
     pushMatrix();
-    translate(location.x, location.y);
+    translate(position.x, position.y);
     for (Neuron n : neurons) {
       n.display();
     }
@@ -1073,7 +1073,7 @@ class Connection {
   void display() {
     stroke(0);
     strokeWeight(weight * 4);
-    line(a.location.x, a.location.y, b.location.x, b.location.y);
+    line(a.position.x, a.position.y, b.position.x, b.position.y);
   }
 }</pre>
 
@@ -1125,13 +1125,13 @@ void setup() {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron {
-  PVector location;
+  PVector position;
 
   //{!1} The neuron stores its connections.
   ArrayList<Connection> connections;
 
   Neuron(float x, float y) {
-    location = new PVector(x, y);
+    position = new PVector(x, y);
     connections = new ArrayList<Connection>();
   }
 
@@ -1153,7 +1153,7 @@ class Neuron {
     stroke(0);
     strokeWeight(1);
     fill(0);
-    ellipse(location.x, location.y, 16, 16);
+    ellipse(position.x, position.y, 16, 16);
 
     //{!3} Drawing all the connections
     for (Connection c : connections) {
@@ -1251,22 +1251,22 @@ class Connection {
 
 <p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>.</p>
 
-<p>Let’s first think about how we might do that. We know the location of <span class="klass">Neuron</span> <span class="var">a</span>; it’s the <span class="klass">PVector</span> <span class="var">a.location</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.location</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
+<p>Let’s first think about how we might do that. We know the position of <span class="klass">Neuron</span> <span class="var">a</span>; it’s the <span class="klass">PVector</span> <span class="var">a.position</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.position</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector sender = a.location.get();</pre>
+  PVector sender = a.position.get();</pre>
 
-<p>Once we have a copy of that location, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
+<p>Once we have a copy of that position, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  sender.x = lerp(sender.x, b.location.x, 0.1);
-  sender.y = lerp(sender.y, b.location.y, 0.1);</pre>
+  sender.x = lerp(sender.x, b.position.x, 0.1);
+  sender.y = lerp(sender.y, b.position.y, 0.1);</pre>
 
-<p>Along with the connection’s line, we can then draw a circle at that location:</p>
+<p>Along with the connection’s line, we can then draw a circle at that position:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   stroke(0);
-  line(a.location.x, a.location.y, b.location.x, b.location.y);
+  line(a.position.x, a.position.y, b.position.x, b.position.y);
   fill(0);
   ellipse(sender.x, sender.y, 8, 8); //[bold]</pre>
 
@@ -1295,35 +1295,35 @@ class Connection {
   void feedforward(float val) {
     // Sending is now true.
     sending = true;
-    // Start the animation at the location of Neuron A.
-    sender = a.location.copy();
+    // Start the animation at the position of Neuron A.
+    sender = a.position.copy();
     //{!1} Store the output for when it is actually time to feed it forward.
     output = val * weight;
   }</pre>
 
-<p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> “sender” for the location where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
+<p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> “sender” for the position where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
 
-<p>The <span class="function">feedforward()</span> function is called the moment the connection becomes active. Once it’s active, we’ll need to call another function continuously (each time through <span class="function">draw()</span>), one that will update the location of the traveling data.</p>
+<p>The <span class="function">feedforward()</span> function is called the moment the connection becomes active. Once it’s active, we’ll need to call another function continuously (each time through <span class="function">draw()</span>), one that will update the position of the traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
     if (sending) {
       //{!2} As long as we’re sending, interpolate our points.
-      sender.x = lerp(sender.x, b.location.x, 0.1);
-      sender.y = lerp(sender.y, b.location.y, 0.1);
+      sender.x = lerp(sender.x, b.position.x, 0.1);
+      sender.y = lerp(sender.y, b.position.y, 0.1);
     }
   }</pre>
 
-<p>We’re missing a key element, however. We need to check if the sender has arrived at location b, and if it has, feed forward that output to the next neuron.</p>
+<p>We’re missing a key element, however. We need to check if the sender has arrived at position b, and if it has, feed forward that output to the next neuron.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
     if (sending) {
-      sender.x = lerp(sender.x, b.location.x, 0.1);
-      sender.y = lerp(sender.y, b.location.y, 0.1);
+      sender.x = lerp(sender.x, b.position.x, 0.1);
+      sender.y = lerp(sender.y, b.position.y, 0.1);
 
       // How far are we from neuron b?
-      float d = PVector.dist(sender, b.location); //[bold]
+      float d = PVector.dist(sender, b.position); //[bold]
 
       //{!4 .bold} If we’re close enough (within one pixel) pass on the output. Turn off sending.
       if (d < 1) {
@@ -1374,16 +1374,16 @@ class Connection {
   // The Connection is active with data traveling from a to b.
   void feedforward(float val) {
     output = val*weight;
-    sender = a.location.get();
+    sender = a.position.get();
     sending = true;
   }
 
   // Update the animation if it is sending.
   void update() {
     if (sending) {
-      sender.x = lerp(sender.x, b.location.x, 0.1);
-      sender.y = lerp(sender.y, b.location.y, 0.1);
-      float d = PVector.dist(sender, b.location);
+      sender.x = lerp(sender.x, b.position.x, 0.1);
+      sender.y = lerp(sender.y, b.position.y, 0.1);
+      float d = PVector.dist(sender, b.position);
       if (d < 1) {
         b.feedforward(output);
         sending = false;
@@ -1395,7 +1395,7 @@ class Connection {
   void display() {
     stroke(0);
     strokeWeight(1 + weight * 4);
-    line(a.location.x, a.location.y, b.location.x, b.location.y);
+    line(a.position.x, a.position.y, b.position.x, b.position.y);
 
     if (sending) {
       fill(0);
@@ -1408,7 +1408,7 @@ class Connection {
 <div data-type="exercise" id="chapter10_exercise5">
 <h5>Exercise 10.5</h5>
 
-<p>The network in the above example was manually configured by setting the location of each neuron and its connections with hard-coded values. Rewrite this example to generate the network’s layout via an algorithm. Can you make a circular network diagram? A random one? An example of a multi-layered network is below.</p>
+<p>The network in the above example was manually configured by setting the position of each neuron and its connections with hard-coded values. Rewrite this example to generate the network’s layout via an algorithm. Can you make a circular network diagram? A random one? An example of a multi-layered network is below.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Ex_10_5_LayeredNetworkAnimation.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Connection.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Network.pde processingjs/chapter10/Ex_10_5_LayeredNetworkAnimation/Neuron.pde"><img alt="ch10 exc05" src="chapter10/ch10_exc05.png" />
 <figcaption>&nbsp;</figcaption>
