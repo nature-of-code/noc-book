@@ -117,11 +117,11 @@
 
 <p>Or:</p>
 
-<p>{newton2ablock}</p>
+<div data-type="equation">\vec{F} = M \times \vec{A}</div>
 
 <p>Why is this the most important law for us? Well, let’s write it a different way.</p>
 
-<p>{newton2bblock}</p>
+<div data-type="equation">\vec{A} = \vec{F} / M</div>
 
 <p>Acceleration is directly proportional to force and inversely proportional to mass. This means that if you get pushed, the harder you are pushed, the faster you’ll move (accelerate). The bigger you are, the slower you’ll move.</p>
 
@@ -147,7 +147,7 @@
 
 <p>Now, in the world of Processing, what is mass anyway? Aren’t we dealing with pixels? To start in a simpler place, let’s say that in our pretend pixel world, all of our objects have a mass equal to 1. <span class="var">F</span>/ 1 = <span class="var">F</span>. And so:</p>
 
-<p>{aequalsf}</p>
+<div data-type="equation">\vec{A} = \vec{F}</div>
 
 <p>The acceleration of an object is equal to force. This is great news. After all, we saw in Chapter 1 that acceleration was the key to controlling the movement of our objects on screen. position is adjusted by velocity, and velocity by acceleration. Acceleration was where it all began. Now we learn that <em>force</em> is truly where it all begins.</p>
 
@@ -247,7 +247,7 @@ void update() {
 
 <a data-primary="mass" data-secondary="modeling" data-type="indexterm"></a> <a data-primary="natural phenomena" data-secondary="mass" data-tertiary="modeling" data-type="indexterm"></a>
 
-<p>OK. We’ve got one tiny little addition to make before we are done with integrating forces into our <span class="klass">Mover</span> class and are ready to look at examples. After all, Newton’s second law is really {newton2a}, not {fequalsa}. Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
+<p>OK. We’ve got one tiny little addition to make before we are done with integrating forces into our <span class="klass">Mover</span> class and are ready to look at examples. After all, Newton’s second law is really <span data-type="equation">\vec{F} = M \times \vec{A}</span>, not <span data-type="equation">\vec{F} = \vec{A}</span>. Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little more time here because a slight complication will emerge.</p>
 
 <p>First we just need to add mass.</p>
 
@@ -599,15 +599,15 @@ for (int i = 0; i &lt; movers.length; i++) {
 <div data-type="note">
 <h2>Dealing with formulae</h2>
 
-<p>OK, in a moment we’re going to write out the formula for friction. This isn’t the first time we’ve seen a formula in this book; we just finished up our discussion of Newton’s second law, {newton2a} (or force = mass * acceleration). We didn’t spend a lot of time worrying about this formula because it’s a nice and simple one. Nevertheless, it’s a scary world out there. Just take a look at the equation for a “normal” distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
+<p>OK, in a moment we’re going to write out the formula for friction. This isn’t the first time we’ve seen a formula in this book; we just finished up our discussion of Newton’s second law, <span data-type="equation">\vec{F} = M \times \vec{A}</span> (or force = mass * acceleration). We didn’t spend a lot of time worrying about this formula because it’s a nice and simple one. Nevertheless, it’s a scary world out there. Just take a look at the equation for a “normal” distribution, which we covered (without looking at the formula) in the <a href="#intro_section4">Introduction</a>.</p>
 
-<p>{normal}</p>
+<div data-type="equation">\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}</div>
 
 <a data-primary="friction" data-secondary="formula for" data-type="indexterm"></a>
 
 <p>What we’re seeing here is that formulas like to use a lot of symbols (quite often letters from the Greek alphabet). Let’s take a look at the formula for friction.</p>
 
-<p>{friction1}</p>
+<div data-type="equation">\vec{friction} = -\mu * N * \hat{\nu}</div>
 
 <p>If it’s been a while since you’ve looked at a formula from a math or physics textbook, there are three key points that are important to cover before we move on.</p>
 
@@ -619,7 +619,8 @@ for (int i = 0; i &lt; movers.length; i++) {
 	<p><strong><em>Are we talking about a vector or a scalar?</em></strong> It’s important for us to realize that in some cases, we’ll be looking at a vector; in others, a scalar. For example, in this case the force of friction is a vector. We can see that by the arrow above the word “friction.” It has a magnitude and direction. The right side of the equation also has a vector, as indicated by the symbol {unitv}, which in this case stands for the velocity unit vector.</p>
 	</li>
 	<li>
-	<p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong> The formula above actually has four elements: -1, <em>&mu;</em>, <em>N</em>, and {unitv}. We want to multiply them together and read the formula as: {friction2}</p>
+	<p><strong><em>When symbols are placed next to each other, we mean for them to be multiplied.</em></strong> The formula above actually has four elements: -1, <em>&mu;</em>, <em>N</em>, and <span data-type="equation">\hat{v}</span>
+. We want to multiply them together and read the formula as: <span data-type="equation">\vec{friction} = -1 * \mu * N * \hat{\nu}</span></p>
 	</li>
 </ul>
 </div>
@@ -644,7 +645,7 @@ for (int i = 0; i &lt; movers.length; i++) {
 
 <a data-primary="friction" data-secondary="determining direction/magnitude of" data-type="indexterm"></a>
 
-<p>It’s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that’s the part of the formula that says -1 * {unitv}, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
+<p>It’s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that’s the part of the formula that says -1 * <span data-type="equation">\hat{v}</span>, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector friction = velocity.get();
@@ -746,13 +747,13 @@ void draw() {
 
 <p>Friction also occurs when a body passes through a liquid or gas. This force has many different names, all really meaning the same thing: <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>. While the result is ultimately the same as our previous friction examples (the object slows down), the way in which we calculate a drag force will be slightly different. Let’s look at the formula:</p>
 
-<p>{drag1}</p>
+<div data-type="equation">F_d = - \frac{1}{2}\rho\nu^2 A C_d\hat{\nu}</div>
 
 <p>Now let’s break this down and see what we really need for an effective simulation in Processing, making ourselves a much simpler formula in the process.</p>
 
 <ul>
 	<li>
-	<p>{fd} refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <span class="function">applyForce()</span> function.</p>
+	<p><span data-type="equation">F_d</span> refers to <em>drag force</em>, the vector we ultimately want to compute and pass into our <span class="function">applyForce()</span> function.</p>
 	</li>
 	<li>
 	<p>- 1/2 is a constant: -0.5. This is fairly irrelevant in terms of our Processing world, as we will be making up values for other constants anyway. However, the fact that it is negative is important, as it tells us that the force is in the opposite direction of velocity (just as with friction).</p>
@@ -763,19 +764,19 @@ void draw() {
 
 <ul>
 	<li>
-	<p>{rho} is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don’t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
+	<p><span data-type="equation">\rho</span> is the Greek letter <em>rho</em>, and refers to the density of the liquid, something we don’t need to worry about. We can simplify the problem and consider this to have a constant value of 1.</p>
 	</li>
 	<li>
-	<p>{v} refers to the speed of the object moving. OK, we’ve got this one! The object’s speed is the magnitude of the velocity vector: <span class="function">velocity.magnitude()</span>. And {v2} just means {v} squared or {v} * {v}.</p>
+	<p><span data-type="equation">v</span> refers to the speed of the object moving. OK, we’ve got this one! The object’s speed is the magnitude of the velocity vector: <span class="function">velocity.magnitude()</span>. And <span data-type="equation">v^2</span> just means <span data-type="equation">v</span> squared or <span data-type="equation">v \times v</span>.</p>
 	</li>
 	<li>
-	<p>{a} refers to the frontal area of the object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p>
+	<p><span data-type="equation">A</span> refers to the frontal area of the object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic simulation, we can consider our object to be spherical and ignore this element.</p>
 	</li>
 	<li>
-	<p>{cd} is the coefficient of drag, exactly the same as the coefficient of friction (μ). This is a constant we’ll determine based on whether we want the drag force to be strong or weak.</p>
+	<p><span data-type="equation">C_d</span> is the coefficient of drag, exactly the same as the coefficient of friction (μ). This is a constant we’ll determine based on whether we want the drag force to be strong or weak.</p>
 	</li>
 	<li>
-	<p>{unitv} Look familiar? It should. This refers to the velocity unit vector, i.e. <span class="function">velocity.normalize()</span>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
+	<p><span data-type="equation">\hat{v}</span> Look familiar? It should. This refers to the velocity unit vector, i.e. <span class="function">velocity.normalize()</span>. Just like with friction, drag is a force that points in the opposite direction of velocity.</p>
 	</li>
 </ul>
 
@@ -961,13 +962,13 @@ void draw() {
 	<p><span class="var">G</span> is the <em>universal gravitational constant</em>, which in our world equals 6.67428 x 10<sup>-11</sup> meters cubed per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or Albert Einstein. It’s not an important number if you are a Processing programmer. Again, it’s a constant that we can use to make the forces in our world weaker or stronger. Just making it equal to one and ignoring it isn’t such a terrible choice either.</p>
 	</li>
 	<li>
-	<p><span class="var">m<sub>1</sub></span> and <span class="var">m<sub>2</sub></span> are the masses of objects 1 and 2. As we saw with Newton’s second law ({newton2a}), mass is also something we could choose to ignore. After all, shapes drawn on the screen don’t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which “bigger” objects exert a stronger gravitational force than smaller ones.</p>
+	<p><span class="var">m<sub>1</sub></span> and <span class="var">m<sub>2</sub></span> are the masses of objects 1 and 2. As we saw with Newton’s second law (<span data-type="equation">\vec{F} = M \times \vec{A}</span>), mass is also something we could choose to ignore. After all, shapes drawn on the screen don’t actually have a physical mass. However, if we keep these values, we can create more interesting simulations in which “bigger” objects exert a stronger gravitational force than smaller ones.</p>
 	</li>
 	<li>
-	<p>{unitr} refers to the unit vector pointing from object 1 to object 2. As we’ll see in a moment, we can compute this direction vector by subtracting the position of one object from the other.</p>
+	<p><span data-type="equation">\hat{r}</span> refers to the unit vector pointing from object 1 to object 2. As we’ll see in a moment, we can compute this direction vector by subtracting the position of one object from the other.</p>
 	</li>
 	<li>
-	<p><span class="var">r</span><sup>2</sup> refers to the distance between the two objects squared. Let’s take a moment to think about this a bit more. With everything on the top of the formula—<span class="var">G</span>, <span class="var">m<sub>1</sub></span>, <span class="var">m<sub>2</sub></span>—the bigger its value, the stronger the force. Big mass, big force. Big <span class="var">G</span>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
+	<p><span data-type="equation">r^2</span> refers to the distance between the two objects squared. Let’s take a moment to think about this a bit more. With everything on the top of the formula—<span class="var">G</span>, <span class="var">m<sub>1</sub></span>, <span class="var">m<sub>2</sub></span>—the bigger its value, the stronger the force. Big mass, big force. Big <span class="var">G</span>, big force. Now, when we divide by something, we have the opposite. The strength of the force is inversely proportional to the distance squared. The <em>farther away</em> an object is, the <em>weaker</em> the force; the <em>closer</em>, the <em>stronger</em>.</p>
 	</li>
 </ul>
 
@@ -989,7 +990,7 @@ void draw() {
 	</li>
 </ol>
 
-<p>Given these assumptions, we want to compute <span class="var">PVector force</span>, the force of gravity. We’ll do it in two parts. First, we’ll compute the direction of the force {unitr} in the formula above. Second, we’ll calculate the strength of the force according to the masses and distance.</p>
+<p>Given these assumptions, we want to compute <span class="var">PVector force</span>, the force of gravity. We’ll do it in two parts. First, we’ll compute the direction of the force <span data-type="equation">\hat{r}</span> in the formula above. Second, we’ll calculate the strength of the force according to the masses and distance.</p>
 
 <figure class="half-width-right" id="chapter02_figure7"><img alt="Figure 2.7" src="chapter02/ch02_07.png" />
 <figcaption>Figure 2.7</figcaption>
