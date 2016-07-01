@@ -211,15 +211,26 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void step() {
     //{!2} Yields -1, 0, or 1
-    int xstep = int(random(3))-1;
-    int ystep = int(random(3))-1;
+    int xstep = int(random(3)) - 1;
+    int ystep = int(random(3)) - 1;
     x += xstep;
     y += ystep;
   }</pre>
 
-<p>Taking this further, we could use floating point numbers (i.e. decimal numbers) for <span class="var">x</span> and <span class="var">y</span> instead and move according to an arbitrary random value between -1 and 1.</p>
+<p>Taking this further, we could use floating point numbers (i.e. decimal numbers)  move according to an arbitrary random value between -1 and 1.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
+class Walker {
+	// x and y are now floats
+  float x;
+  float y;
+</pre>
+
+<p>Now that <code>x</code> and <code>y</code> are floats, the output of the <code>random()</code> function can be directly applied.</p>
+
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
+	float x;
+
   void step() {
     //{!2} Yields any floating point number between -1.0 and 1.0
     float xstep = random(-1, 1);
