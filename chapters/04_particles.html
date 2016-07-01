@@ -414,7 +414,7 @@ Iterator<Particle> it = particles.iterator();</pre>
     }
   }</pre>
 
-<p>Putting it all together, we have:</p>
+<p>Because the <code>Iterator</code> object is specific to Java and requires an additional import statement in your Processing code, I'm choosing to use the backwards loop style in this book's examples.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter04/_4_02_ArrayListParticles/_4_02_ArrayListParticles.pde processingjs/chapter04/_4_02_ArrayListParticles/Particle.pde"><img alt="ch04 ex02" src="chapter04/ch04_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -423,25 +423,24 @@ Iterator<Particle> it = particles.iterator();</pre>
 <div data-type="example"><h5>Example 4.2: ArrayList of particles with Iterator</h5></div>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-ArrayList&lt;Particle&gt; particles;
+ArrayList<Particle> particles;
 
 void setup() {
   size(640, 360);
-  particles = new ArrayList&lt;Particle&gt;();
+  particles = new ArrayList<Particle>();
 }
 
 void draw() {
   background(255);
 
-  particles.add(new Particle(new PVector(width/2,50)));
+  particles.add(new Particle(new PVector(width / 2, 50)));
 
-  Iterator&lt;Particle&gt; it = particles.iterator();
-  //{!7} Using an Iterator object instead of counting with i
-  while (it.hasNext()) {
-    Particle p = it.next();
+  //{!1} Looping through the array backwards for deletion
+  for (int i = particles.size()-1; i >= 0; i--) {
+    Particle p = particles.get(i);
     p.run();
     if (p.isDead()) {
-      it.remove();
+      particles.remove(i);
     }
   }
 }</pre>
@@ -497,13 +496,11 @@ void draw() {
 
 
 
-  <b>Iterator&lt;Particle&gt; it =
-      particles.iterator();
-  while (it.hasNext()) {
-    Particle p = it.next();
+  <b>for (int i = particles.size()-1; i >= 0; i--) {
+    Particle p = particles.get(i);
     p.run();
     if (p.isDead()) {
-      it.remove();
+      particles.remove(i);
     }
   }</b>
 }
@@ -526,13 +523,11 @@ class ParticleSystem {
   }
 
   void run() {
-    <b>Iterator&lt;Particle&gt; it =
-        particles.iterator();
-    while (it.hasNext()) {
-      Particle p = it.next();
+    <b>for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
       p.run();
       if (p.isDead()) {
-        it.remove();
+        particles.remove(i);
       }
     }</b>
   }
@@ -1130,21 +1125,19 @@ class ParticleSystem {
   }
 
   void run() {
-    //{!16 .bold} We’re stuck doing everything twice with two lists!
-    Iterator&lt;Particle&gt; it = particles.iterator();
-    while (it.hasNext()) {
-      Particle p = it.next();
+    //{!14 .bold} We’re stuck doing everything twice with two lists!
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
       p.run();
       if (p.isDead()) {
-        it.remove();
+        particles.remove(i);
       }
     }
-    it = confetti.iterator();
-    while (it.hasNext()) {
-      Confetti c = it.next();
+    for (int i = confetti.size()-1; i >= 0; i--) {
+      Confetti c = particles.get(i);
       c.run();
       if (c.isDead()) {
-        it.remove();
+        confetti.remove(i);
       }
     }
   }
@@ -1180,13 +1173,12 @@ class ParticleSystem {
   }
 
   void run() {
-    Iterator&lt;Particle&gt; it = particles.iterator();
-    while (it.hasNext()) {
+    for (int i = particles.size()-1; i >= 0; i--) {
       //{!1 .bold} Polymorphism allows us to treat everything as a Particle, whether it is a Particle or a Confetti.
-      Particle p = it.next();
+      Particle p = particles.get(i);
       p.run();
       if (p.isDead()) {
-        it.remove();
+        particles.remove(i);
       }
     }
   }
@@ -1402,13 +1394,12 @@ class ParticleSystem {
   }
 
   void run() {
-    //{!8} Can’t use the enhanced loop because we want to check for particles to delete.
-    Iterator&lt;Particle&gt; it = particles.iterator();
-    while (it.hasNext()) {
-      Particle p = (Particle) it.next();
+    //{!7} Can’t use the enhanced loop because we want to check for particles to delete.
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
       p.run();
       if (p.isDead()) {
-        it.remove();
+        particles.remove(i);
       }
     }
   }
@@ -1603,12 +1594,11 @@ class ParticleSystem {
   }
 
   void run() {
-    Iterator&lt;Particle&gt; it = particles.iterator();
-    while (it.hasNext()) {
-      Particle p = (Particle) it.next();
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
       p.run();
       if (p.isDead()) {
-        it.remove();
+        particles.remove(i);
       }
     }
   }
