@@ -1,4 +1,4 @@
-# The Nature of Code book project
+# The Nature of Code Book Project
 
 Hello.  If you found your way here you have found the raw source material for my Nature of Code book.  The book is for sale in PDF and print forms at [natureofcode.com](http://www.natureofcode.com). There, you'll also find a free version of the book available as HTML.  
 
@@ -10,7 +10,7 @@ By using GitHub to host all the raw material for the book, it's my hope that I w
 
 This repository is in progress.  It's for a new edition of the book that I will be generating with [The Magic Book](https://github.com/magicbookproject/magicbook).  For the previous version of the book, you can check out the [Nature of Code archived repo](https://github.com/shiffman/The-Nature-of-Code-archive).
 
-# Steps to build Nature of Code
+# Steps to Build The Nature of Code
 
 * Install [node.js](https://nodejs.org/en/).
 * At a terminal prompt ([more info here](https://github.com/magicbookproject/magicbook/)):
