@@ -1,0 +1,144 @@
+/*
+====================================
+file: _page.scss
+
+    # PRINT SPECIFIC STYLES
+        1. Global Page Style
+        2. Front Matter
+        3. Page Breaks
+        4. Page Numbering
+        5. Links extra content
+*/
+
+// ----------------------------------
+// # PRINT SPECIFIC STYLES
+// ----------------------------------
+
+// ----------------------------------
+// 1. Global Page Style
+@page {
+    size: 7.5in 9.25in;
+    margin-top: 0.75in;
+    margin-bottom: 0.75in;
+}
+
+@page :left {
+    margin-right: 1.125in;
+    margin-left: 0.875in;
+
+    // Left Headers and Footers
+    @top-left {
+        font-family: $sans-regular;
+        font-size: $font-S;
+        content: "The Nature of Code (v1.0)";
+        vertical-align: bottom;
+        padding-bottom: 2em;
+    }
+    @bottom-left {
+        font-family: $sans-regular;
+        font-size: $font-M;
+        content: counter(page);
+        padding-top: 2em;
+        vertical-align: top;
+    }
+}
+
+@page :right {
+    margin-right: 0.875in;
+    margin-left: 1.25in;
+
+    // Right Headers and Footers
+    @top-right {
+        font-family: $sans-regular;
+        font-size: $font-S;
+        content: string(doctitle);
+        vertical-align: bottom;
+        padding-bottom: 2em;
+    }
+    @bottom-right {
+        font-family: $sans-regular;
+        font-size: $font-M;
+        content: counter(page);
+        text-align: right;
+        vertical-align: top;
+        padding-top: 2em;
+    }
+}
+
+// ----------------------------------
+// 2. Front Matter
+@page frontmatter :left {
+    @bottom-left {
+        content: counter(page,lower-roman);
+    }
+}
+@page frontmatter :right {
+    @bottom-right {
+        content: counter(page,lower-roman);
+    }
+}
+@page :first {
+    @bottom-right {
+        content: counter(page,lower-roman);
+    }
+}
+h2 { string-set: doctitle content() }
+
+
+// ----------------------------------
+// 3. Page Breaks
+div[data-type="note"],
+div[data-type="tip"],
+div[data-type="exercise"],
+div[data-type="example"],
+img,
+table,
+.codesplit,
+.note,
+.example,
+.tip,
+.breakout_box,
+.half-width,
+.half-width-right,
+.code-comment-pair,
+.image-container {
+    page-break-inside: avoid;
+}
+h2, h3, h4, h5
+h2 + p,
+h2 + p + a,
+h4 + p,
+h4 + p + a,
+span.example {
+    page-break-after: avoid;
+}
+section[data-type="chapter"],
+section[data-type="acknowledgments"],
+section[data-type="dedication"],
+section[data-type="credits"],
+section[data-type="introduction"],
+section[data-type="preface"],
+section[data-type="toc"] {
+    page-break-before: always;
+}
+
+// ----------------------------------
+// 4. Page Numbering
+div#frontmatter {
+    page: frontmatter;
+}
+div#contents {
+    counter-reset: page 1;
+}
+
+// ----------------------------------
+// 5. Links extra content
+a[href]::after {
+    content: " (see page " target-counter(attr(href), page) ")";
+}
+a[href^="http:"]::after {
+    content: " ("attr(href)")";
+}
+a[href].index-term-link::after {
+    content: target-counter(attr(href), page);
+}
