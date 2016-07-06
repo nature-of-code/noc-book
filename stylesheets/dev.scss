@@ -5,7 +5,7 @@
 @import 'pdf/math';
 
 /*
-==================
+====================================
 file: _print.scss
 
     # VARIABLES
@@ -15,9 +15,11 @@ file: _print.scss
         2. Links
         3. Typography
         4. Tables
+            * Table Classes
         5. Lists
             * Lists: List Classes
         6. Code
+            * Code-like Custom Styles
         7. Text-level semantics
             * Element Semantics: Blockquote Classes
         8. Display Elements
@@ -26,11 +28,16 @@ file: _print.scss
             * Images: Half Width Images
             * Images: Two Column Images
             * Images: Three Column Images
+        10. Helper Classes / Utilities
+
     # SECTIONS
         - Index
         - TOC
+        - Boxes Styling
 
-==================
+    # MISC / UNCLASSIFIED
+
+====================================
 file: _page.scss
 
     # PRINT SPECIFIC STYLES
@@ -39,10 +46,7 @@ file: _page.scss
         3. Page Breaks
         4. Page Numbering
         5. Links extra content
-
 */
-
-
 
 // ----------------------------------
 // # VARIABLES
@@ -54,10 +58,11 @@ $sans-bold              : "ProximaNova-Bold";
 $sans-bold-italic       : "ProximaNova-BoldIt";
 $sans-semibold          : "ProximaNova-Semibold";
 $serif                  : "Georgia", serif;
+$monospace              : "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
 
 // Font Sizes :
 $font-S                 : 13px;     // 8pt
-$font-M                 : 15px;     // 9pt
+$font-M                 : 15px;     // 9pt // Default
 $font-L                 : 18px;     // 12pt
 $font-XL                : 24px;     // 17pt (18)
 $font-XXL               : 60px;     // 38pt
@@ -65,9 +70,13 @@ $font-XXL               : 60px;     // 38pt
 // Colours - Grey Shades :
 $color-background       : #fff;
 $color-foreground       : #000;
+$color-dark             : #737373;
 $color-medium           : #808080;
 $color-light            : #d1d1d1;
 $color-lighter          : #dfdfdf;
+$color-lightest         : #e9e9e9;
+
+$color-danger           : #f00;
 
 
 // ----------------------------------
@@ -165,6 +174,15 @@ table {
     }
 }
 
+    // * Table Classes
+    table.codewide { width: 109%; }
+    table.code,
+    table.codewide {
+        pre { font-size: $font-S; }
+        td {  text-align: left; }
+    }
+
+
 // ----------------------------------
 // 5. Lists
 dl {
@@ -211,6 +229,32 @@ pre {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
 }
+
+    // * Code-like Custom Styles
+    .source-code {
+        position: relative;
+        clear: both;
+        textarea {
+            display: none;
+            background-color: $color-lightest;
+            width: 100%;
+        }
+    }
+    .note, .example, .tip {
+        .source-code {
+            border-left: none;
+        }
+    }
+    .function, .klass, .var, .mono, .formula, .formula2 {
+        font-family: $monospace;
+        font-size: $font-S;
+    }
+    .mono, .formula, .formula2{
+        font-weight: bold;
+    }
+    .formula{ margin-left: 16pt; }
+    .formula2{ margin-left: 83pt; }
+
 
 // ----------------------------------
 // 7. Text-level semantics
@@ -387,6 +431,27 @@ img {
         width: 33%;
     }
 
+// ----------------------------------
+// 10. Helper Classes / Utilities
+.line-through {
+    text-decoration: line-through;
+}
+.underline {
+    text-decoration: underline;
+}
+.highlight {
+    display: block;
+    margin: 2em 1em;
+    padding: 0.8em;
+    font-size: $font-M;
+    background: $color-lightest;
+    text-align: center;
+}
+.notetoself {
+    color: $color-danger;
+    font-weight: bold;
+}
+
 
 // ----------------------------------
 // # SECTIONS
@@ -491,6 +556,93 @@ span.index-term-name {
         content: target-counter(attr(href), page,decimal);
     }
 }
+
+// ----------------------------------
+// - Boxes Styling
+// -- Exercises (.example), Projects (.tip), Breakout Boxes (.note)
+.tip,
+.note h2, .example h2,
+div[data-type="note"] h2, div[data-type="tip"] h2,
+.note h3, .tip h3, .example h3,
+.note h4, .tip h4, .example h4,
+.note h5, .tip h5, .example h5,
+div[data-type="tip"] {
+    font-family: $sans-semibold;
+    font-size: $font-L;
+    margin: 0 0 0.3em 0;
+}
+
+    // ----------------------
+    // Breakout Boxes (.note)
+    div[data-type="note"] {
+        margin: 1.15em 0;
+        padding: 1.4em 1.5em;
+        background-color: $color-lightest;
+    }
+
+    // ----------------------
+    // Exercises (.example)
+    div.example, div[data-type="exercise"] {
+        background: $color-dark;
+        color: $color-background;
+        padding: 3em 1.5em 1em;
+        position: relative;
+        margin: 1.15em 0;
+        overflow-y: auto;
+    }
+    div.example h3[id],
+    div.example h4[id],
+    div.example h5[id],
+    div.example h6[id], div[data-type="exercise"] h5 {
+        text-align: right;
+        margin: 1em 0.9em;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    div.example *, div[data-type="exercise"] * {
+        color: $color-background;
+    }
+
+    // ----------------------
+    // Projects (.tip)
+    .tip, div[data-type="tip"] {
+        background: $color-lightest;
+        padding: 0.7em 1.5em;
+        margin: 1.15em 0;
+    }
+    .note h2:first-child, .tip h2:first-child, .example h2:first-child,
+    .note h3:first-child, .tip h3:first-child, .example h3:first-child,
+    .note h4:first-child, .tip h4:first-child, .example h4:first-child,
+    .note h5:first-child, .tip h5:first-child, .example h5:first-child,
+    .note p:first-child, .tip p:first-child, .example p:first-child {
+        margin-top: 0;
+    }
+    .note p:last-child, .tip p:last-child, .example p:last-child {
+        margin-bottom: 0;
+    }
+    span.example, div[data-type="example"] h5 {
+        display: block;
+        clear: both;
+        font-family: $sans-bold;
+        font-size: $font-M;
+        background: $color-lighter;
+        padding: 0.7em 1em;
+    }
+
+
+// ----------------------------------
+// # MISC / UNCLASSIFIED
+// ----------------------------------
+body>h2:nth-child(2) { /* To squash extra h2 element on title page */
+    display: none;
+}
+#preamble h1 {
+    margin: 0;
+    font-size: 320%;
+}
+.list h4, .table h4 { clear: none; }
+
 
 
 
@@ -629,173 +781,9 @@ a[href].index-term-link::after {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
-// Still to be done...
-// Boxes
-.note h2, .tip, .example h2,
-.note h3, .tip h3, .example h3,
-.note h4, .tip h4, .example h4,
-.note h5, .tip h5, .example h5, div[data-type="tip"] {
-  font-size: 12pt;
-  color: #000000;/*#191919;*/
-  margin-bottom: 0.3em;
-  font-style: normal;
-  font-family: "ProximaNova-Semibold";
-}
-div[data-type="note"] h2, div[data-type="tip"] h2 {
-  font-size: 12pt;
-  color: #000000;/*#191919;*/
-  margin: 0 0 0.3em 0;
-  font-style: normal;
-  font-family: "ProximaNova-Semibold";
-}
-/* == BREAKOUT BOXES */
-div[data-type="note"] {
-  font-size: 10pt;
-  color: #000000;/*#191919;*/
-  padding: 1.4em 1.5em;
-  margin: 1.15em 0;
-  background-color: #E9E9E9;
-}
-/* == EXERCISES */
-div.example, div[data-type="exercise"] {
-  background-color: rgb(112, 115, 115);
-  color: #ffffff;
-  padding: 3em 1.5em 1em;
-  position: relative;
-  margin: 1.15em 0;
-  overflow-y:auto;
-}
-div.example h3[id],
-div.example h4[id],
-div.example h5[id],
-div.example h6[id], div[data-type="exercise"] h5 {
-  text-align: right;
-  margin: 1em 0.9em;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-div.example *, div[data-type="exercise"] * {
-  color: #ffffff;
-}
-/* == PROJECTS */
-.tip, div[data-type="tip"] {
-  padding: 0.7em 1.5em;
-  margin: 1.15em 0;
-  background-color: #E9E9E9;
-}
-.note h2:first-child, .tip h2:first-child, .example h2:first-child,
-.note h3:first-child, .tip h3:first-child, .example h3:first-child,
-.note h4:first-child, .tip h4:first-child, .example h4:first-child,
-.note h5:first-child, .tip h5:first-child, .example h5:first-child,
-.note p:first-child, .tip p:first-child, .example p:first-child {
-  margin-top: 0;
-}
-.note p:last-child, .tip p:last-child, .example p:last-child {
-  margin-bottom: 0;
-}
-span.example, div[data-type="example"] h5 {
-  background-color: #CACCCB;
-  clear: both;
-  display: block;
-  font-family: "ProximaNova-Bold";
-  font-size:1em;
-  padding: 0.7em 1em;
-}
-
-/* To squash extra h2 element on title page */
-body>h2:nth-child(2) {
-    display: none;
-}
-#preamble h1 {
-    margin: 0;
-    font-size: 320%;
-}
-.line-through {
-    text-decoration: line-through;
-}
-.underline {
-    text-decoration: underline;
-}
-span.highlight {
-  background-color: #E9E9E9;
-  font-size: 10pt;
-  display: block;
-  margin: 2em 1em;
-  padding: 0.8em;
-  text-align: center;
-}
-.list h4, .table h4 { clear: none; }
-
-/* Style functions */
-.function, .klass, .var, .mono, .formula, .formula2 {
-  font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
-  /*a little bit smaller than body?*/
-  font-size: 8pt;
-  color: #000000;
-}
-.mono, .formula, .formula2{ font-weight: bold; }
-.formula{ margin-left: 16pt; }
-.formula2{ margin-left: 83pt; }
-
-/* Style note to self */
-.notetoself {
-  color: #FF0000;
-  font-weight: bold;
-}
-
-table.codewide {
-    width: 109%;
-}
-table.code {
-    width: 100%;
-}
-table.code pre,
-table.codewide pre {
-    font-size: 0.9em;
-}
-table.code td,
-table.codewide td {
-    text-align: left;
-}
-
-// code styles
-.source-code {
-  position: relative;
-  clear: both;
-  textarea {
-    background-color: #f0f0f0;
-    display: none;
-    width: 100%;
-  }
-}
-.note .source-code,
-.example .source-code,
-.tip .source-code {
-  border-left: none;
-}
-
-// ----------
-// Temp
+// Temp (DEV)
 @media only screen {
     body > div.container {
         width: 90%;
