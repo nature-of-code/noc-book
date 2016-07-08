@@ -265,17 +265,19 @@ section {
 
 // ----------------------------------
 // 9. Grouping content / Images
-figcaption {
-    font-family: $serif;
-    font-size: $font-S;
-    font-style: italic;
-    border: 0;
-    margin-top: 2px;
-    line-height: 12pt;
-}
-img {
-    width: 100%;
-    margin: 0;
+figure {
+    figcaption {
+        font-family: $serif;
+        font-size: $font-S;
+        font-style: italic;
+        border: 0;
+        margin-top: 2px;
+        line-height: 12pt;
+    }
+    img {
+        width: 100%;
+        margin: 0;
+    }
 }
 
     // * Images: Image Classes
@@ -289,6 +291,12 @@ img {
             width: auto;
             height: auto;
             vertical-align: text-bottom;
+        }
+        &.shadow {
+            display: block;
+            box-shadow:
+                1px 1px 0 $color-background,
+                5px 5px 0 $color-lightest;            
         }
     }
     .image-container {
@@ -439,80 +447,81 @@ span.index-term-name {
 // ----------------------------------
 // - TOC
 .toc {
-    // Level 1
-    ul {
-        position: relative;
-        list-style: none;
-        margin: 3em 4em 0 0;
-        padding: 0;
+    width: 70%;
 
-        li {
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li { // Level 01
+            font-family: $sans-bold;
+            font-size: $font-XL;
+            font-weight: normal;
+            margin: 0;
+            padding: .2em 0;
+
             a {
-                font-family: $sans-semibold;
-                font-size: $font-XL;
-                text-decoration: none;
+                display: block;
+                position: relative;
+                padding: 0 50px 0 0;
             }
             a[href]::after {
                 content: target-counter(attr(href), page);
                 position: absolute;
-                right: 0em;
+                bottom: 0;
+                right: 0;
+                min-width: 40px;
             }
 
-            // Level 2
             ul {
-                margin: 1em 0em 2em 4em;
-                position: static;
+                margin: 1em 0 2em 2em;
+                li { // Level 02
+                    font-family: $sans-regular;
+                    font-size: $font-M;
+                    a {}
 
-                li {
-                    margin-bottom: 0.7em;
-                    a {
-                        font-family: $sans-regular;
-                        font-size: $font-L;
-                        text-decoration: none;
+                    ul {
+                        margin: .5em 0 .5em 2em;
+                        li { // Level 03
+                            a { color: $color-dark; }
+                        }
                     }
                 }
             }
         }
-    }
 
-    li:nth-child(1) {
-        display: none;
-    }
-    li li:nth-child(1) {
-        display: block;
-    }
-    li:nth-child(-n+3) a[href]::after {
-        content: target-counter(attr(href), page,lower-roman);
-    }
-    li:nth-child(-n+3) li a[href]::after {
-        content: target-counter(attr(href), page,lower-roman);
-    }
-    li:nth-child(4) li a[href]::after,
-    li:nth-child(5) li a[href]::after,
-    li:nth-child(6) li a[href]::after,
-    li:nth-child(7) li a[href]::after,
-    li:nth-child(8) li a[href]::after,
-    li:nth-child(9) li a[href]::after,
-    li:nth-child(10) li a[href]::after,
-    li:nth-child(11) li a[href]::after,
-    li:nth-child(12) li a[href]::after,
-    li:nth-child(13) li a[href]::after,
-    li:nth-child(14) li a[href]::after,
-    li:nth-child(15) li a[href]::after,
-    li:nth-child(16) li a[href]::after {
-        content: target-counter(attr(href), page,decimal);
+        li:nth-child(1) {       display: none;  }
+        li li:nth-child(1) {    display: block; }
+        li:nth-child(-n+3) li a[href]::after {
+            content: target-counter(attr(href), page,lower-roman);
+        }
+        li:nth-child(4) li a[href]::after,
+        li:nth-child(5) li a[href]::after,
+        li:nth-child(6) li a[href]::after,
+        li:nth-child(7) li a[href]::after,
+        li:nth-child(8) li a[href]::after,
+        li:nth-child(9) li a[href]::after,
+        li:nth-child(10) li a[href]::after,
+        li:nth-child(11) li a[href]::after,
+        li:nth-child(12) li a[href]::after,
+        li:nth-child(13) li a[href]::after,
+        li:nth-child(14) li a[href]::after,
+        li:nth-child(15) li a[href]::after,
+        li:nth-child(16) li a[href]::after {
+            content: target-counter(attr(href), page,decimal);
+        }
+
     }
 }
 
 // ----------------------------------
 // - Boxes Styling
 // -- Exercises (.example), Projects (.tip), Breakout Boxes (.note)
-.tip,
 div[data-type="note"] h2, div[data-type="tip"] h2, .example h2,
 div[data-type="note"] h3, .tip h3, .example h3,
 div[data-type="note"] h4, .tip h4, .example h4,
-div[data-type="note"] h5, .tip h5, .example h5,
-div[data-type="tip"] {
+div[data-type="note"] h5, .tip h5, .example h5 {
     font-family: $sans-semibold;
     font-size: $font-L;
     margin: 0 0 0.3em 0;
@@ -538,26 +547,16 @@ div[data-type="tip"] {
 
     // ----------------------
     // Exercises (.example)
-    div.example, div[data-type="exercise"] {
+    div[data-type="exercise"] {
         background: $color-dark;
-        color: $color-background;
-        padding: 3em 1.5em 1em;
-        position: relative;
-        margin: 1.15em 0;
-        overflow-y: auto;
-    }
-    div.example h3[id],
-    div.example h4[id],
-    div.example h5[id],
-    div.example h6[id], div[data-type="exercise"] h5 {
-        text-align: right;
-        margin: 1em 0.9em;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    div.example *, div[data-type="exercise"] * {
-        color: $color-background;
+        color: $color-lighter;
+        padding: 2em 2em 1em 2em;
+        margin: .5em 0 1.5em 0;
+
+        h5 {
+            color: $color-background;
+            margin: 0 0 1em 0;
+        }
     }
 
     // ----------------------
@@ -565,7 +564,8 @@ div[data-type="tip"] {
     .tip, div[data-type="tip"] {
         background: $color-lightest;
         padding: 0.7em 1.5em;
-        margin: 1.15em 0;
+        margin: 1.5em 0;
+        padding: 2em 2em 1em 2em;
     }
     div[data-type="note"] h2:first-child, .tip h2:first-child, .example h2:first-child,
     div[data-type="note"] h3:first-child, .tip h3:first-child, .example h3:first-child,
