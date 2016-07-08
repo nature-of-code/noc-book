@@ -88,7 +88,6 @@ p {
 // 4. Tables
 table {
     font-family: $sans-regular;
-    font-size: $font-S;
     text-align: center;
     width: 100%;
     border-collapse: collapse;
@@ -101,11 +100,11 @@ table {
     }
 
     th {
-        font-family: $sans-bold;
+        font-family: $sans-semibold;
+        font-weight: normal;
         font-style: normal;
-        font-size: $font-M;
         border: solid $color-light 1px;
-        background: $color-lighter;
+        background: $color-lightest;
     }
 
     td {
@@ -383,11 +382,13 @@ img {
 }
 .highlight {
     display: block;
-    margin: 2em 1em;
-    padding: 0.8em;
+    margin: 2em;
+    padding: 1em;
+    font-family: $sans-semibold-italic;
     font-size: $font-M;
-    background: $color-lightest;
+    letter-spacing: 0;
     text-align: center;
+    background: $color-lightest;
 }
 .bold {
     font-weight: bold;
@@ -522,8 +523,18 @@ div[data-type="tip"] {
     div[data-type="note"] {
         margin: 1.15em 0;
         padding: 1.4em 1.5em;
-        background-color: $color-lightest;
+        background: $color-lightest;
+
+        // TODO: Merge with .half-width (images)
+        &.half-width {
+            position: inherit;
+            width: 50%;
+            float: none;
+            margin: 1.2em 2em 1.2em 0;
+            @include box-sizing(border-box);
+        }
     }
+
 
     // ----------------------
     // Exercises (.example)
