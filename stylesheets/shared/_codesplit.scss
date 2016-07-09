@@ -15,10 +15,31 @@
         }
         &.no-comment {
             background-color: transparent;
+            .code { width: 100%; }
         }
-        &.no-comment .code, &.offset .code {
-            width: 100%;
+
+        &.offset,
+        &.offset-top {
+            position: relative;
+            .code {
+                width: 100%;
+            }
+            .comment {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                float: none;
+                padding: .5em 0 .5em .5em;
+                background: $color-lightest;
+            }
         }
+        &.offset-top {
+            .comment {
+                top: auto;
+                bottom: 100%;
+            }
+        }
+
         &.bold.no-comment {
             padding: 0px 4px;
         }
@@ -32,10 +53,6 @@
             line-height: 1.4em;
         }
     }
-    .offset .comment {
-        padding-bottom: 4px;
-    }
-
     .code {
         width: 53%;
         float: left;
