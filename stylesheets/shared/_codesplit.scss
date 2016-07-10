@@ -1,63 +1,63 @@
 .codesplit {
     font-size: $font-S;
-    line-height: 1.4em;
-    margin: 1.4em 0em 0.8em;
+    line-height: 1.4;
+    margin: 1.5em 0em 1em;
 
     .pair {
         background: $color-lightest;
-        padding: 2px 8px;
-        margin: 4px 0px;
-
+        padding: 5px 10px;
+        margin: 2px 0;
+        position: relative;
         &:after {
-          content: "";
-          display: table;
-          clear: both;
-        }
-        &.no-comment {
-            background-color: transparent;
-            .code { width: 100%; }
-        }
+    		content: "";
+    		display: table;
+    		clear: both;
+    	}
 
-        &.offset,
-        &.offset-top {
-            position: relative;
-            .code {
-                width: 100%;
-            }
-            .comment {
-                position: absolute;
-                top: 100%;
-                right: 0;
-                float: none;
-                padding: .5em 0 .5em .5em;
-                background: $color-lightest;
-            }
+        .code {
+            float: left;
+            width: 53%;
         }
-        &.offset-top {
-            .comment {
-                top: auto;
-                bottom: 100%;
-            }
-        }
-
-        &.bold.no-comment {
-            padding: 0px 4px;
+        .comment {
+            float: right;
+            width: 45%;
+            p { margin: 0; }
         }
     }
 
-    .comment {
-        width: 45%;
-        float: right;
-        p {
-            margin: 0;
-            line-height: 1.4em;
+
+    .no-comment {
+        background: transparent;
+        .code { width: 100%; }
+    }
+
+    .line-through {
+        .code { text-decoration: line-through; }
+    }
+
+    .bold {
+        .code { font-weight: bold; }
+        .comment { font-family: $sans-semibold; }
+    }
+
+
+    // Offsetting
+    [class^="offset"], [class*=" offset"] {
+        .code { width: 100%; }
+        .comment {
+            position: absolute;
+            z-index: 1;
+            top: 100%;
+            right: 0;
+            float: none;
+            padding: .5em 0 .5em .5em;
+            background: $color-lightest;
         }
     }
-    .code {
-        width: 53%;
-        float: left;
-    }
-    .line-through .code {
-        text-decoration: line-through;
+    .offset-top {
+        .comment {
+            top: auto;
+            bottom: 100%;
+        }
     }
 }

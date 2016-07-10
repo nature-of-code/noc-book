@@ -613,7 +613,7 @@ int row = int(position.y/resolution);</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector lookup(PVector lookup) {
-    //{!2 .offset} Using constrain()
+    //{!2 .offset-top} Using constrain()
     int column = int(constrain(lookup.x/resolution, 0, cols-1));
     int row = int(constrain(lookup.y/resolution, 0, rows-1));
     //{!1} Note the use of copy() to ensure
@@ -645,7 +645,7 @@ class FlowField {
     for (int i = 0; i &lt; cols; i++) {
       float yoff = 0;
       for (int j = 0; j &lt; rows; j++) {
-        //{.offset} In this example, we use Perlin noise to seed the vectors.
+        //{.offset-top} In this example, we use Perlin noise to seed the vectors.
         float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
         //{.offset} Polar to Cartesian coordinate transformation to get x and y components of the vector
         field[i][j] = new PVector(cos(theta), sin(theta));
@@ -717,15 +717,19 @@ class Vehicle {
 
 <p>However, there are two other <em>multiplication-like</em> operations with vectors that are useful in certain scenarios—the dot product and the cross product. For now we’re going to focus on the dot product, which is defined as follows. Assume vectors <span data-type="equation">\vec{A}</span> and <span data-type="equation">\vec{B}</span>:</p>
 
-<p><span data-type="equation">\vec{A}=(a_x,a_y)</span><br />
-<span data-type="equation">\vec{B}=(a_x,a_y)</span></span></p>
+<div class="narrow">
+<div data-type="equation">\vec{A}=(a_x,a_y)</div>
+<div data-type="equation">\vec{B}=(a_x,a_y)</div>
+</div>
 
 <p>THE DOT PRODUCT: <span data-type="equation">\vec{A}\cdot\vec{B}=a_x\times b_x + a_y\times b_y</span></p>
 
 <p>For example, if we have the following two vectors:</p>
 
-<p><span data-type="equation">\vec{A}=(-3,5)</span><br />
-<span data-type="equation">\vec{B}=(10,1)</span></p>
+<div class="narrow">
+<div data-type="equation">\vec{A}=(-3,5)</div>
+<div data-type="equation">\vec{B}=(10,1)</div>
+</div>
 
 <div data-type="equation">\vec{A}\cdot\vec{B} = -3 * 10 + 5 * 1 = -30 + 5 = -25</div>
 
@@ -760,8 +764,10 @@ public float dot(PVector v) {
 
 <p>The two formulas for dot product can be derived from one another with <a href="http://mathworld.wolfram.com/DotProduct.html">trigonometry</a>, but for our purposes we can be happy with operating on the assumption that:</p>
 
-<p><span data-type="equation">\vec{A}\cdot\vec{B} = ||\vec{A}||\times||\vec{B}||\times\cos(\theta)</span><br />
-<span data-type="equation">\vec{A}\cdot\vec{B}=a_x\times b_x + a_y\times b_y</span></p>
+<div class="narrow">
+<div data-type="equation">\vec{A}\cdot\vec{B} = ||\vec{A}||\times||\vec{B}||\times\cos(\theta)</div>
+<div data-type="equation">\vec{A}\cdot\vec{B}=a_x\times b_x + a_y\times b_y</div>
+</div>
 
 <p>both hold true and therefore:</p>
 
@@ -773,8 +779,10 @@ public float dot(PVector v) {
 
 <p>Now, let’s start with the following problem. We have the vectors A and B:</p>
 
-<p><span data-type="equation">\vec{A}=(10,2)</span><br/>
-<span data-type="equation">\vec{B}=(4,-3)</span></p>
+<div class="narrow">
+<div data-type="equation">\vec{A}=(10,2)</div>
+<div data-type="equation">\vec{B}=(4,-3)</div>
+</div>
 
 <p>We now have a situation in which we know everything except for theta. We know the components of the vector and can calculate the magnitude of each vector. We can therefore solve for cosine of theta:</p>
 
@@ -787,16 +795,18 @@ public float dot(PVector v) {
 
 <p>Let’s now do the math with actual numbers:</p>
 
-<p><span data-type="equation">||\vec{A}||=10.2</span><br/>
-<span data-type="equation">||\vec{B}||=5</span></p>
+<div class="narrow">
+<div data-type="equation">||\vec{A}||=10.2</div>
+<div data-type="equation">||\vec{B}||=5</div>
+</div>
 
 <p>Therefore:</p>
 
-<p>
-<span data-type="equation">\theta=\cos^{-1}((10\times4+2\times-3)/(10.2\times5))</span><br/>
-<span data-type="equation">\theta=\cos^{-1}(34/51)</span><br/>
-<span data-type="equation">\theta=\sim48^\circ</span>
-</p>
+<div class="narrow">
+<div data-type="equation">\theta=\cos^{-1}((10\times4+2\times-3)/(10.2\times5))</div>
+<div data-type="equation">\theta=\cos^{-1}(34/51)</div>
+<div data-type="equation">\theta=\sim48^\circ</div>
+</div>
 
 <p>The Processing version of this would be:</p>
 
