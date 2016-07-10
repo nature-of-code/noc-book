@@ -613,7 +613,7 @@ int row = int(position.y/resolution);</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector lookup(PVector lookup) {
-    //{!2 .offset} Using constrain()
+    //{!2 .offset-top} Using constrain()
     int column = int(constrain(lookup.x/resolution, 0, cols-1));
     int row = int(constrain(lookup.y/resolution, 0, rows-1));
     //{!1} Note the use of copy() to ensure
@@ -645,7 +645,7 @@ class FlowField {
     for (int i = 0; i &lt; cols; i++) {
       float yoff = 0;
       for (int j = 0; j &lt; rows; j++) {
-        //{.offset} In this example, we use Perlin noise to seed the vectors.
+        //{.offset-top} In this example, we use Perlin noise to seed the vectors.
         float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
         //{.offset} Polar to Cartesian coordinate transformation to get x and y components of the vector
         field[i][j] = new PVector(cos(theta), sin(theta));
