@@ -61,3 +61,159 @@
         text-decoration: line-through;
     }
 }
+
+
+// From _code.scss
+// TODO : clean it further + check classes with the content
+
+// The code goes in here.
+// Div wrapper for code blocks
+.code-block {
+    font-size: $font-S;
+    line-height: 1.4em;
+    margin: 1.4em 1em 0.8em;
+
+    code {
+        position: relative;
+        display: block;
+        clear: left;
+    }
+}
+
+// Stretch class for comments that point to multiple lines of code
+.stretch {
+    background-color: $color-lighter;
+    padding: 4px;
+
+    .code-comment,
+    span.one-line,
+    .one-line:first-child {
+        background: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .code-comment {
+        padding-left: 1.0em;
+    }
+    span.one-line {
+        padding-right: 4px;
+        padding-left: 0;
+    }
+}
+
+div[data-type="exercise"] {
+    code pre span[class],
+    .code-comment,
+    .toggle {
+        color: $color-background;
+    }
+    .one-line:first-child,
+    .code-comment,
+    .stretch {
+        background: $color-medium;
+    }
+    .source-code,
+    .no-comment .one-line:first-child {
+        background: transparent;
+    }
+
+}
+
+.code-comment-pair code pre {
+    width: 100%;
+}
+// Matches padding for code commented lines
+.one-line {
+    padding-left: 4px;
+}
+
+.one-line:first-child,
+.code-comment {
+    display: inline-block;
+    background: $color-lighter;
+    padding: 4px;
+    @include box-sizing(border-box);
+}
+.one-line:first-child {
+    margin-bottom: 3px;
+    width: 60%;
+}
+.no-comment .one-line:first-child {
+    background: transparent;
+    margin-bottom: 0;
+    padding: 0 0 0 4px;
+    width: auto;
+}
+.code-comment {
+    margin-bottom: 2px;
+    position: relative;
+}
+
+
+.offset-up,
+.offset-down {
+    span.one-line {
+        width: 100%;
+    }
+}
+.offset-up {
+    overflow-x: visible;
+    overflow-y: visible;
+
+    .code-comment {
+        margin-bottom: 0;
+        position: absolute;
+        right: 0;
+        margin-top: 0.2em;
+    }
+}
+.offset-down {
+    .one-line:first-child {
+        width: 100%;
+    }
+    code {
+        position: relative;
+    }
+    .code-comment {
+        float: right;
+        position: absolute;
+        margin-top: 2.1em;
+        right: 0;
+        top: 0;
+    }
+}
+
+
+// Wrapper for every pairing of code and comment.
+// Used to catch the .code-comment-line inside of
+// a relatively positioned parent.
+.code-comment-pair {
+    display: block;
+    position: relative;
+    clear: both;
+    margin: 0 0 2px 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+// Div wrapper for code comments.
+.code-comment {
+    clear: right;
+    color: $color-foreground;
+    display: block;
+    float: right;
+    font-family: $sans-bold;
+    margin-top: 0.0em;
+    position: relative;
+    width: 40%;
+    padding-left: 1.0em;
+}
+
+.source-code {
+    overflow-y: auto;
+    clear: both;
+    position: relative;
+}
