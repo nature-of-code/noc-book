@@ -109,18 +109,21 @@ table {
 
     td {
         border: solid $color-light 1px;
-        p {
-            margin: 0;
-        }
+        p { margin: 0; }
     }
 }
 
     // * Table Classes
-    table.codewide { width: 109%; }
-    table.code,
-    table.codewide {
-        pre { font-size: $font-S; }
-        td {  text-align: left; }
+    table {
+        &.code, &.codewide {
+            pre { font-size: $font-S; }
+            td  { text-align: left; }
+        }
+        &.codewide {
+            width: 110%;
+            position: relative;
+            left: -5%;
+        }
     }
 
 
@@ -177,20 +180,6 @@ pre {
 }
 
     // * Code-like Custom Styles
-    .source-code {
-        position: relative;
-        clear: both;
-        textarea {
-            display: none;
-            background-color: $color-lightest;
-            width: 100%;
-        }
-    }
-    .example, .tip, div[data-type="note"] {
-        .source-code {
-            border-left: none;
-        }
-    }
     .function, .klass, .var, .mono, .formula, .formula2 {
         font-family: $monospace;
         font-size: $font-S;
@@ -198,8 +187,8 @@ pre {
     .mono, .formula, .formula2{
         font-weight: bold;
     }
-    .formula{ margin-left: 16pt; }
-    .formula2{ margin-left: 83pt; }
+    .formula  { margin-left: 2em; }
+    .formula2 { margin-left: 8em; }
 
 
 // ----------------------------------
@@ -223,39 +212,36 @@ blockquote {
     font-size: $font-S;
     font-style: italic;
     margin: 0 40px;
-    line-height: 12pt;
+    line-height: 1.5;
 }
 
     // * Element Semantics: Blockquote Classes
     blockquote[data-type="epigraph"] {
         margin: 0 0 3em 0;
+
         p {
             margin: 0;
             font-size: $font-L;
-            font-style: italic;
-            line-height: 16pt;
+            line-height: 1.4;
             letter-spacing: 0;
 
-            // This is for epigraph only but not sure how to handle this
             &[data-type="attribution"] {
-                display: block;
+                margin: .25em 0 0 1.5em;
                 font-style: normal;
-                margin: 4px 0 0 24px;
             }
         }
     }
 
     blockquote {
-        // For the acknowledgements?
         &.long-quote {
             margin: 0 0 3em 0;
             font-size: $font-L;
-            line-height: 16pt;
+            line-height: 1.4;
         }
         span.attribution {
             display: block;
             font-style: normal;
-            margin: 4px 0 0 24px;
+            margin: .5em 0 0 1.5em;
         }
     }
 
@@ -263,8 +249,6 @@ blockquote {
 // ----------------------------------
 // 8. Display Elements
 section {
-    overflow-y: auto;
-    position: relative;
     clear: both;
 }
 
@@ -602,4 +586,4 @@ body>h2:nth-child(2) { /* To squash extra h2 element on title page */
     margin: 0;
     font-size: 320%;
 }
-.list h4, .table h4 { clear: none; }
+.table h4 { clear: none; }
