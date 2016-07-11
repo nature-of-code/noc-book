@@ -277,43 +277,40 @@ figure {
 }
 
     // * Images: Image Classes
-    img {
-        &.mathinline {
-            width: auto;
-            height: 13px;
-            vertical-align: text-bottom;
-        }
-        &.mathblock {
-            width: auto;
-            height: auto;
-            vertical-align: text-bottom;
-        }
-        &.shadow {
+    .bella img {
+        width: 25%;
+    }
+
+    .screenshot {
+        position: relative;
+
+        &:before {
+            content: '';
             display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            padding: 0 2px 0 0;
             box-shadow:
                 1px 1px 0 $color-background,
                 5px 5px 0 $color-lightest;
+            background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, $color-medium 100%);
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, $color-medium 100%);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, $color-medium 100%);
+            border-radius: 0 0 2px 2px;
+            z-index: -1;
         }
-    }
-    .bella {
-        img {
-            width: 25%;
-        }
-    }
-    .screenshot {
         img {
             width: 100%;
             margin: 0;
-            border: 1px solid $color-medium;
-            // Need a magic solution for border side borders to be partial, not extend all the way to top
+            display: block;
+            border: solid 1px transparent;
+        }
+        figcaption {
+            display: none;
         }
     }
-    .mini200 {
-        img {
-            width: 25%;
-            border: 1px solid $color-medium;
-        }
-    }
+
 
     // * Images: Half Width Images
     .half-width,
