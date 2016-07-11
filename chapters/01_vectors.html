@@ -20,7 +20,7 @@
 <p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and the magnitude by the length of the arrow itself.</p>
 
 <figure id="chapter01_figure1"><img alt="Figure 1.1" src="chapter01/ch01_01.png" />
-<figcaption>Figure 1.1A vector (drawn as an arrow) has magnitude (length of arrow) and direction (which way it is pointing).</figcaption>
+<figcaption>Figure 1.1 A vector (drawn as an arrow) has magnitude (length of arrow) and direction (which way it is pointing).</figcaption>
 </figure>
 
 <p>In the above illustration, the vector is drawn as an arrow from point A to point B and serves as an instruction for how to travel from A to B.</p>
@@ -59,10 +59,10 @@ void draw() {
   y = y + yspeed;
 
   //{!6} Check for bouncing.
-  if ((x &gt; width) || (x &lt; 0)) {
+  if ((x > width)  || (x < 0)) {
     xspeed = xspeed * -1;
   }
-  if ((y &gt; height) || (y &lt; 0)) {
+  if ((y > height) || (y < 0)) {
     yspeed = yspeed * -1;
   }
 
@@ -365,10 +365,10 @@ void draw() {
   position.add(velocity);
 
   //{!6 .bold} We still sometimes need to refer to the individual components of a PVector and can do so using the dot syntax: position.x, velocity.y, etc.
-  if ((position.x &gt; width) || (position.x &lt; 0)) {
+  if ((position.x > width) || (position.x < 0)) {
     velocity.x = velocity.x * -1;
   }
-  if ((position.y &gt; height) || (position.y &lt; 0)) {
+  if ((position.y > height) || (position.y < 0)) {
     velocity.y = velocity.y * -1;
   }
 
@@ -863,7 +863,6 @@ class Mover {
     //{!1} The Mover is displayed.
     ellipse(position.x, position.y, 16, 16);
   }
-
 }</pre>
 
 <a data-primary="class (Processing)" data-secondary="constructor" data-type="indexterm"></a> <a data-primary="constructor" data-type="indexterm"></a>
@@ -1220,9 +1219,9 @@ PVector w = v.add(u);</pre>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void add(PVector v) {
-    x = x + v.x;
-    y = y + v.y;
- }</pre>
+  x = x + v.x;
+  y = y + v.y;
+}</pre>
 
 <p>we see that this code does not accomplish our goal. First, it does not return a new <span class="klass">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="klass">PVector</span> upon which it is called. In order to add two <span class="klass">PVector</span> objects together and return the result as a new <span class="klass">PVector</span>, we must use the static <span class="function">add()</span> function.</p>
 
@@ -1372,7 +1371,7 @@ dir.mult(anything);</pre>
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
 
-    PVector mouse = new PVector(mouseX,mouseY);
+    PVector mouse = new PVector(mouseX, mouseY);
     // Step 1: Compute direction
     PVector dir = PVector.sub(mouse, position);
 
@@ -1450,9 +1449,10 @@ class Mover {
 
     // <b>Our algorithm for calculating acceleration</b>:
 
-    //{$2} Find the vector pointing towards the mouse.
-    PVector mouse = new PVector(mouseX,mouseY);
-    PVector dir = PVector.sub(mouse,position);
+    //{!2} Find the vector pointing towards the mouse.
+    PVector mouse = new PVector(mouseX, mouseY);
+    PVector dir = PVector.sub(mouse, position);
+
 
     // Normalize.
     dir.normalize();
