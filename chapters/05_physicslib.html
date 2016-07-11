@@ -354,6 +354,12 @@ a.normalize();
 <p>In order to have Box2D as part of our Processing sketches, the <span class="klass">World</span> is the very first thing that needs to be set up. Here is where Box2D-for-Processing comes in handy and takes care of making the world for us.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
+//{!4} Note how in addition to the default important statement for Box2D-for-Processing, I'm also importing packages from JBox2D itself.  This will be necessary for referencing certain objects that come from JBox2D rather than Box2D-for-Processing.
+import shiffman.box2d.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.*;
+
 Box2DProcessing box2d;
 
 void setup() {
@@ -1637,8 +1643,8 @@ class Windmill {
 <p>Before we look at the <span class="klass">MouseJoint</span> object itself, let’s ask ourselves why we even need it in the first place. If you look at the Box2D documentation, there is a function called <span class="function">setTransform()</span> that specifically “sets the position of the body’s origin and rotation (radians).” If a body has a position, can’t we just assign the body’s position to the mouse?</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Vec2 mouse = box2d.screenToWorld(x,y);
-body.setTransform(mouse,0);</pre>
+Vec2 mouse = box2d.coordPixelsToWorld(x, y);
+body.setTransform(mouse, 0);</pre>
 
 <p>While this will in fact move the body, it will also have the unfortunate result of breaking the physics. Let’s imagine you built a teleportation machine that allows you to teleport from your bedroom to your kitchen (good for late-night snacking). Now, go ahead and rewrite Newton’s laws of motion to account for the possibility of teleportation. Not so easy, right? Box2D has the same problem. If you manually assign the position of an body, it’s like saying “teleport that body” and Box2D no longer knows how to compute the physics properly. However, Box2D does allow you to tie a rope to yourself and get a friend of yours to stand in the kitchen and drag you there. This is what the <span class="klass">MouseJoint</span> does. It’s like a string you attach to a body and pull towards a target.</p>
 

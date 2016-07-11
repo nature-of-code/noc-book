@@ -30,7 +30,7 @@
 
 <p>It’s fairly intuitive for us to think of angles in terms of degrees. For example, the square in Figure 3.2 is rotated 45 degrees around its center.</p>
 
-<figure id="chapter03_figure2"><img alt="Figure 3.3" src="chapter03/ch03_02.png" />
+<figure id="chapter03_figure2"><img alt="Figure 3.2" src="chapter03/ch03_02.png" />
 <figcaption>Figure 3.2</figcaption>
 </figure>
 
@@ -1039,7 +1039,7 @@ class Pendulum  {
 <figcaption>Figure 3.13</figcaption>
 </figure>
 
-<p>&hellip;as well as a function <span class="function">display()</span> to draw the pendulum in the window. This begs the question: “Um, where do we draw the pendulum?” We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob position (let’s call it position)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
+<p>...as well as a function <span class="function">display()</span> to draw the pendulum in the window. This begs the question: “Um, where do we draw the pendulum?” We know the angle and the arm length, but how do we know the <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob position (let’s call it position)? This may be getting a little tiring, but the answer, yet again, is trigonometry.</p>
 
 <p>The origin is just something we make up, as is the arm length. Let’s say:</p>
 
@@ -1050,7 +1050,9 @@ float r = 125;</pre>
 <p>We’ve got the current angle stored in our variable <span class="var">angle</span>. So relative to the origin, the pendulum’s position is a polar coordinate: <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we just spent some time (section 3.5) deriving the formula for converting from polar to Cartesian. And so:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector position = new PVector(r*sin(angle),r*cos(angle));</pre>
+PVector position = new PVector(r * sin(angle), r* cos(angle));</pre>
+
+<p>Note, however that <code>sin(angle)</code> is used for the x-value and <code>cos(angle)</code> for the y.  This is the opposite of the formula we established in Chapter 3.  The reason for this is that we are looking for the top angle of the right-triangle pointing down as depicted in Figure 3.13.</p>
 
 <p>Since the position is relative to wherever the origin happens to be, we can just add origin to the position <span class="klass">PVector</span>:</p>
 
