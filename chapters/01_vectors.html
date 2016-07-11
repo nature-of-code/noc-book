@@ -521,14 +521,21 @@ void setup() {
 
 void draw() {
   background(255);
-  // Two PVectors, one for the mouse position and one for the center of the window
+  // Two PVectors, one for the mouse location and one for the center of the window
   PVector mouse  = new PVector(mouseX, mouseY);
   PVector center = new PVector(width/2, height/2);
+
+  //{!3} Draw the original two vectors
+  stroke(200);
+  line(0, 0, mouse.x, mouse.y);
+  line(0, 0, center.x, center.y);
 
   // PVector subtraction!
   mouse.sub(center);
 
-  //{!2} Draw a line to represent the vector.
+  //{!3} Draw a line to represent the result of subtraction.
+  // Notice how I move the origin with translate() to place the vector
+  stroke(0);
   translate(width/2, height/2);
   line(0, 0, mouse.x, mouse.y);
 }</pre>
