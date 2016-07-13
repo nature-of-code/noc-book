@@ -2,30 +2,46 @@
 // PDF where katex is not included.
 .katex-display {
     display: block;
-    margin: 1em 0;
-
-    overflow: hidden;
 
     > .katex {
-        width: 60px !important;
-        margin: 0 !important;
         display: block !important;
+        padding: 1em 0;
 
-        .mfrac {
-            width: 60px !important;
-            margin: 0 !important;
-        }
-        .katex-html {}
+        .sqrt > .vlist > span { width: 100px; }
+        .mfrac > .vlist > span { width: 30px; }
     }
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
 }
 .mathhack .katex .mfrac .frac-line {
     width: 10px;
 }
 
+// * Wrapping divs for data-type="equation" blocks
+// -----------------------------------------------
+// .narrow : decreases the line space
 .narrow {
     margin: 1em 0;
 
     .katex-display {
         margin: 0;
+
+        > .katex {
+            padding: 0;
+        }
+    }
+}
+
+// .equation-left : pushes content to the left
+.equation-left {
+    .katex-display {
+        > .katex {
+            float: left;
+        }
     }
 }
