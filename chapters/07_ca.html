@@ -90,7 +90,7 @@
 <figcaption>Figure 7.6</figcaption>
 </figure>
 
-<p>Let’s say we have an individual cell in the CA, and let’s call it CELL. The formula for calculating CELL’s state at any given time <span class="var">t</span> is as follows:</p>
+<p>Let’s say we have an individual cell in the CA, and let’s call it CELL. The formula for calculating CELL’s state at any given time <code>t</code> is as follows:</p>
 
 <p><span class="formula">CELL state at time t = f(CELL neighborhood at time t - 1)</span></p>
 
@@ -239,13 +239,13 @@ for (int i = 0; i < cells.length; i++) {
 
 <p>We’re fairly close to getting this right, but we’ve made one minor blunder and one major blunder in the above code. Let’s talk about what we’ve done well so far.</p>
 
-<p>Notice how easy it is to look at a cell’s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <span class="var">i</span>, its neighbors are <span class="var">i-1</span> and <span class="var">i+1</span>.</p>
+<p>Notice how easy it is to look at a cell’s neighbors. Because an array is an ordered list of data, we can use the fact that the indices are numbered to know which cells are next to which cells. We know that cell number 15, for example, has cell 14 to its left and 16 to its right. More generally, we can say that for any cell <code>i</code>, its neighbors are <code>i-1</code> and <code>i+1</code>.</p>
 
 <a data-primary="elementary cellular automata" data-secondary="edge cases and" data-type="indexterm"></a>
 
 <p>We’re also farming out the calculation of a new state value to some function called <code>rules()</code>. Obviously, we’re going to have to write this function ourselves, but the point we’re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don’t have to touch that framework; we can simply rewrite the <code>rules()</code> function to compute the new states differently.</p>
 
-<p>So what have we done wrong? Let’s talk through how the code will execute. First, we look at cell index <span class="var">i</span> equals 0. Now let’s look at 0’s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we’ve alluded to before: the edge cases.</p>
+<p>So what have we done wrong? Let’s talk through how the code will execute. First, we look at cell index <code>i</code> equals 0. Now let’s look at 0’s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we’ve alluded to before: the edge cases.</p>
 
 <p>How do we deal with the cells on the edge who don’t have a neighbor to both their left and their right? Here are three possible solutions to this problem:</p>
 
@@ -743,7 +743,7 @@ for (int x = 0; x &lt; columns; x++) {
 <figcaption>Figure 7.27</figcaption>
 </figure>
 
-<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell’s neighbor. In the case of the 1D CA, this was simple: if a cell index was <span class="var">i</span>, its neighbors were i-1 and i+1. Here each cell doesn’t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
+<p>OK. Before we can sort out how to actually calculate the new state, we need to know how we can reference each cell’s neighbor. In the case of the 1D CA, this was simple: if a cell index was <code>i</code>, its neighbors were i-1 and i+1. Here each cell doesn’t have a single index, but rather a column and row index: x,y. As shown in Figure 7.27, we can see that its neighbors are: <em>(x-1,y-1) (x,y-1), (x+1,y-2), (x-1,y), (x+1,y), (x-1,y+1), (x,y+1),</em> and <em>(x+1,y+1)</em>.</p>
 
 <p>All of the Game of Life rules operate by knowing how many neighbors are alive. So if we create a neighbor counter variable and increment it each time we find a neighbor with a state of 1, we’ll have the total of live neighbors.</p>
 
@@ -775,7 +775,7 @@ for (int i = -1; i <= 1; i++) {
   }
 }</pre>
 
-<p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <span class="var">i</span> and <span class="var">j</span> equal 0, but another option would be to just subtract the cell state once we’ve finished the loop.</p>
+<p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as one of the neighbors. We could use a conditional to skip adding the state when both <code>i</code> and <code>j</code> equal 0, but another option would be to just subtract the cell state once we’ve finished the loop.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Whoops! Subtract the cell’s state,

@@ -177,7 +177,7 @@ desired.mult(maxspeed);</pre>
 
 <a data-primary="steering force" data-secondary="magnitude of" data-type="indexterm"></a>
 
-<p>In all of this excitement, however, we’ve missed one last step. What sort of vehicle is this? Is it a super sleek race car with amazing handling? Or a giant Mack truck that needs a lot of advance notice to turn? A graceful panda, or a lumbering elephant? Our example code, as it stands, has no feature to account for this variability in steering ability. Steering ability can be controlled by limiting the magnitude of the steering force. Let’s call that limit the “maximum force” (or <span class="var">maxforce</span> for short). And so finally, we have:</p>
+<p>In all of this excitement, however, we’ve missed one last step. What sort of vehicle is this? Is it a super sleek race car with amazing handling? Or a giant Mack truck that needs a lot of advance notice to turn? A graceful panda, or a lumbering elephant? Our example code, as it stands, has no feature to account for this variability in steering ability. Steering ability can be controlled by limiting the magnitude of the steering force. Let’s call that limit the “maximum force” (or <code>maxforce</code> for short). And so finally, we have:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
@@ -438,7 +438,7 @@ Frame 6: I’m there. I want to stop!</p>
 
 <p>For Reynolds, the goal of wandering is not simply random motion, but rather a sense of moving in one direction for a little while, wandering off to the next for a little bit, and so on and so forth. So how does Reynolds calculate a desired vector to achieve such an effect?</p>
 
-<p>Figure 6.12 illustrates how the vehicle predicts its future position as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <span class="var">r</span> at that position, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
+<p>Figure 6.12 illustrates how the vehicle predicts its future position as a fixed distance in front of it (in the direction of its velocity), draws a circle with radius <code>r</code> at that position, and picks a random point along the circumference of the circle. That random point moves randomly around the circle in each frame of animation. And that random point is the vehicle’s target, its desired vector pointing in that direction.</p>
 
 <p>Sounds a bit absurd, right? Or, at the very least, rather arbitrary. In fact, this is a very clever and thoughtful solution—it uses randomness to drive a vehicle’s steering, but constrains that randomness along the path of a circle to keep the vehicle’s movement from appearing jittery, and, well, random.</p>
 
@@ -462,7 +462,7 @@ Frame 6: I’m there. I want to stop!</p>
 <figcaption>Figure 6.13</figcaption>
 </figure>
 
-<p>If we define the walls of the space as the edges of a Processing window and the distance <span class="var">d</span> as 25, the code is rather simple.</p>
+<p>If we define the walls of the space as the edges of a Processing window and the distance <code>d</code> as 25, the code is rather simple.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_03_StayWithinWalls/_6_03_StayWithinWalls.pde processingjs/chapter06/_6_03_StayWithinWalls/Vehicle.pde"><img alt="ch06 ex3" src="chapter06/ch06_ex3.png" />
 <figcaption>&nbsp;</figcaption>
@@ -518,7 +518,7 @@ class FlowField {
 
 <a data-primary="flow field following" data-secondary="resolution and" data-type="indexterm"></a> <a data-primary="resolution" data-secondary="flow field following and" data-type="indexterm"></a>
 
-<p>Notice how we are defining a third variable called <span class="var">resolution</span> above. What is this variable? Let’s say we have a Processing window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a <span class="klass">PVector</span> object for every single pixel, or 40,000 <span class="klass">PVector</span><code>s</code> (200 * 200). This isn’t terribly unreasonable, but in our case, it’s overkill. We don’t need a <span class="klass">PVector</span> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
+<p>Notice how we are defining a third variable called <code>resolution</code> above. What is this variable? Let’s say we have a Processing window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a <span class="klass">PVector</span> object for every single pixel, or 40,000 <span class="klass">PVector</span><code>s</code> (200 * 200). This isn’t terribly unreasonable, but in our case, it’s overkill. We don’t need a <span class="klass">PVector</span> for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   FlowField() {
@@ -1220,7 +1220,7 @@ for (int i = 0; i < p.points.size()-1; i++) {
   PVector normalPoint = getNormalPoint(predictLoc, a, b);
 </pre>
 
-<p>Then we should make sure the normal point is actually between points <span class="var">a</span> and <span class="var">b</span>. Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <span class="var">normalPoint</span> is outside the <em>x</em> components of <span class="var">a</span> and <span class="var">b</span>.</p>
+<p>Then we should make sure the normal point is actually between points <code>a</code> and <code>b</code>. Since we know our path goes from left to right in this example, we can test if the <em>x</em> component of <code>normalPoint</code> is outside the <em>x</em> components of <code>a</code> and <code>b</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
    if (normalPoint.x < a.x || normalPoint.x > b.x) {
@@ -1231,7 +1231,7 @@ for (int i = 0; i < p.points.size()-1; i++) {
 
 <p>As a little trick, we’ll say that if it’s not within the line segment, let’s just pretend the end point of that line segment is the normal. This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>
 
-<p>Finally, we’ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high “world record” distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <span class="var">target</span>. At the end of the loop, we’ll have the closest normal point in that variable.</p>
+<p>Finally, we’ll need to make sure we find the normal point that is closest to our vehicle. To accomplish this, we start with a very high “world record” distance and iterate through each normal point to see if it beats the record (i.e. is less than). Each time a normal point beats the record, the world record is updated and the winning point is stored in a variable named <code>target</code>. At the end of the loop, we’ll have the closest normal point in that variable.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter06/_6_06_PathFollowing/_6_06_PathFollowing.pde processingjs/chapter06/_6_06_PathFollowing/Path.pde processingjs/chapter06/_6_06_PathFollowing/Vehicle.pde"><img alt="ch06 ex6" src="chapter06/ch06_ex6.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1381,7 +1381,7 @@ void draw(){
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     v.separate();</pre>
 
-<p>Is that right? It sounds good, but it’s not. What’s missing? In the case of seek, we said, “Seek <span class="var">mouseX</span> and <span class="var">mouseY</span>.” In the case of separate, we’re saying “separate from <em>everyone else</em>.” Who is everyone else? It’s the list of all the other vehicles.</p>
+<p>Is that right? It sounds good, but it’s not. What’s missing? In the case of seek, we said, “Seek <code>mouseX</code> and <code>mouseY</code>.” In the case of separate, we’re saying “separate from <em>everyone else</em>.” Who is everyone else? It’s the list of all the other vehicles.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     v.separate(vehicles);</pre>
@@ -2016,7 +2016,7 @@ float mag() {
   return sqrt(x*x + y*y);
 }</pre>
 
-<p>Magnitude requires the square root operation. And it should. After all, if you want the magnitude of a vector, then you’ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1). However, if you could somehow skip using the square root, your code would run faster. Let’s consider a situation where you just want to know the relative magnitude of a vector. For example, is the magnitude greater than ten? (Assume a <span class="klass">PVector</span> <span class="var">v</span>.)</p>
+<p>Magnitude requires the square root operation. And it should. After all, if you want the magnitude of a vector, then you’ve got to look up the Pythagorean theorem and compute it (we did this in Chapter 1). However, if you could somehow skip using the square root, your code would run faster. Let’s consider a situation where you just want to know the relative magnitude of a vector. For example, is the magnitude greater than ten? (Assume a <span class="klass">PVector</span> <code>v</code>.)</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 if (v.mag() > 10) {
@@ -2056,7 +2056,7 @@ void draw() {
   }
 }</pre>
 
-<p>Sure, this is a totally ridiculous code snippet that you would never write. But it illustrates a certain point. If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary? This is the principle behind sine and cosine lookup tables. Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <span class="var">TWO_PI</span> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
+<p>Sure, this is a totally ridiculous code snippet that you would never write. But it illustrates a certain point. If you are calculating the sine of pi ten thousand times, why not just calculate it once, save that value, and refer to it whenever necessary? This is the principle behind sine and cosine lookup tables. Instead of calling the sine and cosine functions in your code whenever you need them, you can build an array that stores the results of sine and cosine at angles between 0 and <code>TWO_PI</code> and just look up the values when you need them. For example, here are two arrays that store the sine and cosine values for every angle, 0 to 359 degrees.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 float sinvalues[] = new float[360];
@@ -2102,7 +2102,7 @@ void draw() {
   }
 }</pre>
 
-<p>Now you’ve made just one <span class="klass">PVector</span> instead of one thousand. Even better, you could turn the <span class="klass">PVector</span> into a global variable and just assign the <span class="var">x</span> and <span class="var">y</span> value:</p>
+<p>Now you’ve made just one <span class="klass">PVector</span> instead of one thousand. Even better, you could turn the <span class="klass">PVector</span> into a global variable and just assign the <code>x</code> and <code>y</code> value:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector mouse = new PVector();
@@ -2141,7 +2141,7 @@ void draw() {
     desired.limit(maxforce);
     return desired;</pre>
 
-<p>We don’t actually need a second <span class="klass">PVector</span> called <span class="var">steer</span>. We could just use the desired <span class="klass">PVector</span> object and turn it into the steering force by subtracting velocity. I didn’t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
+<p>We don’t actually need a second <span class="klass">PVector</span> called <code>steer</code>. We could just use the desired <span class="klass">PVector</span> object and turn it into the steering force by subtracting velocity. I didn’t do this in my example because it is more confusing to read. But in some cases, it may be greatly more efficient.</p>
 
 <div data-type="exercise" id="chapter06_exercise20">
 <h5>Exercise 6.20</h5>

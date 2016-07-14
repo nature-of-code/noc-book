@@ -74,7 +74,7 @@
 
 <ul>
 	<li>
-	<p><strong><em>Reinforcement Learning</em></strong> —A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don’t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <span class="var">t</span>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We’ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
+	<p><strong><em>Reinforcement Learning</em></strong> —A strategy built on observation. Think of a little mouse running through a maze. If it turns left, it gets a piece of cheese; if it turns right, it receives a little shock. (Don’t worry, this is just a pretend mouse.) Presumably, the mouse will learn over time to turn left. Its neural network makes a decision with an outcome (turn left or right) and observes its environment (yum or ouch). If the observation is negative, the network can adjust its weights in order to make a different decision the next time. Reinforcement learning is common in robotics. At time <code>t</code>, the robot performs a task and observes the results. Did it crash into a wall or fall off a table? Or is it unharmed? We’ll look at reinforcement learning in the context of our simulated steering vehicles.</p>
 	</li>
 </ul>
 
@@ -415,7 +415,7 @@ int result = p.feedforward(point);</pre>
 
 <p>Notice that a high learning constant means the weight will change more drastically. This may help us arrive at a solution more quickly, but with such large changes in weight it’s possible we will overshoot the optimal weights. With a small learning constant, the weights will be adjusted slowly, requiring more training time but allowing the network to make very small adjustments that could improve the network’s overall accuracy.</p>
 
-<p>Assuming the addition of a variable <span class="var">c</span> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
+<p>Assuming the addition of a variable <code>c</code> for the learning constant, we can now write a training function for the perceptron following the above steps.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A new variable is introduced
@@ -502,7 +502,7 @@ class Trainer {
   }
 }</pre>
 
-<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let’s start with the formula for a line, where <span class="var">y</span> is calculated as a function of <span class="var">x</span>:</p>
+<p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let’s start with the formula for a line, where <code>y</code> is calculated as a function of <code>x</code>:</p>
 
 <p><span class="formula">y = f(x)</span></p>
 
@@ -528,13 +528,13 @@ float f(float x) {
 float x = random(width);
 float y = random(height);</pre>
 
-<p>How do we know if this point is above or below the line? The line function <code>f(x)</code> gives us the <span class="var">y</span> value on the line for that <span class="var">x</span> position. Let’s call that <span class="var">yline</span>.</p>
+<p>How do we know if this point is above or below the line? The line function <code>f(x)</code> gives us the <code>y</code> value on the line for that <code>x</code> position. Let’s call that <code>yline</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // The y position on the line
 float yline = f(x);</pre>
 
-<p>If the <span class="var">y</span> value we are examining is above the line, it will be less than <span class="var">yline</span>.</p>
+<p>If the <code>y</code> value we are examining is above the line, it will be less than <code>yline</code>.</p>
 
 <figure id="chapter10_figure8"><img alt="Figure 10.8" src="chapter10/ch10_08.png" />
 <figcaption>Figure 10.8</figcaption>
@@ -553,7 +553,7 @@ if (y < yline) {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 Trainer t = new Trainer(x, y, answer);</pre>
 
-<p>Assuming we had a <span class="klass">Perceptron</span> object <span class="var">ptron</span>, we could then train it by sending the inputs along with the known answer.</p>
+<p>Assuming we had a <span class="klass">Perceptron</span> object <code>ptron</code>, we could then train it by sending the inputs along with the known answer.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 ptron.train(t.inputs, t.answer);</pre>
@@ -774,7 +774,7 @@ int feedforward(float[] inputs) {
 
 <p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current position to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error—the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
 
-<p>The brain can then apply this “error” vector (which has two error values, one for <span class="var">x</span> and one for <span class="var">y</span>) as a means for adjusting the weights, just as we did in the line classification example.</p>
+<p>The brain can then apply this “error” vector (which has two error values, one for <code>x</code> and one for <code>y</code>) as a means for adjusting the weights, just as we did in the line classification example.</p>
 
 <table class="codewide">
 	<tbody>
@@ -1053,7 +1053,7 @@ void draw() {
 <figcaption>ch10 ex03a&nbsp;</figcaption>
 </figure>
 
-<p>What’s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>) and a <span class="var">weight</span>.</p>
+<p>What’s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <code>a</code> to <span class="klass">Neuron</span> <code>b</code>) and a <code>weight</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
@@ -1111,7 +1111,7 @@ void setup() {
     [inline]// But what do we do with the Connection object?
   }</pre>
 
-<p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <span class="var">a</span> connects to <span class="var">b</span>, we want <span class="var">a</span> to store a reference of that connection so that it can pass its output to <span class="var">b</span> when the time comes.</p>
+<p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <code>a</code> connects to <code>b</code>, we want <code>a</code> to store a reference of that connection so that it can pass its output to <code>b</code> when the time comes.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
@@ -1119,7 +1119,7 @@ void setup() {
     a.addConnection(c);
   }</pre>
 
-<p>In some cases, we also might want <span class="klass">Neuron</span> <span class="var">b</span> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
+<p>In some cases, we also might want <span class="klass">Neuron</span> <code>b</code> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
 
 <p>For this to work, we have to add an <span class="klass">ArrayList</span> of connections to the <span class="klass">Neuron</span> class. Then we implement the <code>addConnection()</code> function that stores the connection in that <span class="klass">ArrayList</span>.</p>
 
@@ -1201,7 +1201,7 @@ class Neuron
 
   }</pre>
 
-<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">Neuron</span> class adds a variable called <span class="var">sum</span>, it can simply accumulate the inputs as they are received.</p>
+<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">Neuron</span> class adds a variable called <code>sum</code>, it can simply accumulate the inputs as they are received.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
@@ -1227,7 +1227,7 @@ class Neuron
     }
   }</pre>
 
-<p>Now, what do we do in the <code>fire()</code> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <code>feedforward()</code> the neuron’s output. For this simple example, we’ll just take the neuron’s <span class="var">sum</span> variable and make it the output.</p>
+<p>Now, what do we do in the <code>fire()</code> function? If you recall, each neuron keeps track of its connections to other neurons. So all we need to do is loop through those connections and <code>feedforward()</code> the neuron’s output. For this simple example, we’ll just take the neuron’s <code>sum</code> variable and make it the output.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fire() {
@@ -1249,14 +1249,14 @@ class Connection {
     b.feedforward(val*weight);
   }</pre>
 
-<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">Neuron</span> <span class="var">a</span> to <span class="klass">Neuron</span> <span class="var">b</span>.</p>
+<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">Neuron</span> <code>a</code> to <span class="klass">Neuron</span> <code>b</code>.</p>
 
-<p>Let’s first think about how we might do that. We know the position of <span class="klass">Neuron</span> <span class="var">a</span>; it’s the <span class="klass">PVector</span> <span class="var">a.position</span>. <span class="klass">Neuron</span> <span class="var">b</span> is located at <span class="var">b.position</span>. We need to start something moving from <span class="klass">Neuron</span> <span class="var">a</span> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
+<p>Let’s first think about how we might do that. We know the position of <span class="klass">Neuron</span> <code>a</code>; it’s the <span class="klass">PVector</span> <code>a.position</code>. <span class="klass">Neuron</span> <code>b</code> is located at <code>b.position</code>. We need to start something moving from <span class="klass">Neuron</span> <code>a</code> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector sender = a.position.get();</pre>
 
-<p>Once we have a copy of that position, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <span class="var">a</span> to <span class="var">b</span>.</p>
+<p>Once we have a copy of that position, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <code>a</code> to <code>b</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   sender.x = lerp(sender.x, b.position.x, 0.1);

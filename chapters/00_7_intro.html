@@ -147,7 +147,7 @@ Since the three lines of code above are the first to appear in this book, I'd li
     point(x,y);
   }</pre>
 
-<p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <span class="var">x</span> (<span class="var">x</span><code>++</code>); to the left by decrementing <span class="var">x</span> (<span class="var">x--</span>); forward by going down a pixel (<span class="var">y++</span>); and backward by going up a pixel (<span class="var">y--</span>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <code>random()</code>.</p>
+<p>The second function directs the <span class="klass">Walker</span> object to take a step. Now, this is where things get a bit more interesting. Remember that floor on which we were taking random steps? Well, now we can use a Processing window in that same capacity. There are four possible steps. A step to the right can be simulated by incrementing <code>x</code> (<code>x</code><code>++</code>); to the left by decrementing <code>x</code> (<code>x--</code>); forward by going down a pixel (<code>y++</code>); and backward by going up a pixel (<code>y--</code>). How do we pick from these four choices? Earlier we stated that we could flip two coins. In Processing, however, when we want to randomly choose from a list of options, we can pick a random number using <code>random()</code>.</p>
 
 <a data-primary="random number generators" data-secondary="random() function" data-type="indexterm"></a> <a data-primary="random() function" data-type="indexterm"></a>
 
@@ -156,7 +156,7 @@ Since the three lines of code above are the first to appear in this book, I'd li
     // 0, 1, 2, or 3
     int choice = int(random(4));</pre>
 
-<p>The above line of code picks a random floating point number between 0 and 4 and converts it to an integer, with a result of 0, 1, 2, or 3. Technically speaking, the highest number will never be 4.0, but rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an integer lops off the decimal place, the highest <span class="var">int</span> we can get is 3. Next, we take the appropriate step (left, right, up, or down) depending on which random number was picked.</p>
+<p>The above line of code picks a random floating point number between 0 and 4 and converts it to an integer, with a result of 0, 1, 2, or 3. Technically speaking, the highest number will never be 4.0, but rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an integer lops off the decimal place, the highest <code>int</code> we can get is 3. Next, we take the appropriate step (left, right, up, or down) depending on which random number was picked.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     //{!9} The random “choice” determines our step.
@@ -172,7 +172,7 @@ Since the three lines of code above are the first to appear in this book, I'd li
   }
 }</pre>
 
-<p>Now that we’ve written the class, it’s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch—<code>setup()</code> and <code>draw()</code>. Assuming we are looking to model a single random walk, we declare one global variable of type <span class="var">Walker</span>.</p>
+<p>Now that we’ve written the class, it’s time to make an actual <span class="klass">Walker</span> object in the main part of our sketch—<code>setup()</code> and <code>draw()</code>. Assuming we are looking to model a single random walk, we declare one global variable of type <code>Walker</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A Walker object
@@ -637,7 +637,7 @@ if (r < 0.01) {
 
 <a data-primary="Lévy flight" data-secondary="implementing with qualifying random values" data-type="indexterm"></a>
 
-<p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more general rule—the higher a number, the more likely it is to be picked? 3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if <span class="var">x</span> is the random number, we could map the likelihood on the y-axis with <span class="var">y</span> = <span class="var">x</span>.</p>
+<p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more general rule—the higher a number, the more likely it is to be picked? 3.145 would be more likely to be picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if <code>x</code> is the random number, we could map the likelihood on the y-axis with <code>y</code> = <code>x</code>.</p>
 
 <figure id="intro_figure4"><img alt="Figure I.4" src="intro/intro_04.png" />
 <figcaption>Figure I.4</figcaption>
@@ -836,7 +836,7 @@ void draw() {
   println(n);
 }</pre>
 
-<p>The above code results in the same value printed over and over. This happens because we are asking for the result of the <code>noise()</code> function at the same point in time—3—over and over. If we increment the time variable <span class="var">t</span>, however, we’ll get a different result.</p>
+<p>The above code results in the same value printed over and over. This happens because we are asking for the result of the <code>noise()</code> function at the same point in time—3—over and over. If we increment the time variable <code>t</code>, however, we’ll get a different result.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!1} Typically we would start at time = 0, though this is arbitrary.
@@ -849,20 +849,20 @@ void draw() {
   t += 0.01;
 }</pre>
 
-<p>How quickly we increment <span class="var">t</span> also affects the smoothness of the noise. If we make large jumps in time, then we are skipping ahead and the values will be more random.</p>
+<p>How quickly we increment <code>t</code> also affects the smoothness of the noise. If we make large jumps in time, then we are skipping ahead and the values will be more random.</p>
 
 <figure id="intro_figure7"><img alt="Figure I.7" src="intro/intro_07.png" />
 <figcaption>Figure I.7</figcaption>
 </figure>
 
-<p>Try running the code several times, incrementing <span class="var">t</span> by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see different results.</p>
+<p>Try running the code several times, incrementing <code>t</code> by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see different results.</p>
 
 <section data-type="sect2" id="_mapping_noise">
 <h3>Mapping Noise</h3>
 
 <a data-primary="map() function (Processing)" data-type="indexterm"></a> <a data-primary="Perlin noise" data-secondary="map() function" data-type="indexterm"></a>
 
-<p>Now we’re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it’s up to us to map that range to what we want. The easiest way to do this is with Processing’s <code>map()</code> function. The <code>map()</code> function takes five arguments. First up is the value we want to map, in this case <span class="var">n</span>. Then we have to give it the value’s current range (minimum and maximum), followed by our desired range.</p>
+<p>Now we’re ready to answer the question of what to do with the noise value. Once we have the value with a range between 0 and 1, it’s up to us to map that range to what we want. The easiest way to do this is with Processing’s <code>map()</code> function. The <code>map()</code> function takes five arguments. First up is the value we want to map, in this case <code>n</code>. Then we have to give it the value’s current range (minimum and maximum), followed by our desired range.</p>
 
 <figure id="intro_figure8"><img alt="Figure I.8" src="intro/intro_08.png" />
 <figcaption>Figure I.8</figcaption>
@@ -913,13 +913,13 @@ class Walker {
   }
 }</pre>
 
-<p>Notice how the above example requires an additional pair of variables: <span class="var">tx</span> and <span class="var">ty</span>. This is because we need to keep track of two time variables, one for the x-position of the <span class="klass">Walker</span> object and one for the y-position. But there is something a bit odd about these variables. Why does <span class="var">tx</span> start at 0 and <span class="var">ty</span> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <span class="var">t</span> each and every time. If we asked for the noise value at the same time <span class="var">t</span> for both <span class="var">x</span> and <span class="var">y</span>, then <span class="var">x</span> and <span class="var">y</span> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <span class="var">x</span> and 10,000 for <span class="var">y</span> so that <span class="var">x</span> and <span class="var">y</span> can appear to act independently of each other.</p>
+<p>Notice how the above example requires an additional pair of variables: <code>tx</code> and <code>ty</code>. This is because we need to keep track of two time variables, one for the x-position of the <span class="klass">Walker</span> object and one for the y-position. But there is something a bit odd about these variables. Why does <code>tx</code> start at 0 and <code>ty</code> at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our two time variables with different values. This is because the noise function is deterministic: it gives you the same result for a specific time <code>t</code> each and every time. If we asked for the noise value at the same time <code>t</code> for both <code>x</code> and <code>y</code>, then <code>x</code> and <code>y</code> would always be equal, meaning that the <span class="klass">Walker</span> object would only move along a diagonal. Instead, we simply use two different parts of the noise space, starting at 0 for <code>x</code> and 10,000 for <code>y</code> so that <code>x</code> and <code>y</code> can appear to act independently of each other.</p>
 
 <figure id="intro_figure9"><img alt="Figure I.9" src="intro/intro_09.png" />
 <figcaption>Figure I.9</figcaption>
 </figure>
 
-<p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-position whenever we want. In examples, you will often see a variable named <span class="var">xoff</span> to indicate the x-offset along the noise graph, rather than <span class="var">t</span> for time (as noted in the diagram).</p>
+<p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us understand how the noise function works, but really what we have is space, rather than time. The graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for a value at a specific x-position whenever we want. In examples, you will often see a variable named <code>xoff</code> to indicate the x-offset along the noise graph, rather than <code>t</code> for time (as noted in the diagram).</p>
 
 <div data-type="exercise" id="intro_exercise7">
 <h5>Exercise I.7</h5>
@@ -972,7 +972,7 @@ updatePixels();</pre>
    //{.bold} A Perlin noise brightness!
    float bright = map(noise(x,y),0,1,0,255);</pre>
 
-<p>This is a nice start conceptually—it gives you a noise value for every (<span class="var">x</span>,<span class="var">y</span>) position in our two-dimensional space. The problem is that this won’t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <span class="var">xoff</span> each time we move horizontally, and a <span class="var">yoff</span> variable each time we move vertically through the nested loops.</p>
+<p>This is a nice start conceptually—it gives you a noise value for every (<code>x</code>,<code>y</code>) position in our two-dimensional space. The problem is that this won’t have the cloudy quality we want. Jumping from pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good solution to this problem is to just use different variables for the noise arguments. For example, we could increment a variable called <code>xoff</code> each time we move horizontally, and a <code>yoff</code> variable each time we move vertically through the nested loops.</p>
 
 <div data-type="example">
 <h5>Example I.7: 2D Perlin noise</h5>
@@ -1002,7 +1002,7 @@ for (int x = 0; x &lt; width; x++) {
 <div data-type="exercise" id="intro_exercise8">
 <h5>Exercise I.8</h5>
 
-<p>Play with color, <code>noiseDetail()</code>, and the rate at which <span class="var">xoff</span> and <span class="var">yoff</span> are incremented to achieve different visual effects.</p>
+<p>Play with color, <code>noiseDetail()</code>, and the rate at which <code>xoff</code> and <code>yoff</code> are incremented to achieve different visual effects.</p>
 </div>
 
 <div data-type="exercise" id="intro_exercise9">

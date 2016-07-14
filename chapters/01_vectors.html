@@ -110,7 +110,7 @@ void draw() {
 </dl>
 </div>
 
-<p>It’s becoming clearer that for every concept in this world (wind, position, acceleration, etc.), we’ll need two variables. And this is only a two-dimensional world. In a 3D world, we’ll need <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>, <span class="var">xspeed</span>, <span class="var">yspeed</span>, <span class="var">zspeed</span>, and so on.</p>
+<p>It’s becoming clearer that for every concept in this world (wind, position, acceleration, etc.), we’ll need two variables. And this is only a two-dimensional world. In a 3D world, we’ll need <code>x</code>, <code>y</code>, <code>z</code>, <code>xspeed</code>, <code>yspeed</code>, <code>zspeed</code>, and so on.</p>
 
 <p>Wouldn’t it be nice if we could simplify our code and use fewer variables?</p>
 
@@ -198,7 +198,7 @@ Vector speed;</pre>
 </dl>
 </div>
 
-<p>Notice how we are storing the same data for both—two floating point numbers, an <span class="var">x</span> and a <span class="var">y</span>. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
+<p>Notice how we are storing the same data for both—two floating point numbers, an <code>x</code> and a <code>y</code>. If we were to write a vector class ourselves, we’d start with something rather basic:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class PVector {
@@ -275,7 +275,7 @@ position = position + velocity;</pre>
 <figcaption>Figure 1.5</figcaption>
 </figure>
 
-<p>Each vector has two components, an <span class="var">x</span> and a <span class="var">y</span>. To add two vectors together, we simply add both <span class="var">x</span><code>’</code>s and both <span class="var">y</span><code>’</code>s.</p>
+<p>Each vector has two components, an <code>x</code> and a <code>y</code>. To add two vectors together, we simply add both <code>x</code><code>’</code>s and both <code>y</code><code>’</code>s.</p>
 
 <figure id="chapter01_figure6"><img alt="Figure 1.6" src="chapter01/ch01_06.png" />
 <figcaption>Figure 1.6</figcaption>
@@ -294,7 +294,7 @@ position = position + velocity;</pre>
 <div data-type="equation">w_y = u_y - v_y</div>
 </div>
 
-<p>Then, replacing <span class="var">u</span> and <span class="var">v</span> with their values from Figure 1.6, we get:</p>
+<p>Then, replacing <code>u</code> and <code>v</code> with their values from Figure 1.6, we get:</p>
 
 <div class="narrow equation-left">
 <div data-type="equation">w_x = 5 + 3</div>
@@ -400,18 +400,18 @@ void draw() {
 
 <p>Now, you might feel somewhat disappointed. After all, this may initially appear to have made the code more complicated than the original version. While this is a perfectly reasonable and valid critique, it’s important to understand that we haven’t fully realized the power of programming with vectors just yet. Looking at a simple bouncing ball and only implementing vector addition is just the first step. As we move forward into a more complex world of multiple objects and multiple <strong><em>forces</em></strong> (which we’ll introduce in Chapter 2), the benefits of <span class="klass">PVector</span> will become more apparent.</p>
 
-<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">PVector</span> objects to describe two values—the <span class="var">x</span> and <span class="var">y</span> of position and the <span class="var">x</span> and <span class="var">y</span> of velocity—we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">PVector</span> individually. When we go to draw an object in Processing, there’s no means for us to say:</p>
+<p>We should, however, note an important aspect of the above transition to programming with vectors. Even though we are using <span class="klass">PVector</span> objects to describe two values—the <code>x</code> and <code>y</code> of position and the <code>x</code> and <code>y</code> of velocity—we still often need to refer to the <em>x</em> and <em>y</em> components of each <span class="klass">PVector</span> individually. When we go to draw an object in Processing, there’s no means for us to say:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{.line-through .no-comment}
 ellipse(position, 16, 16);</pre>
 
-<p>The <code>ellipse()</code> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">x</span>-coordinate and a <span class="var">y</span>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
+<p>The <code>ellipse()</code> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <code>x</code>-coordinate and a <code>y</code>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 ellipse(position.x, position.y, 16, 16);</pre>
 
-<p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: <span class="var">position</span> and <span class="var">velocity</span>.</p>
+<p>The same issue arises when testing if the circle has reached the edge of the window, and we need to access the individual components of both vectors: <code>position</code> and <code>velocity</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 if ((position.x &gt; width) || (position.x &lt; 0)) {
@@ -421,7 +421,7 @@ if ((position.x &gt; width) || (position.x &lt; 0)) {
 <div data-type="exercise" id="chapter01_exercise1">
 <h5>Exercise 1.1</h5>
 
-<p>Find something you’ve previously made in Processing using separate <span class="var">x</span> and <span class="var">y</span> variables and use <span class="klass">PVector</span><code>s</code> instead.</p>
+<p>Find something you’ve previously made in Processing using separate <code>x</code> and <code>y</code> variables and use <span class="klass">PVector</span><code>s</code> instead.</p>
 </div>
 
 <div data-type="exercise" id="chapter01_exercise2">
@@ -571,7 +571,7 @@ void draw() {
 
 <p>Moving on to multiplication, we have to think a little bit differently. When we talk about multiplying a vector, what we typically mean is <strong><em>scaling</em></strong> a vector. If we wanted to scale a vector to twice its size or one-third of its size (leaving its direction the same), we would say: “Multiply the vector by 2” or “Multiply the vector by 1/3.” Note that we are multiplying a vector by a scalar, a single number, not another vector.</p>
 
-<p>To scale a vector, we multiply each component (<span class="var">x</span> and <span class="var">y</span>) by a scalar.</p>
+<p>To scale a vector, we multiply each component (<code>x</code> and <code>y</code>) by a scalar.</p>
 
 <figure class="half-width-right" id="chapter01_figure8"><img alt="Figure 1.8: Scaling a vector" src="chapter01/ch01_08.png" />
 <figcaption>Figure 1.8: Scaling a vector&nbsp;</figcaption>
@@ -681,7 +681,7 @@ The distributive rule with 2 vectors, 1 scalar: <span data-type="equation">(\vec
 
 <a data-primary="magnitude (of vectors)" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm"></a>
 
-<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you’re wondering: “OK, so how do I know what the length of a vector is? I know the components (<span class="var">x</span> and <span class="var">y</span>), but how long (in pixels) is the actual arrow?” Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
+<p>Multiplication and division, as we just saw, are means by which the length of the vector can be changed without affecting direction. Perhaps you’re wondering: “OK, so how do I know what the length of a vector is? I know the components (<code>x</code> and <code>y</code>), but how long (in pixels) is the actual arrow?” Understanding how to calculate the length (also known as <strong><em>magnitude</em></strong>) of a vector is incredibly useful and important.</p>
 
 <figure class="half-width-right">
 <img alt="Nature of Code Image" src="chapter01/ch01_10.png" />
@@ -692,7 +692,7 @@ The distributive rule with 2 vectors, 1 scalar: <span data-type="equation">(\vec
 
 <a data-primary="Pythagoras" data-type="indexterm"></a> <a data-primary="Pythagorean theorem" data-type="indexterm"></a>
 
-<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<span class="var">x</span> and <span class="var">y</span>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We’re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras discovered a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
+<p>Notice in the above diagram how the vector, drawn as an arrow and two components (<code>x</code> and <code>y</code>), creates a right triangle. The sides are the components and the hypotenuse is the arrow itself. We’re very lucky to have this right triangle, because once upon a time, a Greek mathematician named Pythagoras discovered a lovely formula to describe the relationship between the sides and hypotenuse of a right triangle.</p>
 
 <figure class="half-width-right" id="chapter01_figure11"><img alt="Figure 1.11: The Pythagorean Theorem" src="chapter01/ch01_11.png" />
 <figcaption>Figure 1.11: The Pythagorean Theorem&nbsp;</figcaption>
@@ -852,7 +852,7 @@ ellipse(position.x,position.y,16,16);</pre>
 	</li>
 </ol>
 
-<p>Our Motion 101 algorithm tells us the answers to these questions. A <span class="klass">Mover</span> object has two pieces of data: <span class="var">position</span> and <span class="var">velocity</span>, which are both <span class="klass">PVector</span> objects.</p>
+<p>Our Motion 101 algorithm tells us the answers to these questions. A <span class="klass">Mover</span> object has two pieces of data: <code>position</code> and <code>velocity</code>, which are both <span class="klass">PVector</span> objects.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
@@ -998,7 +998,7 @@ class Mover {
 
 <a data-primary="acceleration" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="acceleration" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="acceleration" data-type="indexterm"></a>
 
-<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">PVector</span> is and (2) how we use <span class="klass">PVector</span><code>s</code> inside of an object to keep track of its position and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">PVector</span> to our class—<span class="var">acceleration</span>.</p>
+<p>OK. At this point, we should feel comfortable with two things: (1) what a <span class="klass">PVector</span> is and (2) how we use <span class="klass">PVector</span><code>s</code> inside of an object to keep track of its position and movement. This is an excellent first step and deserves a mild round of applause. Before standing ovations and screaming fans, however, we need to make one more, somewhat bigger step forward. After all, watching the Motion 101 example is fairly boring—the circle never speeds up, never slows down, and never turns. For more interesting motion, for motion that appears in the real world around us, we need to add one more <span class="klass">PVector</span> to our class—<code>acceleration</code>.</p>
 
 <p>The strict definition of <strong><em>acceleration</em></strong> we’re using here is: <em>the rate of change of velocity</em>. Let’s think about that definition for a moment. Is this a new concept? Not really. Velocity is defined as <em>the rate of change of position</em>. In essence, we are developing a “trickle-down” effect. Acceleration affects velocity, which in turn affects position (for some brief foreshadowing, this point will become even more crucial in the next chapter, when we see how forces affect acceleration, which affects velocity, which affects position). In code, this reads:</p>
 
@@ -1201,14 +1201,14 @@ float y = 5;
 
 x = x + y;</pre>
 
-<p>Pretty simple, right? <span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and now <span class="var">x</span> is equal to 5. We could write the corresponding code pretty easily based on what we’ve learned about <span class="klass">PVector</span>.</p>
+<p>Pretty simple, right? <code>x</code> has the value of 0, we add <code>y</code> to it, and now <code>x</code> is equal to 5. We could write the corresponding code pretty easily based on what we’ve learned about <span class="klass">PVector</span>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(0, 0);
 PVector u = new PVector(4, 5);
 v.add(u);</pre>
 
-<p>The vector <span class="var">v</span> has the value of (0,0), we add <span class="var">u</span> to it, and now <span class="var">v</span> is equal to (4,5). Easy, right?</p>
+<p>The vector <code>v</code> has the value of (0,0), we add <code>u</code> to it, and now <code>v</code> is equal to (4,5). Easy, right?</p>
 
 <p>Let’s take a look at another example of some simple floating point math:</p>
 
@@ -1218,7 +1218,7 @@ float y = 5;
 
 float z = x + y;</pre>
 
-<p><span class="var">x</span> has the value of 0, we add <span class="var">y</span> to it, and store the result in a new variable <span class="var">z</span>. The value of <span class="var">x</span> does not change in this example (neither does <span class="var">y</span>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it’s not so obvious with mathematical operations in <span class="klass">PVector</span>. Let’s try to write the code based on what we know so far.</p>
+<p><code>x</code> has the value of 0, we add <code>y</code> to it, and store the result in a new variable <code>z</code>. The value of <code>x</code> does not change in this example (neither does <code>y</code>)! This may seem like a trivial point, and one that is quite intuitive when it comes to mathematical operations with floats. However, it’s not so obvious with mathematical operations in <span class="klass">PVector</span>. Let’s try to write the code based on what we know so far.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(0,0);
@@ -1238,7 +1238,7 @@ void add(PVector v) {
 
 <a data-primary="static functions" data-type="indexterm"></a>
 
-<p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">PVector</span> objects, <span class="var">v</span> and <span class="var">u</span>:</p>
+<p>Functions that we call from the class name itself (rather than from a speciﬁc object instance) are known as <strong><em>static functions</em></strong>. Here are two examples of function calls that assume two <span class="klass">PVector</span> objects, <code>v</code> and <code>u</code>:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Static: called from the class name.
@@ -1266,7 +1266,7 @@ v.add(u);</pre>
 	<p>The function does not have a <strong><em>void</em></strong> return type, but rather returns a <span class="klass">PVector</span>.</p>
 	</li>
 	<li>
-	<p>The function creates a new <span class="klass">PVector</span> (<span class="var">v3</span>) and returns the sum of the components of <span class="var">v1</span> and <span class="var">v2</span> in that new <span class="klass">PVector</span>.</p>
+	<p>The function creates a new <span class="klass">PVector</span> (<code>v3</code>) and returns the sum of the components of <code>v1</code> and <code>v2</code> in that new <span class="klass">PVector</span>.</p>
 	</li>
 </ul>
 
@@ -1289,13 +1289,13 @@ PVector w = PVector.add(v, u);</pre>
 
 <ul>
 	<li>
-	<p>The <span class="klass">PVector</span> <span class="var">v</span> equals (1,5).</p>
+	<p>The <span class="klass">PVector</span> <code>v</code> equals (1,5).</p>
 	</li>
 	<li>
-	<p>The <span class="klass">PVector</span> <span class="var">u</span> equals <span class="var">v</span> multiplied by 2.</p>
+	<p>The <span class="klass">PVector</span> <code>u</code> equals <code>v</code> multiplied by 2.</p>
 	</li>
 	<li>
-	<p>The <span class="klass">PVector</span> <span class="var">w</span> equals <span class="var">v</span> minus <span class="var">u</span>.</p>
+	<p>The <span class="klass">PVector</span> <code>w</code> equals <code>v</code> minus <code>u</code>.</p>
 	</li>
 	<li>
 	<p>Divide the <span class="klass">PVector</span> w by 3.</p>
@@ -1321,13 +1321,13 @@ ___________;</pre>
 
 <p>To finish out this chapter, let’s try something a bit more complex and a great deal more useful. We’ll dynamically calculate an object’s acceleration according to a rule stated in Algorithm #3 — <em>the object accelerates towards the mouse</em>.</p>
 
-<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let’s start with direction. We know the acceleration vector should point from the object’s position towards the mouse position. Let’s say the object is located at the point (<span class="var">x</span>,<span class="var">y</span>) and the mouse at (<span class="var">mouseX</span>,<span class="var">mouseY</span>).</p>
+<p>Anytime we want to calculate a vector based on a rule or a formula, we need to compute two things: <strong><em>magnitude</em></strong> and <strong><em>direction</em></strong>. Let’s start with direction. We know the acceleration vector should point from the object’s position towards the mouse position. Let’s say the object is located at the point (<code>x</code>,<code>y</code>) and the mouse at (<code>mouseX</code>,<code>mouseY</code>).</p>
 
 <figure class="half-width-right" id="chapter01_figure15"><img alt="Figure 1.15" src="chapter01/ch01_15.png" />
 <figcaption>Figure 1.15</figcaption>
 </figure>
 
-<p>In Figure 1.15, we see that we can get a vector (<span class="var">dx</span>,<span class="var">dy</span>) by subtracting the object’s position from the mouse’s position.</p>
+<p>In Figure 1.15, we see that we can get a vector (<code>dx</code>,<code>dy</code>) by subtracting the object’s position from the mouse’s position.</p>
 
 <ul>
 	<li>
