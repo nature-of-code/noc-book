@@ -243,7 +243,7 @@ for (int i = 0; i < cells.length; i++) {
 
 <a data-primary="elementary cellular automata" data-secondary="edge cases and" data-type="indexterm"></a>
 
-<p>We’re also farming out the calculation of a new state value to some function called <span class="function">rules()</span>. Obviously, we’re going to have to write this function ourselves, but the point we’re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don’t have to touch that framework; we can simply rewrite the <span class="function">rules()</span> function to compute the new states differently.</p>
+<p>We’re also farming out the calculation of a new state value to some function called <code>rules()</code>. Obviously, we’re going to have to write this function ourselves, but the point we’re making here is modularity. We have a basic framework for the CA in this function, and if we later want to change how the rules operate, we don’t have to touch that framework; we can simply rewrite the <code>rules()</code> function to compute the new states differently.</p>
 
 <p>So what have we done wrong? Let’s talk through how the code will execute. First, we look at cell index <span class="var">i</span> equals 0. Now let’s look at 0’s neighbors. Left is index -1. Middle is index 0. And right is index 1. However, our array by definition does not have an element with the index -1. It starts with 0. This is a problem we’ve alluded to before: the edge cases.</p>
 
@@ -313,7 +313,7 @@ for (int i = 1; i < cells.length-1; i++) {
 //{.bold} The new generation becomes the current generation.
 cells = newcells;</pre>
 
-<p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the <span class="function">rules()</span> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
+<p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the <code>rules()</code> function that computes the new state value based on the neighborhood (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three neighbors).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   //{!1} Function receives 3 ints and returns 1.
@@ -469,9 +469,9 @@ for (int i = 0; i < cells.length; i++) {
   rect(i*w, 0, w, w);
 }</pre>
 
-<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing’s <span class="function">rect()</span> function, but rather access the pixel array directly.</p>
+<p>In truth, we could optimize the above by having a white background and only drawing when there is a black cell (saving us the work of drawing many white squares), but in most cases this solution is good enough (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not want to use Processing’s <code>rect()</code> function, but rather access the pixel array directly.</p>
 
-<p>In the above code, you’ll notice the y-position for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we’ll also need to compute a y-position based on how many iterations of the CA we’ve executed. We could accomplish this by adding a “generation” variable (an integer) to our CA class and incrementing it each time through <span class="function">generate()</span>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
+<p>In the above code, you’ll notice the y-position for each rectangle is 0. If we want the generations to be drawn next to each other, with each row of cells marking a new generation, we’ll also need to compute a y-position based on how many iterations of the CA we’ve executed. We could accomplish this by adding a “generation” variable (an integer) to our CA class and incrementing it each time through <code>generate()</code>. With these additions, we can now look at the CA class with all the features for both computing and drawing the CA.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/Ex_7_01_WolframCA_randomizedrules.pde processingjs/chapter07/Ex_7_01_WolframCA_randomizedrules/CA.pde"><img alt="ch07 ex01" src="chapter07/ch07_ex01.png" />
 <figcaption>&nbsp;</figcaption>

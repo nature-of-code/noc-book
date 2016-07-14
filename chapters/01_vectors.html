@@ -163,7 +163,7 @@ Vector speed;</pre>
 </dl>
 </div>
 
-<p>You’ve probably done this before when programming motion. For every frame of animation (i.e. a single cycle through Processing’s <span class="function">draw()</span> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
+<p>You’ve probably done this before when programming motion. For every frame of animation (i.e. a single cycle through Processing’s <code>draw()</code> loop), you instruct each object on the screen to move a certain number of pixels horizontally and a certain number of pixels vertically.</p>
 
 <figure id="chapter01_figure3"><img alt="Figure 1.3" src="chapter01/ch01_03.png" />
 <figcaption>Figure 1.3</figcaption>
@@ -254,7 +254,7 @@ position = position + velocity;</pre>
 
 <a data-primary="add() function (PVector class)" data-type="indexterm"></a> <a data-primary="vectors" data-secondary="adding" data-type="indexterm"></a>
 
-<p>Before we continue looking at the <span class="klass">PVector</span> class and its <span class="function">add()</span> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks.</p>
+<p>Before we continue looking at the <span class="klass">PVector</span> class and its <code>add()</code> method (purely for the sake of learning since it’s already implemented for us in Processing itself), let’s examine vector addition using the notation found in math and physics textbooks.</p>
 
 <a data-primary="scalar notation" data-secondary="vs. vector notation" data-type="indexterm"></a> <a data-primary="vector notation" data-secondary="vs. scalar notation" data-type="indexterm"></a>
 
@@ -316,7 +316,7 @@ position = position + velocity;</pre>
 
 <a data-primary="add() function (PVector class)" data-secondary="implementation of" data-type="indexterm"></a>
 
-<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="klass">PVector</span> class itself. Let’s write a function called <span class="function">add()</span> that takes another <span class="klass">PVector</span> object as its argument.</p>
+<p>Now that we understand how to add two vectors together, we can look at how addition is implemented in the <span class="klass">PVector</span> class itself. Let’s write a function called <code>add()</code> that takes another <span class="klass">PVector</span> object as its argument.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class PVector {
@@ -355,7 +355,7 @@ class PVector {
 
 <a data-primary="bouncing ball sketch" data-secondary="implementing with vectors" data-type="indexterm"></a>
 
-<p>Now that we see how <span class="function">add()</span> is written inside of <span class="klass">PVector</span>, we can return to our bouncing ball example with its <strong><em>position + velocity</em></strong> algorithm and implement vector addition:</p>
+<p>Now that we see how <code>add()</code> is written inside of <span class="klass">PVector</span>, we can return to our bouncing ball example with its <strong><em>position + velocity</em></strong> algorithm and implement vector addition:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!1 .line-through}Add the current velocity to the position.
@@ -406,7 +406,7 @@ void draw() {
 //{.line-through .no-comment}
 ellipse(position, 16, 16);</pre>
 
-<p>The <span class="function">ellipse()</span> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">x</span>-coordinate and a <span class="var">y</span>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
+<p>The <code>ellipse()</code> function does not allow for a <span class="klass">PVector</span> as an argument. An ellipse can only be drawn with two scalar values, an <span class="var">x</span>-coordinate and a <span class="var">y</span>-coordinate. And so we must dig into the <span class="klass">PVector</span> object and pull out the <em>x</em> and <em>y</em> components using object-oriented dot syntax.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 ellipse(position.x, position.y, 16, 16);</pre>
@@ -446,55 +446,55 @@ if ((position.x &gt; width) || (position.x &lt; 0)) {
 
 <ul>
 	<li>
-	<p><span class="function">add()</span> — add vectors</p>
+	<p><code>add()</code> — add vectors</p>
 	</li>
 	<li>
-	<p><span class="function">sub()</span> — subtract vectors</p>
+	<p><code>sub()</code> — subtract vectors</p>
 	</li>
 	<li>
-	<p><span class="function">mult()</span> — scale the vector with multiplication</p>
+	<p><code>mult()</code> — scale the vector with multiplication</p>
 	</li>
 	<li>
-	<p><span class="function">div()</span> — scale the vector with division</p>
+	<p><code>div()</code> — scale the vector with division</p>
 	</li>
 	<li>
-	<p><span class="function">mag()</span> — calculate the magnitude of a vector</p>
+	<p><code>mag()</code> — calculate the magnitude of a vector</p>
 	</li>
 	<li>
-	<p><span class="function">setMag()</span> - set the magnitude of a vector</p>
+	<p><code>setMag()</code> - set the magnitude of a vector</p>
 	</li>
 	<li>
-	<p><span class="function">normalize()</span> — normalize the vector to a unit length of 1</p>
+	<p><code>normalize()</code> — normalize the vector to a unit length of 1</p>
 	</li>
 	<li>
-	<p><span class="function">limit()</span> — limit the magnitude of a vector</p>
+	<p><code>limit()</code> — limit the magnitude of a vector</p>
 	</li>
 	<li>
-	<p><span class="function">heading()</span> — the 2D heading of a vector expressed as an angle</p>
+	<p><code>heading()</code> — the 2D heading of a vector expressed as an angle</p>
 	</li>
 	<li>
-	<p><span class="function">rotate()</span> — rotate a 2D vector by an angle</p>
+	<p><code>rotate()</code> — rotate a 2D vector by an angle</p>
 	</li>
 	<li>
-	<p><span class="function">lerp()</span> — linear interpolate to another vector</p>
+	<p><code>lerp()</code> — linear interpolate to another vector</p>
 	</li>
 	<li>
-	<p><span class="function">dist()</span> — the Euclidean distance between two vectors (considered as points)</p>
+	<p><code>dist()</code> — the Euclidean distance between two vectors (considered as points)</p>
 	</li>
 	<li>
-	<p><span class="function">angleBetween()</span> — find the angle between two vectors</p>
+	<p><code>angleBetween()</code> — find the angle between two vectors</p>
 	</li>
 	<li>
-	<p><span class="function">dot()</span> — the dot product of two vectors</p>
+	<p><code>dot()</code> — the dot product of two vectors</p>
 	</li>
 	<li>
-	<p><span class="function">cross()</span> — the cross product of two vectors (only relevant in three dimensions)</p>
+	<p><code>cross()</code> — the cross product of two vectors (only relevant in three dimensions)</p>
 	</li>
 	<li>
-	<p><span class="function">random2D()</span> - make a random 2D vector</p>
+	<p><code>random2D()</code> - make a random 2D vector</p>
 	</li>
 	<li>
-	<p><span class="function">random3D()</span> - make a random 3D vector</p>
+	<p><code>random3D()</code> - make a random 3D vector</p>
 	</li>
 </ul>
 
@@ -839,7 +839,7 @@ ellipse(position.x,position.y,16,16);</pre>
 
 <a data-primary="Processing" data-secondary="OOP online tutorial" data-type="indexterm"></a>
 
-<p>In the bouncing ball example, all of this code happened in Processing’s main tab, within <span class="function">setup()</span> and <span class="function">draw()</span>. What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing. In <a href="#intro_section2">section I.2 of the introduction</a>, “The Random Walker Class,” we briefly reviewed the basics of object-oriented-programming (“OOP”). Beyond that short introduction, this book assumes experience with objects and classes in Processing. If you need a refresher, I encourage you to check out the <a href="http://processing.org/learning/objects/">Processing objects tutorial</a>.</p>
+<p>In the bouncing ball example, all of this code happened in Processing’s main tab, within <code>setup()</code> and <code>draw()</code>. What we want to do now is move towards encapsulating all of the logic for motion inside of a <strong><em>class</em></strong>. This way, we can create a foundation for programming moving objects in Processing. In <a href="#intro_section2">section I.2 of the introduction</a>, “The Random Walker Class,” we briefly reviewed the basics of object-oriented-programming (“OOP”). Beyond that short introduction, this book assumes experience with objects and classes in Processing. If you need a refresher, I encourage you to check out the <a href="http://processing.org/learning/objects/">Processing objects tutorial</a>.</p>
 
 <p>In this case, we’re going to create a generic <span class="klass">Mover</span> class that will describe a thing moving around the screen. And so we must consider the following two questions:</p>
 
@@ -860,7 +860,7 @@ class Mover {
   PVector position;
   PVector velocity;</pre>
 
-<p>Its functionality is just about as simple. The <span class="klass">Mover</span> needs to move and it needs to be seen. We’ll implement these needs as functions named <span class="function">update()</span> and <span class="function">display()</span>. We’ll put all of our motion logic code in <span class="function">update()</span> and draw the object in <span class="function">display()</span>.</p>
+<p>Its functionality is just about as simple. The <span class="klass">Mover</span> needs to move and it needs to be seen. We’ll implement these needs as functions named <code>update()</code> and <code>display()</code>. We’ll put all of our motion logic code in <code>update()</code> and draw the object in <code>display()</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void update() {
@@ -916,12 +916,12 @@ class Mover {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 Mover mover;</pre>
 
-<p>Then create and initialize the mover in <span class="function">setup()</span>:</p>
+<p>Then create and initialize the mover in <code>setup()</code>:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 mover = new Mover();</pre>
 
-<p>and call the appropriate functions in <span class="function">draw()</span>:</p>
+<p>and call the appropriate functions in <code>draw()</code>:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 mover.update();
@@ -1037,7 +1037,7 @@ class Mover {
   //{.bold} A new PVector for acceleration
   PVector acceleration;</pre>
 
-<p>And incorporate acceleration into the <span class="function">update()</span> function:</p>
+<p>And incorporate acceleration into the <code>update()</code> function:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
  void update() {
@@ -1067,7 +1067,7 @@ class Mover {
     acceleration = new PVector(-0.001, 0.01);
   }</pre>
 
-<p>Maybe you’re thinking, “Gosh, those values seem awfully small!” That’s right, they are quite tiny. It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <span class="klass">PVector</span> function <span class="function">limit()</span>.</p>
+<p>Maybe you’re thinking, “Gosh, those values seem awfully small!” That’s right, they are quite tiny. It’s important to realize that our acceleration values (measured in pixels) accumulate over time in the velocity, about thirty times per second depending on our sketch’s frame rate. And so to keep the magnitude of the velocity vector within a reasonable range, our acceleration values should remain quite small. We can also help this cause by incorporating the <span class="klass">PVector</span> function <code>limit()</code>.</p>
 
 <a data-primary="limit() function (PVector class)" data-type="indexterm"></a> <a data-primary="magnitude (of vectors)" data-secondary="limiting" data-type="indexterm"></a> <a data-primary="PVector class (Processing)" data-secondary="limit() function" data-type="indexterm"></a> <a data-primary="velocity" data-secondary="limiting" data-type="indexterm"></a>
 
@@ -1082,7 +1082,7 @@ velocity.limit(10);</pre>
 <div data-type="exercise" id="chapter01_exercise4">
 <h5>Exercise 1.4</h5>
 
-<p>Write the <span class="function">limit()</span> function for the <span class="klass">PVector</span> class.</p>
+<p>Write the <code>limit()</code> function for the <span class="klass">PVector</span> class.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void limit(float max) {
@@ -1093,7 +1093,7 @@ velocity.limit(10);</pre>
   }</pre>
 </div>
 
-<p>Let’s take a look at the changes to the <span class="klass">Mover</span> class, complete with <span class="function">acceleration</span> and <span class="function">limit()</span>.</p>
+<p>Let’s take a look at the changes to the <span class="klass">Mover</span> class, complete with <code>acceleration</code> and <code>limit()</code>.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_8_motion101_acceleration/_1_8_motion101_acceleration.pde processingjs/chapter01/_1_8_motion101_acceleration/Mover.pde"><img alt="ch01 ex08" src="chapter01/ch01_ex08.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1141,7 +1141,7 @@ class Mover {
 
 <a data-primary="acceleration algorithms" data-secondary="random" data-type="indexterm"></a>
 
-<p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <span class="function">update()</span> is called.</p>
+<p>Now on to Algorithm #2, <em>a totally random acceleration</em>. In this case, instead of initializing acceleration in the object’s constructor, we want to pick a new acceleration each cycle, i.e. each time <code>update()</code> is called.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_9_motion101_acceleration/_1_9_motion101_acceleration.pde processingjs/chapter01/_1_9_motion101_acceleration/Mover.pde"><img alt="ch01 ex09" src="chapter01/ch01_ex09.png" />
 <figcaption>&nbsp;</figcaption>
@@ -1226,7 +1226,7 @@ PVector u = new PVector(4,5);
 //{.line-through} Don’t be fooled; this is incorrect!!!
 PVector w = v.add(u);</pre>
 
-<p>The above might seem like a good guess, but it’s just not the way the <span class="klass">PVector</span> class works. If we look at the definition of <span class="function">add()</span> . . .</p>
+<p>The above might seem like a good guess, but it’s just not the way the <span class="klass">PVector</span> class works. If we look at the definition of <code>add()</code> . . .</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void add(PVector v) {
@@ -1234,7 +1234,7 @@ void add(PVector v) {
   y = y + v.y;
 }</pre>
 
-<p>we see that this code does not accomplish our goal. First, it does not return a new <span class="klass">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="klass">PVector</span> upon which it is called. In order to add two <span class="klass">PVector</span> objects together and return the result as a new <span class="klass">PVector</span>, we must use the static <span class="function">add()</span> function.</p>
+<p>we see that this code does not accomplish our goal. First, it does not return a new <span class="klass">PVector</span> (the return type is “void”) and second, it changes the value of the <span class="klass">PVector</span> upon which it is called. In order to add two <span class="klass">PVector</span> objects together and return the result as a new <span class="klass">PVector</span>, we must use the static <code>add()</code> function.</p>
 
 <a data-primary="static functions" data-type="indexterm"></a>
 
@@ -1247,7 +1247,7 @@ PVector.add(v, u);
 // Not static: called from an object instance.
 v.add(u);</pre>
 
-<p>Since you can’t write static functions yourself in Processing, you might not have encountered them before. <span class="klass">PVector</span>'s static functions allow us to perform generic mathematical operations on <span class="klass">PVector</span> objects without having to adjust the value of one of the input <span class="klass">PVector</span><code>s</code>. Let’s look at how we might write the static version of <span class="function">add()</span>:</p>
+<p>Since you can’t write static functions yourself in Processing, you might not have encountered them before. <span class="klass">PVector</span>'s static functions allow us to perform generic mathematical operations on <span class="klass">PVector</span> objects without having to adjust the value of one of the input <span class="klass">PVector</span><code>s</code>. Let’s look at how we might write the static version of <code>add()</code>:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   //{!1} The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
@@ -1280,7 +1280,7 @@ PVector w = v.add(u);
 //{.bold .no-comment}
 PVector w = PVector.add(v, u);</pre>
 
-<p>The <span class="klass">PVector</span> class has static versions of <span class="function">add()</span>, <span class="function">sub()</span>, <span class="function">mult()</span>, and <span class="function">div()</span>.</p>
+<p>The <span class="klass">PVector</span> class has static versions of <code>add()</code>, <code>sub()</code>, <code>mult()</code>, and <code>div()</code>.</p>
 
 <div data-type="exercise" id="chapter01_exercise7">
 <h5>Exercise 1.7</h5>
@@ -1371,7 +1371,7 @@ dir.mult(anything);</pre>
 	</li>
 </ol>
 
-<p>And here are those steps in the <span class="function">update()</span> function itself:</p>
+<p>And here are those steps in the <code>update()</code> function itself:</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter01/_1_10_motion101_acceleration/_1_10_motion101_acceleration.pde processingjs/chapter01/_1_10_motion101_acceleration/Mover.pde"><img alt="ch01 ex10" src="chapter01/ch01_ex10.png" />
 <figcaption>&nbsp;</figcaption>
