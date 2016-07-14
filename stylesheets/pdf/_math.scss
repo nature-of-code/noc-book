@@ -2,26 +2,13 @@
 // PDF where katex is not included.
 .katex-display {
     display: block;
-
-    > .katex {
-        display: block !important;
-        padding: 1em 0;
-
-        @media not screen {
-            .sqrt > .vlist > span { width: 100px; }
-            .mfrac > .vlist > span { width: 30px; }
-        }
-    }
+    > .katex { padding: 1em 0; }
 
     &:after {
         content: "";
         display: table;
         clear: both;
     }
-
-}
-.mathhack .katex .mfrac .frac-line {
-    width: 10px;
 }
 
 // * Wrapping divs for data-type="equation" blocks
@@ -32,18 +19,32 @@
 
     .katex-display {
         margin: 0;
-
-        > .katex {
-            padding: 0;
-        }
+        > .katex { padding: 0; }
     }
 }
 
 // .equation-left : pushes content to the left
 .equation-left {
-    .katex-display {
-        > .katex {
-            float: left;
-        }
+    .katex-display > .katex { float: left; }
+}
+
+
+
+// ----------------------------------------------------
+// * Fix for square roots and fractions PDF rendering
+// ----------------------------------------------------
+@media not screen {
+
+    // Default widths
+    .katex-display > .katex .mfrac .frac-line { width: 30px; }
+    .katex-display > .katex .sqrt .sqrt-line { width: 110px; }
+
+    // Specific width classes
+    .equation-w-frac-big {   // Fraction (big)
+        .katex-display > .katex .mfrac .frac-line { width: 80px; }
     }
+    .equation-w-sqrt-small { // Square root (small)
+        .katex-display > .katex .sqrt .sqrt-line  { width: 20px; }
+    }
+
 }
