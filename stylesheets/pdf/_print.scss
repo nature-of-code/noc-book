@@ -23,11 +23,9 @@ file: _print.scss
         10. Helper Classes / Utilities
 
     # SECTIONS
-        - Index
+        - Preamble
         - TOC
         - Boxes Styling
-
-    # MISC / UNCLASSIFIED
 
 */
 
@@ -289,13 +287,11 @@ figure {
         width: 25%;
     }
 
-    .screenshot {
-        img {
-            width: 100%;
-            margin: 0;
-            display: block;
-            border: solid 1px $color-medium;
-        }
+    .screenshot img {
+        width: 100%;
+        margin: 0;
+        display: block;
+        border: solid 1px $color-medium;
     }
 
 
@@ -385,35 +381,15 @@ figure {
 // ----------------------------------
 
 // ----------------------------------
-// - Index
-#index {
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        columns: 2;
-        font-size: 8pt;
-
-        ul {
-            margin: 0.6em 0 0.6em 1.5em;
-            columns: 1;
-        }
-        li {
-            margin-bottom: 0.4em;
-            &.big-letter {
-                font-family: $sans-bold;
-                font-size: $font-XL;
-                margin-top: 1.2em;
-            }
-        }
+// - Preamble
+#preamble {
+    h1 {
+        margin: 0 0 1em 0;
+        font-size: ($font-XXL / 4) * 3; // XXL's three-fourths
     }
-}
-a.index-term-link {
-    font-family: $sans-semibold;
-}
-span.index-term-name {
-    display: inline-block;
-    margin-right: 0.6em;
+    p {
+        margin: 0 0 .25em 0;
+    }
 }
 
 // ----------------------------------
@@ -490,10 +466,10 @@ span.index-term-name {
 // ----------------------------------
 // - Boxes Styling
 // -- Exercises (.example), Projects (.tip), Breakout Boxes (.note)
-div[data-type="note"] h2, div[data-type="tip"] h2, .example h2,
-div[data-type="note"] h3, .tip h3, .example h3,
-div[data-type="note"] h4, .tip h4, .example h4,
-div[data-type="note"] h5, .tip h5, .example h5 {
+div[data-type="note"] h2, div[data-type="tip"] h2,
+div[data-type="note"] h3,
+div[data-type="note"] h4,
+div[data-type="note"] h5 {
     font-family: $sans-semibold;
     font-size: $font-L;
     margin: 0 0 0.3em 0;
@@ -514,6 +490,17 @@ div[data-type="note"] h5, .tip h5, .example h5 {
             margin: 1.2em 2em 1.2em 0;
             @include box-sizing(border-box);
         }
+    }
+
+    div[data-type="note"] h2:first-child,
+    div[data-type="note"] h3:first-child,
+    div[data-type="note"] h4:first-child,
+    div[data-type="note"] h5:first-child,
+    div[data-type="note"] p:first-child {
+        margin-top: 0;
+    }
+    div[data-type="note"] p:last-child {
+        margin-bottom: 0;
     }
 
 
@@ -538,23 +525,16 @@ div[data-type="note"] h5, .tip h5, .example h5 {
 
     // ----------------------
     // Projects (.tip)
-    .tip, div[data-type="tip"] {
+    div[data-type="tip"] {
         background: $color-lightest;
         padding: 0.7em 1.5em;
         margin: 1.5em 0;
         padding: 2em 2em 1em 2em;
     }
-    div[data-type="note"] h2:first-child, .tip h2:first-child, .example h2:first-child,
-    div[data-type="note"] h3:first-child, .tip h3:first-child, .example h3:first-child,
-    div[data-type="note"] h4:first-child, .tip h4:first-child, .example h4:first-child,
-    div[data-type="note"] h5:first-child, .tip h5:first-child, .example h5:first-child,
-    div[data-type="note"] p:first-child, .tip p:first-child, .example p:first-child {
-        margin-top: 0;
-    }
-    div[data-type="note"] p:last-child, .tip p:last-child, .example p:last-child {
-        margin-bottom: 0;
-    }
-    span.example, div[data-type="example"] h5 {
+
+    // ----------------------
+    // Example Heders
+    div[data-type="example"] h5 {
         display: block;
         clear: both;
         font-family: $sans-bold;
@@ -562,16 +542,3 @@ div[data-type="note"] h5, .tip h5, .example h5 {
         background: $color-lighter;
         padding: 0.7em 1em;
     }
-
-
-// ----------------------------------
-// # MISC / UNCLASSIFIED
-// ----------------------------------
-body>h2:nth-child(2) { /* To squash extra h2 element on title page */
-    display: none;
-}
-#preamble h1 {
-    margin: 0;
-    font-size: 320%;
-}
-.table h4 { clear: none; }
