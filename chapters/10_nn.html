@@ -19,7 +19,7 @@
 
 <p>The good news is that developing engaging animated systems with code does not require scientific rigor or accuracy, as we’ve learned throughout this book. We can simply be inspired by the idea of brain function.</p>
 
-<p>In this chapter, we’ll begin with a conceptual overview of the properties and features of neural networks and build the simplest possible example of one (a network that consists of a single neuron). Afterwards, we’ll examine strategies for creating a “Brain” object that can be inserted into our <span class="klass">Vehicle</span> class and used to determine steering. Finally, we’ll also look at techniques for visualizing and animating a network of neurons.</p>
+<p>In this chapter, we’ll begin with a conceptual overview of the properties and features of neural networks and build the simplest possible example of one (a network that consists of a single neuron). Afterwards, we’ll examine strategies for creating a “Brain” object that can be inserted into our <code>Vehicle</code> class and used to determine steering. Finally, we’ll also look at techniques for visualizing and animating a network of neurons.</p>
 
 <section data-type="sect1" id="chapter10_section1">
 <h2>10.1 Artificial Neural Networks: Introduction and Application</h2>
@@ -250,7 +250,7 @@ int activate(float sum) {
 <section data-type="sect1" id="chapter10_section4">
 <h2>10.4 Coding the Perceptron</h2>
 
-<p>We’re now ready to assemble the code for a <span class="klass">Perceptron</span> class. The only data the perceptron needs to track are the input weights, and we could use an array of floats to store these.</p>
+<p>We’re now ready to assemble the code for a <code>Perceptron</code> class. The only data the perceptron needs to track are the input weights, and we could use an array of floats to store these.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Perceptron {
@@ -281,7 +281,7 @@ class Perceptron {
     return activate(sum);
   }</pre>
 
-<p>Presumably, we could now create a <span class="klass">Perceptron</span> object and ask it to make a guess for any given point.</p>
+<p>Presumably, we could now create a <code>Perceptron</code> object and ask it to make a guess for any given point.</p>
 
 <figure id="chapter10_figure7"><img alt="Figure 10.7" src="chapter10/ch10_07.png" />
 <figcaption>Figure 10.7</figcaption>
@@ -440,7 +440,7 @@ void train(float[] inputs, int desired) {
   }
 }</pre>
 
-<p>We can now see the <span class="klass">Perceptron</span> class as a whole.</p>
+<p>We can now see the <code>Perceptron</code> class as a whole.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Perceptron {
@@ -548,12 +548,12 @@ if (y < yline) {
   answer = 1;
 }</pre>
 
-<p>We can then make a <span class="klass">Trainer</span> object with the inputs and the correct answer.</p>
+<p>We can then make a <code>Trainer</code> object with the inputs and the correct answer.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 Trainer t = new Trainer(x, y, answer);</pre>
 
-<p>Assuming we had a <span class="klass">Perceptron</span> object <code>ptron</code>, we could then train it by sending the inputs along with the known answer.</p>
+<p>Assuming we had a <code>Perceptron</code> object <code>ptron</code>, we could then train it by sending the inputs along with the known answer.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 ptron.train(t.inputs, t.answer);</pre>
@@ -637,9 +637,9 @@ void draw() {
 
 <p>We are now going to take significant creative license with the concept of a neural network. This will allow us to stick with the basics and avoid some of the highly complex algorithms associated with more sophisticated neural networks. Here we’re not so concerned with following rules outlined in artificial intelligence textbooks—we’re just hoping to make something interesting and brain-like.</p>
 
-<p>Remember our good friend the <span class="klass">Vehicle</span> class? You know, that one for making objects with a position, velocity, and acceleration? That could obey Newton’s laws with an <code>applyForce()</code> function and move around the window according to a variety of steering rules?</p>
+<p>Remember our good friend the <code>Vehicle</code> class? You know, that one for making objects with a position, velocity, and acceleration? That could obey Newton’s laws with an <code>applyForce()</code> function and move around the window according to a variety of steering rules?</p>
 
-<p>What if we added one more variable to our <span class="klass">Vehicle</span> class?</p>
+<p>What if we added one more variable to our <code>Vehicle</code> class?</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
@@ -652,13 +652,13 @@ class Vehicle {
   PVector acceleration;
   [inline]//etc...</pre>
 
-<p>Here’s our scenario. Let’s say we have a Processing sketch with an <span class="klass">ArrayList</span> of targets and a single vehicle.</p>
+<p>Here’s our scenario. Let’s say we have a Processing sketch with an <code>ArrayList</code> of targets and a single vehicle.</p>
 
 <figure id="chapter10_figure09"><img alt="Figure 10.9" src="chapter10/ch10_09.png" />
 <figcaption>Figure 10.9</figcaption>
 </figure>
 
-<p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object’s acceleration. Assuming the targets are an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> objects, it would look something like:</p>
+<p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter 6, we would next write a function that calculates a steering force towards each target, applying each force one at a time to the object’s acceleration. Assuming the targets are an <code>ArrayList</code> of <code>PVector</code> objects, it would look something like:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void seek(ArrayList<PVector> targets) {
@@ -750,7 +750,7 @@ int feedforward(float[] inputs) {
 
 <ol>
 	<li>
-	<p><strong><em>Summing PVectors.</em></strong> Instead of a series of numbers added together, each input is a <span class="klass">PVector</span> and must be multiplied by the weight and added to a sum according to the mathematical <span class="klass">PVector</span> functions.</p>
+	<p><strong><em>Summing PVectors.</em></strong> Instead of a series of numbers added together, each input is a <code>PVector</code> and must be multiplied by the weight and added to a sum according to the mathematical <code>PVector</code> functions.</p>
 	</li>
 	<li>
 	<p><strong><em>No activation function.</em></strong> In this case, we’re taking the result and applying it directly as a steering force for the vehicle, so we’re not asking for a simple boolean value that classifies it in one of two categories. Rather, we’re asking for raw output itself, the resulting overall force.</p>
@@ -772,7 +772,7 @@ int feedforward(float[] inputs) {
 <figcaption>Figure 10.10</figcaption>
 </figure>
 
-<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <span class="klass">PVector</span> that points from its current position to where it desires to be. This <span class="klass">PVector</span> essentially serves as the error—the longer the <span class="klass">PVector</span>, the worse the vehicle is performing; the shorter, the better.</p>
+<p>Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well as an observation about its environment: a <code>PVector</code> that points from its current position to where it desires to be. This <code>PVector</code> essentially serves as the error—the longer the <code>PVector</code>, the worse the vehicle is performing; the shorter, the better.</p>
 
 <p>The brain can then apply this “error” vector (which has two error values, one for <code>x</code> and one for <code>y</code>) as a means for adjusting the weights, just as we did in the line classification example.</p>
 
@@ -821,7 +821,7 @@ void train(float[] inputs, int desired) {
 weights[i] += c * error.x * forces[i].x;
 weights[i] += c * error.y * forces[i].y;</pre>
 
-<p>We can now look at the <span class="klass">Vehicle</span> class and see how the <code>steer</code> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
+<p>We can now look at the <code>Vehicle</code> class and see how the <code>steer</code> function uses a perceptron to control the overall steering force. The new content from this chapter is highlighted.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_02_SeekingNeural/_10_02_SeekingNeural.pde processingjs/chapter10/_10_02_SeekingNeural/Perceptron.pde processingjs/chapter10/_10_02_SeekingNeural/Vehicle.pde"><img alt="ch10 ex02" src="chapter10/ch10_ex02.png" />
 <figcaption>&nbsp;</figcaption>
@@ -957,7 +957,7 @@ class Vehicle {
 
 <p>Backpropagation is a bit beyond the scope of this book and involves a fancier activation function (called the sigmoid function) as well as some basic calculus. If you are interested in how backpropagation works, check the book website (and GitHub repository) for an example that solves <em>XOR</em> using a multi-layered feed forward network with backpropagation.</p>
 
-<p>Instead, here we’ll focus on a code framework for building the visual architecture of a network. We’ll make <span class="klass">Neuron</span> objects and <span class="klass">Connection</span> objects from which a <span class="klass">Network</span> object can be created and animated to show the feed forward process. This will closely resemble some of the force-directed graph examples we examined in Chapter 5 (toxiclibs).</p>
+<p>Instead, here we’ll focus on a code framework for building the visual architecture of a network. We’ll make <code>Neuron</code> objects and <code>Connection</code> objects from which a <code>Network</code> object can be created and animated to show the feed forward process. This will closely resemble some of the force-directed graph examples we examined in Chapter 5 (toxiclibs).</p>
 </section>
 
 <section data-type="sect1" id="chapter10_section7">
@@ -971,7 +971,7 @@ class Vehicle {
 <figcaption>Figure 10.15</figcaption>
 </figure>
 
-<p>The primary building block for this diagram is a neuron. For the purpose of this example, the <span class="klass">Neuron</span> class describes an entity with an <em>(x,y)</em> position.</p>
+<p>The primary building block for this diagram is a neuron. For the purpose of this example, the <code>Neuron</code> class describes an entity with an <em>(x,y)</em> position.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // An incredibly simple Neuron class stores and displays the position of a single neuron.
@@ -989,7 +989,7 @@ class Neuron {
   }
 }</pre>
 
-<p>The <span class="klass">Network</span> class can then manage an <span class="klass">ArrayList</span> of neurons, as well as have its own position (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
+<p>The <code>Network</code> class can then manage an <code>ArrayList</code> of neurons, as well as have its own position (so that each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single element (a neuron) and a network (a “system” of many neurons).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!2} A Network is a list of neurons.
@@ -1053,7 +1053,7 @@ void draw() {
 <figcaption>ch10 ex03a&nbsp;</figcaption>
 </figure>
 
-<p>What’s missing, of course, is the connection. We can consider a <span class="klass">Connection</span> object to be made up of three elements, two neurons (from <span class="klass">Neuron</span> <code>a</code> to <span class="klass">Neuron</span> <code>b</code>) and a <code>weight</code>.</p>
+<p>What’s missing, of course, is the connection. We can consider a <code>Connection</code> object to be made up of three elements, two neurons (from <code>Neuron</code> <code>a</code> to <code>Neuron</code> <code>b</code>) and a <code>weight</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Connection {
@@ -1077,7 +1077,7 @@ class Connection {
   }
 }</pre>
 
-<p>Once we have the idea of a <span class="klass">Connection</span> object, we can write a function (let’s put it inside the <span class="klass">Network</span> class) that connects two neurons together—the goal being that in addition to making the neurons in <code>setup()</code>, we can also connect them.</p>
+<p>Once we have the idea of a <code>Connection</code> object, we can write a function (let’s put it inside the <code>Network</code> class) that connects two neurons together—the goal being that in addition to making the neurons in <code>setup()</code>, we can also connect them.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void setup() {
@@ -1101,7 +1101,7 @@ void setup() {
   network.addNeuron(d);
 }</pre>
 
-<p>The <span class="klass">Network</span> class therefore needs a new function called <code>connect()</code>, which makes a <span class="klass">Connection</span> object between the two specified neurons.</p>
+<p>The <code>Network</code> class therefore needs a new function called <code>connect()</code>, which makes a <code>Connection</code> object between the two specified neurons.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
@@ -1111,7 +1111,7 @@ void setup() {
     [inline]// But what do we do with the Connection object?
   }</pre>
 
-<p>Presumably, we might think that the <span class="klass">Network</span> should store an <span class="klass">ArrayList</span> of connections, just like it stores an <span class="klass">ArrayList</span> of neurons. While useful, in this case such an <span class="klass">ArrayList</span> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <span class="klass">Neuron</span> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <span class="klass">Connection</span> objects. When <code>a</code> connects to <code>b</code>, we want <code>a</code> to store a reference of that connection so that it can pass its output to <code>b</code> when the time comes.</p>
+<p>Presumably, we might think that the <code>Network</code> should store an <code>ArrayList</code> of connections, just like it stores an <code>ArrayList</code> of neurons. While useful, in this case such an <code>ArrayList</code> is not necessary and is missing an important feature that we need. Ultimately we plan to “feed forward" the neurons through the network, so the <code>Neuron</code> objects themselves must know to which neurons they are connected in the “forward” direction. In other words, each neuron should have its own list of <code>Connection</code> objects. When <code>a</code> connects to <code>b</code>, we want <code>a</code> to store a reference of that connection so that it can pass its output to <code>b</code> when the time comes.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
@@ -1119,9 +1119,9 @@ void setup() {
     a.addConnection(c);
   }</pre>
 
-<p>In some cases, we also might want <span class="klass">Neuron</span> <code>b</code> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
+<p>In some cases, we also might want <code>Neuron</code> <code>b</code> to know about this connection, but in this particular example we are only going to pass information in one direction.</p>
 
-<p>For this to work, we have to add an <span class="klass">ArrayList</span> of connections to the <span class="klass">Neuron</span> class. Then we implement the <code>addConnection()</code> function that stores the connection in that <span class="klass">ArrayList</span>.</p>
+<p>For this to work, we have to add an <code>ArrayList</code> of connections to the <code>Neuron</code> class. Then we implement the <code>addConnection()</code> function that stores the connection in that <code>ArrayList</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron {
@@ -1180,7 +1180,7 @@ void setup() {
   network.feedforward(random(1));
 }</pre>
 
-<p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In this case, we’ll do something simple and just feed a single input into the first neuron in the <span class="klass">ArrayList</span>, which happens to be the left-most one.</p>
+<p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In this case, we’ll do something simple and just feed a single input into the first neuron in the <code>ArrayList</code>, which happens to be the left-most one.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Network {
@@ -1191,7 +1191,7 @@ class Network {
     start.feedforward(input);
   }</pre>
 
-<p>What did we do? Well, we made it necessary to add a function called <code>feedforward()</code> in the <span class="klass">Neuron</span> class that will receive the input and process it.</p>
+<p>What did we do? Well, we made it necessary to add a function called <code>feedforward()</code> in the <code>Neuron</code> class that will receive the input and process it.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
@@ -1201,7 +1201,7 @@ class Neuron
 
   }</pre>
 
-<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <span class="klass">Neuron</span> class adds a variable called <code>sum</code>, it can simply accumulate the inputs as they are received.</p>
+<p>If you recall from working with our perceptron, the standard task that the processing unit performs is to sum up all of its inputs. So if our <code>Neuron</code> class adds a variable called <code>sum</code>, it can simply accumulate the inputs as they are received.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Neuron
@@ -1249,9 +1249,9 @@ class Connection {
     b.feedforward(val*weight);
   }</pre>
 
-<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <span class="klass">Neuron</span> <code>a</code> to <span class="klass">Neuron</span> <code>b</code>.</p>
+<p>But this is not what we want. What we want to do is draw something that we can see traveling along the connection from <code>Neuron</code> <code>a</code> to <code>Neuron</code> <code>b</code>.</p>
 
-<p>Let’s first think about how we might do that. We know the position of <span class="klass">Neuron</span> <code>a</code>; it’s the <span class="klass">PVector</span> <code>a.position</code>. <span class="klass">Neuron</span> <code>b</code> is located at <code>b.position</code>. We need to start something moving from <span class="klass">Neuron</span> <code>a</code> by creating another <span class="klass">PVector</span> that will store the path of our traveling data.</p>
+<p>Let’s first think about how we might do that. We know the position of <code>Neuron</code> <code>a</code>; it’s the <code>PVector</code> <code>a.position</code>. <code>Neuron</code> <code>b</code> is located at <code>b.position</code>. We need to start something moving from <code>Neuron</code> <code>a</code> by creating another <code>PVector</code> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   PVector sender = a.position.get();</pre>
@@ -1276,7 +1276,7 @@ class Connection {
 <figcaption>Figure 10.16</figcaption>
 </figure>
 
-<p>OK, so that’s how we might move something along the connection. But how do we know when to do so? We start this process the moment the <span class="klass">Connection</span> object receives the “feedforward” signal. We can keep track of this process by employing a simple <span class="klass">boolean</span> to know whether the connection is sending or not. Before, we had:</p>
+<p>OK, so that’s how we might move something along the connection. But how do we know when to do so? We start this process the moment the <code>Connection</code> object receives the “feedforward” signal. We can keep track of this process by employing a simple <code>boolean</code> to know whether the connection is sending or not. Before, we had:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void feedforward(float val) {
@@ -1301,7 +1301,7 @@ class Connection {
     output = val * weight;
   }</pre>
 
-<p>Notice how our <span class="klass">Connection</span> class now needs three new variables. We need a <span class="klass">boolean</span> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <span class="klass">PVector</span> “sender” for the position where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
+<p>Notice how our <code>Connection</code> class now needs three new variables. We need a <code>boolean</code> “sending” that starts as false and that will track whether or not the connection is actively sending (i.e. animating). We need a <code>PVector</code> “sender” for the position where we’ll draw the traveling dot. And since we aren’t passing the output along this instant, we’ll need to store it in a variable that will do the job later.</p>
 
 <p>The <code>feedforward()</code> function is called the moment the connection becomes active. Once it’s active, we’ll need to call another function continuously (each time through <code>draw()</code>), one that will update the position of the traveling data.</p>
 
@@ -1333,7 +1333,7 @@ class Connection {
     }
   }</pre>
 
-<p>Let’s look at the <span class="klass">Connection</span> class all together, as well as our new <code>draw()</code> function.</p>
+<p>Let’s look at the <code>Connection</code> class all together, as well as our new <code>draw()</code> function.</p>
 
 <figure class="screenshot" data-pde="processingjs/chapter10/_10_04_NetworkAnimation/_10_04_NetworkAnimation.pde processingjs/chapter10/_10_04_NetworkAnimation/Connection.pde processingjs/chapter10/_10_04_NetworkAnimation/Network.pde processingjs/chapter10/_10_04_NetworkAnimation/Neuron.pde"><img alt="ch10 ex04" src="chapter10/ch10_ex04.png" />
 <figcaption>&nbsp;</figcaption>

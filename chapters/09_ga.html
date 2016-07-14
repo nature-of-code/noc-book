@@ -504,27 +504,27 @@ Parent B: PLAY</strong></p>
 
 <a data-primary="populations (genetic algorithms)" data-secondary="implementing" data-type="indexterm"></a>
 
-<p>If we’re going to create a population, we need a data structure to store a list of members of the population. In most cases (such as our typing-monkey example), the number of elements in the population can be fixed, and so we use an array. (Later we’ll see examples that involve a growing/shrinking population and we’ll use an <span class="klass">ArrayList</span>.) But an array of what? We need an object that stores the genetic information for a member of the population. Let’s call it <strong><em>DNA</em></strong>.</p>
+<p>If we’re going to create a population, we need a data structure to store a list of members of the population. In most cases (such as our typing-monkey example), the number of elements in the population can be fixed, and so we use an array. (Later we’ll see examples that involve a growing/shrinking population and we’ll use an <code>ArrayList</code>.) But an array of what? We need an object that stores the genetic information for a member of the population. Let’s call it <strong><em>DNA</em></strong>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
 
 }</pre>
 
-<p>The population will then be an array of <span class="klass">DNA</span> objects.</p>
+<p>The population will then be an array of <code>DNA</code> objects.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // A population of 100 DNA objects
 DNA[] population = new DNA[100];</pre>
 
-<p>But what stuff goes in the <span class="klass">DNA</span> class? For a typing monkey, its DNA is the random phrase it types, a string of characters.</p>
+<p>But what stuff goes in the <code>DNA</code> class? For a typing monkey, its DNA is the random phrase it types, a string of characters.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
   String phrase;
 }</pre>
 
-<p>While this is perfectly reasonable for this particular example, we’re not going to use an actual <span class="klass">String</span> object as the genetic code. Instead, we’ll use an array of characters.</p>
+<p>While this is perfectly reasonable for this particular example, we’re not going to use an actual <code>String</code> object as the genetic code. Instead, we’ll use an array of characters.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -533,7 +533,7 @@ class DNA {
   char[] genes = new char[18];
 }</pre>
 
-<p>By using an array, we’ll be able to extend all the code we write into other examples. For example, the DNA of a creature in a physics system might be an array of <span class="klass">PVector</span><code>s</code>—or for an image, an array of integers (RGB colors). We can describe any set of properties in an array, and even though a string is convenient for this particular sketch, an array will serve as a better foundation for future evolutionary examples.</p>
+<p>By using an array, we’ll be able to extend all the code we write into other examples. For example, the DNA of a creature in a physics system might be an array of <code>PVector</code><code>s</code>—or for an image, an array of integers (RGB colors). We can describe any set of properties in an array, and even though a string is convenient for this particular sketch, an array will serve as a better foundation for future evolutionary examples.</p>
 
 <p>Our genetic algorithm dictates that we create a population of N elements, each with <em>randomly generated DNA</em>. Therefore, in the object’s constructor, we randomly create each character of the array.</p>
 
@@ -552,7 +552,7 @@ class DNA {
   }
 }</pre>
 
-<p>Now that we have the constructor, we can return to <code>setup()</code> and initialize each <span class="klass">DNA</span> object in the population array.</p>
+<p>Now that we have the constructor, we can return to <code>setup()</code> and initialize each <code>DNA</code> object in the population array.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 DNA[] population = new DNA[100];
@@ -564,7 +564,7 @@ void setup() {
   }
 }</pre>
 
-<p>Our <span class="klass">DNA</span> class is not at all complete. We’ll need to add functions to it to perform all the other tasks in our genetic algorithm, which we’ll do as we walk through steps 2 and 3.</p>
+<p>Our <code>DNA</code> class is not at all complete. We’ll need to add functions to it to perform all the other tasks in our genetic algorithm, which we’ll do as we walk through steps 2 and 3.</p>
 </section>
 
 <section data-type="sect2" id="_step_2_selection">
@@ -576,7 +576,7 @@ void setup() {
 
 <p><span class="formula">Fitness = Total # Characters Correct/Total # Characters</span></p>
 
-<p>Where should we calculate the fitness? Since the <span class="klass">DNA</span> class contains the genetic information (the phrase we will test against the target phrase), we can write a function inside the <span class="klass">DNA</span> class itself to score its own fitness. Let’s assume we have a target phrase:</p>
+<p>Where should we calculate the fitness? Since the <code>DNA</code> class contains the genetic information (the phrase we will test against the target phrase), we can write a function inside the <code>DNA</code> class itself to score its own fitness. Let’s assume we have a target phrase:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 String target = "to be or not to be";</pre>
@@ -628,9 +628,9 @@ void draw() {
 <figcaption>Figure 9.7</figcaption>
 </figure>
 
-<p>Instead we can pick from the five options (ABCDE) according to their probabilities by filling an <span class="klass">ArrayList</span> with multiple instances of each parent. In other words, let’s say you had a bucket of wooden letters—30 As, 40 Bs, 5 Cs, 15 Ds, and 10 Es.</p>
+<p>Instead we can pick from the five options (ABCDE) according to their probabilities by filling an <code>ArrayList</code> with multiple instances of each parent. In other words, let’s say you had a bucket of wooden letters—30 As, 40 Bs, 5 Cs, 15 Ds, and 10 Es.</p>
 
-<p>If you pick a random letter out of that bucket, there’s a 30% chance you’ll get an A, a 5% chance you’ll get a C, and so on. For us, that bucket is an <span class="klass">ArrayList</span>, and each wooden letter is a potential parent. We add each parent to the <span class="klass">ArrayList</span> N number of times where N is equal to its percentage score.</p>
+<p>If you pick a random letter out of that bucket, there’s a 30% chance you’ll get an A, a 5% chance you’ll get a C, and so on. For us, that bucket is an <code>ArrayList</code>, and each wooden letter is a potential parent. We add each parent to the <code>ArrayList</code> N number of times where N is equal to its percentage score.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   //{!1} Start with an empty mating pool.
@@ -680,7 +680,7 @@ C: 17% (1/6)</span></p>
 
 <p>With the mating pool ready to go, it’s time to make some babies. The first step is to pick two parents. Again, it’s somewhat of an arbitrary decision to pick two parents. It certainly mirrors human reproduction and is the standard means in the traditional GA, but in terms of your work, there really aren’t any restrictions here. You could choose to perform “asexual” reproduction with one parent, or come up with a scheme for picking three or four parents from which to generate child DNA. For this code demonstration, we’ll stick to two parents and call them <code>parentA</code> and <code>parentB</code>.</p>
 
-<p>First thing we need are two random indices into the mating pool—random numbers between 0 and the size of the <span class="klass">ArrayList</span>.</p>
+<p>First thing we need are two random indices into the mating pool—random numbers between 0 and the size of the <code>ArrayList</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   int a = int(random(matingPool.size()));
@@ -692,7 +692,7 @@ C: 17% (1/6)</span></p>
   DNA parentA = matingPool.get(a);
   DNA parentB = matingPool.get(b);</pre>
 
-<p>Because we have multiple instances of the same <span class="klass">DNA</span> objects in the mating pool (not to mention that we could pick the same random number twice), it’s possible that <code>parentA</code> and <code>parentB</code> could be the same <span class="klass">DNA</span> object. If we wanted to be strict, we could write some code to ensure that we haven’t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it’s worth trying this as an exercise.</p>
+<p>Because we have multiple instances of the same <code>DNA</code> objects in the mating pool (not to mention that we could pick the same random number twice), it’s possible that <code>parentA</code> and <code>parentB</code> could be the same <code>DNA</code> object. If we wanted to be strict, we could write some code to ensure that we haven’t picked the same parent twice, but we would gain very little efficiency for all that extra code. Still, it’s worth trying this as an exercise.</p>
 
 <div data-type="exercise" id="chapter09_exercise4">
 <h5>Exercise 9.4</h5>
@@ -710,7 +710,7 @@ C: 17% (1/6)</span></p>
   // A function for mutation
   child.mutate();</pre>
 
-<p>Of course, the functions <code>crossover()</code> and <code>mutate()</code> don’t magically exist in our <span class="klass">DNA</span> class; we have to write them. The way we called <code>crossover()</code> above indicates that the function receives an instance of DNA as an argument and returns a new instance of DNA, the child.</p>
+<p>Of course, the functions <code>crossover()</code> and <code>mutate()</code> don’t magically exist in our <code>DNA</code> class; we have to write them. The way we called <code>crossover()</code> above indicates that the function receives an instance of DNA as an argument and returns a new instance of DNA, the child.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   // The function receives one argument (DNA) and returns DNA.
@@ -849,7 +849,7 @@ void draw() {
   }
 }</pre>
 
-<p>The main tab precisely mirrors the steps of the genetic algorithm. However, most of the functionality called upon is actually present in the <span class="klass">DNA</span> class itself.</p>
+<p>The main tab precisely mirrors the steps of the genetic algorithm. However, most of the functionality called upon is actually present in the <code>DNA</code> class itself.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -906,7 +906,7 @@ class DNA {
 <div data-type="exercise" id="chapter09_exercise6">
 <h5>Exercise 9.6</h5>
 
-<p>Add features to the above example to report more information about the progress of the genetic algorithm itself. For example, show the phrase closest to the target each generation, as well as report on the number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase. Consider writing a <span class="klass">Population</span> class to manage the GA, instead of including all the code in draw().</p>
+<p>Add features to the above example to report more information about the progress of the genetic algorithm itself. For example, show the phrase closest to the target each generation, as well as report on the number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase. Consider writing a <code>Population</code> class to manage the GA, instead of including all the code in draw().</p>
 
 <figure class="screenshot"><img alt="ch09 exc01" src="chapter09/ch09_exc01.png" />
 <figcaption>&nbsp;</figcaption>
@@ -926,7 +926,7 @@ class DNA {
 
 <a data-primary="genetic algorithms" data-secondary="mutation rate" data-tertiary="varying" data-type="indexterm"></a> <a data-primary="genetic algorithms" data-secondary="population maximum" data-tertiary="varying" data-type="indexterm"></a>
 
-<p>There aren’t a lot of variables to the genetic algorithm itself. In fact, if you look at the previous example’s code, you’ll see only two global variables (not including the arrays and <span class="klass">ArrayList</span><code>s</code> to store the population and mating pool).</p>
+<p>There aren’t a lot of variables to the genetic algorithm itself. In fact, if you look at the previous example’s code, you’ll see only two global variables (not including the arrays and <code>ArrayList</code><code>s</code> to store the population and mating pool).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 float mutationRate = 0.01;
@@ -1117,7 +1117,7 @@ int totalPopulation = 150;</pre>
 	</tbody>
 </table>
 
-<p>There are a couple of problems here. First, we are adding elements to the mating pool N numbers of times, where N equals fitness multiplied by 100. Objects can only be added to an <span class="klass">ArrayList</span> a whole number of times, and so A and B will both be added 80 times, giving them an equal probability of being selected. Even with an improved solution that takes floating point probabilities into account, 80.1% is only a teeny tiny bit higher than 80%. But getting 801 characters right is a whole lot better than 800 in the evolutionary scenario. We really want to make that additional character count. We want the fitness score for 801 characters to be exponentially better than the score for 800.</p>
+<p>There are a couple of problems here. First, we are adding elements to the mating pool N numbers of times, where N equals fitness multiplied by 100. Objects can only be added to an <code>ArrayList</code> a whole number of times, and so A and B will both be added 80 times, giving them an equal probability of being selected. Even with an improved solution that takes floating point probabilities into account, 80.1% is only a teeny tiny bit higher than 80%. But getting 801 characters right is a whole lot better than 800 in the evolutionary scenario. We really want to make that additional character count. We want the fitness score for 801 characters to be exponentially better than the score for 800.</p>
 
 <p>To put it another way, let’s graph the fitness function.</p>
 
@@ -1272,7 +1272,7 @@ class Vehicle {
   float separationWeight;
   [inline]// etc.</pre>
 
-<p>All we need to do to evolve those parameters is to turn them into an array, so that the array can be used with all of the functions—<code>crossover()</code>, <code>mutate()</code>, etc.—found in the <span class="klass">DNA</span> class. One common solution is to use an array of floating point numbers between 0 and 1.</p>
+<p>All we need to do to evolve those parameters is to turn them into an array, so that the array can be used with all of the functions—<code>crossover()</code>, <code>mutate()</code>, etc.—found in the <code>DNA</code> class. One common solution is to use an array of floating point numbers between 0 and 1.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -1288,7 +1288,7 @@ class DNA {
     }
   }</pre>
 
-<p>Notice how we’ve now put the genetic data (genotype) and its expression (phenotype) into two separate classes. The <span class="klass">DNA</span> class is the genotype and the <span class="klass">Vehicle</span> class uses a <span class="klass">DNA</span> object to drive its behaviors and express that data visually—it is the phenotype. The two can be linked by creating a <span class="klass">DNA</span> instance inside the <span class="klass">Vehicle</span> class itself.</p>
+<p>Notice how we’ve now put the genetic data (genotype) and its expression (phenotype) into two separate classes. The <code>DNA</code> class is the genotype and the <code>Vehicle</code> class uses a <code>DNA</code> object to drive its behaviors and express that data visually—it is the phenotype. The two can be linked by creating a <code>DNA</code> instance inside the <code>Vehicle</code> class itself.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Vehicle {
@@ -1311,12 +1311,12 @@ class Vehicle {
     //{!1} Etc.
   }</pre>
 
-<p>Of course, you most likely don’t want all your variables to have a range between 0 and 1. But rather than try to remember how to adjust those ranges in the <span class="klass">DNA</span> class itself, it’s easier to pull the genetic information from the <span class="klass">DNA</span> object and use Processing’s <code>map()</code> function to change the range. For example, if you want a size variable between 10 and 72, you would say:</p>
+<p>Of course, you most likely don’t want all your variables to have a range between 0 and 1. But rather than try to remember how to adjust those ranges in the <code>DNA</code> class itself, it’s easier to pull the genetic information from the <code>DNA</code> object and use Processing’s <code>map()</code> function to change the range. For example, if you want a size variable between 10 and 72, you would say:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     size = map(dna.genes[2], 0, 1, 10, 72);</pre>
 
-<p>In other cases, you will want to design a genotype that is an array of objects. Consider the design of a rocket with a series of “thruster” engines. You could describe each thruster with a <span class="klass">PVector</span> that outlines its direction and relative strength.</p>
+<p>In other cases, you will want to design a genotype that is an array of objects. Consider the design of a rocket with a series of “thruster” engines. You could describe each thruster with a <code>PVector</code> that outlines its direction and relative strength.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -1334,7 +1334,7 @@ class DNA {
     }
   }</pre>
 
-<p>The phenotype would be a <span class="klass">Rocket</span> class that participates in a physics system.</p>
+<p>The phenotype would be a <code>Rocket</code> class that participates in a physics system.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Rocket {
@@ -1343,9 +1343,9 @@ class Rocket {
 
 <a data-primary="object-oriented programming" data-secondary="genotype/phenotype objects and" data-type="indexterm"></a>
 
-<p>What’s great about this technique of dividing the genotype and phenotype into separate classes (<span class="klass">DNA</span> and <span class="klass">Rocket</span> for example) is that when it comes time to build all of the code, you’ll notice that the <span class="klass">DNA</span> class we developed earlier remains intact. The only thing that changes is the array’s data type (<span class="klass">float</span>, <span class="klass">PVector</span>, etc.) and the expression of that data in the phenotype class.</p>
+<p>What’s great about this technique of dividing the genotype and phenotype into separate classes (<code>DNA</code> and <code>Rocket</code> for example) is that when it comes time to build all of the code, you’ll notice that the <code>DNA</code> class we developed earlier remains intact. The only thing that changes is the array’s data type (<code>float</code>, <code>PVector</code>, etc.) and the expression of that data in the phenotype class.</p>
 
-<p>In the next section, we’ll follow this idea a bit further and walk through the necessary steps for an example that involves moving bodies and an array of <span class="klass">PVector</span><code>s</code> as DNA.</p>
+<p>In the next section, we’ll follow this idea a bit further and walk through the necessary steps for an example that involves moving bodies and an array of <code>PVector</code><code>s</code> as DNA.</p>
 </section>
 </section>
 
@@ -1372,7 +1372,7 @@ class Rocket {
 
 <p>Our rockets will have only one thruster, and this thruster will be able to fire in any direction with any strength for every frame of animation. This isn’t particularly realistic, but it will make building out the framework a little easier. (We can always make the rocket and its thrusters more advanced and realistic later.)</p>
 
-<p>Let’s start by taking our basic <span class="klass">Mover</span> class from Chapter 2 examples and renaming it <span class="klass">Rocket</span>.</p>
+<p>Let’s start by taking our basic <code>Mover</code> class from Chapter 2 examples and renaming it <code>Rocket</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Rocket {
@@ -1409,7 +1409,7 @@ class Rocket {
 
 <p>We stated the goal of a rocket reaching a target. In other words, the closer a rocket gets to the target, the higher the fitness. Fitness is inversely proportional to distance: the smaller the distance, the greater the fitness; the greater the distance, the smaller the fitness.</p>
 
-<p>Let’s assume we have a <span class="klass">PVector</span> target.</p>
+<p>Let’s assume we have a <code>PVector</code> target.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fitness() {
@@ -1552,13 +1552,13 @@ void fitness() {
 
 <p><span class="highlight">Key #3: Genotype and Phenotype</span></p>
 
-<p>We stated that each rocket has a thruster that fires in a variable direction with a variable magnitude in each frame. And so we need a <span class="klass">PVector</span> for each frame of animation. Our genotype, the data required to encode the rocket’s behavior, is therefore an array of <span class="klass">PVector</span><code>s</code>.</p>
+<p>We stated that each rocket has a thruster that fires in a variable direction with a variable magnitude in each frame. And so we need a <code>PVector</code> for each frame of animation. Our genotype, the data required to encode the rocket’s behavior, is therefore an array of <code>PVector</code><code>s</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
   PVector[] genes;</pre>
 
-<p>The happy news here is that we don’t really have to do anything else to the <span class="klass">DNA</span> class. All of the functionality we developed for the typing monkey (crossover and mutation) applies here. The one difference we do have to consider is how we initialize the array of genes. With the typing monkey, we had an array of characters and picked a random character for each element of the array. Here we’ll do exactly the same thing and initialize a DNA sequence as an array of random <span class="klass">PVector</span><code>s</code>. Now, your instinct in creating a random <span class="klass">PVector</span> might be as follows:</p>
+<p>The happy news here is that we don’t really have to do anything else to the <code>DNA</code> class. All of the functionality we developed for the typing monkey (crossover and mutation) applies here. The one difference we do have to consider is how we initialize the array of genes. With the typing monkey, we had an array of characters and picked a random character for each element of the array. Here we’ll do exactly the same thing and initialize a DNA sequence as an array of random <code>PVector</code><code>s</code>. Now, your instinct in creating a random <code>PVector</code> might be as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
@@ -1567,13 +1567,13 @@ PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
 <figcaption>Figure 9.12</figcaption>
 </figure>
 
-<p>This is perfectly fine and will likely do the trick. However, if we were to draw every single possible vector we might pick, the result would fill a square (see Figure 9.12). In this case, it probably doesn’t matter, but there is a slight bias to diagonals here given that a <span class="klass">PVector</span> from the center of a square to a corner is longer than a purely vertical or horizontal one.</p>
+<p>This is perfectly fine and will likely do the trick. However, if we were to draw every single possible vector we might pick, the result would fill a square (see Figure 9.12). In this case, it probably doesn’t matter, but there is a slight bias to diagonals here given that a <code>PVector</code> from the center of a square to a corner is longer than a purely vertical or horizontal one.</p>
 
 <figure class="half-width-right" id="chapter09_figure13"><img alt="Figure 9.13" src="chapter09/ch09_13.png" />
 <figcaption>Figure 9.13</figcaption>
 </figure>
 
-<p>What would be better here is to pick a random angle and make a <span class="klass">PVector</span> of length one from that angle, giving us a circle (see Figure 9.13). This could be easily done with a <a href="#chapter03_section5">quick polar to Cartesian conversion</a>, but a quicker path to the result is just to use <span class="klass">PVector</span>'s <code>random2D()</code>.</p>
+<p>What would be better here is to pick a random angle and make a <code>PVector</code> of length one from that angle, giving us a circle (see Figure 9.13). This could be easily done with a <a href="#chapter03_section5">quick polar to Cartesian conversion</a>, but a quicker path to the result is just to use <code>PVector</code>'s <code>random2D()</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 for (int i = 0; i < genes.length; i++) {
@@ -1581,7 +1581,7 @@ for (int i = 0; i < genes.length; i++) {
   genes[i] = PVector.random2D();
 }</pre>
 
-<p>A <span class="klass">PVector</span> of length one is actually going to be quite a large force. Remember, forces are applied to acceleration, which accumulates into velocity thirty times per second. So, for this example, we can also add one more variable to the <span class="klass">DNA</span> class: a maximum force that scales all the <span class="klass">PVector</span><code>s</code>. This will control the thruster power.</p>
+<p>A <code>PVector</code> of length one is actually going to be quite a large force. Remember, forces are applied to acceleration, which accumulates into velocity thirty times per second. So, for this example, we can also add one more variable to the <code>DNA</code> class: a maximum force that scales all the <code>PVector</code><code>s</code>. This will control the thruster power.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -1603,9 +1603,9 @@ class DNA {
     }
   }</pre>
 
-<p>Notice also that we created an array of <span class="klass">PVector</span><code>s</code> with length lifetime. We need a <span class="klass">PVector</span> for each frame of the rocket’s life, and the above assumes the existence of a global variable lifetime that stores the total number of frames in each generation’s life cycle.</p>
+<p>Notice also that we created an array of <code>PVector</code><code>s</code> with length lifetime. We need a <code>PVector</code> for each frame of the rocket’s life, and the above assumes the existence of a global variable lifetime that stores the total number of frames in each generation’s life cycle.</p>
 
-<p>The expression of this array of <span class="klass">PVector</span><code>s</code>, the phenotype, is a <span class="klass">Rocket</span> class modeled on our basic <span class="klass">PVector</span> and forces examples from Chapter 2. All we need to do is add an instance of a <span class="klass">DNA</span> object to the class. The fitness variable will also live here. Only the <span class="klass">Rocket</span> object knows how to compute its distance to the target, and therefore the fitness function will live here in the phenotype as well.</p>
+<p>The expression of this array of <code>PVector</code><code>s</code>, the phenotype, is a <code>Rocket</code> class modeled on our basic <code>PVector</code> and forces examples from Chapter 2. All we need to do is add an instance of a <code>DNA</code> object to the class. The fitness variable will also live here. Only the <code>Rocket</code> object knows how to compute its distance to the target, and therefore the fitness function will live here in the phenotype as well.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Rocket {
@@ -1619,7 +1619,7 @@ class Rocket {
   PVector velocity;
   PVector acceleration;</pre>
 
-<p>What are we using the DNA for? We are marching through the array of <span class="klass">PVector</span><code>s</code> and applying them one at a time as a force to the rocket. To do this, we’ll also have to add an integer that acts as a counter to walk through the array.</p>
+<p>What are we using the DNA for? We are marching through the array of <code>PVector</code><code>s</code> and applying them one at a time as a force to the rocket. To do this, we’ll also have to add an integer that acts as a counter to walk through the array.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   int geneCounter = 0;
@@ -1637,7 +1637,7 @@ class Rocket {
 <section data-type="sect1" id="chapter09_section11">
 <h2>9.11 Smart Rockets: Putting It All Together</h2>
 
-<p>We now have our <span class="klass">DNA</span> class (genotype) and our <span class="klass">Rocket</span> class (phenotype). The last piece of the puzzle is a <span class="klass">Population</span> class, which manages an array of rockets and has the functionality for selection and reproduction. Again, the happy news here is that we barely have to change anything from the Shakespeare monkey example. The process for building a mating pool and generating a new array of child rockets is exactly the same as what we did with our population of strings.</p>
+<p>We now have our <code>DNA</code> class (genotype) and our <code>Rocket</code> class (phenotype). The last piece of the puzzle is a <code>Population</code> class, which manages an array of rockets and has the functionality for selection and reproduction. Again, the happy news here is that we barely have to change anything from the Shakespeare monkey example. The process for building a mating pool and generating a new array of child rockets is exactly the same as what we did with our population of strings.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Population {
@@ -1657,7 +1657,7 @@ class Population {
   void selection() {}
   void reproduction() {}</pre>
 
-<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <span class="klass">Population</span> class that runs the physics simulation itself. This is identical to what we did in the <code>run()</code> function of a particle system—update all the particle positions and draw them.</p>
+<p>There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of calculating its fitness and then we moved on. The rockets, however, need to live for a period of time before they can be evaluated; they need to be given a chance to make their attempt at reaching the target. Therefore, we need to add one more function to the <code>Population</code> class that runs the physics simulation itself. This is identical to what we did in the <code>run()</code> function of a particle system—update all the particle positions and draw them.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void live () {
@@ -1669,7 +1669,7 @@ class Population {
     }
   }</pre>
 
-<p>Finally, we’re ready for <code>setup()</code> and <code>draw()</code>. Here in the main tab, our primary responsibility is to implement the steps of the genetic algorithm in the appropriate order by calling the functions in the <span class="klass">Population</span> class.</p>
+<p>Finally, we’re ready for <code>setup()</code> and <code>draw()</code>. Here in the main tab, our primary responsibility is to implement the steps of the genetic algorithm in the appropriate order by calling the functions in the <code>Population</code> class.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
     population.fitness();
@@ -1783,7 +1783,7 @@ class Obstacle {
     }
   }</pre>
 
-<p>Assuming we make an <span class="klass">ArrayList</span> of obstacles, we can then have each rocket check to see if it has collided with an obstacle and set a <span class="klass">boolean</span> flag to be true if it does, adding a function to the rocket class.</p>
+<p>Assuming we make an <code>ArrayList</code> of obstacles, we can then have each rocket check to see if it has collided with an obstacle and set a <code>boolean</code> flag to be true if it does, adding a function to the rocket class.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   // This new function lives in the rocket
@@ -1827,7 +1827,7 @@ class Obstacle {
 
 <p>If you look closely at our first Smart Rockets example, you’ll notice that the rockets are not rewarded for getting to the target faster. The only variable in their fitness calculation is the distance to the target at the end of the generation’s life. In fact, in the event that the rockets get very close to the target but overshoot it and fly past, they may actually be penalized for getting to the target faster. Slow and steady wins the race in this case.</p>
 
-<p>We could improve the algorithm to optimize for speed a number of ways. First, instead of using the distance to the target at the end of the generation, we could use the distance that is the closest to the target at any point during the rocket’s life. We would call this the rocket’s “record” distance. (All of the code snippets in this section live inside the <span class="klass">Rocket</span> class.)</p>
+<p>We could improve the algorithm to optimize for speed a number of ways. First, instead of using the distance to the target at the end of the generation, we could use the distance that is the closest to the target at any point during the rocket’s life. We would call this the rocket’s “record” distance. (All of the code snippets in this section live inside the <code>Rocket</code> class.)</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void checkTarget() {
@@ -1890,14 +1890,14 @@ class Obstacle {
 <div data-type="exercise" id="chapter09_exercise11">
 <h5>Exercise 9.11</h5>
 
-<p>Another way to achieve a similar result is to evolve a flow field. Can you make the genotype of a rocket a flow field of <span class="klass">PVector</span><code>s</code>?</p>
+<p>Another way to achieve a similar result is to evolve a flow field. Can you make the genotype of a rocket a flow field of <code>PVector</code><code>s</code>?</p>
 </div>
 
 <a data-primary="Evolved Virtual Creatures (Sims)" data-type="indexterm"></a> <a data-primary="Sims" data-secondary="Karl" data-type="indexterm"></a>
 
 <p>One of the more famous implementations of genetic algorithms in computer graphics is Karl Sims’s “Evolved Virtual Creatures.” In Sims’s work, a population of digital creatures (in a simulated physics environment) is evaluated for the creatures' ability to perform tasks, such as swimming, running, jumping, following, and competing for a green cube.</p>
 
-<p>One of the innovations in Sims’s work is a node-based genotype. In other words, the creature’s DNA is not a linear list of <span class="klass">PVector</span><code>s</code> or numbers, but a map of nodes. (For an example of this, take a look at <a href="#chapter05_exercise15">Exercise 5.15</a>, toxiclibs' Force Directed Graph.) The phenotype is the creature’s design itself, a network of limbs connected with muscles.</p>
+<p>One of the innovations in Sims’s work is a node-based genotype. In other words, the creature’s DNA is not a linear list of <code>PVector</code><code>s</code> or numbers, but a map of nodes. (For an example of this, take a look at <a href="#chapter05_exercise15">Exercise 5.15</a>, toxiclibs' Force Directed Graph.) The phenotype is the creature’s design itself, a network of limbs connected with muscles.</p>
 
 <div data-type="exercise" id="chapter09_exercise12">
 <h5>Exercise 9.12</h5>
@@ -1946,7 +1946,7 @@ class DNA {
     }
   }</pre>
 
-<p>The phenotype is a <span class="klass">Face</span> class that includes an instance of a <span class="klass">DNA</span> object.</p>
+<p>The phenotype is a <code>Face</code> class that includes an instance of a <code>DNA</code> object.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Face {
@@ -2081,7 +2081,7 @@ class Bloop {
 
 <p>The above is missing a few details (such as initializing the variables in the constructor), but you get the idea.</p>
 
-<p>For this example, we’ll want to store the population of bloops in an <span class="klass">ArrayList</span>, rather than an array, as we expect the population to grow and shrink according to how often bloops die or are born. We can store this <span class="klass">ArrayList</span> in a class called <span class="klass">World</span>, which will manage all the elements of the bloops’ world.</p>
+<p>For this example, we’ll want to store the population of bloops in an <code>ArrayList</code>, rather than an array, as we expect the population to grow and shrink according to how often bloops die or are born. We can store this <code>ArrayList</code> in a class called <code>World</code>, which will manage all the elements of the bloops’ world.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class World {
@@ -2098,7 +2098,7 @@ class World {
     }
   }</pre>
 
-<p>So far, what we have is just a rehashing of our particle system example from Chapter 5. We have an entity (<span class="klass">Bloop</span>) that moves around the window and a class (<span class="klass">World</span>) that manages a variable quantity of these entities. To turn this into a system that evolves, we need to add two additional features to our world:</p>
+<p>So far, what we have is just a rehashing of our particle system example from Chapter 5. We have an entity (<code>Bloop</code>) that moves around the window and a class (<code>World</code>) that manages a variable quantity of these entities. To turn this into a system that evolves, we need to add two additional features to our world:</p>
 
 <ul>
 	<li>
@@ -2111,7 +2111,7 @@ class World {
 
 <a data-primary="fitness functions (natural selection algorithms)" data-secondary="ecosystem simulations and" data-type="indexterm"></a>
 
-<p>Bloops dying is our replacement for a fitness function, the process of “selection.” If a bloop dies, it cannot be selected to be a parent, because it simply no longer exists! One way we can build a mechanism to ensure bloop deaths in our world is by adding a <code>health</code> variable to the <span class="klass">Bloop</span> class.</p>
+<p>Bloops dying is our replacement for a fitness function, the process of “selection.” If a bloop dies, it cannot be selected to be a parent, because it simply no longer exists! One way we can build a mechanism to ensure bloop deaths in our world is by adding a <code>health</code> variable to the <code>Bloop</code> class.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Bloop {
@@ -2147,7 +2147,7 @@ class Bloop {
 
 <p>There are many ways we could achieve variable lifespans with a more sophisticated world. For example, we could introduce predators that eat bloops. Perhaps the faster bloops would be able to escape being eaten more easily, and therefore our world would evolve to have faster and faster bloops. Another option would be to introduce food. When a bloop eats food, it increases its health points, and therefore extends its life.</p>
 
-<p>Let’s assume we have an <span class="klass">ArrayList</span> of <span class="klass">PVector</span> positions for food, named “food.” We could test each bloop’s proximity to each food position. If the bloop is close enough, it eats the food (which is then removed from the world) and increases its health.</p>
+<p>Let’s assume we have an <code>ArrayList</code> of <code>PVector</code> positions for food, named “food.” We could test each bloop’s proximity to each food position. If the bloop is close enough, it eats the food (which is then removed from the world) and increases its health.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void eat() {
@@ -2198,7 +2198,7 @@ class DNA {
     }
   }</pre>
 
-<p>The phenotype then is the bloop itself, whose size and speed is assigned by adding an instance of a <span class="klass">DNA</span> object to the <span class="klass">Bloop</span> class.</p>
+<p>The phenotype then is the bloop itself, whose size and speed is assigned by adding an instance of a <code>DNA</code> object to the <code>Bloop</code> class.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Bloop {
@@ -2239,7 +2239,7 @@ class Bloop {
 
 <p>&hellip;then the longer a bloop lives, the more likely it will make at least one child. This is equivalent to saying the more times you play the lottery, the greater the likelihood you’ll win (though I’m sorry to say your chances of that are still essentially zero).</p>
 
-<p>To implement this selection algorithm, we can write a function in the <span class="klass">Bloop</span> class that picks a random number every frame. If the number is less than 0.01 (1%), a new bloop is born.</p>
+<p>To implement this selection algorithm, we can write a function in the <code>Bloop</code> class that picks a random number every frame. If the number is less than 0.01 (1%), a new bloop is born.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   // This function will return a new bloop, the child.
@@ -2252,7 +2252,7 @@ class Bloop {
     }
   }</pre>
 
-<p>How does a bloop reproduce? In our previous examples, the reproduction process involved calling the <code>crossover()</code> function in the <span class="klass">DNA</span> class and making a new object from the newly made DNA. Here, since we are making a child from a single parent, we’ll call a function called <code>copy()</code> instead.</p>
+<p>How does a bloop reproduce? In our previous examples, the reproduction process involved calling the <code>crossover()</code> function in the <code>DNA</code> class and making a new object from the newly made DNA. Here, since we are making a child from a single parent, we’ll call a function called <code>copy()</code> instead.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   Bloop reproduce() {
@@ -2272,7 +2272,7 @@ class Bloop {
 
 <p>Note also that we’ve reduced the probability of reproducing from 1% to 0.05%. This value makes quite a difference; with a high probability of reproducing, the system will quickly tend towards overpopulation. Too low a probability, and everything will likely quickly die out.</p>
 
-<p>Writing the <code>copy()</code> function into the <span class="klass">DNA</span> class is easy since Processing includes a function <code>arraycopy()</code> that copies the contents of one array into another.</p>
+<p>Writing the <code>copy()</code> function into the <code>DNA</code> class is easy since Processing includes a function <code>arraycopy()</code> that copies the contents of one array into another.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -2288,7 +2288,7 @@ class DNA {
   }
 }</pre>
 
-<p>Now that we have all the pieces in place for selection and reproduction, we can finalize the <span class="klass">World</span> class that manages the list of all <span class="klass">Bloop</span> objects (as well as a <span class="klass">Food</span> object, which itself is a list of <span class="klass">PVector</span> positions for food).</p>
+<p>Now that we have all the pieces in place for selection and reproduction, we can finalize the <code>World</code> class that manages the list of all <code>Bloop</code> objects (as well as a <code>Food</code> object, which itself is a list of <code>PVector</code> positions for food).</p>
 
 <p>Before you run the example, take a moment to guess what size and speed of bloops the system will evolve towards. We’ll discuss following the code.</p>
 
