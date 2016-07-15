@@ -276,6 +276,7 @@ figure {
     }
     img {
         width: 100%;
+        max-width: 100%;
         margin: 0;
     }
 }
@@ -316,35 +317,27 @@ figure {
         border: 1px solid $color-medium;
     }
 
-    // * Images: Two Column Images
-    figure.two-col,
-    figure.two-col-borderless,
+    // * Images: Two-Three Column Images
+    figure[class^="two-col"],
     figure.three-col {
         position: relative;
         float: left;
         width: 50%;
-        margin: 1.7em 0;
+        margin: 2em 0;
         padding-right: 1em;
         @include box-sizing(border-box);
+        img { border: 1px solid $color-medium; }
     }
-    figure.two-col img,
-    figure.two-col canvas,
-    figure.two-col-borderless canvas,
-    figure.three-col img,
-    figure.three-col canvas {
-        width: 100%;
-        max-width: 100%;
-        border: 1px solid $color-medium;
-    }
-    figure.two-col-borderless img {
-        border: 1px solid $color-medium;
+    figure.three-col { width: 33%; }
+
+    figure.two-col-borderless {
+        img { border: none; }
+        figcaption {
+            text-align: center;
+            padding: .5em 0 0 0;
+        }
     }
 
-    // * Images: Three Column Images
-    figure.three-col {
-        margin:1.7em 0;
-        width: 33%;
-    }
 
 // ----------------------------------
 // 10. Helper Classes / Utilities
@@ -464,13 +457,12 @@ figure {
 // ----------------------------------
 // - Boxes Styling
 // -- Exercises (.example), Projects (.tip), Breakout Boxes (.note)
-div[data-type="note"] h2, div[data-type="tip"] h2,
-div[data-type="note"] h3,
-div[data-type="note"] h4,
-div[data-type="note"] h5 {
-    font-family: $sans-semibold;
-    font-size: $font-L;
-    margin: 0 0 0.3em 0;
+div[data-type="note"], div[data-type="tip"] {
+    h2 {
+        font-family: $sans-semibold;
+        font-size: $font-L;
+        margin: 0 0 0.3em 0;
+    }
 }
 
     // ----------------------
@@ -491,9 +483,6 @@ div[data-type="note"] h5 {
     }
 
     div[data-type="note"] h2:first-child,
-    div[data-type="note"] h3:first-child,
-    div[data-type="note"] h4:first-child,
-    div[data-type="note"] h5:first-child,
     div[data-type="note"] p:first-child {
         margin-top: 0;
     }

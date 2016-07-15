@@ -172,7 +172,7 @@ class Particle {
   float lifespan;
 
   Particle(PVector l) {
-    //{!2 .offset} For demonstration purposes we assign the Particle a random velocity and constant acceleration.
+    //{!2 .offset-top} For demonstration purposes we assign the Particle a random velocity and constant acceleration.
     acceleration = new PVector(0, 0.05);
     velocity = new PVector(random(-1, 1), random(-2, 0));
     position = l.copy();
@@ -258,7 +258,7 @@ void draw() {
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 int total = 10;
 
-//{!1 .offset} Have you ever seen this syntax before? This is a feature in Java (called "generics"). It allows us to specify in advance what type of object we intend to put in the ArrayList.
+//{!1 .offset-top} Have you ever seen this syntax before? This is a feature in Java (called "generics"). It allows us to specify in advance what type of object we intend to put in the ArrayList.
 ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
 void setup() {
   for (int i = 0; i &lt; total; i++) {
@@ -268,7 +268,7 @@ void setup() {
 }
 
 void draw() {
-  //{.offset} The size of the ArrayList is returned by size().
+  //{!1} The size of the ArrayList is returned by size().
   for (int i = 0; i < particles.size(); i++) {
     //{!1} An object is accessed from the ArrayList with get().  Because we are using generics, we do not need to specify a type when we pull objects out of the ArrayList.
     Particle p = particles.get(i);
@@ -315,7 +315,7 @@ void setup() {
 
 void draw() {
   background(255);
-  //{!1 .offset} A new Particle object is added to the ArrayList every cycle through draw().
+  //{!1 .offset-top} A new Particle object is added to the ArrayList every cycle through draw().
   particles.add(new Particle(new PVector(width/2, 50)));
 
   for (int i = 0; i &lt; particles.size(); i++) {
@@ -346,7 +346,7 @@ void draw() {
   for (int i = 0; i < particles.size(); i++) {
     Particle p = particles.get(i);
     p.run();
-    //{!1 .offset} Adding a new Particle to the list while iterating?
+    //{!1 .offset-top} Adding a new Particle to the list while iterating?
     particles.add(new Particle(new PVector(width/2, 50)));
   }</pre>
 
