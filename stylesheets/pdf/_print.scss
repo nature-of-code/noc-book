@@ -386,8 +386,6 @@ figure {
 // ----------------------------------
 // - TOC
 .toc {
-    width: 70%;
-
     ul {
         margin: 0;
         padding: 0;
@@ -406,11 +404,12 @@ figure {
                 padding: 0 50px 0 0;
             }
             a[href]::after {
-                content: target-counter(attr(href), page);
+                content: target-counter(attr(href), page, decimal);
                 position: absolute;
                 bottom: 0;
                 right: 0;
                 min-width: 40px;
+                text-align: right;
             }
 
             ul {
@@ -429,29 +428,20 @@ figure {
                 }
             }
         }
-
-        li:nth-child(1) {       display: none;  }
-        li li:nth-child(1) {    display: block; }
-        li:nth-child(-n+3) li a[href]::after {
-            content: target-counter(attr(href), page,lower-roman);
-        }
-        li:nth-child(4) li a[href]::after,
-        li:nth-child(5) li a[href]::after,
-        li:nth-child(6) li a[href]::after,
-        li:nth-child(7) li a[href]::after,
-        li:nth-child(8) li a[href]::after,
-        li:nth-child(9) li a[href]::after,
-        li:nth-child(10) li a[href]::after,
-        li:nth-child(11) li a[href]::after,
-        li:nth-child(12) li a[href]::after,
-        li:nth-child(13) li a[href]::after,
-        li:nth-child(14) li a[href]::after,
-        li:nth-child(15) li a[href]::after,
-        li:nth-child(16) li a[href]::after {
-            content: target-counter(attr(href), page,decimal);
-        }
-
     }
+
+    // Preface visible w/roman index
+    > ul {
+        width: 90%;
+
+        > li:first-child {
+            a[href]::after {
+                content: target-counter(attr(href), page, upper-roman);
+            }
+        }
+    }
+
+
 }
 
 // ----------------------------------
