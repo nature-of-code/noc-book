@@ -1,10 +1,10 @@
 {% for item in children %}
-<li>
-  <a href="{{ item.href }}">{{ item.label }}</a>
-  {% if item.children.length > 0 %}
-  <ul>
-    {% include toc_item.html children=item.children %}
-  </ul>
-  {% endif %}
+<li data-toc-item="{{ item.id }}">
+    <a href="{{ item.href }}" title="{{ item.label | escape }}">{{ item.label }}</a>
+    {% if item.children.length > 0 %}
+    <ul>
+        {% include toc_item.html children=item.children %}
+    </ul>
+    {% endif %}
 </li>
 {% endfor %}
