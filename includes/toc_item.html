@@ -1,6 +1,33 @@
 {% for item in children %}
 <li data-toc-item="{{ item.id }}">
-    <a href="{{ item.href }}" title="{{ item.label | escape }}">{{ item.label }}</a>
+    <a href="{{ item.href }}" title="{{ item.label | escape }}">
+    {% assign label = item.label | split: ". " %}
+    {% if label.length == 2 && item.type == 'chapter' %}
+
+        <span class="chapter-number">{{ label | first }}</span>
+        <span class="chapter-title">{{ label | last }}</span>
+
+    {% else %}
+
+        {% if item.type == 'sect1' %}
+
+            {% assign sect = item.label | split: " " %}
+            {% capture sect_num %}{{ sect | first }}{% endcapture %}
+
+            <span class="section-number">{{ sect_num }}</span>
+            {% for parts in sect  %}
+                {% unless parts == sect_num %}{{ parts }} {% endunless %}
+            {% endfor %}
+
+        {% else %}
+
+            {{ item.label }}
+
+        {% endif %}
+
+    {% endif %}
+    </a>
+
     {% if item.children.length > 0 %}
     <ul>
         {% include toc_item.html children=item.children %}
