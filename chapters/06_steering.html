@@ -576,7 +576,7 @@ float xoff = 0;
 for (int i = 0; i < cols; i++) {
   float yoff = 0;
   for (int j = 0; j < rows; j++) {
-    //{!1} 2D Noise
+    //{!1 .offset-top} 2D Noise
     float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
     field[i][j] = new PVector(cos(theta), sin(theta));
     yoff += 0.1;
@@ -645,9 +645,9 @@ class FlowField {
     for (int i = 0; i &lt; cols; i++) {
       float yoff = 0;
       for (int j = 0; j &lt; rows; j++) {
-        //{.offset-top} In this example, we use Perlin noise to seed the vectors.
+        //{.code-wide} In this example, we use Perlin noise to seed the vectors.
         float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
-        //{.offset} Polar to Cartesian coordinate transformation to get x and y components of the vector
+        //{.code-wide} Polar to Cartesian coordinate transformation to get x and y components of the vector
         field[i][j] = new PVector(cos(theta), sin(theta));
         yoff += 0.1;
       }
@@ -655,7 +655,7 @@ class FlowField {
     }
   }
 
-  // A function to return a PVector based on a position
+  //{.code-wide} A function to return a PVector based on a position
   PVector lookup(PVector lookup) {
     int column = int(constrain(lookup.x/resolution, 0, cols-1));
     int row = int(constrain(lookup.y/resolution, 0, rows-1));
@@ -1216,7 +1216,7 @@ if (distance > path.radius) {
 for (int i = 0; i < p.points.size()-1; i++) {
   PVector a = p.points.get(i);
   PVector b = p.points.get(i+1);
-  //{!1 .offset} Finding the normals for each line segment
+  //{!1 .offset-top} Finding the normals for each line segment
   PVector normalPoint = getNormalPoint(predictLoc, a, b);
 </pre>
 

@@ -857,7 +857,7 @@ class DNA {
   char[] genes;
   float fitness;
 
-  // Create DNA randomly.
+  //{.code-wide} Create DNA randomly.
   DNA() {
     genes = new char[target.length()];
     for (int i = 0; i < genes.length; i++) {
@@ -865,7 +865,7 @@ class DNA {
     }
   }
 
-  // Calculate fitness.
+  //{.code-wide} Calculate fitness.
   void fitness() {
      int score = 0;
      for (int i = 0; i < genes.length; i++) {
@@ -876,7 +876,7 @@ class DNA {
      fitness = float(score) / target.length();
   }
 
-  // Crossover
+  //{.code-wide} Crossover
   DNA crossover(DNA partner) {
     DNA child = new DNA();
     int midpoint = int(random(genes.length));
@@ -888,7 +888,7 @@ class DNA {
   }
 
 
-  // Mutation
+  //{.code-wide} Mutation
   void mutate(float mutationRate) {
     for (int i = 0; i < genes.length; i++) {
       if (random(1) < mutationRate) {
@@ -897,7 +897,7 @@ class DNA {
     }
   }
 
-  //{!3} Convert to String—PHENOTYPE.
+  //{!3 .code-wide} Convert to String—PHENOTYPE.
   String getPhrase() {
     return new String(genes);
   }
@@ -1958,7 +1958,8 @@ class Face {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 	void display() {
-	  // Using map() to convert the genes to a range for drawing the face.
+
+	  //{.offset-top} Using map() to convert the genes to a range for drawing the face.
 	  float r          = map(dna.genes[0], 0, 1, 0, 70);
 
 	  color c          = color(dna.genes[1], dna.genes[2], dna.genes[3]);
@@ -2324,7 +2325,7 @@ class World {
     food = new Food(num);
     bloops = new ArrayList&lt;Bloop&gt;();
 
-    //{!4} Creating the population
+    //{!4 .offset-top} Creating the population
     for (int i = 0; i < num; i++) {
       PVector position = new PVector(random(width), random(height));
       DNA dna = new DNA();

@@ -643,7 +643,7 @@ void draw() {
 
   float period = 120;
   float amplitude = 100;
-  //{!1} Calculating horizontal position according to the formula for simple harmonic motion
+  //{!1 .offset} Calculating horizontal position according to the formula for simple harmonic motion
   float x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
@@ -743,7 +743,7 @@ class Oscillator  {
   Oscillator()  {
     angle = new PVector();
     velocity = new PVector(random(-0.05,0.05),random(-0.05,0.05));
-    //{!1} Random velocities and amplitudes
+    //{!1 .offset} Random velocities and amplitudes
     amplitude = new PVector(random(width/2), random(height/2));
   }
 
@@ -1101,8 +1101,8 @@ void setup() {
 void draw() {
   background(255);
   p.go();
-}
-
+}</pre>
+<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Pendulum  {
   //{!7} Many, many variables to keep track of the Pendulum’s various properties
   PVector position;    // position of bob
@@ -1132,7 +1132,7 @@ class Pendulum  {
 
   void update() {
     float gravity = 0.4;
-    //{!1} Formula we worked out for angular acceleration
+    //{!1 .code-wide} Formula we worked out for angular acceleration
     aAcceleration = (-1 * gravity / r) * sin(angle);
 
     //{!2} Standard angular motion algorithm
@@ -1149,10 +1149,10 @@ class Pendulum  {
     position.add(origin);
 
     stroke(0);
-    //{!1} The arm
+    //{!1 .code-wide} The arm
     line(origin.x, origin.y, position.x, position.y);
     fill(175);
-    //{!1} The bob
+    //{!1 .code-wide} The bob
     ellipse(position.x, position.y, 16, 16);
   }
 }</pre>
@@ -1385,7 +1385,7 @@ class Spring {
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
   void connect(Bob b) {
 
-    //{!1 .bold} Get a vector pointing from anchor to Bob position.
+    //{!1 .bold .code-wide} Get a vector pointing from anchor to Bob position.
     PVector force = PVector.sub(b.position, anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
     float d = force.mag();

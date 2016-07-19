@@ -768,8 +768,8 @@ if (board[x+1][y+1] == 1) neighbors++;</pre>
 <p>And again, just as with the Wolfram CA, we find ourselves in a situation where the above is a useful and clear way to write the code for teaching purposes, allowing us to see every step (each time we find a neighbor with a state of one, we increase a counter). Nevertheless, it’s a bit silly to say, “If the cell state equals one, add one to a counter” when we could just say, “Add the cell state to a counter.” After all, if the state is only a 0 or 1, the sum of all the neighbors’ states will yield the total number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = -1; i <= 1; i++) {
-  for (int j = -1; j <= 1; j++) {
+for (int i = -1; i &lt;= 1; i++) {
+  for (int j = -1; j &lt;= 1; j++) {
     //{!1} Add up all the neighbors’ states.
     neighbors += board[x+i][y+j];
   }
@@ -785,16 +785,16 @@ neighbors -= board[x][y];</pre>
 <p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new state should be according to the rules: birth, death, or stasis.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-// If it is alive and has less than 2 live neighbors, it dies from loneliness.
+// {.code-wide} If it is alive and has less than 2 live neighbors, it dies from loneliness.
 if        ((board[x][y] == 1) &amp;&amp; (neighbors < 2)) {
   next[x][y] = 0;
-// If it is alive and has more than 3 live neighbors, it dies from overpopulation.
+// {.code-wide} If it is alive and has more than 3 live neighbors, it dies from overpopulation.
 } else if ((board[x][y] == 1) &amp;&amp; (neighbors >  3)) {
   next[x][y] = 0;
-// If it is dead and has exactly 3 live neighbors, it is born!
+// {.code-wide} If it is dead and has exactly 3 live neighbors, it is born!
 } else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) {
   next[x][y] = 1;
-// In all other cases, its state remains the same.
+// {.code-wide} In all other cases, its state remains the same.
 } else {
   next[x][y] = board[x][y];
 }</pre>
@@ -806,13 +806,13 @@ if        ((board[x][y] == 1) &amp;&amp; (neighbors < 2)) {
 int[][] next = new int[columns][rows];
 
 //{!2} Looping but skipping the edge cells
-for (int x = 1; x < columns-1; x++) {
-  for (int y = 1; y < rows-1; y++) {
+for (int x = 1; x &lt; columns-1; x++) {
+  for (int y = 1; y &lt; rows-1; y++) {
     // Add up all the neighbor states to
     // calculate the number of live neighbors.
     int neighbors = 0;
-    for (int i = -1; i <= 1; i++) {
-      for (int j = -1; j <= 1; j++) {
+    for (int i = -1; i &lt;= 1; i++) {
+      for (int j = -1; j &lt;= 1; j++) {
         neighbors += board[x+i][y+j];
       }
     }
@@ -928,12 +928,12 @@ void display() {
 <p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be counted the same way; the difference is that we now need to refer to the object’s state variables as we loop through the 2D array.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int x = 1; x < columns-1; x++) {
-  for (int y = 1; y < rows-1; y++) {
+for (int x = 1; x &lt; columns-1; x++) {
+  for (int y = 1; y &lt; rows-1; y++) {
 
     int neighbors = 0;
-    for (int i = -1; i <= 1; i++) {
-      for (int j = -1; j <= 1; j++) {
+    for (int i = -1; i &lt;= 1; i++) {
+      for (int j = -1; j &lt;= 1; j++) {
         //{!1 .bold} Use the previous state when tracking neighbors.
         neighbors += board[x+i][y+j].previous;
       }
