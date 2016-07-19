@@ -283,10 +283,9 @@ void draw() {
   stroke(0);
   fill(175);
   int w = width/randomCounts.length;
-  //{!3} Graphing the results
+  //{!3 .offset-top} Graphing the results
   for (int x = 0; x &lt; randomCounts.length; x++) {
-    rect(x*w, height-randomCounts[x],
-		     w-1, randomCounts[x]);
+    rect(x*w, height-randomCounts[x], w-1, randomCounts[x]);
   }
 }</pre>
 
@@ -987,9 +986,8 @@ for (int x = 0; x &lt; width; x++) {
   float yoff = 0.0;
 
   for (int y = 0; y &lt; height; y++) {
-    //{!2 .bold} Use xoff and yoff for noise().
-    float bright =
-		  map(noise(xoff,yoff),0,1,0,255);
+    //{.bold .code-wide} Use xoff and yoff for noise().
+    float bright = map(noise(xoff,yoff),0,1,0,255);
     // Use x and y for pixel position.
     pixels[x + y * width] = color(bright);
     //{!1 .bold} Increment yoff.
