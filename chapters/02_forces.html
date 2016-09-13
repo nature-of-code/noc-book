@@ -307,7 +307,7 @@ m2.applyForce(wind);</pre>
 
 <a data-primary="object-oriented programming" data-secondary="references to vs. copies of objects" data-type="indexterm"></a>
 
-<p>OK. Moving on to object <code>m2</code>. It also receives the wind force—(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now—(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <code>PVector</code>) into a function, you are passing a reference to that object. It’s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don’t want <code>m2</code> to receive a force divided by the mass of object <code>m1</code>. We want it to receive that force in its original state—(1,0). And so we must protect ourselves and make a copy of the <code>PVector</code> f before dividing it by mass. Fortunately, the <code>PVector</code> class has a convenient method for making a copy—<code>get()</code>. <code>get()</code> returns a new <code>PVector</code> object with the same data. And so we can revise <code>applyForce()</code> as follows:</p>
+<p>OK. Moving on to object <code>m2</code>. It also receives the wind force—(1,0). Wait. Hold on a second. What is the value of the wind force? Taking a closer look, the wind force is actually now—(0.1,0)!! Do you remember this little tidbit about working with objects? When you pass an object (in this case a <code>PVector</code>) into a function, you are passing a reference to that object. It’s not a copy! So if a function makes a change to that object (which, in this case, it does by dividing by mass) then that object is permanently changed! But we don’t want <code>m2</code> to receive a force divided by the mass of object <code>m1</code>. We want it to receive that force in its original state—(1,0). And so we must protect ourselves and make a copy of the <code>PVector</code> f before dividing it by mass. Fortunately, the <code>PVector</code> class has a convenient method for making a copy—<code>copy()</code>. <code>copy()</code> returns a new <code>PVector</code> object with the same data. And so we can revise <code>applyForce()</code> as follows:</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void applyForce(PVector force) {
@@ -322,7 +322,7 @@ void applyForce(PVector force) {
 <div data-type="exercise" id="chapter02_exercise2">
 <h5>Exercise 2.2</h5>
 
-<p>Rewrite the <code>applyForce()</code> method using the static method <code>div()</code> instead of <code>get()</code>.</p>
+<p>Rewrite the <code>applyForce()</code> method using the static method <code>div()</code> instead of <code>copy()</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 void applyForce(PVector force) {
@@ -650,7 +650,7 @@ for (int i = 0; i &lt; movers.length; i++) {
 <p>It’s now up to us to separate this formula into two components that determine the direction of friction as well as the magnitude. Based on the diagram above, we can see that <em>friction points in the opposite direction of velocity.</em> In fact, that’s the part of the formula that says -1 * <span data-type="equation">\hat{v}</span>, or -1 times the velocity unit vector. In Processing, this would mean taking the velocity vector, normalizing it, and multiplying by -1.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector friction = velocity.get();
+PVector friction = velocity.copy();
 friction.normalize();
 // Let’s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
@@ -869,7 +869,7 @@ boolean contains(Mover m) {
   // The force's magnitude: Cd * v~2~
   float dragMagnitude = c * speed * speed;
   // The force's direction: -1 * velocity
-  PVector drag = m.velocity.get();
+  PVector drag = m.velocity.copy();
   // Finalize the force: magnitude and direction together.
   drag.setMag(dragMagnitude);
   //{!1} Apply the force.
