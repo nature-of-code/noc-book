@@ -40,7 +40,7 @@ class Vehicle {
     // Reset accelertion to 0 each cycle
     acceleration.mult(0);
     
-        history.add(location.get());
+        history.add(location.copy());
     if (history.size() > 500) {
       history.remove(0);
     }

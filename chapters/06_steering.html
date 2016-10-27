@@ -1091,7 +1091,7 @@ if (distance > path.radius) {
   void follow(Path p) {
 
     //{!4} Step 1: Predict the vehicle’s future position.
-    PVector predict = vel.get();
+    PVector predict = vel.copy();
     predict.normalize();
     predict.mult(25);
     PVector predictLoc = PVector.add(loc, predict);
@@ -1226,7 +1226,7 @@ for (int i = 0; i < p.points.size()-1; i++) {
    if (normalPoint.x < a.x || normalPoint.x > b.x) {
       //{!1} Use the end point of the segment
       // as our normal point if we can’t find one.
-      normalPoint = b.get();
+      normalPoint = b.copy();
    }</pre>
 
 <p>As a little trick, we’ll say that if it’s not within the line segment, let’s just pretend the end point of that line segment is the normal. This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>

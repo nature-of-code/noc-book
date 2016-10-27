@@ -1254,7 +1254,7 @@ class Connection {
 <p>Let’s first think about how we might do that. We know the position of <code>Neuron</code> <code>a</code>; it’s the <code>PVector</code> <code>a.position</code>. <code>Neuron</code> <code>b</code> is located at <code>b.position</code>. We need to start something moving from <code>Neuron</code> <code>a</code> by creating another <code>PVector</code> that will store the path of our traveling data.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector sender = a.position.get();</pre>
+  PVector sender = a.position.copy();</pre>
 
 <p>Once we have a copy of that position, we can use any of the motion algorithms that we’ve studied throughout this book to move along this path. Here—let’s pick something very simple and just interpolate from <code>a</code> to <code>b</code>.</p>
 
@@ -1374,7 +1374,7 @@ class Connection {
   // The Connection is active with data traveling from a to b.
   void feedforward(float val) {
     output = val*weight;
-    sender = a.position.get();
+    sender = a.position.copy();
     sending = true;
   }
 

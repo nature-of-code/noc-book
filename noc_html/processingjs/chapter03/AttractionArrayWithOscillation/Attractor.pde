@@ -14,7 +14,7 @@ class Attractor {
   PVector drag;  // holds the offset for when object is clicked on
 
   Attractor(PVector l_,float m_, float g_) {
-    loc = l_.get();
+    loc = l_.copy();
     mass = m_;
     G = g_;
     drag = new PVector(0.0,0.0);

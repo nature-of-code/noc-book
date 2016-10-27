@@ -11,7 +11,7 @@ class Wave {
   float[] yvalues;         // Using an array to store height values for the wave (not entirely necessary)
 
   Wave(PVector o, int w_, float a, float p) {
-    origin = o.get();
+    origin = o.copy();
     w = w_;
     period = p;
     amplitude = a;

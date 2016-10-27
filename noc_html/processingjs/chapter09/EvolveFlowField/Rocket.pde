@@ -23,7 +23,7 @@ class Rocket {
   Rocket(PVector l, DNA dna_) {
     acceleration = new PVector();
     velocity = new PVector();
-    location = l.get();
+    location = l.copy();
     r = 2;
     dna = dna_;
     stopped = false;

@@ -16,7 +16,7 @@ class Vehicle {
 
     // Constructor initialize all values
   Vehicle( PVector l, float ms, float mf) {
-    location = l.get();
+    location = l.copy();
     r = 12;
     maxspeed = ms;
     maxforce = mf;
@@ -58,7 +58,7 @@ class Vehicle {
   PVector follow(Path p) {
 
     // Predict location 25 (arbitrary choice) frames ahead
-    PVector predict = velocity.get();
+    PVector predict = velocity.copy();
     predict.normalize();
     predict.mult(25);
     PVector predictLoc = PVector.add(location, predict);
@@ -84,7 +84,7 @@ class Vehicle {
       // If it's not within the line segment, consider the normal to just be the end of the line segment (point b)
       //if (da + db > line.mag()+1) {
       if (normalPoint.x < min(a.x,b.x) || normalPoint.x > max(a.x,b.x) || normalPoint.y < min(a.y,b.y) || normalPoint.y > max(a.y,b.y)) {
-        normalPoint = b.get();
+        normalPoint = b.copy();
         // If we're at the end we really want the next line segment for looking ahead
         a = p.points.get((i+1)%p.points.size());
         b = p.points.get((i+2)%p.points.size());  // Path wraps around
@@ -103,7 +103,7 @@ class Vehicle {
         // This is an oversimplification
         // Should be based on distance to path & velocity
         dir.mult(25);
-        target = normal.get();
+        target = normal.copy();
         target.add(dir);
         
       }

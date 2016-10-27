@@ -16,7 +16,7 @@ class Vehicle {
 
     // Constructor initialize all values
   Vehicle( PVector l, float ms, float mf) {
-    location = l.get();
+    location = l.copy();
     r = 4.0;
     maxspeed = ms;
     maxforce = mf;
@@ -37,7 +37,7 @@ class Vehicle {
   void follow(Path p) {
 
     // Predict location 25 (arbitrary choice) frames ahead
-    PVector predict = velocity.get();
+    PVector predict = velocity.copy();
     predict.normalize();
     predict.mult(25);
     PVector predictLoc = PVector.add(location, predict);
@@ -63,7 +63,7 @@ class Vehicle {
       if (normalPoint.x < a.x || normalPoint.x > b.x) {
         // This is something of a hacky solution, but if it's not within the line segment
         // consider the normal to just be the end of the line segment (point b)
-        normalPoint = b.get();
+        normalPoint = b.copy();
       }
 
       // How far away are we from the path?
@@ -80,7 +80,7 @@ class Vehicle {
         // This is an oversimplification
         // Should be based on distance to path & velocity
         dir.mult(10);
-        target = normalPoint.get();
+        target = normalPoint.copy();
         target.add(dir);
       }
     }

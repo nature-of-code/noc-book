@@ -33,7 +33,7 @@ class Vehicle {
     // Reset accelerationelertion to 0 each cycle
     acceleration.mult(0);
     
-    history.add(location.get());
+    history.add(location.copy());
     if (history.size() > 100) {
       history.remove(0);
     }

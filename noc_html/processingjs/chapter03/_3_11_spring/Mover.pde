@@ -35,7 +35,7 @@ class Bob {
 
   // Newton's law: F = M * A
   void applyForce(PVector force) {
-    PVector f = force.get();
+    PVector f = force.copy();
     f.div(mass);
     acceleration.add(f);
   }

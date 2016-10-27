@@ -16,7 +16,7 @@ class Food {
   
   // Add some food at a location
   void add(PVector l) {
-     food.add(l.get()); 
+     food.add(l.copy()); 
   }
   
   // Display the food

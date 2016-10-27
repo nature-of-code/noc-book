@@ -31,7 +31,7 @@ class Rocket {
   Rocket(PVector l, DNA dna_, int totalRockets) {
     acceleration = new PVector();
     velocity = new PVector();
-    location = l.get();
+    location = l.copy();
     r = 4;
     dna = dna_;
     finishTime = 0;          // We're going to count how long it takes to reach target

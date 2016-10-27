@@ -9,7 +9,7 @@ class Leaf {
   PVector loc;
 
   Leaf(PVector l) {
-    loc = l.get();
+    loc = l.copy();
   }
 
   void display() {

@@ -1112,7 +1112,7 @@ class ParticleSystem {
   PVector origin;
 
   ParticleSystem(PVector position) {
-    origin = position.get();
+    origin = position.copy();
     //{!2 .bold} We’re stuck doing everything twice with two lists!
     particles = new ArrayList&lt;Particle&gt;();
     confetti = new ArrayList&lt;Confetti&gt;();
@@ -1158,7 +1158,7 @@ class ParticleSystem {
   PVector origin;
 
   ParticleSystem(PVector position) {
-    origin = position.get();
+    origin = position.copy();
     particles = new ArrayList&lt;Particle&gt;();
   }
 
@@ -1269,7 +1269,7 @@ class Particle {
 
   // Newton’s second law &amp; force accumulation
   void applyForce(PVector force) {
-    PVector f = force.get();
+    PVector f = force.copy();
     f.div(mass);
     acceleration.add(f);
   }
@@ -1570,7 +1570,7 @@ class ParticleSystem {
   PVector origin;
 
   ParticleSystem(PVector position) {
-    origin = position.get();
+    origin = position.copy();
     particles = new ArrayList&lt;Particle&gt;();
   }
 

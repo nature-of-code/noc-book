@@ -13,7 +13,7 @@ class Vehicle {
   float maxspeed;    // Maximum speed
 
     Vehicle(PVector l, float ms, float mf) {
-    location = l.get();
+    location = l.copy();
     r = 3.0;
     maxspeed = ms;
     maxforce = mf;

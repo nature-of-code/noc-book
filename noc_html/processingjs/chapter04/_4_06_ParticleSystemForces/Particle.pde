@@ -14,7 +14,7 @@ class Particle {
   Particle(PVector l) {
     acceleration = new PVector(0,0);
     velocity = new PVector(random(-1,1),random(-2,0));
-    location = l.get();
+    location = l.copy();
     lifespan = 255.0;
   }
 
@@ -24,7 +24,7 @@ class Particle {
   }
 
   void applyForce(PVector force) {
-    PVector f = force.get();
+    PVector f = force.copy();
     f.div(mass);   
     acceleration.add(f);
   }

@@ -16,7 +16,7 @@ class Vehicle {
 
     // Constructor initialize all values
   Vehicle( PVector l, float ms, float mf) {
-    location = l.get();
+    location = l.copy();
     r = 4.0;
     maxspeed = ms;
     maxforce = mf;
@@ -37,7 +37,7 @@ class Vehicle {
   void follow(Path p) {
 
     // Predict location 25 (arbitrary choice) frames ahead
-    PVector predict = velocity.get();
+    PVector predict = velocity.copy();
     predict.normalize();
     predict.mult(25);
     PVector predictLoc = PVector.add(location, predict);

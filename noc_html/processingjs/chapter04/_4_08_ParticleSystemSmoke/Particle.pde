@@ -17,7 +17,7 @@ class Particle {
     float vx = (float) generator.nextGaussian()*0.3;
     float vy = (float) generator.nextGaussian()*0.3 - 1.0;
     vel = new PVector(vx,vy);
-    loc = l.get();
+    loc = l.copy();
     lifespan = 100.0;
     img = img_;
   }
