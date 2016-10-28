@@ -22,7 +22,7 @@ class Crawler {
   }
   
   void applyForce(PVector force) {
-    PVector f = force.get();  
+    PVector f = force.copy();  
     f.div(mass);
     acc.add(f);
   }

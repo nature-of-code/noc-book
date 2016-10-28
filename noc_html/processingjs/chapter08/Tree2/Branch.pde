@@ -13,8 +13,8 @@ class Branch {
   float timerstart;
 
   Branch(PVector l, PVector v, float n) {
-    loc = l.get();
-    vel = v.get();
+    loc = l.copy();
+    vel = v.copy();
     timerstart = n;
     timer = timerstart;
   }

@@ -27,7 +27,7 @@ class Connection {
   // The Connection is active
   void feedforward(float val) {
     output = val*weight;        // Compute output
-    sender = a.location.get();  // Start animation at Neuron A
+    sender = a.location.copy();  // Start animation at Neuron A
     sending = true;             // Turn on sending
   }
   

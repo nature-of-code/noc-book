@@ -13,8 +13,8 @@ class KochLine {
   PVector end;
 
   KochLine(PVector a, PVector b) {
-    start = a.get();
-    end = b.get();
+    start = a.copy();
+    end = b.copy();
   }
 
   void display() {
@@ -23,7 +23,7 @@ class KochLine {
   }
 
   PVector kochA() {
-    return start.get();
+    return start.copy();
   }
 
 
@@ -37,7 +37,7 @@ class KochLine {
 
   // More complicated, have to use a little trig to figure out where this PVector is!
   PVector kochC() {
-    PVector a = start.get(); // Start at the beginning
+    PVector a = start.copy(); // Start at the beginning
     
     PVector v = PVector.sub(end, start);
     v.div(3);
@@ -58,7 +58,7 @@ class KochLine {
   }
 
   PVector kochE() {
-    return end.get();
+    return end.copy();
   }
 }
 

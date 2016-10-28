@@ -48,7 +48,7 @@ class Vehicle {
     wandertheta += random(-change,change);     // Randomly change wander theta
 
     // Now we have to calculate the new location to steer towards on the wander circle
-    PVector circleloc = velocity.get();    // Start with velocity
+    PVector circleloc = velocity.copy();    // Start with velocity
     circleloc.normalize();            // Normalize to get heading
     circleloc.mult(wanderD);          // Multiply by distance
     circleloc.add(location);               // Make it relative to boid's location

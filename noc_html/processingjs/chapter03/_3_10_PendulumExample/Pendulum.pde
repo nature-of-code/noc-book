@@ -21,7 +21,7 @@ class Pendulum {
   // This constructor could be improved to allow a greater variety of pendulums
   Pendulum(PVector origin_, float r_) {
     // Fill all variables
-    origin = origin_.get();
+    origin = origin_.copy();
     location = new PVector();
     r = r_;
     angle = PI/4;

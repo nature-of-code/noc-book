@@ -16,9 +16,9 @@ class Branch {
   boolean growing = true;
 
   Branch(PVector l, PVector v, float n) {
-    start = l.get();
-    end = l.get();
-    vel = v.get();
+    start = l.copy();
+    end = l.copy();
+    vel = v.copy();
     timerstart = n;
     timer = timerstart;
   }

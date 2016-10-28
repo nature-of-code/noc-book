@@ -12,7 +12,7 @@ class Wave {
   Particle[] particles;
 
   Wave(PVector o, int w_, float a, float p) {
-    origin = o.get();
+    origin = o.copy();
     w = w_;
     period = p;
     amplitude = a;

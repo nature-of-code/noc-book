@@ -15,7 +15,7 @@ class Bloop {
 
   // Create a "bloop" creature
   Bloop(PVector l, DNA dna_) {
-    location = l.get();
+    location = l.copy();
     health = 200;
     xoff = random(1000);
     yoff = random(1000);

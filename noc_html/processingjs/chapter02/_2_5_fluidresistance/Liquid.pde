@@ -42,7 +42,7 @@
     float dragMagnitude = c * speed * speed;
 
     // Direction is inverse of velocity
-    PVector dragForce = m.velocity.get();
+    PVector dragForce = m.velocity.copy();
     dragForce.mult(-1);
     
     // Scale according to magnitude
