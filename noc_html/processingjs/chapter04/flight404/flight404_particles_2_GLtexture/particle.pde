@@ -78,7 +78,7 @@ class Particle{
     // if the particle is moving fast enough, when it hits the ground it can
     // split into a bunch of smaller particles.
     if( ISBOUNCING ){
-      bounceVel = vel.magnitude();
+      bounceVel = vel.mag();
       
       vel.scaleSelf( .7 );
       vel.y *= -( ( radius/40.0 ) * .5 );
