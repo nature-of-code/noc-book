@@ -193,7 +193,7 @@ mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
 
-<p>Ok, let’s <em>be</em> the computer for a moment. First, we call <code>applyForce()</code> with wind. And so the <code>Mover</code> object’s acceleration is now assigned the <code>PVector</code> <code>wind</code>. Second, we call <code>applyForce()</code> with gravity. Now the <code>Mover</code> object’s acceleration is set to the gravity <code>PVector</code>. Third, we call <code>update()</code>. What happens in <code>update()</code>? Acceleration is added to velocity.</p>
+<p>OK, let’s <em>be</em> the computer for a moment. First, we call <code>applyForce()</code> with wind. And so the <code>Mover</code> object’s acceleration is now assigned the <code>PVector</code> <code>wind</code>. Second, we call <code>applyForce()</code> with gravity. Now the <code>Mover</code> object’s acceleration is set to the gravity <code>PVector</code>. Third, we call <code>update()</code>. What happens in <code>update()</code>? Acceleration is added to velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 velocity.add(acceleration);</pre>
@@ -852,12 +852,12 @@ if (liquid.contains(movers[i])) {
 
 <p>The above code tells us that we need to add two functions to the <code>Liquid</code> class: (1) a function that determines if a <code>Mover</code> object is inside the <code>Liquid</code> object, and (2) a function that computes and applies a drag force on the <code>Mover</code> object.</p>
 
-The first is easy; we can simply use a boolean expressionto determine if the position vector rests inside the rectangle defined by the liquid.
+The first is easy; we can simply use a Boolean expression to determine if the position vector rests inside the rectangle defined by the liquid.
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-boolean contains(Mover m) {
+Boolean contains(Mover m) {
   PVector pos = m.position;
-  //{.offset-top} This boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
+  //{.offset-top} This Boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
   return pos.x > x &amp;&amp; pos.x < x + w &amp;&amp; pos.y > y &amp;&amp; pos.y < y + h;
 }</pre>
 
