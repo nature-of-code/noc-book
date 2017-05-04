@@ -193,7 +193,7 @@ mover.applyForce(gravity);
 mover.update();
 mover.display();</pre>
 
-<p>Ok, let’s <em>be</em> the computer for a moment. First, we call <code>applyForce()</code> with wind. And so the <code>Mover</code> object’s acceleration is now assigned the <code>PVector</code> <code>wind</code>. Second, we call <code>applyForce()</code> with gravity. Now the <code>Mover</code> object’s acceleration is set to the gravity <code>PVector</code>. Third, we call <code>update()</code>. What happens in <code>update()</code>? Acceleration is added to velocity.</p>
+<p>OK, let’s <em>be</em> the computer for a moment. First, we call <code>applyForce()</code> with wind. And so the <code>Mover</code> object’s acceleration is now assigned the <code>PVector</code> <code>wind</code>. Second, we call <code>applyForce()</code> with gravity. Now the <code>Mover</code> object’s acceleration is set to the gravity <code>PVector</code>. Third, we call <code>update()</code>. What happens in <code>update()</code>? Acceleration is added to velocity.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 velocity.add(acceleration);</pre>
@@ -268,7 +268,7 @@ class Mover {
 <p>Now that we are introducing mass, it’s important to make a quick note about units of measurement. In the real world, things are measured in specific units. We say that two objects are 3 meters apart, the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6 kilograms. As we’ll see later in this book, sometimes we will want to take real-world units into consideration. However, in this chapter, we’re going to ignore them for the most part. Our units of measurement are in pixels (“These two circles are 100 pixels apart”) and frames of animation (“This circle is moving at a rate of 2 pixels per frame”). In the case of mass, there isn’t any unit of measurement for us to use. We’re just going to make something up. In this example, we’re arbitrarily picking the number 10. There is no unit of measurement, though you might enjoy inventing a unit of your own, like “1 moog” or “1 yurkle.” It should also be noted that, for demonstration purposes, we’ll tie mass to pixels (drawing, say, a circle with a radius of 10). This will allow us to visualize the mass of an object. In the real world, however, size does not definitely indicate mass. A small metal ball could have a much higher mass than a large balloon due to its higher density.</p>
 </div>
 
-<p>Mass is a scalar (float), not a vector, as it’s just one number describing the amount of matter in an object. We could be fancy about things and compute the area of a shape as its mass, but it’s simpler to begin by saying, “Hey, the mass of this object is&hellip;um, I dunno&hellip;how about 10?”</p>
+<p>Mass is a scalar (float), not a vector, as it’s just one number describing the amount of matter in an object. We could be fancy about things and compute the area of a shape as its mass, but it’s simpler to begin by saying, “Hey, the mass of this object is…um, I dunno…how about 10?”</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 Mover() {
@@ -452,7 +452,7 @@ void setup() {
   }
 }</pre>
 
-<p>But now we have a small issue. If we refer back to the <code>Mover</code> object’s constructor&hellip;</p>
+<p>But now we have a small issue. If we refer back to the <code>Mover</code> object’s constructor…</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   Mover() {
@@ -465,7 +465,7 @@ void setup() {
 
 <a data-primary="constructor" data-secondary="arguments" data-tertiary="adding to" data-type="indexterm"></a>
 
-<p>&hellip;we discover that every <code>Mover</code> object is made exactly the same way. What we want are <code>Mover</code> objects of varying mass that start at varying positions. Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
+<p>…we discover that every <code>Mover</code> object is made exactly the same way. What we want are <code>Mover</code> objects of varying mass that start at varying positions. Here is where we need to increase the sophistication of our constructor by adding arguments.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
   Mover(float m, float x , float y) {
@@ -674,7 +674,7 @@ float c = 0.01;</pre>
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 float normal = 1;</pre>
 
-<p>Now that we have both the magnitude and direction for friction, we can put it all together&hellip;</p>
+<p>Now that we have both the magnitude and direction for friction, we can put it all together…</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 float c = 0.01;
@@ -689,7 +689,7 @@ friction.normalize();
 // Take the unit vector and multiply it by magnitude and we have our force vector!
 friction.mult(frictionMag);</pre>
 
-<p>&hellip;and add it to our “forces” example, where many objects experience wind, gravity, and now friction:</p>
+<p>…and add it to our “forces” example, where many objects experience wind, gravity, and now friction:</p>
 
 <figure class="two-col" data-pde="processingjs/chapter02/_2_4_forces_nofriction/_2_4_forces_nofriction.pde processingjs/chapter02/_2_4_forces_nofriction/Mover.pde"><img alt="No friction" src="chapter02/ch02_ex04a.png" />
 <figcaption>No friction&nbsp;</figcaption>
@@ -842,7 +842,7 @@ void setup() {
 
 <p><em>When a mover passes through a liquid it experiences a drag force.</em></p>
 
-<p>&hellip;or in object-oriented speak (assuming we are looping through an array of <code>Mover</code> objects with index i):</p>
+<p>…or in object-oriented speak (assuming we are looping through an array of <code>Mover</code> objects with index i):</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // If a Mover is inside a Liquid, apply the drag force.
@@ -852,12 +852,12 @@ if (liquid.contains(movers[i])) {
 
 <p>The above code tells us that we need to add two functions to the <code>Liquid</code> class: (1) a function that determines if a <code>Mover</code> object is inside the <code>Liquid</code> object, and (2) a function that computes and applies a drag force on the <code>Mover</code> object.</p>
 
-The first is easy; we can simply use a boolean expressionto determine if the position vector rests inside the rectangle defined by the liquid.
+The first is easy; we can simply use a Boolean expression to determine if the position vector rests inside the rectangle defined by the liquid.
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 boolean contains(Mover m) {
   PVector pos = m.position;
-  //{.offset-top} This boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
+  //{.offset-top} This Boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
   return pos.x > x &amp;&amp; pos.x < x + w &amp;&amp; pos.y > y &amp;&amp; pos.y < y + h;
 }</pre>
 
