@@ -26,4 +26,7 @@ magicbook build
 ```
 * Navigate to "build" directory and look for generated files.
 
+###### Build Notes
+On Mac OSX, you need to install princexml along with the node-prince `brew cask install prince`  or download via [here.](http://www.princexml.com/download/)
+
 More information about Magic Book at [its README](https://github.com/magicbookproject/magicbook/blob/master/README.md).
