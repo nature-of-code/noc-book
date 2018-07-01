@@ -67,14 +67,20 @@ h2 {
     font-size: $font-XL;
     margin-top: 2em;
 }
-h3, h4, h5 {
+h3, h4, h5, 
+section[data-type="sect2"] h2,
+section[data-type="sect3"] h2,
+section[data-type="sect4"] h2 {
     font-family: $sans-semibold;
     font-size: $font-L;
 }
 h1, h2, h3, h4, h5, h6 {
     clear: both;
 }
-h3, h4, h5, h6 {
+h3, h4, h5, h6,
+section[data-type="sect2"] h2,
+section[data-type="sect3"] h2,
+section[data-type="sect4"] h2 {
     line-height: 1.317em;
     margin: 1.6em 0 0.5em;
 }
@@ -159,6 +165,9 @@ ul, ol {
             padding: .2em 0;
         }
     }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
     // * Lists: List Classes
@@ -176,6 +185,11 @@ pre, tt, code {
     margin: 0;
     padding: 0;
 }
+
+p code, li code {
+    font-size: 0.9em;
+}
+
 pre {
     width: 100%;
     white-space: pre-wrap;
@@ -413,15 +427,19 @@ section[data-type="toc"] nav {
                 min-width: 40px;
                 text-align: right;
             }
+            a + ul {
+                page-break-before: avoid;
+            }
 
             ul {
-                margin: 1em 0 2em 2em;
+                margin: 0.25em 0 1em 2em;
                 li { // Level 02
                     font-family: $sans-regular;
                     font-size: $font-M;
                     a {}
 
                     ul {
+                        display: none;
                         margin: .5em 0 .5em 4em;
                         li { // Level 03
                             a { color: $color-dark; }
@@ -438,13 +456,16 @@ section[data-type="toc"] nav {
         > li > a {
 
             .chapter-number {
-                display: block;
-                font-size: $font-M;
-                font-family: $sans-regular;
-                color: $color-dark;
+                display: inline-block;
+                font-family: $sans-bold;
+                font-size: $font-XL;
+                font-weight: normal;
+            }
+            .chapter-number::after {
+                content: ":";
             }
             .chapter-title {
-                display: block;
+                display: inline-block;
             }
         }
 
@@ -458,8 +479,14 @@ section[data-type="toc"] nav {
         // Preface visible w/roman index
         li[data-toc-item="_preface"] {
             a[href]::after {
-                content: target-counter(attr(href), page, upper-roman);
+                content: target-counter(attr(href), page, lower-roman);
             }
+        }
+        li[data-toc-item="_further_reading"] span.section-number {
+            display: inline-block;
+            min-width: 2em;
+            color: inherit;
+            font-family: $sans-regular;
         }
     }
 }
@@ -506,16 +533,27 @@ div[data-type="note"], div[data-type="tip"] {
     div[data-type="exercise"] {
         background: $color-dark;
         color: $color-lighter;
-        padding: 2em 2em 1em 2em;
+        padding: 1em 2em 1em 2em;
         margin: .5em 0 1.5em 0;
 
         h5 {
             color: $color-background;
-            margin: 0 0 1em 0;
+            margin: 0 0 0.5em 0;
+            text-align: right;
+        }
+        p:last-child {
+            margin-bottom: 0;
+        }
+        figure:last-child {
+            margin-bottom: 0;
         }
         a { color: $color-lighter; }
 
         .codesplit .pair {
+            background: $color-medium;
+        }
+
+        .codesplit .pair.no-comment {
             background: transparent;
         }
     }
