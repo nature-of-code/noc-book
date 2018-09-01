@@ -25,21 +25,21 @@ Plugin.prototype = {
             //<p class="caption">angleVel = 0.05</p>
             var source = jel.attr('data-p5-sketch');
             if (jel.attr('class') && jel.attr('class').indexOf('two-col') > -1) {
-              var newel = '<div class="two-col"><iframe class="two-col" src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
+              var newel = '<div class="two-col"><iframe class="two-col" data-src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
               if (jel.prev().attr('class') && jel.prev().attr('class').indexOf('two-col-wrapper') > -1) {
                 jel.prev().find('div.two-col-container').append(newel);
               } else {
                 jel.before('<div class="two-col-wrapper"><div class="two-col-container">' + newel + '</div></div>');
               }
             } else if (jel.attr('class') && jel.attr('class').indexOf('three-col') > -1) {
-              var newel = '<div class="three-col"><iframe class="three-col" src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
+              var newel = '<div class="three-col"><iframe class="three-col" data-src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
               if (jel.prev().attr('class') && jel.prev().attr('class').indexOf('three-col-wrapper') > -1) {
                 jel.prev().find('div.three-col-container').append(newel);
               } else {
                 jel.before('<div class="three-col-wrapper"><div class="three-col-container">' + newel + '</div></div>');
               }
             } else {
-              var newel = '<div class="one-col-wrapper"><iframe src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
+              var newel = '<div class="one-col-wrapper"><iframe data-src="' + source + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>';
               jel.before(newel);
             }
             // check for a caption; if found, add to new element
