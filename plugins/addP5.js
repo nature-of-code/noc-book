@@ -20,7 +20,7 @@ Plugin.prototype = {
     stream = stream.pipe(through.obj(function(file, enc, cb) {
         if(!file.$el) file.$el = cheerio.load(file.contents.toString());
           // Loop through all figures to replace with iframes
-          file.$el('figure[data-p5-sketch^="http"]').each(function(i, el) { 
+          file.$el('figure[data-p5-sketch^="http"]').each(function(i, el) {
             var jel = file.$el(this);
             //<p class="caption">angleVel = 0.05</p>
             var source = jel.attr('data-p5-sketch');
