@@ -1,13 +1,109 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>{{ config.title }}</title>
-    {{ stylesheets }}
-  </head>
-  <body>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>The Nature of Code</title>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/javascripts/codeprocessing.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/processingjs/processing.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/processingjs/lazyloading.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/javascripts/sketchControls.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/javascripts/jquery.fixed.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/javascripts/jquery.lazyloadxt.extra.min.js"></script>
+  <script type="text/javascript" src="https://natureofcode.com/book/javascripts/size-iframes.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+      $('#toc-list').fixed({'top':'8'});
+      $('#nav-bar-wrap').fixed({'top':'8'});
+
+      $('span.c1').each(function(){ addStylesToCodeLines($(this)); });
+      // $('code').each(function(){ inlineComments($(this)); });
+      $('div.source-code').each(function(){ setRawCodeHeight($(this)); });
+      $('a.toggle').click(function(){ toggleCodeDisplay($(this)); return false; });
+    });
+  </script>
+  <link rel="stylesheet" href="https://natureofcode.com/book/stylesheets/fonts.css" type="text/css">
+  <link rel="stylesheet" href="https://natureofcode.com/book/stylesheets/html.css" type="text/css">
+  <link rel="stylesheet" href="https://natureofcode.com/book/stylesheets/code-html.css" type="text/css">
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34673170-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script>
+
+    window.onload= function() {
+      offsetUps = document.getElementsByClassName('offset-up');
+      for(var i=0; i < offsetUps.length; i++) {
+        var element = offsetUps[i];
+        var comment = element.getElementsByClassName('code-comment')[0];
+        var height = comment.offsetHeight;
+        comment.style.top = '-' + (height) +  'px';
+      }
+    };
+</script>
+
+</head>
+<body>
+
+  <div id="navigator">
+    <div id="navigator-inner">
+      <div id='nav-bar-wrap'>
+        <div id="mask"></div>
+        <div id="nav-bar">
+          <h1><a href="/">THE <strong>NATURE</strong> OF CODE</a></h1>
+          <h2>by Daniel Shiffman</h2>
+          <a id="purchase-link" href="/">Buy this book in print</a> <a id="purchase-link" href="/">Buy this book as PDF</a>
+        </div>
+      </div>
+      <div id="toc-holder">
+        <div id="toc-list">
+          <ul>
+            <li><a href="/book/">Welcome</a></li>
+            <li><a href="/book/acknowledgments">Acknowledgments</a></li>
+            <li><a href="/book/dedication">Dedication</a></li>
+            <li><a href="/book/preface">Preface</a></li>
+            <li><a href="/book/introduction">Introduction</a></li>
+            <li><a href="/book/chapter-1-vectors">1.  Vectors</a></li>
+            <li><a href="/book/chapter-2-forces">2.  Forces</a></li>
+            <li><a href="/book/chapter-3-oscillation">3.  Oscillation</a></li>
+            <li><a href="/book/chapter-4-particle-systems">4.  Particle Systems</a></li>
+            <li><a href="/book/chapter-5-physics-libraries">5.  Physics Libraries</a></li>
+            <li><a href="/book/chapter-6-autonomous-agents">6.  Autonomous Agents</a></li>
+            <li><a href="/book/chapter-7-cellular-automata">7.  Cellular Automata</a></li>
+            <li><a href="/book/chapter-8-fractals">8.  Fractals</a></li>
+            <li><a href="/book/chapter-9-the-evolution-of-code">9.  The Evolution of Code</a></li>
+            <li><a href="/book/chapter-10-neural-networks">10.  Neural Networks</a></li>
+            <li><a href="/book/further-reading">Further Reading</a></li>
+            <li><a href="/book/index">Index</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="top">
+    <div id="header">
+      <h1><a href="/">The <strong>Nature</strong> of Code</a></h1>
+      <h2>Daniel Shiffman</h2>
+    </div>
+  </div>
+
+  <div id="middle">
     <div class="container">
       {{ content }}
     </div>
+  </div>
   </body>
 </html>
