@@ -1,4 +1,8 @@
+
 # The Nature of Code Book Project
+
+_**This repo is no longer active! To follow the project visit [noc-book-2](https://github.com/nature-of-code/noc-book-2)!**_
+
 
 Hello.  If you found your way here you have found the raw source material for my Nature of Code book.  The book is for sale in PDF and print forms at [natureofcode.com](http://www.natureofcode.com). There, you'll also find a free version of the book available as HTML.  
 
